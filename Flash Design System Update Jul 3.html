@@ -1137,6 +1137,51 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
 .cpg-reset{font-family:inherit;font-size:12px;font-weight:600;color:var(--chrome-muted);background:none;border:1px solid var(--chrome-border);border-radius:20px;padding:7px 15px;cursor:pointer;transition:all .15s}
 .cpg-reset:hover{color:var(--chrome-txt);border-color:var(--chrome-txt)}
 
+/* ── DATA DISPLAY ── */
+.dd-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+@media(max-width:820px){.dd-stats{grid-template-columns:1fr 1fr}}
+@media(max-width:480px){.dd-stats{grid-template-columns:1fr}}
+.dd-stat{border:1px solid var(--chrome-border);border-radius:14px;padding:18px 18px 16px;background:var(--chrome-bg);transition:border-color .2s,transform .2s}
+.dd-stat:hover{border-color:var(--chrome-accent);transform:translateY(-2px)}
+.dd-stat__label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--chrome-muted);margin-bottom:10px}
+.dd-stat__value{font-size:30px;font-weight:800;line-height:1;color:var(--chrome-txt);letter-spacing:-1px;font-variant-numeric:tabular-nums}
+.dd-stat__foot{display:flex;align-items:center;gap:8px;margin-top:11px;font-size:12px}
+.dd-stat__sub{color:var(--chrome-muted);font-weight:500}
+.dd-delta{display:inline-flex;align-items:center;gap:3px;padding:2px 7px;border-radius:999px;font-size:11px;font-weight:700;white-space:nowrap}
+.dd-delta--up{color:var(--color-success-h);background:var(--color-success-l)}
+.dd-delta--down{color:var(--color-crit-h);background:var(--color-crit-l)}
+
+/* Table */
+.dd-table-wrap{border:1px solid var(--chrome-border);border-radius:12px;overflow:hidden;overflow-x:auto}
+.dd-table{width:100%;border-collapse:collapse;font-size:13px;min-width:540px}
+.dd-table thead th{text-align:left;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--chrome-muted);padding:13px 16px;background:var(--chrome-nav);border-bottom:1px solid var(--chrome-border);white-space:nowrap}
+.dd-table tbody td{padding:13px 16px;border-bottom:1px solid var(--chrome-border);color:var(--chrome-txt);font-weight:500}
+.dd-table tbody tr:last-child td{border-bottom:none}
+.dd-table tbody tr{transition:background .12s}
+.dd-table tbody tr:hover{background:var(--chrome-hover)}
+.dd-num{text-align:right;font-variant-numeric:tabular-nums;font-weight:700}
+.dd-table__name{font-weight:700;color:var(--chrome-txt)}
+.dd-status{display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:600;white-space:nowrap}
+.dd-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+
+/* Key-value list */
+.dd-kv{border:1px solid var(--chrome-border);border-radius:12px;overflow:hidden}
+.dd-kv__row{display:flex;gap:16px;padding:13px 16px;border-bottom:1px solid var(--chrome-border)}
+.dd-kv__row:last-child{border-bottom:none}
+.dd-kv__key{flex:0 0 180px;font-size:12px;font-weight:700;color:var(--chrome-muted)}
+.dd-kv__val{font-size:13px;font-weight:600;color:var(--chrome-txt)}
+@media(max-width:520px){.dd-kv__row{flex-direction:column;gap:3px}.dd-kv__key{flex:none}}
+
+/* Progress meters */
+.dd-meters{border:1px solid var(--chrome-border);border-radius:12px;padding:22px}
+.dd-meter{margin-bottom:18px}
+.dd-meter:last-child{margin-bottom:0}
+.dd-meter__top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:7px}
+.dd-meter__label{font-size:12.5px;font-weight:700;color:var(--chrome-txt)}
+.dd-meter__val{font-size:12px;font-weight:700;color:var(--chrome-muted);font-variant-numeric:tabular-nums}
+.dd-meter__track{height:8px;border-radius:999px;background:var(--chrome-nav);overflow:hidden}
+.dd-meter__fill{height:100%;border-radius:999px}
+
 </style>
 </head>
 <body>
@@ -1433,7 +1478,130 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
     <section class="sec" id="s-drawers"><div class="sec__head"><div class="sec__eye">Components</div><h1 class="sec__title">Drawers</h1></div><div class="coming">Coming in a future session</div></section>
     <section class="sec" id="s-toasts"><div class="sec__head"><div class="sec__eye">Components</div><h1 class="sec__title">Toasts &amp; Snackbars</h1></div><div class="coming">Coming in a future session</div></section>
     <section class="sec" id="s-nav"><div class="sec__head"><div class="sec__eye">Components</div><h1 class="sec__title">Navigation</h1></div><div class="coming">Coming in a future session</div></section>
-    <section class="sec" id="s-data"><div class="sec__head"><div class="sec__eye">Components</div><h1 class="sec__title">Data Display</h1></div><div class="coming">Coming in a future session</div></section>
+    <section class="sec" id="s-data">
+      <div class="sec__head">
+        <div class="sec__eye">Components</div>
+        <h1 class="sec__title">Data Display <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.0</span></h1>
+        <p class="sec__desc">Patterns for surfacing numbers and records — stat tiles, tables, key&ndash;value lists and progress meters. All built on chrome and semantic tokens, so they adapt to light &amp; dark automatically.</p>
+      </div>
+
+      <div class="type-sub">
+        <div class="type-sub__title">Stat tiles</div>
+        <div class="type-sub__desc">Headline KPI cards with a label, value and trend delta. Deltas use the Success / Critical semantic tokens so direction reads at a glance.</div>
+        <div class="dd-stats">
+          <div class="dd-stat">
+            <div class="dd-stat__label">Transactions</div>
+            <div class="dd-stat__value">2.4M</div>
+            <div class="dd-stat__foot"><span class="dd-delta dd-delta--up">▲ 12.8%</span><span class="dd-stat__sub">vs last week</span></div>
+          </div>
+          <div class="dd-stat">
+            <div class="dd-stat__label">Gross value</div>
+            <div class="dd-stat__value">R48.2M</div>
+            <div class="dd-stat__foot"><span class="dd-delta dd-delta--up">▲ 6.1%</span><span class="dd-stat__sub">vs last week</span></div>
+          </div>
+          <div class="dd-stat">
+            <div class="dd-stat__label">Active traders</div>
+            <div class="dd-stat__value">18,930</div>
+            <div class="dd-stat__foot"><span class="dd-delta dd-delta--down">▼ 2.3%</span><span class="dd-stat__sub">vs last week</span></div>
+          </div>
+          <div class="dd-stat">
+            <div class="dd-stat__label">Platform uptime</div>
+            <div class="dd-stat__value">99.98%</div>
+            <div class="dd-stat__foot"><span class="dd-stat__sub">Last 30 days</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="type-sub">
+        <div class="type-sub__title">Data table</div>
+        <div class="type-sub__desc">Row-based records with an uppercase header, tabular-aligned numerics, hover states and a status indicator. Wraps horizontally on narrow screens.</div>
+        <div class="dd-table-wrap">
+          <table class="dd-table">
+            <thead>
+              <tr>
+                <th>Product</th>
+                <th>Category</th>
+                <th class="dd-num">Volume</th>
+                <th class="dd-num">Value</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="dd-table__name">Airtime &amp; Data</td>
+                <td>Prepaid</td>
+                <td class="dd-num">842,190</td>
+                <td class="dd-num">R14.8M</td>
+                <td><span class="dd-status"><span class="dd-dot" style="background:var(--color-success-h)"></span>Live</span></td>
+              </tr>
+              <tr>
+                <td class="dd-table__name">Electricity</td>
+                <td>Utilities</td>
+                <td class="dd-num">613,455</td>
+                <td class="dd-num">R11.2M</td>
+                <td><span class="dd-status"><span class="dd-dot" style="background:var(--color-success-h)"></span>Live</span></td>
+              </tr>
+              <tr>
+                <td class="dd-table__name">1Voucher</td>
+                <td>Vouchers</td>
+                <td class="dd-num">508,720</td>
+                <td class="dd-num">R9.6M</td>
+                <td><span class="dd-status"><span class="dd-dot" style="background:var(--color-warn-h)"></span>Degraded</span></td>
+              </tr>
+              <tr>
+                <td class="dd-table__name">Bill Payments</td>
+                <td>Utilities</td>
+                <td class="dd-num">231,004</td>
+                <td class="dd-num">R7.1M</td>
+                <td><span class="dd-status"><span class="dd-dot" style="background:var(--color-success-h)"></span>Live</span></td>
+              </tr>
+              <tr>
+                <td class="dd-table__name">Gaming Vouchers</td>
+                <td>Vouchers</td>
+                <td class="dd-num">96,338</td>
+                <td class="dd-num">R5.5M</td>
+                <td><span class="dd-status"><span class="dd-dot" style="background:var(--chrome-muted)"></span>Paused</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="type-sub">
+        <div class="type-sub__title">Key&ndash;value list</div>
+        <div class="type-sub__desc">Definition rows for detail panels and record summaries. Keys are muted and fixed-width; values sit on the primary text token. Collapses to stacked pairs on mobile.</div>
+        <div class="dd-kv">
+          <div class="dd-kv__row"><div class="dd-kv__key">Merchant ID</div><div class="dd-kv__val">FLSH-004821-ZA</div></div>
+          <div class="dd-kv__row"><div class="dd-kv__key">Registered name</div><div class="dd-kv__val">Kasi Connect Spaza (Pty) Ltd</div></div>
+          <div class="dd-kv__row"><div class="dd-kv__key">Region</div><div class="dd-kv__val">Gauteng · Soweto</div></div>
+          <div class="dd-kv__row"><div class="dd-kv__key">Onboarded</div><div class="dd-kv__val">14 March 2026</div></div>
+          <div class="dd-kv__row"><div class="dd-kv__key">Settlement</div><div class="dd-kv__val">Daily · 18:00 SAST</div></div>
+        </div>
+      </div>
+
+      <div class="type-sub">
+        <div class="type-sub__title">Progress meters</div>
+        <div class="type-sub__desc">Labelled bars for quotas, targets and health. The fill uses the brand token by default and switches to Warning / Critical semantics as a value approaches its limit.</div>
+        <div class="dd-meters">
+          <div class="dd-meter">
+            <div class="dd-meter__top"><span class="dd-meter__label">Monthly GMV target</span><span class="dd-meter__val">R48.2M / R60M · 80%</span></div>
+            <div class="dd-meter__track"><div class="dd-meter__fill" style="width:80%;background:var(--chrome-accent)"></div></div>
+          </div>
+          <div class="dd-meter">
+            <div class="dd-meter__top"><span class="dd-meter__label">Trader onboarding</span><span class="dd-meter__val">18,930 / 25,000 · 76%</span></div>
+            <div class="dd-meter__track"><div class="dd-meter__fill" style="width:76%;background:var(--chrome-accent)"></div></div>
+          </div>
+          <div class="dd-meter">
+            <div class="dd-meter__top"><span class="dd-meter__label">Float utilisation</span><span class="dd-meter__val">88%</span></div>
+            <div class="dd-meter__track"><div class="dd-meter__fill" style="width:88%;background:var(--color-warn-h)"></div></div>
+          </div>
+          <div class="dd-meter">
+            <div class="dd-meter__top"><span class="dd-meter__label">API error budget spent</span><span class="dd-meter__val">96%</span></div>
+            <div class="dd-meter__track"><div class="dd-meter__fill" style="width:96%;background:var(--color-crit-h)"></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
     <section class="sec" id="s-changelog">
       <div class="sec__head">
         <div class="sec__eye">About</div>
@@ -3759,12 +3927,16 @@ try { renderChipReference(); } catch(e){ console.error('chip-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.10.0';
+const SYSTEM_VERSION = '1.11.0';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.11.0', date:'2026-07-03', author:'Mo', title:'Data Display', changes:[
+        ['added','Data Display section — stat tiles, data table, key–value list and progress meters'],
+        ['added','Semantic status dots and trend deltas built on the Success / Warning / Critical tokens'],
+      ]},
       {version:'1.10.0', date:'2026-07-03', author:'Mo', title:'Chip playground', changes:[
         ['added','Interactive playground in the Chips & Pills section — live variant, size, icon, dismiss, selectable and label controls'],
         ['added','Removable chips (dismiss × with reset) and selectable chips (click to toggle a selected ring)'],
@@ -3950,9 +4122,12 @@ const CHANGELOG = {
         ['changed','Planned for a future session'],
       ]},
     ]},
-    {secId:'s-data', name:'Data Display', version:'0.0.0', entries:[
-      {version:'0.0.0', date:'—', title:'Not yet started', changes:[
-        ['changed','Planned for a future session'],
+    {secId:'s-data', name:'Data Display', version:'1.0.0', entries:[
+      {version:'1.0.0', date:'2026-07-03', author:'Mo', title:'Initial release', changes:[
+        ['added','Stat tiles with trend deltas (Success / Critical semantics)'],
+        ['added','Data table with uppercase header, tabular numerics, hover rows and status dots'],
+        ['added','Key–value list for detail panels, stacking on mobile'],
+        ['added','Progress meters with brand / Warning / Critical fills'],
       ]},
     ]},
   ]
