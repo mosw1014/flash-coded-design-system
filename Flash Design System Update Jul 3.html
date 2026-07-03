@@ -1127,6 +1127,16 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
 .chip-ref__rowlabel{padding:12px 14px;font-size:12px;font-weight:700;color:var(--chrome-txt);display:flex;align-items:center}
 .chip-ref__cell{display:flex;align-items:center;padding:12px 14px}
 
+/* Chip playground */
+.cpg-label-input{background:var(--chrome-bg);border:1px solid var(--chrome-border);border-radius:7px;padding:5px 10px;font-family:inherit;font-size:12px;font-weight:600;color:var(--chrome-txt);width:170px;max-width:100%;transition:border-color .15s}
+.cpg-label-input:focus{outline:none;border-color:var(--chrome-accent)}
+.chip__x{display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;margin-left:1px;margin-right:-2px;width:1.15em;height:1.15em;border-radius:999px;border:none;background:transparent;color:inherit;cursor:pointer;padding:0;opacity:.72;transition:opacity .12s,background .12s}
+.chip__x:hover{opacity:1;background:rgba(0,0,0,.2)}
+.chip.is-selectable{cursor:pointer}
+.chip.is-selected{box-shadow:0 0 0 2px var(--cpg-stage-bg,#fff),0 0 0 4px var(--chip-bg)}
+.cpg-reset{font-family:inherit;font-size:12px;font-weight:600;color:var(--chrome-muted);background:none;border:1px solid var(--chrome-border);border-radius:20px;padding:7px 15px;cursor:pointer;transition:all .15s}
+.cpg-reset:hover{color:var(--chrome-txt);border-color:var(--chrome-txt)}
+
 </style>
 </head>
 <body>
@@ -1412,9 +1422,10 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
     <section class="sec" id="s-chips">
       <div class="sec__head">
         <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Chips &amp; Pills <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.0</span></h1>
-        <p class="sec__desc">5 semantic variants · 3 sizes · light &amp; dark mode.</p>
+        <h1 class="sec__title">Chips &amp; Pills <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.1.0</span></h1>
+        <p class="sec__desc">5 semantic variants · 3 sizes · light &amp; dark mode · interactive playground.</p>
       </div>
+      <div id="chip-playground" class="type-sub"></div>
       <div id="chip-reference" class="type-sub"></div>
     </section>
     <section class="sec" id="s-cards"><div class="sec__head"><div class="sec__eye">Components</div><h1 class="sec__title">Cards</h1></div><div class="coming">Coming in a future session</div></section>
@@ -1895,6 +1906,7 @@ function toggleTheme() {
   // playground stages follow the global theme
   try { if(typeof renderPlayground==='function' && document.getElementById('btn-playground')) renderPlayground(); } catch(e){}
   try { if(typeof renderInpPlayground==='function' && document.getElementById('inp-playground')) renderInpPlayground(); } catch(e){}
+  try { if(typeof renderChipPlayground==='function' && document.getElementById('chip-playground')) renderChipPlayground(); } catch(e){}
 }
 
 // Colour view switch (prim / sem)
@@ -3587,6 +3599,121 @@ function makeChipHTML(variant, sizeKey, theme){
   return `<span class="chip chip--${sizeKey}" style="${style}">${chipHeartSVG(sz.icon, c.text)}<span class="chip__label">Chip</span></span>`;
 }
 
+/* ── CHIP PLAYGROUND ── */
+let cpg = { variant:'accent', size:'reg', icon:true, removable:false, selectable:false, label:'Chip', theme:'light', dismissed:false, selected:false, codeOpen:false };
+
+function cpgEsc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&#60;').replace(/>/g,'&#62;').replace(/"/g,'&quot;'); }
+
+function makeChipEl(){
+  const sz = CHIP_SIZES.find(s=>s.key===cpg.size)||CHIP_SIZES[1];
+  const v  = CHIP_VARIANTS.find(x=>x.key===cpg.variant)||CHIP_VARIANTS[0];
+  const c  = v[cpg.theme];
+  const chip = document.createElement('span');
+  chip.className = `chip chip--${cpg.size}${cpg.selectable?' is-selectable':''}${(cpg.selectable&&cpg.selected)?' is-selected':''}`;
+  chip.style.cssText = `--chip-bg:${c.bg};--chip-text:${c.text};font-size:${sz.fs}px;gap:${sz.gap}px;padding:0 ${sz.padX}px 0 ${sz.padX-2}px`;
+  chip.style.setProperty('--cpg-stage-bg', stageBg(cpg.theme));
+  let inner = '';
+  if(cpg.icon) inner += chipHeartSVG(sz.icon, c.text);
+  inner += `<span class="chip__label">${cpgEsc(cpg.label||'Chip')}</span>`;
+  chip.innerHTML = inner;
+  if(cpg.removable){
+    const x = document.createElement('button');
+    x.className = 'chip__x'; x.type = 'button'; x.setAttribute('aria-label','Remove');
+    const xs = Math.round(sz.icon*0.82);
+    x.innerHTML = `<svg width="${xs}" height="${xs}" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg>`;
+    x.onclick = (e)=>{ e.stopPropagation(); cpg.dismissed = true; cpgRefresh(); };
+    chip.appendChild(x);
+  }
+  if(cpg.selectable){
+    chip.onclick = ()=>{ cpg.selected = !cpg.selected; cpgRefresh(); };
+  }
+  return chip;
+}
+
+function getChipCodeHTML(){
+  const v = CHIP_VARIANTS.find(x=>x.key===cpg.variant)||CHIP_VARIANTS[0];
+  const c = v[cpg.theme];
+  const cls = `chip chip--${cpg.size}${cpg.selectable?' is-selectable':''}`;
+  const label = cpgEsc(cpg.label||'Chip');
+  const iconLine = cpg.icon ? `\n  <span class="code-cm">&#60;!-- heart icon svg --></span>` : '';
+  const xLine = cpg.removable ? `\n  <span class="code-kw">&#60;button</span> <span class="code-cls">class</span>=<span class="code-val">"chip__x"</span> <span class="code-attr">aria-label</span>=<span class="code-val">"Remove"</span><span class="code-kw">>×&#60;/button></span>` : '';
+  return `<span class="code-cm">/* Flash · ${cap(cpg.theme)} · ${cap(cpg.variant)} chip */</span>
+<span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"${cls}"</span>
+      <span class="code-attr">style</span>=<span class="code-val">"--chip-bg:${c.bg}; --chip-text:${c.text};"</span><span class="code-kw">></span>${iconLine}
+  <span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"chip__label"</span><span class="code-kw">></span>${label}<span class="code-kw">&#60;/span></span>${xLine}
+<span class="code-kw">&#60;/span></span>`;
+}
+
+function cpgRefresh(){
+  const stage = document.getElementById('cpg-stage');
+  if(stage){
+    stage.innerHTML = '';
+    if(cpg.dismissed){
+      stage.innerHTML = `<button class="cpg-reset" onclick="cpgReset()">↺&nbsp;&nbsp;Bring chip back</button>`;
+    } else {
+      stage.appendChild(makeChipEl());
+    }
+  }
+  const block = document.getElementById('cpg-code-block');
+  if(block) block.innerHTML = getChipCodeHTML();
+}
+
+function renderChipPlayground(){
+  const root = document.getElementById('chip-playground');
+  if(!root) return;
+  cpg.theme = document.documentElement.getAttribute('data-theme')==='dark' ? 'dark' : 'light';
+  const sbg = stageBg(cpg.theme);
+
+  const varBtns = CHIP_VARIANTS.map(v=>`<button class="btn-pg__pill${cpg.variant===v.key?' on':''}" onclick="cpgSet('variant','${v.key}')">${v.label}</button>`).join('');
+  const szBtns  = CHIP_SIZES.map(s=>`<button class="btn-pg__pill${cpg.size===s.key?' on':''}" onclick="cpgSet('size','${s.key}')">${s.label}</button>`).join('');
+  const iconBtns = ['off','on'].map(x=>`<button class="btn-pg__pill${(cpg.icon?(x==='on'):(x==='off'))?' on':''}" onclick="cpgSet('icon','${x}')">${x==='on'?'With icon':'No icon'}</button>`).join('');
+  const rmBtns  = ['off','on'].map(x=>`<button class="btn-pg__pill${(cpg.removable?(x==='on'):(x==='off'))?' on':''}" onclick="cpgSet('removable','${x}')">${x==='on'?'Removable':'Static'}</button>`).join('');
+  const selBtns = ['off','on'].map(x=>`<button class="btn-pg__pill${(cpg.selectable?(x==='on'):(x==='off'))?' on':''}" onclick="cpgSet('selectable','${x}')">${x==='on'?'Selectable':'Display'}</button>`).join('');
+
+  root.innerHTML = `
+    <div class="type-sub__title">Playground</div>
+    <div class="type-sub__desc">Configure a chip and interact with it live. Removable chips can be dismissed with the × ; selectable chips toggle a selected ring on click. The stage follows the site-wide theme toggle.</div>
+    <div class="btn-pg">
+      <div class="btn-pg__stage" id="cpg-stage" style="background:${sbg}"></div>
+      <div class="btn-pg__ctrls">
+        <div class="btn-pg__group"><span class="btn-pg__clabel">Variant</span><div class="btn-pg__pill-row">${varBtns}</div></div>
+        <div class="btn-pg__group"><span class="btn-pg__clabel">Size</span><div class="btn-pg__pill-row">${szBtns}</div></div>
+        <div class="btn-pg__group"><span class="btn-pg__clabel">Icon</span><div class="btn-pg__pill-row">${iconBtns}</div></div>
+        <div class="btn-pg__group"><span class="btn-pg__clabel">Dismiss</span><div class="btn-pg__pill-row">${rmBtns}</div></div>
+        <div class="btn-pg__group"><span class="btn-pg__clabel">Behaviour</span><div class="btn-pg__pill-row">${selBtns}</div></div>
+        <div class="btn-pg__group"><span class="btn-pg__clabel">Label</span><input class="cpg-label-input" id="cpg-label-input" value="${cpgEsc(cpg.label)}" maxlength="24" oninput="cpgSetLabel(this.value)" placeholder="Chip"></div>
+      </div>
+      <div class="code-panel${cpg.codeOpen?' open':''}" id="cpg-code-panel">
+        <div class="code-panel__head" onclick="cpgToggleCode()">
+          <span class="code-panel__label">&#60;/&#62; &nbsp;View code</span>
+          <button class="code-copy-btn" onclick="event.stopPropagation();cpgCopyCode()" id="cpg-copy-btn">Copy</button>
+        </div>
+        <div class="code-body"><div class="code-block" id="cpg-code-block"></div></div>
+      </div>
+    </div>`;
+
+  cpgRefresh();
+}
+
+function cpgSet(key, val){
+  if(key==='icon') cpg.icon = (val==='on');
+  else if(key==='removable') cpg.removable = (val==='on');
+  else if(key==='selectable'){ cpg.selectable = (val==='on'); if(!cpg.selectable) cpg.selected = false; }
+  else cpg[key] = val;
+  cpg.dismissed = false;
+  renderChipPlayground();
+}
+function cpgSetLabel(val){ cpg.label = val; cpgRefresh(); }
+function cpgReset(){ cpg.dismissed = false; cpg.selected = false; cpgRefresh(); }
+function cpgToggleCode(){ const p = document.getElementById('cpg-code-panel'); if(p){ p.classList.toggle('open'); cpg.codeOpen = p.classList.contains('open'); } }
+function cpgCopyCode(){
+  const b = document.getElementById('cpg-code-block');
+  if(!b) return;
+  navigator.clipboard.writeText(b.innerText||b.textContent).catch(()=>{});
+  const btn = document.getElementById('cpg-copy-btn');
+  if(btn){ btn.textContent = 'Copied!'; setTimeout(()=>btn.textContent='Copy', 2000); }
+}
+
 function renderChipReference(){
   const root = document.getElementById('chip-reference');
   if(!root) return;
@@ -3626,17 +3753,23 @@ function renderChipReference(){
     <div class="chip-ref"><div class="chip-ref__grid">${cells}</div></div>`;
 }
 
+try { renderChipPlayground(); } catch(e){ console.error('chip-playground',e); }
 try { renderChipReference(); } catch(e){ console.error('chip-reference',e); }
 
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.9.0';
+const SYSTEM_VERSION = '1.10.0';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.10.0', date:'2026-07-03', author:'Mo', title:'Chip playground', changes:[
+        ['added','Interactive playground in the Chips & Pills section — live variant, size, icon, dismiss, selectable and label controls'],
+        ['added','Removable chips (dismiss × with reset) and selectable chips (click to toggle a selected ring)'],
+        ['added','View-code panel emitting the chip markup with live --chip-bg / --chip-text values'],
+      ]},
       {version:'1.9.0', date:'2026-07-03', author:'Mo', title:'Chips & Pills', changes:[
         ['added','Chips & Pills section — 5 semantic variants (Accent, Muted, Success, Warning, Error) × 3 sizes (Small, Regular, Large), light & dark mode reference grid'],
       ]},
@@ -3781,7 +3914,12 @@ const CHANGELOG = {
         ['changed','Planned for a future session'],
       ]},
     ]},
-    {secId:'s-chips', name:'Chips & Pills', version:'1.0.0', entries:[
+    {secId:'s-chips', name:'Chips & Pills', version:'1.1.0', entries:[
+      {version:'1.1.0', date:'2026-07-03', author:'Mo', title:'Interactive playground', changes:[
+        ['added','Playground with live variant, size, icon, dismiss, selectable and label controls'],
+        ['added','Removable chips (dismiss × + reset) and selectable chips with a selected ring'],
+        ['added','View-code panel with copy, following the site-wide light/dark theme'],
+      ]},
       {version:'1.0.0', date:'2026-07-03', author:'Mo', title:'Initial release', changes:[
         ['added','5 variants (Accent, Muted, Success, Warning, Error) × 3 sizes (Small, Regular, Large)'],
         ['added','Light & dark mode reference grid, shown side by side'],
