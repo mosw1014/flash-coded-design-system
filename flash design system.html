@@ -1203,6 +1203,93 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
 .dd-empty__action{margin-top:6px;font-family:inherit;font-size:12.5px;font-weight:700;color:var(--color-btn-p-txt);background:var(--chrome-accent);border:none;border-radius:8px;padding:9px 16px;cursor:pointer;transition:filter .15s}
 .dd-empty__action:hover{filter:brightness(1.06)}
 
+/* ================================================================
+   CHECKBOXES & RADIO BUTTONS
+================================================================ */
+.fsel{display:inline-flex;align-items:center;gap:9px;cursor:pointer;font-family:inherit;font-size:14px;line-height:1.2;color:var(--chrome-txt);-webkit-user-select:none;user-select:none}
+.fsel__input{
+  --fs-box:20px; --fs-radius:6px;
+  --fs-border:#c2c6cc; --fs-bg:#fff; --fs-green:#10c504;
+  --fs-ring:rgba(0,0,0,.14);
+  appearance:none;-webkit-appearance:none;
+  flex:0 0 auto;display:block;width:var(--fs-box);height:var(--fs-box);margin:0;
+  border:1.6px solid var(--fs-border);border-radius:var(--fs-radius);
+  background-color:var(--fs-bg);background-repeat:no-repeat;background-position:center;
+  cursor:pointer;transition:border-color .15s,background-color .15s,box-shadow .15s;
+}
+.fsel__input[type="radio"]{border-radius:50%}
+/* size modifiers (usable on the input directly or via .fsel--sm / --xs wrapper) */
+.fsel__input.is-sm,.fsel--sm .fsel__input{--fs-box:18px;--fs-radius:5px}
+.fsel__input.is-xs,.fsel--xs .fsel__input{--fs-box:16px;--fs-radius:4.5px}
+.fsel--sm{font-size:13px}.fsel--xs{font-size:12px}
+/* checked — checkbox: green fill + white tick */
+.fsel__input[type="checkbox"]:checked{
+  background-color:var(--fs-green);border-color:var(--fs-green);background-size:74%;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='none' stroke='%23fff' stroke-width='2.3' stroke-linecap='round' stroke-linejoin='round' d='M3.5 8.4l3 3 6-6.6'/%3E%3C/svg%3E");
+}
+/* checked — radio: green ring + white gap + green centre dot */
+.fsel__input[type="radio"]:checked{
+  border-color:var(--fs-green);
+  background-image:radial-gradient(circle at center, var(--fs-green) 0 30%, var(--fs-bg) 33% 100%);
+}
+/* hover (real + forced .is-hover) */
+.fsel:hover>.fsel__input:not(:disabled),.fsel__input.is-hover:not(:disabled){border-color:#9a9ea6}
+.fsel:hover>.fsel__input:checked:not(:disabled),.fsel__input.is-hover:checked:not(:disabled){border-color:var(--fs-green);filter:brightness(.93)}
+/* focus (real + forced .is-focus) */
+.fsel__input:focus-visible,.fsel__input.is-focus{outline:none;box-shadow:0 0 0 4px var(--fs-ring)}
+.fsel__input:checked:focus-visible,.fsel__input.is-focus:checked{box-shadow:0 0 0 4px rgba(16,197,4,.24)}
+/* disabled */
+.fsel__input:disabled{cursor:not-allowed;--fs-border:#e0e2e6;--fs-bg:#f4f5f6}
+.fsel__input[type="checkbox"]:disabled:checked{background-color:#c3c7cd;border-color:#c3c7cd}
+.fsel__input[type="radio"]:disabled:checked{border-color:#c3c7cd;background-image:radial-gradient(circle at center,#c3c7cd 0 30%,#f4f5f6 33% 100%)}
+.fsel__input:disabled~.fsel__label,.fsel--disabled{cursor:not-allowed;color:var(--chrome-muted);opacity:.75}
+/* dark stage (forced) + site dark theme */
+.selref__stage--dark .fsel,[data-theme="dark"] .fsel{color:#f4f5f6}
+.selref__stage--dark .fsel__input,[data-theme="dark"] .fsel__input{--fs-border:#565963;--fs-bg:#12131a;--fs-ring:rgba(255,255,255,.2)}
+.selref__stage--dark .fsel:hover>.fsel__input:not(:disabled),.selref__stage--dark .fsel__input.is-hover:not(:disabled),[data-theme="dark"] .fsel:hover>.fsel__input:not(:disabled){border-color:#8b8e97}
+.selref__stage--dark .fsel__input:disabled,[data-theme="dark"] .fsel__input:disabled{--fs-border:#33343a;--fs-bg:#1a1b22}
+.selref__stage--dark .fsel__input[type="checkbox"]:disabled:checked,[data-theme="dark"] .fsel__input[type="checkbox"]:disabled:checked{background-color:#3a3b42;border-color:#3a3b42}
+.selref__stage--dark .fsel__input[type="radio"]:disabled:checked,[data-theme="dark"] .fsel__input[type="radio"]:disabled:checked{border-color:#3a3b42;background-image:radial-gradient(circle at center,#3a3b42 0 30%,#1a1b22 33% 100%)}
+
+/* Quick-copy card */
+.selqc{border:1px solid var(--chrome-border);border-radius:16px;background:var(--chrome-bg);padding:26px 28px;transition:background .25s}
+.selqc__title{font-size:22px;font-weight:900;color:var(--chrome-txt);margin-bottom:6px}
+.selqc__desc{font-size:13px;color:var(--chrome-muted);margin-bottom:18px}
+.selqc__bare{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.selqc__row{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;background:var(--chrome-nav);border-radius:12px;padding:14px 16px;margin-bottom:10px;transition:background .25s}
+.selqc__row .fsel{gap:10px}
+
+/* Reference grid */
+.selref{border:1px solid var(--chrome-border);border-radius:14px;overflow:hidden}
+.selref__wrap{overflow-x:auto}
+.selref__wrap+.selref__wrap{border-top:1px solid var(--chrome-border)}
+.selref__stage{min-width:600px}
+.selref__stage--light{background:#fff}
+.selref__stage--dark{background:#12131a}
+.selref__grid{display:grid;grid-template-columns:120px repeat(6,minmax(72px,1fr));align-items:stretch}
+.selref__modehead{grid-column:1/8;padding:16px 16px 2px;font-size:14px;font-weight:800}
+.selref__grouphead{padding:12px 14px 2px;font-size:13px;font-weight:800}
+.selref__sizehead{padding:2px 14px 12px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+.selref__rowlabel{padding:14px;font-size:12px;font-weight:600;display:flex;align-items:center}
+.selref__cell{display:flex;flex-direction:column;gap:11px;align-items:flex-start;justify-content:center;padding:12px 14px}
+.selref__grpdiv{grid-column:5;grid-row:2/9;border-left:1px dashed}
+.selref__stage--light .selref__modehead,.selref__stage--light .selref__grouphead,.selref__stage--light .selref__rowlabel{color:#161616}
+.selref__stage--light .selref__sizehead{color:#797b7e}
+.selref__stage--light .selref__grpdiv{border-color:#e6e6e6}
+.selref__stage--dark .selref__modehead,.selref__stage--dark .selref__grouphead,.selref__stage--dark .selref__rowlabel{color:#fff}
+.selref__stage--dark .selref__sizehead{color:#a1a3a8}
+.selref__stage--dark .selref__grpdiv{border-color:#33343a}
+
+/* Usage do / don't */
+.sel-usage{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:720px){.sel-usage{grid-template-columns:1fr}}
+.sel-usage__card{border:1px solid var(--chrome-border);border-radius:12px;padding:16px 18px;background:var(--chrome-nav);transition:background .25s}
+.sel-usage__tag{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px}
+.sel-usage__tag--do{color:var(--color-success-h)}
+.sel-usage__tag--dont{color:var(--color-crit-h)}
+.sel-usage__list{list-style:none;display:flex;flex-direction:column;gap:8px}
+.sel-usage__list li{font-size:12.5px;line-height:1.5;color:var(--chrome-txt);padding-left:16px;position:relative}
+.sel-usage__list li::before{content:"";position:absolute;left:0;top:7px;width:5px;height:5px;border-radius:50%;background:var(--chrome-muted)}
 </style>
 </head>
 <body>
@@ -1236,6 +1323,7 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
     <div class="sb-cat">Components</div>
     <a href="javascript:void(0)" onclick="showSection('s-buttons')" class="sb-link"><div class="sb-pip"></div>Buttons</a>
     <a href="javascript:void(0)" onclick="showSection('s-inputs')"  class="sb-link"><div class="sb-pip"></div>Text Inputs</a>
+    <a href="javascript:void(0)" onclick="showSection('s-selection')" class="sb-link"><div class="sb-pip"></div>Checkboxes &amp; Radios</a>
     <a href="javascript:void(0)" onclick="showSection('s-tags')"    class="sb-link"><div class="sb-pip"></div>Tags &amp; Badges</a>
     <a href="javascript:void(0)" onclick="showSection('s-chips')"   class="sb-link"><div class="sb-pip"></div>Chips &amp; Pills</a>
     <a href="javascript:void(0)" onclick="showSection('s-cards')"   class="sb-link"><div class="sb-pip"></div>Cards</a>
@@ -1483,6 +1571,81 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
       </div>
       <div id="inp-playground" class="type-sub"></div>
       <div id="inp-reference"  class="type-sub"></div>
+    </section>
+    <section class="sec" id="s-selection">
+      <div class="sec__head">
+        <div class="sec__eye">Components</div>
+        <h1 class="sec__title">Checkboxes &amp; Radios <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.0</span></h1>
+        <p class="sec__desc">Selection controls built on real native inputs, styled with the brand green. 2 control types &middot; 3 sizes &middot; 5 states &middot; light &amp; dark mode. Checkboxes for independent on/off choices; radios for one-of-many.</p>
+      </div>
+
+      <!-- Quick copy -->
+      <div class="type-sub">
+        <div class="type-sub__title">Quick copy</div>
+        <div class="type-sub__desc">Grab a ready-made instance. Every control here is a real, focusable native input.</div>
+        <div class="selqc">
+          <div class="selqc__title">Quick copy</div>
+          <div class="selqc__desc">Use these instances if you&rsquo;re here to quickly grab a copy.</div>
+          <div class="selqc__bare">
+            <input type="checkbox" class="fsel__input" aria-label="Unchecked checkbox">
+            <input type="checkbox" class="fsel__input" checked aria-label="Checked checkbox">
+            <input type="radio" name="qc-bare" class="fsel__input" aria-label="Unselected radio">
+            <input type="radio" name="qc-bare" class="fsel__input" checked aria-label="Selected radio">
+          </div>
+          <div class="selqc__row">
+            <label class="fsel"><input type="checkbox" class="fsel__input"><span class="fsel__label">With a label</span></label>
+            <label class="fsel"><input type="checkbox" class="fsel__input" checked><span class="fsel__label">With a label</span></label>
+            <label class="fsel"><input type="radio" name="qc-lbl" class="fsel__input"><span class="fsel__label">With a label</span></label>
+            <label class="fsel"><input type="radio" name="qc-lbl" class="fsel__input" checked><span class="fsel__label">With a label</span></label>
+          </div>
+          <div class="selqc__row">
+            <label class="fsel fsel--sm"><input type="checkbox" class="fsel__input"><span class="fsel__label">Small</span></label>
+            <label class="fsel fsel--sm"><input type="checkbox" class="fsel__input" checked><span class="fsel__label">Small</span></label>
+            <label class="fsel fsel--sm"><input type="radio" name="qc-sm" class="fsel__input"><span class="fsel__label">Small</span></label>
+            <label class="fsel fsel--sm"><input type="radio" name="qc-sm" class="fsel__input" checked><span class="fsel__label">Small</span></label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Reference grid -->
+      <div id="sel-reference" class="type-sub"></div>
+
+      <!-- Labels & tap target -->
+      <div class="type-sub">
+        <div class="type-sub__title">Labels &amp; tap target</div>
+        <div class="type-sub__desc">Always wrap the control and its text in a single <code style="font-family:'SF Mono',monospace;font-size:11.5px;background:var(--chrome-nav);padding:1px 5px;border-radius:4px">&lt;label&gt;</code> so the whole row is clickable. Keep the interactive row at least 44&times;44px for comfortable touch targets.</div>
+        <div style="display:flex;flex-wrap:wrap;gap:14px 28px;align-items:center">
+          <label class="fsel" style="min-height:44px"><input type="checkbox" class="fsel__input" checked><span class="fsel__label">Email me product updates</span></label>
+          <label class="fsel" style="min-height:44px"><input type="radio" name="tap-demo" class="fsel__input" checked><span class="fsel__label">Standard delivery</span></label>
+          <label class="fsel" style="min-height:44px"><input type="radio" name="tap-demo" class="fsel__input"><span class="fsel__label">Express delivery</span></label>
+        </div>
+      </div>
+
+      <!-- Usage -->
+      <div class="type-sub">
+        <div class="type-sub__title">When to use which</div>
+        <div class="type-sub__desc">Checkboxes and radios look similar but answer different questions.</div>
+        <div class="sel-usage">
+          <div class="sel-usage__card">
+            <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
+            <ul class="sel-usage__list">
+              <li>Use a <strong>checkbox</strong> for independent on/off options, or a single opt-in (terms, marketing).</li>
+              <li>Use <strong>radios</strong> when exactly one option from a set must be chosen and all options are worth showing.</li>
+              <li>Give every control a visible, clickable text label.</li>
+              <li>Pre-select a sensible default for radio groups.</li>
+            </ul>
+          </div>
+          <div class="sel-usage__card">
+            <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don&rsquo;t</div>
+            <ul class="sel-usage__list">
+              <li>Don&rsquo;t use radios for a yes/no toggle &mdash; use a single checkbox or a switch.</li>
+              <li>Don&rsquo;t use checkboxes when only one choice is allowed.</li>
+              <li>Don&rsquo;t leave a radio group with no option selected once the user has interacted.</li>
+              <li>Don&rsquo;t nest more than one level of dependent checkboxes.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
     </section>
     <section class="sec" id="s-tags"><div class="sec__head"><div class="sec__eye">Components</div><h1 class="sec__title">Tags &amp; Badges</h1></div><div class="coming">Coming in a future session</div></section>
     <section class="sec" id="s-chips">
@@ -3988,14 +4151,85 @@ try { renderChipPlayground(); } catch(e){ console.error('chip-playground',e); }
 try { renderChipReference(); } catch(e){ console.error('chip-reference',e); }
 
 /* ============================================================
+   CHECKBOXES & RADIOS — reference grid
+============================================================ */
+const SEL_SIZES = [
+  {cls:'',      label:'Regular'},
+  {cls:'is-sm', label:'Small'},
+  {cls:'is-xs', label:'XSmall'},
+];
+const SEL_ROWS = [
+  {label:'Unchecked', kind:'single', checked:false},
+  {label:'Checked',   kind:'single', checked:true },
+  {label:'Hover',     kind:'pair',   extra:'is-hover'},
+  {label:'Focused',   kind:'pair',   extra:'is-focus'},
+  {label:'Disabled',  kind:'pair',   disabled:true },
+];
+
+function selInput(type, sizeCls, {checked=false, extra='', disabled=false}={}, uid){
+  const cls = ['fsel__input', sizeCls, extra].filter(Boolean).join(' ');
+  const name = type==='radio' ? ` name="selref-${uid}"` : '';
+  return `<input type="${type}" class="${cls}"${name}${checked?' checked':''}${disabled?' disabled':''} aria-label="${type} ${extra||''}">`;
+}
+
+function selCell(type, size, row, mode, ri, ci){
+  const uid = `${mode}-${ci}-${ri}`;
+  let inner;
+  if(row.kind==='single'){
+    inner = selInput(type, size.cls, {checked:row.checked}, uid);
+  } else {
+    inner = selInput(type, size.cls, {checked:false, extra:row.extra, disabled:row.disabled}, uid+'a')
+          + selInput(type, size.cls, {checked:true,  extra:row.extra, disabled:row.disabled}, uid+'b');
+  }
+  return `<div class="selref__cell" style="grid-column:${ci};grid-row:${4+ri}">${inner}</div>`;
+}
+
+function selStageHTML(mode, modeLabel){
+  let g = '';
+  g += `<div class="selref__modehead">${modeLabel}</div>`;
+  // group headers
+  g += `<div style="grid-column:1;grid-row:2"></div>`;
+  g += `<div class="selref__grouphead" style="grid-column:2/5;grid-row:2">Checkboxes</div>`;
+  g += `<div class="selref__grouphead" style="grid-column:5/8;grid-row:2">Radios</div>`;
+  g += `<div class="selref__grpdiv"></div>`;
+  // size sub-headers
+  g += `<div style="grid-column:1;grid-row:3"></div>`;
+  SEL_SIZES.forEach((s,i)=>{ g += `<div class="selref__sizehead" style="grid-column:${2+i};grid-row:3">${s.label}</div>`; });
+  SEL_SIZES.forEach((s,i)=>{ g += `<div class="selref__sizehead" style="grid-column:${5+i};grid-row:3">${s.label}</div>`; });
+  // state rows
+  SEL_ROWS.forEach((row, ri)=>{
+    g += `<div class="selref__rowlabel" style="grid-column:1;grid-row:${4+ri}">${row.label}</div>`;
+    SEL_SIZES.forEach((s,i)=> g += selCell('checkbox', s, row, mode, ri, 2+i));
+    SEL_SIZES.forEach((s,i)=> g += selCell('radio',    s, row, mode, ri, 5+i));
+  });
+  return `<div class="selref__wrap"><div class="selref__stage selref__stage--${mode}"><div class="selref__grid">${g}</div></div></div>`;
+}
+
+function renderSelReference(){
+  const root = document.getElementById('sel-reference');
+  if(!root) return;
+  root.innerHTML = `
+    <div class="type-sub__title">Reference grid</div>
+    <div class="type-sub__desc">Both control types across 3 sizes and 5 states, shown in fixed light and dark stages so both appearances compare side by side, independent of the site-wide theme. Hover and focused rows show the unchecked state above the checked state.</div>
+    ${selStageHTML('light','Light mode')}
+    ${selStageHTML('dark','Dark mode')}`;
+}
+try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
+
+/* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.12.0';
+const SYSTEM_VERSION = '1.13.0';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.13.0', date:'2026-07-03', author:'Mo', title:'Checkboxes & Radios', changes:[
+        ['added','Checkboxes & Radios section — real native inputs styled with the brand green'],
+        ['added','3 sizes (Regular, Small, XSmall) × 5 states (Unchecked, Checked, Hover, Focused, Disabled)'],
+        ['added','Light & dark reference grid, quick-copy card, and checkbox-vs-radio usage guidance'],
+      ]},
       {version:'1.12.0', date:'2026-07-03', author:'Mo', title:'Data Display — timeline & empty state', changes:[
         ['added','Activity timeline component for audit logs and status history'],
         ['added','Empty state component for tables and lists with no rows'],
@@ -4146,6 +4380,13 @@ const CHANGELOG = {
       ]},
       {version:'1.0.0', date:'2026-06-20', time:'13:56', author:'Mo', title:'Initial release', changes:[
         ['added','9 input types, 2 sizes, interactive playground, full reference grid'],
+      ]},
+    ]},
+    {secId:'s-selection', name:'Checkboxes & Radios', version:'1.0.0', entries:[
+      {version:'1.0.0', date:'2026-07-03', author:'Mo', title:'Initial release', changes:[
+        ['added','Checkbox and radio controls on real native inputs, styled with the brand green'],
+        ['added','3 sizes (Regular, Small, XSmall) × 5 states (Unchecked, Checked, Hover, Focused, Disabled)'],
+        ['added','Light & dark reference grid, quick-copy card, tap-target guidance and usage do/don\'t'],
       ]},
     ]},
     {secId:'s-tags', name:'Tags & Badges', version:'0.0.0', entries:[
