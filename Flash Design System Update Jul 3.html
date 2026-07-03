@@ -1182,6 +1182,27 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
 .dd-meter__track{height:8px;border-radius:999px;background:var(--chrome-nav);overflow:hidden}
 .dd-meter__fill{height:100%;border-radius:999px}
 
+/* Activity timeline */
+.dd-timeline{border:1px solid var(--chrome-border);border-radius:12px;padding:22px 24px}
+.dd-tl{position:relative;padding-left:26px}
+.dd-tl__item{position:relative;padding-bottom:20px}
+.dd-tl__item:last-child{padding-bottom:0}
+.dd-tl__item::before{content:"";position:absolute;left:-19px;top:3px;width:9px;height:9px;border-radius:50%;background:var(--dd-tl-dot,var(--chrome-accent));box-shadow:0 0 0 3px var(--chrome-bg)}
+.dd-tl__item::after{content:"";position:absolute;left:-15px;top:15px;bottom:-3px;width:1px;background:var(--chrome-border)}
+.dd-tl__item:last-child::after{display:none}
+.dd-tl__meta{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+.dd-tl__title{font-size:13px;font-weight:700;color:var(--chrome-txt)}
+.dd-tl__time{font-size:11px;font-weight:600;color:var(--chrome-muted);font-variant-numeric:tabular-nums}
+.dd-tl__desc{font-size:12px;color:var(--chrome-muted);line-height:1.55;margin-top:2px}
+
+/* Empty state */
+.dd-empty{border:1.5px dashed var(--chrome-border);border-radius:12px;padding:40px 24px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px}
+.dd-empty__icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:var(--chrome-nav);color:var(--chrome-muted)}
+.dd-empty__title{font-size:14px;font-weight:800;color:var(--chrome-txt)}
+.dd-empty__desc{font-size:12.5px;color:var(--chrome-muted);max-width:340px;line-height:1.55}
+.dd-empty__action{margin-top:6px;font-family:inherit;font-size:12.5px;font-weight:700;color:var(--color-btn-p-txt);background:var(--chrome-accent);border:none;border-radius:8px;padding:9px 16px;cursor:pointer;transition:filter .15s}
+.dd-empty__action:hover{filter:brightness(1.06)}
+
 </style>
 </head>
 <body>
@@ -1481,7 +1502,7 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
     <section class="sec" id="s-data">
       <div class="sec__head">
         <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Data Display <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.0</span></h1>
+        <h1 class="sec__title">Data Display <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.1.0</span></h1>
         <p class="sec__desc">Patterns for surfacing numbers and records — stat tiles, tables, key&ndash;value lists and progress meters. All built on chrome and semantic tokens, so they adapt to light &amp; dark automatically.</p>
       </div>
 
@@ -1599,6 +1620,48 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
             <div class="dd-meter__top"><span class="dd-meter__label">API error budget spent</span><span class="dd-meter__val">96%</span></div>
             <div class="dd-meter__track"><div class="dd-meter__fill" style="width:96%;background:var(--color-crit-h)"></div></div>
           </div>
+        </div>
+      </div>
+
+      <div class="type-sub">
+        <div class="type-sub__title">Activity timeline</div>
+        <div class="type-sub__desc">A chronological event feed for audit logs and status history. Each node is coloured by the semantic meaning of the event; the connecting rail uses the border token.</div>
+        <div class="dd-timeline">
+          <div class="dd-tl">
+            <div class="dd-tl__item" style="--dd-tl-dot:var(--color-success-h)">
+              <div class="dd-tl__meta"><span class="dd-tl__title">Settlement completed</span><span class="dd-tl__time">Today · 18:00</span></div>
+              <div class="dd-tl__desc">R2.31M paid out to 4,812 traders across all regions.</div>
+            </div>
+            <div class="dd-tl__item" style="--dd-tl-dot:var(--chrome-accent)">
+              <div class="dd-tl__meta"><span class="dd-tl__title">Float top-up</span><span class="dd-tl__time">Today · 09:14</span></div>
+              <div class="dd-tl__desc">R5.0M added to the Gauteng float pool ahead of month-end.</div>
+            </div>
+            <div class="dd-tl__item" style="--dd-tl-dot:var(--color-warn-h)">
+              <div class="dd-tl__meta"><span class="dd-tl__title">API latency spike</span><span class="dd-tl__time">Yesterday · 21:47</span></div>
+              <div class="dd-tl__desc">p95 response time exceeded 800&nbsp;ms for 4 minutes, then recovered.</div>
+            </div>
+            <div class="dd-tl__item" style="--dd-tl-dot:var(--color-crit-h)">
+              <div class="dd-tl__meta"><span class="dd-tl__title">1Voucher redemptions dipped</span><span class="dd-tl__time">Yesterday · 14:02</span></div>
+              <div class="dd-tl__desc">Volume fell 8% below forecast; investigation opened with the vouchers team.</div>
+            </div>
+            <div class="dd-tl__item" style="--dd-tl-dot:var(--chrome-accent)">
+              <div class="dd-tl__meta"><span class="dd-tl__title">New region live</span><span class="dd-tl__time">2 Jul · 11:30</span></div>
+              <div class="dd-tl__desc">Limpopo trader onboarding opened to the first 500 merchants.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="type-sub">
+        <div class="type-sub__title">Empty state</div>
+        <div class="type-sub__desc">Shown when a table, list or view has no rows to display. Pairs a muted glyph with a plain-language explanation and a single primary action to move the user forward.</div>
+        <div class="dd-empty">
+          <div class="dd-empty__icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M4 7h16M4 12h16M4 17h9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </div>
+          <div class="dd-empty__title">No transactions match these filters</div>
+          <div class="dd-empty__desc">Nothing was recorded for the selected region and date range. Try widening the range or clearing the region filter.</div>
+          <button class="dd-empty__action" type="button">Clear filters</button>
         </div>
       </div>
     </section>
@@ -3927,12 +3990,16 @@ try { renderChipReference(); } catch(e){ console.error('chip-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.11.0';
+const SYSTEM_VERSION = '1.12.0';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.12.0', date:'2026-07-03', author:'Mo', title:'Data Display — timeline & empty state', changes:[
+        ['added','Activity timeline component for audit logs and status history'],
+        ['added','Empty state component for tables and lists with no rows'],
+      ]},
       {version:'1.11.0', date:'2026-07-03', author:'Mo', title:'Data Display', changes:[
         ['added','Data Display section — stat tiles, data table, key–value list and progress meters'],
         ['added','Semantic status dots and trend deltas built on the Success / Warning / Critical tokens'],
@@ -4122,7 +4189,11 @@ const CHANGELOG = {
         ['changed','Planned for a future session'],
       ]},
     ]},
-    {secId:'s-data', name:'Data Display', version:'1.0.0', entries:[
+    {secId:'s-data', name:'Data Display', version:'1.1.0', entries:[
+      {version:'1.1.0', date:'2026-07-03', author:'Mo', title:'Timeline & empty state', changes:[
+        ['added','Activity timeline — chronological event feed with semantic-coloured nodes'],
+        ['added','Empty state — muted glyph, plain-language explanation and a single primary action'],
+      ]},
       {version:'1.0.0', date:'2026-07-03', author:'Mo', title:'Initial release', changes:[
         ['added','Stat tiles with trend deltas (Success / Critical semantics)'],
         ['added','Data table with uppercase header, tabular numerics, hover rows and status dots'],
