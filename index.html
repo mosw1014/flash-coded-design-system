@@ -1213,6 +1213,20 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
 .dd-dist__track{height:10px;border-radius:999px;background:var(--chrome-nav);overflow:hidden}
 .dd-dist__fill{height:100%;border-radius:999px;transition:width .3s}
 
+/* Distribution bar */
+.dd-break{border:1px solid var(--chrome-border);border-radius:12px;padding:22px}
+.dd-break__top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:11px}
+.dd-break__label{font-size:12.5px;font-weight:700;color:var(--chrome-txt)}
+.dd-break__total{font-size:12px;font-weight:700;color:var(--chrome-muted);font-variant-numeric:tabular-nums}
+.dd-break__bar{display:flex;gap:2px;height:14px;border-radius:999px;overflow:hidden;background:var(--chrome-nav)}
+.dd-break__seg{height:100%;transition:filter .15s}
+.dd-break__seg:hover{filter:brightness(1.08)}
+.dd-break__legend{display:flex;flex-wrap:wrap;gap:12px 22px;margin-top:16px}
+.dd-break__item{display:flex;align-items:center;gap:8px}
+.dd-break__swatch{width:10px;height:10px;border-radius:3px;flex-shrink:0}
+.dd-break__k{font-size:12.5px;font-weight:700;color:var(--chrome-txt)}
+.dd-break__v{font-size:12px;font-weight:700;color:var(--chrome-muted);font-variant-numeric:tabular-nums}
+
 /* ================================================================
    CHECKBOXES & RADIO BUTTONS
 ================================================================ */
@@ -1675,7 +1689,7 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
     <section class="sec" id="s-data">
       <div class="sec__head">
         <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Data Display <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.1.0</span></h1>
+        <h1 class="sec__title">Data Display <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.2.0</span></h1>
         <p class="sec__desc">Patterns for surfacing numbers and records — stat tiles, tables, key&ndash;value lists and progress meters. All built on chrome and semantic tokens, so they adapt to light &amp; dark automatically.</p>
       </div>
 
@@ -1792,6 +1806,26 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
           <div class="dd-meter">
             <div class="dd-meter__top"><span class="dd-meter__label">API error budget spent</span><span class="dd-meter__val">96%</span></div>
             <div class="dd-meter__track"><div class="dd-meter__fill" style="width:96%;background:var(--color-crit-h)"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="type-sub">
+        <div class="type-sub__title">Distribution bar</div>
+        <div class="type-sub__desc">A single segmented bar for showing how a total splits across categories &mdash; product mix, spend by region, storage used. Segments map to semantic tokens and are paired with a legend that carries the exact figures.</div>
+        <div class="dd-break">
+          <div class="dd-break__top"><span class="dd-break__label">GMV by region</span><span class="dd-break__total">R48.2M total</span></div>
+          <div class="dd-break__bar">
+            <div class="dd-break__seg" style="width:38%;background:var(--chrome-accent)" title="Gauteng · 38%"></div>
+            <div class="dd-break__seg" style="width:24%;background:var(--color-success-h)" title="Western Cape · 24%"></div>
+            <div class="dd-break__seg" style="width:21%;background:var(--color-warn-h)" title="KwaZulu-Natal · 21%"></div>
+            <div class="dd-break__seg" style="width:17%;background:var(--chrome-muted)" title="Other regions · 17%"></div>
+          </div>
+          <div class="dd-break__legend">
+            <div class="dd-break__item"><span class="dd-break__swatch" style="background:var(--chrome-accent)"></span><span class="dd-break__k">Gauteng</span><span class="dd-break__v">38% · R18.3M</span></div>
+            <div class="dd-break__item"><span class="dd-break__swatch" style="background:var(--color-success-h)"></span><span class="dd-break__k">Western Cape</span><span class="dd-break__v">24% · R11.6M</span></div>
+            <div class="dd-break__item"><span class="dd-break__swatch" style="background:var(--color-warn-h)"></span><span class="dd-break__k">KwaZulu-Natal</span><span class="dd-break__v">21% · R10.1M</span></div>
+            <div class="dd-break__item"><span class="dd-break__swatch" style="background:var(--chrome-muted)"></span><span class="dd-break__k">Other regions</span><span class="dd-break__v">17% · R8.2M</span></div>
           </div>
         </div>
       </div>
@@ -4256,12 +4290,15 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.13.0';
+const SYSTEM_VERSION = '1.14.0';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.14.0', date:'2026-07-06', author:'Person A', title:'Data Display — distribution bar', changes:[
+        ['added','Distribution bar component — a single segmented bar showing how a total splits across categories, paired with a legend'],
+      ]},
       {version:'1.13.0', date:'2026-07-03', author:'Mo', title:'Checkboxes & Radios', changes:[
         ['added','Checkboxes & Radios section — real native inputs styled with the brand green'],
         ['added','3 sizes (Regular, Small, XSmall) × 5 states (Unchecked, Checked, Hover, Focused, Disabled)'],
@@ -4467,7 +4504,10 @@ const CHANGELOG = {
         ['changed','Planned for a future session'],
       ]},
     ]},
-    {secId:'s-data', name:'Data Display', version:'1.1.0', entries:[
+    {secId:'s-data', name:'Data Display', version:'1.2.0', entries:[
+      {version:'1.2.0', date:'2026-07-06', author:'Person A', title:'Distribution bar', changes:[
+        ['added','Distribution bar — segmented bar with semantic-token segments and a figure-carrying legend'],
+      ]},
       {version:'1.1.0', date:'2026-07-03', author:'Mo', title:'Timeline & empty state', changes:[
         ['added','Activity timeline — chronological event feed with semantic-coloured nodes'],
         ['added','Empty state — muted glyph, plain-language explanation and a single primary action'],
