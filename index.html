@@ -1100,7 +1100,7 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
 .inp-ai.open .inp-ah-chev{transform:rotate(90deg)}
 .inp-ab{display:none;border-top:1px solid var(--chrome-border)}
 .inp-ai.open .inp-ab{display:block}
-.inp-ref-thead{display:flex;justify-content:flex-end;align-items:center;gap:6px;padding:10px 16px;border-bottom:1px solid var(--chrome-border)}
+.inp-ref-thead{display:flex;flex-wrap:wrap;justify-content:flex-end;align-items:center;gap:6px;padding:10px 16px;border-bottom:1px solid var(--chrome-border)}
 .inp-ref-thead button{padding:3px 10px;border-radius:5px;border:none;cursor:pointer;font-family:inherit;font-size:11px;font-weight:600;color:var(--chrome-muted);background:var(--chrome-nav);transition:all .15s}
 .inp-ref-thead button.on{background:var(--chrome-txt);color:var(--chrome-bg)}
 .inp-ref-row{display:flex;align-items:stretch;border-bottom:1px solid var(--chrome-border)}
@@ -1110,6 +1110,54 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
 .inp-ref-cell{flex:1;min-width:160px;max-width:240px;padding:14px 12px;border-right:1px solid var(--chrome-border);transition:background .25s}
 .inp-ref-cell:last-child{border-right:none}
 .inp-ref-cell-lbl{font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--chrome-muted);margin-bottom:8px}
+
+/* ================================================================
+   TEXT INPUTS V2 (Trader — Figma "Master Input Component")
+================================================================ */
+.inpv2-box{display:flex;flex-direction:column;width:100%;border-radius:12px;overflow:hidden;background:var(--_iv2-box-bg,#fff);border:2px solid transparent;box-sizing:border-box;transition:background .25s,border-color .15s}
+.inpv2-box[data-bg="white"]{background:var(--_iv2-fill-white,#f8f8f8);border-color:var(--_iv2-border-white,#ddd)}
+.inpv2-box[data-bg="grey"]{background:var(--_iv2-fill-grey,#fff);border-color:var(--_iv2-border-grey,#ddd)}
+.inpv2-row{display:flex;align-items:center;width:100%;height:60px}
+.inpv2-box[data-size="small"] .inpv2-row{height:44px}
+.inpv2-icon{display:flex;align-items:center;justify-content:center;flex-shrink:0;width:28px;height:28px;margin:0 0 0 16px;font-family:'Satoshi',sans-serif;font-weight:900;font-size:16px;color:var(--_iv2-text,#000)}
+.inpv2-box[data-size="small"] .inpv2-icon{width:20px;height:20px;margin-left:12px;font-size:13px}
+.inpv2-body{flex:1;min-width:0;display:flex;flex-direction:column;justify-content:center;gap:2px;padding-left:20px;overflow:hidden}
+.inpv2-label{font-family:'Satoshi',sans-serif;font-weight:650;font-size:16px;color:var(--_iv2-label,#8a8a8a);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:font-size .12s,color .12s}
+.inpv2-box[data-size="small"] .inpv2-label{font-size:13px}
+.inpv2-box[data-state="focus"] .inpv2-label{font-weight:500;font-size:13px;color:var(--_iv2-label-focus,#414141)}
+.inpv2-box[data-size="small"][data-state="focus"] .inpv2-label{font-size:12px}
+.inpv2-value{display:none;align-items:center;gap:2px;font-family:'Satoshi',sans-serif;font-weight:650;font-size:16px;color:var(--_iv2-text,#000);white-space:nowrap}
+.inpv2-box[data-size="small"] .inpv2-value{font-size:13px}
+.inpv2-box[data-state="focus"] .inpv2-value{display:flex}
+.inpv2-cursor{width:2px;height:18px;background:var(--_iv2-cursor,#10c504);flex-shrink:0}
+.inpv2-trailing{display:flex;align-items:center;gap:8px;padding-right:20px;padding-left:8px;flex-shrink:0}
+.inpv2-trailing button{background:transparent;border:none;cursor:pointer;color:var(--_iv2-icon,#a4a4a4);display:flex;align-items:center;justify-content:center;padding:0}
+.inpv2-trailing button:hover{opacity:.7}
+.inpv2-link{display:flex;align-items:center;gap:4px;font-family:'Satoshi',sans-serif;font-weight:700;font-size:12px;color:var(--_iv2-text,#000);white-space:nowrap}
+.inpv2-link svg{color:var(--_iv2-link,#0062eb)}
+.inpv2-helper{padding:4px 20px 6px;font-family:'Satoshi',sans-serif;font-weight:650;font-size:12px;color:var(--_iv2-helper-text,#252525);background:var(--_iv2-helper-bg,#f0f0f0)}
+
+/* Search pill */
+.inpv2-pill{display:flex;align-items:center;width:100%;height:60px;border-radius:80px;border:2px solid transparent;background:var(--_iv2-box-bg,#fff);transition:background .15s,border-color .15s;box-sizing:border-box}
+.inpv2-pill[data-size="small"]{height:44px}
+.inpv2-pill[data-bg="white"]{background:var(--_iv2-fill-white,#f8f8f8);border-color:var(--_iv2-border-white,#ddd)}
+.inpv2-pill[data-bg="grey"]{background:var(--_iv2-fill-grey,#fff);border-color:var(--_iv2-border-grey,#ddd)}
+.inpv2-pill[data-state="focus"],.inpv2-pill[data-state="typing"]{border-color:var(--_iv2-pill-border-focus,#000)!important;background:var(--_iv2-box-bg,#fff)}
+.inpv2-pill-icon{display:flex;align-items:center;justify-content:center;flex-shrink:0;width:28px;height:28px;margin-left:20px;color:var(--_iv2-icon,#a4a4a4)}
+.inpv2-pill[data-size="small"] .inpv2-pill-icon{width:20px;height:20px;margin-left:16px}
+.inpv2-pill-body{flex:1;min-width:0;display:flex;flex-direction:column;justify-content:center;gap:2px;padding-left:20px;overflow:hidden}
+.inpv2-pill-caption{font-family:'Satoshi',sans-serif;font-weight:500;font-size:13px;color:var(--_iv2-label-focus,#414141);white-space:nowrap}
+.inpv2-pill[data-size="small"] .inpv2-pill-caption{font-size:12px}
+.inpv2-pill-line{display:flex;align-items:center;gap:2px;min-width:0}
+.inpv2-pill-label{font-family:'Satoshi',sans-serif;font-weight:650;font-size:16px;color:var(--_iv2-label,#8a8a8a);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.inpv2-pill[data-size="small"] .inpv2-pill-label{font-size:13px}
+.inpv2-pill-value{display:none;font-family:'Satoshi',sans-serif;font-weight:650;font-size:16px;color:var(--_iv2-text,#000);white-space:nowrap}
+.inpv2-pill[data-size="small"] .inpv2-pill-value{font-size:13px}
+.inpv2-pill-cursor{width:2px;height:18px;background:var(--_iv2-cursor,#10c504);flex-shrink:0;display:none;margin-left:2px}
+.inpv2-pill[data-state="focus"] .inpv2-pill-cursor,.inpv2-pill[data-state="typing"] .inpv2-pill-cursor{display:inline-block}
+.inpv2-pill-trailing{display:flex;align-items:center;padding-right:20px;padding-left:8px;flex-shrink:0}
+.inpv2-pill-trailing button{background:transparent;border:none;cursor:pointer;color:var(--_iv2-icon,#a4a4a4);display:flex;align-items:center;justify-content:center;padding:0}
+.inpv2-pill-trailing button:hover{opacity:.7}
 
 /* ================================================================
    CHIPS
@@ -1353,6 +1401,7 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
     <div class="sb-cat">Components</div>
     <a href="javascript:void(0)" onclick="showSection('s-buttons')" class="sb-link"><div class="sb-pip"></div>Buttons</a>
     <a href="javascript:void(0)" onclick="showSection('s-inputs')"  class="sb-link"><div class="sb-pip"></div>Text Inputs</a>
+    <a href="javascript:void(0)" onclick="showSection('s-inputs-v2')" class="sb-link"><div class="sb-pip"></div>Text Inputs v2</a>
     <a href="javascript:void(0)" onclick="showSection('s-selection')" class="sb-link"><div class="sb-pip"></div>Checkboxes &amp; Radios</a>
     <a href="javascript:void(0)" onclick="showSection('s-tags')"    class="sb-link"><div class="sb-pip"></div>Tags &amp; Badges</a>
     <a href="javascript:void(0)" onclick="showSection('s-chips')"   class="sb-link"><div class="sb-pip"></div>Chips &amp; Pills</a>
@@ -1601,6 +1650,15 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
       </div>
       <div id="inp-playground" class="type-sub"></div>
       <div id="inp-reference"  class="type-sub"></div>
+    </section>
+    <section class="sec" id="s-inputs-v2">
+      <div class="sec__head">
+        <div class="sec__eye">Components</div>
+        <h1 class="sec__title">Text Inputs v2 <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.0</span></h1>
+        <p class="sec__desc">Trader input system pulled from Figma's Master Input Component &middot; Input (floating label) and Search (pill) families &middot; 2 sizes &middot; 3 backgrounds &middot; every state and slot configuration.</p>
+      </div>
+      <div id="inpv2-playground" class="type-sub"></div>
+      <div id="inpv2-reference"  class="type-sub"></div>
     </section>
     <section class="sec" id="s-selection">
       <div class="sec__head">
@@ -2400,6 +2458,7 @@ function toggleTheme() {
   // playground stages follow the global theme
   try { if(typeof renderPlayground==='function' && document.getElementById('btn-playground')) renderPlayground(); } catch(e){}
   try { if(typeof renderInpPlayground==='function' && document.getElementById('inp-playground')) renderInpPlayground(); } catch(e){}
+  try { if(typeof renderInpV2Playground==='function' && document.getElementById('inpv2-playground')) renderInpV2Playground(); } catch(e){}
   try { if(typeof renderChipPlayground==='function' && document.getElementById('chip-playground')) renderChipPlayground(); } catch(e){}
 }
 
@@ -3596,6 +3655,8 @@ const I = {
   close:`<svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" width="12" height="12"><path d="M2 2l8 8M10 2l-8 8" stroke-linecap="round"/></svg>`,
   check:`<svg viewBox="0 0 16 16" fill="none" stroke="#10c504" stroke-width="2" width="16" height="16"><path d="M3 8l4 4 6-7" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
   daterange:`<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" width="14" height="14"><rect x="1" y="3" width="14" height="12" rx="1.5"/><path d="M1 7h14M5 1v4M11 1v4" stroke-linecap="round"/><path d="M5 10h6" stroke-linecap="round"/></svg>`,
+  userPlus:`<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" width="14" height="14"><circle cx="6" cy="5" r="2.5"/><path d="M1.5 14c0-2.5 2-4 4.5-4s4.5 1.5 4.5 4" stroke-linecap="round"/><path d="M12 4v4M10 6h4" stroke-linecap="round"/></svg>`,
+  addressBook:`<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" width="14" height="14"><rect x="3" y="1" width="10" height="14" rx="1.5"/><circle cx="8" cy="6.5" r="1.8"/><path d="M5.3 11.5c0-1.4 1.2-2.3 2.7-2.3s2.7.9 2.7 2.3" stroke-linecap="round"/><path d="M1 5h2M1 8h2M1 11h2" stroke-linecap="round"/></svg>`,
 };
 const BOOK_BADGE = `<svg viewBox="237 17 17 18" width="17" height="18" fill="#0062EB" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;display:block"><path d="M240 18H249C250.094 18 251 18.9062 251 20V32C251 33.125 250.094 34 249 34H240C238.875 34 238 33.125 238 32V20C238 18.9062 238.875 18 240 18ZM243.5 27C242.094 27 241 28.125 241 29.5C241 29.7812 241.219 30 241.5 30H247.5C247.75 30 248 29.7812 248 29.5C248 28.125 246.875 27 245.5 27H243.5ZM242.5 24C242.5 24.7188 242.875 25.375 243.5 25.75C244.094 26.0938 244.875 26.0938 245.5 25.75C246.094 25.375 246.5 24.7188 246.5 24C246.5 23.3125 246.094 22.6562 245.5 22.2812C244.875 21.9375 244.094 21.9375 243.5 22.2812C242.875 22.6562 242.5 23.3125 242.5 24ZM253 20.5V22.5C253 22.7812 252.75 23 252.5 23C252.219 23 252 22.7812 252 22.5V20.5C252 20.25 252.219 20 252.5 20C252.75 20 253 20.25 253 20.5ZM252.5 24C252.75 24 253 24.25 253 24.5V26.5C253 26.7812 252.75 27 252.5 27C252.219 27 252 26.7812 252 26.5V24.5C252 24.25 252.219 24 252.5 24ZM253 28.5V30.5C253 30.7812 252.75 31 252.5 31C252.219 31 252 30.7812 252 30.5V28.5C252 28.25 252.219 28 252.5 28C252.75 28 253 28.25 253 28.5Z"/></svg>`;
 
@@ -4063,6 +4124,442 @@ try {
 } catch(e){ console.error('inp-accord-expand',e); }
 
 /* ============================================================
+   TEXT INPUTS V2 (Trader — Figma "Master Input Component")
+   node-id 3115:5380 · Input Container + Input Text State (box)
+   and Search Component + Search Container (pill).
+   Background (node-id 4644:16572) is a shared property on BOTH
+   families: it picks the fill/border pairing that keeps the
+   field visible against the page surface it sits on —
+   Colour = plain page-matching fill, no border (for sitting on
+   a branded/coloured surface); White = #f8f8f8 fill + border
+   (for sitting on a white page); Grey = #ffffff fill + border
+   (for sitting on a light-grey page).
+============================================================ */
+
+const INPV2_COLORS = {
+  flash: {
+    light:{stage:'#f2f2f3',boxBg:'#ffffff',label:'#8a8a8a',labelFocus:'#414141',text:'#000000',cursor:'#10c504',icon:'#a4a4a4',link:'#0062eb',helperBg:'#f0f0f0',helperText:'#252525',pillBorderFocus:'#000000',fillWhite:'#f8f8f8',borderWhite:'#dddddd',fillGrey:'#ffffff',borderGrey:'#dddddd'},
+    dark: {stage:'#12131a',boxBg:'#25262c',label:'#8c8c91',labelFocus:'#c7c8cc',text:'#ffffff',cursor:'#10c504',icon:'#72747a',link:'#4d9dff',helperBg:'#2e2f35',helperText:'#e6e6e6',pillBorderFocus:'#ffffff',fillWhite:'#2b2c33',borderWhite:'#3a3b42',fillGrey:'#25262c',borderGrey:'#3a3b42'},
+  },
+};
+
+function applyInpV2Colors(el, theme) {
+  const c = INPV2_COLORS.flash[theme];
+  const vars = [
+    ['--_iv2-stage',c.stage],['--_iv2-box-bg',c.boxBg],['--_iv2-label',c.label],['--_iv2-label-focus',c.labelFocus],
+    ['--_iv2-text',c.text],['--_iv2-cursor',c.cursor],['--_iv2-icon',c.icon],['--_iv2-link',c.link],
+    ['--_iv2-helper-bg',c.helperBg],['--_iv2-helper-text',c.helperText],['--_iv2-pill-border-focus',c.pillBorderFocus],
+    ['--_iv2-fill-white',c.fillWhite],['--_iv2-border-white',c.borderWhite],
+    ['--_iv2-fill-grey',c.fillGrey],['--_iv2-border-grey',c.borderGrey],
+  ];
+  vars.forEach(([k,v])=>el.style.setProperty(k,v));
+}
+
+/* ── Build an Input v2 (box / floating-label) element ── */
+function buildInputV2El(size, bg, leftIcon, trailing, helper, state, uid) {
+  uid = uid || ('iv2_'+Math.random().toString(36).slice(2,7));
+  const trailingHTML = (trailing||[]).map(t=>{
+    if(t==='single') return `<button type="button" aria-label="Clear">${I.close}</button>`;
+    if(t==='link')   return `<span class="inpv2-link">${I.userPlus}Link text${I.addressBook}</span>`;
+    if(t==='double') return `<button type="button" aria-label="Clear">${I.close}</button><button type="button" aria-label="Clear">${I.close}</button>`;
+    return '';
+  }).join('');
+  const box = document.createElement('div');
+  box.className = 'inpv2-box';
+  box.dataset.size = size;
+  box.dataset.bg = bg;
+  box.dataset.state = state;
+  box.id = uid;
+  box.innerHTML = `
+    <div class="inpv2-row">
+      ${leftIcon?`<div class="inpv2-icon">R</div>`:''}
+      <div class="inpv2-body">
+        <span class="inpv2-label">Label</span>
+        <span class="inpv2-value"><span>Input text</span><span class="inpv2-cursor"></span></span>
+      </div>
+      ${(trailing&&trailing.length)?`<div class="inpv2-trailing">${trailingHTML}</div>`:''}
+    </div>
+    ${helper?`<div class="inpv2-helper">Helper text</div>`:''}`;
+  return box;
+}
+
+/* ── Build a Search v2 (pill) element ── */
+function buildSearchV2El(size, bg, type, state, uid) {
+  uid = uid || ('sv2_'+Math.random().toString(36).slice(2,7));
+  const hasValue = state==='typing' || state==='complete';
+  const floated  = type==='caption' && state!=='default';
+  let body;
+  if(floated){
+    body = `<span class="inpv2-pill-caption">Label</span>
+      <span class="inpv2-pill-line">
+        ${hasValue?`<span class="inpv2-pill-value" style="display:inline">Input text</span>`:''}
+        <span class="inpv2-pill-cursor"></span>
+      </span>`;
+  } else {
+    body = `<span class="inpv2-pill-line">
+        <span class="inpv2-pill-label"${hasValue?' style="display:none"':''}>Label</span>
+        <span class="inpv2-pill-value"${hasValue?' style="display:inline"':''}>Input text</span>
+        <span class="inpv2-pill-cursor"></span>
+      </span>`;
+  }
+  const pill = document.createElement('div');
+  pill.className = 'inpv2-pill';
+  pill.dataset.size = size;
+  pill.dataset.bg = bg;
+  pill.dataset.type = type;
+  pill.dataset.state = state;
+  pill.id = uid;
+  pill.innerHTML = `
+    <div class="inpv2-pill-icon">${I.search}</div>
+    <div class="inpv2-pill-body">${body}</div>
+    ${state==='typing'?`<div class="inpv2-pill-trailing"><button type="button" aria-label="Clear">${I.close}</button></div>`:''}`;
+  return pill;
+}
+
+/* ── PLAYGROUND ── */
+let iv2Pg = {family:'input', size:'default', bg:'colour', leftIcon:true, helper:false, trailSingle:true, trailLink:false, trailDouble:false, state:'default', searchType:'inline', searchState:'default'};
+
+function renderInpV2Playground() {
+  const el = document.getElementById('inpv2-playground');
+  if(!el) return;
+  const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+  const c = INPV2_COLORS.flash[theme];
+  const isInput = iv2Pg.family === 'input';
+
+  const seg = (label, opts, key) =>
+    `<div class="inp-pg__group">
+       <span class="inp-pg__clabel">${label}</span>
+       <div class="inp-pg__pr" style="flex-wrap:wrap">${opts.map(([v,l])=>`<button class="inp-pg__p${iv2Pg[key]===v?' on':''}" onclick="iv2PgSet('${key}','${v}')">${l}</button>`).join('')}</div>
+     </div>`;
+  const toggle = (label, key) =>
+    `<div class="inp-pg__group">
+       <span class="inp-pg__clabel">${label}</span>
+       <div class="inp-pg__pr"><button class="inp-pg__p${iv2Pg[key]?' on':''}" onclick="iv2PgToggle('${key}')">${iv2Pg[key]?'On':'Off'}</button></div>
+     </div>`;
+
+  const sharedControls = `
+      ${seg('Size',[['default','Default'],['small','Small']],'size')}
+      ${seg('Background',[['colour','Colour'],['white','White'],['grey','Grey']],'bg')}
+    `;
+  const familyControls = isInput ? `
+      ${toggle('Left icon','leftIcon')}
+      ${toggle('Single icon','trailSingle')}
+      ${toggle('Link text','trailLink')}
+      ${toggle('Double icon','trailDouble')}
+      ${toggle('Helper text','helper')}
+      ${seg('State',[['default','Default'],['focus','Focus']],'state')}
+    ` : `
+      ${seg('Type',[['inline','Inline'],['caption','Caption']],'searchType')}
+      ${seg('State',[['default','Default'],['focus','Focus'],['typing','Typing'],['complete','Complete']],'searchState')}
+    `;
+
+  el.innerHTML = `
+    <div class="type-sub__title">Playground</div>
+    <div class="inp-pg">
+      <div class="inp-pg__stage" id="inpv2-pg-stage" style="background:${c.stage}">
+        <div class="inp-pg__inner" id="inpv2-pg-inner" style="max-width:420px"></div>
+      </div>
+      <div class="inp-pg__ctrls">
+        <div class="inp-pg__group">
+          <span class="inp-pg__clabel">Family</span>
+          <div class="inp-pg__pr">
+            <button class="inp-pg__p${isInput?' on':''}" onclick="iv2PgSet('family','input')">Input</button>
+            <button class="inp-pg__p${!isInput?' on':''}" onclick="iv2PgSet('family','search')">Search</button>
+          </div>
+        </div>
+        ${sharedControls}
+        ${familyControls}
+      </div>
+      <div class="code-panel" id="inpv2-code-panel">
+        <div class="code-panel__head" onclick="toggleInpV2Code()">
+          <span class="code-panel__label">&#60;/&#62; &nbsp;View code</span>
+          <button class="code-copy-btn" onclick="event.stopPropagation();copyInpV2Code()" id="inpv2-copy-btn">Copy</button>
+        </div>
+        <div class="code-body">
+          <div class="code-tabs">
+            <button class="code-tab${(typeof iv2Lang==='undefined'||iv2Lang==='html')?' on':''}" onclick="setInpV2Lang('html',this)">HTML / CSS</button>
+            <button class="code-tab${typeof iv2Lang!=='undefined'&&iv2Lang==='blazor'?' on':''}" onclick="setInpV2Lang('blazor',this)">Blazor</button>
+            <button class="code-tab${typeof iv2Lang!=='undefined'&&iv2Lang==='tsx'?' on':''}" onclick="setInpV2Lang('tsx',this)">React TSX</button>
+          </div>
+          <div class="code-block" id="inpv2-code-block">${(typeof iv2Lang!=='undefined'&&iv2Lang==='blazor')?getInpV2CodeBlazor():(typeof iv2Lang!=='undefined'&&iv2Lang==='tsx')?getInpV2CodeTSX():getInpV2CodeHTML()}</div>
+        </div>
+      </div>
+    </div>`;
+
+  const stage = document.getElementById('inpv2-pg-stage');
+  if(stage) applyInpV2Colors(stage, theme);
+  const inner = document.getElementById('inpv2-pg-inner');
+  if(inner){
+    if(isInput){
+      const trailing = [];
+      if(iv2Pg.trailSingle) trailing.push('single');
+      if(iv2Pg.trailLink)   trailing.push('link');
+      if(iv2Pg.trailDouble) trailing.push('double');
+      inner.appendChild(buildInputV2El(iv2Pg.size, iv2Pg.bg, iv2Pg.leftIcon, trailing, iv2Pg.helper, iv2Pg.state, 'iv2_pg_main'));
+    } else {
+      inner.appendChild(buildSearchV2El(iv2Pg.size, iv2Pg.bg, iv2Pg.searchType, iv2Pg.searchState, 'iv2_pg_main'));
+    }
+  }
+}
+
+function iv2PgSet(key, val) { iv2Pg[key] = val; renderInpV2Playground(); }
+function iv2PgToggle(key) { iv2Pg[key] = !iv2Pg[key]; renderInpV2Playground(); }
+
+function toggleInpV2Code() {
+  document.getElementById('inpv2-code-panel')?.classList.toggle('open');
+}
+let iv2Lang = 'html';
+function setInpV2Lang(lang, btn) {
+  iv2Lang = lang;
+  document.querySelectorAll('#inpv2-code-panel .code-tab').forEach(t=>t.classList.remove('on'));
+  btn.classList.add('on');
+  const block = document.getElementById('inpv2-code-block');
+  if(!block) return;
+  const gen = lang==='blazor'?getInpV2CodeBlazor:lang==='tsx'?getInpV2CodeTSX:getInpV2CodeHTML;
+  block.innerHTML = gen();
+  document.getElementById('inpv2-code-panel').classList.add('open');
+}
+function copyInpV2Code() {
+  const block = document.getElementById('inpv2-code-block');
+  if(!block) return;
+  navigator.clipboard.writeText(block.innerText||block.textContent).catch(()=>{});
+  const btn = document.getElementById('inpv2-copy-btn');
+  if(btn){ btn.textContent='Copied!'; setTimeout(()=>btn.textContent='Copy',2000); }
+}
+
+function getInpV2CodeHTML() {
+  const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+  const c = INPV2_COLORS.flash[theme];
+  if(iv2Pg.family==='input'){
+    const comment = `<span class="code-cm">/* Input v2 · ${theme==='dark'?'Dark':'Light'} · ${iv2Pg.size==='small'?'Small':'Default'} · Background: ${iv2Pg.bg} · ${iv2Pg.state==='focus'?'Focus':'Default'} */</span>`;
+    return `${comment}
+<span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"inpv2-box"</span> <span class="code-cls">data-size</span>=<span class="code-val">"${iv2Pg.size}"</span> <span class="code-cls">data-bg</span>=<span class="code-val">"${iv2Pg.bg}"</span> <span class="code-cls">data-state</span>=<span class="code-val">"${iv2Pg.state}"</span><span class="code-kw">></span>
+  <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"inpv2-row"</span><span class="code-kw">></span>
+    ${iv2Pg.leftIcon?'<span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"inpv2-icon"</span><span class="code-kw">>R&#60;/div></span>':'<span class="code-cm">&#60;!-- left icon off --&#62;</span>'}
+    <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"inpv2-body"</span><span class="code-kw">></span>
+      <span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"inpv2-label"</span><span class="code-kw">></span>Label<span class="code-kw">&#60;/span></span>
+      <span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"inpv2-value"</span><span class="code-kw">></span>Input text<span class="code-kw">&#60;/span></span>
+    <span class="code-kw">&#60;/div></span>
+  <span class="code-kw">&#60;/div></span>
+  ${iv2Pg.helper?'<span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"inpv2-helper"</span><span class="code-kw">>Helper text&#60;/div></span>':'<span class="code-cm">&#60;!-- helper text off --&#62;</span>'}
+<span class="code-kw">&#60;/div></span>
+
+<span class="code-cm">/* CSS variables */</span>
+<span class="code-cls">.inpv2-box</span> {
+  <span class="code-kw">--_iv2-box-bg</span>: <span class="code-val">${c.boxBg}</span>;
+  <span class="code-kw">--_iv2-fill-white</span>: <span class="code-val">${c.fillWhite}</span>;
+  <span class="code-kw">--_iv2-border-white</span>: <span class="code-val">${c.borderWhite}</span>;
+  <span class="code-kw">--_iv2-fill-grey</span>: <span class="code-val">${c.fillGrey}</span>;
+  <span class="code-kw">--_iv2-border-grey</span>: <span class="code-val">${c.borderGrey}</span>;
+  <span class="code-kw">--_iv2-label</span>: <span class="code-val">${c.label}</span>;
+  <span class="code-kw">--_iv2-label-focus</span>: <span class="code-val">${c.labelFocus}</span>;
+  <span class="code-kw">--_iv2-text</span>: <span class="code-val">${c.text}</span>;
+  <span class="code-kw">--_iv2-cursor</span>: <span class="code-val">${c.cursor}</span>;
+}`;
+  }
+  const comment = `<span class="code-cm">/* Search v2 · ${theme==='dark'?'Dark':'Light'} · ${iv2Pg.searchType} · Background: ${iv2Pg.bg} · ${iv2Pg.searchState} */</span>`;
+  return `${comment}
+<span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"inpv2-pill"</span> <span class="code-cls">data-size</span>=<span class="code-val">"${iv2Pg.size}"</span> <span class="code-cls">data-bg</span>=<span class="code-val">"${iv2Pg.bg}"</span> <span class="code-cls">data-type</span>=<span class="code-val">"${iv2Pg.searchType}"</span> <span class="code-cls">data-state</span>=<span class="code-val">"${iv2Pg.searchState}"</span><span class="code-kw">></span>
+  <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"inpv2-pill-icon"</span><span class="code-kw">>&#60;!-- search icon --&#62;&#60;/div></span>
+  <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"inpv2-pill-body"</span><span class="code-kw">></span>
+    <span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"inpv2-pill-label"</span><span class="code-kw">></span>Label<span class="code-kw">&#60;/span></span>
+  <span class="code-kw">&#60;/div></span>
+<span class="code-kw">&#60;/div></span>
+
+<span class="code-cm">/* CSS variables */</span>
+<span class="code-cls">.inpv2-pill</span> {
+  <span class="code-kw">--_iv2-box-bg</span>: <span class="code-val">${c.boxBg}</span>;
+  <span class="code-kw">--_iv2-fill-white</span>: <span class="code-val">${c.fillWhite}</span>;
+  <span class="code-kw">--_iv2-border-white</span>: <span class="code-val">${c.borderWhite}</span>;
+  <span class="code-kw">--_iv2-fill-grey</span>: <span class="code-val">${c.fillGrey}</span>;
+  <span class="code-kw">--_iv2-border-grey</span>: <span class="code-val">${c.borderGrey}</span>;
+  <span class="code-kw">--_iv2-pill-border-focus</span>: <span class="code-val">${c.pillBorderFocus}</span>;
+}`;
+}
+
+function getInpV2CodeBlazor() {
+  if(iv2Pg.family==='input'){
+    return `<span class="code-cm">@* DsInputV2.razor — usage *@</span>
+<span class="code-kw">&#60;DsInputV2</span> <span class="code-attr">Size</span>=<span class="code-val">"InputSize.${iv2Pg.size==='small'?'Small':'Default'}"</span>
+           <span class="code-attr">Background</span>=<span class="code-val">"InputBackground.${iv2Pg.bg[0].toUpperCase()+iv2Pg.bg.slice(1)}"</span>
+           <span class="code-attr">LeftIcon</span>=<span class="code-val">"${iv2Pg.leftIcon}"</span>
+           <span class="code-attr">Trailing</span>=<span class="code-val">"TrailingSlots.${['trailSingle','trailLink','trailDouble'].filter(k=>iv2Pg[k]).map(k=>({trailSingle:'SingleIcon',trailLink:'LinkText',trailDouble:'DoubleIcon'})[k]).join(' | ')||'None'}"</span>
+           <span class="code-attr">HelperText</span>=<span class="code-val">"${iv2Pg.helper?'"Helper text"':'null'}"</span>
+           <span class="code-attr">Label</span>=<span class="code-val">"Label"</span>
+           <span class="code-attr">@bind-Value</span>=<span class="code-val">"model.Field"</span> /><span class="code-kw"></span>`;
+  }
+  return `<span class="code-cm">@* DsSearchV2.razor — usage *@</span>
+<span class="code-kw">&#60;DsSearchV2</span> <span class="code-attr">Size</span>=<span class="code-val">"InputSize.${iv2Pg.size==='small'?'Small':'Default'}"</span>
+            <span class="code-attr">Background</span>=<span class="code-val">"InputBackground.${iv2Pg.bg[0].toUpperCase()+iv2Pg.bg.slice(1)}"</span>
+            <span class="code-attr">Type</span>=<span class="code-val">"SearchType.${iv2Pg.searchType==='caption'?'Caption':'Inline'}"</span>
+            <span class="code-attr">@bind-Value</span>=<span class="code-val">"model.Query"</span> /><span class="code-kw"></span>`;
+}
+
+function getInpV2CodeTSX() {
+  if(iv2Pg.family==='input'){
+    const slots = ['trailSingle','trailLink','trailDouble'].filter(k=>iv2Pg[k]).map(k=>`'${({trailSingle:'single',trailLink:'link',trailDouble:'double'})[k]}'`).join(', ');
+    return `<span class="code-cm">// DsInputV2.tsx — usage</span>
+<span class="code-kw">&#60;DsInputV2</span>
+  size=<span class="code-val">"${iv2Pg.size}"</span>
+  background=<span class="code-val">"${iv2Pg.bg}"</span>
+  leftIcon={${iv2Pg.leftIcon}}
+  trailing={[${slots}]}
+  helperText={${iv2Pg.helper?'"Helper text"':'undefined'}}
+  label=<span class="code-val">"Label"</span>
+  value={value}
+  onChange={setValue}
+/&#62;`;
+  }
+  return `<span class="code-cm">// DsSearchV2.tsx — usage</span>
+<span class="code-kw">&#60;DsSearchV2</span>
+  size=<span class="code-val">"${iv2Pg.size}"</span>
+  background=<span class="code-val">"${iv2Pg.bg}"</span>
+  type=<span class="code-val">"${iv2Pg.searchType}"</span>
+  label=<span class="code-val">"Label"</span>
+  value={query}
+  onChange={setQuery}
+/&#62;`;
+}
+
+/* ── REFERENCE GRID ── */
+const INPV2_PRESETS = [
+  {key:'default', label:'Default',      desc:'No icon, no trailing, no helper',                leftIcon:false, trailing:[],                        helper:false},
+  {key:'leading', label:'Leading icon', desc:'Currency/user icon in the leading slot',          leftIcon:true,  trailing:[],                        helper:false},
+  {key:'single',  label:'Single icon',  desc:'One trailing icon button',                        leftIcon:false, trailing:['single'],                helper:false},
+  {key:'link',    label:'Link text',    desc:'Icon + label + icon trailing group',              leftIcon:false, trailing:['link'],                  helper:false},
+  {key:'double',  label:'Double icon',  desc:'Two trailing icon buttons',                       leftIcon:false, trailing:['double'],                helper:false},
+  {key:'helper',  label:'Helper text',  desc:'Assistive caption below the field',               leftIcon:false, trailing:[],                        helper:true},
+  {key:'loaded',  label:'Fully loaded', desc:'Leading icon + all trailing slots + helper text', leftIcon:true,  trailing:['single','link','double'], helper:true},
+];
+const INPV2_SEARCH_COMBOS = [
+  {key:'inline-colour',  label:'Inline · Colour',  type:'inline',  bg:'colour'},
+  {key:'inline-white',   label:'Inline · White',   type:'inline',  bg:'white'},
+  {key:'inline-grey',    label:'Inline · Grey',    type:'inline',  bg:'grey'},
+  {key:'caption-colour', label:'Caption · Colour', type:'caption', bg:'colour'},
+  {key:'caption-white',  label:'Caption · White',  type:'caption', bg:'white'},
+  {key:'caption-grey',   label:'Caption · Grey',   type:'caption', bg:'grey'},
+];
+const INPV2_BACKGROUNDS = [{key:'colour',label:'Colour'},{key:'white',label:'White'},{key:'grey',label:'Grey'}];
+const INPV2_SIZES = [{key:'default',label:'Default'},{key:'small',label:'Small'}];
+const INPV2_STATES_INPUT  = [{key:'default',label:'Default'},{key:'focus',label:'Focus'}];
+const INPV2_STATES_SEARCH = [{key:'default',label:'Default'},{key:'focus',label:'Focus'},{key:'typing',label:'Typing'},{key:'complete',label:'Complete'}];
+const inpv2RefThemes = {};
+const inpv2RefBgs = {};
+
+function renderInpV2Reference() {
+  const el = document.getElementById('inpv2-reference');
+  if(!el) return;
+
+  const accItem = (key, name, desc, withBgToggle) => `
+    <div class="inp-ai" id="inpv2ai-${key}">
+      <button class="inp-ah" onclick="toggleInpV2Accord('${key}')">
+        <span class="inp-ah-name">${name}</span>
+        <span class="inp-ah-desc">${desc}</span>
+        <span class="inp-ah-chev">›</span>
+      </button>
+      <div class="inp-ab" id="inpv2ab-${key}">
+        <div class="inp-ref-thead" id="inpv2th-${key}">
+          ${withBgToggle?INPV2_BACKGROUNDS.map((b,i)=>`<button class="${i===0?'on':''}" onclick="setInpV2RefBg('${key}','${b.key}',this)">${b.label}</button>`).join(''):''}
+          <button class="on" onclick="setInpV2RefTheme('${key}','light',this)">☀ Light</button>
+          <button onclick="setInpV2RefTheme('${key}','dark',this)">☽ Dark</button>
+        </div>
+        <div id="inpv2rc-${key}"></div>
+      </div>
+    </div>`;
+
+  const inputItems  = INPV2_PRESETS.map(p => accItem(p.key, p.label, p.desc, true)).join('');
+  const searchItems = INPV2_SEARCH_COMBOS.map(s => accItem(s.key, s.label, 'Search pill', false)).join('');
+
+  el.innerHTML = `
+    <div class="type-sub__title">Input — all configurations</div>
+    <div class="type-sub__desc">Expand a preset to see both sizes across Default and Focus. Switch Background (Colour/White/Grey) and light/dark independently per row.</div>
+    <div class="inp-accord">${inputItems}</div>
+    <div class="type-sub__title" style="margin-top:36px">Search — all configurations</div>
+    <div class="type-sub__desc">Expand a Type &times; Background combination to see both sizes across all four states.</div>
+    <div class="inp-accord">${searchItems}</div>`;
+}
+
+function toggleInpV2Accord(key) {
+  const item = document.getElementById('inpv2ai-'+key);
+  const wasOpen = item.classList.contains('open');
+  item.classList.toggle('open');
+  if(!wasOpen) renderInpV2RefContent(key, inpv2RefThemes[key]||'light');
+}
+
+function setInpV2RefTheme(key, theme, btn) {
+  inpv2RefThemes[key] = theme;
+  const strip = document.getElementById('inpv2th-'+key);
+  if(strip) strip.querySelectorAll('button').forEach(b=>{ if(b.textContent.includes('Light')||b.textContent.includes('Dark')) b.classList.toggle('on', (theme==='light'&&b.textContent.includes('Light'))||(theme==='dark'&&b.textContent.includes('Dark'))); });
+  renderInpV2RefContent(key, theme);
+}
+
+function setInpV2RefBg(key, bg, btn) {
+  inpv2RefBgs[key] = bg;
+  const strip = document.getElementById('inpv2th-'+key);
+  if(strip) INPV2_BACKGROUNDS.forEach((b,i)=>{
+    const el = strip.children[i];
+    if(el) el.classList.toggle('on', b.key===bg);
+  });
+  renderInpV2RefContent(key, inpv2RefThemes[key]||'light');
+}
+
+function renderInpV2RefContent(key, theme) {
+  const cont = document.getElementById('inpv2rc-'+key);
+  if(!cont) return;
+  const c = INPV2_COLORS.flash[theme];
+  const preset = INPV2_PRESETS.find(p=>p.key===key);
+  const combo  = INPV2_SEARCH_COMBOS.find(s=>s.key===key);
+  const states = preset ? INPV2_STATES_INPUT : INPV2_STATES_SEARCH;
+  const bg = preset ? (inpv2RefBgs[key]||'colour') : combo.bg;
+
+  cont.innerHTML = '';
+  INPV2_SIZES.forEach(sz => {
+    const row = document.createElement('div');
+    row.className = 'inp-ref-row';
+
+    const lbl = document.createElement('div');
+    lbl.className = 'inp-ref-rlabel';
+    lbl.textContent = sz.label;
+    row.appendChild(lbl);
+
+    const cells = document.createElement('div');
+    cells.className = 'inp-ref-cells';
+
+    states.forEach(st => {
+      const cell = document.createElement('div');
+      cell.className = 'inp-ref-cell';
+      cell.style.background = c.stage;
+      applyInpV2Colors(cell, theme);
+      const cellLbl = document.createElement('div');
+      cellLbl.className = 'inp-ref-cell-lbl';
+      cellLbl.textContent = st.label;
+      cell.appendChild(cellLbl);
+      const uid = `iv2ref_${key}_${sz.key}_${st.key}`;
+      const fieldEl = preset
+        ? buildInputV2El(sz.key, bg, preset.leftIcon, preset.trailing, preset.helper, st.key, uid)
+        : buildSearchV2El(sz.key, bg, combo.type, st.key, uid);
+      cell.appendChild(fieldEl);
+      cells.appendChild(cell);
+    });
+    row.appendChild(cells);
+    cont.appendChild(row);
+  });
+}
+
+/* ── INIT ── */
+try { renderInpV2Playground(); } catch(e){ console.error('inpv2-playground',e); }
+try { renderInpV2Reference();  } catch(e){ console.error('inpv2-reference',e);  }
+try {
+  [...INPV2_PRESETS, ...INPV2_SEARCH_COMBOS].forEach(p => {
+    const item = document.getElementById('inpv2ai-'+p.key);
+    if(item && !item.classList.contains('open')){
+      item.classList.add('open');
+      renderInpV2RefContent(p.key, 'light');
+    }
+  });
+} catch(e){ console.error('inpv2-accord-expand',e); }
+
+/* ============================================================
    CHIPS
 ============================================================ */
 const CHIP_SIZES = [
@@ -4319,12 +4816,19 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.15.0';
+const SYSTEM_VERSION = '1.16.0';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.16.0', date:'2026-07-06', author:'Mo', title:'Text Inputs v2 (Trader)', changes:[
+        ['added','Text Inputs v2 section — Input (floating-label box) and Search (pill) families pulled from Figma’s Master Input Component'],
+        ['added','Shared Background property (Colour/White/Grey) on both families — picks the fill/border pairing that keeps the field visible against the page surface it sits on'],
+        ['added','Input family: 2 sizes × 3 backgrounds × leading icon × 3 independent trailing slots (single icon, link text, double icon) × helper text × Default/Focus states'],
+        ['added','Search family: 2 sizes × 3 backgrounds × Inline/Caption label type × Default/Focus/Typing/Complete states'],
+        ['added','Interactive playground with family switch and live code panel (HTML/CSS, Blazor, React TSX)'],
+      ]},
       {version:'1.15.0', date:'2026-07-06', author:'Helen', title:'Data Display — filter chips', changes:[
         ['added','Filter chips component — removable chips summarising active table/list filters, built on the Chips & Pills tokens'],
       ]},
@@ -4486,6 +4990,15 @@ const CHANGELOG = {
       ]},
       {version:'1.0.0', date:'2026-06-20', time:'13:56', author:'Mo', title:'Initial release', changes:[
         ['added','9 input types, 2 sizes, interactive playground, full reference grid'],
+      ]},
+    ]},
+    {secId:'s-inputs-v2', name:'Text Inputs v2', version:'1.0.0', entries:[
+      {version:'1.0.0', date:'2026-07-06', author:'Mo', title:'Initial release', changes:[
+        ['added','Input family (floating-label box) — 2 sizes, 3 backgrounds, leading icon, 3 independent trailing slots, helper text, Default/Focus states'],
+        ['added','Search family (pill) — 2 sizes, 3 backgrounds, Inline/Caption label type, Default/Focus/Typing/Complete states'],
+        ['added','Background property (Colour/White/Grey) shared by both families, matching Figma\'s node 4644:16572 — adapts fill/border to the page surface the field sits on'],
+        ['added','Interactive playground with Input/Search family switch and HTML/CSS · Blazor · React TSX code panel'],
+        ['added','Full reference grid — 7 Input presets (each with an independent Background switch) and 6 Search Type×Background combinations, every state and both sizes'],
       ]},
     ]},
     {secId:'s-selection', name:'Checkboxes & Radios', version:'1.0.0', entries:[
