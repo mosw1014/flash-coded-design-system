@@ -1202,6 +1202,16 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
 .dd-empty__desc{font-size:12.5px;color:var(--chrome-muted);max-width:340px;line-height:1.55}
 .dd-empty__action{margin-top:6px;font-family:inherit;font-size:12.5px;font-weight:700;color:var(--color-btn-p-txt);background:var(--chrome-accent);border:none;border-radius:8px;padding:9px 16px;cursor:pointer;transition:filter .15s}
 .dd-empty__action:hover{filter:brightness(1.06)}
+/* Distribution bars */
+.dd-dist{border:1px solid var(--chrome-border);border-radius:12px;padding:22px}
+.dd-dist__row{margin-bottom:16px}
+.dd-dist__row:last-child{margin-bottom:0}
+.dd-dist__top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:7px;gap:12px}
+.dd-dist__label{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;font-weight:700;color:var(--chrome-txt)}
+.dd-dist__swatch{width:9px;height:9px;border-radius:3px;flex-shrink:0}
+.dd-dist__val{font-size:12px;font-weight:700;color:var(--chrome-muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+.dd-dist__track{height:10px;border-radius:999px;background:var(--chrome-nav);overflow:hidden}
+.dd-dist__fill{height:100%;border-radius:999px;transition:width .3s}
 
 /* ================================================================
    CHECKBOXES & RADIO BUTTONS
@@ -1825,6 +1835,33 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
           <div class="dd-empty__title">No transactions match these filters</div>
           <div class="dd-empty__desc">Nothing was recorded for the selected region and date range. Try widening the range or clearing the region filter.</div>
           <button class="dd-empty__action" type="button">Clear filters</button>
+        </div>
+      </div>
+
+      <div class="type-sub">
+        <div class="type-sub__title">Distribution bars</div>
+        <div class="type-sub__desc">A ranked share-of-total breakdown for splitting a single metric across categories. Each row carries its own semantic colour, so a legend swatch, bar and percentage stay visually linked. Use it where a full chart would be overkill but a single meter can&rsquo;t show the mix.</div>
+        <div class="dd-dist">
+          <div class="dd-dist__row">
+            <div class="dd-dist__top"><span class="dd-dist__label"><span class="dd-dist__swatch" style="background:var(--chrome-accent)"></span>Airtime &amp; Data</span><span class="dd-dist__val">R14.8M · 42%</span></div>
+            <div class="dd-dist__track"><div class="dd-dist__fill" style="width:42%;background:var(--chrome-accent)"></div></div>
+          </div>
+          <div class="dd-dist__row">
+            <div class="dd-dist__top"><span class="dd-dist__label"><span class="dd-dist__swatch" style="background:var(--color-success-h)"></span>Electricity</span><span class="dd-dist__val">R11.2M · 32%</span></div>
+            <div class="dd-dist__track"><div class="dd-dist__fill" style="width:32%;background:var(--color-success-h)"></div></div>
+          </div>
+          <div class="dd-dist__row">
+            <div class="dd-dist__top"><span class="dd-dist__label"><span class="dd-dist__swatch" style="background:var(--color-warn-h)"></span>1Voucher</span><span class="dd-dist__val">R9.6M · 27%</span></div>
+            <div class="dd-dist__track"><div class="dd-dist__fill" style="width:27%;background:var(--color-warn-h)"></div></div>
+          </div>
+          <div class="dd-dist__row">
+            <div class="dd-dist__top"><span class="dd-dist__label"><span class="dd-dist__swatch" style="background:var(--color-crit-h)"></span>Gaming Vouchers</span><span class="dd-dist__val">R5.5M · 16%</span></div>
+            <div class="dd-dist__track"><div class="dd-dist__fill" style="width:16%;background:var(--color-crit-h)"></div></div>
+          </div>
+          <div class="dd-dist__row">
+            <div class="dd-dist__top"><span class="dd-dist__label"><span class="dd-dist__swatch" style="background:var(--chrome-muted)"></span>Other</span><span class="dd-dist__val">R2.9M · 8%</span></div>
+            <div class="dd-dist__track"><div class="dd-dist__fill" style="width:8%;background:var(--chrome-muted)"></div></div>
+          </div>
         </div>
       </div>
     </section>
