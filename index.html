@@ -1227,6 +1227,11 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
 .dd-break__k{font-size:12.5px;font-weight:700;color:var(--chrome-txt)}
 .dd-break__v{font-size:12px;font-weight:700;color:var(--chrome-muted);font-variant-numeric:tabular-nums}
 
+/* Filter chips */
+.dd-chips{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+.dd-chips__clear{font-family:inherit;font-size:12px;font-weight:700;color:var(--chrome-muted);background:none;border:none;cursor:pointer;padding:4px 2px;transition:color .15s}
+.dd-chips__clear:hover{color:var(--chrome-txt)}
+
 /* ================================================================
    CHECKBOXES & RADIO BUTTONS
 ================================================================ */
@@ -1689,8 +1694,8 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
     <section class="sec" id="s-data">
       <div class="sec__head">
         <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Data Display <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.2.0</span></h1>
-        <p class="sec__desc">Patterns for surfacing numbers and records — stat tiles, tables, key&ndash;value lists and progress meters. All built on chrome and semantic tokens, so they adapt to light &amp; dark automatically.</p>
+        <h1 class="sec__title">Data Display <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.3.0</span></h1>
+        <p class="sec__desc">Patterns for surfacing numbers and records — stat tiles, tables, key&ndash;value lists, progress meters and filter chips. All built on chrome and semantic tokens, so they adapt to light &amp; dark automatically.</p>
       </div>
 
       <div class="type-sub">
@@ -1896,6 +1901,29 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
             <div class="dd-dist__top"><span class="dd-dist__label"><span class="dd-dist__swatch" style="background:var(--chrome-muted)"></span>Other</span><span class="dd-dist__val">R2.9M · 8%</span></div>
             <div class="dd-dist__track"><div class="dd-dist__fill" style="width:8%;background:var(--chrome-muted)"></div></div>
           </div>
+        </div>
+      </div>
+
+      <div class="type-sub">
+        <div class="type-sub__title">Filter chips</div>
+        <div class="type-sub__desc">Removable chips that summarise the filters currently applied to a table or list. Built on the same <code>.chip</code> tokens as Chips &amp; Pills, so colour and sizing stay in sync with the rest of the system.</div>
+        <div class="dd-chips">
+          <span class="chip chip--sm is-selectable is-selected" style="--chip-bg:#0062EB;--chip-text:#ffffff">
+            <span class="chip__label">Region: Gauteng</span>
+            <button class="chip__x" type="button" aria-label="Remove filter">&times;</button>
+          </span>
+          <span class="chip chip--sm is-selectable is-selected" style="--chip-bg:#16A220;--chip-text:#ffffff">
+            <span class="chip__label">Status: Live</span>
+            <button class="chip__x" type="button" aria-label="Remove filter">&times;</button>
+          </span>
+          <span class="chip chip--sm is-selectable is-selected" style="--chip-bg:#FF8900;--chip-text:#ffffff">
+            <span class="chip__label">Last 30 days</span>
+            <button class="chip__x" type="button" aria-label="Remove filter">&times;</button>
+          </span>
+          <span class="chip chip--sm" style="--chip-bg:#E6E6E6;--chip-text:#646464">
+            <span class="chip__label">+2 more</span>
+          </span>
+          <button class="dd-chips__clear" type="button">Clear all</button>
         </div>
       </div>
     </section>
@@ -4290,12 +4318,15 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.14.0';
+const SYSTEM_VERSION = '1.15.0';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.15.0', date:'2026-07-06', author:'Helen', title:'Data Display — filter chips', changes:[
+        ['added','Filter chips component — removable chips summarising active table/list filters, built on the Chips & Pills tokens'],
+      ]},
       {version:'1.14.0', date:'2026-07-06', author:'Person A', title:'Data Display — distribution bar', changes:[
         ['added','Distribution bar component — a single segmented bar showing how a total splits across categories, paired with a legend'],
       ]},
@@ -4504,7 +4535,10 @@ const CHANGELOG = {
         ['changed','Planned for a future session'],
       ]},
     ]},
-    {secId:'s-data', name:'Data Display', version:'1.2.0', entries:[
+    {secId:'s-data', name:'Data Display', version:'1.3.0', entries:[
+      {version:'1.3.0', date:'2026-07-06', author:'Helen', title:'Filter chips', changes:[
+        ['added','Filter chips — removable chips summarising active filters, sharing tokens with Chips & Pills'],
+      ]},
       {version:'1.2.0', date:'2026-07-06', author:'Person A', title:'Distribution bar', changes:[
         ['added','Distribution bar — segmented bar with semantic-token segments and a figure-carrying legend'],
       ]},
