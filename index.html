@@ -1368,6 +1368,53 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
 .sel-usage__list{list-style:none;display:flex;flex-direction:column;gap:8px}
 .sel-usage__list li{font-size:12.5px;line-height:1.5;color:var(--chrome-txt);padding-left:16px;position:relative}
 .sel-usage__list li::before{content:"";position:absolute;left:0;top:7px;width:5px;height:5px;border-radius:50%;background:var(--chrome-muted)}
+
+/* ================================================================
+   BOTTOM SHEETS
+================================================================ */
+.bshqc{border:1px solid var(--chrome-border);border-radius:16px;background:var(--chrome-bg);padding:26px 28px;transition:background .25s}
+.bshqc__title{font-size:22px;font-weight:900;color:var(--chrome-txt);margin-bottom:6px}
+.bshqc__desc{font-size:13px;color:var(--chrome-muted);margin-bottom:24px}
+.bshqc__row{display:flex;gap:32px;flex-wrap:wrap}
+.bshqc__item{display:flex;flex-direction:column;align-items:center;gap:12px}
+.bshqc__label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--chrome-muted)}
+
+.bsh-phone{position:relative;width:260px;height:520px;border-radius:30px;overflow:hidden;background:var(--color-surface-n1);border:6px solid var(--chrome-txt);box-shadow:0 12px 30px rgba(0,0,0,.18);flex-shrink:0;transition:background .25s,border-color .25s}
+.bsh-phone__status{display:flex;align-items:center;justify-content:flex-end;gap:5px;height:22px;padding:0 12px;position:relative;z-index:1}
+.bsh-phone__content{position:absolute;inset:22px 0 0 0;display:flex;align-items:center;justify-content:center;color:var(--chrome-muted);font-size:11.5px;text-align:center;padding:20px}
+.bsh-phone__overlay{position:absolute;inset:0;background:rgba(43,43,43,.5);backdrop-filter:blur(2px);z-index:1}
+
+.bsh-sheet{position:absolute;left:0;right:0;bottom:0;background:var(--color-surface-base);display:flex;flex-direction:column;z-index:2;box-shadow:0 -6px 24px rgba(0,0,0,.16);transition:background .25s}
+.bsh-sheet--compact{border-radius:20px 20px 0 0}
+.bsh-sheet--full{top:22px;border-radius:0}
+.bsh-sheet--full .bsh-sheet__body{flex:1}
+.bsh-sheet__handle{width:36px;height:4px;border-radius:2px;background:var(--color-surface-n3);margin:8px auto 0}
+.bsh-sheet__header{display:flex;align-items:center;gap:8px;padding:10px 16px 12px}
+.bsh-sheet__back,.bsh-sheet__close{background:none;border:none;padding:0;display:inline-flex;align-items:center;color:var(--color-text-1);cursor:pointer;flex-shrink:0}
+.bsh-sheet__title{flex:1;font-size:14px;font-weight:800;color:var(--color-text-1);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bsh-sheet__body{padding:0 16px 16px}
+.bsh-sheet__placeholder{border:1.5px dashed var(--chrome-border);border-radius:10px;padding:14px 12px;font-size:11.5px;font-weight:700;color:var(--color-text-s);text-align:center}
+.bsh-sheet__footer{padding:12px 16px;display:flex;gap:6px}
+.bsh-sheet__footer .ds-btn{flex:1}
+.bsh-sheet__footer.is-vertical{flex-direction:column}
+.bsh-sheet__footer.is-mix{flex-direction:column;align-items:stretch;gap:10px}
+.bsh-sheet__footer-row{display:flex;gap:6px;width:100%}
+.bsh-sheet__footer-row .ds-btn{flex:1}
+.bsh-sheet__footer.is-mix>a.ds-btn{align-self:center;flex:none}
+
+.bsh-ref{display:flex;flex-wrap:wrap;gap:20px}
+.bsh-ref__card{display:flex;flex-direction:column;align-items:center;gap:10px}
+.bsh-ref__header{width:260px;background:var(--color-surface-base);border:1px solid var(--chrome-border);border-radius:20px 20px 0 0;padding-bottom:10px;transition:background .25s}
+.bsh-ref__header.is-dialog{border-radius:16px}
+.bsh-ref__header .bsh-sheet__header{padding:10px 14px 0}
+.bsh-ref__header .bsh-phone__status{height:auto;padding:8px 14px 0}
+.bsh-ref__label{font-size:11px;font-weight:700;color:var(--chrome-muted);text-align:center;max-width:200px}
+
+.bsh-footer-ref{display:flex;gap:18px;flex-wrap:wrap}
+.bsh-footer-ref__card{border:1px solid var(--chrome-border);border-radius:12px;padding:20px;background:var(--chrome-bg);flex:1;min-width:220px;transition:background .25s}
+.bsh-footer-ref__label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--chrome-muted);margin-bottom:16px}
+
+.bsh-pg-stage{position:relative;display:flex;align-items:center;justify-content:center;min-height:580px;padding:36px}
 </style>
 </head>
 <body>
@@ -1407,7 +1454,7 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
     <a href="javascript:void(0)" onclick="showSection('s-chips')"   class="sb-link"><div class="sb-pip"></div>Chips &amp; Pills</a>
     <a href="javascript:void(0)" onclick="showSection('s-cards')"   class="sb-link"><div class="sb-pip"></div>Cards</a>
     <a href="javascript:void(0)" onclick="showSection('s-modals')"  class="sb-link"><div class="sb-pip"></div>Modals</a>
-    <a href="javascript:void(0)" onclick="showSection('s-drawers')" class="sb-link"><div class="sb-pip"></div>Drawers</a>
+    <a href="javascript:void(0)" onclick="showSection('s-drawers')" class="sb-link"><div class="sb-pip"></div>Bottom Sheets</a>
     <a href="javascript:void(0)" onclick="showSection('s-toasts')"  class="sb-link"><div class="sb-pip"></div>Toasts</a>
     <a href="javascript:void(0)" onclick="showSection('s-nav')"     class="sb-link"><div class="sb-pip"></div>Navigation</a>
     <a href="javascript:void(0)" onclick="showSection('s-data')"    class="sb-link"><div class="sb-pip"></div>Data Display</a>
@@ -1654,7 +1701,7 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
     <section class="sec" id="s-inputs-v2">
       <div class="sec__head">
         <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Text Inputs v2 <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.0</span></h1>
+        <h1 class="sec__title">Text Inputs v2 <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.1.0</span></h1>
         <p class="sec__desc">Trader input system pulled from Figma's Master Input Component &middot; Input (floating label) and Search (pill) families &middot; 2 sizes &middot; 3 backgrounds &middot; every state and slot configuration.</p>
       </div>
       <div id="inpv2-playground" class="type-sub"></div>
@@ -1747,7 +1794,43 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
     </section>
     <section class="sec" id="s-cards"><div class="sec__head"><div class="sec__eye">Components</div><h1 class="sec__title">Cards</h1></div><div class="coming">Coming in a future session</div></section>
     <section class="sec" id="s-modals"><div class="sec__head"><div class="sec__eye">Components</div><h1 class="sec__title">Modals &amp; Dialogs</h1></div><div class="coming">Coming in a future session</div></section>
-    <section class="sec" id="s-drawers"><div class="sec__head"><div class="sec__eye">Components</div><h1 class="sec__title">Drawers</h1></div><div class="coming">Coming in a future session</div></section>
+    <section class="sec" id="s-drawers">
+      <div class="sec__head">
+        <div class="sec__eye">Components</div>
+        <h1 class="sec__title">Bottom Sheets <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.0</span></h1>
+        <p class="sec__desc">A drawer-style sheet that slides up from the bottom of the screen, built from the SheetHeader block (with or without a back arrow, compact or full screen) plus a body and a footer button group. Flash brand only &middot; interactive playground included.</p>
+      </div>
+
+      <div id="bsh-quickcopy"   class="type-sub"></div>
+      <div id="bsh-header-ref"  class="type-sub"></div>
+      <div id="bsh-footer-ref"  class="type-sub"></div>
+      <div id="bsh-playground"  class="type-sub"></div>
+
+      <div class="type-sub">
+        <div class="type-sub__title">When to use which</div>
+        <div class="type-sub__desc">Bottom sheets and dialogs both interrupt the current screen to ask for input or show detail &mdash; the right choice depends on how much room the content needs and how attached it is to the page underneath.</div>
+        <div class="sel-usage">
+          <div class="sel-usage__card">
+            <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
+            <ul class="sel-usage__list">
+              <li>Use a <strong>compact sheet</strong> for a short, focused task &mdash; confirming an action, picking from a short list, showing a summary.</li>
+              <li>Use <strong>full screen</strong> when the content needs the whole viewport &mdash; a multi-field form, a long list, or a flow with its own steps.</li>
+              <li>Add the <strong>back arrow</strong> only when the sheet is one step in a flow the person can step back out of.</li>
+              <li>Keep the footer to one primary action, with a secondary action alongside it where needed.</li>
+            </ul>
+          </div>
+          <div class="sel-usage__card">
+            <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don&rsquo;t</div>
+            <ul class="sel-usage__list">
+              <li>Don&rsquo;t use a bottom sheet for a simple yes/no confirmation &mdash; a dialog is quicker to dismiss and keeps context visible.</li>
+              <li>Don&rsquo;t add a back arrow on the first step of a flow &mdash; there&rsquo;s nowhere for it to go.</li>
+              <li>Don&rsquo;t drop the drag handle on a full screen sheet &mdash; it&rsquo;s still dismissible by swipe, so the affordance should stay.</li>
+              <li>Don&rsquo;t bury the primary action below the fold on a full screen sheet &mdash; keep the footer pinned.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
     <section class="sec" id="s-toasts"><div class="sec__head"><div class="sec__eye">Components</div><h1 class="sec__title">Toasts &amp; Snackbars</h1></div><div class="coming">Coming in a future session</div></section>
     <section class="sec" id="s-nav"><div class="sec__head"><div class="sec__eye">Components</div><h1 class="sec__title">Navigation</h1></div><div class="coming">Coming in a future session</div></section>
     <section class="sec" id="s-data">
@@ -2460,6 +2543,10 @@ function toggleTheme() {
   try { if(typeof renderInpPlayground==='function' && document.getElementById('inp-playground')) renderInpPlayground(); } catch(e){}
   try { if(typeof renderInpV2Playground==='function' && document.getElementById('inpv2-playground')) renderInpV2Playground(); } catch(e){}
   try { if(typeof renderChipPlayground==='function' && document.getElementById('chip-playground')) renderChipPlayground(); } catch(e){}
+  try { if(typeof renderBshQuickCopy==='function' && document.getElementById('bsh-quickcopy')) renderBshQuickCopy(); } catch(e){}
+  try { if(typeof renderBshHeaderRef==='function' && document.getElementById('bsh-header-ref')) renderBshHeaderRef(); } catch(e){}
+  try { if(typeof renderBshFooterRef==='function' && document.getElementById('bsh-footer-ref')) renderBshFooterRef(); } catch(e){}
+  try { if(typeof renderBshPlayground==='function' && document.getElementById('bsh-playground')) renderBshPlayground(); } catch(e){}
 }
 
 // Colour view switch (prim / sem)
@@ -4816,17 +4903,23 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.16.0';
+const SYSTEM_VERSION = '1.18.0';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.18.0', date:'2026-07-06', author:'Mo', title:'Text Inputs v2 — shared Background property', changes:[
+        ['added','Background property (Colour/White/Grey) added to the Input family, matching Figma\'s node 4644:16572 — both Input and Search now share one Background control'],
+        ['fixed','Search family\'s White background corrected to the spec fill/border pairing (#f8f8f8 fill + #dddddd border) instead of a borderless plain white'],
+      ]},
+      {version:'1.17.0', date:'2026-07-06', author:'Mo', title:'Bottom Sheets', changes:[
+        ['added','Bottom Sheets section — SheetHeader component (compact/full screen, with/without back arrow), quick-copy mockups, footer button-group building block, and a fully interactive playground'],
+      ]},
       {version:'1.16.0', date:'2026-07-06', author:'Mo', title:'Text Inputs v2 (Trader)', changes:[
         ['added','Text Inputs v2 section — Input (floating-label box) and Search (pill) families pulled from Figma’s Master Input Component'],
-        ['added','Shared Background property (Colour/White/Grey) on both families — picks the fill/border pairing that keeps the field visible against the page surface it sits on'],
-        ['added','Input family: 2 sizes × 3 backgrounds × leading icon × 3 independent trailing slots (single icon, link text, double icon) × helper text × Default/Focus states'],
-        ['added','Search family: 2 sizes × 3 backgrounds × Inline/Caption label type × Default/Focus/Typing/Complete states'],
+        ['added','Input family: 2 sizes × leading icon × 3 independent trailing slots (single icon, link text, double icon) × helper text × Default/Focus states'],
+        ['added','Search family: 2 sizes × Inline/Caption label type × Colour/White/Grey background × Default/Focus/Typing/Complete states'],
         ['added','Interactive playground with family switch and live code panel (HTML/CSS, Blazor, React TSX)'],
       ]},
       {version:'1.15.0', date:'2026-07-06', author:'Helen', title:'Data Display — filter chips', changes:[
@@ -4992,13 +5085,17 @@ const CHANGELOG = {
         ['added','9 input types, 2 sizes, interactive playground, full reference grid'],
       ]},
     ]},
-    {secId:'s-inputs-v2', name:'Text Inputs v2', version:'1.0.0', entries:[
+    {secId:'s-inputs-v2', name:'Text Inputs v2', version:'1.1.0', entries:[
+      {version:'1.1.0', date:'2026-07-06', author:'Mo', title:'Shared Background property', changes:[
+        ['added','Background property (Colour/White/Grey) added to the Input family, matching Figma\'s node 4644:16572 — adapts fill/border to the page surface the field sits on'],
+        ['fixed','Search family\'s White background corrected to the spec fill/border pairing (#f8f8f8 fill + #dddddd border) instead of a borderless plain white'],
+        ['added','Reference grid: each of the 7 Input presets now has its own independent Background switch alongside light/dark'],
+      ]},
       {version:'1.0.0', date:'2026-07-06', author:'Mo', title:'Initial release', changes:[
-        ['added','Input family (floating-label box) — 2 sizes, 3 backgrounds, leading icon, 3 independent trailing slots, helper text, Default/Focus states'],
-        ['added','Search family (pill) — 2 sizes, 3 backgrounds, Inline/Caption label type, Default/Focus/Typing/Complete states'],
-        ['added','Background property (Colour/White/Grey) shared by both families, matching Figma\'s node 4644:16572 — adapts fill/border to the page surface the field sits on'],
+        ['added','Input family (floating-label box) — 2 sizes, leading icon, 3 independent trailing slots, helper text, Default/Focus states'],
+        ['added','Search family (pill) — 2 sizes, Inline/Caption label type, Colour/White/Grey background, Default/Focus/Typing/Complete states'],
         ['added','Interactive playground with Input/Search family switch and HTML/CSS · Blazor · React TSX code panel'],
-        ['added','Full reference grid — 7 Input presets (each with an independent Background switch) and 6 Search Type×Background combinations, every state and both sizes'],
+        ['added','Full reference grid — 7 Input presets and 6 Search Type×Background combinations, each across every state and both sizes'],
       ]},
     ]},
     {secId:'s-selection', name:'Checkboxes & Radios', version:'1.0.0', entries:[
@@ -5034,9 +5131,13 @@ const CHANGELOG = {
         ['changed','Planned for next session'],
       ]},
     ]},
-    {secId:'s-drawers', name:'Drawers', version:'0.0.0', entries:[
-      {version:'0.0.0', date:'—', title:'Not yet started', changes:[
-        ['changed','Planned for next session'],
+    {secId:'s-drawers', name:'Bottom Sheets', version:'1.0.0', entries:[
+      {version:'1.0.0', date:'2026-07-06', author:'Mo', title:'Initial release', changes:[
+        ['added','Bottom Sheets section — SheetHeader building block with 4 drawer-sheet variants (compact/full screen × with/without back arrow) plus the dialog-usage header variant'],
+        ['added','Quick copy — ready-made compact and full-screen sheet mockups with header, body and footer button group'],
+        ['added','Footer building block reference — Horizontal, Vertical and Mix button-group layouts'],
+        ['added','Interactive playground — live phone-frame simulation with open/close, back arrow, full screen, footer layout and editable copy controls, plus a view-code panel'],
+        ['added','Usage guidance for when to reach for a bottom sheet vs. a dialog'],
       ]},
     ]},
     {secId:'s-toasts', name:'Toasts & Snackbars', version:'0.0.0', entries:[
@@ -5116,6 +5217,325 @@ function renderChangelog() {
     <div class="type-sub__desc">Individual version history for each foundation and component. Click a name to jump to that section.</div>
     <div style="margin-top:16px">${compHtml}</div>`;
 }
+
+/* ============================================================
+   BOTTOM SHEETS
+============================================================ */
+function bshEsc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&#60;').replace(/>/g,'&#62;').replace(/"/g,'&quot;'); }
+
+function bshIconClose(size, color){
+  return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="${color}" stroke-width="2.4" stroke-linecap="round"/></svg>`;
+}
+function bshIconBack(size, color){
+  return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7 7 7" stroke="${color}" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+}
+function bshStatusBarHTML(color){
+  return `<svg width="15" height="11" viewBox="0 0 16 11" fill="none"><path d="M1 4.2c4-3.6 10-3.6 14 0" stroke="${color}" stroke-width="1.3" stroke-linecap="round"/><path d="M3.3 6.6c2.6-2.2 6.8-2.2 9.4 0" stroke="${color}" stroke-width="1.3" stroke-linecap="round"/><circle cx="8" cy="9" r="1.1" fill="${color}"/></svg><svg width="15" height="11" viewBox="0 0 16 11" fill="none"><rect x="1" y="5" width="2" height="5" fill="${color}"/><rect x="5" y="3" width="2" height="7" fill="${color}"/><rect x="9" y="1" width="2" height="9" fill="${color}"/><rect x="13" y="4" width="2" height="6" fill="${color}" opacity=".35"/></svg><svg width="20" height="11" viewBox="0 0 21 11" fill="none"><rect x="1" y="1.5" width="16" height="8" rx="2" stroke="${color}" stroke-width="1.2"/><rect x="18" y="4" width="1.6" height="3" rx="0.6" fill="${color}"/><rect x="2.5" y="3" width="11" height="5" rx="1" fill="${color}"/></svg>`;
+}
+
+/* ── Shared builders (used by Quick copy, reference grid and Playground) ── */
+function bshBuildFooter(layout, theme){
+  const footer = document.createElement('div');
+  footer.className = 'bsh-sheet__footer' + (layout==='vertical' ? ' is-vertical' : layout==='mix' ? ' is-mix' : '');
+  if(layout==='vertical'){
+    footer.appendChild(makeBtnEl('flash', theme, 'primary', 'reg', false, 'Confirm'));
+    footer.appendChild(makeBtnEl('flash', theme, 'secondary', 'reg', false, 'Cancel'));
+  } else if(layout==='mix'){
+    footer.appendChild(makeBtnEl('flash', theme, 'primary', 'reg', false, 'Confirm'));
+    const row = document.createElement('div');
+    row.className = 'bsh-sheet__footer-row';
+    row.appendChild(makeBtnEl('flash', theme, 'secondary', 'reg', false, 'Save for later'));
+    row.appendChild(makeBtnEl('flash', theme, 'secondary', 'reg', false, 'Cancel'));
+    footer.appendChild(row);
+    footer.appendChild(makeBtnEl('flash', theme, 'link', 'reg', false, 'Learn more'));
+  } else {
+    footer.appendChild(makeBtnEl('flash', theme, 'secondary', 'reg', false, 'Cancel'));
+    footer.appendChild(makeBtnEl('flash', theme, 'primary', 'reg', false, 'Confirm'));
+  }
+  return footer;
+}
+
+function bshBuildSheetEl({backArrow, fullScreen, title, body, footerLayout, theme, onClose, onBack}){
+  const wrap = document.createElement('div');
+  wrap.className = 'bsh-sheet ' + (fullScreen ? 'bsh-sheet--full' : 'bsh-sheet--compact');
+
+  const handle = document.createElement('div');
+  handle.className = 'bsh-sheet__handle';
+  wrap.appendChild(handle);
+
+  const header = document.createElement('div');
+  header.className = 'bsh-sheet__header';
+  if(backArrow){
+    const b = document.createElement('button');
+    b.type = 'button'; b.className = 'bsh-sheet__back'; b.setAttribute('aria-label','Back');
+    b.innerHTML = bshIconBack(18,'currentColor');
+    b.onclick = onBack || onClose || null;
+    header.appendChild(b);
+  }
+  const t = document.createElement('span');
+  t.className = 'bsh-sheet__title';
+  t.textContent = title || 'Header title here';
+  header.appendChild(t);
+  const x = document.createElement('button');
+  x.type = 'button'; x.className = 'bsh-sheet__close'; x.setAttribute('aria-label','Close');
+  x.innerHTML = bshIconClose(16,'currentColor');
+  x.onclick = onClose || null;
+  header.appendChild(x);
+  wrap.appendChild(header);
+
+  const bodyEl = document.createElement('div');
+  bodyEl.className = 'bsh-sheet__body';
+  const ph = document.createElement('div');
+  ph.className = 'bsh-sheet__placeholder';
+  ph.textContent = body || 'Content goes here';
+  bodyEl.appendChild(ph);
+  wrap.appendChild(bodyEl);
+
+  wrap.appendChild(bshBuildFooter(footerLayout || 'horizontal', theme));
+  return wrap;
+}
+
+function bshBuildPhone({theme, contentEl}){
+  const phone = document.createElement('div');
+  phone.className = 'bsh-phone';
+  const status = document.createElement('div');
+  status.className = 'bsh-phone__status';
+  status.innerHTML = bshStatusBarHTML(theme==='dark' ? '#fff' : '#000');
+  phone.appendChild(status);
+  if(contentEl) phone.appendChild(contentEl);
+  return phone;
+}
+
+/* ── Quick copy ── */
+function renderBshQuickCopy(){
+  const root = document.getElementById('bsh-quickcopy');
+  if(!root) return;
+  const theme = document.documentElement.getAttribute('data-theme')==='dark' ? 'dark' : 'light';
+
+  root.innerHTML = `
+    <div class="bshqc">
+      <div class="bshqc__title">Quick copy</div>
+      <div class="bshqc__desc">Ready-made instances for the two default shapes &mdash; grab one if you just need a working sheet on the canvas.</div>
+      <div class="bshqc__row">
+        <div class="bshqc__item"><div id="bsh-qc-compact"></div><div class="bshqc__label">Compact</div></div>
+        <div class="bshqc__item"><div id="bsh-qc-full"></div><div class="bshqc__label">Full screen</div></div>
+      </div>
+    </div>`;
+
+  const compactContent = document.createElement('div');
+  compactContent.className = 'bsh-phone__content';
+  const compactOverlay = document.createElement('div');
+  compactOverlay.className = 'bsh-phone__overlay';
+  const compactPhone = bshBuildPhone({theme, contentEl: null});
+  compactPhone.appendChild(compactOverlay);
+  compactPhone.appendChild(bshBuildSheetEl({backArrow:false, fullScreen:false, title:'Header title here', body:'Content goes here', footerLayout:'horizontal', theme}));
+  document.getElementById('bsh-qc-compact').appendChild(compactPhone);
+
+  const fullOverlay = document.createElement('div');
+  fullOverlay.className = 'bsh-phone__overlay';
+  const fullPhone = bshBuildPhone({theme, contentEl: null});
+  fullPhone.appendChild(fullOverlay);
+  fullPhone.appendChild(bshBuildSheetEl({backArrow:true, fullScreen:true, title:'Header title here', body:'Content goes here', footerLayout:'horizontal', theme}));
+  document.getElementById('bsh-qc-full').appendChild(fullPhone);
+}
+
+/* ── SheetHeader reference grid ── */
+const BSH_HEADER_VARIANTS = [
+  {key:'default',  label:'Default',                 backArrow:false, fullScreen:false, usage:'drawer'},
+  {key:'back',     label:'Back arrow',               backArrow:true,  fullScreen:false, usage:'drawer'},
+  {key:'full',     label:'Full screen',              backArrow:false, fullScreen:true,  usage:'drawer'},
+  {key:'fullback', label:'Full screen + back arrow', backArrow:true,  fullScreen:true,  usage:'drawer'},
+  {key:'dialog',   label:'Dialog usage',             backArrow:false, fullScreen:false, usage:'dialog'},
+];
+
+function bshBuildHeaderOnlyEl({backArrow, fullScreen, usage, theme}){
+  const wrap = document.createElement('div');
+  wrap.className = 'bsh-ref__header' + (usage==='dialog' ? ' is-dialog' : '');
+  if(fullScreen){
+    const status = document.createElement('div');
+    status.className = 'bsh-phone__status';
+    status.innerHTML = bshStatusBarHTML(theme==='dark' ? '#fff' : '#000');
+    wrap.appendChild(status);
+  }
+  if(usage==='drawer'){
+    const handle = document.createElement('div');
+    handle.className = 'bsh-sheet__handle';
+    wrap.appendChild(handle);
+  }
+  const header = document.createElement('div');
+  header.className = 'bsh-sheet__header';
+  if(backArrow){
+    const b = document.createElement('span');
+    b.className = 'bsh-sheet__back';
+    b.innerHTML = bshIconBack(18,'currentColor');
+    header.appendChild(b);
+  }
+  const t = document.createElement('span');
+  t.className = 'bsh-sheet__title';
+  t.textContent = 'Header title here';
+  header.appendChild(t);
+  const x = document.createElement('span');
+  x.className = 'bsh-sheet__close';
+  x.innerHTML = bshIconClose(16,'currentColor');
+  header.appendChild(x);
+  wrap.appendChild(header);
+  return wrap;
+}
+
+function renderBshHeaderRef(){
+  const root = document.getElementById('bsh-header-ref');
+  if(!root) return;
+  const theme = document.documentElement.getAttribute('data-theme')==='dark' ? 'dark' : 'light';
+  const cards = BSH_HEADER_VARIANTS.map(v=>`<div class="bsh-ref__card"><div id="bsh-hdr-${v.key}"></div><div class="bsh-ref__label">${v.label}</div></div>`).join('');
+  root.innerHTML = `
+    <div class="type-sub__title">SheetHeader building block</div>
+    <div class="type-sub__desc">The same header powers both usages &mdash; a drag handle for drawer sheets (dismissible by swipe), no handle for dialogs. Full screen variants sit flush with the top of the device, so they carry their own status row. The optional back arrow marks a sheet as one step in a flow.</div>
+    <div class="bsh-ref">${cards}</div>`;
+  BSH_HEADER_VARIANTS.forEach(v=>{
+    document.getElementById(`bsh-hdr-${v.key}`).appendChild(bshBuildHeaderOnlyEl({backArrow:v.backArrow, fullScreen:v.fullScreen, usage:v.usage, theme}));
+  });
+}
+
+/* ── Footer building block reference ── */
+const BSH_FOOTER_LAYOUTS = [
+  {key:'horizontal', label:'Horizontal'},
+  {key:'vertical',   label:'Vertical'},
+  {key:'mix',        label:'Mix'},
+];
+
+function renderBshFooterRef(){
+  const root = document.getElementById('bsh-footer-ref');
+  if(!root) return;
+  const theme = document.documentElement.getAttribute('data-theme')==='dark' ? 'dark' : 'light';
+  root.innerHTML = `
+    <div class="type-sub__title">Footer button group</div>
+    <div class="type-sub__desc">Shared building block for the sheet footer &mdash; not specific to bottom sheets, but this is where it shows up most. Three layouts cover most footer needs.</div>
+    <div class="bsh-footer-ref">
+      ${BSH_FOOTER_LAYOUTS.map(l=>`<div class="bsh-footer-ref__card"><div class="bsh-footer-ref__label">${l.label}</div><div id="bsh-foot-${l.key}"></div></div>`).join('')}
+    </div>`;
+  BSH_FOOTER_LAYOUTS.forEach(l=>{
+    document.getElementById(`bsh-foot-${l.key}`).appendChild(bshBuildFooter(l.key, theme));
+  });
+}
+
+/* ── Interactive playground ── */
+let bsh = { backArrow:false, fullScreen:false, footerLayout:'horizontal', title:'Header title here', body:'Content goes here', open:false, theme:'light', codeOpen:false };
+
+function renderBshPlayground(){
+  const root = document.getElementById('bsh-playground');
+  if(!root) return;
+  bsh.theme = document.documentElement.getAttribute('data-theme')==='dark' ? 'dark' : 'light';
+
+  const backBtns   = ['off','on'].map(x=>`<button class="btn-pg__pill${(bsh.backArrow?(x==='on'):(x==='off'))?' on':''}" onclick="bshSet('backArrow','${x}')">${x==='on'?'Back arrow':'No back arrow'}</button>`).join('');
+  const fsBtns     = ['off','on'].map(x=>`<button class="btn-pg__pill${(bsh.fullScreen?(x==='on'):(x==='off'))?' on':''}" onclick="bshSet('fullScreen','${x}')">${x==='on'?'Full screen':'Compact'}</button>`).join('');
+  const layoutBtns = BSH_FOOTER_LAYOUTS.map(l=>`<button class="btn-pg__pill${bsh.footerLayout===l.key?' on':''}" onclick="bshSet('footerLayout','${l.key}')">${l.label}</button>`).join('');
+
+  root.innerHTML = `
+    <div class="type-sub__title">Playground</div>
+    <div class="type-sub__desc">Tap &ldquo;Open bottom sheet&rdquo;, then try the controls &mdash; back arrow, screen and footer layout all update the live sheet. Close it with the &times;, the back arrow, or by tapping the overlay.</div>
+    <div class="btn-pg">
+      <div class="btn-pg__stage bsh-pg-stage" id="bsh-pg-stage" style="background:${stageBg(bsh.theme)}"></div>
+      <div class="btn-pg__ctrls">
+        <div class="btn-pg__group"><span class="btn-pg__clabel">Back arrow</span><div class="btn-pg__pill-row">${backBtns}</div></div>
+        <div class="btn-pg__group"><span class="btn-pg__clabel">Screen</span><div class="btn-pg__pill-row">${fsBtns}</div></div>
+        <div class="btn-pg__group"><span class="btn-pg__clabel">Footer</span><div class="btn-pg__pill-row">${layoutBtns}</div></div>
+        <div class="btn-pg__group"><span class="btn-pg__clabel">Title</span><input class="cpg-label-input" id="bsh-title-input" value="${bshEsc(bsh.title)}" maxlength="40" oninput="bshSetText('title',this.value)" placeholder="Header title here"></div>
+        <div class="btn-pg__group"><span class="btn-pg__clabel">Body</span><input class="cpg-label-input" id="bsh-body-input" value="${bshEsc(bsh.body)}" maxlength="60" oninput="bshSetText('body',this.value)" placeholder="Content goes here"></div>
+      </div>
+      <div class="code-panel${bsh.codeOpen?' open':''}" id="bsh-code-panel">
+        <div class="code-panel__head" onclick="bshToggleCode()">
+          <span class="code-panel__label">&#60;/&#62; &nbsp;View code</span>
+          <button class="code-copy-btn" onclick="event.stopPropagation();bshCopyCode()" id="bsh-copy-btn">Copy</button>
+        </div>
+        <div class="code-body"><div class="code-block" id="bsh-code-block"></div></div>
+      </div>
+    </div>`;
+
+  bshRefreshStage();
+}
+
+function bshSet(key, val){
+  if(key==='backArrow') bsh.backArrow = (val==='on');
+  else if(key==='fullScreen') bsh.fullScreen = (val==='on');
+  else bsh[key] = val;
+  bsh.open = false;
+  renderBshPlayground();
+}
+function bshSetText(field, val){
+  bsh[field] = val;
+  bshRefreshStage();
+}
+function bshOpen(){ bsh.open = true; bshRefreshStage(); }
+function bshClose(){ bsh.open = false; bshRefreshStage(); }
+
+function bshRefreshStage(){
+  const stage = document.getElementById('bsh-pg-stage');
+  if(stage){
+    stage.style.background = stageBg(bsh.theme);
+    stage.innerHTML = '';
+
+    const content = document.createElement('div');
+    content.className = 'bsh-phone__content';
+    if(!bsh.open){
+      const trig = makeBtnEl('flash', bsh.theme, 'accent', 'reg', false, 'Open bottom sheet', null);
+      trig.onclick = bshOpen;
+      content.appendChild(trig);
+    }
+
+    const phone = bshBuildPhone({theme: bsh.theme, contentEl: content});
+    if(bsh.open){
+      const ov = document.createElement('div');
+      ov.className = 'bsh-phone__overlay';
+      ov.onclick = bshClose;
+      phone.appendChild(ov);
+      phone.appendChild(bshBuildSheetEl({
+        backArrow: bsh.backArrow, fullScreen: bsh.fullScreen,
+        title: bsh.title, body: bsh.body, footerLayout: bsh.footerLayout,
+        theme: bsh.theme, onClose: bshClose, onBack: bshClose,
+      }));
+    }
+    stage.appendChild(phone);
+  }
+  const block = document.getElementById('bsh-code-block');
+  if(block) block.innerHTML = bshGetCodeHTML();
+}
+
+function bshToggleCode(){
+  const p = document.getElementById('bsh-code-panel');
+  if(p){ p.classList.toggle('open'); bsh.codeOpen = p.classList.contains('open'); }
+}
+function bshCopyCode(){
+  const b = document.getElementById('bsh-code-block');
+  if(!b) return;
+  navigator.clipboard.writeText(b.innerText||b.textContent).catch(()=>{});
+  const btn = document.getElementById('bsh-copy-btn');
+  if(btn){ btn.textContent = 'Copied!'; setTimeout(()=>btn.textContent='Copy', 2000); }
+}
+
+function bshGetCodeHTML(){
+  const back = bsh.backArrow, full = bsh.fullScreen;
+  const footerBtns = bsh.footerLayout==='horizontal'
+    ? `\n    <span class="code-kw">&#60;button</span> <span class="code-cls">class</span>=<span class="code-val">"ds-btn ds-btn--reg ds-btn--secondary"</span><span class="code-kw">></span>Cancel<span class="code-kw">&#60;/button></span>\n    <span class="code-kw">&#60;button</span> <span class="code-cls">class</span>=<span class="code-val">"ds-btn ds-btn--reg ds-btn--primary"</span><span class="code-kw">></span>Confirm<span class="code-kw">&#60;/button></span>`
+    : bsh.footerLayout==='vertical'
+    ? `\n    <span class="code-kw">&#60;button</span> <span class="code-cls">class</span>=<span class="code-val">"ds-btn ds-btn--reg ds-btn--primary"</span><span class="code-kw">></span>Confirm<span class="code-kw">&#60;/button></span>\n    <span class="code-kw">&#60;button</span> <span class="code-cls">class</span>=<span class="code-val">"ds-btn ds-btn--reg ds-btn--secondary"</span><span class="code-kw">></span>Cancel<span class="code-kw">&#60;/button></span>`
+    : `\n    <span class="code-kw">&#60;button</span> <span class="code-cls">class</span>=<span class="code-val">"ds-btn ds-btn--reg ds-btn--primary"</span><span class="code-kw">></span>Confirm<span class="code-kw">&#60;/button></span>\n    <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"bsh-sheet__footer-row"</span><span class="code-kw">></span>\n      <span class="code-kw">&#60;button</span> <span class="code-cls">class</span>=<span class="code-val">"ds-btn ds-btn--reg ds-btn--secondary"</span><span class="code-kw">></span>Save for later<span class="code-kw">&#60;/button></span>\n      <span class="code-kw">&#60;button</span> <span class="code-cls">class</span>=<span class="code-val">"ds-btn ds-btn--reg ds-btn--secondary"</span><span class="code-kw">></span>Cancel<span class="code-kw">&#60;/button></span>\n    <span class="code-kw">&#60;/div></span>\n    <span class="code-kw">&#60;a</span> <span class="code-cls">class</span>=<span class="code-val">"ds-btn ds-btn--reg ds-btn--link"</span><span class="code-kw">></span>Learn more<span class="code-kw">&#60;/a></span>`;
+
+  return `<span class="code-cm">/* Flash &middot; ${cap(bsh.footerLayout)} footer ${full?'&middot; Full screen':'&middot; Compact'}${back?' &middot; Back arrow':''} */</span>
+<span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"bsh-sheet ${full?'bsh-sheet--full':'bsh-sheet--compact'}"</span><span class="code-kw">></span>
+  ${full ? '' : `<span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"bsh-sheet__handle"</span><span class="code-kw">>&#60;/div></span>\n  `}<span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"bsh-sheet__header"</span><span class="code-kw">></span>
+    ${back ? `<span class="code-kw">&#60;button</span> <span class="code-cls">class</span>=<span class="code-val">"bsh-sheet__back"</span><span class="code-kw">>&#60;/button></span>\n    ` : ''}<span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"bsh-sheet__title"</span><span class="code-kw">></span>${bshEsc(bsh.title||'Header title here')}<span class="code-kw">&#60;/span></span>
+    <span class="code-kw">&#60;button</span> <span class="code-cls">class</span>=<span class="code-val">"bsh-sheet__close"</span> <span class="code-attr">aria-label</span>=<span class="code-val">"Close"</span><span class="code-kw">>&#60;/button></span>
+  <span class="code-kw">&#60;/div></span>
+  <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"bsh-sheet__body"</span><span class="code-kw">></span>${bshEsc(bsh.body||'Content goes here')}<span class="code-kw">&#60;/div></span>
+  <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"bsh-sheet__footer"</span><span class="code-kw">></span>${footerBtns}
+  <span class="code-kw">&#60;/div></span>
+<span class="code-kw">&#60;/div></span>`;
+}
+
+try { renderBshQuickCopy(); } catch(e){ console.error('bsh-quickcopy',e); }
+try { renderBshHeaderRef(); } catch(e){ console.error('bsh-header-ref',e); }
+try { renderBshFooterRef(); } catch(e){ console.error('bsh-footer-ref',e); }
+try { renderBshPlayground(); } catch(e){ console.error('bsh-playground',e); }
 
 /* Inject a collapsible changelog block at the end of each section */
 function renderSectionChangelogs() {
