@@ -1252,6 +1252,52 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
 .dd-chips__clear:hover{color:var(--chrome-txt)}
 
 /* ================================================================
+   TABS
+================================================================ */
+/* Tabs list — the horizontal strip with the shared bottom divider */
+.tabs-list{display:flex;align-items:flex-start;gap:0;border-bottom:2px solid var(--chrome-border);overflow-x:auto;-webkit-overflow-scrolling:touch}
+.tabs-list::-webkit-scrollbar{height:0}
+
+/* Tab item */
+.tab-item{position:relative;display:flex;flex-direction:column;align-items:stretch;flex-shrink:0;background:none;border:none;padding:0;margin:0;cursor:pointer;font-family:inherit;color:inherit}
+.tab-item__inner{display:flex;align-items:center;justify-content:center;height:56px;gap:8px;padding:4px 20px}
+.tab-item__icon{display:flex;align-items:center;justify-content:center;flex-shrink:0;padding:4px;border-radius:6px;background:var(--color-surface-n2);color:var(--color-text-1)}
+.tab-item__icon svg{width:12px;height:12px;display:block}
+.tab-item__label{font-size:16px;font-weight:500;line-height:1.25;color:var(--color-text-3);white-space:nowrap;transition:color .15s ease}
+/* active underline — straddles the 2px divider */
+.tab-item__line{position:absolute;left:0;right:0;bottom:-2px;height:4px;border-radius:4px;background:var(--color-surface-inverse);opacity:0;transition:opacity .15s ease}
+
+/* Hover state */
+.tab-item:hover .tab-item__label,
+.tab-item--hover .tab-item__label{color:var(--color-text-1)}
+
+/* Active state */
+.tab-item.on .tab-item__label,
+.tab-item--active .tab-item__label{color:var(--color-text-1);font-weight:650}
+.tab-item.on .tab-item__line,
+.tab-item--active .tab-item__line{opacity:1}
+
+/* Small size */
+.tab-item--sm .tab-item__inner{height:46px;gap:6px;padding:4px 12px}
+.tab-item--sm .tab-item__label{font-size:13px;line-height:1.3}
+.tab-item--sm .tab-item__icon svg{width:11px;height:11px}
+.tab-item--sm .tab-item__line{bottom:0;height:3px}
+
+/* Panels revealed by the interactive playground */
+.tabs-panel{display:none;padding:22px 4px 4px;font-size:13.5px;line-height:1.6;color:var(--chrome-muted)}
+.tabs-panel.on{display:block;animation:tabsPanelIn .2s ease}
+.tabs-panel strong{color:var(--chrome-txt)}
+@keyframes tabsPanelIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+
+/* Showcase surface so tab swatches sit on a clean board in both themes */
+.tabs-demo{border:1px solid var(--chrome-border);border-radius:12px;padding:6px 20px 0;background:var(--chrome-bg);overflow:hidden}
+.tabs-demo--pad{padding:22px 20px}
+.tabs-swatchgrid{display:flex;flex-wrap:wrap;gap:14px 28px}
+.tabs-swatch{display:flex;flex-direction:column;gap:10px}
+.tabs-swatch__cap{font-size:10.5px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--chrome-muted)}
+.tabs-swatch .tabs-list{border-bottom-width:2px}
+
+/* ================================================================
    CHECKBOXES & RADIO BUTTONS
 ================================================================ */
 .fsel{display:inline-flex;align-items:center;gap:9px;cursor:pointer;font-family:inherit;font-size:14px;line-height:1.2;color:var(--chrome-txt);-webkit-user-select:none;user-select:none}
@@ -1427,6 +1473,7 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
     <a href="javascript:void(0)" onclick="showSection('s-drawers')" class="sb-link"><div class="sb-pip"></div>Bottom Sheets</a>
     <a href="javascript:void(0)" onclick="showSection('s-toasts')"  class="sb-link"><div class="sb-pip"></div>Toasts</a>
     <a href="javascript:void(0)" onclick="showSection('s-nav')"     class="sb-link"><div class="sb-pip"></div>Navigation</a>
+    <a href="javascript:void(0)" onclick="showSection('s-tabs')"    class="sb-link"><div class="sb-pip"></div>Tabs</a>
     <a href="javascript:void(0)" onclick="showSection('s-data')"    class="sb-link"><div class="sb-pip"></div>Data Display</a>
     <div class="sb-cat">About</div>
     <a href="javascript:void(0)" onclick="showSection('s-changelog')" class="sb-link"><div class="sb-pip"></div>Changelog</a>
@@ -1793,6 +1840,81 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
     </section>
     <section class="sec" id="s-toasts"><div class="sec__head"><div class="sec__eye">Components</div><h1 class="sec__title">Toasts &amp; Snackbars</h1></div><div class="coming">Coming in a future session</div></section>
     <section class="sec" id="s-nav"><div class="sec__head"><div class="sec__eye">Components</div><h1 class="sec__title">Navigation</h1></div><div class="coming">Coming in a future session</div></section>
+    <section class="sec" id="s-tabs">
+      <div class="sec__head">
+        <div class="sec__eye">Components</div>
+        <h1 class="sec__title">Tabs <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.0</span></h1>
+        <p class="sec__desc">A horizontal tab bar for switching between views within a single screen. Built from a <strong>Tab item</strong> (with or without a leading icon, in Regular or Small) composed into a <strong>Tabs list</strong> that shares one bottom divider. The active tab is marked by a weighted label and an inverse underline. Adapts to light &amp; dark via semantic tokens.</p>
+      </div>
+
+      <div class="type-sub">
+        <div class="type-sub__title">Interactive</div>
+        <div class="type-sub__desc">A working Tabs list &mdash; click any tab to switch the panel below. Only one tab is active at a time; the underline slides to the selected item.</div>
+        <div class="tabs-demo" id="tabs-play"></div>
+      </div>
+
+      <div class="type-sub">
+        <div class="type-sub__title">Sizes</div>
+        <div class="type-sub__desc"><strong>Regular</strong> (56px tall, 16px label) is the default for primary, page-level navigation. <strong>Small</strong> (46px tall, 13px label) suits denser or secondary contexts such as inside a card or panel.</div>
+        <div class="tabs-demo tabs-demo--pad"><div class="tabs-swatchgrid" id="tabs-sizes"></div></div>
+      </div>
+
+      <div class="type-sub">
+        <div class="type-sub__title">With &amp; without icon</div>
+        <div class="type-sub__desc">A tab item can carry an optional leading icon in a rounded neutral chip. Use icons only when they add scanning value &mdash; keep every tab in a list consistent, either all with icons or all without.</div>
+        <div class="tabs-demo tabs-demo--pad"><div class="tabs-swatchgrid" id="tabs-icon"></div></div>
+      </div>
+
+      <div class="type-sub">
+        <div class="type-sub__title">States</div>
+        <div class="type-sub__desc">Every tab item resolves to one of three states. <strong>Inactive</strong> uses tertiary text at medium weight; <strong>Hover</strong> lifts the label to primary text; <strong>Active</strong> keeps primary text at semibold and adds the underline. Shown here for both sizes, with and without the icon.</div>
+        <div class="tabs-demo tabs-demo--pad"><div class="tabs-swatchgrid" id="tabs-states"></div></div>
+      </div>
+
+      <div class="type-sub">
+        <div class="type-sub__title">Anatomy &amp; specs</div>
+        <div class="type-sub__desc">Measurements and tokens per size. The active underline straddles the list&rsquo;s 2px divider so it reads as a single continuous edge.</div>
+        <div class="dd-table-wrap">
+          <table class="dd-table">
+            <thead><tr><th>Property</th><th>Regular</th><th>Small</th><th>Token</th></tr></thead>
+            <tbody>
+              <tr><td class="dd-table__name">Height</td><td>56px</td><td>46px</td><td>&mdash;</td></tr>
+              <tr><td class="dd-table__name">Horizontal padding</td><td>20px</td><td>12px</td><td>spacing-250 / spacing-150</td></tr>
+              <tr><td class="dd-table__name">Vertical padding</td><td>4px</td><td>4px</td><td>spacing-050</td></tr>
+              <tr><td class="dd-table__name">Icon &harr; label gap</td><td>8px</td><td>6px</td><td>spacing-100 / spacing-075</td></tr>
+              <tr><td class="dd-table__name">Label size</td><td>16px</td><td>13px</td><td>Body m / Body s</td></tr>
+              <tr><td class="dd-table__name">Icon chip</td><td>12px icon, 4px pad, 6px radius</td><td>11px icon, 4px pad, 6px radius</td><td>surface-n2 &middot; radius-xsmall</td></tr>
+              <tr><td class="dd-table__name">Active underline</td><td>4px tall, offset &minus;2px</td><td>3px tall, flush</td><td>surface-inverse</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="type-sub">
+        <div class="type-sub__title">When to use</div>
+        <div class="type-sub__desc">Tabs switch between peer views of the same context without leaving the screen &mdash; they are not a substitute for primary navigation between destinations.</div>
+        <div class="sel-usage">
+          <div class="sel-usage__card">
+            <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
+            <ul class="sel-usage__list">
+              <li>Use tabs to switch between related views of one object &mdash; Overview, Activity, Settings.</li>
+              <li>Keep exactly one tab active at all times, and default to the most useful view.</li>
+              <li>Keep labels short and parallel &mdash; ideally one or two words each.</li>
+              <li>Pick one size and one icon treatment for the whole list, and stay consistent.</li>
+            </ul>
+          </div>
+          <div class="sel-usage__card">
+            <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don&rsquo;t</div>
+            <ul class="sel-usage__list">
+              <li>Don&rsquo;t use tabs to move between unrelated destinations &mdash; that&rsquo;s navigation, not tabs.</li>
+              <li>Don&rsquo;t mix icon and no-icon tabs, or Regular and Small, in the same list.</li>
+              <li>Don&rsquo;t overflow with too many tabs &mdash; if it scrolls a lot, reconsider the structure.</li>
+              <li>Don&rsquo;t leave the list with no active tab, or with more than one active at once.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
     <section class="sec" id="s-data">
       <div class="sec__head">
         <div class="sec__eye">Components</div>
@@ -4803,12 +4925,16 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.18.0';
+const SYSTEM_VERSION = '1.19.0';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.19.0', date:'2026-07-08', author:'Mo', title:'Tabs', changes:[
+        ['added','Tabs section — Tab item (Regular/Small × with/without icon × Inactive/Hover/Active) composed into a Tabs list with a shared bottom divider'],
+        ['added','Interactive Tabs playground, size and icon comparisons, a full states matrix and an anatomy/spec table'],
+      ]},
       {version:'1.18.0', date:'2026-07-06', author:'Mo', title:'Global light/dark theme — one toggle for everything', changes:[
         ['changed','Light/dark is now driven entirely by the global toggle — every section, colour token, semantic table and component reference follows it'],
         ['removed','Per-section light/dark toggles from the Colour semantics table and the Buttons, Text Inputs, Text Inputs v2 and Checkboxes & Radios reference grids'],
@@ -5066,6 +5192,13 @@ const CHANGELOG = {
     {secId:'s-nav', name:'Navigation', version:'0.0.0', entries:[
       {version:'0.0.0', date:'—', title:'Not yet started', changes:[
         ['changed','Planned for a future session'],
+      ]},
+    ]},
+    {secId:'s-tabs', name:'Tabs', version:'1.0.0', entries:[
+      {version:'1.0.0', date:'2026-07-08', author:'Mo', title:'Tabs component', changes:[
+        ['added','Tab item — Regular/Small sizes, optional leading icon chip, and Inactive/Hover/Active states'],
+        ['added','Tabs list — items sharing one bottom divider, with the active tab marked by a weighted label and inverse underline'],
+        ['added','Interactive playground, size/icon comparisons, a full states matrix and an anatomy/spec table'],
       ]},
     ]},
     {secId:'s-data', name:'Data Display', version:'1.3.0', entries:[
@@ -5485,6 +5618,104 @@ function renderSectionChangelogs() {
     else sec.appendChild(wrap);
   });
 }
+
+/* ── TABS ── */
+(function(){
+  var USER_ICON = '<svg viewBox="0 0 10.5 11" fill="none" xmlns="http://www.w3.org/2000/svg"><path transform="translate(-24.75,-22.5)" fill-rule="evenodd" clip-rule="evenodd" d="M32.4479 24.8119C32.4479 26.0887 31.3676 27.1237 30.035 27.1237C28.7024 27.1237 27.6221 26.0887 27.6221 24.8119C27.6221 23.5351 28.7024 22.5 30.035 22.5C31.3676 22.5 32.4479 23.5351 32.4479 24.8119ZM35.2235 30.8447C35.1916 30.9409 35.1397 31.0298 35.071 31.1062H35.0321C34.4324 31.8437 33.6649 32.4403 32.7882 32.8507C31.9114 33.2611 30.9485 33.4744 29.9728 33.4744C28.997 33.4744 28.0341 33.2611 27.1574 32.8507C26.2806 32.4403 25.5132 31.8437 24.9135 31.1062C24.7872 30.9463 24.729 30.7465 24.7507 30.5471C24.7723 30.3478 24.8723 30.1637 25.0302 30.0323C26.3975 28.865 28.1648 28.22 29.9961 28.22C31.8274 28.22 33.5948 28.865 34.962 30.0323C35.0448 30.0945 35.1136 30.1722 35.1642 30.2607C35.2148 30.3491 35.2461 30.4465 35.2563 30.5469C35.2665 30.6473 35.2553 30.7486 35.2235 30.8447Z" fill="currentColor"/></svg>';
+
+  // opts: {label, icon(bool), size:'reg'|'sm', state:'inactive'|'hover'|'active', el:'div'|'button'}
+  function tabItem(opts){
+    var tag = opts.el || 'button';
+    var cls = 'tab-item';
+    if(opts.size === 'sm') cls += ' tab-item--sm';
+    if(opts.state === 'hover')  cls += ' tab-item--hover';
+    if(opts.state === 'active') cls += ' tab-item--active';
+    var icon = opts.icon ? '<span class="tab-item__icon">' + USER_ICON + '</span>' : '';
+    return '<' + tag + ' type="button" class="' + cls + '">' +
+             '<span class="tab-item__inner">' + icon +
+               '<span class="tab-item__label">' + (opts.label || 'Tab item') + '</span>' +
+             '</span>' +
+             '<span class="tab-item__line"></span>' +
+           '</' + tag + '>';
+  }
+  function tabsList(items, size){
+    return '<div class="tabs-list">' + items.map(function(it){
+      it.size = size; return tabItem(it);
+    }).join('') + '</div>';
+  }
+  function swatch(cap, inner){
+    return '<div class="tabs-swatch"><div class="tabs-swatch__cap">' + cap + '</div>' + inner + '</div>';
+  }
+
+  // Interactive playground
+  var play = document.getElementById('tabs-play');
+  if(play){
+    var tabs = [
+      {label:'Overview',  icon:true, panel:'<strong>Overview.</strong> Tabs switch between peer views of the same context. This panel is shown because the Overview tab is active — clicking another tab moves the underline and swaps the content in place, without a page change.'},
+      {label:'Activity',  icon:true, panel:'<strong>Activity.</strong> A running log of recent events. Only one tab is ever active, so there is always exactly one panel visible.'},
+      {label:'Documents', icon:true, panel:'<strong>Documents.</strong> Files attached to this record. Keep tab labels short and parallel so the row stays scannable.'},
+      {label:'Settings',  icon:true, panel:'<strong>Settings.</strong> Configuration for this view. The Small size works well for secondary tab bars nested inside a panel like this one.'}
+    ];
+    play.innerHTML = tabsList(tabs, 'reg') +
+      tabs.map(function(t,i){ return '<div class="tabs-panel' + (i===0?' on':'') + '">' + t.panel + '</div>'; }).join('');
+    var items  = play.querySelectorAll('.tab-item');
+    var panels = play.querySelectorAll('.tabs-panel');
+    items[0].classList.add('on');
+    items.forEach(function(btn, i){
+      btn.addEventListener('click', function(){
+        items.forEach(function(b){ b.classList.remove('on'); });
+        panels.forEach(function(p){ p.classList.remove('on'); });
+        btn.classList.add('on');
+        if(panels[i]) panels[i].classList.add('on');
+      });
+    });
+  }
+
+  // Sizes
+  var sizes = document.getElementById('tabs-sizes');
+  if(sizes){
+    var listItems = [
+      {label:'Overview', icon:true, state:'active'},
+      {label:'Activity', icon:true},
+      {label:'Documents', icon:true}
+    ];
+    sizes.innerHTML =
+      swatch('Regular · 56px', tabsList(listItems.map(function(o){return Object.assign({},o);}), 'reg')) +
+      swatch('Small · 46px',   tabsList(listItems.map(function(o){return Object.assign({},o);}), 'sm'));
+  }
+
+  // With & without icon
+  var iconEl = document.getElementById('tabs-icon');
+  if(iconEl){
+    var withIcon = [{label:'Overview',icon:true,state:'active'},{label:'Activity',icon:true},{label:'Documents',icon:true}];
+    var noIcon   = [{label:'Overview',icon:false,state:'active'},{label:'Activity',icon:false},{label:'Documents',icon:false}];
+    iconEl.innerHTML =
+      swatch('With icon',    tabsList(withIcon, 'reg')) +
+      swatch('Without icon', tabsList(noIcon, 'reg'));
+  }
+
+  // States — every combination of size × icon × state
+  var states = document.getElementById('tabs-states');
+  if(states){
+    var order = [
+      {state:'inactive', cap:'Inactive'},
+      {state:'hover',    cap:'Hover'},
+      {state:'active',   cap:'Active'}
+    ];
+    var groups = [
+      {size:'reg', icon:true,  cap:'Regular · with icon'},
+      {size:'reg', icon:false, cap:'Regular · no icon'},
+      {size:'sm',  icon:true,  cap:'Small · with icon'},
+      {size:'sm',  icon:false, cap:'Small · no icon'}
+    ];
+    states.innerHTML = groups.map(function(g){
+      var row = order.map(function(o){
+        return tabItem({label:o.cap, icon:g.icon, size:g.size, state:o.state, el:'div'});
+      }).join('');
+      return swatch(g.cap, '<div class="tabs-list">' + row + '</div>');
+    }).join('');
+  }
+})();
 
 try { renderChangelog(); } catch(e){ console.error('changelog',e); }
 try { renderSectionChangelogs(); } catch(e){ console.error('section-changelog',e); }
