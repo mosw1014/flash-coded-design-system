@@ -395,27 +395,6 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
 .sem-wrap{padding-top:4px}
 
 /* ── Controls bar ── */
-.sem-controls{
-  display:flex;align-items:center;gap:8px;
-  padding:16px 0 14px;
-  border-bottom:1px solid var(--chrome-border);
-  margin-bottom:20px;
-}
-.sem-ctl-group{
-  display:flex;gap:2px;
-  background:var(--chrome-nav);
-  border:1px solid var(--chrome-border);
-  border-radius:7px;padding:2px;
-  transition:background .25s;
-}
-.sem-ctl-btn{
-  padding:5px 16px;border-radius:5px;border:none;cursor:pointer;
-  font-family:inherit;font-size:12px;font-weight:600;
-  color:var(--chrome-muted);background:transparent;transition:all .15s;
-}
-.sem-ctl-btn.on{background:var(--chrome-txt);color:var(--chrome-bg)}
-.sem-ctl-sep{width:1px;height:24px;background:var(--chrome-border);margin:0 6px;flex-shrink:0}
-
 /* Semantic view panels — all visible */
 .sem-panel{display:block}
 
@@ -812,9 +791,6 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
 .btn-accord-body{display:none;border-top:1px solid var(--chrome-border)}
 .btn-accord-item.open .btn-accord-body{display:block}
 .btn-ref-states{display:flex;flex-direction:column;gap:0}
-.btn-ref-theme-strip{display:flex;justify-content:flex-end;padding:12px 16px;border-bottom:1px solid var(--chrome-border);gap:4px}
-.btn-ref-theme-strip button{padding:3px 10px;border-radius:5px;border:none;cursor:pointer;font-family:inherit;font-size:11px;font-weight:600;color:var(--chrome-muted);background:var(--chrome-nav);transition:all .15s}
-.btn-ref-theme-strip button.on{background:var(--chrome-txt);color:var(--chrome-bg)}
 .btn-ref-row{display:flex;align-items:center;border-bottom:1px solid var(--chrome-border)}
 .btn-ref-row:last-child{border-bottom:none}
 .btn-ref-row-label{width:84px;flex-shrink:0;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--chrome-muted);padding:14px 16px;border-right:1px solid var(--chrome-border)}
@@ -1100,9 +1076,6 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
 .inp-ai.open .inp-ah-chev{transform:rotate(90deg)}
 .inp-ab{display:none;border-top:1px solid var(--chrome-border)}
 .inp-ai.open .inp-ab{display:block}
-.inp-ref-thead{display:flex;justify-content:flex-end;align-items:center;gap:6px;padding:10px 16px;border-bottom:1px solid var(--chrome-border)}
-.inp-ref-thead button{padding:3px 10px;border-radius:5px;border:none;cursor:pointer;font-family:inherit;font-size:11px;font-weight:600;color:var(--chrome-muted);background:var(--chrome-nav);transition:all .15s}
-.inp-ref-thead button.on{background:var(--chrome-txt);color:var(--chrome-bg)}
 .inp-ref-row{display:flex;align-items:stretch;border-bottom:1px solid var(--chrome-border)}
 .inp-ref-row:last-child{border-bottom:none}
 .inp-ref-rlabel{width:72px;flex-shrink:0;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--chrome-muted);padding:16px 12px;border-right:1px solid var(--chrome-border);display:flex;align-items:flex-start}
@@ -1167,8 +1140,7 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
 .chip--lg{height:33px}
 
 .chip-ref{border:1px solid var(--chrome-border);border-radius:14px;overflow:hidden;transition:background .25s}
-.chip-ref__grid{display:grid;grid-template-columns:96px repeat(3,minmax(64px,1fr)) repeat(3,minmax(64px,1fr))}
-.chip-ref__modehead{padding:16px 14px 6px;font-size:14px;font-weight:800;color:var(--chrome-txt)}
+.chip-ref__grid{display:grid;grid-template-columns:96px repeat(3,minmax(64px,1fr))}
 .chip-ref__sizehead{padding:0 14px 12px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--chrome-muted)}
 .chip-ref__rowlabel{padding:12px 14px;font-size:12px;font-weight:700;color:var(--chrome-txt);display:flex;align-items:center}
 .chip-ref__cell{display:flex;align-items:center;padding:12px 14px}
@@ -1622,16 +1594,6 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
       <!-- ── SEMANTIC VIEW ── -->
       <div class="c-view" id="c-sem">
         <div class="sem-wrap">
-          <div class="sem-controls">
-            <div class="sem-ctl-group">
-              <span style="font-size:12px;font-weight:700;color:var(--chrome-txt);padding:4px 8px">Flash</span>
-            </div>
-            <div class="sem-ctl-sep"></div>
-            <div class="sem-ctl-group">
-              <button class="sem-ctl-btn on" data-st="light" onclick="switchSemTheme('light')">&#9728; Light</button>
-              <button class="sem-ctl-btn"    data-st="dark"  onclick="switchSemTheme('dark')">&#9790; Dark</button>
-            </div>
-          </div>
           <div class="sem-panel on" id="sem-surface"></div>
           <div class="sem-panel" id="sem-text"></div>
           <div class="sem-panel" id="sem-icon"></div>
@@ -2429,9 +2391,6 @@ CATS.forEach(([name, hex]) => {
    RENDER SEMANTIC TABLES
 ============================================================ */
 
-// Local state — fully isolated from global brand/theme
-let semBrand = 'flash', semTheme = 'light';
-
 // Build hex → primitive name from FAMILIES data (fixes PAL reference error)
 const HEX_PRIM = {
   '#ffffff':'White', '#000000':'Black',
@@ -2448,9 +2407,8 @@ const HEX_PRIM = {
 });
 
 function getSemHex(fl,fd,vl,vd) {
-  if (semBrand==='flash'    && semTheme==='light') return fl;
-  if (semBrand==='flash'    && semTheme==='dark')  return fd;
-  return vd;
+  // Flash brand only; light/dark follows the global theme.
+  return currentTheme()==='dark' ? fd : fl;
 }
 
 function renderSemGroup(key) {
@@ -2493,18 +2451,7 @@ function renderSemGroup(key) {
 
 function refreshSem() {
   Object.keys(SEM).forEach(renderSemGroup);
-  document.querySelectorAll('.sem-ctl-btn[data-sb]').forEach(b => {
-    const on = b.dataset.sb === semBrand;
-    b.classList.toggle('on', on);
-    if (on && b.dataset.sb === 'flash')    { b.style.background='#10c504'; b.style.color='#000'; }
-
-    else { b.style.background=''; b.style.color=''; }
-  });
-  document.querySelectorAll('.sem-ctl-btn[data-st]').forEach(b=>b.classList.toggle('on',b.dataset.st===semTheme));
 }
-
-function switchSemBrand(b) { /* removed */ }
-function switchSemTheme(t) { semTheme=t; refreshSem(); }
 
 try { Object.keys(SEM).forEach(renderSemGroup); }
 catch(e) { console.error('Semantic render error:', e); }
@@ -2532,15 +2479,24 @@ function setBrand(b) {
 }
 
 // Theme
+// Single source of truth for light/dark: the global data-theme attribute.
+function currentTheme(){ return document.documentElement.getAttribute('data-theme')==='dark' ? 'dark' : 'light'; }
+
 function toggleTheme() {
   const isDark = document.documentElement.getAttribute('data-theme')==='dark';
   document.documentElement.setAttribute('data-theme',isDark?'light':'dark');
   document.getElementById('theme-lbl').textContent = isDark?'\u2600 Light':'\u263e Dark';
-  // playground stages follow the global theme
+  // Every themed surface follows the global toggle \u2014 no per-section toggles.
+  try { if(typeof refreshSem==='function') refreshSem(); } catch(e){}
   try { if(typeof renderPlayground==='function' && document.getElementById('btn-playground')) renderPlayground(); } catch(e){}
+  try { if(typeof rerenderBtnRef==='function') rerenderBtnRef(); } catch(e){}
   try { if(typeof renderInpPlayground==='function' && document.getElementById('inp-playground')) renderInpPlayground(); } catch(e){}
+  try { if(typeof rerenderInpRef==='function') rerenderInpRef(); } catch(e){}
   try { if(typeof renderInpV2Playground==='function' && document.getElementById('inpv2-playground')) renderInpV2Playground(); } catch(e){}
+  try { if(typeof rerenderInpV2Ref==='function') rerenderInpV2Ref(); } catch(e){}
   try { if(typeof renderChipPlayground==='function' && document.getElementById('chip-playground')) renderChipPlayground(); } catch(e){}
+  try { if(typeof renderChipReference==='function' && document.getElementById('chip-reference')) renderChipReference(); } catch(e){}
+  try { if(typeof renderSelReference==='function' && document.getElementById('sel-reference')) renderSelReference(); } catch(e){}
   try { if(typeof renderBshQuickCopy==='function' && document.getElementById('bsh-quickcopy')) renderBshQuickCopy(); } catch(e){}
   try { if(typeof renderBshHeaderRef==='function' && document.getElementById('bsh-header-ref')) renderBshHeaderRef(); } catch(e){}
   try { if(typeof renderBshFooterRef==='function' && document.getElementById('bsh-footer-ref')) renderBshFooterRef(); } catch(e){}
@@ -3455,10 +3411,6 @@ function renderReference(){
         <span class="btn-accord-chev">›</span>
       </button>
       <div class="btn-accord-body" id="${id}-body">
-        <div class="btn-ref-theme-strip" id="${id}-themectl">
-          <button class="on" onclick="setRefTheme('${id}','light',this)">☀ Light</button>
-          <button onclick="setRefTheme('${id}','dark',this)">☽ Dark</button>
-        </div>
         <div id="${id}-content"></div>
       </div>
     </div>`;
@@ -3466,7 +3418,7 @@ function renderReference(){
 
   ref.innerHTML = `
     <div class="type-sub__title">All variants</div>
-    <div class="type-sub__desc">Click any variant to expand. The table shows Regular size across all states. Toggle light/dark within each variant independently.</div>
+    <div class="type-sub__desc">Click any variant to expand. The table shows Regular size across all states, in the current light/dark theme.</div>
     <div class="btn-accord">${accordItems}</div>`;
 }
 
@@ -3476,17 +3428,16 @@ function toggleAccord(id){
   item.classList.toggle('open');
   if(!wasOpen){
     const v = id.replace('accord-','');
-    renderRefContent(id, v, refThemes[id]||'light');
+    renderRefContent(id, v, currentTheme());
   }
 }
 
-const refThemes = {};
-function setRefTheme(id, theme, btn){
-  refThemes[id] = theme;
-  const strip = document.getElementById(id+'-themectl');
-  if(strip) strip.querySelectorAll('button').forEach(b=>b.classList.toggle('on', b.textContent.trim().includes(theme==='light'?'Light':'Dark')));
-  const v = id.replace('accord-','');
-  renderRefContent(id, v, theme);
+// Re-render any open button-reference variant in the current global theme.
+function rerenderBtnRef(){
+  const t = currentTheme();
+  document.querySelectorAll('.btn-accord-item.open').forEach(item => {
+    renderRefContent(item.id, item.id.replace('accord-',''), t);
+  });
 }
 
 function renderRefContent(id, variantKey, theme){
@@ -3672,7 +3623,7 @@ try {
     const item = document.getElementById(id);
     if(item && !item.classList.contains('open')){
       item.classList.add('open');
-      renderRefContent(id, v.key, 'light');
+      renderRefContent(id, v.key, currentTheme());
     }
   });
 } catch(e){ console.error('btn-accord-expand',e); }
@@ -4114,8 +4065,6 @@ function getInpCodeTSX(type, size, brand, theme){
 }
 
 /* ── REFERENCE GRID ── */
-const inpRefThemes = {};
-
 function renderInpReference() {
   const el = document.getElementById('inp-reference');
   if(!el) return;
@@ -4128,17 +4077,13 @@ function renderInpReference() {
         <span class="inp-ah-chev">›</span>
       </button>
       <div class="inp-ab" id="inpab-${t.key}">
-        <div class="inp-ref-thead" id="inpth-${t.key}">
-          <button class="on" onclick="setInpRefTheme('${t.key}','light',this)">☀ Light</button>
-          <button onclick="setInpRefTheme('${t.key}','dark',this)">☽ Dark</button>
-        </div>
         <div id="inprc-${t.key}"></div>
       </div>
     </div>`).join('');
 
   el.innerHTML = `
     <div class="type-sub__title">All types</div>
-    <div class="type-sub__desc">Expand any type to see both sizes across all five states. Toggle light/dark per type independently.</div>
+    <div class="type-sub__desc">Expand any type to see both sizes across all five states, in the current light/dark theme.</div>
     <div class="inp-accord">${items}</div>`;
 }
 
@@ -4146,14 +4091,16 @@ function toggleInpAccord(key) {
   const item = document.getElementById('inpai-'+key);
   const wasOpen = item.classList.contains('open');
   item.classList.toggle('open');
-  if(!wasOpen) renderInpRefContent(key, inpRefThemes[key]||'light');
+  if(!wasOpen) renderInpRefContent(key, currentTheme());
 }
 
-function setInpRefTheme(key, theme, btn) {
-  inpRefThemes[key] = theme;
-  const strip = document.getElementById('inpth-'+key);
-  if(strip) strip.querySelectorAll('button').forEach(b=>b.classList.toggle('on', (theme==='light'&&b.textContent.includes('Light'))||(theme==='dark'&&b.textContent.includes('Dark'))));
-  renderInpRefContent(key, theme);
+// Re-render any open input-reference type in the current global theme.
+function rerenderInpRef(){
+  const t = currentTheme();
+  INP_TYPES.forEach(tp => {
+    const item = document.getElementById('inpai-'+tp.key);
+    if(item && item.classList.contains('open')) renderInpRefContent(tp.key, t);
+  });
 }
 
 function renderInpRefContent(key, theme) {
@@ -4203,7 +4150,7 @@ try {
     const item = document.getElementById('inpai-'+t.key);
     if(item && !item.classList.contains('open')){
       item.classList.add('open');
-      renderInpRefContent(t.key, 'light');
+      renderInpRefContent(t.key, currentTheme());
     }
   });
 } catch(e){ console.error('inp-accord-expand',e); }
@@ -4507,8 +4454,6 @@ const INPV2_SEARCH_COMBOS = [
 const INPV2_SIZES = [{key:'default',label:'Default'},{key:'small',label:'Small'}];
 const INPV2_STATES_INPUT  = [{key:'default',label:'Default'},{key:'focus',label:'Focus'}];
 const INPV2_STATES_SEARCH = [{key:'default',label:'Default'},{key:'focus',label:'Focus'},{key:'typing',label:'Typing'},{key:'complete',label:'Complete'}];
-const inpv2RefThemes = {};
-
 function renderInpV2Reference() {
   const el = document.getElementById('inpv2-reference');
   if(!el) return;
@@ -4521,10 +4466,6 @@ function renderInpV2Reference() {
         <span class="inp-ah-chev">›</span>
       </button>
       <div class="inp-ab" id="inpv2ab-${key}">
-        <div class="inp-ref-thead" id="inpv2th-${key}">
-          <button class="on" onclick="setInpV2RefTheme('${key}','light',this)">☀ Light</button>
-          <button onclick="setInpV2RefTheme('${key}','dark',this)">☽ Dark</button>
-        </div>
         <div id="inpv2rc-${key}"></div>
       </div>
     </div>`;
@@ -4534,7 +4475,7 @@ function renderInpV2Reference() {
 
   el.innerHTML = `
     <div class="type-sub__title">Input — all configurations</div>
-    <div class="type-sub__desc">Expand a preset to see both sizes across Default and Focus. Toggle light/dark per row independently.</div>
+    <div class="type-sub__desc">Expand a preset to see both sizes across Default and Focus, in the current light/dark theme.</div>
     <div class="inp-accord">${inputItems}</div>
     <div class="type-sub__title" style="margin-top:36px">Search — all configurations</div>
     <div class="type-sub__desc">Expand a Type &times; Background combination to see both sizes across all four states.</div>
@@ -4545,14 +4486,16 @@ function toggleInpV2Accord(key) {
   const item = document.getElementById('inpv2ai-'+key);
   const wasOpen = item.classList.contains('open');
   item.classList.toggle('open');
-  if(!wasOpen) renderInpV2RefContent(key, inpv2RefThemes[key]||'light');
+  if(!wasOpen) renderInpV2RefContent(key, currentTheme());
 }
 
-function setInpV2RefTheme(key, theme, btn) {
-  inpv2RefThemes[key] = theme;
-  const strip = document.getElementById('inpv2th-'+key);
-  if(strip) strip.querySelectorAll('button').forEach(b=>b.classList.toggle('on', (theme==='light'&&b.textContent.includes('Light'))||(theme==='dark'&&b.textContent.includes('Dark'))));
-  renderInpV2RefContent(key, theme);
+// Re-render any open Input V2 reference row in the current global theme.
+function rerenderInpV2Ref(){
+  const t = currentTheme();
+  [...INPV2_PRESETS, ...INPV2_SEARCH_COMBOS].forEach(p => {
+    const item = document.getElementById('inpv2ai-'+p.key);
+    if(item && item.classList.contains('open')) renderInpV2RefContent(p.key, t);
+  });
 }
 
 function renderInpV2RefContent(key, theme) {
@@ -4605,7 +4548,7 @@ try {
     const item = document.getElementById('inpv2ai-'+p.key);
     if(item && !item.classList.contains('open')){
       item.classList.add('open');
-      renderInpV2RefContent(p.key, 'light');
+      renderInpV2RefContent(p.key, currentTheme());
     }
   });
 } catch(e){ console.error('inpv2-accord-expand',e); }
@@ -4760,38 +4703,31 @@ function renderChipReference(){
   const root = document.getElementById('chip-reference');
   if(!root) return;
 
+  const theme = currentTheme();
+  const stageBgCol = theme==='dark' ? '#12131a' : '#ffffff';
+  const sizeHeadColor = theme==='dark' ? ';color:#A1A3A8' : '';
+  const rows = CHIP_VARIANTS.length;
+
   let cells = '';
-  // Fixed light/dark stage backgrounds behind each mode's cells, painted
-  // first so the cell content below stacks on top of them in DOM order.
-  cells += `<div style="grid-column:2/5;grid-row:2/8;background:#ffffff"></div>`;
-  cells += `<div style="grid-column:5/8;grid-row:2/8;background:#12131a"></div>`;
+  // Stage background behind the size columns, painted first so cells stack on top.
+  cells += `<div style="grid-column:2/5;grid-row:1/${2+rows};background:${stageBgCol}"></div>`;
 
   cells += `<div style="grid-column:1;grid-row:1"></div>`;
-  cells += `<div class="chip-ref__modehead" style="grid-column:2/5;grid-row:1">Light mode</div>`;
-  cells += `<div class="chip-ref__modehead" style="grid-column:5/8;grid-row:1;color:#fff">Dark mode</div>`;
-
-  cells += `<div style="grid-column:1;grid-row:2"></div>`;
   CHIP_SIZES.forEach((sz,i)=>{
-    cells += `<div class="chip-ref__sizehead" style="grid-column:${2+i};grid-row:2">${sz.label}</div>`;
-  });
-  CHIP_SIZES.forEach((sz,i)=>{
-    cells += `<div class="chip-ref__sizehead" style="grid-column:${5+i};grid-row:2;color:#A1A3A8">${sz.label}</div>`;
+    cells += `<div class="chip-ref__sizehead" style="grid-column:${2+i};grid-row:1${sizeHeadColor}">${sz.label}</div>`;
   });
 
   CHIP_VARIANTS.forEach((v, ri)=>{
-    const row = 3+ri;
+    const row = 2+ri;
     cells += `<div class="chip-ref__rowlabel" style="grid-column:1;grid-row:${row}">${v.label}</div>`;
     CHIP_SIZES.forEach((sz,i)=>{
-      cells += `<div class="chip-ref__cell" style="grid-column:${2+i};grid-row:${row}">${makeChipHTML(v, sz.key, 'light')}</div>`;
-    });
-    CHIP_SIZES.forEach((sz,i)=>{
-      cells += `<div class="chip-ref__cell" style="grid-column:${5+i};grid-row:${row}">${makeChipHTML(v, sz.key, 'dark')}</div>`;
+      cells += `<div class="chip-ref__cell" style="grid-column:${2+i};grid-row:${row}">${makeChipHTML(v, sz.key, theme)}</div>`;
     });
   });
 
   root.innerHTML = `
     <div class="type-sub__title">Reference grid</div>
-    <div class="type-sub__desc">5 semantic variants across 3 sizes, shown in both light and dark mode. Light and dark stage backgrounds are fixed here so both appearances can be compared side by side, independent of the site-wide theme toggle.</div>
+    <div class="type-sub__desc">5 semantic variants across 3 sizes, shown in the current light/dark theme.</div>
     <div class="chip-ref"><div class="chip-ref__grid">${cells}</div></div>`;
 }
 
@@ -4856,23 +4792,28 @@ function selStageHTML(mode, modeLabel){
 function renderSelReference(){
   const root = document.getElementById('sel-reference');
   if(!root) return;
+  const theme = currentTheme();
   root.innerHTML = `
     <div class="type-sub__title">Reference grid</div>
-    <div class="type-sub__desc">Both control types across 3 sizes and 5 states, shown in fixed light and dark stages so both appearances compare side by side, independent of the site-wide theme. Hover and focused rows show the unchecked state above the checked state.</div>
-    ${selStageHTML('light','Light mode')}
-    ${selStageHTML('dark','Dark mode')}`;
+    <div class="type-sub__desc">Both control types across 3 sizes and 5 states, shown in the current light/dark theme. Hover and focused rows show the unchecked state above the checked state.</div>
+    ${selStageHTML(theme, theme==='dark'?'Dark mode':'Light mode')}`;
 }
 try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.17.0';
+const SYSTEM_VERSION = '1.18.0';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.18.0', date:'2026-07-06', author:'Mo', title:'Global light/dark theme — one toggle for everything', changes:[
+        ['changed','Light/dark is now driven entirely by the global toggle — every section, colour token, semantic table and component reference follows it'],
+        ['removed','Per-section light/dark toggles from the Colour semantics table and the Buttons, Text Inputs, Text Inputs v2 and Checkboxes & Radios reference grids'],
+        ['changed','Checkboxes & Radios and Chips reference grids now render a single stage in the active theme instead of fixed side-by-side light and dark stages'],
+      ]},
       {version:'1.17.0', date:'2026-07-06', author:'Mo', title:'Bottom Sheets', changes:[
         ['added','Bottom Sheets section — SheetHeader component (compact/full screen, with/without back arrow), quick-copy mockups, footer button-group building block, and a fully interactive playground'],
       ]},
@@ -4970,7 +4911,11 @@ const CHANGELOG = {
         ['added','Default landing page for the design system'],
       ]},
     ]},
-    {secId:'s-colours', name:'Colours', version:'1.3.0', entries:[
+    {secId:'s-colours', name:'Colours', version:'1.4.0', entries:[
+      {version:'1.4.0', date:'2026-07-06', author:'Mo', title:'Semantics follow global theme', changes:[
+        ['removed','Light/dark toggle above the semantic tokens table'],
+        ['changed','Semantic colour values now switch with the global light/dark toggle'],
+      ]},
       {version:'1.3.0', date:'2026-06-22', time:'10:41', author:'Mo', title:'Naming + opacity families', changes:[
         ['added','Support family (pink, orange, red) and Opacity black/white/grey families'],
         ['changed','Primitive step names matched to spec (e.g. Green-500-base, 1Voucher orange)'],
@@ -5004,7 +4949,11 @@ const CHANGELOG = {
         ['added','5 elevation levels with structured x/y/blur/spread breakdown'],
       ]},
     ]},
-    {secId:'s-buttons', name:'Buttons', version:'1.3.0', entries:[
+    {secId:'s-buttons', name:'Buttons', version:'1.4.0', entries:[
+      {version:'1.4.0', date:'2026-07-06', author:'Mo', title:'Reference follows global theme', changes:[
+        ['removed','Per-variant light/dark toggle from the reference grid'],
+        ['changed','Variant reference now follows the global light/dark toggle'],
+      ]},
       {version:'1.3.0', date:'2026-06-23', time:'10:57', author:'Mo', title:'Playground simplification', changes:[
         ['changed','Stage moved above controls — live preview is now the focal point'],
         ['removed','In-playground theme toggle (follows global toggle now)'],
@@ -5024,7 +4973,11 @@ const CHANGELOG = {
         ['added','5 variants × 5 sizes × 5 states, icon-only grid, tappable-area overlays'],
       ]},
     ]},
-    {secId:'s-inputs', name:'Text Inputs', version:'1.4.0', entries:[
+    {secId:'s-inputs', name:'Text Inputs', version:'1.5.0', entries:[
+      {version:'1.5.0', date:'2026-07-06', author:'Mo', title:'Reference follows global theme', changes:[
+        ['removed','Per-type light/dark toggle from the reference grid'],
+        ['changed','Type reference now follows the global light/dark toggle'],
+      ]},
       {version:'1.4.0', date:'2026-06-23', time:'14:05', author:'Mo', title:'Playground simplification', changes:[
         ['changed','Stage moved above controls — live preview is now the focal point'],
         ['removed','In-playground theme toggle (follows global toggle now)'],
@@ -5045,7 +4998,11 @@ const CHANGELOG = {
         ['added','9 input types, 2 sizes, interactive playground, full reference grid'],
       ]},
     ]},
-    {secId:'s-inputs-v2', name:'Text Inputs v2', version:'1.0.0', entries:[
+    {secId:'s-inputs-v2', name:'Text Inputs v2', version:'1.1.0', entries:[
+      {version:'1.1.0', date:'2026-07-06', author:'Mo', title:'Reference follows global theme', changes:[
+        ['removed','Per-row light/dark toggle from the reference grid'],
+        ['changed','Input and Search references now follow the global light/dark toggle'],
+      ]},
       {version:'1.0.0', date:'2026-07-06', author:'Mo', title:'Initial release', changes:[
         ['added','Input family (floating-label box) — 2 sizes, leading icon, 3 independent trailing slots, helper text, Default/Focus states'],
         ['added','Search family (pill) — 2 sizes, Inline/Caption label type, Colour/White/Grey background, Default/Focus/Typing/Complete states'],
@@ -5053,7 +5010,10 @@ const CHANGELOG = {
         ['added','Full reference grid — 7 Input presets and 6 Search Type×Background combinations, each across every state and both sizes'],
       ]},
     ]},
-    {secId:'s-selection', name:'Checkboxes & Radios', version:'1.0.0', entries:[
+    {secId:'s-selection', name:'Checkboxes & Radios', version:'1.1.0', entries:[
+      {version:'1.1.0', date:'2026-07-06', author:'Mo', title:'Reference follows global theme', changes:[
+        ['changed','Reference grid now shows a single stage in the active theme, following the global toggle, instead of fixed side-by-side light and dark stages'],
+      ]},
       {version:'1.0.0', date:'2026-07-03', author:'Mo', title:'Initial release', changes:[
         ['added','Checkbox and radio controls on real native inputs, styled with the brand green'],
         ['added','3 sizes (Regular, Small, XSmall) × 5 states (Unchecked, Checked, Hover, Focused, Disabled)'],
@@ -5065,7 +5025,10 @@ const CHANGELOG = {
         ['changed','Planned for a future session'],
       ]},
     ]},
-    {secId:'s-chips', name:'Chips & Pills', version:'1.1.0', entries:[
+    {secId:'s-chips', name:'Chips & Pills', version:'1.2.0', entries:[
+      {version:'1.2.0', date:'2026-07-06', author:'Mo', title:'Reference follows global theme', changes:[
+        ['changed','Reference grid now shows a single stage in the active theme, following the global toggle, instead of fixed side-by-side light and dark stages'],
+      ]},
       {version:'1.1.0', date:'2026-07-03', author:'Mo', title:'Interactive playground', changes:[
         ['added','Playground with live variant, size, icon, dismiss, selectable and label controls'],
         ['added','Removable chips (dismiss × + reset) and selectable chips with a selected ring'],
