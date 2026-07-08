@@ -1288,23 +1288,34 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
 .tab-item--sm .tab-item__icon svg{width:11px;height:11px}
 .tab-item--sm .tab-item__line{bottom:0;height:3px}
 
-/* Panels revealed by the interactive playground */
-.tabs-panel{display:none;padding:22px 4px 4px;font-size:13.5px;line-height:1.6;color:var(--chrome-muted)}
+/* Panels revealed by the interactive playground — a placeholder table simulating real content */
+.tabs-panel{display:none;padding:22px 4px 4px}
 .tabs-panel.on{display:block;animation:tabsPanelIn .2s ease}
-.tabs-panel strong{color:var(--chrome-txt)}
 @keyframes tabsPanelIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+.tabs-skel{border:1px solid var(--chrome-border);border-radius:10px;overflow:hidden}
+.tabs-skel__row{display:flex;align-items:center;gap:16px;padding:13px 16px;border-bottom:1px solid var(--chrome-border)}
+.tabs-skel__row:last-child{border-bottom:none}
+.tabs-skel__row--head{background:var(--chrome-nav)}
+.tabs-skel__cell{height:9px;border-radius:4px;background:var(--chrome-border)}
+.tabs-skel__row--head .tabs-skel__cell{height:7px;opacity:.8}
 
 /* Showcase surface so tab swatches sit on a clean board in both themes */
 .tabs-demo{border:1px solid var(--chrome-border);border-radius:12px;padding:6px 20px 0;background:var(--chrome-bg)}
 .tabs-demo--pad{padding:26px 20px}
 /* interactive playground — centre the tab bar across the full-width divider */
 #tabs-play .tabs-list{justify-content:center}
-#tabs-play .tabs-panel{max-width:640px;margin:0 auto;text-align:center}
+#tabs-play .tabs-panel{max-width:680px;margin:0 auto}
 /* comparison swatches — compact, centred lists that hug their tabs */
 .tabs-swatchgrid{display:flex;flex-wrap:wrap;gap:22px 48px;justify-content:center;align-items:flex-start}
 .tabs-swatch{display:flex;flex-direction:column;align-items:center;gap:12px}
 .tabs-swatch__cap{font-size:10.5px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--chrome-muted)}
 .tabs-swatch .tabs-list{width:-moz-fit-content;width:fit-content}
+/* Sizes comparison — bottom-align swatches so the two underlines sit flush */
+.tabs-swatchgrid--bottom{align-items:stretch}
+.tabs-swatchgrid--bottom .tabs-swatch{justify-content:flex-end}
+/* States matrix — lock to a 2-up grid so each size's icon/no-icon pair always sits together, even on wide screens */
+.tabs-swatchgrid--states{display:grid;grid-template-columns:repeat(2,max-content);justify-content:center;align-items:start;gap:28px 48px}
+@media(max-width:640px){.tabs-swatchgrid--states{grid-template-columns:max-content}}
 
 /* ================================================================
    CHECKBOXES & RADIO BUTTONS
@@ -1852,7 +1863,7 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
     <section class="sec" id="s-tabs">
       <div class="sec__head">
         <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Tabs <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.0</span></h1>
+        <h1 class="sec__title">Tabs <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.2.0</span></h1>
         <p class="sec__desc">A horizontal tab bar for switching between views within a single screen. Built from a <strong>Tab item</strong> (with or without a leading icon, in Regular or Small) composed into a <strong>Tabs list</strong> that shares one bottom divider. The active tab is marked by a weighted label and an inverse underline. Adapts to light &amp; dark via semantic tokens.</p>
       </div>
 
@@ -1865,7 +1876,7 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
       <div class="type-sub">
         <div class="type-sub__title">Sizes</div>
         <div class="type-sub__desc"><strong>Regular</strong> (56px tall, 16px label) is the default for primary, page-level navigation. <strong>Small</strong> (46px tall, 13px label) suits denser or secondary contexts such as inside a card or panel.</div>
-        <div class="tabs-demo tabs-demo--pad"><div class="tabs-swatchgrid" id="tabs-sizes"></div></div>
+        <div class="tabs-demo tabs-demo--pad"><div class="tabs-swatchgrid tabs-swatchgrid--bottom" id="tabs-sizes"></div></div>
       </div>
 
       <div class="type-sub">
@@ -1877,7 +1888,7 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
       <div class="type-sub">
         <div class="type-sub__title">States</div>
         <div class="type-sub__desc">Every tab item resolves to one of three states. <strong>Inactive</strong> uses tertiary text at medium weight with a muted icon glyph; <strong>Hover</strong> lifts the label and glyph to primary; <strong>Active</strong> keeps primary text at semibold, darkens the glyph and adds the underline. Shown here for both sizes, with and without the icon.</div>
-        <div class="tabs-demo tabs-demo--pad"><div class="tabs-swatchgrid" id="tabs-states"></div></div>
+        <div class="tabs-demo tabs-demo--pad"><div class="tabs-swatchgrid tabs-swatchgrid--states" id="tabs-states"></div></div>
       </div>
 
       <div class="type-sub">
@@ -4935,12 +4946,17 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.20.0';
+const SYSTEM_VERSION = '1.21.0';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.21.0', date:'2026-07-08', author:'Mo', title:'Tabs layout & playground refinements', changes:[
+        ['changed','Sizes comparison — Regular and Small swatches now bottom-align so their active underlines sit flush with each other'],
+        ['changed','States matrix locked to a 2-up grid so each size’s icon/no-icon pair always sits side by side, even on wide screens'],
+        ['changed','Interactive playground panels replaced prose descriptions with a placeholder table simulation, so switching tabs visibly swaps table-shaped content'],
+      ]},
       {version:'1.20.0', date:'2026-07-08', author:'Mo', title:'Cow logo in nav + centred hero', changes:[
         ['added','Cow icon mark in the top nav bar, next to the "Flash Design System" wordmark'],
         ['changed','Brand intro hero swapped to the Flash stacked logo and centrally aligned (logo, title, description)'],
@@ -5214,7 +5230,18 @@ const CHANGELOG = {
         ['changed','Planned for a future session'],
       ]},
     ]},
-    {secId:'s-tabs', name:'Tabs', version:'1.0.0', entries:[
+    {secId:'s-tabs', name:'Tabs', version:'1.2.0', entries:[
+      {version:'1.2.0', date:'2026-07-08', author:'Mo', title:'Layout & playground refinements', changes:[
+        ['changed','Sizes comparison now bottom-aligns Regular and Small so their active underlines sit flush'],
+        ['changed','States matrix locked to a 2-up grid so each size’s icon/no-icon pair stays side by side on wide screens'],
+        ['changed','Interactive playground now shows a placeholder table simulation per tab instead of descriptive prose'],
+      ]},
+      {version:'1.1.0', date:'2026-07-08', author:'Mo', title:'Icon colour states & layout cleanup', changes:[
+        ['fixed','Removed a stray vertical scrollbar caused by overflow-x:auto on the tabs list'],
+        ['changed','Icon glyph now lightens (chrome-muted) when inactive and darkens (text-primary) on hover/active, matching the Figma spec'],
+        ['changed','Interactive tab bar and comparison swatches centred; comparisons now hug their content instead of leaving dead space'],
+        ['changed','Anatomy & specs table now shows resolved hex values and real token names'],
+      ]},
       {version:'1.0.0', date:'2026-07-08', author:'Mo', title:'Tabs component', changes:[
         ['added','Tab item — Regular/Small sizes, optional leading icon chip, and Inactive/Hover/Active states (icon glyph lightens when inactive, darkens when active)'],
         ['added','Tabs list — items sharing one bottom divider, with the active tab marked by a weighted label and inverse underline'],
@@ -5667,17 +5694,29 @@ function renderSectionChangelogs() {
     return '<div class="tabs-swatch"><div class="tabs-swatch__cap">' + cap + '</div>' + inner + '</div>';
   }
 
+  // Placeholder table simulation — stands in for real content switching between panels
+  function skeletonRow(widths, head){
+    var cells = widths.map(function(w){ return '<span class="tabs-skel__cell" style="width:' + w + '%"></span>'; }).join('');
+    return '<div class="tabs-skel__row' + (head ? ' tabs-skel__row--head' : '') + '">' + cells + '</div>';
+  }
+  function skeletonTable(rowCount){
+    var cols = [38, 24, 20, 12];
+    var rows = skeletonRow(cols, true);
+    for(var i = 0; i < rowCount; i++) rows += skeletonRow(cols);
+    return '<div class="tabs-skel">' + rows + '</div>';
+  }
+
   // Interactive playground
   var play = document.getElementById('tabs-play');
   if(play){
     var tabs = [
-      {label:'Overview',  icon:true, panel:'<strong>Overview.</strong> Tabs switch between peer views of the same context. This panel is shown because the Overview tab is active — clicking another tab moves the underline and swaps the content in place, without a page change.'},
-      {label:'Activity',  icon:true, panel:'<strong>Activity.</strong> A running log of recent events. Only one tab is ever active, so there is always exactly one panel visible.'},
-      {label:'Documents', icon:true, panel:'<strong>Documents.</strong> Files attached to this record. Keep tab labels short and parallel so the row stays scannable.'},
-      {label:'Settings',  icon:true, panel:'<strong>Settings.</strong> Configuration for this view. The Small size works well for secondary tab bars nested inside a panel like this one.'}
+      {label:'Overview',  icon:true, rows:4},
+      {label:'Activity',  icon:true, rows:3},
+      {label:'Documents', icon:true, rows:5},
+      {label:'Settings',  icon:true, rows:2}
     ];
     play.innerHTML = tabsList(tabs, 'reg') +
-      tabs.map(function(t,i){ return '<div class="tabs-panel' + (i===0?' on':'') + '">' + t.panel + '</div>'; }).join('');
+      tabs.map(function(t,i){ return '<div class="tabs-panel' + (i===0?' on':'') + '">' + skeletonTable(t.rows) + '</div>'; }).join('');
     var items  = play.querySelectorAll('.tab-item');
     var panels = play.querySelectorAll('.tabs-panel');
     items[0].classList.add('on');
