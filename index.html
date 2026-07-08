@@ -1257,25 +1257,28 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
    TABS
 ================================================================ */
 /* Tabs list — the horizontal strip with the shared bottom divider */
-.tabs-list{display:flex;align-items:flex-start;gap:0;border-bottom:2px solid var(--chrome-border);overflow-x:auto;-webkit-overflow-scrolling:touch}
-.tabs-list::-webkit-scrollbar{height:0}
+.tabs-list{display:flex;align-items:flex-start;gap:0;border-bottom:2px solid var(--chrome-border)}
 
 /* Tab item */
 .tab-item{position:relative;display:flex;flex-direction:column;align-items:stretch;flex-shrink:0;background:none;border:none;padding:0;margin:0;cursor:pointer;font-family:inherit;color:inherit}
 .tab-item__inner{display:flex;align-items:center;justify-content:center;height:56px;gap:8px;padding:4px 20px}
-.tab-item__icon{display:flex;align-items:center;justify-content:center;flex-shrink:0;padding:4px;border-radius:6px;background:var(--color-surface-n2);color:var(--color-text-1)}
+.tab-item__icon{display:flex;align-items:center;justify-content:center;flex-shrink:0;padding:4px;border-radius:6px;background:var(--color-surface-n2);color:var(--chrome-muted);transition:color .15s ease}
 .tab-item__icon svg{width:12px;height:12px;display:block}
 .tab-item__label{font-size:16px;font-weight:500;line-height:1.25;color:var(--color-text-3);white-space:nowrap;transition:color .15s ease}
 /* active underline — straddles the 2px divider */
 .tab-item__line{position:absolute;left:0;right:0;bottom:-2px;height:4px;border-radius:4px;background:var(--color-surface-inverse);opacity:0;transition:opacity .15s ease}
 
-/* Hover state */
+/* Hover state — label lifts to primary, icon glyph darkens */
 .tab-item:hover .tab-item__label,
 .tab-item--hover .tab-item__label{color:var(--color-text-1)}
+.tab-item:hover .tab-item__icon,
+.tab-item--hover .tab-item__icon{color:var(--color-text-1)}
 
-/* Active state */
+/* Active state — semibold primary label, dark glyph, underline shown */
 .tab-item.on .tab-item__label,
 .tab-item--active .tab-item__label{color:var(--color-text-1);font-weight:650}
+.tab-item.on .tab-item__icon,
+.tab-item--active .tab-item__icon{color:var(--color-text-1)}
 .tab-item.on .tab-item__line,
 .tab-item--active .tab-item__line{opacity:1}
 
@@ -1292,12 +1295,16 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
 @keyframes tabsPanelIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
 
 /* Showcase surface so tab swatches sit on a clean board in both themes */
-.tabs-demo{border:1px solid var(--chrome-border);border-radius:12px;padding:6px 20px 0;background:var(--chrome-bg);overflow:hidden}
-.tabs-demo--pad{padding:22px 20px}
-.tabs-swatchgrid{display:flex;flex-wrap:wrap;gap:14px 28px}
-.tabs-swatch{display:flex;flex-direction:column;gap:10px}
+.tabs-demo{border:1px solid var(--chrome-border);border-radius:12px;padding:6px 20px 0;background:var(--chrome-bg)}
+.tabs-demo--pad{padding:26px 20px}
+/* interactive playground — centre the tab bar across the full-width divider */
+#tabs-play .tabs-list{justify-content:center}
+#tabs-play .tabs-panel{max-width:640px;margin:0 auto;text-align:center}
+/* comparison swatches — compact, centred lists that hug their tabs */
+.tabs-swatchgrid{display:flex;flex-wrap:wrap;gap:22px 48px;justify-content:center;align-items:flex-start}
+.tabs-swatch{display:flex;flex-direction:column;align-items:center;gap:12px}
 .tabs-swatch__cap{font-size:10.5px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--chrome-muted)}
-.tabs-swatch .tabs-list{border-bottom-width:2px}
+.tabs-swatch .tabs-list{width:-moz-fit-content;width:fit-content}
 
 /* ================================================================
    CHECKBOXES & RADIO BUTTONS
@@ -1869,7 +1876,7 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
 
       <div class="type-sub">
         <div class="type-sub__title">States</div>
-        <div class="type-sub__desc">Every tab item resolves to one of three states. <strong>Inactive</strong> uses tertiary text at medium weight; <strong>Hover</strong> lifts the label to primary text; <strong>Active</strong> keeps primary text at semibold and adds the underline. Shown here for both sizes, with and without the icon.</div>
+        <div class="type-sub__desc">Every tab item resolves to one of three states. <strong>Inactive</strong> uses tertiary text at medium weight with a muted icon glyph; <strong>Hover</strong> lifts the label and glyph to primary; <strong>Active</strong> keeps primary text at semibold, darkens the glyph and adds the underline. Shown here for both sizes, with and without the icon.</div>
         <div class="tabs-demo tabs-demo--pad"><div class="tabs-swatchgrid" id="tabs-states"></div></div>
       </div>
 
@@ -1885,8 +1892,9 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
               <tr><td class="dd-table__name">Vertical padding</td><td>4px</td><td>4px</td><td>spacing-050</td></tr>
               <tr><td class="dd-table__name">Icon &harr; label gap</td><td>8px</td><td>6px</td><td>spacing-100 / spacing-075</td></tr>
               <tr><td class="dd-table__name">Label size</td><td>16px</td><td>13px</td><td>Body m / Body s</td></tr>
-              <tr><td class="dd-table__name">Icon chip</td><td>12px icon, 4px pad, 6px radius</td><td>11px icon, 4px pad, 6px radius</td><td>surface-n2 &middot; radius-xsmall</td></tr>
-              <tr><td class="dd-table__name">Active underline</td><td>4px tall, offset &minus;2px</td><td>3px tall, flush</td><td>surface-inverse</td></tr>
+              <tr><td class="dd-table__name">Icon chip</td><td>12px glyph &middot; 4px pad</td><td>11px glyph &middot; 4px pad</td><td>bg <code>surface-neutral-secondary</code> #E6E6E6 &middot; radius 6px</td></tr>
+              <tr><td class="dd-table__name">Icon glyph colour</td><td colspan="2">Inactive #5F6261 &rarr; Active #000000</td><td><code>chrome-muted</code> &rarr; <code>text-primary</code></td></tr>
+              <tr><td class="dd-table__name">Active underline</td><td>4px tall, offset &minus;2px</td><td>3px tall, flush</td><td><code>surface-base-inverse</code> #000 <span style="color:var(--chrome-muted)">(dark #FFF)</span></td></tr>
             </tbody>
           </table>
         </div>
@@ -4940,6 +4948,7 @@ const CHANGELOG = {
       {version:'1.19.0', date:'2026-07-08', author:'Mo', title:'Tabs', changes:[
         ['added','Tabs section — Tab item (Regular/Small × with/without icon × Inactive/Hover/Active) composed into a Tabs list with a shared bottom divider'],
         ['added','Interactive Tabs playground, size and icon comparisons, a full states matrix and an anatomy/spec table'],
+        ['added','Icon glyph shifts from a muted grey when inactive to full strength when hovered/active, matching the Figma spec'],
       ]},
       {version:'1.18.0', date:'2026-07-06', author:'Mo', title:'Global light/dark theme — one toggle for everything', changes:[
         ['changed','Light/dark is now driven entirely by the global toggle — every section, colour token, semantic table and component reference follows it'],
@@ -5207,7 +5216,7 @@ const CHANGELOG = {
     ]},
     {secId:'s-tabs', name:'Tabs', version:'1.0.0', entries:[
       {version:'1.0.0', date:'2026-07-08', author:'Mo', title:'Tabs component', changes:[
-        ['added','Tab item — Regular/Small sizes, optional leading icon chip, and Inactive/Hover/Active states'],
+        ['added','Tab item — Regular/Small sizes, optional leading icon chip, and Inactive/Hover/Active states (icon glyph lightens when inactive, darkens when active)'],
         ['added','Tabs list — items sharing one bottom divider, with the active tab marked by a weighted label and inverse underline'],
         ['added','Interactive playground, size/icon comparisons, a full states matrix and an anatomy/spec table'],
       ]},
