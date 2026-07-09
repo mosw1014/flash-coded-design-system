@@ -1766,25 +1766,33 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
 .card-btn--ghost{background:transparent;color:var(--chrome-txt);border:1px solid var(--chrome-border)}
 .card-btn--ghost:hover{opacity:1;background:var(--chrome-hover)}
 
-/* ---- Chart ---- */
-.cht{border:1px solid var(--chrome-border);border-radius:14px;padding:20px 22px;background:var(--chrome-bg);width:380px;max-width:100%}
+/* ---- Chart (Flash palette + interactive) ---- */
+.cht{position:relative;border:1px solid var(--chrome-border);border-radius:14px;padding:20px 22px;background:var(--chrome-bg);width:380px;max-width:100%;
+  --c1:var(--prim-green-500);--c2:var(--prim-sup-blue-1);--c3:var(--prim-sup-purple-4);--c4:var(--prim-sup-orange-1);--c5:var(--prim-sup-pink-1)}
 .cht__cap{font-size:13px;font-weight:700;color:var(--chrome-txt);margin-bottom:2px}
 .cht__sub{font-size:11.5px;color:var(--chrome-muted);margin-bottom:16px}
 .cht svg{display:block;width:100%;height:auto;overflow:visible}
-.cht__bar{fill:var(--color-surface-inverse);transition:opacity .15s}
-.cht__bar:hover{opacity:.65}
-.cht__line{fill:none;stroke:var(--color-surface-inverse);stroke-width:2.5;stroke-linejoin:round;stroke-linecap:round}
-.cht__area{opacity:.09;fill:var(--color-surface-inverse)}
-.cht__dot{fill:var(--chrome-bg);stroke:var(--color-surface-inverse);stroke-width:2.5}
-.cht__grid{stroke:var(--chrome-border);stroke-width:1}
+.cht__bar{fill:var(--c1);transition:opacity .15s;cursor:pointer}
+.cht svg.is-hot .cht__bar{opacity:.28}
+.cht svg.is-hot .cht__bar.on{opacity:1}
+.cht__line{fill:none;stroke:var(--c1);stroke-width:2.5;stroke-linejoin:round;stroke-linecap:round}
+.cht__area{fill:url(#chtAreaGrad)}
+.cht__dot{fill:var(--chrome-bg);stroke:var(--c1);stroke-width:2.5;transition:fill .12s}
+.cht__dot.on{fill:var(--c1)}
+.cht__hit{fill:transparent;cursor:pointer}
 .cht__axis{fill:var(--chrome-muted);font-size:10px;font-family:inherit}
-.cht__seg{transition:opacity .15s}
-.cht__seg:hover{opacity:.7}
-.cht-legend{display:flex;flex-wrap:wrap;gap:12px 18px;margin-top:16px}
-.cht-legend__item{display:inline-flex;align-items:center;gap:7px;font-size:12px;color:var(--chrome-txt)}
+.cht__seg{transition:opacity .18s,stroke-width .18s;cursor:pointer}
+.cht svg.is-hot .cht__seg{opacity:.32}
+.cht svg.is-hot .cht__seg.on{opacity:1}
+.cht-legend{display:flex;flex-wrap:wrap;gap:8px 14px;margin-top:16px}
+.cht-legend__item{display:inline-flex;align-items:center;gap:7px;font-size:12px;color:var(--chrome-txt);cursor:pointer;padding:2px 5px;border-radius:6px;transition:background .12s}
+.cht-legend__item:hover{background:var(--chrome-hover)}
 .cht-legend__dot{width:10px;height:10px;border-radius:3px;flex-shrink:0}
 .cht-donut-val{fill:var(--chrome-txt);font-weight:800}
 .cht-donut-lab{fill:var(--chrome-muted)}
+.cht__tip{position:absolute;z-index:5;pointer-events:none;background:var(--color-surface-inverse);color:var(--color-text-inv);font-size:11.5px;font-weight:600;padding:5px 9px;border-radius:7px;white-space:nowrap;opacity:0;transform:translate(-50%,-100%);transition:opacity .12s;box-shadow:0 4px 14px rgba(0,0,0,.22)}
+.cht__tip.show{opacity:1}
+.cht__tip b{font-weight:800}
 /* ---- Kbd (shared: used by Command & Context Menu too) ---- */
 .kbd{display:inline-flex;align-items:center;justify-content:center;min-width:20px;height:20px;padding:0 6px;font-family:'SF Mono',ui-monospace,monospace;font-size:11px;font-weight:600;color:var(--chrome-txt);background:var(--color-surface-n1);border:1px solid var(--chrome-border);border-bottom-width:2px;border-radius:6px;line-height:1}
 .kbd-combo{display:inline-flex;align-items:center;gap:4px}
@@ -3566,11 +3574,11 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
       <div class="sec__head">
         <div class="sec__eye">Components</div>
         <h1 class="sec__title">Charts <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.0</span></h1>
-        <p class="sec__desc">Lightweight data visualisations rendered as inline SVG &mdash; no charting library. Four core types cover most needs. The palette is deliberately monochrome (the primary ink plus a neutral ramp), so charts stay calm and on-brand; reserve colour for genuinely categorical or semantic data.</p>
+        <p class="sec__desc">Lightweight, interactive data visualisations rendered as inline SVG &mdash; no charting library. Four core types cover most needs. Hover any bar, point or segment for its value; the donut pops the hovered slice and shows its share in the centre. Series and categories use the Flash colour palette (brand green, blue, purple, orange); single-series charts lead with the brand green.</p>
       </div>
       <div class="type-sub">
         <div class="type-sub__title">Bar</div>
-        <div class="type-sub__desc">Compare discrete values across categories. Hover a bar to emphasise it.</div>
+        <div class="type-sub__desc">Compare discrete values across categories. Hover a bar to emphasise it and read its value; the rest dim back.</div>
         <div class="sg-stage"><div class="cht"><div class="cht__cap">Monthly volume</div><div class="cht__sub">Transactions per month &middot; 2026</div><div id="cht-bar"></div></div></div>
       </div>
       <div class="type-sub">
@@ -3583,7 +3591,7 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
       </div>
       <div class="type-sub">
         <div class="type-sub__title">Donut</div>
-        <div class="type-sub__desc">Show parts of a whole. A neutral ramp keeps segments distinct without shouting; the centre carries the total.</div>
+        <div class="type-sub__desc">Show parts of a whole. Each slice takes a colour from the Flash palette; hover a slice or its legend entry to pop it out and read its share in the centre.</div>
         <div class="sg-stage"><div class="cht" style="width:340px"><div class="cht__cap">Payment mix</div><div class="cht__sub">Share of volume by method</div><div id="cht-donut"></div><div class="cht-legend" id="cht-donut-legend"></div></div></div>
       </div>
       <div class="type-sub">
@@ -3594,7 +3602,7 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
             <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
             <ul class="sel-usage__list">
               <li>Use bars for comparison, lines for trends, donuts for a few parts of a whole.</li>
-              <li>Label axes and keep the palette restrained &mdash; ink first, colour only when it means something.</li>
+              <li>Label axes; give each category or series its own palette colour, and keep single-series charts to one.</li>
               <li>Start bar and area value axes at zero.</li>
             </ul>
           </div>
@@ -6921,7 +6929,7 @@ const CHANGELOG = {
     entries: [
       {version:'1.24.0', date:'2026-07-09', author:'Mo', title:'More shadcn-gap components — Cards, Charts & 7 more', changes:[
         ['added','Cards — basic, with footer actions, media band and interactive/hoverable variants (replaces the placeholder)'],
-        ['added','Charts — inline-SVG bar, line, area and donut, hand-built with no charting library, in a restrained monochrome ink palette'],
+        ['added','Charts — interactive inline-SVG bar, line, area and donut (hover for values, donut pops the slice), hand-built with no charting library, using the Flash colour palette'],
         ['added','Calendar & Date Picker — interactive month grid with month nav and day select, plus a field that opens it in a popover'],
         ['added','Command — searchable command palette with grouping, live filtering, arrow-key navigation and an empty state'],
         ['added','Context Menu — right-click menu positioned at the pointer, dismissing on outside-click, scroll or Escape'],
@@ -6929,7 +6937,7 @@ const CHANGELOG = {
         ['added','Separator — horizontal, vertical and labelled hairline dividers'],
         ['added','Kbd — keyboard key-caps for single keys and shortcut combinations'],
         ['added','Carousel — scroll-snap slider with prev/next arrows and position dots'],
-        ['changed','Emphasis (chart ink, selected day, carousel arrows/dots, card actions) uses the primary black/white style; colour stays reserved for semantic meaning'],
+        ['changed','Emphasis (selected day, carousel arrows/dots, card actions) uses the primary black/white style; charts use the Flash colour palette, and colour otherwise stays reserved for semantic meaning'],
       ]},
       {version:'1.23.0', date:'2026-07-09', author:'Mo', title:'shadcn-gap components — 13 new primitives', changes:[
         ['added','Switch — on/off toggle built on a native checkbox, brand-green when on, in Regular and Small sizes'],
@@ -7065,7 +7073,7 @@ const CHANGELOG = {
   components: [
     {secId:'s-charts', name:'Charts', version:'1.0.0', entries:[
       {version:'1.0.0', date:'2026-07-09', author:'Mo', title:'Initial release', changes:[
-        ['added','Inline-SVG bar, line, area and donut charts rendered from data, monochrome ink palette, with hover states and legend'],
+        ['added','Interactive inline-SVG bar, line, area and donut charts rendered from data, Flash colour palette, with hover tooltips, dim-the-rest emphasis, donut pop-out and an interactive legend'],
       ]},
     ]},
     {secId:'s-calendar', name:'Calendar & Date Picker', version:'1.0.0', entries:[
@@ -8206,52 +8214,80 @@ function renderSectionChangelogs() {
     });
   });
 })();
-/* Charts — inline SVG rendered from data (monochrome ink palette) */
+/* Charts — interactive inline SVG, Flash palette */
 (function(){
   function fmt(n){ return n>=1000 ? (n/1000).toFixed(1).replace(/\.0$/,'')+'k' : ''+n; }
+  var PAL=['var(--c1)','var(--c2)','var(--c3)','var(--c4)','var(--c5)'];
+  function mkTip(card){ var t=document.createElement('div'); t.className='cht__tip'; card.appendChild(t); return t; }
+  function moveTip(t,card,el,html){ var r=el.getBoundingClientRect(), cr=card.getBoundingClientRect(); t.innerHTML=html; t.style.left=(r.left-cr.left+r.width/2)+'px'; t.style.top=(r.top-cr.top-8)+'px'; t.classList.add('show'); }
 
-  var barEl = document.getElementById('cht-bar');
+  /* Bar — hover to highlight one bar and dim the rest */
+  var barEl=document.getElementById('cht-bar');
   if(barEl){
+    var card=barEl.closest('.cht'), tip=mkTip(card);
     var data=[{label:'Jan',v:42},{label:'Feb',v:55},{label:'Mar',v:48},{label:'Apr',v:63},{label:'May',v:71},{label:'Jun',v:66},{label:'Jul',v:82}];
     var W=340,H=180,padT=8,padB=22,padX=6, cw=W-padX*2, ch=H-padT-padB;
     var max=Math.max.apply(null,data.map(function(d){return d.v;})), n=data.length, gap=10, bw=(cw-gap*(n-1))/n, s='';
     data.forEach(function(d,i){ var bh=max?d.v/max*ch:0, x=padX+i*(bw+gap), y=padT+ch-bh;
-      s+='<rect class="cht__bar" x="'+x.toFixed(1)+'" y="'+y.toFixed(1)+'" width="'+bw.toFixed(1)+'" height="'+bh.toFixed(1)+'" rx="3"><title>'+d.label+': '+d.v+'</title></rect>';
+      s+='<rect class="cht__bar" data-i="'+i+'" x="'+x.toFixed(1)+'" y="'+y.toFixed(1)+'" width="'+bw.toFixed(1)+'" height="'+bh.toFixed(1)+'" rx="3"/>';
       s+='<text class="cht__axis" x="'+(x+bw/2).toFixed(1)+'" y="'+(H-7)+'" text-anchor="middle">'+d.label+'</text>';
     });
     barEl.innerHTML='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Bar chart of monthly volume">'+s+'</svg>';
+    var barSvg=barEl.querySelector('svg');
+    Array.prototype.forEach.call(barEl.querySelectorAll('.cht__bar'),function(b){ var i=+b.getAttribute('data-i');
+      b.addEventListener('mouseenter',function(){ barSvg.classList.add('is-hot'); b.classList.add('on'); moveTip(tip,card,b,'<b>'+data[i].v+'</b> &middot; '+data[i].label); });
+      b.addEventListener('mouseleave',function(){ barSvg.classList.remove('is-hot'); b.classList.remove('on'); tip.classList.remove('show'); });
+    });
   }
 
+  /* Line / Area — hover bands reveal the nearest point */
   function lineChart(el, data, filled){
-    var W=340,H=168,padT=12,padB=22,padX=8, cw=W-padX*2, ch=H-padT-padB;
+    var card=el.closest('.cht'), tip=mkTip(card);
+    var W=340,H=168,padT=12,padB=22,padX=10, cw=W-padX*2, ch=H-padT-padB;
     var max=Math.max.apply(null,data.map(function(d){return d.v;})), n=data.length;
     var xs=function(i){return padX+(n<=1?0:i/(n-1)*cw);}, ys=function(v){return padT+ch-(max?v/max*ch:0);};
-    var area='';
-    if(filled){ var d='M '+xs(0).toFixed(1)+','+(padT+ch).toFixed(1);
+    var defs='', area='';
+    if(filled){
+      defs='<defs><linearGradient id="chtAreaGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="var(--c1)" stop-opacity="0.32"/><stop offset="1" stop-color="var(--c1)" stop-opacity="0"/></linearGradient></defs>';
+      var d='M '+xs(0).toFixed(1)+','+(padT+ch).toFixed(1);
       data.forEach(function(dd,i){ d+=' L '+xs(i).toFixed(1)+','+ys(dd.v).toFixed(1); });
-      d+=' L '+xs(n-1).toFixed(1)+','+(padT+ch).toFixed(1)+' Z'; area='<path class="cht__area" d="'+d+'"/>'; }
+      d+=' L '+xs(n-1).toFixed(1)+','+(padT+ch).toFixed(1)+' Z'; area='<path class="cht__area" d="'+d+'"/>';
+    }
     var pts=data.map(function(dd,i){return xs(i).toFixed(1)+','+ys(dd.v).toFixed(1);}).join(' ');
-    var dots=data.map(function(dd,i){return '<circle class="cht__dot" cx="'+xs(i).toFixed(1)+'" cy="'+ys(dd.v).toFixed(1)+'" r="3.5"><title>'+dd.label+': '+dd.v+'</title></circle>';}).join('');
+    var dots=data.map(function(dd,i){return '<circle class="cht__dot" data-i="'+i+'" cx="'+xs(i).toFixed(1)+'" cy="'+ys(dd.v).toFixed(1)+'" r="3.5"/>';}).join('');
+    var hits=data.map(function(dd,i){ var x0=i===0?0:(xs(i-1)+xs(i))/2, x1=i===n-1?W:(xs(i)+xs(i+1))/2;
+      return '<rect class="cht__hit" data-i="'+i+'" x="'+x0.toFixed(1)+'" y="0" width="'+(x1-x0).toFixed(1)+'" height="'+(padT+ch).toFixed(1)+'"/>'; }).join('');
     var labs=data.map(function(dd,i){return '<text class="cht__axis" x="'+xs(i).toFixed(1)+'" y="'+(H-7)+'" text-anchor="middle">'+dd.label+'</text>';}).join('');
-    el.innerHTML='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Line chart">'+area+'<polyline class="cht__line" points="'+pts+'"/>'+dots+labs+'</svg>';
+    el.innerHTML='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Line chart">'+defs+area+'<polyline class="cht__line" points="'+pts+'"/>'+dots+labs+hits+'</svg>';
+    var dotEls=el.querySelectorAll('.cht__dot');
+    Array.prototype.forEach.call(el.querySelectorAll('.cht__hit'),function(h){ var i=+h.getAttribute('data-i'), dot=dotEls[i];
+      h.addEventListener('mouseenter',function(){ dot.classList.add('on'); dot.setAttribute('r','5.5'); moveTip(tip,card,dot,'<b>'+data[i].v+'</b> &middot; '+data[i].label); });
+      h.addEventListener('mouseleave',function(){ dot.classList.remove('on'); dot.setAttribute('r','3.5'); tip.classList.remove('show'); });
+    });
   }
   var lineEl=document.getElementById('cht-line');
   if(lineEl) lineChart(lineEl,[{label:'W1',v:120},{label:'W2',v:145},{label:'W3',v:132},{label:'W4',v:170},{label:'W5',v:190},{label:'W6',v:210},{label:'W7',v:240}],false);
   var areaEl=document.getElementById('cht-area');
   if(areaEl) lineChart(areaEl,[{label:'W1',v:32},{label:'W2',v:40},{label:'W3',v:55},{label:'W4',v:49},{label:'W5',v:70},{label:'W6',v:82},{label:'W7',v:95}],true);
 
+  /* Donut — Flash categorical palette; hover a segment or legend to pop it and show its share in the centre */
   var donutEl=document.getElementById('cht-donut'), legEl=document.getElementById('cht-donut-legend');
   if(donutEl){
     var dd=[{label:'Card',v:1240},{label:'EFT',v:580},{label:'Cash',v:320},{label:'Wallet',v:240}];
-    var c=90,r=62,sw=24,total=dd.reduce(function(a,x){return a+x.v;},0)||1,circ=2*Math.PI*r,ops=[1,.62,.38,.22],acc=0,segs='';
+    var c=90,r=62,sw=24,total=dd.reduce(function(a,x){return a+x.v;},0)||1,circ=2*Math.PI*r,acc=0,segs='';
     dd.forEach(function(x,i){ var frac=x.v/total,len=frac*circ,off=-acc*circ;
-      segs+='<circle class="cht__seg" cx="'+c+'" cy="'+c+'" r="'+r+'" fill="none" stroke="var(--color-surface-inverse)" stroke-opacity="'+ops[i%ops.length]+'" stroke-width="'+sw+'" stroke-dasharray="'+len.toFixed(2)+' '+(circ-len).toFixed(2)+'" stroke-dashoffset="'+off.toFixed(2)+'" transform="rotate(-90 '+c+' '+c+')"><title>'+x.label+': '+Math.round(frac*100)+'%</title></circle>';
+      segs+='<circle class="cht__seg" data-i="'+i+'" cx="'+c+'" cy="'+c+'" r="'+r+'" fill="none" stroke="'+PAL[i%PAL.length]+'" stroke-width="'+sw+'" stroke-dasharray="'+len.toFixed(2)+' '+(circ-len).toFixed(2)+'" stroke-dashoffset="'+off.toFixed(2)+'" transform="rotate(-90 '+c+' '+c+')"/>';
       acc+=frac;
     });
     donutEl.innerHTML='<svg viewBox="0 0 180 180" width="180" role="img" aria-label="Donut chart of payment mix">'+segs
       +'<text class="cht-donut-val" x="90" y="88" text-anchor="middle" font-size="26">'+fmt(total)+'</text>'
       +'<text class="cht-donut-lab" x="90" y="106" text-anchor="middle" font-size="10">txns</text></svg>';
-    if(legEl) legEl.innerHTML=dd.map(function(x,i){return '<span class="cht-legend__item"><span class="cht-legend__dot" style="background:var(--color-surface-inverse);opacity:'+ops[i%ops.length]+'"></span>'+x.label+' &middot; '+Math.round(x.v/total*100)+'%</span>';}).join('');
+    var dSvg=donutEl.querySelector('svg'), valEl=dSvg.querySelector('.cht-donut-val'), labEl=dSvg.querySelector('.cht-donut-lab'), segEls=dSvg.querySelectorAll('.cht__seg');
+    if(legEl) legEl.innerHTML=dd.map(function(x,i){return '<span class="cht-legend__item" data-i="'+i+'"><span class="cht-legend__dot" style="background:'+PAL[i%PAL.length]+'"></span>'+x.label+' &middot; '+Math.round(x.v/total*100)+'%</span>';}).join('');
+    function hot(i){ dSvg.classList.add('is-hot'); segEls[i].classList.add('on'); segEls[i].setAttribute('stroke-width',sw+5); valEl.textContent=Math.round(dd[i].v/total*100)+'%'; labEl.textContent=dd[i].label; }
+    function cool(){ dSvg.classList.remove('is-hot'); Array.prototype.forEach.call(segEls,function(s){ s.classList.remove('on'); s.setAttribute('stroke-width',sw); }); valEl.textContent=fmt(total); labEl.textContent='txns'; }
+    Array.prototype.forEach.call(segEls,function(s){ var i=+s.getAttribute('data-i'); s.addEventListener('mouseenter',function(){hot(i);}); s.addEventListener('mouseleave',cool); });
+    if(legEl) Array.prototype.forEach.call(legEl.querySelectorAll('.cht-legend__item'),function(li){ var i=+li.getAttribute('data-i'); li.addEventListener('mouseenter',function(){hot(i);}); li.addEventListener('mouseleave',cool); });
   }
 })();
 /* Calendar & Date Picker */
