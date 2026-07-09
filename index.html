@@ -1749,6 +1749,135 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
 .otp--error .otp__box:focus{box-shadow:0 0 0 3px rgba(235,0,41,.16)}
 .otp-msg{font-size:12px;margin-top:10px}
 .otp-msg--err{color:var(--color-crit-h);font-weight:600}
+/* ---- Card ---- */
+.card-grid{display:flex;flex-wrap:wrap;gap:20px}
+.card{background:var(--chrome-bg);border:1px solid var(--chrome-border);border-radius:14px;overflow:hidden;width:300px;max-width:100%;transition:background .25s,border-color .15s,box-shadow .15s,transform .15s;display:flex;flex-direction:column}
+.card__media{height:132px;background:linear-gradient(135deg,var(--prim-grey-700),var(--prim-grey-1000));flex-shrink:0}
+.card__body{padding:18px;flex:1}
+.card__title{font-size:15px;font-weight:800;color:var(--chrome-txt);margin-bottom:5px}
+.card__desc{font-size:13px;line-height:1.55;color:var(--chrome-muted)}
+.card__body p{font-size:13px;line-height:1.6;color:var(--chrome-txt);margin-top:12px}
+.card__foot{display:flex;gap:10px;align-items:center;padding:14px 18px;border-top:1px solid var(--chrome-border)}
+.card__foot--end{justify-content:flex-end}
+.card--interactive{cursor:pointer}
+.card--interactive:hover{border-color:var(--color-text-s);box-shadow:0 8px 24px rgba(0,0,0,.10);transform:translateY(-2px)}
+.card-btn{background:var(--color-btn-s-bg);color:var(--color-btn-s-txt);border:0;border-radius:8px;padding:8px 16px;font-size:13px;font-weight:700;font-family:inherit;cursor:pointer;transition:opacity .15s}
+.card-btn:hover{opacity:.85}
+.card-btn--ghost{background:transparent;color:var(--chrome-txt);border:1px solid var(--chrome-border)}
+.card-btn--ghost:hover{opacity:1;background:var(--chrome-hover)}
+
+/* ---- Chart (Flash palette + interactive) ---- */
+.cht{position:relative;border:1px solid var(--chrome-border);border-radius:14px;padding:20px 22px;background:var(--chrome-bg);width:380px;max-width:100%;
+  --c1:var(--prim-green-500);--c2:var(--prim-sup-blue-1);--c3:var(--prim-sup-purple-4);--c4:var(--prim-sup-orange-1);--c5:var(--prim-sup-pink-1)}
+.cht__cap{font-size:13px;font-weight:700;color:var(--chrome-txt);margin-bottom:2px}
+.cht__sub{font-size:11.5px;color:var(--chrome-muted);margin-bottom:16px}
+.cht svg{display:block;width:100%;height:auto;overflow:visible}
+.cht__bar{fill:var(--c1);transition:opacity .15s;cursor:pointer}
+.cht svg.is-hot .cht__bar{opacity:.28}
+.cht svg.is-hot .cht__bar.on{opacity:1}
+.cht__line{fill:none;stroke:var(--c1);stroke-width:2.5;stroke-linejoin:round;stroke-linecap:round}
+.cht__area{fill:url(#chtAreaGrad)}
+.cht__dot{fill:var(--chrome-bg);stroke:var(--c1);stroke-width:2.5;transition:fill .12s}
+.cht__dot.on{fill:var(--c1)}
+.cht__hit{fill:transparent;cursor:pointer}
+.cht__axis{fill:var(--chrome-muted);font-size:10px;font-family:inherit}
+.cht__seg{transition:opacity .18s,stroke-width .18s;cursor:pointer}
+.cht svg.is-hot .cht__seg{opacity:.32}
+.cht svg.is-hot .cht__seg.on{opacity:1}
+.cht-legend{display:flex;flex-wrap:wrap;gap:8px 14px;margin-top:16px}
+.cht-legend__item{display:inline-flex;align-items:center;gap:7px;font-size:12px;color:var(--chrome-txt);cursor:pointer;padding:2px 5px;border-radius:6px;transition:background .12s}
+.cht-legend__item:hover{background:var(--chrome-hover)}
+.cht-legend__dot{width:10px;height:10px;border-radius:3px;flex-shrink:0}
+.cht-donut-val{fill:var(--chrome-txt);font-weight:800}
+.cht-donut-lab{fill:var(--chrome-muted)}
+.cht__tip{position:absolute;z-index:5;pointer-events:none;background:var(--color-surface-inverse);color:var(--color-text-inv);font-size:11.5px;font-weight:600;padding:5px 9px;border-radius:7px;white-space:nowrap;opacity:0;transform:translate(-50%,-100%);transition:opacity .12s;box-shadow:0 4px 14px rgba(0,0,0,.22)}
+.cht__tip.show{opacity:1}
+.cht__tip b{font-weight:800}
+/* ---- Kbd (shared: used by Command & Context Menu too) ---- */
+.kbd{display:inline-flex;align-items:center;justify-content:center;min-width:20px;height:20px;padding:0 6px;font-family:'SF Mono',ui-monospace,monospace;font-size:11px;font-weight:600;color:var(--chrome-txt);background:var(--color-surface-n1);border:1px solid var(--chrome-border);border-bottom-width:2px;border-radius:6px;line-height:1}
+.kbd-combo{display:inline-flex;align-items:center;gap:4px}
+.kbd-combo__plus{color:var(--chrome-muted);font-size:11px}
+
+/* ---- Calendar & Date Picker ---- */
+.cal{width:280px;max-width:100%;border:1px solid var(--chrome-border);border-radius:14px;padding:16px;background:var(--chrome-bg)}
+.cal__head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.cal__title{font-size:13px;font-weight:700;color:var(--chrome-txt)}
+.cal__nav{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:7px;border:1px solid var(--chrome-border);background:var(--chrome-bg);color:var(--chrome-txt);cursor:pointer;font-size:15px;font-family:inherit;line-height:1}
+.cal__nav:hover{background:var(--chrome-hover)}
+.cal__grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px}
+.cal__dow{font-size:9.5px;font-weight:700;color:var(--chrome-muted);text-align:center;padding:4px 0;text-transform:uppercase}
+.cal__day{aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:12.5px;color:var(--chrome-txt);border:none;background:none;border-radius:8px;cursor:pointer;font-family:inherit;transition:background .12s}
+.cal__day:hover{background:var(--chrome-hover)}
+.cal__day--muted{color:var(--chrome-muted);opacity:.4;cursor:default}
+.cal__day--muted:hover{background:none}
+.cal__day--today{font-weight:800;box-shadow:inset 0 0 0 1px var(--chrome-border)}
+.cal__day--sel{background:var(--color-btn-s-bg);color:var(--color-btn-s-txt);font-weight:700}
+.cal__day--sel:hover{background:var(--color-btn-s-bg);opacity:.85}
+.dp{position:relative;display:inline-block}
+.dp__field{display:inline-flex;align-items:center;gap:10px;min-width:220px;padding:10px 14px;border:1.5px solid var(--color-input-border);border-radius:10px;background:var(--color-input-bg);color:var(--chrome-txt);font-size:13px;font-family:inherit;cursor:pointer;text-align:left}
+.dp__field:hover{border-color:var(--color-text-s)}
+.dp__val{color:var(--chrome-muted);font-weight:500}
+.dp__field svg{width:16px;height:16px;margin-left:auto;color:var(--chrome-muted);flex-shrink:0}
+.dp__pop{position:absolute;top:calc(100% + 6px);left:0;z-index:40;opacity:0;transform:translateY(-6px);pointer-events:none;transition:opacity .15s,transform .15s}
+.dp.is-open .dp__pop{opacity:1;transform:translateY(0);pointer-events:auto}
+
+/* ---- Command palette ---- */
+.cmd{width:420px;max-width:100%;border:1px solid var(--chrome-border);border-radius:14px;background:var(--chrome-bg);overflow:hidden;box-shadow:0 14px 36px rgba(0,0,0,.12)}
+.cmd__search{display:flex;align-items:center;gap:10px;padding:13px 16px;border-bottom:1px solid var(--chrome-border)}
+.cmd__search svg{width:16px;height:16px;color:var(--chrome-muted);flex-shrink:0}
+.cmd__input{flex:1;border:0;background:none;outline:none;font-family:inherit;font-size:14px;color:var(--chrome-txt);min-width:0}
+.cmd__input::placeholder{color:var(--chrome-muted)}
+.cmd__list{max-height:264px;overflow-y:auto;padding:6px}
+.cmd__glabel{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--chrome-muted);padding:10px 10px 4px}
+.cmd__item{display:flex;align-items:center;gap:11px;padding:9px 10px;border-radius:8px;font-size:13.5px;color:var(--chrome-txt);cursor:pointer}
+.cmd__item.is-active,.cmd__item:hover{background:var(--chrome-hover)}
+.cmd__ico{width:16px;text-align:center;color:var(--chrome-muted);flex-shrink:0}
+.cmd__item .kbd{margin-left:auto}
+.cmd__empty{padding:28px;text-align:center;font-size:13px;color:var(--chrome-muted)}
+
+/* ---- Context menu ---- */
+.ctx-target{display:flex;align-items:center;justify-content:center;min-height:130px;border:1.5px dashed var(--chrome-border);border-radius:12px;color:var(--chrome-muted);font-size:13px;user-select:none;text-align:center;padding:20px;cursor:context-menu}
+.ctx-menu{position:fixed;z-index:60;min-width:196px;background:var(--chrome-bg);border:1px solid var(--chrome-border);border-radius:10px;box-shadow:0 12px 32px rgba(0,0,0,.18);padding:6px;display:none}
+.ctx-menu.is-open{display:block}
+.ctx-item{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:7px;font-size:13px;color:var(--chrome-txt);cursor:pointer}
+.ctx-item:hover{background:var(--chrome-hover)}
+.ctx-item .cmd__ico,.ctx-item .ctx-ico{width:16px;text-align:center;color:var(--chrome-muted);flex-shrink:0}
+.ctx-item--danger{color:var(--color-crit-h)}
+.ctx-item--danger .ctx-ico{color:var(--color-crit-h)}
+.ctx-item .kbd{margin-left:auto}
+.ctx-sep{height:1px;background:var(--chrome-border);margin:5px 4px}
+
+/* ---- Hover card ---- */
+.hc{position:relative;display:inline-block}
+.hc__trigger{color:var(--color-link);font-weight:600;cursor:pointer;text-decoration:underline;text-underline-offset:2px;background:none;border:0;font-family:inherit;font-size:inherit;padding:0}
+.hc__card{position:absolute;top:calc(100% + 8px);left:0;z-index:30;width:268px;background:var(--chrome-bg);border:1px solid var(--chrome-border);border-radius:12px;box-shadow:0 14px 36px rgba(0,0,0,.16);padding:16px;opacity:0;transform:translateY(-6px) scale(.98);transform-origin:top left;pointer-events:none;transition:opacity .18s ease,transform .18s ease}
+.hc:hover .hc__card,.hc:focus-within .hc__card{opacity:1;transform:translateY(0) scale(1);pointer-events:auto;transition-delay:.2s}
+.hc__row{display:flex;gap:12px;align-items:center;margin-bottom:11px}
+.hc__name{font-size:14px;font-weight:800;color:var(--chrome-txt)}
+.hc__handle{font-size:12px;color:var(--chrome-muted)}
+.hc__meta{font-size:12.5px;color:var(--chrome-muted);line-height:1.55}
+/* ---- Separator ---- */
+.sep{border:none;height:1px;background:var(--chrome-border);margin:0;width:100%}
+.sep--v{width:1px;height:20px;background:var(--chrome-border);flex-shrink:0}
+.sep-hstack{display:flex;align-items:center;gap:16px;font-size:13px;font-weight:600;color:var(--chrome-txt)}
+.sep-label{display:flex;align-items:center;gap:14px;color:var(--chrome-muted);font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;width:100%;max-width:360px}
+.sep-label::before,.sep-label::after{content:"";flex:1;height:1px;background:var(--chrome-border)}
+
+/* ---- Carousel ---- */
+.car{position:relative;width:440px;max-width:100%}
+.car__track{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;scrollbar-width:none;border-radius:14px}
+.car__track::-webkit-scrollbar{display:none}
+.car__slide{flex:0 0 100%;scroll-snap-align:center;min-height:196px;border-radius:14px;display:flex;align-items:flex-end;padding:20px;color:#fff;font-weight:800;font-size:17px;background:linear-gradient(135deg,var(--prim-grey-600),var(--prim-grey-1100))}
+.car__slide:nth-child(2){background:linear-gradient(135deg,var(--prim-gb-300),var(--prim-gb-700))}
+.car__slide:nth-child(3){background:linear-gradient(135deg,var(--prim-grey-800),var(--prim-dg-700))}
+.car__slide:nth-child(4){background:linear-gradient(135deg,var(--prim-gb-200),var(--prim-gb-600))}
+.car__arrow{position:absolute;top:98px;transform:translateY(-50%);width:34px;height:34px;border-radius:50%;background:var(--color-btn-s-bg);color:var(--color-btn-s-txt);border:0;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;font-family:inherit;box-shadow:0 2px 10px rgba(0,0,0,.25);z-index:2;transition:opacity .15s}
+.car__arrow:hover{opacity:.85}
+.car__arrow--prev{left:10px}
+.car__arrow--next{right:10px}
+.car__dots{display:flex;gap:7px;justify-content:center;margin-top:14px}
+.car__dot{width:7px;height:7px;border-radius:50%;background:var(--color-surface-n3);border:0;cursor:pointer;padding:0;transition:width .2s,background .2s}
+.car__dot.is-active{background:var(--color-surface-inverse);width:20px;border-radius:4px}
 /* @@SHADCN_CSS@@ */
 </style>
 </head>
@@ -1799,9 +1928,17 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
     <a href="javascript:void(0)" onclick="showSection('s-alert')" class="sb-link"><div class="sb-pip"></div>Alert</a>
     <a href="javascript:void(0)" onclick="showSection('s-avatar')" class="sb-link"><div class="sb-pip"></div>Avatar</a>
     <a href="javascript:void(0)" onclick="showSection('s-breadcrumb')" class="sb-link"><div class="sb-pip"></div>Breadcrumb</a>
+    <a href="javascript:void(0)" onclick="showSection('s-calendar')" class="sb-link"><div class="sb-pip"></div>Calendar</a>
+    <a href="javascript:void(0)" onclick="showSection('s-carousel')" class="sb-link"><div class="sb-pip"></div>Carousel</a>
+    <a href="javascript:void(0)" onclick="showSection('s-charts')" class="sb-link"><div class="sb-pip"></div>Charts</a>
+    <a href="javascript:void(0)" onclick="showSection('s-command')" class="sb-link"><div class="sb-pip"></div>Command</a>
+    <a href="javascript:void(0)" onclick="showSection('s-context-menu')" class="sb-link"><div class="sb-pip"></div>Context Menu</a>
+    <a href="javascript:void(0)" onclick="showSection('s-hover-card')" class="sb-link"><div class="sb-pip"></div>Hover Card</a>
     <a href="javascript:void(0)" onclick="showSection('s-input-otp')" class="sb-link"><div class="sb-pip"></div>Input OTP</a>
+    <a href="javascript:void(0)" onclick="showSection('s-kbd')" class="sb-link"><div class="sb-pip"></div>Kbd</a>
     <a href="javascript:void(0)" onclick="showSection('s-pagination')" class="sb-link"><div class="sb-pip"></div>Pagination</a>
     <a href="javascript:void(0)" onclick="showSection('s-popover')" class="sb-link"><div class="sb-pip"></div>Popover</a>
+    <a href="javascript:void(0)" onclick="showSection('s-separator')" class="sb-link"><div class="sb-pip"></div>Separator</a>
     <a href="javascript:void(0)" onclick="showSection('s-skeleton')" class="sb-link"><div class="sb-pip"></div>Skeleton</a>
     <a href="javascript:void(0)" onclick="showSection('s-slider')" class="sb-link"><div class="sb-pip"></div>Slider</a>
     <a href="javascript:void(0)" onclick="showSection('s-spinner')" class="sb-link"><div class="sb-pip"></div>Spinner</a>
@@ -2168,7 +2305,90 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
       <div id="chip-playground" class="type-sub"></div>
       <div id="chip-reference" class="type-sub"></div>
     </section>
-    <section class="sec" id="s-cards"><div class="sec__head"><div class="sec__eye">Components</div><h1 class="sec__title">Cards</h1></div><div class="coming">Coming in a future session</div></section>
+    <section class="sec" id="s-cards">
+      <div class="sec__head">
+        <div class="sec__eye">Components</div>
+        <h1 class="sec__title">Cards <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.0</span></h1>
+        <p class="sec__desc">A surface that groups related content and actions into a single unit. Composed from an optional media band, a body (title, description, content) and an optional footer for actions. Built on Flash surface and border tokens, so it adapts to light &amp; dark.</p>
+      </div>
+      <div class="type-sub">
+        <div class="type-sub__title">Anatomy</div>
+        <div class="type-sub__desc">A basic card is a body with a title and description. Add a footer for actions, and a media band for imagery &mdash; use only what each card needs.</div>
+        <div class="sg-stage"><div class="card-grid">
+          <div class="card">
+            <div class="card__body">
+              <div class="card__title">Basic card</div>
+              <div class="card__desc">Just a body with a title and a short description. The simplest, most common shape.</div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card__body">
+              <div class="card__title">With footer</div>
+              <div class="card__desc">A footer separates primary and secondary actions from the content above.</div>
+            </div>
+            <div class="card__foot card__foot--end">
+              <button class="card-btn card-btn--ghost" type="button">Cancel</button>
+              <button class="card-btn" type="button">Save</button>
+            </div>
+          </div>
+        </div></div>
+      </div>
+      <div class="type-sub">
+        <div class="type-sub__title">Media &amp; interactive</div>
+        <div class="type-sub__desc">A media band sits flush at the top. An interactive card lifts on hover and makes the whole surface a single target &mdash; use it when the entire card links somewhere.</div>
+        <div class="sg-stage"><div class="card-grid">
+          <div class="card">
+            <div class="card__media"></div>
+            <div class="card__body">
+              <div class="card__title">Media card</div>
+              <div class="card__desc">An image or thumbnail band above the body, useful for products, articles and previews.</div>
+            </div>
+          </div>
+          <div class="card card--interactive" tabindex="0" role="button">
+            <div class="card__body">
+              <div class="card__title">Interactive card &rarr;</div>
+              <div class="card__desc">Hover me. The whole card is one clickable target with a subtle lift and shadow.</div>
+            </div>
+          </div>
+        </div></div>
+      </div>
+      <div class="type-sub">
+        <div class="type-sub__title">Specs</div>
+        <div class="type-sub__desc">Shared measurements and the tokens behind the surface.</div>
+        <div class="dd-table-wrap"><table class="dd-table">
+          <thead><tr><th>Property</th><th>Value</th><th>Token</th></tr></thead>
+          <tbody>
+            <tr><td class="dd-table__name">Corner radius</td><td>14px</td><td>&mdash;</td></tr>
+            <tr><td class="dd-table__name">Border</td><td>1px</td><td><code>chrome-border</code></td></tr>
+            <tr><td class="dd-table__name">Surface</td><td>Base background</td><td><code>chrome-bg</code></td></tr>
+            <tr><td class="dd-table__name">Body padding</td><td>18px</td><td>spacing-225</td></tr>
+            <tr><td class="dd-table__name">Footer action</td><td colspan="2">Primary (black) button</td></tr>
+          </tbody>
+        </table></div>
+      </div>
+      <div class="type-sub">
+        <div class="type-sub__title">When to use</div>
+        <div class="type-sub__desc">A card groups one coherent thing. If content isn&rsquo;t related, don&rsquo;t box it together.</div>
+        <div class="sel-usage">
+          <div class="sel-usage__card">
+            <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
+            <ul class="sel-usage__list">
+              <li>Group a single, self-contained subject &mdash; one product, one summary, one record.</li>
+              <li>Keep one clear primary action per card, in the footer.</li>
+              <li>Make the whole card clickable only when it links to one destination.</li>
+            </ul>
+          </div>
+          <div class="sel-usage__card">
+            <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don&rsquo;t</div>
+            <ul class="sel-usage__list">
+              <li>Don&rsquo;t cram unrelated content into one card to save space.</li>
+              <li>Don&rsquo;t nest cards inside cards &mdash; flatten the hierarchy.</li>
+              <li>Don&rsquo;t put several competing primary actions in one footer.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
     <section class="sec" id="s-modals"><div class="sec__head"><div class="sec__eye">Components</div><h1 class="sec__title">Modals &amp; Dialogs</h1></div><div class="coming">Coming in a future session</div></section>
     <section class="sec" id="s-drawers">
       <div class="sec__head">
@@ -3341,6 +3561,401 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
               <li>Don&rsquo;t use segmented boxes for ordinary or variable-length input.</li>
               <li>Don&rsquo;t use it for long secrets or passwords &mdash; use a password field.</li>
               <li>Don&rsquo;t block pasting &mdash; it&rsquo;s how most people enter codes.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         CHARTS
+    ============================================================ -->
+    <section class="sec" id="s-charts">
+      <div class="sec__head">
+        <div class="sec__eye">Components</div>
+        <h1 class="sec__title">Charts <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.0</span></h1>
+        <p class="sec__desc">Lightweight, interactive data visualisations rendered as inline SVG &mdash; no charting library. Four core types cover most needs. Hover any bar, point or segment for its value; the donut pops the hovered slice and shows its share in the centre. Series and categories use the Flash colour palette (brand green, blue, purple, orange); single-series charts lead with the brand green.</p>
+      </div>
+      <div class="type-sub">
+        <div class="type-sub__title">Bar</div>
+        <div class="type-sub__desc">Compare discrete values across categories. Hover a bar to emphasise it and read its value; the rest dim back.</div>
+        <div class="sg-stage"><div class="cht"><div class="cht__cap">Monthly volume</div><div class="cht__sub">Transactions per month &middot; 2026</div><div id="cht-bar"></div></div></div>
+      </div>
+      <div class="type-sub">
+        <div class="type-sub__title">Line &amp; area</div>
+        <div class="type-sub__desc">Show a trend over a continuous range. The area variant fills beneath the line to emphasise volume.</div>
+        <div class="sg-stage"><div class="sg-row sg-row--top" style="gap:22px">
+          <div class="cht" style="width:340px"><div class="cht__cap">Active users</div><div class="cht__sub">Line &middot; last 7 weeks</div><div id="cht-line"></div></div>
+          <div class="cht" style="width:340px"><div class="cht__cap">Settled value</div><div class="cht__sub">Area &middot; last 7 weeks</div><div id="cht-area"></div></div>
+        </div></div>
+      </div>
+      <div class="type-sub">
+        <div class="type-sub__title">Donut</div>
+        <div class="type-sub__desc">Show parts of a whole. Each slice takes a colour from the Flash palette; hover a slice or its legend entry to pop it out and read its share in the centre.</div>
+        <div class="sg-stage"><div class="cht" style="width:340px"><div class="cht__cap">Payment mix</div><div class="cht__sub">Share of volume by method</div><div id="cht-donut"></div><div class="cht-legend" id="cht-donut-legend"></div></div></div>
+      </div>
+      <div class="type-sub">
+        <div class="type-sub__title">When to use</div>
+        <div class="type-sub__desc">Pick the type that matches the question: comparison (bar), trend (line/area) or composition (donut).</div>
+        <div class="sel-usage">
+          <div class="sel-usage__card">
+            <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
+            <ul class="sel-usage__list">
+              <li>Use bars for comparison, lines for trends, donuts for a few parts of a whole.</li>
+              <li>Label axes; give each category or series its own palette colour, and keep single-series charts to one.</li>
+              <li>Start bar and area value axes at zero.</li>
+            </ul>
+          </div>
+          <div class="sel-usage__card">
+            <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don&rsquo;t</div>
+            <ul class="sel-usage__list">
+              <li>Don&rsquo;t use a donut for more than ~5 segments &mdash; a bar reads better.</li>
+              <li>Don&rsquo;t colour series just for decoration &mdash; it implies meaning that isn&rsquo;t there.</li>
+              <li>Don&rsquo;t truncate a value axis in a way that exaggerates differences.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         CALENDAR & DATE PICKER
+    ============================================================ -->
+    <section class="sec" id="s-calendar">
+      <div class="sec__head">
+        <div class="sec__eye">Components</div>
+        <h1 class="sec__title">Calendar &amp; Date Picker <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.0</span></h1>
+        <p class="sec__desc">A month-grid calendar for choosing a date, and a compact field that opens it in a popover. Fully interactive &mdash; navigate months and pick a day. The selected day uses the primary (black) style; today is outlined.</p>
+      </div>
+      <div class="type-sub">
+        <div class="type-sub__title">Inline calendar</div>
+        <div class="type-sub__desc">Use the arrows to change month; click a day to select it. Good when the calendar is always on screen &mdash; booking flows, filters.</div>
+        <div class="sg-stage"><div id="cal-inline"></div></div>
+      </div>
+      <div class="type-sub">
+        <div class="type-sub__title">Date picker field</div>
+        <div class="type-sub__desc">A field that shows the chosen date and opens the calendar on click. Picking a day fills the field and closes the popover; click outside or press Escape to dismiss.</div>
+        <div class="sg-stage" style="min-height:360px;align-items:flex-start">
+          <div class="dp" id="dp-demo">
+            <button class="dp__field" type="button"><span class="dp__val">Select a date</span><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="4.5" width="18" height="16" rx="2.5" stroke="currentColor" stroke-width="1.8"/><path d="M3 9h18M8 2.5v4M16 2.5v4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>
+            <div class="dp__pop"></div>
+          </div>
+        </div>
+      </div>
+      <div class="type-sub">
+        <div class="type-sub__title">When to use</div>
+        <div class="type-sub__desc">Pick the form that fits the space: an inline calendar when it&rsquo;s central, a field when date is one input among many.</div>
+        <div class="sel-usage">
+          <div class="sel-usage__card">
+            <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
+            <ul class="sel-usage__list">
+              <li>Use the field in forms; use the inline calendar when picking a date is the main task.</li>
+              <li>Mark today and make the selected date unmistakable.</li>
+              <li>Also accept typed dates for accessibility and speed where you can.</li>
+            </ul>
+          </div>
+          <div class="sel-usage__card">
+            <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don&rsquo;t</div>
+            <ul class="sel-usage__list">
+              <li>Don&rsquo;t use a calendar for far-off dates like birth year &mdash; a select is faster.</li>
+              <li>Don&rsquo;t trap keyboard users &mdash; allow Escape and typed entry.</li>
+              <li>Don&rsquo;t hide which month is shown or which day is selected.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         COMMAND PALETTE
+    ============================================================ -->
+    <section class="sec" id="s-command">
+      <div class="sec__head">
+        <div class="sec__eye">Components</div>
+        <h1 class="sec__title">Command <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.0</span></h1>
+        <p class="sec__desc">A searchable command palette for jumping to actions and destinations fast. Type to filter; use &uarr; &darr; to move and Enter to run. Typically summoned with a shortcut like <span class="kbd-combo"><span class="kbd">&#8984;</span><span class="kbd-combo__plus">+</span><span class="kbd">K</span></span>.</p>
+      </div>
+      <div class="type-sub">
+        <div class="type-sub__title">Interactive</div>
+        <div class="type-sub__desc">Start typing to filter across groups. The highlighted row follows your arrow keys; Enter would run it.</div>
+        <div class="sg-stage" style="align-items:flex-start"><div class="cmd" id="cmd-demo"></div></div>
+      </div>
+      <div class="type-sub">
+        <div class="type-sub__title">When to use</div>
+        <div class="type-sub__desc">A command palette rewards frequent, keyboard-driven users. It complements visible navigation &mdash; it doesn&rsquo;t replace it.</div>
+        <div class="sel-usage">
+          <div class="sel-usage__card">
+            <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
+            <ul class="sel-usage__list">
+              <li>Aggregate common actions and destinations behind one search.</li>
+              <li>Support full keyboard use and show shortcuts inline.</li>
+              <li>Group results and show a clear empty state.</li>
+            </ul>
+          </div>
+          <div class="sel-usage__card">
+            <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don&rsquo;t</div>
+            <ul class="sel-usage__list">
+              <li>Don&rsquo;t make it the only way to reach a feature.</li>
+              <li>Don&rsquo;t dump every action in with no grouping or ranking.</li>
+              <li>Don&rsquo;t hide it with no discoverable shortcut or entry point.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         CONTEXT MENU
+    ============================================================ -->
+    <section class="sec" id="s-context-menu">
+      <div class="sec__head">
+        <div class="sec__eye">Components</div>
+        <h1 class="sec__title">Context Menu <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.0</span></h1>
+        <p class="sec__desc">A menu of actions relevant to a specific element, opened by right-click. It appears at the pointer and dismisses on outside-click, scroll or Escape.</p>
+      </div>
+      <div class="type-sub">
+        <div class="type-sub__title">Interactive</div>
+        <div class="type-sub__desc">Right-click (or two-finger tap) inside the area below to open the menu at your pointer.</div>
+        <div class="sg-stage">
+          <div class="ctx-target" id="ctx-target" style="width:100%">Right-click anywhere in this area</div>
+          <div class="ctx-menu" id="ctx-menu">
+            <div class="ctx-item"><span class="ctx-ico">&#8663;</span>Open<span class="kbd">&crarr;</span></div>
+            <div class="ctx-item"><span class="ctx-ico">&#10697;</span>Duplicate</div>
+            <div class="ctx-item"><span class="ctx-ico">&#9998;</span>Rename<span class="kbd">F2</span></div>
+            <div class="ctx-sep"></div>
+            <div class="ctx-item ctx-item--danger"><span class="ctx-ico">&times;</span>Delete<span class="kbd">&#8998;</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="type-sub">
+        <div class="type-sub__title">When to use</div>
+        <div class="type-sub__desc">Context menus offer power-user shortcuts. Because they&rsquo;re hidden until right-click, never make them the only path to an action.</div>
+        <div class="sel-usage">
+          <div class="sel-usage__card">
+            <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
+            <ul class="sel-usage__list">
+              <li>Offer actions specific to the right-clicked item.</li>
+              <li>Group related actions and separate destructive ones.</li>
+              <li>Mirror every item in a visible menu or toolbar too.</li>
+            </ul>
+          </div>
+          <div class="sel-usage__card">
+            <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don&rsquo;t</div>
+            <ul class="sel-usage__list">
+              <li>Don&rsquo;t hide essential actions only behind right-click.</li>
+              <li>Don&rsquo;t overload it with dozens of items.</li>
+              <li>Don&rsquo;t place a destructive action where users expect a safe one.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         HOVER CARD
+    ============================================================ -->
+    <section class="sec" id="s-hover-card">
+      <div class="sec__head">
+        <div class="sec__eye">Components</div>
+        <h1 class="sec__title">Hover Card <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.0</span></h1>
+        <p class="sec__desc">A rich preview that appears when a user hovers or focuses a reference &mdash; a person, entity or link &mdash; without navigating away. Like a tooltip, but for structured content rather than a one-line hint.</p>
+      </div>
+      <div class="type-sub">
+        <div class="type-sub__title">Interactive</div>
+        <div class="type-sub__desc">Hover (or tab to) the highlighted name. The card fades in after a short delay so it doesn&rsquo;t flicker on passing hovers.</div>
+        <div class="sg-stage" style="min-height:220px;align-items:flex-start">
+          <p style="font-size:14px;line-height:1.7;color:var(--chrome-txt);max-width:440px">Last settlement was approved by
+            <span class="hc">
+              <button class="hc__trigger" type="button">@rethabile</button>
+              <span class="hc__card">
+                <span class="hc__row">
+                  <span class="avt avt--lg">RB</span>
+                  <span><span class="hc__name" style="display:block">Rethabile Beng</span><span class="hc__handle">@rethabile &middot; Finance ops</span></span>
+                </span>
+                <span class="hc__meta">Approves payouts and manages settlement rules. Joined March 2024 &middot; Cape Town.</span>
+              </span>
+            </span>
+            earlier today.</p>
+        </div>
+      </div>
+      <div class="type-sub">
+        <div class="type-sub__title">When to use</div>
+        <div class="type-sub__desc">Hover cards enrich a reference in place. They&rsquo;re optional context &mdash; never the only way to see the information.</div>
+        <div class="sel-usage">
+          <div class="sel-usage__card">
+            <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
+            <ul class="sel-usage__list">
+              <li>Preview a person, record or link the user is pointing at.</li>
+              <li>Delay the open slightly so it doesn&rsquo;t flash on pass-through.</li>
+              <li>Keep the content scannable &mdash; a few lines, not a page.</li>
+            </ul>
+          </div>
+          <div class="sel-usage__card">
+            <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don&rsquo;t</div>
+            <ul class="sel-usage__list">
+              <li>Don&rsquo;t put essential info only in a hover card &mdash; touch users miss it.</li>
+              <li>Don&rsquo;t use one for a plain text hint &mdash; that&rsquo;s a tooltip.</li>
+              <li>Don&rsquo;t pack interactive-heavy flows inside &mdash; use a popover or page.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SEPARATOR
+    ============================================================ -->
+    <section class="sec" id="s-separator">
+      <div class="sec__head">
+        <div class="sec__eye">Components</div>
+        <h1 class="sec__title">Separator <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.0</span></h1>
+        <p class="sec__desc">A thin rule that divides content into groups. Horizontal by default, vertical inside a row, or with a centred label to break a flow. One hairline on the border token, so it stays quiet in both themes.</p>
+      </div>
+      <div class="type-sub">
+        <div class="type-sub__title">Horizontal</div>
+        <div class="type-sub__desc">The default &mdash; separates stacked blocks of content.</div>
+        <div class="sg-stage" style="display:block">
+          <div style="font-size:13px;color:var(--chrome-txt);max-width:420px">
+            <div style="font-weight:700;margin-bottom:3px">Account</div>
+            <div style="color:var(--chrome-muted)">Manage your business profile and details.</div>
+            <hr class="sep" style="margin:16px 0">
+            <div style="font-weight:700;margin-bottom:3px">Payouts</div>
+            <div style="color:var(--chrome-muted)">Choose where settled funds are deposited.</div>
+          </div>
+        </div>
+      </div>
+      <div class="type-sub">
+        <div class="type-sub__title">Vertical &amp; labelled</div>
+        <div class="type-sub__desc">A vertical rule separates inline items; a labelled separator breaks a flow with a word like &ldquo;or&rdquo;.</div>
+        <div class="sg-stage sg-stage--col" style="display:flex;flex-direction:column;gap:26px;align-items:flex-start">
+          <div class="sep-hstack"><span>Profile</span><span class="sep--v"></span><span>Settings</span><span class="sep--v"></span><span>Log out</span></div>
+          <div class="sep-label">Or continue with</div>
+        </div>
+      </div>
+      <div class="type-sub">
+        <div class="type-sub__title">When to use</div>
+        <div class="type-sub__desc">A separator groups; whitespace usually does the same job more quietly. Reach for a rule only when the boundary needs to be explicit.</div>
+        <div class="sel-usage">
+          <div class="sel-usage__card">
+            <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
+            <ul class="sel-usage__list">
+              <li>Divide clearly distinct groups in a list or settings page.</li>
+              <li>Use a vertical rule between inline actions or meta items.</li>
+              <li>Use a labelled separator to introduce an alternative (&ldquo;or&rdquo;).</li>
+            </ul>
+          </div>
+          <div class="sel-usage__card">
+            <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don&rsquo;t</div>
+            <ul class="sel-usage__list">
+              <li>Don&rsquo;t rule between every row &mdash; let spacing do the work.</li>
+              <li>Don&rsquo;t make separators heavy or coloured; keep them hairline.</li>
+              <li>Don&rsquo;t stack multiple rules with no content between them.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         KBD
+    ============================================================ -->
+    <section class="sec" id="s-kbd">
+      <div class="sec__head">
+        <div class="sec__eye">Components</div>
+        <h1 class="sec__title">Kbd <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.0</span></h1>
+        <p class="sec__desc">A small key-cap for representing keyboard input &mdash; single keys or shortcut combinations. Monospaced, with a subtle bottom edge so it reads as a physical key.</p>
+      </div>
+      <div class="type-sub">
+        <div class="type-sub__title">Single keys</div>
+        <div class="type-sub__desc">One glyph per cap. Use the platform symbols where they help.</div>
+        <div class="sg-stage"><div class="sg-row" style="gap:10px">
+          <span class="kbd">&#8984;</span><span class="kbd">&#8679;</span><span class="kbd">&#8997;</span><span class="kbd">Ctrl</span><span class="kbd">Esc</span><span class="kbd">&crarr;</span><span class="kbd">&#9003;</span><span class="kbd">K</span>
+        </div></div>
+      </div>
+      <div class="type-sub">
+        <div class="type-sub__title">Combinations</div>
+        <div class="type-sub__desc">Chain caps with a thin plus to show a chord.</div>
+        <div class="sg-stage"><div class="sg-row" style="gap:22px">
+          <span class="kbd-combo"><span class="kbd">&#8984;</span><span class="kbd-combo__plus">+</span><span class="kbd">K</span></span>
+          <span class="kbd-combo"><span class="kbd">&#8984;</span><span class="kbd-combo__plus">+</span><span class="kbd">&#8679;</span><span class="kbd-combo__plus">+</span><span class="kbd">P</span></span>
+          <span class="kbd-combo"><span class="kbd">Ctrl</span><span class="kbd-combo__plus">+</span><span class="kbd">C</span></span>
+        </div></div>
+      </div>
+      <div class="type-sub">
+        <div class="type-sub__title">In context</div>
+        <div class="type-sub__desc">Inline within running text, at the size of the surrounding copy.</div>
+        <div class="sg-stage" style="display:block">
+          <p style="font-size:14px;color:var(--chrome-txt);line-height:1.7">Press <span class="kbd-combo"><span class="kbd">&#8984;</span><span class="kbd-combo__plus">+</span><span class="kbd">K</span></span> to open the command palette, or <span class="kbd">/</span> to jump straight to search.</p>
+        </div>
+      </div>
+      <div class="type-sub">
+        <div class="type-sub__title">When to use</div>
+        <div class="type-sub__desc">Kbd shows the user which keys to press. It&rsquo;s documentation, not a button &mdash; don&rsquo;t make it clickable.</div>
+        <div class="sel-usage">
+          <div class="sel-usage__card">
+            <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
+            <ul class="sel-usage__list">
+              <li>Show shortcuts in menus, tooltips and the command palette.</li>
+              <li>Use recognised symbols and keep one glyph per cap.</li>
+              <li>Match the key labels to the user&rsquo;s platform where you can.</li>
+            </ul>
+          </div>
+          <div class="sel-usage__card">
+            <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don&rsquo;t</div>
+            <ul class="sel-usage__list">
+              <li>Don&rsquo;t style buttons as key-caps &mdash; Kbd isn&rsquo;t interactive.</li>
+              <li>Don&rsquo;t cram a whole chord into one cap &mdash; chain separate caps.</li>
+              <li>Don&rsquo;t invent symbols; use the platform&rsquo;s standard ones.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         CAROUSEL
+    ============================================================ -->
+    <section class="sec" id="s-carousel">
+      <div class="sec__head">
+        <div class="sec__eye">Components</div>
+        <h1 class="sec__title">Carousel <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.0</span></h1>
+        <p class="sec__desc">A horizontally scrollable, snapping set of slides for browsing a small collection &mdash; features, images, onboarding steps. Drag/swipe, use the arrows, or jump with the dots.</p>
+      </div>
+      <div class="type-sub">
+        <div class="type-sub__title">Interactive</div>
+        <div class="type-sub__desc">Swipe or use the arrows; the active dot elongates to show position. Slides snap into place.</div>
+        <div class="sg-stage" style="justify-content:center">
+          <div class="car" id="car-demo">
+            <button class="car__arrow car__arrow--prev" type="button" aria-label="Previous slide">&lsaquo;</button>
+            <button class="car__arrow car__arrow--next" type="button" aria-label="Next slide">&rsaquo;</button>
+            <div class="car__track">
+              <div class="car__slide">Instant payouts</div>
+              <div class="car__slide">Tap to pay</div>
+              <div class="car__slide">Fraud protection</div>
+              <div class="car__slide">Same-day settlement</div>
+            </div>
+            <div class="car__dots"></div>
+          </div>
+        </div>
+      </div>
+      <div class="type-sub">
+        <div class="type-sub__title">When to use</div>
+        <div class="type-sub__desc">Carousels suit small, browsable sets where each slide stands alone. They hide content behind interaction, so don&rsquo;t bury anything essential.</div>
+        <div class="sel-usage">
+          <div class="sel-usage__card">
+            <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
+            <ul class="sel-usage__list">
+              <li>Use for a handful of equally-weighted, self-contained slides.</li>
+              <li>Show position with dots and offer arrows plus swipe.</li>
+              <li>Keep each slide understandable on its own.</li>
+            </ul>
+          </div>
+          <div class="sel-usage__card">
+            <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don&rsquo;t</div>
+            <ul class="sel-usage__list">
+              <li>Don&rsquo;t hide critical content or primary actions in later slides.</li>
+              <li>Don&rsquo;t auto-advance without a pause control &mdash; it fights the reader.</li>
+              <li>Don&rsquo;t use a carousel where a simple list would show everything at once.</li>
             </ul>
           </div>
         </div>
@@ -6306,12 +6921,24 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.23.0';
+const SYSTEM_VERSION = '1.24.0';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.24.0', date:'2026-07-09', author:'Mo', title:'More shadcn-gap components — Cards, Charts & 7 more', changes:[
+        ['added','Cards — basic, with footer actions, media band and interactive/hoverable variants (replaces the placeholder)'],
+        ['added','Charts — interactive inline-SVG bar, line, area and donut (hover for values, donut pops the slice), hand-built with no charting library, using the Flash colour palette'],
+        ['added','Calendar & Date Picker — interactive month grid with month nav and day select, plus a field that opens it in a popover'],
+        ['added','Command — searchable command palette with grouping, live filtering, arrow-key navigation and an empty state'],
+        ['added','Context Menu — right-click menu positioned at the pointer, dismissing on outside-click, scroll or Escape'],
+        ['added','Hover Card — CSS-driven rich preview that fades in on hover/focus after a short delay'],
+        ['added','Separator — horizontal, vertical and labelled hairline dividers'],
+        ['added','Kbd — keyboard key-caps for single keys and shortcut combinations'],
+        ['added','Carousel — scroll-snap slider with prev/next arrows and position dots'],
+        ['changed','Emphasis (selected day, carousel arrows/dots, card actions) uses the primary black/white style; charts use the Flash colour palette, and colour otherwise stays reserved for semantic meaning'],
+      ]},
       {version:'1.23.0', date:'2026-07-09', author:'Mo', title:'shadcn-gap components — 13 new primitives', changes:[
         ['added','Switch — on/off toggle built on a native checkbox, brand-green when on, in Regular and Small sizes'],
         ['added','Tooltip — pure-CSS hover/focus hint with top, right, bottom and left placements'],
@@ -6444,6 +7071,46 @@ const CHANGELOG = {
     ]
   },
   components: [
+    {secId:'s-charts', name:'Charts', version:'1.0.0', entries:[
+      {version:'1.0.0', date:'2026-07-09', author:'Mo', title:'Initial release', changes:[
+        ['added','Interactive inline-SVG bar, line, area and donut charts rendered from data, Flash colour palette, with hover tooltips, dim-the-rest emphasis, donut pop-out and an interactive legend'],
+      ]},
+    ]},
+    {secId:'s-calendar', name:'Calendar & Date Picker', version:'1.0.0', entries:[
+      {version:'1.0.0', date:'2026-07-09', author:'Mo', title:'Initial release', changes:[
+        ['added','Interactive month-grid calendar (month nav, today marker, day select) and a date-picker field that opens it in a popover'],
+      ]},
+    ]},
+    {secId:'s-command', name:'Command', version:'1.0.0', entries:[
+      {version:'1.0.0', date:'2026-07-09', author:'Mo', title:'Initial release', changes:[
+        ['added','Searchable command palette with grouped results, live filtering, arrow-key navigation, inline shortcuts and an empty state'],
+      ]},
+    ]},
+    {secId:'s-context-menu', name:'Context Menu', version:'1.0.0', entries:[
+      {version:'1.0.0', date:'2026-07-09', author:'Mo', title:'Initial release', changes:[
+        ['added','Right-click menu positioned at the pointer, with a destructive item, dismissing on outside-click, scroll or Escape'],
+      ]},
+    ]},
+    {secId:'s-hover-card', name:'Hover Card', version:'1.0.0', entries:[
+      {version:'1.0.0', date:'2026-07-09', author:'Mo', title:'Initial release', changes:[
+        ['added','CSS-driven rich preview card that fades in on hover/focus after a short delay'],
+      ]},
+    ]},
+    {secId:'s-separator', name:'Separator', version:'1.0.0', entries:[
+      {version:'1.0.0', date:'2026-07-09', author:'Mo', title:'Initial release', changes:[
+        ['added','Horizontal, vertical and labelled hairline dividers on the border token'],
+      ]},
+    ]},
+    {secId:'s-kbd', name:'Kbd', version:'1.0.0', entries:[
+      {version:'1.0.0', date:'2026-07-09', author:'Mo', title:'Initial release', changes:[
+        ['added','Keyboard key-caps for single keys and chained shortcut combinations'],
+      ]},
+    ]},
+    {secId:'s-carousel', name:'Carousel', version:'1.0.0', entries:[
+      {version:'1.0.0', date:'2026-07-09', author:'Mo', title:'Initial release', changes:[
+        ['added','Scroll-snap slider with prev/next arrows and position dots'],
+      ]},
+    ]},
     {secId:'s-switch', name:'Switch', version:'1.0.0', entries:[
       {version:'1.0.0', date:'2026-07-09', author:'Mo', title:'Initial release', changes:[
         ['added','Native-checkbox toggle, Regular/Small sizes, Off/On/Disabled states, anatomy specs and usage guidance'],
@@ -6660,9 +7327,9 @@ const CHANGELOG = {
         ['added','Light & dark mode reference grid, shown side by side'],
       ]},
     ]},
-    {secId:'s-cards', name:'Cards', version:'0.0.0', entries:[
-      {version:'0.0.0', date:'—', title:'Not yet started', changes:[
-        ['changed','Planned for a future session'],
+    {secId:'s-cards', name:'Cards', version:'1.0.0', entries:[
+      {version:'1.0.0', date:'2026-07-09', author:'Mo', title:'Initial release', changes:[
+        ['added','Card surface — basic, with footer actions (primary black), media band and interactive/hoverable variants, plus specs and usage guidance'],
       ]},
     ]},
     {secId:'s-modals', name:'Modals & Dialogs', version:'0.0.0', entries:[
@@ -7546,6 +8213,191 @@ function renderSectionChangelogs() {
       });
     });
   });
+})();
+/* Charts — interactive inline SVG, Flash palette */
+(function(){
+  function fmt(n){ return n>=1000 ? (n/1000).toFixed(1).replace(/\.0$/,'')+'k' : ''+n; }
+  var PAL=['var(--c1)','var(--c2)','var(--c3)','var(--c4)','var(--c5)'];
+  function mkTip(card){ var t=document.createElement('div'); t.className='cht__tip'; card.appendChild(t); return t; }
+  function moveTip(t,card,el,html){ var r=el.getBoundingClientRect(), cr=card.getBoundingClientRect(); t.innerHTML=html; t.style.left=(r.left-cr.left+r.width/2)+'px'; t.style.top=(r.top-cr.top-8)+'px'; t.classList.add('show'); }
+
+  /* Bar — hover to highlight one bar and dim the rest */
+  var barEl=document.getElementById('cht-bar');
+  if(barEl){
+    var card=barEl.closest('.cht'), tip=mkTip(card);
+    var data=[{label:'Jan',v:42},{label:'Feb',v:55},{label:'Mar',v:48},{label:'Apr',v:63},{label:'May',v:71},{label:'Jun',v:66},{label:'Jul',v:82}];
+    var W=340,H=180,padT=8,padB=22,padX=6, cw=W-padX*2, ch=H-padT-padB;
+    var max=Math.max.apply(null,data.map(function(d){return d.v;})), n=data.length, gap=10, bw=(cw-gap*(n-1))/n, s='';
+    data.forEach(function(d,i){ var bh=max?d.v/max*ch:0, x=padX+i*(bw+gap), y=padT+ch-bh;
+      s+='<rect class="cht__bar" data-i="'+i+'" x="'+x.toFixed(1)+'" y="'+y.toFixed(1)+'" width="'+bw.toFixed(1)+'" height="'+bh.toFixed(1)+'" rx="3"/>';
+      s+='<text class="cht__axis" x="'+(x+bw/2).toFixed(1)+'" y="'+(H-7)+'" text-anchor="middle">'+d.label+'</text>';
+    });
+    barEl.innerHTML='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Bar chart of monthly volume">'+s+'</svg>';
+    var barSvg=barEl.querySelector('svg');
+    Array.prototype.forEach.call(barEl.querySelectorAll('.cht__bar'),function(b){ var i=+b.getAttribute('data-i');
+      b.addEventListener('mouseenter',function(){ barSvg.classList.add('is-hot'); b.classList.add('on'); moveTip(tip,card,b,'<b>'+data[i].v+'</b> &middot; '+data[i].label); });
+      b.addEventListener('mouseleave',function(){ barSvg.classList.remove('is-hot'); b.classList.remove('on'); tip.classList.remove('show'); });
+    });
+  }
+
+  /* Line / Area — hover bands reveal the nearest point */
+  function lineChart(el, data, filled){
+    var card=el.closest('.cht'), tip=mkTip(card);
+    var W=340,H=168,padT=12,padB=22,padX=10, cw=W-padX*2, ch=H-padT-padB;
+    var max=Math.max.apply(null,data.map(function(d){return d.v;})), n=data.length;
+    var xs=function(i){return padX+(n<=1?0:i/(n-1)*cw);}, ys=function(v){return padT+ch-(max?v/max*ch:0);};
+    var defs='', area='';
+    if(filled){
+      defs='<defs><linearGradient id="chtAreaGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="var(--c1)" stop-opacity="0.32"/><stop offset="1" stop-color="var(--c1)" stop-opacity="0"/></linearGradient></defs>';
+      var d='M '+xs(0).toFixed(1)+','+(padT+ch).toFixed(1);
+      data.forEach(function(dd,i){ d+=' L '+xs(i).toFixed(1)+','+ys(dd.v).toFixed(1); });
+      d+=' L '+xs(n-1).toFixed(1)+','+(padT+ch).toFixed(1)+' Z'; area='<path class="cht__area" d="'+d+'"/>';
+    }
+    var pts=data.map(function(dd,i){return xs(i).toFixed(1)+','+ys(dd.v).toFixed(1);}).join(' ');
+    var dots=data.map(function(dd,i){return '<circle class="cht__dot" data-i="'+i+'" cx="'+xs(i).toFixed(1)+'" cy="'+ys(dd.v).toFixed(1)+'" r="3.5"/>';}).join('');
+    var hits=data.map(function(dd,i){ var x0=i===0?0:(xs(i-1)+xs(i))/2, x1=i===n-1?W:(xs(i)+xs(i+1))/2;
+      return '<rect class="cht__hit" data-i="'+i+'" x="'+x0.toFixed(1)+'" y="0" width="'+(x1-x0).toFixed(1)+'" height="'+(padT+ch).toFixed(1)+'"/>'; }).join('');
+    var labs=data.map(function(dd,i){return '<text class="cht__axis" x="'+xs(i).toFixed(1)+'" y="'+(H-7)+'" text-anchor="middle">'+dd.label+'</text>';}).join('');
+    el.innerHTML='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Line chart">'+defs+area+'<polyline class="cht__line" points="'+pts+'"/>'+dots+labs+hits+'</svg>';
+    var dotEls=el.querySelectorAll('.cht__dot');
+    Array.prototype.forEach.call(el.querySelectorAll('.cht__hit'),function(h){ var i=+h.getAttribute('data-i'), dot=dotEls[i];
+      h.addEventListener('mouseenter',function(){ dot.classList.add('on'); dot.setAttribute('r','5.5'); moveTip(tip,card,dot,'<b>'+data[i].v+'</b> &middot; '+data[i].label); });
+      h.addEventListener('mouseleave',function(){ dot.classList.remove('on'); dot.setAttribute('r','3.5'); tip.classList.remove('show'); });
+    });
+  }
+  var lineEl=document.getElementById('cht-line');
+  if(lineEl) lineChart(lineEl,[{label:'W1',v:120},{label:'W2',v:145},{label:'W3',v:132},{label:'W4',v:170},{label:'W5',v:190},{label:'W6',v:210},{label:'W7',v:240}],false);
+  var areaEl=document.getElementById('cht-area');
+  if(areaEl) lineChart(areaEl,[{label:'W1',v:32},{label:'W2',v:40},{label:'W3',v:55},{label:'W4',v:49},{label:'W5',v:70},{label:'W6',v:82},{label:'W7',v:95}],true);
+
+  /* Donut — Flash categorical palette; hover a segment or legend to pop it and show its share in the centre */
+  var donutEl=document.getElementById('cht-donut'), legEl=document.getElementById('cht-donut-legend');
+  if(donutEl){
+    var dd=[{label:'Card',v:1240},{label:'EFT',v:580},{label:'Cash',v:320},{label:'Wallet',v:240}];
+    var c=90,r=62,sw=24,total=dd.reduce(function(a,x){return a+x.v;},0)||1,circ=2*Math.PI*r,acc=0,segs='';
+    dd.forEach(function(x,i){ var frac=x.v/total,len=frac*circ,off=-acc*circ;
+      segs+='<circle class="cht__seg" data-i="'+i+'" cx="'+c+'" cy="'+c+'" r="'+r+'" fill="none" stroke="'+PAL[i%PAL.length]+'" stroke-width="'+sw+'" stroke-dasharray="'+len.toFixed(2)+' '+(circ-len).toFixed(2)+'" stroke-dashoffset="'+off.toFixed(2)+'" transform="rotate(-90 '+c+' '+c+')"/>';
+      acc+=frac;
+    });
+    donutEl.innerHTML='<svg viewBox="0 0 180 180" width="180" role="img" aria-label="Donut chart of payment mix">'+segs
+      +'<text class="cht-donut-val" x="90" y="88" text-anchor="middle" font-size="26">'+fmt(total)+'</text>'
+      +'<text class="cht-donut-lab" x="90" y="106" text-anchor="middle" font-size="10">txns</text></svg>';
+    var dSvg=donutEl.querySelector('svg'), valEl=dSvg.querySelector('.cht-donut-val'), labEl=dSvg.querySelector('.cht-donut-lab'), segEls=dSvg.querySelectorAll('.cht__seg');
+    if(legEl) legEl.innerHTML=dd.map(function(x,i){return '<span class="cht-legend__item" data-i="'+i+'"><span class="cht-legend__dot" style="background:'+PAL[i%PAL.length]+'"></span>'+x.label+' &middot; '+Math.round(x.v/total*100)+'%</span>';}).join('');
+    function hot(i){ dSvg.classList.add('is-hot'); segEls[i].classList.add('on'); segEls[i].setAttribute('stroke-width',sw+5); valEl.textContent=Math.round(dd[i].v/total*100)+'%'; labEl.textContent=dd[i].label; }
+    function cool(){ dSvg.classList.remove('is-hot'); Array.prototype.forEach.call(segEls,function(s){ s.classList.remove('on'); s.setAttribute('stroke-width',sw); }); valEl.textContent=fmt(total); labEl.textContent='txns'; }
+    Array.prototype.forEach.call(segEls,function(s){ var i=+s.getAttribute('data-i'); s.addEventListener('mouseenter',function(){hot(i);}); s.addEventListener('mouseleave',cool); });
+    if(legEl) Array.prototype.forEach.call(legEl.querySelectorAll('.cht-legend__item'),function(li){ var i=+li.getAttribute('data-i'); li.addEventListener('mouseenter',function(){hot(i);}); li.addEventListener('mouseleave',cool); });
+  }
+})();
+/* Calendar & Date Picker */
+(function(){
+  var MONTHS=['January','February','March','April','May','June','July','August','September','October','November','December'];
+  var DOW=['Su','Mo','Tu','We','Th','Fr','Sa'];
+  function build(host, onSelect){
+    var now=new Date();
+    var st={y:now.getFullYear(), m:now.getMonth(), sel:null};
+    function render(){
+      var first=new Date(st.y,st.m,1).getDay(), days=new Date(st.y,st.m+1,0).getDate(), prev=new Date(st.y,st.m,0).getDate();
+      var cells='';
+      for(var i=0;i<first;i++){ cells+='<button class="cal__day cal__day--muted" tabindex="-1">'+(prev-first+1+i)+'</button>'; }
+      for(var d=1;d<=days;d++){
+        var isT=(st.y===now.getFullYear()&&st.m===now.getMonth()&&d===now.getDate());
+        var isS=(st.sel&&st.sel.y===st.y&&st.sel.m===st.m&&st.sel.d===d);
+        cells+='<button class="cal__day'+(isT?' cal__day--today':'')+(isS?' cal__day--sel':'')+'" data-d="'+d+'">'+d+'</button>';
+      }
+      var total=first+days, trail=(7-total%7)%7;
+      for(var t=1;t<=trail;t++){ cells+='<button class="cal__day cal__day--muted" tabindex="-1">'+t+'</button>'; }
+      host.innerHTML='<div class="cal"><div class="cal__head">'
+        +'<button class="cal__nav" data-nav="-1" aria-label="Previous month">&lsaquo;</button>'
+        +'<div class="cal__title">'+MONTHS[st.m]+' '+st.y+'</div>'
+        +'<button class="cal__nav" data-nav="1" aria-label="Next month">&rsaquo;</button></div>'
+        +'<div class="cal__grid">'+DOW.map(function(x){return '<div class="cal__dow">'+x+'</div>';}).join('')+cells+'</div></div>';
+      host.querySelector('[data-nav="-1"]').onclick=function(){ if(--st.m<0){st.m=11;st.y--;} render(); };
+      host.querySelector('[data-nav="1"]').onclick=function(){ if(++st.m>11){st.m=0;st.y++;} render(); };
+      Array.prototype.forEach.call(host.querySelectorAll('[data-d]'),function(b){
+        b.onclick=function(){ st.sel={y:st.y,m:st.m,d:+b.getAttribute('data-d')}; render(); if(onSelect) onSelect(st.sel,MONTHS); };
+      });
+    }
+    render();
+  }
+  var inl=document.getElementById('cal-inline'); if(inl) build(inl,null);
+  var dp=document.getElementById('dp-demo');
+  if(dp){
+    var field=dp.querySelector('.dp__field'), val=dp.querySelector('.dp__val'), pop=dp.querySelector('.dp__pop');
+    build(pop,function(s,M){ val.textContent=s.d+' '+M[s.m].slice(0,3)+' '+s.y; val.style.color='var(--chrome-txt)'; dp.classList.remove('is-open'); });
+    field.addEventListener('click',function(e){ e.stopPropagation(); dp.classList.toggle('is-open'); });
+    pop.addEventListener('click',function(e){ e.stopPropagation(); });
+    document.addEventListener('click',function(){ dp.classList.remove('is-open'); });
+    document.addEventListener('keydown',function(e){ if(e.key==='Escape') dp.classList.remove('is-open'); });
+  }
+})();
+
+/* Command palette */
+(function(){
+  var host=document.getElementById('cmd-demo'); if(!host) return;
+  var CMD=[
+    {group:'Navigation', items:[{ico:'⌂',label:'Go to Dashboard',kbd:'G D'},{ico:'⇄',label:'Go to Transactions',kbd:'G T'},{ico:'↑',label:'Go to Payouts'}]},
+    {group:'Actions', items:[{ico:'＋',label:'New payment link',kbd:'N'},{ico:'↓',label:'Export to CSV'},{ico:'⟳',label:'Refresh data',kbd:'R'}]},
+    {group:'Settings', items:[{ico:'☾',label:'Toggle dark mode'},{ico:'⚙',label:'Open settings',kbd:','}]}
+  ];
+  host.innerHTML='<div class="cmd__search"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.8"/><path d="M20 20l-3.5-3.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>'
+    +'<input class="cmd__input" type="text" placeholder="Type a command or search…" aria-label="Command palette"></div><div class="cmd__list"></div>';
+  var input=host.querySelector('.cmd__input'), listEl=host.querySelector('.cmd__list'), items=[], active=-1;
+  function hi(){ items.forEach(function(el,i){ el.classList.toggle('is-active', i===active); }); if(active>=0&&items[active]) items[active].scrollIntoView({block:'nearest'}); }
+  function draw(){
+    var q=input.value.toLowerCase().trim(), html='', count=0;
+    CMD.forEach(function(g){
+      var m=g.items.filter(function(it){return it.label.toLowerCase().indexOf(q)>=0;});
+      if(!m.length) return;
+      html+='<div class="cmd__glabel">'+g.group+'</div>';
+      m.forEach(function(it){ html+='<div class="cmd__item" data-i="'+(count++)+'"><span class="cmd__ico">'+it.ico+'</span>'+it.label+(it.kbd?'<span class="kbd">'+it.kbd+'</span>':'')+'</div>'; });
+    });
+    listEl.innerHTML=count?html:'<div class="cmd__empty">No results found</div>';
+    items=Array.prototype.slice.call(listEl.querySelectorAll('.cmd__item'));
+    active=count?0:-1; hi();
+    items.forEach(function(el){ el.addEventListener('mousemove',function(){ active=+el.getAttribute('data-i'); hi(); }); });
+  }
+  input.addEventListener('input',draw);
+  input.addEventListener('keydown',function(e){
+    if(e.key==='ArrowDown'){ e.preventDefault(); if(items.length){ active=(active+1)%items.length; hi(); } }
+    else if(e.key==='ArrowUp'){ e.preventDefault(); if(items.length){ active=(active-1+items.length)%items.length; hi(); } }
+    else if(e.key==='Enter'){ e.preventDefault(); if(items[active]) items[active].classList.add('is-active'); }
+  });
+  draw();
+})();
+
+/* Context menu */
+(function(){
+  var t=document.getElementById('ctx-target'), m=document.getElementById('ctx-menu'); if(!t||!m) return;
+  function close(){ m.classList.remove('is-open'); }
+  t.addEventListener('contextmenu',function(e){
+    e.preventDefault();
+    m.classList.add('is-open');
+    var mw=m.offsetWidth, mh=m.offsetHeight, x=e.clientX, y=e.clientY;
+    if(x+mw>innerWidth-8) x=innerWidth-mw-8;
+    if(y+mh>innerHeight-8) y=innerHeight-mh-8;
+    m.style.left=x+'px'; m.style.top=y+'px';
+  });
+  document.addEventListener('click',close);
+  document.addEventListener('scroll',close,true);
+  window.addEventListener('resize',close);
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape') close(); });
+})();
+/* Carousel */
+(function(){
+  var car=document.getElementById('car-demo'); if(!car) return;
+  var track=car.querySelector('.car__track'), slides=car.querySelectorAll('.car__slide'), dotsWrap=car.querySelector('.car__dots');
+  var n=slides.length, idx=0, GAP=14, dh='';
+  for(var i=0;i<n;i++) dh+='<button class="car__dot'+(i===0?' is-active':'')+'" data-i="'+i+'" aria-label="Go to slide '+(i+1)+'"></button>';
+  dotsWrap.innerHTML=dh;
+  var dots=dotsWrap.querySelectorAll('.car__dot');
+  function update(){ Array.prototype.forEach.call(dots,function(d,i){ d.classList.toggle('is-active',i===idx); }); }
+  function go(i){ idx=Math.max(0,Math.min(n-1,i)); track.scrollTo({left:idx*(track.clientWidth+GAP),behavior:'smooth'}); update(); }
+  car.querySelector('.car__arrow--prev').addEventListener('click',function(){ go(idx-1); });
+  car.querySelector('.car__arrow--next').addEventListener('click',function(){ go(idx+1); });
+  Array.prototype.forEach.call(dots,function(d){ d.addEventListener('click',function(){ go(+d.getAttribute('data-i')); }); });
+  var tmr; track.addEventListener('scroll',function(){ clearTimeout(tmr); tmr=setTimeout(function(){ var w=track.clientWidth+GAP; if(w>1){ idx=Math.round(track.scrollLeft/w); update(); } },110); });
 })();
 /* @@SHADCN_JS@@ */
 
