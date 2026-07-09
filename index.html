@@ -1569,6 +1569,187 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
 .bsh-footer-ref__label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--chrome-muted);margin-bottom:16px}
 
 .bsh-pg-stage{position:relative;display:flex;align-items:center;justify-content:center;min-height:580px;padding:36px}
+
+/* ================================================================
+   SHADCN-GAP COMPONENTS — themed to Flash (Mo · 2026-07-09)
+   Concepts adapted from shadcn/ui, minimally skinned with Flash
+   semantic tokens. Shared demo scaffolding first, then per-component.
+================================================================ */
+.sg-stage{border:1px solid var(--chrome-border);border-radius:12px;padding:26px 24px;background:var(--chrome-nav);transition:background .25s}
+.sg-row{display:flex;flex-wrap:wrap;gap:30px;align-items:center}
+.sg-row--top{align-items:flex-start}
+.sg-swatch{display:flex;flex-direction:column;gap:13px;align-items:flex-start;min-width:0}
+.sg-swatch__cap{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--chrome-muted)}
+
+/* ---- Switch ---- */
+.sw{display:inline-flex;align-items:center;gap:10px;cursor:pointer;user-select:none;vertical-align:middle}
+.sw__input{position:absolute;opacity:0;width:0;height:0;margin:0}
+.sw__track{position:relative;flex-shrink:0;width:40px;height:24px;border-radius:999px;background:var(--color-surface-n3);transition:background .2s ease}
+.sw__thumb{position:absolute;top:2px;left:2px;width:20px;height:20px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.28);transition:transform .2s ease}
+.sw__input:checked + .sw__track{background:var(--color-brand)}
+.sw__input:checked + .sw__track .sw__thumb{transform:translateX(16px)}
+.sw__input:focus-visible + .sw__track{outline:2px solid var(--color-input-focus);outline-offset:2px}
+.sw__label{font-size:13px;font-weight:500;color:var(--chrome-txt)}
+.sw--sm .sw__track{width:32px;height:18px}
+.sw--sm .sw__thumb{width:14px;height:14px}
+.sw--sm .sw__input:checked + .sw__track .sw__thumb{transform:translateX(14px)}
+.sw--sm .sw__label{font-size:12px}
+.sw:has(.sw__input:disabled){opacity:.45;cursor:not-allowed}
+
+/* ---- Tooltip ---- */
+.tip{position:relative;display:inline-flex}
+.tip__bubble{position:absolute;z-index:30;padding:6px 10px;border-radius:8px;background:var(--color-surface-inverse);color:var(--color-text-inv);font-size:12px;font-weight:500;line-height:1.4;white-space:nowrap;pointer-events:none;opacity:0;transition:opacity .15s ease,transform .15s ease;box-shadow:0 6px 18px rgba(0,0,0,.18)}
+.tip__bubble::after{content:"";position:absolute;width:8px;height:8px;background:var(--color-surface-inverse);transform:rotate(45deg)}
+.tip:hover .tip__bubble,.tip:focus-within .tip__bubble{opacity:1}
+.tip__bubble--top{bottom:calc(100% + 9px);left:50%;transform:translate(-50%,4px)}
+.tip:hover .tip__bubble--top,.tip:focus-within .tip__bubble--top{transform:translate(-50%,0)}
+.tip__bubble--top::after{bottom:-4px;left:50%;margin-left:-4px}
+.tip__bubble--bottom{top:calc(100% + 9px);left:50%;transform:translate(-50%,-4px)}
+.tip:hover .tip__bubble--bottom,.tip:focus-within .tip__bubble--bottom{transform:translate(-50%,0)}
+.tip__bubble--bottom::after{top:-4px;left:50%;margin-left:-4px}
+.tip__bubble--right{left:calc(100% + 9px);top:50%;transform:translate(-4px,-50%)}
+.tip:hover .tip__bubble--right,.tip:focus-within .tip__bubble--right{transform:translate(0,-50%)}
+.tip__bubble--right::after{left:-4px;top:50%;margin-top:-4px}
+.tip__bubble--left{right:calc(100% + 9px);top:50%;transform:translate(4px,-50%)}
+.tip:hover .tip__bubble--left,.tip:focus-within .tip__bubble--left{transform:translate(0,-50%)}
+.tip__bubble--left::after{right:-4px;top:50%;margin-top:-4px}
+.tip__trigger{cursor:default}
+
+/* ---- Accordion ---- */
+.acc{border:1px solid var(--chrome-border);border-radius:12px;overflow:hidden;background:var(--chrome-bg);max-width:620px;transition:background .25s}
+.acc__item{border-bottom:1px solid var(--chrome-border)}
+.acc__item:last-child{border-bottom:none}
+.acc__sum{list-style:none;cursor:pointer;display:flex;align-items:center;gap:12px;padding:15px 18px;font-size:14px;font-weight:600;color:var(--chrome-txt);transition:background .15s}
+.acc__sum::-webkit-details-marker{display:none}
+.acc__sum:hover{background:var(--chrome-hover)}
+.acc__sum:focus-visible{outline:2px solid var(--color-input-focus);outline-offset:-2px}
+.acc__chev{margin-left:auto;flex-shrink:0;font-size:19px;line-height:1;color:var(--chrome-muted);transition:transform .2s,color .2s}
+.acc__item[open] > .acc__sum .acc__chev{transform:rotate(90deg);color:var(--color-brand)}
+.acc__body{padding:0 18px 16px;font-size:13px;line-height:1.6;color:var(--chrome-muted)}
+
+/* ---- Alert / Callout ---- */
+.alrt{display:flex;gap:11px;padding:13px 15px;border-radius:10px;font-size:13px;line-height:1.5;max-width:620px}
+.alrt + .alrt{margin-top:12px}
+.alrt__ico{flex-shrink:0;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:800;margin-top:1px;font-style:normal}
+.alrt__bd{flex:1;min-width:0}
+.alrt__title{font-weight:700;color:var(--chrome-txt);margin-bottom:2px}
+.alrt__msg{color:var(--chrome-muted)}
+.alrt__x{align-self:flex-start;background:none;border:0;color:var(--chrome-muted);cursor:pointer;font-size:15px;line-height:1;padding:2px 5px;border-radius:5px;flex-shrink:0}
+.alrt__x:hover{background:var(--chrome-hover);color:var(--chrome-txt)}
+.alrt--info{background:var(--color-info-l)}.alrt--info .alrt__ico{background:var(--color-info-h)}
+.alrt--success{background:var(--color-success-l)}.alrt--success .alrt__ico{background:var(--color-success-h)}
+.alrt--warn{background:var(--color-warn-l)}.alrt--warn .alrt__ico{background:var(--color-warn-h)}
+.alrt--crit{background:var(--color-crit-l)}.alrt--crit .alrt__ico{background:var(--color-crit-h)}
+/* --color-info-l stays light in dark mode (unlike its siblings), which would leave
+   light text unreadable — give the info alert a deep-navy tint in dark only. */
+[data-theme="dark"] .alrt--info{background:var(--prim-sup-blue-3)}
+
+/* ---- Skeleton ---- */
+@keyframes skl-shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.skl{background:linear-gradient(90deg,var(--color-surface-n1) 25%,var(--color-surface-n2) 37%,var(--color-surface-n1) 63%);background-size:200% 100%;animation:skl-shimmer 1.5s ease-in-out infinite;border-radius:6px}
+.skl--line{height:12px;margin-bottom:9px}
+.skl--title{height:18px;width:55%;margin-bottom:14px}
+.skl--circle{border-radius:50%}
+.skl--block{height:120px;border-radius:10px;margin-bottom:14px}
+.skl-card{border:1px solid var(--chrome-border);border-radius:12px;padding:16px;width:280px;max-width:100%}
+.skl-media{display:flex;gap:13px;align-items:center;width:320px;max-width:100%}
+.skl-media__txt{flex:1}
+.skl-media__txt .skl--line:last-child{margin-bottom:0}
+@media(prefers-reduced-motion:reduce){.skl{animation:none}}
+
+/* ---- Spinner ---- */
+@keyframes spn-rot{to{transform:rotate(360deg)}}
+.spn{display:inline-block;width:24px;height:24px;border-radius:50%;border:2.5px solid var(--color-surface-n3);border-top-color:var(--color-brand);animation:spn-rot .7s linear infinite;vertical-align:middle;box-sizing:border-box}
+.spn--sm{width:16px;height:16px;border-width:2px}
+.spn--lg{width:36px;height:36px;border-width:3px}
+.spn--btn{width:15px;height:15px;border-width:2px;border-color:rgba(0,0,0,.25);border-top-color:var(--color-btn-p-txt)}
+.spn-btn{display:inline-flex;align-items:center;gap:9px;background:var(--color-btn-p-bg);color:var(--color-btn-p-txt);border:0;border-radius:8px;padding:10px 18px;font-size:13px;font-weight:700;font-family:inherit;cursor:default}
+.spn-inline{display:inline-flex;align-items:center;gap:9px;font-size:13px;color:var(--chrome-muted)}
+/* shared demo triggers (tooltip / popover / etc.) */
+.sg-btn{display:inline-flex;align-items:center;gap:7px;background:var(--chrome-bg);color:var(--chrome-txt);border:1px solid var(--chrome-border);border-radius:8px;padding:8px 14px;font-size:13px;font-weight:600;font-family:inherit;cursor:pointer;transition:background .15s}
+.sg-btn:hover{background:var(--chrome-hover)}
+.sg-iconbtn{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:8px;border:1px solid var(--chrome-border);background:var(--chrome-bg);color:var(--chrome-txt);cursor:pointer;font-size:15px;font-weight:700;font-family:inherit;transition:background .15s}
+.sg-iconbtn:hover{background:var(--chrome-hover)}
+/* ---- Breadcrumb ---- */
+.bcr{display:flex;align-items:center;flex-wrap:wrap;gap:5px;font-size:13px}
+.bcr__link{color:var(--chrome-muted);text-decoration:none;border-radius:5px;padding:2px 6px;transition:color .15s,background .15s}
+.bcr__link:hover{color:var(--chrome-txt);background:var(--chrome-hover)}
+.bcr__sep{color:var(--chrome-muted);opacity:.55;font-size:15px;line-height:1}
+.bcr__current{color:var(--chrome-txt);font-weight:600;padding:2px 6px}
+.bcr__ellipsis{color:var(--chrome-muted);padding:2px 4px;letter-spacing:1px}
+
+/* ---- Pagination ---- */
+.pag{display:inline-flex;align-items:center;gap:6px;flex-wrap:wrap}
+.pag__btn{min-width:34px;height:34px;padding:0 11px;display:inline-flex;align-items:center;justify-content:center;border:1px solid var(--chrome-border);background:var(--chrome-bg);color:var(--chrome-txt);border-radius:8px;font-size:13px;font-weight:600;font-family:inherit;cursor:pointer;transition:background .15s,border-color .15s,color .15s}
+.pag__btn:hover:not(:disabled):not(.is-active){background:var(--chrome-hover)}
+.pag__btn.is-active{background:var(--color-brand);border-color:var(--color-brand);color:var(--color-btn-p-txt);cursor:default}
+.pag__btn:disabled{opacity:.4;cursor:not-allowed}
+.pag__ellipsis{min-width:22px;text-align:center;color:var(--chrome-muted)}
+.pag__status{font-size:13px;color:var(--chrome-muted)}
+
+/* ---- Toggle Group / Segmented ---- */
+.tgl{display:inline-flex;background:var(--color-surface-n1);border-radius:10px;padding:3px;gap:2px}
+.tgl__btn{border:0;background:none;color:var(--chrome-muted);font-family:inherit;font-size:13px;font-weight:600;padding:7px 15px;border-radius:7px;cursor:pointer;transition:background .15s,color .15s,box-shadow .15s;display:inline-flex;align-items:center;justify-content:center;gap:7px}
+.tgl__btn:hover:not(.is-active){color:var(--chrome-txt)}
+.tgl__btn:focus-visible{outline:2px solid var(--color-input-focus);outline-offset:1px}
+.tgl__btn.is-active{background:var(--chrome-bg);color:var(--chrome-txt);box-shadow:0 1px 3px rgba(0,0,0,.14)}
+.tgl--multi .tgl__btn{min-width:38px}
+.tgl--multi .tgl__btn.is-active{background:var(--color-brand);color:var(--color-btn-p-txt);box-shadow:none}
+.tgl-out{font-size:13px;color:var(--chrome-muted);margin-top:14px}
+.tgl-out b{color:var(--chrome-txt);font-weight:700}
+
+/* ---- Avatar ---- */
+.avt{display:inline-flex;align-items:center;justify-content:center;border-radius:50%;background:var(--color-surface-brand-l);color:var(--color-success-h);font-weight:700;overflow:hidden;flex-shrink:0;position:relative;line-height:1;user-select:none;text-transform:uppercase}
+.avt img{width:100%;height:100%;object-fit:cover;display:block}
+.avt--grad{background:linear-gradient(135deg,var(--prim-green-400),var(--prim-sup-blue-1));color:#fff}
+.avt--icon{color:var(--chrome-muted);background:var(--color-surface-n1)}
+.avt--icon svg{width:55%;height:55%}
+.avt--xs{width:24px;height:24px;font-size:9px}
+.avt--sm{width:32px;height:32px;font-size:11px}
+.avt--md{width:40px;height:40px;font-size:14px}
+.avt--lg{width:56px;height:56px;font-size:19px}
+.avt--xl{width:72px;height:72px;font-size:25px}
+.avt__status{position:absolute;bottom:1px;right:1px;width:27%;height:27%;border-radius:50%;border:2px solid var(--chrome-nav);background:var(--color-success-h);box-sizing:border-box}
+.avt__status--off{background:var(--prim-grey-700)}
+.avt-group{display:inline-flex;align-items:center}
+.avt-group > *{border:2px solid var(--chrome-nav);border-radius:50%;margin-left:-11px}
+.avt-group > *:first-child{margin-left:0}
+.avt-more{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%;background:var(--color-surface-n2);color:var(--chrome-txt);font-size:12px;font-weight:700;flex-shrink:0}
+/* ---- Slider ---- */
+.sld{width:280px;max-width:100%}
+.sld__head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:11px;font-size:13px;color:var(--chrome-muted)}
+.sld__val{font-weight:700;color:var(--chrome-txt);font-size:14px}
+.sld__range{-webkit-appearance:none;appearance:none;width:100%;height:6px;border-radius:999px;background:var(--color-surface-n2);outline:none;cursor:pointer;margin:8px 0}
+.sld__range::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:18px;height:18px;border-radius:50%;background:var(--color-brand);border:2px solid var(--chrome-bg);box-shadow:0 1px 4px rgba(0,0,0,.3);cursor:pointer;margin-top:-6px}
+.sld__range::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:var(--color-brand);border:2px solid var(--chrome-bg);box-shadow:0 1px 4px rgba(0,0,0,.3);cursor:pointer}
+.sld__range::-webkit-slider-runnable-track{height:6px;border-radius:999px}
+.sld__range::-moz-range-track{height:6px;border-radius:999px}
+.sld__range:focus-visible{box-shadow:0 0 0 3px rgba(16,197,4,.2)}
+.sld__range:disabled{opacity:.5;cursor:not-allowed}
+.sld__scale{display:flex;justify-content:space-between;font-size:11px;color:var(--chrome-muted);margin-top:2px}
+
+/* ---- Popover ---- */
+.pop{position:relative;display:inline-block}
+.pop__panel{position:absolute;top:calc(100% + 8px);left:0;z-index:40;min-width:244px;background:var(--chrome-bg);border:1px solid var(--chrome-border);border-radius:12px;box-shadow:0 14px 36px rgba(0,0,0,.18);padding:16px;opacity:0;transform:translateY(-6px);pointer-events:none;transition:opacity .15s ease,transform .15s ease}
+.pop__panel--right{left:auto;right:0}
+.pop.is-open .pop__panel{opacity:1;transform:translateY(0);pointer-events:auto}
+.pop__title{font-size:13px;font-weight:700;color:var(--chrome-txt);margin-bottom:5px}
+.pop__desc{font-size:12.5px;color:var(--chrome-muted);line-height:1.5}
+.pop__row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:7px 0;font-size:13px;color:var(--chrome-txt)}
+.pop__foot{display:flex;gap:8px;margin-top:12px;padding-top:12px;border-top:1px solid var(--chrome-border)}
+.pop__apply{flex:1;background:var(--color-btn-p-bg);color:var(--color-btn-p-txt);border:0;border-radius:8px;padding:8px;font-size:12.5px;font-weight:700;font-family:inherit;cursor:pointer}
+
+/* ---- Input OTP ---- */
+.otp{display:inline-flex;gap:9px;align-items:center}
+.otp__box{width:44px;height:52px;text-align:center;font-size:20px;font-weight:700;font-family:inherit;color:var(--chrome-txt);background:var(--color-input-bg);border:1.5px solid var(--color-input-border);border-radius:10px;outline:none;transition:border-color .15s,box-shadow .15s;caret-color:var(--color-brand)}
+.otp__box:focus{border-color:var(--color-input-focus);box-shadow:0 0 0 3px rgba(16,197,4,.16)}
+.otp__box:not(:placeholder-shown){border-color:var(--color-text-s)}
+.otp__sep{color:var(--chrome-muted);font-size:20px;font-weight:700}
+.otp--error .otp__box{border-color:var(--color-crit-h)}
+.otp--error .otp__box:focus{box-shadow:0 0 0 3px rgba(235,0,41,.16)}
+.otp-msg{font-size:12px;margin-top:10px}
+.otp-msg--err{color:var(--color-crit-h);font-weight:600}
+/* @@SHADCN_CSS@@ */
 </style>
 </head>
 <body>
@@ -1614,6 +1795,19 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
     <a href="javascript:void(0)" onclick="showSection('s-tabs')"    class="sb-link"><div class="sb-pip"></div>Tabs</a>
     <a href="javascript:void(0)" onclick="showSection('s-dropdown')" class="sb-link"><div class="sb-pip"></div>Dropdown</a>
     <a href="javascript:void(0)" onclick="showSection('s-data')"    class="sb-link"><div class="sb-pip"></div>Data Display</a>
+    <a href="javascript:void(0)" onclick="showSection('s-accordion')" class="sb-link"><div class="sb-pip"></div>Accordion</a>
+    <a href="javascript:void(0)" onclick="showSection('s-alert')" class="sb-link"><div class="sb-pip"></div>Alert</a>
+    <a href="javascript:void(0)" onclick="showSection('s-avatar')" class="sb-link"><div class="sb-pip"></div>Avatar</a>
+    <a href="javascript:void(0)" onclick="showSection('s-breadcrumb')" class="sb-link"><div class="sb-pip"></div>Breadcrumb</a>
+    <a href="javascript:void(0)" onclick="showSection('s-input-otp')" class="sb-link"><div class="sb-pip"></div>Input OTP</a>
+    <a href="javascript:void(0)" onclick="showSection('s-pagination')" class="sb-link"><div class="sb-pip"></div>Pagination</a>
+    <a href="javascript:void(0)" onclick="showSection('s-popover')" class="sb-link"><div class="sb-pip"></div>Popover</a>
+    <a href="javascript:void(0)" onclick="showSection('s-skeleton')" class="sb-link"><div class="sb-pip"></div>Skeleton</a>
+    <a href="javascript:void(0)" onclick="showSection('s-slider')" class="sb-link"><div class="sb-pip"></div>Slider</a>
+    <a href="javascript:void(0)" onclick="showSection('s-spinner')" class="sb-link"><div class="sb-pip"></div>Spinner</a>
+    <a href="javascript:void(0)" onclick="showSection('s-switch')" class="sb-link"><div class="sb-pip"></div>Switch</a>
+    <a href="javascript:void(0)" onclick="showSection('s-toggle-group')" class="sb-link"><div class="sb-pip"></div>Toggle Group</a>
+    <a href="javascript:void(0)" onclick="showSection('s-tooltip')" class="sb-link"><div class="sb-pip"></div>Tooltip</a>
     <div class="sb-cat">About</div>
     <a href="javascript:void(0)" onclick="showSection('s-changelog')" class="sb-link"><div class="sb-pip"></div>Changelog</a>
   </aside>
@@ -2417,6 +2611,743 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
         </div>
       </div>
     </section>
+    <!-- ============================================================
+         SWITCH
+    ============================================================ -->
+    <section class="sec" id="s-switch">
+      <div class="sec__head">
+        <div class="sec__eye">Components</div>
+        <h1 class="sec__title">Switch <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.0</span></h1>
+        <p class="sec__desc">A toggle for a single on/off setting that applies immediately &mdash; no save step. Built on a real checkbox input, so it works with the keyboard and screen readers out of the box, and lights up in Flash green when on.</p>
+      </div>
+      <div class="type-sub">
+        <div class="type-sub__title">Interactive</div>
+        <div class="type-sub__desc">Real, clickable switches &mdash; toggle with a click, Space or Enter. State is native, so no JavaScript is involved.</div>
+        <div class="sg-stage"><div class="sg-row">
+          <label class="sw"><input type="checkbox" class="sw__input" checked><span class="sw__track"><span class="sw__thumb"></span></span><span class="sw__label">Email notifications</span></label>
+          <label class="sw"><input type="checkbox" class="sw__input"><span class="sw__track"><span class="sw__thumb"></span></span><span class="sw__label">Two-factor auth</span></label>
+        </div></div>
+      </div>
+      <div class="type-sub">
+        <div class="type-sub__title">Sizes</div>
+        <div class="type-sub__desc"><strong>Regular</strong> (40&times;24) is the default. <strong>Small</strong> (32&times;18) suits dense rows such as table cells or settings lists.</div>
+        <div class="sg-stage"><div class="sg-row">
+          <div class="sg-swatch"><span class="sg-swatch__cap">Regular</span><label class="sw"><input type="checkbox" class="sw__input" checked><span class="sw__track"><span class="sw__thumb"></span></span></label></div>
+          <div class="sg-swatch"><span class="sg-swatch__cap">Small</span><label class="sw sw--sm"><input type="checkbox" class="sw__input" checked><span class="sw__track"><span class="sw__thumb"></span></span></label></div>
+        </div></div>
+      </div>
+      <div class="type-sub">
+        <div class="type-sub__title">States</div>
+        <div class="type-sub__desc">Off uses a neutral track; on uses brand green; disabled dims the whole control and blocks interaction.</div>
+        <div class="sg-stage"><div class="sg-row">
+          <div class="sg-swatch"><span class="sg-swatch__cap">Off</span><label class="sw"><input type="checkbox" class="sw__input"><span class="sw__track"><span class="sw__thumb"></span></span></label></div>
+          <div class="sg-swatch"><span class="sg-swatch__cap">On</span><label class="sw"><input type="checkbox" class="sw__input" checked><span class="sw__track"><span class="sw__thumb"></span></span></label></div>
+          <div class="sg-swatch"><span class="sg-swatch__cap">Disabled off</span><label class="sw"><input type="checkbox" class="sw__input" disabled><span class="sw__track"><span class="sw__thumb"></span></span></label></div>
+          <div class="sg-swatch"><span class="sg-swatch__cap">Disabled on</span><label class="sw"><input type="checkbox" class="sw__input" checked disabled><span class="sw__track"><span class="sw__thumb"></span></span></label></div>
+        </div></div>
+      </div>
+      <div class="type-sub">
+        <div class="type-sub__title">Anatomy &amp; specs</div>
+        <div class="type-sub__desc">Measurements per size, with the tokens that drive each colour.</div>
+        <div class="dd-table-wrap"><table class="dd-table">
+          <thead><tr><th>Property</th><th>Regular</th><th>Small</th><th>Token</th></tr></thead>
+          <tbody>
+            <tr><td class="dd-table__name">Track</td><td>40 &times; 24</td><td>32 &times; 18</td><td>&mdash;</td></tr>
+            <tr><td class="dd-table__name">Thumb</td><td>20px</td><td>14px</td><td>&mdash;</td></tr>
+            <tr><td class="dd-table__name">Track &mdash; off</td><td colspan="2">Neutral surface</td><td><code>surface-neutral-3</code></td></tr>
+            <tr><td class="dd-table__name">Track &mdash; on</td><td colspan="2">Flash green</td><td><code>color-brand</code></td></tr>
+            <tr><td class="dd-table__name">Focus ring</td><td colspan="2">2px, 2px offset</td><td><code>input-focus</code></td></tr>
+          </tbody>
+        </table></div>
+      </div>
+      <div class="type-sub">
+        <div class="type-sub__title">When to use</div>
+        <div class="type-sub__desc">A switch commits instantly. If the choice only takes effect on submit, use a checkbox.</div>
+        <div class="sel-usage">
+          <div class="sel-usage__card">
+            <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
+            <ul class="sel-usage__list">
+              <li>Use for a single setting that takes effect the moment it&rsquo;s toggled.</li>
+              <li>Pair every switch with a clear text label describing the &ldquo;on&rdquo; state.</li>
+              <li>Keep the label static &mdash; don&rsquo;t change its wording between on and off.</li>
+            </ul>
+          </div>
+          <div class="sel-usage__card">
+            <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don&rsquo;t</div>
+            <ul class="sel-usage__list">
+              <li>Don&rsquo;t use a switch inside a form that needs a Save button &mdash; use a checkbox.</li>
+              <li>Don&rsquo;t use switches for multi-select lists &mdash; that&rsquo;s checkboxes.</li>
+              <li>Don&rsquo;t rely on colour alone; the thumb position must read clearly too.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         TOOLTIP
+    ============================================================ -->
+    <section class="sec" id="s-tooltip">
+      <div class="sec__head">
+        <div class="sec__eye">Components</div>
+        <h1 class="sec__title">Tooltip <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.0</span></h1>
+        <p class="sec__desc">A small floating label that explains an element on hover or keyboard focus. Pure CSS &mdash; it appears on <code>:hover</code> and <code>:focus-within</code>, so keyboard users get it too. Reserve it for short, non-essential hints.</p>
+      </div>
+      <div class="type-sub">
+        <div class="type-sub__title">Placements</div>
+        <div class="type-sub__desc">Hover or tab to each trigger. The bubble uses the inverse surface so it reads as an overlay in both light and dark. Four placements cover most anchoring needs.</div>
+        <div class="sg-stage"><div class="sg-row" style="gap:48px;justify-content:center;padding:14px 0">
+          <span class="tip" tabindex="0"><button class="sg-btn" type="button">Top</button><span class="tip__bubble tip__bubble--top">Appears above</span></span>
+          <span class="tip" tabindex="0"><button class="sg-btn" type="button">Right</button><span class="tip__bubble tip__bubble--right">Appears right</span></span>
+          <span class="tip" tabindex="0"><button class="sg-btn" type="button">Bottom</button><span class="tip__bubble tip__bubble--bottom">Appears below</span></span>
+          <span class="tip" tabindex="0"><button class="sg-btn" type="button">Left</button><span class="tip__bubble tip__bubble--left">Appears left</span></span>
+        </div></div>
+      </div>
+      <div class="type-sub">
+        <div class="type-sub__title">On an icon button</div>
+        <div class="type-sub__desc">The most common use: naming an icon-only control so its purpose is never a guess.</div>
+        <div class="sg-stage"><div class="sg-row">
+          <span class="tip" tabindex="0"><button class="sg-iconbtn" type="button" aria-label="Copy">&#10697;</button><span class="tip__bubble tip__bubble--top">Copy to clipboard</span></span>
+          <span class="tip" tabindex="0"><button class="sg-iconbtn" type="button" aria-label="Info">i</button><span class="tip__bubble tip__bubble--top">More information</span></span>
+          <span class="tip" tabindex="0"><button class="sg-iconbtn" type="button" aria-label="Delete">&times;</button><span class="tip__bubble tip__bubble--top">Delete row</span></span>
+        </div></div>
+      </div>
+      <div class="type-sub">
+        <div class="type-sub__title">When to use</div>
+        <div class="type-sub__desc">Tooltips are supplementary. If the user must read it to succeed, put it on the page instead.</div>
+        <div class="sel-usage">
+          <div class="sel-usage__card">
+            <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
+            <ul class="sel-usage__list">
+              <li>Label icon-only buttons and clarify terse controls.</li>
+              <li>Keep the text to a short phrase &mdash; a line or two at most.</li>
+              <li>Make triggers focusable so keyboard users can reveal them.</li>
+            </ul>
+          </div>
+          <div class="sel-usage__card">
+            <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don&rsquo;t</div>
+            <ul class="sel-usage__list">
+              <li>Don&rsquo;t hide essential information or actions inside a tooltip.</li>
+              <li>Don&rsquo;t put links, buttons or long copy in one &mdash; use a popover.</li>
+              <li>Don&rsquo;t depend on hover alone on touch devices, where it never fires.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         ACCORDION
+    ============================================================ -->
+    <section class="sec" id="s-accordion">
+      <div class="sec__head">
+        <div class="sec__eye">Components</div>
+        <h1 class="sec__title">Accordion <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.0</span></h1>
+        <p class="sec__desc">Stacked headers that expand to reveal content, for progressively disclosing long or secondary information. Built on native <code>&lt;details&gt;</code> elements, so expand/collapse works without JavaScript and stays accessible.</p>
+      </div>
+      <div class="type-sub">
+        <div class="type-sub__title">Single open</div>
+        <div class="type-sub__desc">Grouped with a shared <code>name</code>, so opening one item closes the others &mdash; ideal for FAQs where one answer at a time keeps things tidy.</div>
+        <div class="acc">
+          <details class="acc__item" name="acc-demo" open><summary class="acc__sum">How do payouts work?<span class="acc__chev">&rsaquo;</span></summary><div class="acc__body">Settled funds are paid to your linked account on the next business day. You can review every payout and its breakdown in the Payouts tab.</div></details>
+          <details class="acc__item" name="acc-demo"><summary class="acc__sum">Can I refund a transaction?<span class="acc__chev">&rsaquo;</span></summary><div class="acc__body">Yes &mdash; full or partial refunds can be issued from a transaction&rsquo;s detail view for up to 180 days after the sale.</div></details>
+          <details class="acc__item" name="acc-demo"><summary class="acc__sum">Which cards are supported?<span class="acc__chev">&rsaquo;</span></summary><div class="acc__body">All major schemes are accepted, including Visa, Mastercard and domestic debit networks.</div></details>
+        </div>
+      </div>
+      <div class="type-sub">
+        <div class="type-sub__title">Multiple open</div>
+        <div class="type-sub__desc">Without a shared name, items open independently, so several can be expanded at once. Use this when sections are unrelated.</div>
+        <div class="acc">
+          <details class="acc__item"><summary class="acc__sum">Business details<span class="acc__chev">&rsaquo;</span></summary><div class="acc__body">Legal entity name, registration number and trading address.</div></details>
+          <details class="acc__item"><summary class="acc__sum">Bank account<span class="acc__chev">&rsaquo;</span></summary><div class="acc__body">The account where settled funds are deposited.</div></details>
+        </div>
+      </div>
+      <div class="type-sub">
+        <div class="type-sub__title">When to use</div>
+        <div class="type-sub__desc">Accordions trade visibility for density. Only fold away content the user won&rsquo;t always need.</div>
+        <div class="sel-usage">
+          <div class="sel-usage__card">
+            <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
+            <ul class="sel-usage__list">
+              <li>Use for FAQs, optional settings and long secondary content.</li>
+              <li>Write headers that describe exactly what&rsquo;s inside.</li>
+              <li>Default the most useful item open when it helps.</li>
+            </ul>
+          </div>
+          <div class="sel-usage__card">
+            <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don&rsquo;t</div>
+            <ul class="sel-usage__list">
+              <li>Don&rsquo;t bury content users need on every visit.</li>
+              <li>Don&rsquo;t nest accordions inside accordions.</li>
+              <li>Don&rsquo;t use one for a single item &mdash; just show it.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         ALERT / CALLOUT
+    ============================================================ -->
+    <section class="sec" id="s-alert">
+      <div class="sec__head">
+        <div class="sec__eye">Components</div>
+        <h1 class="sec__title">Alert <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.0</span></h1>
+        <p class="sec__desc">An inline banner that draws attention to a status or message tied to the surrounding content. Four semantic variants map straight onto the Flash Info / Success / Warning / Critical tokens, so they stay on-brand in light and dark.</p>
+      </div>
+      <div class="type-sub">
+        <div class="type-sub__title">Variants</div>
+        <div class="type-sub__desc">Each variant carries a matching tinted background and icon. Keep the title to a few words and the message to a sentence or two.</div>
+        <div class="sg-stage" style="display:block">
+          <div class="alrt alrt--info"><span class="alrt__ico">i</span><div class="alrt__bd"><div class="alrt__title">Heads up</div><div class="alrt__msg">Your monthly statement for June is now available to download.</div></div></div>
+          <div class="alrt alrt--success"><span class="alrt__ico">&#10003;</span><div class="alrt__bd"><div class="alrt__title">Payment received</div><div class="alrt__msg">R1,250.00 has been settled to your account.</div></div></div>
+          <div class="alrt alrt--warn"><span class="alrt__ico">!</span><div class="alrt__bd"><div class="alrt__title">Verify your account</div><div class="alrt__msg">Add your bank details before your first payout to avoid delays.</div></div></div>
+          <div class="alrt alrt--crit"><span class="alrt__ico">&times;</span><div class="alrt__bd"><div class="alrt__title">Transaction failed</div><div class="alrt__msg">The card was declined. Ask the customer to try another method.</div></div></div>
+        </div>
+      </div>
+      <div class="type-sub">
+        <div class="type-sub__title">Dismissible</div>
+        <div class="type-sub__desc">Add a close affordance for messages the user can clear. Keep persistent, action-critical alerts non-dismissible.</div>
+        <div class="sg-stage" style="display:block">
+          <div class="alrt alrt--info"><span class="alrt__ico">i</span><div class="alrt__bd"><div class="alrt__title">New feature</div><div class="alrt__msg">You can now export transactions to CSV from the Reports page.</div></div><button class="alrt__x" type="button" aria-label="Dismiss" onclick="this.closest('.alrt').style.display='none'">&times;</button></div>
+        </div>
+      </div>
+      <div class="type-sub">
+        <div class="type-sub__title">When to use</div>
+        <div class="type-sub__desc">Alerts belong in the page, next to what they describe. For transient confirmations use a toast; for blocking decisions use a dialog.</div>
+        <div class="sel-usage">
+          <div class="sel-usage__card">
+            <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
+            <ul class="sel-usage__list">
+              <li>Place the alert next to the content or form it refers to.</li>
+              <li>Match the variant to the severity of the message.</li>
+              <li>Lead with a short title, then a plain-language explanation.</li>
+            </ul>
+          </div>
+          <div class="sel-usage__card">
+            <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don&rsquo;t</div>
+            <ul class="sel-usage__list">
+              <li>Don&rsquo;t use an alert for a fleeting confirmation &mdash; that&rsquo;s a toast.</li>
+              <li>Don&rsquo;t stack many alerts &mdash; prioritise the one that matters.</li>
+              <li>Don&rsquo;t use critical red for routine, non-urgent information.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SKELETON
+    ============================================================ -->
+    <section class="sec" id="s-skeleton">
+      <div class="sec__head">
+        <div class="sec__eye">Components</div>
+        <h1 class="sec__title">Skeleton <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.0</span></h1>
+        <p class="sec__desc">A shimmering placeholder that mirrors content&rsquo;s shape while it loads, so the layout doesn&rsquo;t jump when data arrives. Built from neutral surface tokens and honours <code>prefers-reduced-motion</code>.</p>
+      </div>
+      <div class="type-sub">
+        <div class="type-sub__title">Building blocks</div>
+        <div class="type-sub__desc">Compose skeletons from three primitives &mdash; lines, blocks and circles &mdash; sized to match the real content they stand in for.</div>
+        <div class="sg-stage"><div class="sg-row sg-row--top" style="gap:40px">
+          <div class="sg-swatch" style="width:220px"><span class="sg-swatch__cap">Text lines</span><div style="width:100%"><div class="skl skl--line"></div><div class="skl skl--line"></div><div class="skl skl--line" style="width:70%;margin-bottom:0"></div></div></div>
+          <div class="sg-swatch"><span class="sg-swatch__cap">Circle</span><div class="skl skl--circle" style="width:48px;height:48px"></div></div>
+          <div class="sg-swatch" style="width:160px"><span class="sg-swatch__cap">Block</span><div class="skl skl--block" style="margin-bottom:0;height:80px"></div></div>
+        </div></div>
+      </div>
+      <div class="type-sub">
+        <div class="type-sub__title">Composed</div>
+        <div class="type-sub__desc">Real-world groupings: a media row (avatar + two lines) and a content card. Match the skeleton to the component it replaces.</div>
+        <div class="sg-stage"><div class="sg-row sg-row--top" style="gap:34px">
+          <div class="skl-media"><div class="skl skl--circle" style="width:44px;height:44px;flex-shrink:0"></div><div class="skl-media__txt"><div class="skl skl--line"></div><div class="skl skl--line" style="width:60%"></div></div></div>
+          <div class="skl-card"><div class="skl skl--block" style="height:96px"></div><div class="skl skl--title"></div><div class="skl skl--line"></div><div class="skl skl--line" style="width:80%;margin-bottom:0"></div></div>
+        </div></div>
+      </div>
+      <div class="type-sub">
+        <div class="type-sub__title">When to use</div>
+        <div class="type-sub__desc">Skeletons work best when you know the shape of what&rsquo;s coming and the wait is more than a moment.</div>
+        <div class="sel-usage">
+          <div class="sel-usage__card">
+            <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
+            <ul class="sel-usage__list">
+              <li>Mirror the final layout so content doesn&rsquo;t shift on load.</li>
+              <li>Use for lists, tables and cards fetched from the network.</li>
+              <li>Keep the shimmer subtle and stop it for reduced-motion users.</li>
+            </ul>
+          </div>
+          <div class="sel-usage__card">
+            <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don&rsquo;t</div>
+            <ul class="sel-usage__list">
+              <li>Don&rsquo;t use a skeleton for a sub-second load &mdash; it just flickers.</li>
+              <li>Don&rsquo;t use one for a small indeterminate action &mdash; use a spinner.</li>
+              <li>Don&rsquo;t let the placeholder differ wildly from the real content.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SPINNER
+    ============================================================ -->
+    <section class="sec" id="s-spinner">
+      <div class="sec__head">
+        <div class="sec__eye">Components</div>
+        <h1 class="sec__title">Spinner <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.0</span></h1>
+        <p class="sec__desc">An indeterminate loading indicator for short waits where progress can&rsquo;t be measured. A brand-green arc spins over a neutral ring; three sizes cover inline, standalone and button contexts.</p>
+      </div>
+      <div class="type-sub">
+        <div class="type-sub__title">Sizes</div>
+        <div class="type-sub__desc"><strong>Small</strong> (16px) for inline and buttons, <strong>Regular</strong> (24px) as the default, <strong>Large</strong> (36px) for full-block loading.</div>
+        <div class="sg-stage"><div class="sg-row" style="gap:40px">
+          <div class="sg-swatch"><span class="sg-swatch__cap">Small</span><span class="spn spn--sm"></span></div>
+          <div class="sg-swatch"><span class="sg-swatch__cap">Regular</span><span class="spn"></span></div>
+          <div class="sg-swatch"><span class="sg-swatch__cap">Large</span><span class="spn spn--lg"></span></div>
+        </div></div>
+      </div>
+      <div class="type-sub">
+        <div class="type-sub__title">In context</div>
+        <div class="type-sub__desc">On a busy primary button the arc switches to the button&rsquo;s text colour; inline it sits beside a label.</div>
+        <div class="sg-stage"><div class="sg-row" style="gap:30px">
+          <span class="spn-btn"><span class="spn spn--btn"></span>Processing&hellip;</span>
+          <span class="spn-inline"><span class="spn spn--sm"></span>Loading transactions&hellip;</span>
+        </div></div>
+      </div>
+      <div class="type-sub">
+        <div class="type-sub__title">When to use</div>
+        <div class="type-sub__desc">A spinner says &ldquo;working&rdquo; without saying how long. For content whose shape you know, a skeleton feels faster.</div>
+        <div class="sel-usage">
+          <div class="sel-usage__card">
+            <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
+            <ul class="sel-usage__list">
+              <li>Use for short, indeterminate waits &mdash; submitting, saving, fetching.</li>
+              <li>Place it where the result will appear, or inside the triggering button.</li>
+              <li>Keep one spinner per action, not many at once.</li>
+            </ul>
+          </div>
+          <div class="sel-usage__card">
+            <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don&rsquo;t</div>
+            <ul class="sel-usage__list">
+              <li>Don&rsquo;t use a spinner for long, content-shaped loads &mdash; use a skeleton.</li>
+              <li>Don&rsquo;t leave it spinning with no resolution or error path.</li>
+              <li>Don&rsquo;t scatter multiple spinners across one view.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         BREADCRUMB
+    ============================================================ -->
+    <section class="sec" id="s-breadcrumb">
+      <div class="sec__head">
+        <div class="sec__eye">Components</div>
+        <h1 class="sec__title">Breadcrumb <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.0</span></h1>
+        <p class="sec__desc">A trail showing where the current page sits in the hierarchy, and a one-click route back up. Ancestors are muted links; the current page is a non-interactive, weighted label.</p>
+      </div>
+      <div class="type-sub">
+        <div class="type-sub__title">Standard</div>
+        <div class="type-sub__desc">Each level links to its parent; a chevron separates them. The last item is the current page and isn&rsquo;t a link.</div>
+        <div class="sg-stage">
+          <nav class="bcr" aria-label="Breadcrumb">
+            <a class="bcr__link" href="javascript:void(0)">Dashboard</a>
+            <span class="bcr__sep">&rsaquo;</span>
+            <a class="bcr__link" href="javascript:void(0)">Transactions</a>
+            <span class="bcr__sep">&rsaquo;</span>
+            <a class="bcr__link" href="javascript:void(0)">June 2026</a>
+            <span class="bcr__sep">&rsaquo;</span>
+            <span class="bcr__current" aria-current="page">Payout #4821</span>
+          </nav>
+        </div>
+      </div>
+      <div class="type-sub">
+        <div class="type-sub__title">Truncated</div>
+        <div class="type-sub__desc">When a deep path would wrap or crowd the header, collapse the middle into an ellipsis and keep the root and the last step or two.</div>
+        <div class="sg-stage">
+          <nav class="bcr" aria-label="Breadcrumb">
+            <a class="bcr__link" href="javascript:void(0)">Dashboard</a>
+            <span class="bcr__sep">&rsaquo;</span>
+            <span class="bcr__ellipsis" title="Transactions / June 2026">&hellip;</span>
+            <span class="bcr__sep">&rsaquo;</span>
+            <a class="bcr__link" href="javascript:void(0)">June 2026</a>
+            <span class="bcr__sep">&rsaquo;</span>
+            <span class="bcr__current" aria-current="page">Payout #4821</span>
+          </nav>
+        </div>
+      </div>
+      <div class="type-sub">
+        <div class="type-sub__title">When to use</div>
+        <div class="type-sub__desc">Breadcrumbs orient users in deep structures. In a flat app they add clutter without value.</div>
+        <div class="sel-usage">
+          <div class="sel-usage__card">
+            <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
+            <ul class="sel-usage__list">
+              <li>Use in hierarchies three or more levels deep.</li>
+              <li>Make every ancestor a working link; leave the current page plain.</li>
+              <li>Collapse the middle with an ellipsis when space is tight.</li>
+            </ul>
+          </div>
+          <div class="sel-usage__card">
+            <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don&rsquo;t</div>
+            <ul class="sel-usage__list">
+              <li>Don&rsquo;t use breadcrumbs as the primary navigation.</li>
+              <li>Don&rsquo;t add them to flat, one- or two-level structures.</li>
+              <li>Don&rsquo;t link the current page to itself.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         PAGINATION
+    ============================================================ -->
+    <section class="sec" id="s-pagination">
+      <div class="sec__head">
+        <div class="sec__eye">Components</div>
+        <h1 class="sec__title">Pagination <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.0</span></h1>
+        <p class="sec__desc">Page-by-page navigation through a large set of results. The active page is marked in Flash green; long ranges collapse to an ellipsis so the control stays compact.</p>
+      </div>
+      <div class="type-sub">
+        <div class="type-sub__title">Interactive</div>
+        <div class="type-sub__desc">Click a page or the arrows &mdash; the active page updates and the visible range recalculates around it. Prev/Next disable at the ends.</div>
+        <div class="sg-stage sg-stage--center" style="display:flex;justify-content:center"><div id="pag-play"></div></div>
+      </div>
+      <div class="type-sub">
+        <div class="type-sub__title">Compact</div>
+        <div class="type-sub__desc">Where horizontal space is scarce &mdash; toolbars, cards, mobile &mdash; pair the arrows with a plain &ldquo;Page X of Y&rdquo; status.</div>
+        <div class="sg-stage" style="display:flex;justify-content:center">
+          <div class="pag">
+            <button class="pag__btn" type="button" disabled>&lsaquo;</button>
+            <span class="pag__status">Page <b style="color:var(--chrome-txt)">1</b> of 24</span>
+            <button class="pag__btn" type="button">&rsaquo;</button>
+          </div>
+        </div>
+      </div>
+      <div class="type-sub">
+        <div class="type-sub__title">When to use</div>
+        <div class="type-sub__desc">Pagination gives users control and a sense of scale. For continuous feeds, infinite scroll may fit better.</div>
+        <div class="sel-usage">
+          <div class="sel-usage__card">
+            <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
+            <ul class="sel-usage__list">
+              <li>Use for large, countable result sets and data tables.</li>
+              <li>Always show the current page and keep Prev/Next reachable.</li>
+              <li>Collapse long ranges with an ellipsis around the active page.</li>
+            </ul>
+          </div>
+          <div class="sel-usage__card">
+            <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don&rsquo;t</div>
+            <ul class="sel-usage__list">
+              <li>Don&rsquo;t paginate a handful of items &mdash; just show them.</li>
+              <li>Don&rsquo;t render dozens of raw page numbers with no truncation.</li>
+              <li>Don&rsquo;t mix pagination and infinite scroll in the same list.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         TOGGLE GROUP / SEGMENTED
+    ============================================================ -->
+    <section class="sec" id="s-toggle-group">
+      <div class="sec__head">
+        <div class="sec__eye">Components</div>
+        <h1 class="sec__title">Toggle Group <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.0</span></h1>
+        <p class="sec__desc">A compact set of related toggles in one track. <strong>Single-select</strong> works as a segmented control (one choice at a time); <strong>multi-select</strong> works as a formatting toolbar (independent on/off toggles).</p>
+      </div>
+      <div class="type-sub">
+        <div class="type-sub__title">Single-select (segmented)</div>
+        <div class="type-sub__desc">Exactly one option is active. The selected segment lifts onto a raised surface &mdash; good for switching a view or range.</div>
+        <div class="sg-stage sg-stage--col" style="display:block"><div id="tgl-single"></div></div>
+      </div>
+      <div class="type-sub">
+        <div class="type-sub__title">Multi-select (toolbar)</div>
+        <div class="type-sub__desc">Any number of toggles can be on at once; active ones fill with brand green. Use for formatting-style controls.</div>
+        <div class="sg-stage" style="display:block"><div id="tgl-multi"></div></div>
+      </div>
+      <div class="type-sub">
+        <div class="type-sub__title">When to use</div>
+        <div class="type-sub__desc">A toggle group keeps a small, fixed set of options in view. Past a handful, a dropdown scales better.</div>
+        <div class="sel-usage">
+          <div class="sel-usage__card">
+            <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
+            <ul class="sel-usage__list">
+              <li>Use for 2&ndash;5 mutually exclusive options (single) or related toggles (multi).</li>
+              <li>Keep labels short and equal in weight.</li>
+              <li>Always keep one option selected in single-select mode.</li>
+            </ul>
+          </div>
+          <div class="sel-usage__card">
+            <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don&rsquo;t</div>
+            <ul class="sel-usage__list">
+              <li>Don&rsquo;t use it to navigate between pages &mdash; that&rsquo;s Tabs.</li>
+              <li>Don&rsquo;t exceed a handful of options &mdash; use a dropdown instead.</li>
+              <li>Don&rsquo;t allow an empty selection in single-select mode.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         AVATAR
+    ============================================================ -->
+    <section class="sec" id="s-avatar">
+      <div class="sec__head">
+        <div class="sec__eye">Components</div>
+        <h1 class="sec__title">Avatar <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.0</span></h1>
+        <p class="sec__desc">A circular representation of a person or entity &mdash; a photo when available, initials or a generic glyph as fallbacks. Five sizes, an optional presence dot, and a stacked group for showing many at once.</p>
+      </div>
+      <div class="type-sub">
+        <div class="type-sub__title">Sizes</div>
+        <div class="type-sub__desc">Five steps from 24px to 72px. Pick one size per context and stay consistent within a list.</div>
+        <div class="sg-stage"><div class="sg-row">
+          <div class="sg-swatch"><span class="sg-swatch__cap">XS</span><span class="avt avt--xs">MO</span></div>
+          <div class="sg-swatch"><span class="sg-swatch__cap">SM</span><span class="avt avt--sm">MO</span></div>
+          <div class="sg-swatch"><span class="sg-swatch__cap">MD</span><span class="avt avt--md">MO</span></div>
+          <div class="sg-swatch"><span class="sg-swatch__cap">LG</span><span class="avt avt--lg">MO</span></div>
+          <div class="sg-swatch"><span class="sg-swatch__cap">XL</span><span class="avt avt--xl">MO</span></div>
+        </div></div>
+      </div>
+      <div class="type-sub">
+        <div class="type-sub__title">Types &amp; presence</div>
+        <div class="type-sub__desc">Photo, initials or a fallback glyph &mdash; always the same circle. An optional presence dot shows online / offline.</div>
+        <div class="sg-stage"><div class="sg-row">
+          <div class="sg-swatch"><span class="sg-swatch__cap">Photo</span><span class="avt avt--lg avt--grad" aria-label="User"></span></div>
+          <div class="sg-swatch"><span class="sg-swatch__cap">Initials</span><span class="avt avt--lg">RB</span></div>
+          <div class="sg-swatch"><span class="sg-swatch__cap">Fallback</span><span class="avt avt--lg avt--icon"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="8" r="4" fill="currentColor"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8" fill="currentColor"/></svg></span></div>
+          <div class="sg-swatch"><span class="sg-swatch__cap">Online</span><span class="avt avt--lg">AK<span class="avt__status"></span></span></div>
+          <div class="sg-swatch"><span class="sg-swatch__cap">Offline</span><span class="avt avt--lg">JP<span class="avt__status avt__status--off"></span></span></div>
+        </div></div>
+      </div>
+      <div class="type-sub">
+        <div class="type-sub__title">Group</div>
+        <div class="type-sub__desc">Stack a few avatars to show shared ownership or attendees, capped with a &ldquo;+N&rdquo; count.</div>
+        <div class="sg-stage">
+          <div class="avt-group">
+            <span class="avt avt--md">MO</span>
+            <span class="avt avt--md avt--grad"></span>
+            <span class="avt avt--md">RB</span>
+            <span class="avt avt--md">AK</span>
+            <span class="avt-more">+3</span>
+          </div>
+        </div>
+      </div>
+      <div class="type-sub">
+        <div class="type-sub__title">When to use</div>
+        <div class="type-sub__desc">Avatars identify people and entities at a glance. They&rsquo;re identity, not decoration.</div>
+        <div class="sel-usage">
+          <div class="sel-usage__card">
+            <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
+            <ul class="sel-usage__list">
+              <li>Always provide a fallback: initials, then a generic glyph.</li>
+              <li>Keep one avatar size consistent within a given list.</li>
+              <li>Add a presence dot only where online status is meaningful.</li>
+            </ul>
+          </div>
+          <div class="sel-usage__card">
+            <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don&rsquo;t</div>
+            <ul class="sel-usage__list">
+              <li>Don&rsquo;t use avatars for decorative or generic imagery.</li>
+              <li>Don&rsquo;t stretch non-square photos &mdash; always crop to fill.</li>
+              <li>Don&rsquo;t rely on the presence dot&rsquo;s colour alone to convey status.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SLIDER
+    ============================================================ -->
+    <section class="sec" id="s-slider">
+      <div class="sec__head">
+        <div class="sec__eye">Components</div>
+        <h1 class="sec__title">Slider <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.0</span></h1>
+        <p class="sec__desc">A draggable control for choosing a value from a continuous or stepped range. Built on a native <code>&lt;input type="range"&gt;</code> &mdash; fully keyboard-operable &mdash; with a Flash-green fill and thumb.</p>
+      </div>
+      <div class="type-sub">
+        <div class="type-sub__title">Continuous</div>
+        <div class="type-sub__desc">Drag the thumb or use the arrow keys. The filled portion and the live value both track the current position.</div>
+        <div class="sg-stage">
+          <div class="sld">
+            <div class="sld__head"><span>Volume</span><span class="sld__val">60%</span></div>
+            <input type="range" class="sld__range" min="0" max="100" value="60" data-suffix="%" aria-label="Volume">
+          </div>
+        </div>
+      </div>
+      <div class="type-sub">
+        <div class="type-sub__title">Stepped</div>
+        <div class="type-sub__desc">A <code>step</code> snaps the thumb to fixed increments &mdash; here, R100 &mdash; with min/max labels for scale.</div>
+        <div class="sg-stage">
+          <div class="sld">
+            <div class="sld__head"><span>Payout threshold</span><span class="sld__val">R500</span></div>
+            <input type="range" class="sld__range" min="0" max="1000" step="100" value="500" data-prefix="R" aria-label="Payout threshold">
+            <div class="sld__scale"><span>R0</span><span>R1,000</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="type-sub">
+        <div class="type-sub__title">Disabled</div>
+        <div class="type-sub__desc">A read-only or unavailable slider dims and stops responding to input.</div>
+        <div class="sg-stage">
+          <div class="sld">
+            <div class="sld__head"><span>Locked</span><span class="sld__val">30%</span></div>
+            <input type="range" class="sld__range" min="0" max="100" value="30" data-suffix="%" disabled aria-label="Locked">
+          </div>
+        </div>
+      </div>
+      <div class="type-sub">
+        <div class="type-sub__title">When to use</div>
+        <div class="type-sub__desc">A slider suits approximate values where the exact number matters less than the feel of more or less.</div>
+        <div class="sel-usage">
+          <div class="sel-usage__card">
+            <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
+            <ul class="sel-usage__list">
+              <li>Use for imprecise ranges &mdash; volume, brightness, thresholds.</li>
+              <li>Always show the current value alongside the track.</li>
+              <li>Use <code>step</code> when only certain increments are valid.</li>
+            </ul>
+          </div>
+          <div class="sel-usage__card">
+            <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don&rsquo;t</div>
+            <ul class="sel-usage__list">
+              <li>Don&rsquo;t use a slider for precise numeric entry &mdash; use an input.</li>
+              <li>Don&rsquo;t use one over a huge range where a pixel equals a big jump.</li>
+              <li>Don&rsquo;t hide the selected value from the user.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         POPOVER
+    ============================================================ -->
+    <section class="sec" id="s-popover">
+      <div class="sec__head">
+        <div class="sec__eye">Components</div>
+        <h1 class="sec__title">Popover <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.0</span></h1>
+        <p class="sec__desc">A small floating panel anchored to a trigger, holding secondary content or controls. Opens on click and dismisses on outside-click or Escape &mdash; richer than a tooltip, lighter than a dialog.</p>
+      </div>
+      <div class="type-sub">
+        <div class="type-sub__title">Interactive</div>
+        <div class="type-sub__desc">Click a trigger to open its panel; click outside or press Escape to close. Panels can carry real, interactive controls.</div>
+        <div class="sg-stage"><div class="sg-row">
+          <div class="pop">
+            <button class="sg-btn" type="button" data-pop>Filter &#9662;</button>
+            <div class="pop__panel">
+              <div class="pop__title">Filter transactions</div>
+              <div class="pop__row">Show refunds <label class="sw sw--sm"><input type="checkbox" class="sw__input" checked><span class="sw__track"><span class="sw__thumb"></span></span></label></div>
+              <div class="pop__row">Only over R100 <label class="sw sw--sm"><input type="checkbox" class="sw__input"><span class="sw__track"><span class="sw__thumb"></span></span></label></div>
+              <div class="pop__foot"><button class="pop__apply" type="button" data-pop-close>Apply</button></div>
+            </div>
+          </div>
+          <div class="pop">
+            <button class="sg-iconbtn" type="button" data-pop aria-label="More information">i</button>
+            <div class="pop__panel pop__panel--right" style="min-width:224px">
+              <div class="pop__title">About settlements</div>
+              <div class="pop__desc">Funds settle to your linked account on the next business day after a sale clears.</div>
+            </div>
+          </div>
+        </div></div>
+      </div>
+      <div class="type-sub">
+        <div class="type-sub__title">When to use</div>
+        <div class="type-sub__desc">A popover is for optional, on-demand content anchored to a control &mdash; not for essential steps or fleeting hints.</div>
+        <div class="sel-usage">
+          <div class="sel-usage__card">
+            <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
+            <ul class="sel-usage__list">
+              <li>Use for contextual actions or details tied to a trigger.</li>
+              <li>Support outside-click and Escape to dismiss.</li>
+              <li>Keep the content compact and focused on one task.</li>
+            </ul>
+          </div>
+          <div class="sel-usage__card">
+            <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don&rsquo;t</div>
+            <ul class="sel-usage__list">
+              <li>Don&rsquo;t use a popover for a required, blocking flow &mdash; use a dialog.</li>
+              <li>Don&rsquo;t use one for a plain text hint &mdash; use a tooltip.</li>
+              <li>Don&rsquo;t pack a whole form or page into it.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         INPUT OTP
+    ============================================================ -->
+    <section class="sec" id="s-input-otp">
+      <div class="sec__head">
+        <div class="sec__eye">Components</div>
+        <h1 class="sec__title">Input OTP <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.0</span></h1>
+        <p class="sec__desc">A segmented field for one-time passcodes &mdash; SMS, email or authenticator 2FA. Each digit gets its own box; typing auto-advances, Backspace steps back, and a pasted code fills every box at once.</p>
+      </div>
+      <div class="type-sub">
+        <div class="type-sub__title">Six digit</div>
+        <div class="type-sub__desc">The default for most verification codes. Type a digit to advance; try pasting a 6-digit number into the first box.</div>
+        <div class="sg-stage"><div class="otp" data-otp>
+          <input class="otp__box" inputmode="numeric" maxlength="1" placeholder=" " aria-label="Digit 1">
+          <input class="otp__box" inputmode="numeric" maxlength="1" placeholder=" " aria-label="Digit 2">
+          <input class="otp__box" inputmode="numeric" maxlength="1" placeholder=" " aria-label="Digit 3">
+          <input class="otp__box" inputmode="numeric" maxlength="1" placeholder=" " aria-label="Digit 4">
+          <input class="otp__box" inputmode="numeric" maxlength="1" placeholder=" " aria-label="Digit 5">
+          <input class="otp__box" inputmode="numeric" maxlength="1" placeholder=" " aria-label="Digit 6">
+        </div></div>
+      </div>
+      <div class="type-sub">
+        <div class="type-sub__title">Four digit, grouped</div>
+        <div class="type-sub__desc">A shorter PIN, split into two pairs with a separator for readability.</div>
+        <div class="sg-stage"><div class="otp" data-otp>
+          <input class="otp__box" inputmode="numeric" maxlength="1" placeholder=" " aria-label="Digit 1">
+          <input class="otp__box" inputmode="numeric" maxlength="1" placeholder=" " aria-label="Digit 2">
+          <span class="otp__sep">&ndash;</span>
+          <input class="otp__box" inputmode="numeric" maxlength="1" placeholder=" " aria-label="Digit 3">
+          <input class="otp__box" inputmode="numeric" maxlength="1" placeholder=" " aria-label="Digit 4">
+        </div></div>
+      </div>
+      <div class="type-sub">
+        <div class="type-sub__title">Error</div>
+        <div class="type-sub__desc">On an invalid or expired code, mark the whole group and explain what to do next below it.</div>
+        <div class="sg-stage" style="display:block">
+          <div class="otp otp--error" data-otp>
+            <input class="otp__box" inputmode="numeric" maxlength="1" placeholder=" " value="4" aria-label="Digit 1">
+            <input class="otp__box" inputmode="numeric" maxlength="1" placeholder=" " value="8" aria-label="Digit 2">
+            <input class="otp__box" inputmode="numeric" maxlength="1" placeholder=" " value="1" aria-label="Digit 3">
+            <input class="otp__box" inputmode="numeric" maxlength="1" placeholder=" " value="5" aria-label="Digit 4">
+          </div>
+          <div class="otp-msg otp-msg--err">That code isn&rsquo;t right &mdash; check it and try again.</div>
+        </div>
+      </div>
+      <div class="type-sub">
+        <div class="type-sub__title">When to use</div>
+        <div class="type-sub__desc">Use an OTP field for short, fixed-length codes the user transcribes once &mdash; not for regular data entry.</div>
+        <div class="sel-usage">
+          <div class="sel-usage__card">
+            <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
+            <ul class="sel-usage__list">
+              <li>Use for SMS / email verification and 2FA codes.</li>
+              <li>Support paste and auto-advance so entry is effortless.</li>
+              <li>Use <code>inputmode="numeric"</code> to bring up the number pad on mobile.</li>
+            </ul>
+          </div>
+          <div class="sel-usage__card">
+            <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don&rsquo;t</div>
+            <ul class="sel-usage__list">
+              <li>Don&rsquo;t use segmented boxes for ordinary or variable-length input.</li>
+              <li>Don&rsquo;t use it for long secrets or passwords &mdash; use a password field.</li>
+              <li>Don&rsquo;t block pasting &mdash; it&rsquo;s how most people enter codes.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- @@SHADCN_SECTIONS@@ -->
     <section class="sec" id="s-changelog">
       <div class="sec__head">
         <div class="sec__eye">About</div>
@@ -5375,12 +6306,28 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.22.1';
+const SYSTEM_VERSION = '1.23.0';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.23.0', date:'2026-07-09', author:'Mo', title:'shadcn-gap components — 13 new primitives', changes:[
+        ['added','Switch — on/off toggle built on a native checkbox, brand-green when on, in Regular and Small sizes'],
+        ['added','Tooltip — pure-CSS hover/focus hint with top, right, bottom and left placements'],
+        ['added','Accordion — native <details> disclosure, with single-open (shared name) and multi-open variants'],
+        ['added','Alert — inline Info / Success / Warning / Critical banner on the semantic tokens, with optional dismiss'],
+        ['added','Skeleton — shimmering loading placeholders (lines, blocks, circles) that honour reduced-motion'],
+        ['added','Spinner — indeterminate loader in three sizes, plus in-button and inline treatments'],
+        ['added','Breadcrumb — hierarchy trail with muted ancestor links and a truncated (ellipsis) variant'],
+        ['added','Pagination — interactive pager with ellipsis truncation, plus a compact “Page X of Y” variant'],
+        ['added','Toggle Group — single-select segmented control and multi-select formatting toolbar'],
+        ['added','Avatar — photo / initials / glyph fallbacks in five sizes, with a presence dot and stacked group'],
+        ['added','Slider — native range input with a brand fill and live value; continuous, stepped and disabled'],
+        ['added','Popover — click-anchored panel with outside-click and Escape dismissal'],
+        ['added','Input OTP — segmented passcode field with auto-advance, backspace and paste-to-fill'],
+        ['changed','Components adapted from shadcn/ui and minimally themed with Flash semantic tokens, so they follow light/dark'],
+      ]},
       {version:'1.22.1', date:'2026-07-09', author:'Mo', title:'Fixed — page JavaScript restored', changes:[
         ['fixed','Closed an unterminated Dropdown changelog entry that threw a SyntaxError and had disabled all page JavaScript — sidebar navigation, playgrounds and the changelog now work again'],
       ]},
@@ -5496,6 +6443,71 @@ const CHANGELOG = {
     ]
   },
   components: [
+    {secId:'s-switch', name:'Switch', version:'1.0.0', entries:[
+      {version:'1.0.0', date:'2026-07-09', author:'Mo', title:'Initial release', changes:[
+        ['added','Native-checkbox toggle, Regular/Small sizes, Off/On/Disabled states, anatomy specs and usage guidance'],
+      ]},
+    ]},
+    {secId:'s-tooltip', name:'Tooltip', version:'1.0.0', entries:[
+      {version:'1.0.0', date:'2026-07-09', author:'Mo', title:'Initial release', changes:[
+        ['added','Pure-CSS hover/focus tooltip with four placements and an icon-button example'],
+      ]},
+    ]},
+    {secId:'s-accordion', name:'Accordion', version:'1.0.0', entries:[
+      {version:'1.0.0', date:'2026-07-09', author:'Mo', title:'Initial release', changes:[
+        ['added','Native <details> disclosure with single-open and multiple-open variants'],
+      ]},
+    ]},
+    {secId:'s-alert', name:'Alert', version:'1.0.0', entries:[
+      {version:'1.0.0', date:'2026-07-09', author:'Mo', title:'Initial release', changes:[
+        ['added','Info / Success / Warning / Critical inline banner on the semantic tokens, with a dismissible variant'],
+      ]},
+    ]},
+    {secId:'s-skeleton', name:'Skeleton', version:'1.0.0', entries:[
+      {version:'1.0.0', date:'2026-07-09', author:'Mo', title:'Initial release', changes:[
+        ['added','Shimmering placeholders (lines, blocks, circles) and composed media/card examples; respects reduced-motion'],
+      ]},
+    ]},
+    {secId:'s-spinner', name:'Spinner', version:'1.0.0', entries:[
+      {version:'1.0.0', date:'2026-07-09', author:'Mo', title:'Initial release', changes:[
+        ['added','Indeterminate loader in three sizes, plus in-button and inline treatments'],
+      ]},
+    ]},
+    {secId:'s-breadcrumb', name:'Breadcrumb', version:'1.0.0', entries:[
+      {version:'1.0.0', date:'2026-07-09', author:'Mo', title:'Initial release', changes:[
+        ['added','Hierarchy trail with muted ancestor links, a current-page label and a truncated variant'],
+      ]},
+    ]},
+    {secId:'s-pagination', name:'Pagination', version:'1.0.0', entries:[
+      {version:'1.0.0', date:'2026-07-09', author:'Mo', title:'Initial release', changes:[
+        ['added','Interactive pager with ellipsis truncation around the active page, plus a compact “Page X of Y” variant'],
+      ]},
+    ]},
+    {secId:'s-toggle-group', name:'Toggle Group', version:'1.0.0', entries:[
+      {version:'1.0.0', date:'2026-07-09', author:'Mo', title:'Initial release', changes:[
+        ['added','Single-select segmented control and multi-select formatting toolbar, both interactive'],
+      ]},
+    ]},
+    {secId:'s-avatar', name:'Avatar', version:'1.0.0', entries:[
+      {version:'1.0.0', date:'2026-07-09', author:'Mo', title:'Initial release', changes:[
+        ['added','Photo / initials / glyph fallbacks in five sizes, with a presence dot and a stacked +N group'],
+      ]},
+    ]},
+    {secId:'s-slider', name:'Slider', version:'1.0.0', entries:[
+      {version:'1.0.0', date:'2026-07-09', author:'Mo', title:'Initial release', changes:[
+        ['added','Native range input with a brand fill and live value; continuous, stepped and disabled examples'],
+      ]},
+    ]},
+    {secId:'s-popover', name:'Popover', version:'1.0.0', entries:[
+      {version:'1.0.0', date:'2026-07-09', author:'Mo', title:'Initial release', changes:[
+        ['added','Click-anchored floating panel with interactive contents; outside-click and Escape to dismiss'],
+      ]},
+    ]},
+    {secId:'s-input-otp', name:'Input OTP', version:'1.0.0', entries:[
+      {version:'1.0.0', date:'2026-07-09', author:'Mo', title:'Initial release', changes:[
+        ['added','Segmented one-time-passcode field with auto-advance, backspace, arrow keys, paste-to-fill and an error state'],
+      ]},
+    ]},
     {secId:'s-brand', name:'Brand Introduction', version:'1.8.0', entries:[
       {version:'1.8.0', date:'2026-07-08', author:'Mo', title:'Cow mark in nav, stacked logo in hero', changes:[
         ['added','Cow icon mark added to the top nav bar, next to the "Flash Design System" wordmark'],
@@ -6401,6 +7413,140 @@ function renderSectionChangelogs() {
       swatch('With search',    fieldHtml({state: 'open', selectedIndex: 2, showCaption: false, showSearch: true}));
   }
 })();
+
+/* ================================================================
+   SHADCN-GAP COMPONENT JS — themed to Flash (Mo · 2026-07-09)
+================================================================ */
+/* Pagination — interactive */
+(function(){
+  var el = document.getElementById('pag-play');
+  if(!el) return;
+  var total = 24, cur = 6;
+  function pageList(c,t){
+    var out=[], range=[];
+    for(var i=Math.max(2,c-1); i<=Math.min(t-1,c+1); i++) range.push(i);
+    out.push(1);
+    if(range.length && range[0] > 2) out.push('e');
+    range.forEach(function(p){ out.push(p); });
+    if(range.length && range[range.length-1] < t-1) out.push('e');
+    if(t>1) out.push(t);
+    return out;
+  }
+  function render(){
+    var html = '<div class="pag">';
+    html += '<button class="pag__btn" type="button" data-go="prev"'+(cur===1?' disabled':'')+' aria-label="Previous page">&lsaquo;</button>';
+    pageList(cur,total).forEach(function(p){
+      if(p==='e') html += '<span class="pag__ellipsis">&hellip;</span>';
+      else html += '<button class="pag__btn'+(p===cur?' is-active':'')+'" type="button" data-go="'+p+'"'+(p===cur?' aria-current="page"':'')+'>'+p+'</button>';
+    });
+    html += '<button class="pag__btn" type="button" data-go="next"'+(cur===total?' disabled':'')+' aria-label="Next page">&rsaquo;</button>';
+    html += '</div>';
+    el.innerHTML = html;
+    Array.prototype.forEach.call(el.querySelectorAll('[data-go]'), function(b){
+      b.addEventListener('click', function(){
+        var g = b.getAttribute('data-go');
+        if(g==='prev') cur = Math.max(1, cur-1);
+        else if(g==='next') cur = Math.min(total, cur+1);
+        else cur = parseInt(g,10);
+        render();
+      });
+    });
+  }
+  render();
+})();
+
+/* Toggle Group — interactive */
+(function(){
+  var single = document.getElementById('tgl-single');
+  if(single){
+    var opts = ['Day','Week','Month','Quarter'], sel = 'Week';
+    (function r(){
+      single.innerHTML = '<div class="tgl">' + opts.map(function(o){
+        return '<button class="tgl__btn'+(o===sel?' is-active':'')+'" type="button">'+o+'</button>';
+      }).join('') + '</div><div class="tgl-out">Showing: <b>'+sel+'</b></div>';
+      Array.prototype.forEach.call(single.querySelectorAll('.tgl__btn'), function(b){
+        b.addEventListener('click', function(){ sel = b.textContent; r(); });
+      });
+    })();
+  }
+  var multi = document.getElementById('tgl-multi');
+  if(multi){
+    var items = [{k:'Bold',g:'B',s:'font-weight:800'},{k:'Italic',g:'I',s:'font-style:italic'},{k:'Underline',g:'U',s:'text-decoration:underline'}];
+    var on = {Bold:true, Italic:false, Underline:false};
+    (function rm(){
+      multi.innerHTML = '<div class="tgl tgl--multi">' + items.map(function(it){
+        return '<button class="tgl__btn'+(on[it.k]?' is-active':'')+'" type="button" aria-pressed="'+(on[it.k]?'true':'false')+'" aria-label="'+it.k+'" style="'+it.s+'">'+it.g+'</button>';
+      }).join('') + '</div><div class="tgl-out">Active: <b>'+(items.filter(function(it){return on[it.k];}).map(function(it){return it.k;}).join(', ')||'none')+'</b></div>';
+      Array.prototype.forEach.call(multi.querySelectorAll('.tgl__btn'), function(b,i){
+        b.addEventListener('click', function(){ on[items[i].k] = !on[items[i].k]; rm(); });
+      });
+    })();
+  }
+})();
+/* Slider — brand fill + live value */
+(function(){
+  Array.prototype.forEach.call(document.querySelectorAll('.sld__range'), function(inp){
+    function upd(){
+      var min = +inp.min || 0, max = +inp.max || 100, v = +inp.value;
+      var pct = max > min ? ((v - min) / (max - min)) * 100 : 0;
+      inp.style.background = 'linear-gradient(90deg, var(--color-brand) 0% ' + pct + '%, var(--color-surface-n2) ' + pct + '% 100%)';
+      var sld = inp.closest('.sld');
+      if(sld){ var lab = sld.querySelector('.sld__val'); if(lab) lab.textContent = (inp.dataset.prefix||'') + Number(v).toLocaleString('en-US') + (inp.dataset.suffix||''); }
+    }
+    inp.addEventListener('input', upd);
+    upd();
+  });
+})();
+
+/* Popover — click to open, outside-click / Escape to close */
+(function(){
+  var pops = Array.prototype.slice.call(document.querySelectorAll('.pop'));
+  if(!pops.length) return;
+  function closeAll(except){ pops.forEach(function(p){ if(p !== except) p.classList.remove('is-open'); }); }
+  pops.forEach(function(p){
+    var trig = p.querySelector('[data-pop]');
+    if(trig) trig.addEventListener('click', function(e){
+      e.stopPropagation();
+      var open = p.classList.contains('is-open');
+      closeAll();
+      if(!open) p.classList.add('is-open');
+    });
+    var panel = p.querySelector('.pop__panel');
+    if(panel) panel.addEventListener('click', function(e){ e.stopPropagation(); });
+    var closeBtn = p.querySelector('[data-pop-close]');
+    if(closeBtn) closeBtn.addEventListener('click', function(){ p.classList.remove('is-open'); });
+  });
+  document.addEventListener('click', function(){ closeAll(); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeAll(); });
+})();
+
+/* Input OTP — auto-advance, backspace, arrows, paste */
+(function(){
+  Array.prototype.forEach.call(document.querySelectorAll('[data-otp]'), function(group){
+    var boxes = Array.prototype.slice.call(group.querySelectorAll('.otp__box'));
+    boxes.forEach(function(box, i){
+      box.addEventListener('input', function(){
+        box.value = box.value.replace(/[^0-9]/g, '').slice(0, 1);
+        group.classList.remove('otp--error');
+        if(box.value && boxes[i+1]) boxes[i+1].focus();
+      });
+      box.addEventListener('keydown', function(e){
+        if(e.key === 'Backspace' && !box.value && boxes[i-1]) boxes[i-1].focus();
+        else if(e.key === 'ArrowLeft' && boxes[i-1]){ e.preventDefault(); boxes[i-1].focus(); }
+        else if(e.key === 'ArrowRight' && boxes[i+1]){ e.preventDefault(); boxes[i+1].focus(); }
+      });
+      box.addEventListener('paste', function(e){
+        e.preventDefault();
+        var txt = ((e.clipboardData || window.clipboardData).getData('text') || '').replace(/[^0-9]/g, '');
+        if(!txt) return;
+        group.classList.remove('otp--error');
+        for(var j = 0; j < txt.length && i + j < boxes.length; j++) boxes[i+j].value = txt[j];
+        boxes[Math.min(i + txt.length, boxes.length - 1)].focus();
+      });
+    });
+  });
+})();
+/* @@SHADCN_JS@@ */
 
 try { renderChangelog(); } catch(e){ console.error('changelog',e); }
 try { renderSectionChangelogs(); } catch(e){ console.error('section-changelog',e); }
