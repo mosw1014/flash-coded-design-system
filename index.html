@@ -1157,6 +1157,64 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
 .cpg-reset{font-family:inherit;font-size:12px;font-weight:600;color:var(--chrome-muted);background:none;border:1px solid var(--chrome-border);border-radius:20px;padding:7px 15px;cursor:pointer;transition:all .15s}
 .cpg-reset:hover{color:var(--chrome-txt);border-color:var(--chrome-txt)}
 
+/* ================================================================
+   TAGS & BADGES
+   Tags = subtle, static category labels (tinted, softly-rounded —
+   deliberately NOT the saturated pill of a Chip). Badges = count,
+   avatar and status-dot markers. All colours ride the semantic
+   --color-*-h / --color-*-l token pairs, so they flip with theme.
+================================================================ */
+/* Tag */
+.tag{display:inline-flex;align-items:center;gap:5px;border-radius:6px;font-family:inherit;font-weight:700;line-height:1;white-space:nowrap;background:var(--tag-bg);color:var(--tag-fg)}
+.tag--sm{height:20px;padding:0 7px;font-size:11px}
+.tag--reg{height:24px;padding:0 9px;font-size:12px}
+.tag__dot{width:6px;height:6px;border-radius:50%;background:currentColor;flex-shrink:0}
+.tag--neutral{--tag-bg:var(--chrome-nav);--tag-fg:var(--chrome-muted)}
+.tag--info{--tag-bg:var(--color-info-l);--tag-fg:var(--color-info-h)}
+.tag--success{--tag-bg:var(--color-success-l);--tag-fg:var(--color-success-h)}
+.tag--warning{--tag-bg:var(--color-warn-l);--tag-fg:var(--color-warn-h)}
+.tag--error{--tag-bg:var(--color-crit-l);--tag-fg:var(--color-crit-h)}
+
+/* Count / notification badge */
+.badge-ct{display:inline-flex;align-items:center;justify-content:center;box-sizing:border-box;border-radius:999px;font-family:inherit;font-weight:800;line-height:1;color:#fff;background:var(--bc-bg,#EB0029);font-variant-numeric:tabular-nums}
+.badge-ct--dot{width:9px;height:9px;padding:0}
+.badge-ct--sm{min-width:16px;height:16px;padding:0 4px;font-size:10px}
+.badge-ct--md{min-width:20px;height:20px;padding:0 6px;font-size:11px}
+.badge-ct--accent{--bc-bg:#0062EB}
+.badge-ct--error{--bc-bg:#EB0029}
+.badge-ct--neutral{--bc-bg:var(--chrome-muted)}
+/* Host wrapper — anchors a badge to the corner of an icon/avatar */
+.badge-host{position:relative;display:inline-flex}
+.badge-host__mark{display:inline-flex;align-items:center;justify-content:center;color:var(--chrome-muted)}
+.badge-host__badge{position:absolute;top:-4px;right:-6px}
+
+/* Avatar / image badge */
+.badge-av{position:relative;display:inline-flex;align-items:center;justify-content:center;border-radius:50%;background:var(--av-bg,var(--chrome-nav));color:var(--av-fg,var(--chrome-muted));font-family:inherit;font-weight:800;flex-shrink:0}
+.badge-av__img{width:100%;height:100%;border-radius:50%;object-fit:cover;display:block}
+.badge-av--sm{width:24px;height:24px;font-size:10px}
+.badge-av--md{width:32px;height:32px;font-size:12px}
+.badge-av--lg{width:48px;height:48px;font-size:17px}
+.badge-av--brand{--av-bg:var(--chrome-accent);--av-fg:#0a2a12}
+.badge-av__status{position:absolute;bottom:0;right:0;border-radius:50%;border:2px solid var(--chrome-bg);background:var(--st-c,var(--chrome-muted))}
+
+/* Status-dot badge */
+.badge-st{display:inline-flex;align-items:center;gap:7px;font-family:inherit;font-size:12px;font-weight:600;color:var(--chrome-txt);white-space:nowrap}
+.badge-st__dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;background:var(--st-c,var(--chrome-muted))}
+.badge-st--success{--st-c:var(--color-success-h)}
+.badge-st--warning{--st-c:var(--color-warn-h)}
+.badge-st--error{--st-c:var(--color-crit-h)}
+.badge-st--info{--st-c:var(--color-info-h)}
+.badge-st--neutral{--st-c:var(--chrome-muted)}
+
+/* Shared reference layout for the badge families */
+.tb-ref{border:1px solid var(--chrome-border);border-radius:14px;overflow:hidden;transition:background .25s}
+.tb-ref__row{display:flex;align-items:stretch;border-bottom:1px solid var(--chrome-border)}
+.tb-ref__row:last-child{border-bottom:none}
+.tb-ref__label{width:118px;flex-shrink:0;display:flex;align-items:center;padding:14px 16px;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--chrome-muted);border-right:1px solid var(--chrome-border)}
+.tb-ref__cells{flex:1;display:flex;flex-wrap:wrap;align-items:center;gap:16px 22px;padding:16px 20px}
+.tb-ref__cell{display:flex;flex-direction:column;align-items:center;gap:8px}
+.tb-ref__cell-cap{font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--chrome-muted)}
+
 /* ── DATA DISPLAY ── */
 .dd-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
 @media(max-width:820px){.dd-stats{grid-template-columns:1fr 1fr}}
@@ -1870,7 +1928,43 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
         </div>
       </div>
     </section>
-    <section class="sec" id="s-tags"><div class="sec__head"><div class="sec__eye">Components</div><h1 class="sec__title">Tags &amp; Badges</h1></div><div class="coming">Coming in a future session</div></section>
+    <section class="sec" id="s-tags">
+      <div class="sec__head">
+        <div class="sec__eye">Components</div>
+        <h1 class="sec__title">Tags &amp; Badges <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.0</span></h1>
+        <p class="sec__desc">Static labelling: tags for categorising, count badges for notifications, avatar badges for identity, and status dots for state &middot; 5 tag variants &middot; light &amp; dark mode &middot; interactive tag playground.</p>
+      </div>
+      <div id="tag-playground"    class="type-sub"></div>
+      <div id="tag-reference"     class="type-sub"></div>
+      <div id="badge-count-ref"   class="type-sub"></div>
+      <div id="badge-avatar-ref"  class="type-sub"></div>
+      <div id="badge-status-ref"  class="type-sub"></div>
+
+      <div class="type-sub">
+        <div class="type-sub__title">Tag or Chip?</div>
+        <div class="type-sub__desc">Both are small pills of text &mdash; the difference is emphasis and interactivity. Reach for a <strong>tag</strong> to quietly categorise; reach for a <a href="javascript:void(0)" onclick="showSection('s-chips')" style="color:var(--color-link);font-weight:700">Chip</a> when the element is selectable, removable, or needs to shout.</div>
+        <div class="sel-usage">
+          <div class="sel-usage__card">
+            <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
+            <ul class="sel-usage__list">
+              <li>Use a <strong>tag</strong> for read-only metadata &mdash; a transaction type, an API version, a category like &ldquo;Betting&rdquo;.</li>
+              <li>Use a <strong>count badge</strong> for unread or pending totals, and its dot-only form when the exact number doesn&rsquo;t matter.</li>
+              <li>Use a <strong>status dot</strong> inline with a label to show live state &mdash; Active, Degraded, Offline.</li>
+              <li>Keep tag colour meaningful &mdash; lean on Neutral unless a semantic colour genuinely adds signal.</li>
+            </ul>
+          </div>
+          <div class="sel-usage__card">
+            <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don&rsquo;t</div>
+            <ul class="sel-usage__list">
+              <li>Don&rsquo;t make a tag clickable or removable &mdash; that&rsquo;s a chip&rsquo;s job.</li>
+              <li>Don&rsquo;t stack more than a couple of tags on one row &mdash; they stop reading as metadata and start looking like filters.</li>
+              <li>Don&rsquo;t show a count badge with &ldquo;0&rdquo; &mdash; hide it, or drop to a dot.</li>
+              <li>Don&rsquo;t rely on dot colour alone for critical status &mdash; pair it with a text label.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
     <section class="sec" id="s-chips">
       <div class="sec__head">
         <div class="sec__eye">Components</div>
@@ -2789,6 +2883,7 @@ function toggleTheme() {
   try { if(typeof renderInpV2Playground==='function' && document.getElementById('inpv2-playground')) renderInpV2Playground(); } catch(e){}
   try { if(typeof rerenderInpV2Ref==='function') rerenderInpV2Ref(); } catch(e){}
   try { if(typeof renderChipPlayground==='function' && document.getElementById('chip-playground')) renderChipPlayground(); } catch(e){}
+  try { if(typeof renderTagsBadges==='function' && document.getElementById('tag-playground')) renderTagsBadges(); } catch(e){}
   try { if(typeof renderChipReference==='function' && document.getElementById('chip-reference')) renderChipReference(); } catch(e){}
   try { if(typeof renderSelReference==='function' && document.getElementById('sel-reference')) renderSelReference(); } catch(e){}
   try { if(typeof renderBshQuickCopy==='function' && document.getElementById('bsh-quickcopy')) renderBshQuickCopy(); } catch(e){}
@@ -5029,6 +5124,189 @@ try { renderChipPlayground(); } catch(e){ console.error('chip-playground',e); }
 try { renderChipReference(); } catch(e){ console.error('chip-reference',e); }
 
 /* ============================================================
+   TAGS & BADGES
+============================================================ */
+function tbTheme(){ return document.documentElement.getAttribute('data-theme')==='dark' ? 'dark' : 'light'; }
+function tbEsc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&#60;').replace(/>/g,'&#62;').replace(/"/g,'&quot;'); }
+
+/* ── TAGS ── */
+const TAG_VARIANTS = [
+  {key:'neutral', label:'Neutral'},
+  {key:'info',    label:'Info'},
+  {key:'success', label:'Success'},
+  {key:'warning', label:'Warning'},
+  {key:'error',   label:'Error'},
+];
+const TAG_SIZES = [ {key:'sm', label:'Small'}, {key:'reg', label:'Regular'} ];
+
+function tagHTML(variant, size, label, dot){
+  const d = dot ? `<span class="tag__dot"></span>` : '';
+  return `<span class="tag tag--${variant} tag--${size}">${d}<span class="tag__label">${tbEsc(label)}</span></span>`;
+}
+
+/* ── TAG PLAYGROUND ── */
+let tpg = { variant:'neutral', size:'reg', dot:false, label:'Betting', codeOpen:false };
+
+function tpgCodeHTML(){
+  const dotLine = tpg.dot ? `\n  <span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"tag__dot"</span><span class="code-kw">>&#60;/span></span>` : '';
+  return `<span class="code-cm">/* Flash · ${cap(tpg.variant)} tag · ${tpg.size==='sm'?'Small':'Regular'} */</span>
+<span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"tag tag--${tpg.variant} tag--${tpg.size}"</span><span class="code-kw">></span>${dotLine}
+  <span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"tag__label"</span><span class="code-kw">></span>${tbEsc(tpg.label||'Tag')}<span class="code-kw">&#60;/span></span>
+<span class="code-kw">&#60;/span></span>`;
+}
+function tpgRefresh(){
+  const stage = document.getElementById('tpg-stage');
+  if(stage) stage.innerHTML = tagHTML(tpg.variant, tpg.size, tpg.label||'Tag', tpg.dot);
+  const block = document.getElementById('tpg-code-block');
+  if(block) block.innerHTML = tpgCodeHTML();
+}
+function renderTagPlayground(){
+  const root = document.getElementById('tag-playground');
+  if(!root) return;
+  const sbg = stageBg(tbTheme());
+  const varBtns = TAG_VARIANTS.map(v=>`<button class="btn-pg__pill${tpg.variant===v.key?' on':''}" onclick="tpgSet('variant','${v.key}')">${v.label}</button>`).join('');
+  const szBtns  = TAG_SIZES.map(s=>`<button class="btn-pg__pill${tpg.size===s.key?' on':''}" onclick="tpgSet('size','${s.key}')">${s.label}</button>`).join('');
+  const dotBtns = ['off','on'].map(x=>`<button class="btn-pg__pill${(tpg.dot?(x==='on'):(x==='off'))?' on':''}" onclick="tpgSet('dot','${x}')">${x==='on'?'With dot':'No dot'}</button>`).join('');
+  root.innerHTML = `
+    <div class="type-sub__title">Playground</div>
+    <div class="type-sub__desc">Configure a tag live. Tags are static &mdash; there&rsquo;s no dismiss or selected state (that&rsquo;s a chip). The stage follows the site-wide theme toggle.</div>
+    <div class="btn-pg">
+      <div class="btn-pg__stage" id="tpg-stage" style="background:${sbg}"></div>
+      <div class="btn-pg__ctrls">
+        <div class="btn-pg__group"><span class="btn-pg__clabel">Variant</span><div class="btn-pg__pill-row">${varBtns}</div></div>
+        <div class="btn-pg__group"><span class="btn-pg__clabel">Size</span><div class="btn-pg__pill-row">${szBtns}</div></div>
+        <div class="btn-pg__group"><span class="btn-pg__clabel">Leading dot</span><div class="btn-pg__pill-row">${dotBtns}</div></div>
+        <div class="btn-pg__group"><span class="btn-pg__clabel">Label</span><input class="cpg-label-input" id="tpg-label-input" value="${tbEsc(tpg.label)}" maxlength="24" oninput="tpgSetLabel(this.value)" placeholder="Tag"></div>
+      </div>
+      <div class="code-panel${tpg.codeOpen?' open':''}" id="tpg-code-panel">
+        <div class="code-panel__head" onclick="tpgToggleCode()">
+          <span class="code-panel__label">&#60;/&#62; &nbsp;View code</span>
+          <button class="code-copy-btn" onclick="event.stopPropagation();tpgCopyCode()" id="tpg-copy-btn">Copy</button>
+        </div>
+        <div class="code-body"><div class="code-block" id="tpg-code-block"></div></div>
+      </div>
+    </div>`;
+  tpgRefresh();
+}
+function tpgSet(key, val){
+  if(key==='dot') tpg.dot = (val==='on');
+  else tpg[key] = val;
+  renderTagPlayground();
+}
+function tpgSetLabel(val){ tpg.label = val; tpgRefresh(); }
+function tpgToggleCode(){ const p = document.getElementById('tpg-code-panel'); if(p){ p.classList.toggle('open'); tpg.codeOpen = p.classList.contains('open'); } }
+function tpgCopyCode(){
+  const b = document.getElementById('tpg-code-block'); if(!b) return;
+  navigator.clipboard.writeText(b.innerText||b.textContent).catch(()=>{});
+  const btn = document.getElementById('tpg-copy-btn');
+  if(btn){ btn.textContent = 'Copied!'; setTimeout(()=>btn.textContent='Copy', 2000); }
+}
+
+/* ── TAG REFERENCE GRID (variants × sizes, + dot column) ── */
+function renderTagReference(){
+  const root = document.getElementById('tag-reference');
+  if(!root) return;
+  const theme = tbTheme();
+  const stageBgCol = stageBg(theme);
+  const headCol = theme==='dark' ? ';color:#A1A3A8' : '';
+  const cols = [ {label:'Small', size:'sm', dot:false}, {label:'Regular', size:'reg', dot:false}, {label:'With dot', size:'reg', dot:true} ];
+  let cells = '';
+  cells += `<div style="grid-column:2/5;grid-row:1/${2+TAG_VARIANTS.length};background:${stageBgCol}"></div>`;
+  cells += `<div style="grid-column:1;grid-row:1"></div>`;
+  cols.forEach((c,i)=>{ cells += `<div class="chip-ref__sizehead" style="grid-column:${2+i};grid-row:1${headCol}">${c.label}</div>`; });
+  TAG_VARIANTS.forEach((v, ri)=>{
+    const row = 2+ri;
+    cells += `<div class="chip-ref__rowlabel" style="grid-column:1;grid-row:${row}">${v.label}</div>`;
+    cols.forEach((c,i)=>{ cells += `<div class="chip-ref__cell" style="grid-column:${2+i};grid-row:${row}">${tagHTML(v.key, c.size, v.label, c.dot)}</div>`; });
+  });
+  root.innerHTML = `
+    <div class="type-sub__title">Tag reference</div>
+    <div class="type-sub__desc">5 semantic variants across 2 sizes, shown in the current theme. Neutral is the default &mdash; reach for a colour only when it adds meaning.</div>
+    <div class="chip-ref"><div class="chip-ref__grid">${cells}</div></div>`;
+}
+
+/* ── COUNT / NOTIFICATION BADGE REFERENCE ── */
+function bellSVG(){ return `<svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 3a6 6 0 0 0-6 6c0 3.5-1 5-2 6h16c-1-1-2-2.5-2-6a6 6 0 0 0-6-6Z" fill="currentColor"/><path d="M10 20a2 2 0 0 0 4 0" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>`; }
+function renderBadgeCountRef(){
+  const root = document.getElementById('badge-count-ref');
+  if(!root) return;
+  const sbg = stageBg(tbTheme());
+  const cell = (inner, cap)=>`<div class="tb-ref__cell">${inner}<span class="tb-ref__cell-cap">${cap}</span></div>`;
+  const variantsRow = ['error','accent','neutral'].map(v=>cell(`<span class="badge-ct badge-ct--md badge-ct--${v}">3</span>`, cap(v==='accent'?'accent':v))).join('');
+  const sizesRow = cell(`<span class="badge-ct badge-ct--dot badge-ct--error"></span>`,'Dot')
+    + cell(`<span class="badge-ct badge-ct--sm badge-ct--error">5</span>`,'Small')
+    + cell(`<span class="badge-ct badge-ct--md badge-ct--error">5</span>`,'Medium')
+    + cell(`<span class="badge-ct badge-ct--md badge-ct--error">99+</span>`,'Overflow');
+  const anchoredRow = cell(`<span class="badge-host"><span class="badge-host__mark">${bellSVG()}</span><span class="badge-host__badge"><span class="badge-ct badge-ct--sm badge-ct--error">4</span></span></span>`,'Count')
+    + cell(`<span class="badge-host"><span class="badge-host__mark">${bellSVG()}</span><span class="badge-host__badge"><span class="badge-ct badge-ct--dot badge-ct--error"></span></span></span>`,'Dot');
+  root.innerHTML = `
+    <div class="type-sub__title">Count &amp; notification badges</div>
+    <div class="type-sub__desc">A small solid marker for unread or pending totals. Use the dot form when the exact number doesn&rsquo;t matter, and &ldquo;99+&rdquo; past two digits. Hide it entirely at zero.</div>
+    <div class="tb-ref" style="background:${sbg}">
+      <div class="tb-ref__row"><div class="tb-ref__label">Variant</div><div class="tb-ref__cells">${variantsRow}</div></div>
+      <div class="tb-ref__row"><div class="tb-ref__label">Size &amp; form</div><div class="tb-ref__cells">${sizesRow}</div></div>
+      <div class="tb-ref__row"><div class="tb-ref__label">Anchored</div><div class="tb-ref__cells">${anchoredRow}</div></div>
+    </div>`;
+}
+
+/* ── AVATAR / IMAGE BADGE REFERENCE ── */
+function renderBadgeAvatarRef(){
+  const root = document.getElementById('badge-avatar-ref');
+  if(!root) return;
+  const sbg = stageBg(tbTheme());
+  const cell = (inner, cap)=>`<div class="tb-ref__cell">${inner}<span class="tb-ref__cell-cap">${cap}</span></div>`;
+  const sizesRow = cell(`<span class="badge-av badge-av--sm">RB</span>`,'Small 24')
+    + cell(`<span class="badge-av badge-av--md">RB</span>`,'Medium 32')
+    + cell(`<span class="badge-av badge-av--lg">RB</span>`,'Large 48');
+  const variantsRow = cell(`<span class="badge-av badge-av--md">RB</span>`,'Neutral')
+    + cell(`<span class="badge-av badge-av--md badge-av--brand">RB</span>`,'Brand');
+  const overlayRow = cell(`<span class="badge-av badge-av--md">RB<span class="badge-av__status badge-st--success" style="width:10px;height:10px"></span></span>`,'+ status')
+    + cell(`<span class="badge-host"><span class="badge-av badge-av--md">RB</span><span class="badge-host__badge"><span class="badge-ct badge-ct--sm badge-ct--error">2</span></span></span>`,'+ count');
+  root.innerHTML = `
+    <div class="type-sub__title">Avatar &amp; image badges</div>
+    <div class="type-sub__desc">A circular identity mark &mdash; initials, a photo, or a product/brand logo. Pair with a status dot to show presence, or a count badge for pending items.</div>
+    <div class="tb-ref" style="background:${sbg}">
+      <div class="tb-ref__row"><div class="tb-ref__label">Size</div><div class="tb-ref__cells">${sizesRow}</div></div>
+      <div class="tb-ref__row"><div class="tb-ref__label">Fill</div><div class="tb-ref__cells">${variantsRow}</div></div>
+      <div class="tb-ref__row"><div class="tb-ref__label">Overlay</div><div class="tb-ref__cells">${overlayRow}</div></div>
+    </div>`;
+}
+
+/* ── STATUS-DOT BADGE REFERENCE ── */
+const STATUS_BADGES = [
+  {key:'success', label:'Active'},
+  {key:'info',    label:'Processing'},
+  {key:'warning', label:'Degraded'},
+  {key:'error',   label:'Offline'},
+  {key:'neutral', label:'Unknown'},
+];
+function renderBadgeStatusRef(){
+  const root = document.getElementById('badge-status-ref');
+  if(!root) return;
+  const sbg = stageBg(tbTheme());
+  const cell = (inner, cap)=>`<div class="tb-ref__cell">${inner}<span class="tb-ref__cell-cap">${cap}</span></div>`;
+  const labelled = STATUS_BADGES.map(s=>cell(`<span class="badge-st badge-st--${s.key}"><span class="badge-st__dot"></span>${s.label}</span>`, cap(s.key))).join('');
+  const dotsOnly = STATUS_BADGES.map(s=>cell(`<span class="badge-st badge-st--${s.key}"><span class="badge-st__dot"></span></span>`, cap(s.key))).join('');
+  root.innerHTML = `
+    <div class="type-sub__title">Status dots</div>
+    <div class="type-sub__desc">A tiny coloured dot for live state. Always pair the dot with a text label for anything critical &mdash; colour alone isn&rsquo;t accessible.</div>
+    <div class="tb-ref" style="background:${sbg}">
+      <div class="tb-ref__row"><div class="tb-ref__label">With label</div><div class="tb-ref__cells">${labelled}</div></div>
+      <div class="tb-ref__row"><div class="tb-ref__label">Dot only</div><div class="tb-ref__cells">${dotsOnly}</div></div>
+    </div>`;
+}
+
+/* Render-all entry point (load + theme toggle) */
+function renderTagsBadges(){
+  try { renderTagPlayground(); } catch(e){ console.error('tag-playground',e); }
+  try { renderTagReference(); } catch(e){ console.error('tag-reference',e); }
+  try { renderBadgeCountRef(); } catch(e){ console.error('badge-count',e); }
+  try { renderBadgeAvatarRef(); } catch(e){ console.error('badge-avatar',e); }
+  try { renderBadgeStatusRef(); } catch(e){ console.error('badge-status',e); }
+}
+try { renderTagsBadges(); } catch(e){ console.error('tags-badges',e); }
+
+/* ============================================================
    CHECKBOXES & RADIOS — reference grid
 ============================================================ */
 const SEL_SIZES = [
@@ -5107,6 +5385,9 @@ const CHANGELOG = {
         ['added','Dropdown section — Dropdown field (label, trigger, assistive caption) in Bordered/Rounded style, Medium/Small size, with Default/Hover/Keyboard focus/Open states'],
         ['added','Dropdown list item — checkbox + label, hover highlight, success-tinted selected state, optional search input for filtering long lists'],
         ['added','Interactive playground with real click-to-open, select-to-close, click-outside and Escape-to-dismiss behaviour, plus style/size/selection/states comparisons and an anatomy/spec table'],
+      {version:'1.22.0', date:'2026-07-09', author:'Mo', title:'Tags & Badges', changes:[
+        ['added','Tags & Badges section — Tag (5 semantic variants × 2 sizes, optional dot) with an interactive playground, plus count/notification, avatar/image and status-dot badges'],
+        ['added','“Tag or Chip?” usage guidance distinguishing static tags from interactive chips'],
       ]},
       {version:'1.21.0', date:'2026-07-08', author:'Mo', title:'Tabs layout & playground refinements', changes:[
         ['changed','Sizes comparison — Regular and Small swatches now bottom-align so their active underlines sit flush with each other'],
@@ -5338,9 +5619,14 @@ const CHANGELOG = {
         ['added','Light & dark reference grid, quick-copy card, tap-target guidance and usage do/don\'t'],
       ]},
     ]},
-    {secId:'s-tags', name:'Tags & Badges', version:'0.0.0', entries:[
-      {version:'0.0.0', date:'—', title:'Not yet started', changes:[
-        ['changed','Planned for a future session'],
+    {secId:'s-tags', name:'Tags & Badges', version:'1.0.0', entries:[
+      {version:'1.0.0', date:'2026-07-09', author:'Mo', title:'Tags & Badges', changes:[
+        ['added','Tag component — 5 semantic variants (Neutral, Info, Success, Warning, Error) × 2 sizes, optional leading dot, light & dark reference grid'],
+        ['added','Interactive tag playground with live code panel'],
+        ['added','Count / notification badge — accent/error/neutral variants, dot & 99+ overflow forms, and anchored-to-icon usage'],
+        ['added','Avatar / image badge — 3 sizes, neutral & brand fills, with status-dot and count overlays'],
+        ['added','Status-dot badge — 5 state colours, with-label and dot-only forms'],
+        ['added','“Tag or Chip?” guidance clarifying when to use each'],
       ]},
     ]},
     {secId:'s-chips', name:'Chips & Pills', version:'1.2.0', entries:[
@@ -5740,7 +6026,7 @@ function bshRefreshStage(){
     const content = document.createElement('div');
     content.className = 'bsh-phone__content';
     if(!bsh.open){
-      const trig = makeBtnEl('flash', bsh.theme, 'accent', 'reg', false, 'Open bottom sheet', null);
+      const trig = makeBtnEl('flash', bsh.theme, 'primary', 'reg', false, 'Open bottom sheet', null);
       trig.onclick = bshOpen;
       content.appendChild(trig);
     }
