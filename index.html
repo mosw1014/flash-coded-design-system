@@ -1663,8 +1663,17 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
 .spn--sm{width:16px;height:16px;border-width:2px}
 .spn--lg{width:36px;height:36px;border-width:3px}
 .spn--btn{width:15px;height:15px;border-width:2px;border-color:transparent;border-top-color:currentColor}
-.spn-btn{display:inline-flex;align-items:center;gap:9px;background:var(--color-btn-s-bg);color:var(--color-btn-s-txt);border:0;border-radius:8px;padding:10px 18px;font-size:13px;font-weight:700;font-family:inherit;cursor:default}
+.spn-btn{display:inline-flex;align-items:center;gap:9px;background:var(--color-btn-s-bg);color:var(--color-btn-s-txt);border:0;border-radius:999px;padding:10px 18px;font-size:13px;font-weight:700;font-family:inherit;cursor:default}
 .spn-inline{display:inline-flex;align-items:center;gap:9px;font-size:13px;color:var(--chrome-muted)}
+/* Activity (blade) spinner — Figma "New Icons/Spinner" */
+.spn-activity{display:inline-block;width:24px;height:24px;vertical-align:middle;color:var(--chrome-txt)}
+.spn-activity svg{display:block;width:100%;height:100%}
+.spn-activity__blades{fill:currentColor;transform-origin:12px 12px;animation:spn-activity-step .9s steps(8) infinite}
+@keyframes spn-activity-step{to{transform:rotate(360deg)}}
+.spn-activity--sm{width:16px;height:16px}
+.spn-activity--lg{width:36px;height:36px}
+.spn-activity--btn{color:currentColor}
+@media(prefers-reduced-motion:reduce){.spn-activity__blades{animation:none;opacity:.6}}
 /* shared demo triggers (tooltip / popover / etc.) */
 .sg-btn{display:inline-flex;align-items:center;gap:7px;background:var(--color-btn-s-bg);color:var(--color-btn-s-txt);border:1px solid var(--color-btn-s-bg);border-radius:8px;padding:8px 14px;font-size:13px;font-weight:600;font-family:inherit;cursor:pointer;transition:opacity .15s}
 .sg-btn:hover{opacity:.85}
@@ -3112,11 +3121,19 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
     <section class="sec" id="s-spinner">
       <div class="sec__head">
         <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Spinner <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.0</span></h1>
-        <p class="sec__desc">An indeterminate loading indicator for short waits where progress can&rsquo;t be measured. A solid black arc (white in dark mode) spins over a neutral ring; three sizes cover inline, standalone and button contexts.</p>
+        <h1 class="sec__title">Spinner <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.1.0</span></h1>
+        <p class="sec__desc">An indeterminate loading indicator for short waits where progress can&rsquo;t be measured. Two styles cover most needs: a solid arc spinning over a neutral ring, or a fading 8-blade activity indicator (from the Figma component library). Both flip black/white with the theme.</p>
       </div>
       <div class="type-sub">
-        <div class="type-sub__title">Sizes</div>
+        <div class="type-sub__title">Type</div>
+        <div class="type-sub__desc"><strong>Ring</strong> is the default &mdash; compact and works well at small sizes. <strong>Activity</strong> is a fading blade wheel, useful where a slightly richer loading motif suits the surface.</div>
+        <div class="sg-stage"><div class="sg-row" style="gap:48px">
+          <div class="sg-swatch"><span class="sg-swatch__cap">Ring</span><span class="spn"></span></div>
+          <div class="sg-swatch"><span class="sg-swatch__cap">Activity</span><span class="spn-activity" role="status" aria-label="Loading"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><g class="spn-activity__blades"><rect x="11" y="1" width="2" height="6" rx="1" opacity="1"/><rect x="11" y="1" width="2" height="6" rx="1" opacity=".87" transform="rotate(45 12 12)"/><rect x="11" y="1" width="2" height="6" rx="1" opacity=".74" transform="rotate(90 12 12)"/><rect x="11" y="1" width="2" height="6" rx="1" opacity=".61" transform="rotate(135 12 12)"/><rect x="11" y="1" width="2" height="6" rx="1" opacity=".48" transform="rotate(180 12 12)"/><rect x="11" y="1" width="2" height="6" rx="1" opacity=".35" transform="rotate(225 12 12)"/><rect x="11" y="1" width="2" height="6" rx="1" opacity=".22" transform="rotate(270 12 12)"/><rect x="11" y="1" width="2" height="6" rx="1" opacity=".15" transform="rotate(315 12 12)"/></g></svg></span></div>
+        </div></div>
+      </div>
+      <div class="type-sub">
+        <div class="type-sub__title">Ring sizes</div>
         <div class="type-sub__desc"><strong>Small</strong> (16px) for inline and buttons, <strong>Regular</strong> (24px) as the default, <strong>Large</strong> (36px) for full-block loading.</div>
         <div class="sg-stage"><div class="sg-row" style="gap:40px">
           <div class="sg-swatch"><span class="sg-swatch__cap">Small</span><span class="spn spn--sm"></span></div>
@@ -3125,11 +3142,21 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
         </div></div>
       </div>
       <div class="type-sub">
+        <div class="type-sub__title">Activity sizes</div>
+        <div class="type-sub__desc">The same three steps, built as an 8-blade SVG that fades around the wheel instead of a rotating arc.</div>
+        <div class="sg-stage"><div class="sg-row" style="gap:40px">
+          <div class="sg-swatch"><span class="sg-swatch__cap">Small</span><span class="spn-activity spn-activity--sm" role="status" aria-label="Loading"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><g class="spn-activity__blades"><rect x="11" y="1" width="2" height="6" rx="1" opacity="1"/><rect x="11" y="1" width="2" height="6" rx="1" opacity=".87" transform="rotate(45 12 12)"/><rect x="11" y="1" width="2" height="6" rx="1" opacity=".74" transform="rotate(90 12 12)"/><rect x="11" y="1" width="2" height="6" rx="1" opacity=".61" transform="rotate(135 12 12)"/><rect x="11" y="1" width="2" height="6" rx="1" opacity=".48" transform="rotate(180 12 12)"/><rect x="11" y="1" width="2" height="6" rx="1" opacity=".35" transform="rotate(225 12 12)"/><rect x="11" y="1" width="2" height="6" rx="1" opacity=".22" transform="rotate(270 12 12)"/><rect x="11" y="1" width="2" height="6" rx="1" opacity=".15" transform="rotate(315 12 12)"/></g></svg></span></div>
+          <div class="sg-swatch"><span class="sg-swatch__cap">Regular</span><span class="spn-activity" role="status" aria-label="Loading"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><g class="spn-activity__blades"><rect x="11" y="1" width="2" height="6" rx="1" opacity="1"/><rect x="11" y="1" width="2" height="6" rx="1" opacity=".87" transform="rotate(45 12 12)"/><rect x="11" y="1" width="2" height="6" rx="1" opacity=".74" transform="rotate(90 12 12)"/><rect x="11" y="1" width="2" height="6" rx="1" opacity=".61" transform="rotate(135 12 12)"/><rect x="11" y="1" width="2" height="6" rx="1" opacity=".48" transform="rotate(180 12 12)"/><rect x="11" y="1" width="2" height="6" rx="1" opacity=".35" transform="rotate(225 12 12)"/><rect x="11" y="1" width="2" height="6" rx="1" opacity=".22" transform="rotate(270 12 12)"/><rect x="11" y="1" width="2" height="6" rx="1" opacity=".15" transform="rotate(315 12 12)"/></g></svg></span></div>
+          <div class="sg-swatch"><span class="sg-swatch__cap">Large</span><span class="spn-activity spn-activity--lg" role="status" aria-label="Loading"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><g class="spn-activity__blades"><rect x="11" y="1" width="2" height="6" rx="1" opacity="1"/><rect x="11" y="1" width="2" height="6" rx="1" opacity=".87" transform="rotate(45 12 12)"/><rect x="11" y="1" width="2" height="6" rx="1" opacity=".74" transform="rotate(90 12 12)"/><rect x="11" y="1" width="2" height="6" rx="1" opacity=".61" transform="rotate(135 12 12)"/><rect x="11" y="1" width="2" height="6" rx="1" opacity=".48" transform="rotate(180 12 12)"/><rect x="11" y="1" width="2" height="6" rx="1" opacity=".35" transform="rotate(225 12 12)"/><rect x="11" y="1" width="2" height="6" rx="1" opacity=".22" transform="rotate(270 12 12)"/><rect x="11" y="1" width="2" height="6" rx="1" opacity=".15" transform="rotate(315 12 12)"/></g></svg></span></div>
+        </div></div>
+      </div>
+      <div class="type-sub">
         <div class="type-sub__title">In context</div>
-        <div class="type-sub__desc">On a busy primary button the arc switches to the button&rsquo;s text colour; inline it sits beside a label.</div>
+        <div class="type-sub__desc">On a busy primary button the indicator switches to the button&rsquo;s text colour; inline it sits beside a label. Either type works in both places &mdash; pick one per surface and stay consistent.</div>
         <div class="sg-stage"><div class="sg-row" style="gap:30px">
           <span class="spn-btn"><span class="spn spn--btn"></span>Processing&hellip;</span>
           <span class="spn-inline"><span class="spn spn--sm"></span>Loading transactions&hellip;</span>
+          <span class="spn-inline"><span class="spn-activity spn-activity--sm spn-activity--btn" role="status" aria-label="Loading"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><g class="spn-activity__blades"><rect x="11" y="1" width="2" height="6" rx="1" opacity="1"/><rect x="11" y="1" width="2" height="6" rx="1" opacity=".87" transform="rotate(45 12 12)"/><rect x="11" y="1" width="2" height="6" rx="1" opacity=".74" transform="rotate(90 12 12)"/><rect x="11" y="1" width="2" height="6" rx="1" opacity=".61" transform="rotate(135 12 12)"/><rect x="11" y="1" width="2" height="6" rx="1" opacity=".48" transform="rotate(180 12 12)"/><rect x="11" y="1" width="2" height="6" rx="1" opacity=".35" transform="rotate(225 12 12)"/><rect x="11" y="1" width="2" height="6" rx="1" opacity=".22" transform="rotate(270 12 12)"/><rect x="11" y="1" width="2" height="6" rx="1" opacity=".15" transform="rotate(315 12 12)"/></g></svg></span>Syncing account&hellip;</span>
         </div></div>
       </div>
       <div class="type-sub">
@@ -6921,12 +6948,16 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.24.0';
+const SYSTEM_VERSION = '1.24.1';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.24.1', date:'2026-07-09', author:'Mo', title:'Spinner — fully rounded buttons + Activity type', changes:[
+        ['fixed','Spinner "In context" busy button was 8px-rounded instead of the pill (999px) radius every other button in the system uses'],
+        ['added','Activity spinner type — an 8-blade fading loader matching the Figma component library (New Icons/Spinner), as an alternative to the default Ring; Small/Regular/Large sizes and an in-button/inline example'],
+      ]},
       {version:'1.24.0', date:'2026-07-09', author:'Mo', title:'More shadcn-gap components — Cards, Charts & 7 more', changes:[
         ['added','Cards — basic, with footer actions, media band and interactive/hoverable variants (replaces the placeholder)'],
         ['added','Charts — interactive inline-SVG bar, line, area and donut (hover for values, donut pops the slice), hand-built with no charting library, using the Flash colour palette'],
@@ -7136,7 +7167,11 @@ const CHANGELOG = {
         ['added','Shimmering placeholders (lines, blocks, circles) and composed media/card examples; respects reduced-motion'],
       ]},
     ]},
-    {secId:'s-spinner', name:'Spinner', version:'1.0.0', entries:[
+    {secId:'s-spinner', name:'Spinner', version:'1.1.0', entries:[
+      {version:'1.1.0', date:'2026-07-09', author:'Mo', title:'Activity type + rounded button fix', changes:[
+        ['fixed','Busy button in "In context" is now fully rounded (999px), matching every other button in the system'],
+        ['added','Activity type — 8-blade fading loader from the Figma component library, in three sizes, plus a Type comparison and an in-button/inline example'],
+      ]},
       {version:'1.0.0', date:'2026-07-09', author:'Mo', title:'Initial release', changes:[
         ['added','Indeterminate loader in three sizes, plus in-button and inline treatments'],
       ]},
