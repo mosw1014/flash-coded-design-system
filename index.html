@@ -1421,6 +1421,9 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
 .dpd-item.is-selected,.dpd-item--selected{background:var(--color-success-l)}
 .dpd-item.is-selected .dpd-item__box,.dpd-item--selected .dpd-item__box{background-color:var(--color-success-h);border-color:var(--color-success-h);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='none' stroke='%23fff' stroke-width='2.3' stroke-linecap='round' stroke-linejoin='round' d='M3.5 8.4l3 3 6-6.6'/%3E%3C/svg%3E")}
 .dpd-item.is-selected .dpd-item__label,.dpd-item--selected .dpd-item__label{font-weight:700}
+.dpd-menu__foot{display:flex;gap:8px;padding:8px 6px 4px;margin-top:2px;border-top:1px solid var(--chrome-border);flex-shrink:0}
+.dpd-menu__clear{flex:1;background:none;border:1px solid var(--chrome-border);color:var(--chrome-txt);border-radius:8px;padding:8px;font-size:12.5px;font-weight:700;font-family:inherit;cursor:pointer}
+.dpd-menu__clear:hover{background:var(--chrome-hover)}
 
 /* Showcase surface + swatch grid, matching the Tabs conventions under a dropdown-specific name */
 .dpd-demo{border:1px solid var(--chrome-border);border-radius:12px;padding:28px 20px;background:var(--chrome-bg)}
@@ -2722,14 +2725,20 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
     <section class="sec" id="s-dropdown">
       <div class="sec__head">
         <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Dropdown <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.0</span></h1>
-        <p class="sec__desc">A labelled select trigger that opens a card of options. Built from a <strong>Dropdown field</strong> (label, trigger button, assistive caption) in <strong>Bordered</strong> or <strong>Rounded</strong> style, <strong>Medium</strong> or <strong>Small</strong> size, paired with a <strong>Dropdown list item</strong> (checkbox + label, optional search) inside the options card.</p>
+        <h1 class="sec__title">Dropdown <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.1.0</span></h1>
+        <p class="sec__desc">A labelled select trigger that opens a card of options, in <strong>single-select</strong> (one exclusive choice) or <strong>multi-select</strong> (several independent checkboxes) form. Built from a <strong>Dropdown field</strong> (label, trigger button, assistive caption) in <strong>Bordered</strong> or <strong>Rounded</strong> style, <strong>Medium</strong> or <strong>Small</strong> size, paired with a <strong>Dropdown list item</strong> (checkbox + label, optional search) inside the options card.</p>
       </div>
 
       <div class="type-sub">
-        <div class="type-sub__title">Interactive</div>
+        <div class="type-sub__title">Single-select</div>
         <div class="type-sub__desc">A working dropdown &mdash; click the trigger to open the list, click an option to select it and close. Click outside or press <code>Esc</code> to dismiss without changing the selection.</div>
         <div class="dpd-demo dpd-demo--play" id="dpd-play"></div>
+      </div>
+
+      <div class="type-sub">
+        <div class="type-sub__title">Multi-select</div>
+        <div class="type-sub__desc">Click as many options as needed &mdash; each checkbox toggles independently and the menu stays open. The trigger summarises the pick as a label, or &ldquo;N selected&rdquo; once there&rsquo;s more than one. Use <strong>Clear</strong> to reset, or <strong>Done</strong> to close.</div>
+        <div class="dpd-demo dpd-demo--play" id="dpd-play-multi"></div>
       </div>
 
       <div class="type-sub">
@@ -2779,6 +2788,8 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
               <tr><td class="dd-table__name">Trigger radius</td><td colspan="2">Bordered 6px &middot; Rounded 999px (pill)</td><td>&mdash;</td></tr>
               <tr><td class="dd-table__name">Card radius / shadow</td><td colspan="2">12px &middot; 0 8px 24px rgba(0,0,0,.14)</td><td>&mdash;</td></tr>
               <tr><td class="dd-table__name">List item selected</td><td colspan="2">Success tint fill, success-coloured checkbox</td><td><code>color-success-l</code> / <code>color-success-h</code></td></tr>
+              <tr><td class="dd-table__name">Multi-select trigger</td><td colspan="2">Label when one is picked &middot; &ldquo;N selected&rdquo; from two up</td><td>&mdash;</td></tr>
+              <tr><td class="dd-table__name">Multi-select footer</td><td colspan="2">Clear (outline) &middot; Done (primary black)</td><td><code>color-btn-s-bg</code></td></tr>
             </tbody>
           </table>
         </div>
@@ -2791,7 +2802,8 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
           <div class="sel-usage__card">
             <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
             <ul class="sel-usage__list">
-              <li>Use a dropdown when there are roughly 5&ndash;15 known, mutually exclusive options.</li>
+              <li>Use a dropdown when there are roughly 5&ndash;15 known options.</li>
+              <li>Reach for multi-select only when picking several values genuinely makes sense &mdash; otherwise use single-select.</li>
               <li>Always show a clear placeholder until a value is chosen &mdash; never default to a hidden first option.</li>
               <li>Add the search input once a list runs past a screen&rsquo;s worth of items.</li>
               <li>Pair the trigger with a label and, where useful, an assistive caption explaining the choice.</li>
@@ -2801,6 +2813,8 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
             <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don&rsquo;t</div>
             <ul class="sel-usage__list">
               <li>Don&rsquo;t use a dropdown for 2&ndash;3 options &mdash; radios or a segmented control are faster to scan and select.</li>
+              <li>Don&rsquo;t use multi-select when only one answer is ever valid &mdash; that&rsquo;s just extra clicks.</li>
+              <li>Don&rsquo;t close a multi-select menu the instant one box is ticked &mdash; let the user finish, then confirm with Done.</li>
               <li>Don&rsquo;t bury a primary, frequently-changed filter three menus deep &mdash; surface it directly.</li>
               <li>Don&rsquo;t mix Bordered and Rounded styles within the same form.</li>
               <li>Don&rsquo;t rely on the placeholder colour alone to signal &ldquo;required&rdquo; &mdash; pair it with real validation.</li>
@@ -7153,12 +7167,16 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.25.0';
+const SYSTEM_VERSION = '1.25.1';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.25.1', date:'2026-07-10', author:'Mo', title:'Dropdown — multi-select', changes:[
+        ['added','Multi-select variant — every option toggles its own checkbox independently, the menu stays open across picks, and the trigger summarises as a label or "N selected"; confirm with Done or reset with Clear'],
+        ['changed','Section intro, anatomy table and Do/Don\'t updated to cover single- vs multi-select'],
+      ]},
       {version:'1.25.0', date:'2026-07-10', author:'Mo', title:'Icons foundation + Navigation, plus Avatar/Alert fixes', changes:[
         ['added','Icons — a fully customisable outline SVG system (24x24 grid, 1.8px stroke, currentColor), a live size/colour customiser, and a 30-icon library with click-to-copy'],
         ['added','Navigation — Side Nav component built from Figma: icon + two-line label, Regular/Small sizes, White/Charcoal/Dark green colour contexts, interactive playground, states and colour reference (replaces the placeholder)'],
@@ -7636,7 +7654,10 @@ const CHANGELOG = {
         ['added','Interactive playground, size/icon comparisons, a full states matrix and an anatomy/spec table'],
       ]},
     ]},
-    {secId:'s-dropdown', name:'Dropdown', version:'1.0.0', entries:[
+    {secId:'s-dropdown', name:'Dropdown', version:'1.1.0', entries:[
+      {version:'1.1.0', date:'2026-07-10', author:'Mo', title:'Multi-select', changes:[
+        ['added','Multi-select playground — independent per-item checkboxes, menu stays open, trigger shows a label or "N selected", with Clear and Done actions in the menu footer'],
+      ]},
       {version:'1.0.0', date:'2026-07-09', author:'Mo', title:'Initial release', changes:[
         ['added','Dropdown field — label, trigger button and assistive caption, in Bordered/Rounded style and Medium/Small size'],
         ['added','Default/Hover/Keyboard focus/Open states, with the border switching to the inverse colour on focus and open'],
@@ -8276,11 +8297,97 @@ function renderSectionChangelogs() {
       if(e.key === 'Escape' && wrap.classList.contains('is-open')) close();
     });
   }
+  // Multi-select — every item toggles independently; menu stays open until Done
+  function interactiveMultiFieldHtml(opts){
+    var cls = 'dpd-field' + (opts.style === 'rounded' ? ' dpd-field--rounded' : '') + (opts.size === 'sm' ? ' dpd-field--sm' : '');
+    var label = '<div class="dpd-label">' + (opts.label || 'Dropdown label') + '</div>';
+    var caption = '<div class="dpd-caption">' + (opts.caption || 'Assistive caption') + '</div>';
+    var items = opts.options.map(function(o){ return itemHtml(o, false); }).join('');
+    var search = opts.showSearch ? ('<div class="dpd-search">' + SEARCH_ICON + '<input type="text" placeholder="Search" aria-label="Search options"></div>') : '';
+    var foot = '<div class="dpd-menu__foot"><button type="button" class="dpd-menu__clear">Clear</button><button type="button" class="pop__apply">Done</button></div>';
+    var menu = '<div class="dpd-menu" hidden>' + search + items + foot + '</div>';
+    return '<div class="' + cls + '">' + label +
+      '<div class="dpd-wrap">' + triggerHtml({options: opts.options, placeholder: opts.placeholder}) + menu + '</div>' +
+      caption +
+    '</div>';
+  }
+  function wireInteractiveMulti(root, opts){
+    var wrap = root.querySelector('.dpd-wrap');
+    var trigger = wrap.querySelector('.dpd-trigger');
+    var menu = wrap.querySelector('.dpd-menu');
+    var textEl = trigger.querySelector('.dpd-trigger__text');
+    var options = opts.options;
+    var selected = new Set();
+    function close(){
+      wrap.classList.remove('is-open');
+      trigger.classList.remove('dpd-trigger--open');
+      menu.setAttribute('hidden', '');
+    }
+    function openMenu(){
+      wrap.classList.add('is-open');
+      trigger.classList.add('dpd-trigger--open');
+      menu.removeAttribute('hidden');
+      var search = menu.querySelector('input');
+      if(search) search.focus();
+    }
+    function updateTrigger(){
+      if(selected.size === 0){
+        textEl.textContent = opts.placeholder || 'Choose an option';
+        trigger.classList.remove('has-value');
+      } else if(selected.size === 1){
+        textEl.textContent = options[selected.values().next().value];
+        trigger.classList.add('has-value');
+      } else {
+        textEl.textContent = selected.size + ' selected';
+        trigger.classList.add('has-value');
+      }
+    }
+    trigger.addEventListener('click', function(e){
+      e.stopPropagation();
+      if(wrap.classList.contains('is-open')) close(); else openMenu();
+    });
+    var itemEls = Array.prototype.slice.call(menu.querySelectorAll('.dpd-item'));
+    itemEls.forEach(function(btn, i){
+      btn.addEventListener('click', function(e){
+        e.stopPropagation();
+        if(selected.has(i)){ selected.delete(i); btn.classList.remove('is-selected'); }
+        else { selected.add(i); btn.classList.add('is-selected'); }
+        updateTrigger();
+      });
+    });
+    var clearBtn = menu.querySelector('.dpd-menu__clear');
+    if(clearBtn) clearBtn.addEventListener('click', function(e){
+      e.stopPropagation();
+      selected.clear();
+      itemEls.forEach(function(b){ b.classList.remove('is-selected'); });
+      updateTrigger();
+    });
+    var doneBtn = menu.querySelector('.pop__apply');
+    if(doneBtn) doneBtn.addEventListener('click', function(e){ e.stopPropagation(); close(); });
+    var search = menu.querySelector('.dpd-search input');
+    if(search){
+      search.addEventListener('click', function(e){ e.stopPropagation(); });
+      search.addEventListener('input', function(){
+        var q = search.value.trim().toLowerCase();
+        itemEls.forEach(function(btn){
+          var txt = btn.querySelector('.dpd-item__label').textContent.toLowerCase();
+          btn.style.display = txt.indexOf(q) > -1 ? '' : 'none';
+        });
+      });
+    }
+    document.addEventListener('click', function(e){
+      if(!wrap.contains(e.target)) close();
+    });
+    document.addEventListener('keydown', function(e){
+      if(e.key === 'Escape' && wrap.classList.contains('is-open')) close();
+    });
+    updateTrigger();
+  }
   function swatch(cap, inner){
     return '<div class="dpd-swatch"><div class="dpd-swatch__cap">' + cap + '</div>' + inner + '</div>';
   }
 
-  // Interactive playground
+  // Interactive playground — single-select
   var play = document.getElementById('dpd-play');
   if(play){
     play.innerHTML = interactiveFieldHtml({
@@ -8289,6 +8396,18 @@ function renderSectionChangelogs() {
       caption: 'Used to route your settlement report.'
     });
     wireInteractive(play);
+  }
+
+  // Interactive playground — multi-select
+  var playMulti = document.getElementById('dpd-play-multi');
+  if(playMulti){
+    var multiOpts = {options: OPTIONS, showSearch: true, placeholder: 'Choose categories'};
+    playMulti.innerHTML = interactiveMultiFieldHtml({
+      options: OPTIONS, showSearch: true,
+      label: 'Categories', placeholder: 'Choose categories',
+      caption: 'Select every category this merchant sells.'
+    });
+    wireInteractiveMulti(playMulti, multiOpts);
   }
 
   // Style — Bordered vs Rounded
