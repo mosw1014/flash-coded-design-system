@@ -1421,6 +1421,9 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
 .dpd-item.is-selected,.dpd-item--selected{background:var(--color-success-l)}
 .dpd-item.is-selected .dpd-item__box,.dpd-item--selected .dpd-item__box{background-color:var(--color-success-h);border-color:var(--color-success-h);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='none' stroke='%23fff' stroke-width='2.3' stroke-linecap='round' stroke-linejoin='round' d='M3.5 8.4l3 3 6-6.6'/%3E%3C/svg%3E")}
 .dpd-item.is-selected .dpd-item__label,.dpd-item--selected .dpd-item__label{font-weight:700}
+.dpd-item__check{margin-left:auto;flex-shrink:0;width:16px;height:16px;color:var(--color-success-h);opacity:0;transition:opacity .1s}
+.dpd-item__check svg{display:block;width:100%;height:100%}
+.dpd-item.is-selected .dpd-item__check,.dpd-item--selected .dpd-item__check{opacity:1}
 .dpd-menu__foot{display:flex;gap:8px;padding:8px 6px 4px;margin-top:2px;border-top:1px solid var(--chrome-border);flex-shrink:0}
 .dpd-menu__clear{flex:1;background:none;border:1px solid var(--chrome-border);color:var(--chrome-txt);border-radius:8px;padding:8px;font-size:12.5px;font-weight:700;font-family:inherit;cursor:pointer}
 .dpd-menu__clear:hover{background:var(--chrome-hover)}
@@ -2725,8 +2728,8 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
     <section class="sec" id="s-dropdown">
       <div class="sec__head">
         <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Dropdown <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.1.0</span></h1>
-        <p class="sec__desc">A labelled select trigger that opens a card of options, in <strong>single-select</strong> (one exclusive choice) or <strong>multi-select</strong> (several independent checkboxes) form. Built from a <strong>Dropdown field</strong> (label, trigger button, assistive caption) in <strong>Bordered</strong> or <strong>Rounded</strong> style, <strong>Medium</strong> or <strong>Small</strong> size, paired with a <strong>Dropdown list item</strong> (checkbox + label, optional search) inside the options card.</p>
+        <h1 class="sec__title">Dropdown <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.2.0</span></h1>
+        <p class="sec__desc">A labelled select trigger that opens a card of options, in <strong>single-select</strong> (one exclusive choice, a plain label with a trailing check) or <strong>multi-select</strong> (several independent checkboxes) form. Built from a <strong>Dropdown field</strong> (label, trigger button, assistive caption) in <strong>Bordered</strong> or <strong>Rounded</strong> style, <strong>Medium</strong> or <strong>Small</strong> size, paired with a <strong>Dropdown list item</strong> inside the options card, plus an optional search input.</p>
       </div>
 
       <div class="type-sub">
@@ -2767,7 +2770,7 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
 
       <div class="type-sub">
         <div class="type-sub__title">Options list &amp; search</div>
-        <div class="type-sub__desc">Each row is a <strong>Dropdown list item</strong> &mdash; a checkbox and a label, hover-highlighted, with the active choice shown on a success tint and a filled check. The card can optionally lead with a search input to filter long option lists.</div>
+        <div class="type-sub__desc">Each row is a <strong>Dropdown list item</strong> &mdash; hover-highlighted, with the active choice on a success tint. Single-select shows a trailing check mark; multi-select (above) shows a real checkbox, since more than one row can be active. The card can optionally lead with a search input to filter long option lists.</div>
         <div class="dpd-demo"><div class="dpd-swatchgrid" id="dpd-list"></div></div>
       </div>
 
@@ -2787,7 +2790,8 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
               <tr><td class="dd-table__name">Focus / open border</td><td colspan="2">#000 <span style="color:var(--chrome-muted)">(dark #fff)</span></td><td><code>color-input-focus</code></td></tr>
               <tr><td class="dd-table__name">Trigger radius</td><td colspan="2">Bordered 6px &middot; Rounded 999px (pill)</td><td>&mdash;</td></tr>
               <tr><td class="dd-table__name">Card radius / shadow</td><td colspan="2">12px &middot; 0 8px 24px rgba(0,0,0,.14)</td><td>&mdash;</td></tr>
-              <tr><td class="dd-table__name">List item selected</td><td colspan="2">Success tint fill, success-coloured checkbox</td><td><code>color-success-l</code> / <code>color-success-h</code></td></tr>
+              <tr><td class="dd-table__name">List item selected (single)</td><td colspan="2">Success tint fill, trailing check mark</td><td><code>color-success-l</code> / <code>color-success-h</code></td></tr>
+              <tr><td class="dd-table__name">List item selected (multi)</td><td colspan="2">Success tint fill, success-coloured checkbox</td><td><code>color-success-l</code> / <code>color-success-h</code></td></tr>
               <tr><td class="dd-table__name">Multi-select trigger</td><td colspan="2">Label when one is picked &middot; &ldquo;N selected&rdquo; from two up</td><td>&mdash;</td></tr>
               <tr><td class="dd-table__name">Multi-select footer</td><td colspan="2">Clear (outline) &middot; Done (primary black)</td><td><code>color-btn-s-bg</code></td></tr>
             </tbody>
@@ -7167,12 +7171,15 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.25.1';
+const SYSTEM_VERSION = '1.25.2';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.25.2', date:'2026-07-10', author:'Mo', title:'Dropdown — single-select drops the checkbox', changes:[
+        ['changed','Single-select rows no longer show a checkbox — just the label, with a trailing check mark on the active choice. Multi-select is unaffected and keeps a real checkbox per row'],
+      ]},
       {version:'1.25.1', date:'2026-07-10', author:'Mo', title:'Dropdown — multi-select', changes:[
         ['added','Multi-select variant — every option toggles its own checkbox independently, the menu stays open across picks, and the trigger summarises as a label or "N selected"; confirm with Done or reset with Clear'],
         ['changed','Section intro, anatomy table and Do/Don\'t updated to cover single- vs multi-select'],
@@ -7654,7 +7661,10 @@ const CHANGELOG = {
         ['added','Interactive playground, size/icon comparisons, a full states matrix and an anatomy/spec table'],
       ]},
     ]},
-    {secId:'s-dropdown', name:'Dropdown', version:'1.1.0', entries:[
+    {secId:'s-dropdown', name:'Dropdown', version:'1.2.0', entries:[
+      {version:'1.2.0', date:'2026-07-10', author:'Mo', title:'Single-select drops the checkbox', changes:[
+        ['changed','Single-select rows now show a plain label with a trailing check mark on the active choice instead of a checkbox; multi-select keeps a real checkbox per row'],
+      ]},
       {version:'1.1.0', date:'2026-07-10', author:'Mo', title:'Multi-select', changes:[
         ['added','Multi-select playground — independent per-item checkboxes, menu stays open, trigger shows a label or "N selected", with Clear and Done actions in the menu footer'],
       ]},
@@ -8198,9 +8208,18 @@ function renderSectionChangelogs() {
 (function(){
   var CHEVRON = '<svg viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1.5L6 6.5L11 1.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
   var SEARCH_ICON = '<svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="7" cy="7" r="5" stroke="currentColor" stroke-width="1.6"/><path d="M11.5 11.5L15 15" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>';
+  var CHECK_ICON = '<svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 8.5L6.5 12L13 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
   var OPTIONS = ['Airtime & Data','Electricity','Bill Payments','Vouchers','Gaming','Insurance','Lottery','Data Bundles'];
 
+  // Single-select row — no checkbox; a trailing check mark shows the active choice
   function itemHtml(label, selected){
+    return '<button type="button" class="dpd-item' + (selected ? ' is-selected' : '') + '">' +
+      '<span class="dpd-item__label">' + label + '</span>' +
+      '<span class="dpd-item__check">' + CHECK_ICON + '</span>' +
+    '</button>';
+  }
+  // Multi-select row — real checkbox, since several can be active at once
+  function itemHtmlCheckbox(label, selected){
     return '<button type="button" class="dpd-item' + (selected ? ' is-selected' : '') + '">' +
       '<span class="dpd-item__box"></span>' +
       '<span class="dpd-item__label">' + label + '</span>' +
@@ -8302,7 +8321,7 @@ function renderSectionChangelogs() {
     var cls = 'dpd-field' + (opts.style === 'rounded' ? ' dpd-field--rounded' : '') + (opts.size === 'sm' ? ' dpd-field--sm' : '');
     var label = '<div class="dpd-label">' + (opts.label || 'Dropdown label') + '</div>';
     var caption = '<div class="dpd-caption">' + (opts.caption || 'Assistive caption') + '</div>';
-    var items = opts.options.map(function(o){ return itemHtml(o, false); }).join('');
+    var items = opts.options.map(function(o){ return itemHtmlCheckbox(o, false); }).join('');
     var search = opts.showSearch ? ('<div class="dpd-search">' + SEARCH_ICON + '<input type="text" placeholder="Search" aria-label="Search options"></div>') : '';
     var foot = '<div class="dpd-menu__foot"><button type="button" class="dpd-menu__clear">Clear</button><button type="button" class="pop__apply">Done</button></div>';
     var menu = '<div class="dpd-menu" hidden>' + search + items + foot + '</div>';
