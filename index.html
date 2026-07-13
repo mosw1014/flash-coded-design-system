@@ -1363,6 +1363,8 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
 .tbl-pg__pill-row{display:flex;gap:2px;background:var(--chrome-bg);border:1px solid var(--chrome-border);border-radius:7px;padding:2px;transition:background .25s}
 .tbl-pg__pill{padding:4px 11px;border-radius:5px;border:none;cursor:pointer;font-family:inherit;font-size:11.5px;font-weight:600;color:var(--chrome-muted);background:transparent;transition:all .15s;white-space:nowrap}
 .tbl-pg__pill.on{background:var(--chrome-txt);color:var(--chrome-bg)}
+.tbl-pg__hint{font-size:11.5px;color:var(--chrome-muted);line-height:1.5}
+.tbl-pg__hint strong{color:var(--chrome-txt);font-weight:700}
 
 /* states demo — a labelled stack */
 .tbl-states{display:flex;flex-direction:column;gap:6px;border:1px solid var(--chrome-border);border-radius:14px;padding:18px;background:var(--chrome-bg);overflow-x:auto}
@@ -3149,13 +3151,13 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
     <section class="sec" id="s-tables">
       <div class="sec__head">
         <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Tables <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.1.0</span></h1>
+        <h1 class="sec__title">Tables <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.1.1</span></h1>
         <p class="sec__desc">A selectable, row-based <strong>Table Row</strong> for records and transactions. Each row is assembled from cells &mdash; the <strong>List building block</strong> &mdash; starting with a leading checkbox, a product icon and a bold primary label, then any number of data cells, a status tag and optional trailing links. Rows resolve to five states and stack under a select-all header to form a full table. Adapts to light &amp; dark via semantic tokens.</p>
       </div>
 
       <div class="type-sub">
         <div class="type-sub__title">Playground</div>
-        <div class="type-sub__desc">Customise a single Table Row live &mdash; swap the product, status and preview state, toggle trailing links, or click the checkbox to select it.</div>
+        <div class="type-sub__desc">Customise a single Table Row live &mdash; swap the product and status, preview any of the five states, or click the checkbox to select it. Trailing links are revealed on hover, so they appear in the Hover state.</div>
         <div id="tbl-playground"></div>
       </div>
 
@@ -7478,12 +7480,17 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.27.0';
+const SYSTEM_VERSION = '1.27.1';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.27.1', date:'2026-07-13', author:'Mo', title:'Tables — playground audit', changes:[
+        ['fixed','Playground no longer shows trailing links on the Default state — links are a hover-revealed affordance, so they now appear only in the Hover state, matching the States reference'],
+        ['added','Checked is now a first-class option in the State control (five states: Default, Hover, Focused, Checked, Disabled); clicking the checkbox stays in sync with it'],
+        ['added','Hint under the controls explaining that links reveal on hover'],
+      ]},
       {version:'1.27.0', date:'2026-07-13', author:'Mo', title:'Tables — playground added, section reordered', changes:[
         ['added','Playground — customise a single Table Row live (Product, Status, State, Links) plus a real, clickable checkbox for the Checked state'],
         ['changed','Section now opens with the Playground, followed by the Interactive table, then States / The cell / Anatomy & specs / When to use'],
@@ -8015,7 +8022,12 @@ const CHANGELOG = {
         ['added','Progress meters with brand / Warning / Critical fills'],
       ]},
     ]},
-    {secId:'s-tables', name:'Tables', version:'1.1.0', entries:[
+    {secId:'s-tables', name:'Tables', version:'1.1.1', entries:[
+      {version:'1.1.1', date:'2026-07-13', author:'Mo', title:'Playground audit', changes:[
+        ['fixed','Trailing links no longer appear on the Default state in the playground — they are revealed on hover, so they now show only in the Hover state, matching the States reference'],
+        ['added','Checked is now a first-class State option (five states, matching the reference); the row checkbox stays in sync when clicked'],
+        ['added','Hint clarifying that links reveal on hover'],
+      ]},
       {version:'1.1.0', date:'2026-07-13', author:'Mo', title:'Playground added, section reordered', changes:[
         ['added','Playground — customise a single Table Row live: Product (1Voucher / Gift Voucher), Status (Pending / Success / Failed), preview State (Default / Hover / Focused / Disabled), and a Links toggle, plus a real clickable checkbox for the Checked state'],
         ['changed','Section order is now Playground → Interactive table → States → The cell → Anatomy & specs → When to use'],
@@ -8542,7 +8554,10 @@ function renderSectionChangelogs() {
 })();
 
 /* ── TABLES — playground (customise a single Table Row) ── */
-var tblPg = { product:'1v', status:'pending', state:'default', links:false, checked:false };
+// state is the single source of truth (Default / Hover / Focused / Checked / Disabled),
+// mirroring the five states in the reference below. Trailing links are a hover-revealed
+// affordance, so they only render in the Hover state — never at rest.
+var tblPg = { product:'1v', status:'pending', state:'default', links:true };
 var TBL_PG_GIFT_SVG = '<svg viewBox="0 0 24 24" fill="none"><path d="M20 12v8H4v-8M2 7h20v5H2zM12 22V7M12 7S9 2 6.5 4.5 12 7 12 7zM12 7s3-5 5.5-2.5S12 7 12 7z" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"/></svg>';
 
 function tblPgRowHtml(){
@@ -8551,13 +8566,16 @@ function tblPgRowHtml(){
     : { cls:'tbl-pic--1v', inner:'1', name:'1Voucher' };
   var status = { pending:{cls:'tbl-tag--pending',label:'Pending'}, success:{cls:'tbl-tag--success',label:'Success'}, failed:{cls:'tbl-tag--failed',label:'Failed'} }[tblPg.status];
   var rowCls = 'tbl-row';
-  if(tblPg.state === 'hover') rowCls += ' is-hover';
-  if(tblPg.state === 'focus') rowCls += ' is-focus';
+  if(tblPg.state === 'hover')    rowCls += ' is-hover';
+  if(tblPg.state === 'focus')    rowCls += ' is-focus';
+  if(tblPg.state === 'checked')  rowCls += ' is-checked';
   if(tblPg.state === 'disabled') rowCls += ' is-disabled';
-  if(tblPg.checked) rowCls += ' is-checked';
-  var checkedAttr = tblPg.checked ? 'checked' : '';
+  var checkedAttr  = tblPg.state === 'checked'  ? 'checked'  : '';
   var disabledAttr = tblPg.state === 'disabled' ? 'disabled' : '';
-  var linksHtml = tblPg.links ? '<span class="tbl-cell--links"><a class="tbl-link">Link text</a><a class="tbl-link">Link text</a></span>' : '';
+  // Links are trailing actions revealed on hover — only shown in the Hover state.
+  var linksHtml = (tblPg.links && tblPg.state === 'hover')
+    ? '<span class="tbl-cell--links"><a class="tbl-link">Link text</a><a class="tbl-link">Link text</a></span>'
+    : '';
   return '<div class="' + rowCls + '" id="tblpg-row">' +
     '<input type="checkbox" class="fsel__input tbl-check tbl-cell--check" ' + checkedAttr + ' ' + disabledAttr + ' onchange="tblPgToggleChecked(this)" aria-label="Select row">' +
     '<span class="tbl-pic ' + product.cls + '">' + product.inner + '</span>' +
@@ -8582,11 +8600,14 @@ function renderTablesPlayground(){
   if(!el) return;
   var productBtns = tblPgPillRow('product', [{key:'1v',label:'1Voucher'},{key:'gift',label:'Gift Voucher'}]);
   var statusBtns  = tblPgPillRow('status',  [{key:'pending',label:'Pending'},{key:'success',label:'Success'},{key:'failed',label:'Failed'}]);
-  var stateBtns   = tblPgPillRow('state',   [{key:'default',label:'Default'},{key:'hover',label:'Hover'},{key:'focus',label:'Focused'},{key:'disabled',label:'Disabled'}]);
+  var stateBtns   = tblPgPillRow('state',   [{key:'default',label:'Default'},{key:'hover',label:'Hover'},{key:'focus',label:'Focused'},{key:'checked',label:'Checked'},{key:'disabled',label:'Disabled'}]);
   var linksOn = tblPg.links;
   var linksBtns =
     '<button type="button" class="tbl-pg__pill' + (!linksOn?' on':'') + '" onclick="tblPgSetLinks(false)">Off</button>' +
     '<button type="button" class="tbl-pg__pill' + (linksOn?' on':'') + '" onclick="tblPgSetLinks(true)">On</button>';
+  var hint = (tblPg.links && tblPg.state !== 'hover')
+    ? '<div class="tbl-pg__hint">Trailing links are revealed on hover &mdash; set State to <strong>Hover</strong> to preview them.</div>'
+    : '';
 
   el.innerHTML =
     '<div class="tbl-pg">' +
@@ -8596,23 +8617,24 @@ function renderTablesPlayground(){
         '<div class="tbl-pg__group"><span class="tbl-pg__clabel">Status</span><div class="tbl-pg__pill-row">' + statusBtns + '</div></div>' +
         '<div class="tbl-pg__group"><span class="tbl-pg__clabel">State</span><div class="tbl-pg__pill-row">' + stateBtns + '</div></div>' +
         '<div class="tbl-pg__group"><span class="tbl-pg__clabel">Links</span><div class="tbl-pg__pill-row">' + linksBtns + '</div></div>' +
+        hint +
       '</div>' +
     '</div>';
 }
 
 function tblPgSet(key, val){
   tblPg[key] = val;
-  if(key === 'state' && val === 'disabled') tblPg.checked = false;
   renderTablesPlayground();
 }
 function tblPgSetLinks(val){
   tblPg.links = val;
   renderTablesPlayground();
 }
+// Clicking the real checkbox maps to the Checked / Default states so the row and the
+// State control stay in sync.
 function tblPgToggleChecked(cb){
-  tblPg.checked = cb.checked;
-  var row = document.getElementById('tblpg-row');
-  if(row) row.classList.toggle('is-checked', cb.checked);
+  tblPg.state = cb.checked ? 'checked' : 'default';
+  renderTablesPlayground();
 }
 
 /* ── TABLES — interactive selection ── */
