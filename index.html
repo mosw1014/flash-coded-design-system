@@ -1361,7 +1361,7 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
 
 /* full table — header + rows */
 .tbl-wrap{border:1px solid var(--chrome-border);border-radius:14px;overflow:hidden;overflow-x:auto}
-.tbl-inner{min-width:760px}
+.tbl-inner{min-width:900px}
 .tbl-head{display:flex;align-items:center;gap:20px;padding:0 14px;height:44px;background:var(--chrome-nav);border-bottom:1px solid var(--chrome-border)}
 .tbl-head__cell{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--chrome-muted);white-space:nowrap}
 .tbl-body .tbl-row{border-radius:0;border-bottom:1px solid var(--chrome-border)}
@@ -1375,6 +1375,10 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
 .tcol-type{flex:1.2 1 0;min-width:0}
 .tcol-status{flex:0 0 88px}
 .tcol-amt{flex:0 0 96px;text-align:right;font-variant-numeric:tabular-nums;font-weight:700}
+/* trailing row actions — hidden until the row is hovered or keyboard-focused */
+.tcol-actions{flex:0 0 132px;display:flex;justify-content:flex-end;gap:18px;opacity:0;transition:opacity .12s}
+.tbl-body .tbl-row:hover .tcol-actions,.tbl-body .tbl-row.is-hover .tcol-actions,.tbl-body .tbl-row:focus-within .tcol-actions{opacity:1}
+.tbl-head__cell.tcol-actions{opacity:1}
 
 /* ================================================================
    TABS
@@ -3132,7 +3136,7 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
     <section class="sec" id="s-tables">
       <div class="sec__head">
         <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Tables <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.0</span></h1>
+        <h1 class="sec__title">Tables <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.1</span></h1>
         <p class="sec__desc">A selectable, row-based <strong>Table Row</strong> for records and transactions. Each row is assembled from cells &mdash; the <strong>List building block</strong> &mdash; starting with a leading checkbox, a product icon and a bold primary label, then any number of data cells, a status tag and optional trailing links. Rows resolve to five states and stack under a select-all header to form a full table. Adapts to light &amp; dark via semantic tokens.</p>
       </div>
 
@@ -3219,7 +3223,7 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
 
       <div class="type-sub">
         <div class="type-sub__title">Interactive table</div>
-        <div class="type-sub__desc">A working transactions table &mdash; tick any row to select it (the row tints green), or use the header checkbox to select or clear every row at once. Hover a row to preview the hover state.</div>
+        <div class="type-sub__desc">A working transactions table &mdash; tick any row to select it (the row tints green), or use the header checkbox to select or clear every row at once. Hover a row (or tab to it) to reveal its trailing link actions.</div>
         <div class="tbl-wrap" id="tbl-play">
           <div class="tbl-inner">
             <div class="tbl-head">
@@ -3230,6 +3234,7 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
               <span class="tbl-head__cell tcol-type">Type</span>
               <span class="tbl-head__cell tcol-status">Status</span>
               <span class="tbl-head__cell tcol-amt">Amount</span>
+              <span class="tbl-head__cell tcol-actions">Actions</span>
             </div>
             <div class="tbl-body">
               <div class="tbl-row">
@@ -3240,6 +3245,7 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
                 <span class="tbl-cell tcol-type">Redemption</span>
                 <span class="tcol-status"><span class="tbl-tag tbl-tag--pending">Pending</span></span>
                 <span class="tbl-cell tcol-amt">R523.00</span>
+                <span class="tcol-actions"><a class="tbl-link">View</a><a class="tbl-link">Receipt</a></span>
               </div>
               <div class="tbl-row">
                 <input type="checkbox" class="fsel__input tbl-check tcol-check" aria-label="Select row">
@@ -3249,6 +3255,7 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
                 <span class="tbl-cell tcol-type">Purchase</span>
                 <span class="tcol-status"><span class="tbl-tag tbl-tag--success">Success</span></span>
                 <span class="tbl-cell tcol-amt">R1,000.50</span>
+                <span class="tcol-actions"><a class="tbl-link">View</a><a class="tbl-link">Receipt</a></span>
               </div>
               <div class="tbl-row">
                 <input type="checkbox" class="fsel__input tbl-check tcol-check" aria-label="Select row">
@@ -3258,6 +3265,7 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
                 <span class="tbl-cell tcol-type">Redemption</span>
                 <span class="tcol-status"><span class="tbl-tag tbl-tag--success">Success</span></span>
                 <span class="tbl-cell tcol-amt">R850.50</span>
+                <span class="tcol-actions"><a class="tbl-link">View</a><a class="tbl-link">Receipt</a></span>
               </div>
               <div class="tbl-row">
                 <input type="checkbox" class="fsel__input tbl-check tcol-check" aria-label="Select row">
@@ -3267,6 +3275,7 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
                 <span class="tbl-cell tcol-type">Purchase</span>
                 <span class="tcol-status"><span class="tbl-tag tbl-tag--success">Success</span></span>
                 <span class="tbl-cell tcol-amt">R25.00</span>
+                <span class="tcol-actions"><a class="tbl-link">View</a><a class="tbl-link">Receipt</a></span>
               </div>
               <div class="tbl-row">
                 <input type="checkbox" class="fsel__input tbl-check tcol-check" aria-label="Select row">
@@ -3276,6 +3285,7 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
                 <span class="tbl-cell tcol-type">Purchase</span>
                 <span class="tcol-status"><span class="tbl-tag tbl-tag--failed">Failed</span></span>
                 <span class="tbl-cell tcol-amt">R349.25</span>
+                <span class="tcol-actions"><a class="tbl-link">View</a><a class="tbl-link">Receipt</a></span>
               </div>
               <div class="tbl-row">
                 <input type="checkbox" class="fsel__input tbl-check tcol-check" aria-label="Select row">
@@ -3285,6 +3295,7 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
                 <span class="tbl-cell tcol-type">Purchase</span>
                 <span class="tcol-status"><span class="tbl-tag tbl-tag--success">Success</span></span>
                 <span class="tbl-cell tcol-amt">R1,000.50</span>
+                <span class="tcol-actions"><a class="tbl-link">View</a><a class="tbl-link">Receipt</a></span>
               </div>
             </div>
           </div>
@@ -7448,12 +7459,16 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.26.0';
+const SYSTEM_VERSION = '1.26.1';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.26.1', date:'2026-07-13', author:'Mo', title:'Tables — hover reveals row actions', changes:[
+        ['fixed','Interactive table rows now reveal their trailing link actions (View / Receipt) on hover and keyboard focus, matching the documented Hover state — previously the live table showed no links on hover'],
+        ['added','Trailing actions column with links that fade in on row hover/focus'],
+      ]},
       {version:'1.26.0', date:'2026-07-13', author:'Mo', title:'Tables', changes:[
         ['added','Tables section — a selectable Table Row assembled from cells (checkbox, product icon, name, data cells, status tag, trailing links)'],
         ['added','Five row states — Default, Hover, Focused, Checked and Disabled'],
@@ -7977,7 +7992,11 @@ const CHANGELOG = {
         ['added','Progress meters with brand / Warning / Critical fills'],
       ]},
     ]},
-    {secId:'s-tables', name:'Tables', version:'1.0.0', entries:[
+    {secId:'s-tables', name:'Tables', version:'1.0.1', entries:[
+      {version:'1.0.1', date:'2026-07-13', author:'Mo', title:'Hover reveals row actions', changes:[
+        ['fixed','Interactive table rows now reveal trailing link actions on hover and keyboard focus, matching the Hover state'],
+        ['added','Trailing actions column with links that fade in on row hover/focus'],
+      ]},
       {version:'1.0.0', date:'2026-07-09', author:'Mo', title:'Initial release', changes:[
         ['added','Table Row — a selectable record row built from cells (checkbox, product icon, name, data cells, status tag, trailing links)'],
         ['added','Five states — Default, Hover, Focused, Checked, Disabled'],
