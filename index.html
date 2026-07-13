@@ -1919,8 +1919,8 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
    Rebuilt to match the Figma SideNav (node 3608:32365): Regular size mirrors the
    Figma "Large" variant exactly; all colour/size differences are driven by --sn-*
    tokens on the root so the Charcoal / Dark green / Small variants only override
-   tokens, never the child rules. (White, Charcoal and Dark green match their Figma
-   variants; the Small size is provisional until its Figma link is supplied.) */
+   tokens, never the child rules. All three colour contexts (White, Charcoal, Dark
+   green) and both sizes (Regular, Small) match their Figma variants. */
 .snav{
   /* --- White colour context (Figma default) --- */
   --sn-bg:var(--prim-white);
@@ -1998,7 +1998,15 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
   --sn-link-glyph:rgba(255,255,255,.22);
   --sn-divider:rgba(255,255,255,.12);
   --sn-logout:var(--prim-grey-400)}
-.snav--sm{width:184px;--sn-pad:16px 12px;--sn-gap:28px;--sn-chip-pad:5px;--sn-glyph:18px;--sn-label:14px;--sn-logo-size:26px;--sn-word:18px}
+.snav--sm{width:170px;--sn-pad:10px 10px 15px;--sn-chip-pad:4px;--sn-glyph:12px;--sn-label:12px;--sn-logo-size:25px;--sn-word:16px}  /* Figma node 4465:38905 */
+.snav--sm .snav__logo{gap:8px}
+.snav--sm .snav__subtitle{font-size:12px}
+.snav--sm .snav__companybadge{padding:7px}
+.snav--sm .snav__companytitle{font-size:12px}
+.snav--sm .snav-item{min-height:40px}
+.snav--sm .snav-item__inner{gap:5px;padding:2px 0}
+.snav--sm .snav__seclink span,.snav--sm .snav__logout span,.snav--sm .snav__user-name{font-size:12px}
+.snav--sm .snav__user-badge{border-radius:100px}
 /* Logo */
 .snav__logo{display:flex;flex-direction:column;gap:12px;padding:0 8px}
 .snav__wordmark{display:flex;align-items:center;gap:7px;height:33px}
@@ -2715,16 +2723,16 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
       </div>
       <div class="type-sub">
         <div class="type-sub__title">Anatomy &amp; specs</div>
-        <div class="type-sub__desc">Regular mirrors the Figma &ldquo;Large&rdquo; variant. Small is a denser scale &mdash; provisional until the Small Figma variant is supplied.</div>
+        <div class="type-sub__desc">Regular mirrors the Figma &ldquo;Large&rdquo; variant; Small mirrors the Figma &ldquo;Small&rdquo; variant.</div>
         <div class="dd-table-wrap"><table class="dd-table">
           <thead><tr><th>Property</th><th>Regular</th><th>Small</th><th>Token</th></tr></thead>
           <tbody>
-            <tr><td class="dd-table__name">Panel width</td><td>208px</td><td>184px</td><td>&mdash;</td></tr>
-            <tr><td class="dd-table__name">Panel padding</td><td>20px 16px</td><td>16px 12px</td><td>&mdash;</td></tr>
+            <tr><td class="dd-table__name">Panel width</td><td>208px</td><td>170px</td><td>&mdash;</td></tr>
+            <tr><td class="dd-table__name">Panel padding</td><td>20px 16px</td><td>10px 10px 15px</td><td>&mdash;</td></tr>
             <tr><td class="dd-table__name">Corner radius</td><td>12px</td><td>12px</td><td><code>radius-small</code></td></tr>
-            <tr><td class="dd-table__name">Item padding</td><td>4px 8px</td><td>4px 8px</td><td>radius <code>radius-xsmall</code> 6px</td></tr>
-            <tr><td class="dd-table__name">Icon chip</td><td>20px glyph &middot; 6px pad</td><td>18px glyph &middot; 5px pad</td><td>radius 6px</td></tr>
-            <tr><td class="dd-table__name">Label</td><td>16px / bold</td><td>14px / bold</td><td>Body m &mdash; single line</td></tr>
+            <tr><td class="dd-table__name">Item padding</td><td>4px 8px</td><td>4px 8px &middot; min-height 40px</td><td>radius <code>radius-xsmall</code> 6px</td></tr>
+            <tr><td class="dd-table__name">Icon chip</td><td>20px glyph &middot; 6px pad</td><td>12px glyph &middot; 4px pad</td><td>radius 6px</td></tr>
+            <tr><td class="dd-table__name">Label</td><td>16px / bold</td><td>12px / bold</td><td>Body m / Body xs &mdash; single line</td></tr>
             <tr><td class="dd-table__name">Idle chip / glyph / label</td><td colspan="2">#DDD chip &middot; #A4A4A4 glyph &middot; #8A8A8A label</td><td>grey-400 / grey-700 / grey-800</td></tr>
             <tr><td class="dd-table__name">Active marker</td><td colspan="2">Brand-green chip, inverse glyph, primary label &mdash; no row fill</td><td><code>icon-secondary</code> #10C504</td></tr>
           </tbody>
@@ -7285,9 +7293,10 @@ const CHANGELOG = {
         ['added','Side Nav now renders the full Figma panel — logo, company block with account selector, nav menu and account footer — instead of just the item list'],
         ['changed','Nav item matches Figma: single-line bold label (no subtitle), 20px icon chip on 6px padding, and an active state marked by the brand-green chip alone (no row fill), with idle greys #DDD / #A4A4A4 / #8A8A8A'],
         ['fixed','Nav item glyphs now render as proper outline icons inside the chip'],
-        ['changed','Colour contexts and size are token-driven (--sn-*); White, Charcoal and Dark green match their Figma variants, only the Small size is provisional pending its Figma link'],
+        ['changed','Colour contexts and size are token-driven (--sn-*); all three contexts (White, Charcoal, Dark green) and both sizes (Regular, Small) now match their Figma variants'],
         ['added','Charcoal context matched to its Figma variant (node 3608:32967) — #252525 panel, #414141 company badge/selector, #646464 idle chip with #A4A4A4 glyph and #DDD label, white active glyph + label, and the account footer greys'],
         ['added','Dark green context matched to its Figma variant (node 3608:33957) — #124A40 panel, #60867F company badge/selector, #507E66 idle chip with #84A895 glyph and label, white active glyph + label'],
+        ['added','Small size matched to its Figma variant (node 4465:38905) — 170px panel, 12px icon glyph on a 4px chip, 12px labels, 40px min-height rows and a pill-shaped user badge'],
       ]},
       {version:'1.25.2', date:'2026-07-10', author:'Mo', title:'Dropdown — single-select drops the checkbox', changes:[
         ['changed','Single-select rows no longer show a checkbox — just the label, with a trailing check mark on the active choice. Multi-select is unaffected and keeps a real checkbox per row'],
@@ -7752,7 +7761,7 @@ const CHANGELOG = {
         ['changed','Colour contexts and the Small size driven by --sn-* tokens so future Figma variant links slot in by overriding tokens only'],
         ['added','Charcoal context matched to its Figma variant (node 3608:32967): #252525 panel, #414141 company badge & selector, #646464 idle chip / #A4A4A4 glyph / #DDD label, white active glyph and label, and the correct account-footer greys'],
         ['added','Dark green context matched to its Figma variant (node 3608:33957): #124A40 panel, #60867F company badge & selector, #507E66 idle chip / #84A895 glyph & label, white active glyph and label'],
-        ['changed','Only the Small size now remains provisional pending its Figma link'],
+        ['added','Small size matched to its Figma variant (node 4465:38905): 170px panel, 12px glyph on a 4px chip, 12px labels, 40px min-height rows, pill-shaped user badge'],
       ]},
       {version:'1.0.0', date:'2026-07-10', author:'Mo', title:'Side Nav — initial release', changes:[
         ['added','Side Nav — icon-chip + two-line label Nav item, Regular/Small sizes, White/Charcoal/Dark green colour contexts'],
