@@ -1375,9 +1375,11 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
 .tcol-type{flex:1.2 1 0;min-width:0}
 .tcol-status{flex:0 0 88px}
 .tcol-amt{flex:0 0 96px;text-align:right;font-variant-numeric:tabular-nums;font-weight:700}
-/* trailing row actions — hidden until the row is hovered or keyboard-focused */
+/* trailing row actions — hidden until the row is hovered or keyboard-focused.
+   :has(:focus-visible), not :focus-within — a plain mouse click leaves the
+   checkbox holding focus, which would keep the row "stuck" showing actions. */
 .tcol-actions{flex:0 0 132px;display:flex;justify-content:flex-end;gap:18px;opacity:0;transition:opacity .12s}
-.tbl-body .tbl-row:hover .tcol-actions,.tbl-body .tbl-row.is-hover .tcol-actions,.tbl-body .tbl-row:focus-within .tcol-actions{opacity:1}
+.tbl-body .tbl-row:hover .tcol-actions,.tbl-body .tbl-row.is-hover .tcol-actions,.tbl-body .tbl-row:has(:focus-visible) .tcol-actions{opacity:1}
 .tbl-head__cell.tcol-actions{opacity:1}
 
 /* ================================================================
