@@ -1555,11 +1555,13 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
 .bsh-sheet__body{padding:0 16px 16px}
 .bsh-sheet__placeholder{border:1.5px dashed var(--chrome-border);border-radius:10px;padding:14px 12px;font-size:11.5px;font-weight:700;color:var(--color-text-s);text-align:center}
 .bsh-sheet__footer{padding:12px 16px;display:flex;gap:6px}
-.bsh-sheet__footer .ds-btn{flex:1}
+.bsh-sheet__footer .ds-btn{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis}
 .bsh-sheet__footer.is-vertical{flex-direction:column}
+.bsh-sheet__footer.is-vertical .ds-btn{flex:none}
 .bsh-sheet__footer.is-mix{flex-direction:column;align-items:stretch;gap:10px}
+.bsh-sheet__footer.is-mix>.ds-btn{flex:none}
 .bsh-sheet__footer-row{display:flex;gap:6px;width:100%}
-.bsh-sheet__footer-row .ds-btn{flex:1}
+.bsh-sheet__footer-row .ds-btn{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis}
 .bsh-sheet__footer.is-mix>a.ds-btn{align-self:center;flex:none}
 
 .bsh-ref{display:flex;flex-wrap:wrap;gap:20px}
@@ -2552,7 +2554,7 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
     <section class="sec" id="s-drawers">
       <div class="sec__head">
         <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Bottom Sheets <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.0</span></h1>
+        <h1 class="sec__title">Bottom Sheets <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.1</span></h1>
         <p class="sec__desc">A drawer-style sheet that slides up from the bottom of the screen, built from the SheetHeader block (with or without a back arrow, compact or full screen) plus a body and a footer button group. Flash brand only &middot; interactive playground included.</p>
       </div>
 
@@ -7171,12 +7173,16 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.25.2';
+const SYSTEM_VERSION = '1.25.3';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.25.3', date:'2026-07-13', author:'Mo', title:'Bottom Sheets — footer button consistency fix', changes:[
+        ['fixed','Footer button group — Vertical and Mix layouts squashed their full-width buttons down to ~23px tall instead of the spec\'d 48px; `flex:1` on the column-direction footer was overriding the button\'s intended height'],
+        ['fixed','Footer button group — "Save for later" and "Cancel" in the Mix layout\'s button row now split the row exactly evenly instead of each sizing to its own label width'],
+      ]},
       {version:'1.25.2', date:'2026-07-10', author:'Mo', title:'Dropdown — single-select drops the checkbox', changes:[
         ['changed','Single-select rows no longer show a checkbox — just the label, with a trailing check mark on the active choice. Multi-select is unaffected and keeps a real checkbox per row'],
       ]},
@@ -7616,7 +7622,11 @@ const CHANGELOG = {
         ['changed','Planned for next session'],
       ]},
     ]},
-    {secId:'s-drawers', name:'Bottom Sheets', version:'1.0.0', entries:[
+    {secId:'s-drawers', name:'Bottom Sheets', version:'1.0.1', entries:[
+      {version:'1.0.1', date:'2026-07-13', author:'Mo', title:'Footer button consistency fix', changes:[
+        ['fixed','Footer button group — Vertical and Mix layouts squashed their full-width buttons down to ~23px tall instead of the spec\'d 48px; `flex:1` on the column-direction footer was overriding the button\'s intended height'],
+        ['fixed','Footer button group — "Save for later" and "Cancel" in the Mix layout\'s button row now split the row exactly evenly instead of each sizing to its own label width'],
+      ]},
       {version:'1.0.0', date:'2026-07-06', author:'Mo', title:'Initial release', changes:[
         ['added','Bottom Sheets section — SheetHeader building block with 4 drawer-sheet variants (compact/full screen × with/without back arrow) plus the dialog-usage header variant'],
         ['added','Quick copy — ready-made compact and full-screen sheet mockups with header, body and footer button group'],
