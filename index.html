@@ -2001,45 +2001,150 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
 .icn-tile__name{font-size:10.5px;color:var(--chrome-muted);text-align:center;word-break:break-word}
 .icn-tile.copied .icn-tile__name{color:var(--color-success-h);font-weight:700}
 
-/* ---- Navigation / Side Nav ---- */
-.snav{display:flex;flex-direction:column;width:248px;max-width:100%;border-radius:14px;padding:12px;gap:2px;transition:background .2s}
-.snav--white{background:#ffffff;border:1px solid var(--chrome-border)}
-.snav--charcoal{background:#20222c}
-.snav--darkgreen{background:var(--prim-dg-600)}
-.snav--sm{width:208px}
-.snav-item{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:10px;cursor:pointer;text-align:left;border:0;background:none;font-family:inherit;width:100%}
-.snav-item__icon{display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:9px;flex-shrink:0}
-.snav-item__body{display:flex;flex-direction:column;gap:1px;min-width:0}
-.snav-item__title{font-size:14px;font-weight:600;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.snav-item__sub{font-size:11.5px;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.snav--sm .snav-item{padding:8px 10px}
-.snav--sm .snav-item__icon{width:30px;height:30px}
-.snav--sm .snav-item__title{font-size:13px}
-.snav--sm .snav-item__sub{font-size:11px}
-.snav--white .snav-item__icon{background:var(--prim-grey-100);color:var(--prim-grey-900)}
-.snav--white .snav-item__title{color:#000}
-.snav--white .snav-item__sub{color:var(--prim-grey-800)}
-.snav--white .snav-item:hover,.snav--white .snav-item--hover-look{background:var(--prim-grey-100)}
-.snav--white .snav-item.on,.snav--white .snav-item--active-look{background:var(--prim-green-50)}
-.snav--white .snav-item.on .snav-item__icon,.snav--white .snav-item--active-look .snav-item__icon{background:var(--prim-green-500);color:#000}
-.snav--charcoal .snav-item__icon{background:rgba(255,255,255,.08);color:rgba(255,255,255,.7)}
-.snav--charcoal .snav-item__title{color:#fff}
-.snav--charcoal .snav-item__sub{color:rgba(255,255,255,.55)}
-.snav--charcoal .snav-item:hover,.snav--charcoal .snav-item--hover-look{background:rgba(255,255,255,.07)}
-.snav--charcoal .snav-item.on,.snav--charcoal .snav-item--active-look{background:#000}
-.snav--charcoal .snav-item.on .snav-item__icon,.snav--charcoal .snav-item--active-look .snav-item__icon{background:var(--prim-green-500);color:#000}
-.snav--darkgreen .snav-item__icon{background:rgba(255,255,255,.1);color:rgba(255,255,255,.75)}
-.snav--darkgreen .snav-item__title{color:#fff}
-.snav--darkgreen .snav-item__sub{color:rgba(255,255,255,.6)}
-.snav--darkgreen .snav-item:hover,.snav--darkgreen .snav-item--hover-look{background:rgba(255,255,255,.09)}
-.snav--darkgreen .snav-item.on,.snav--darkgreen .snav-item--active-look{background:var(--prim-green-700)}
-.snav--darkgreen .snav-item.on .snav-item__icon,.snav--darkgreen .snav-item--active-look .snav-item__icon{background:var(--prim-green-400);color:#000}
+/* ---- Navigation / Side Nav ----
+   Rebuilt to match the Figma SideNav (node 3608:32365): Regular size mirrors the
+   Figma "Large" variant exactly; all colour/size differences are driven by --sn-*
+   tokens on the root so the Charcoal / Dark green / Small variants only override
+   tokens, never the child rules. All three colour contexts (White, Charcoal, Dark
+   green) and both sizes (Regular, Small) match their Figma variants. */
+.snav{
+  /* --- White colour context (Figma default) --- */
+  --sn-bg:var(--prim-white);
+  --sn-border:1px solid var(--chrome-border);
+  --sn-shadow:0 0 10px rgba(0,0,0,.06);
+  --sn-logo:var(--prim-black);
+  --sn-title:#2a2a2a;                        /* grey-10 */
+  --sn-tint:var(--prim-gg-400);              /* green tint #ebf0ef */
+  --sn-company-title:var(--prim-black);
+  --sn-company-glyph:var(--prim-grey-900);   /* #646464 */
+  --sn-user-glyph:var(--prim-grey-900);      /* #646464 on the #ddd user badge */
+  --sn-user-name:var(--prim-grey-900);       /* #646464 */
+  --sn-user-badge:var(--prim-grey-400);      /* #ddd */
+  --sn-selector-label:var(--prim-black);
+  --sn-idle-badge:var(--prim-grey-400);      /* #ddd */
+  --sn-idle-glyph:var(--prim-grey-700);      /* #a4a4a4 */
+  --sn-idle-label:var(--prim-grey-800);      /* #8a8a8a */
+  --sn-active-badge:var(--prim-green-500);   /* icon-secondary #10c504 */
+  --sn-active-glyph:var(--prim-white);
+  --sn-active-label:var(--prim-black);
+  --sn-hover-bg:rgba(0,0,0,.04);
+  --sn-link:var(--prim-grey-900);            /* #646464 */
+  --sn-link-glyph:var(--prim-grey-500);      /* #d1d1d1 */
+  --sn-divider:var(--prim-grey-300);
+  --sn-logout:rgba(0,0,0,.5);
+  /* --- Regular (Figma Large) metrics --- */
+  --sn-pad:20px 16px;
+  --sn-radius:12px;
+  --sn-gap:40px;
+  --sn-chip-pad:6px;
+  --sn-glyph:20px;
+  --sn-label:16px;
+  --sn-logo-size:30px;
+  --sn-word:22px;
+  display:flex;flex-direction:column;width:208px;max-width:100%;
+  padding:var(--sn-pad);border-radius:var(--sn-radius);gap:var(--sn-gap);
+  background:var(--sn-bg);border:var(--sn-border);box-shadow:var(--sn-shadow);
+  font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;
+  transition:background .2s}
+.snav--charcoal{  /* matched to Figma node 3608:32967 */
+  --sn-bg:var(--prim-grey-1100);--sn-border:0;--sn-shadow:none;  /* #252525 */
+  --sn-logo:#fff;--sn-title:#fff;
+  --sn-tint:var(--prim-grey-1000);                 /* #414141 badge + selector */
+  --sn-company-title:var(--prim-grey-200);         /* #e6e6e6 */
+  --sn-company-glyph:var(--prim-grey-900);         /* #646464 */
+  --sn-user-glyph:var(--prim-grey-200);            /* #e6e6e6 on the #646464 user badge */
+  --sn-user-name:var(--prim-grey-600);             /* #bdbdbd */
+  --sn-user-badge:var(--prim-grey-900);            /* #646464 */
+  --sn-selector-label:#fff;
+  --sn-idle-badge:var(--prim-grey-900);            /* #646464 */
+  --sn-idle-glyph:var(--prim-grey-700);            /* #a4a4a4 */
+  --sn-idle-label:var(--prim-grey-400);            /* #dddddd */
+  --sn-active-badge:var(--prim-green-500);--sn-active-glyph:#fff;--sn-active-label:#fff;
+  --sn-hover-bg:rgba(255,255,255,.06);
+  --sn-link:var(--prim-grey-400);                  /* #dddddd */
+  --sn-link-glyph:rgba(255,255,255,.22);
+  --sn-divider:rgba(255,255,255,.12);
+  --sn-logout:var(--prim-grey-400)}
+.snav--darkgreen{  /* matched to Figma node 3608:33957 */
+  --sn-bg:#124a40;--sn-border:0;--sn-shadow:none;    /* Primary/Dark green */
+  --sn-logo:#fff;--sn-title:#fff;
+  --sn-tint:#60867f;                                 /* Dark green-4, badge + selector */
+  --sn-company-title:#fff;
+  --sn-company-glyph:var(--prim-grey-500);           /* #d1d1d1 */
+  --sn-user-glyph:var(--prim-grey-500);              /* #d1d1d1 on the #60867f user badge */
+  --sn-user-name:var(--prim-grey-600);               /* #bdbdbd */
+  --sn-user-badge:#60867f;                           /* Dark green-4 */
+  --sn-selector-label:#fff;
+  --sn-idle-badge:var(--prim-dg-150);                /* #507e66 tertiary-low-contrast-2 */
+  --sn-idle-glyph:var(--prim-dg-50);                 /* #84a895 tertiary-low-contrast-1 */
+  --sn-idle-label:var(--prim-dg-50);                 /* #84a895 */
+  --sn-active-badge:var(--prim-green-500);--sn-active-glyph:#fff;--sn-active-label:#fff;
+  --sn-hover-bg:rgba(255,255,255,.06);
+  --sn-link:var(--prim-grey-400);                    /* #dddddd */
+  --sn-link-glyph:rgba(255,255,255,.22);
+  --sn-divider:rgba(255,255,255,.12);
+  --sn-logout:var(--prim-grey-400)}
+.snav--sm{width:170px;--sn-pad:10px 10px 15px;--sn-chip-pad:4px;--sn-glyph:12px;--sn-label:12px;--sn-logo-size:25px;--sn-word:16px}  /* Figma node 4465:38905 */
+.snav--sm .snav__logo{gap:8px}
+.snav--sm .snav__subtitle{font-size:12px}
+.snav--sm .snav__companybadge{padding:7px}
+.snav--sm .snav__companytitle{font-size:12px}
+.snav--sm .snav-item{min-height:40px}
+.snav--sm .snav-item__inner{gap:5px;padding:2px 0}
+.snav--sm .snav__seclink span,.snav--sm .snav__logout span,.snav--sm .snav__user-name{font-size:12px}
+.snav--sm .snav__user-badge{border-radius:100px}
+/* Logo */
+.snav__logo{display:flex;flex-direction:column;gap:12px;padding:0 8px}
+.snav__wordmark{display:flex;align-items:center;gap:7px;height:33px}
+.snav__wordmark svg{width:var(--sn-logo-size);height:var(--sn-logo-size);display:block;flex-shrink:0}
+.snav__word{font-weight:900;font-size:var(--sn-word);letter-spacing:-.5px;color:var(--sn-logo)}
+.snav__subtitle{font-size:13px;font-weight:800;line-height:1.3;color:var(--sn-title)}
+/* Body fills the column and pushes account info to the bottom */
+.snav__body{flex:1 0 auto;display:flex;flex-direction:column;justify-content:space-between;gap:40px;align-items:center;width:100%}
+.snav__top{display:flex;flex-direction:column;gap:var(--sn-gap);align-items:center;width:100%}
+/* Company */
+.snav__company{display:flex;flex-direction:column;gap:12px;align-items:center;width:100%}
+.snav__companybadge{display:flex;align-items:center;justify-content:center;padding:8px;border-radius:12px;background:var(--sn-tint)}
+.snav__companybadge svg{width:24px;height:24px;display:block;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;color:var(--sn-company-glyph)}
+.snav__companytitle{font-size:13px;font-weight:800;line-height:1.3;color:var(--sn-company-title)}
+.snav__selector{display:flex;align-items:center;width:176px;max-width:100%;height:44px;padding:0 4px;border-radius:6px;background:var(--sn-tint);border:0;cursor:pointer;font-family:inherit}
+.snav__selector-label{flex:1;min-width:0;padding:4px 12px;text-align:left;font-size:16px;font-weight:500;line-height:1.25;color:var(--sn-selector-label);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.snav__selector-chev{display:flex;align-items:center;justify-content:center;padding:12px;color:var(--sn-selector-label)}
+.snav__selector-chev svg{width:14px;height:14px;display:block;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+/* Nav menu */
+.snav__menu{display:flex;flex-direction:column;gap:4px;align-items:stretch;width:100%}
+.snav-item{display:flex;align-items:center;width:100%;padding:4px 8px;border-radius:6px;cursor:pointer;text-align:left;border:0;background:none;font-family:inherit;transition:background .15s ease}
+.snav-item__inner{display:flex;align-items:center;gap:8px;padding:4px 0;min-width:0}
+.snav-item__icon{display:flex;align-items:center;justify-content:center;padding:var(--sn-chip-pad);border-radius:6px;flex-shrink:0;background:var(--sn-idle-badge);transition:background .15s ease}
+.snav-item__icon svg{width:var(--sn-glyph);height:var(--sn-glyph);display:block;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;color:var(--sn-idle-glyph);transition:color .15s ease}
+.snav-item__title{font-size:var(--sn-label);font-weight:800;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--sn-idle-label);transition:color .15s ease}
+.snav-item:hover,.snav-item--hover-look{background:var(--sn-hover-bg)}
+.snav-item:hover .snav-item__title,.snav-item--hover-look .snav-item__title{color:var(--sn-active-label)}
+.snav-item.on .snav-item__icon,.snav-item--active-look .snav-item__icon{background:var(--sn-active-badge)}
+.snav-item.on .snav-item__icon svg,.snav-item--active-look .snav-item__icon svg{color:var(--sn-active-glyph)}
+.snav-item.on .snav-item__title,.snav-item--active-look .snav-item__title{color:var(--sn-active-label)}
 .snav-item:focus-visible,.snav-item--focus-look{outline:2px solid var(--color-brand);outline-offset:-2px}
+/* Account */
+.snav__account{display:flex;flex-direction:column;gap:6px;width:100%}
+.snav__seclink{display:flex;align-items:center;gap:6px;width:100%;padding:8px;background:none;border:0;cursor:pointer;font-family:inherit;text-align:left}
+.snav__seclink svg{width:16px;height:16px;display:block;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;color:var(--sn-link-glyph);flex-shrink:0}
+.snav__seclink span{font-size:13px;font-weight:500;line-height:1.3;color:var(--sn-link)}
+.snav__rule{height:1px;width:100%;margin:9px 0;border:0;background:var(--sn-divider)}
+.snav__user{display:flex;align-items:center;gap:8px;padding:4px 0}
+.snav__user-badge{display:flex;align-items:center;justify-content:center;padding:4px;border-radius:6px;background:var(--sn-user-badge)}
+.snav__user-badge svg{width:16px;height:16px;display:block;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;color:var(--sn-user-glyph)}
+.snav__user-name{font-size:13px;font-weight:800;line-height:1.25;color:var(--sn-user-name)}
+.snav__logout{padding:4px 0;background:none;border:0;cursor:pointer;font-family:inherit;text-align:left;width:100%}
+.snav__logout span{font-size:13px;font-weight:500;line-height:1.3;color:var(--sn-logout)}
+/* Demo scaffolding */
 .snav-ctrl-row{display:flex;flex-wrap:wrap;gap:22px;margin-bottom:20px}
 .snav-ctrl{display:flex;align-items:center;gap:10px}
 .snav-ctrl__lbl{font-size:12px;font-weight:600;color:var(--chrome-muted)}
-.snav-states-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+#snav-play-stage{display:flex;justify-content:center}
+#snav-play-stage .snav{min-height:560px}
+.snav-states-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;align-items:start}
 .snav-states-grid .snav{width:100%}
+.snav-states-grid--items .snav{gap:4px;min-height:0}
 .snav-states-cap{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--chrome-muted);margin-bottom:8px}
 /* @@SHADCN_CSS@@ */
 </style>
@@ -2677,12 +2782,16 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
     <section class="sec" id="s-nav">
       <div class="sec__head">
         <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Navigation <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.0</span></h1>
-        <p class="sec__desc">The primary Side Nav for switching between top-level destinations. A <strong>Nav item</strong> pairs an icon chip with a two-line label (title + short subtitle), works in Regular or Small, and adapts to three background contexts &mdash; White, Charcoal and Dark green.</p>
+        <h1 class="sec__title">Navigation <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.1.0</span></h1>
+        <p class="sec__desc">The primary Side Nav for switching between top-level destinations. The full panel stacks four regions &mdash; a <strong>logo</strong>, a <strong>company</strong> block with an account selector, the <strong>nav menu</strong>, and an <strong>account footer</strong>. Each <strong>Nav item</strong> pairs an icon chip with a single-line label; the active item is marked by a brand-green chip. Works in Regular or Small, across White, Charcoal and Dark green contexts.</p>
+      </div>
+      <div class="type-sub">
+        <div class="type-sub__title">Anatomy</div>
+        <div class="type-sub__desc">Top to bottom: <strong>Logo</strong> (Flash wordmark + secondary title) &middot; <strong>Company</strong> (icon badge, company title and an account selector) &middot; <strong>Nav menu</strong> (icon-chip nav items) &middot; <strong>Account</strong> (secondary links, a divider, the signed-in user and log out). The company block sits at the top and the account footer pins to the bottom.</div>
       </div>
       <div class="type-sub">
         <div class="type-sub__title">Interactive</div>
-        <div class="type-sub__desc">Click an item to make it active. Switch the colour context and size &mdash; the panel re-renders live.</div>
+        <div class="type-sub__desc">The complete panel. Click an item to make it active; switch the colour context and size and it re-renders live.</div>
         <div class="snav-ctrl-row">
           <div class="snav-ctrl"><span class="snav-ctrl__lbl">Colour</span><div id="snav-colour-toggle"></div></div>
           <div class="snav-ctrl"><span class="snav-ctrl__lbl">Size</span><div id="snav-size-toggle"></div></div>
@@ -2696,20 +2805,23 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
       </div>
       <div class="type-sub">
         <div class="type-sub__title">States</div>
-        <div class="type-sub__desc">Shown here on White &mdash; Charcoal and Dark green follow the same logic and can be tried live above.</div>
-        <div class="sg-stage"><div class="snav-states-grid" id="snav-states-ref"></div></div>
+        <div class="type-sub__desc">A nav item resolves to one of these. <strong>Inactive</strong> is a grey chip with a subtle glyph and subtle label; <strong>Hover</strong> adds a faint row wash and lifts the label to primary; <strong>Active</strong> switches the chip to brand green with an inverse glyph and a primary label &mdash; no row fill; <strong>Focused</strong> shows the keyboard ring. Shown on White; Charcoal and Dark green follow the same logic and can be tried live above.</div>
+        <div class="sg-stage"><div class="snav-states-grid snav-states-grid--items" id="snav-states-ref"></div></div>
       </div>
       <div class="type-sub">
         <div class="type-sub__title">Anatomy &amp; specs</div>
-        <div class="type-sub__desc">Measurements and tokens per size.</div>
+        <div class="type-sub__desc">Regular mirrors the Figma &ldquo;Large&rdquo; variant; Small mirrors the Figma &ldquo;Small&rdquo; variant.</div>
         <div class="dd-table-wrap"><table class="dd-table">
-          <thead><tr><th>Property</th><th>Regular</th><th>Small</th></tr></thead>
+          <thead><tr><th>Property</th><th>Regular</th><th>Small</th><th>Token</th></tr></thead>
           <tbody>
-            <tr><td class="dd-table__name">Item padding</td><td>10px 12px</td><td>8px 10px</td></tr>
-            <tr><td class="dd-table__name">Icon chip</td><td>36 &times; 36</td><td>30 &times; 30</td></tr>
-            <tr><td class="dd-table__name">Title</td><td>14px / semibold</td><td>13px / semibold</td></tr>
-            <tr><td class="dd-table__name">Subtitle</td><td colspan="2">11.5px / muted, truncates with an ellipsis</td></tr>
-            <tr><td class="dd-table__name">Active marker</td><td colspan="2">Brand-green icon chip, in every colour context</td></tr>
+            <tr><td class="dd-table__name">Panel width</td><td>208px</td><td>170px</td><td>&mdash;</td></tr>
+            <tr><td class="dd-table__name">Panel padding</td><td>20px 16px</td><td>10px 10px 15px</td><td>&mdash;</td></tr>
+            <tr><td class="dd-table__name">Corner radius</td><td>12px</td><td>12px</td><td><code>radius-small</code></td></tr>
+            <tr><td class="dd-table__name">Item padding</td><td>4px 8px</td><td>4px 8px &middot; min-height 40px</td><td>radius <code>radius-xsmall</code> 6px</td></tr>
+            <tr><td class="dd-table__name">Icon chip</td><td>20px glyph &middot; 6px pad</td><td>12px glyph &middot; 4px pad</td><td>radius 6px</td></tr>
+            <tr><td class="dd-table__name">Label</td><td>16px / bold</td><td>12px / bold</td><td>Body m / Body xs &mdash; single line</td></tr>
+            <tr><td class="dd-table__name">Idle chip / glyph / label</td><td colspan="2">#DDD chip &middot; #A4A4A4 glyph &middot; #8A8A8A label</td><td>grey-400 / grey-700 / grey-800</td></tr>
+            <tr><td class="dd-table__name">Active marker</td><td colspan="2">Brand-green chip, inverse glyph, primary label &mdash; no row fill</td><td><code>icon-secondary</code> #10C504</td></tr>
           </tbody>
         </table></div>
       </div>
@@ -7482,12 +7594,21 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.27.2';
+const SYSTEM_VERSION = '1.28.0';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.28.0', date:'2026-07-13', author:'Mo', title:'Navigation — realigned to the Figma SideNav', changes:[
+        ['added','Side Nav now renders the full Figma panel — logo, company block with account selector, nav menu and account footer — instead of just the item list'],
+        ['changed','Nav item matches Figma: single-line bold label (no subtitle), 20px icon chip on 6px padding, and an active state marked by the brand-green chip alone (no row fill), with idle greys #DDD / #A4A4A4 / #8A8A8A'],
+        ['fixed','Nav item glyphs now render as proper outline icons inside the chip'],
+        ['changed','Colour contexts and size are token-driven (--sn-*); all three contexts (White, Charcoal, Dark green) and both sizes (Regular, Small) now match their Figma variants'],
+        ['added','Charcoal context matched to its Figma variant (node 3608:32967) — #252525 panel, #414141 company badge/selector, #646464 idle chip with #A4A4A4 glyph and #DDD label, white active glyph + label, and the account footer greys'],
+        ['added','Dark green context matched to its Figma variant (node 3608:33957) — #124A40 panel, #60867F company badge/selector, #507E66 idle chip with #84A895 glyph and label, white active glyph + label'],
+        ['added','Small size matched to its Figma variant (node 4465:38905) — 170px panel, 12px icon glyph on a 4px chip, 12px labels, 40px min-height rows and a pill-shaped user badge'],
+      ]},
       {version:'1.27.2', date:'2026-07-13', author:'Mo', title:'Bottom Sheets — footer button consistency fix', changes:[
         ['fixed','Footer button group — Vertical and Mix layouts squashed their full-width buttons down to ~23px tall instead of the spec\'d 48px; `flex:1` on the column-direction footer was overriding the button\'s intended height'],
         ['fixed','Footer button group — "Save for later" and "Cancel" in the Mix layout\'s button row now split the row exactly evenly instead of each sizing to its own label width'],
@@ -7968,7 +8089,18 @@ const CHANGELOG = {
         ['changed','Planned for a future session'],
       ]},
     ]},
-    {secId:'s-nav', name:'Navigation', version:'1.0.0', entries:[
+    {secId:'s-nav', name:'Navigation', version:'1.1.0', entries:[
+      {version:'1.1.0', date:'2026-07-13', author:'Mo', title:'Realigned to the Figma SideNav', changes:[
+        ['added','Full panel structure from Figma — logo (Flash wordmark + secondary title), company block with an account selector, and an account footer (secondary links, divider, signed-in user, log out); previously only the nav-item list existed'],
+        ['changed','Nav item is now a single-line bold label (was a two-line title + subtitle), matching the Figma nav link'],
+        ['changed','Active item is marked by the brand-green icon chip alone with no row fill (was a tinted row); idle chip/glyph/label now use the Figma greys (#DDD / #A4A4A4 / #8A8A8A)'],
+        ['changed','Icon chip is now 20px glyph on 6px padding at radius 6px, panel is 208px wide at 20/16 padding and 12px radius — matching the Figma Large variant'],
+        ['fixed','Nav item glyphs now render as outline icons (stroke:currentColor) inside the chip'],
+        ['changed','Colour contexts and the Small size driven by --sn-* tokens so future Figma variant links slot in by overriding tokens only'],
+        ['added','Charcoal context matched to its Figma variant (node 3608:32967): #252525 panel, #414141 company badge & selector, #646464 idle chip / #A4A4A4 glyph / #DDD label, white active glyph and label, and the correct account-footer greys'],
+        ['added','Dark green context matched to its Figma variant (node 3608:33957): #124A40 panel, #60867F company badge & selector, #507E66 idle chip / #84A895 glyph & label, white active glyph and label'],
+        ['added','Small size matched to its Figma variant (node 4465:38905): 170px panel, 12px glyph on a 4px chip, 12px labels, 40px min-height rows, pill-shaped user badge'],
+      ]},
       {version:'1.0.0', date:'2026-07-10', author:'Mo', title:'Side Nav — initial release', changes:[
         ['added','Side Nav — icon-chip + two-line label Nav item, Regular/Small sizes, White/Charcoal/Dark green colour contexts'],
         ['added','Interactive playground with live colour and size switching and click-to-select'],
@@ -9302,7 +9434,9 @@ const ICONS = {
   mail: '<rect x="3" y="5.5" width="18" height="13" rx="2"/><path d="M3.5 6.5 12 13l8.5-6.5"/>',
   'credit-card': '<rect x="2.5" y="5.5" width="19" height="13" rx="2.2"/><path d="M2.5 10h19"/><path d="M6 15h4"/>',
   wallet: '<rect x="3" y="6.5" width="18" height="12.5" rx="2.2"/><path d="M3 10.5h18"/><circle cx="17" cy="14.3" r="1" fill="currentColor" stroke="none"/>',
-  refresh: '<path d="M20 11A8 8 0 0 0 6.3 6.3L4 8.5"/><path d="M4 4v4.5h4.5"/><path d="M4 13a8 8 0 0 0 13.7 4.7L20 15.5"/><path d="M20 20v-4.5h-4.5"/>'
+  refresh: '<path d="M20 11A8 8 0 0 0 6.3 6.3L4 8.5"/><path d="M4 4v4.5h4.5"/><path d="M4 13a8 8 0 0 0 13.7 4.7L20 15.5"/><path d="M20 20v-4.5h-4.5"/>',
+  store: '<path d="M4 9.5V20a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V9.5"/><path d="M3 5.5h18l-1 4.2a2.4 2.4 0 0 1-4.6 0 2.4 2.4 0 0 1-4.7 0 2.4 2.4 0 0 1-4.7 0L3 5.5Z"/><path d="M9.5 21v-5h5v5"/>',
+  link: '<path d="M9.5 14.5 14.5 9.5"/><path d="M8 11 6.5 12.5a3 3 0 0 0 4.2 4.2L12.5 15"/><path d="M16 13l1.5-1.5a3 3 0 0 0-4.2-4.2L11.5 9"/>'
 };
 function iconSvg(name){
   var d = ICONS[name] || ICONS.info;
@@ -9359,33 +9493,61 @@ function renderIcons(root){
   }
 })();
 
-/* Navigation / Side Nav */
+/* Navigation / Side Nav — mirrors the Figma SideNav: logo, company info,
+   single-line nav menu and an account footer, driven by --sn-* tokens. */
 (function(){
   var stage=document.getElementById('snav-play-stage'); if(!stage) return;
+  var FLASH_MARK='<svg viewBox="0 0 96 94" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M95.072 46.934C95.072 56.2167 92.2841 65.2909 87.0608 73.0091C81.8374 80.7274 74.4133 86.743 65.7272 90.2954C57.0412 93.8477 47.4833 94.7771 38.2622 92.9662C29.0411 91.1552 20.571 86.6852 13.923 80.1214C7.27497 73.5575 2.74759 65.1947 0.913407 56.0904C-0.920779 46.9861 0.0206106 37.5492 3.6185 28.9731C7.21638 20.3971 13.3092 13.067 21.1264 7.90979C28.9437 2.75262 38.1343 0 47.536 0C60.1433 0 72.2343 4.9448 81.149 13.7466C90.0638 22.5485 95.072 34.4863 95.072 46.934Z" fill="#1DFA0F"/><path d="M76.1999 39.374C74.4368 38.2722 72.9882 36.7436 71.9919 34.9335C70.9955 33.1234 70.4843 31.0918 70.507 29.0317C71.374 28.8152 72.1838 28.4171 72.8812 27.8642C73.5787 27.3114 74.1474 26.6169 74.5489 25.8278C75.0431 24.9282 75.2296 23.895 75.0809 22.8822C74.9322 21.8693 74.456 20.931 73.7235 20.207C73.676 20.1531 73.6124 20.1155 73.542 20.0996C73.4715 20.0837 73.3977 20.0903 73.3312 20.1184C73.2648 20.1465 73.2091 20.1947 73.1721 20.2561C73.1352 20.3175 73.1189 20.3888 73.1257 20.4599C73.2471 20.9366 73.2691 21.4327 73.1903 21.918C73.1116 22.4033 72.9336 22.8678 72.6674 23.2831C72.4012 23.6985 72.0522 24.056 71.6416 24.334C71.2311 24.612 70.7676 24.8047 70.2792 24.9004C66.3679 25.6207 62.3246 24.9221 58.8934 22.9331C57.0432 21.2469 56.8439 19.2514 58.5234 16.1038C58.5538 16.0408 58.5637 15.9701 58.5518 15.9014C58.5398 15.8327 58.5066 15.7693 58.4566 15.72C58.4067 15.6706 58.3425 15.6378 58.2729 15.626C58.2033 15.6142 58.1317 15.6241 58.0679 15.6541C56.7615 16.1308 55.643 17.0064 54.8752 18.1537C54.1073 19.301 53.73 20.6602 53.7982 22.0338C53.786 23.2948 54.1526 24.5312 54.8518 25.5867C55.5509 26.6422 56.5512 27.4693 57.7263 27.9637C46.9667 31.2519 42.5262 27.2893 30.3149 27.1206C20.153 27.1206 17.7905 35.3552 18.3313 43.9832C18.4805 47.3799 18.8801 50.7613 19.5268 54.1007C20.4854 56.0867 21.0644 58.2305 21.2347 60.4241C21.0072 62.2064 21.0072 64.0098 21.2347 65.792C21.2712 66.0115 21.3712 66.2158 21.5228 66.3804C21.6743 66.5449 21.8708 66.6627 22.0886 66.7195C23.1589 67.0172 24.2917 67.0172 25.3621 66.7195C25.9313 66.5508 26.3583 66.2698 26.2444 65.792C24.9712 61.2766 24.6514 56.551 25.3051 51.9085C25.3186 51.7487 25.3752 51.5954 25.469 51.4644C25.5627 51.3334 25.6903 51.2296 25.8383 51.1636C25.9864 51.0977 26.1497 51.0721 26.3112 51.0894C26.4727 51.1067 26.6265 51.1664 26.7568 51.2621C28.5077 52.3189 30.0905 53.6258 31.4535 55.1405C34.6808 58.855 36.7473 63.4142 37.4026 68.2652C37.4053 68.5711 37.4984 68.8696 37.6702 69.1242C37.8421 69.3787 38.0854 69.5783 38.3704 69.6985C38.9915 69.9404 39.6572 70.0504 40.3242 70.0213C40.9912 69.9923 41.6445 69.8248 42.2416 69.5299C42.4066 69.4513 42.5392 69.3189 42.6169 69.1551C42.6947 68.9913 42.7129 68.806 42.6686 68.6305C41.6438 64.4711 38.285 59.4686 37.9719 55.0843C37.9719 54.1569 38.2281 54.1007 38.9681 54.2131C39.9104 54.3685 40.8607 54.4717 41.8146 54.5222C41.9509 54.5241 42.0851 54.5552 42.208 54.6135C42.3309 54.6717 42.4395 54.7557 42.5262 54.8595C45.9704 59.0189 49.8416 64.8927 49.557 71.0194C49.5525 71.1808 49.5862 71.3411 49.6554 71.4874C49.7246 71.6338 49.8273 71.7622 49.9555 71.8625C51.151 72.8462 51.1795 74.9821 51.3503 76.9494C51.3742 77.1453 51.4499 77.3316 51.5698 77.4894C51.6897 77.6473 51.8496 77.7712 52.0334 77.8487C53.564 78.426 55.2564 78.426 56.787 77.8487C56.9143 77.8051 57.0229 77.7203 57.0952 77.608C57.1676 77.4958 57.1994 77.3627 57.1855 77.2304C56.6162 73.3801 53.542 70.1482 54.3391 64.3868C54.5098 63.1221 55.5061 61.3235 56.1893 58.9908C57.7833 53.37 57.3848 51.7399 59.0357 48.5923C60.032 46.5688 62.3376 43.9551 65.5541 45.7818C67.2867 46.9533 69.3876 47.4719 71.4748 47.2432C72.8978 46.9436 74.1987 46.2334 75.2122 45.2026C76.2258 44.1719 76.9064 42.8671 77.1677 41.4538C77.2649 41.0737 77.2465 40.6737 77.1149 40.3038C76.9833 39.934 76.7442 39.6106 76.4276 39.374" fill="black"/></svg>';
   var ITEMS=[
-    {icon:'home', title:'Home', sub:'Overview'},
-    {icon:'credit-card', title:'Transactions', sub:'Payments & refunds'},
-    {icon:'wallet', title:'Payouts', sub:'Settlements'},
-    {icon:'users', title:'Customers', sub:'Manage users'},
-    {icon:'bell', title:'Notifications', sub:'Alerts & updates'},
-    {icon:'settings', title:'Settings', sub:'Preferences'}
+    {icon:'home', title:'Home'},
+    {icon:'credit-card', title:'Transactions'},
+    {icon:'wallet', title:'Payouts'},
+    {icon:'users', title:'Customers'},
+    {icon:'bell', title:'Notifications'},
+    {icon:'settings', title:'Settings'}
   ];
   var COLOURS=[{key:'white',label:'White'},{key:'charcoal',label:'Charcoal'},{key:'darkgreen',label:'Dark green'}];
   var SIZES=[{key:'reg',label:'Regular'},{key:'sm',label:'Small'}];
   var state={colour:'white', size:'reg', active:0};
 
-  function navItemsHtml(items, activeIdx, extraCls){
+  function itemsHtml(items, activeIdx, extraCls){
     return items.map(function(it,i){
       var cls='snav-item'+(i===activeIdx?' on':'')+(extraCls&&extraCls[i]?' '+extraCls[i]:'');
       return '<button type="button" class="'+cls+'" data-i="'+i+'">'
-        +'<span class="snav-item__icon">'+iconSvg(it.icon)+'</span>'
-        +'<span class="snav-item__body"><span class="snav-item__title">'+it.title+'</span><span class="snav-item__sub">'+it.sub+'</span></span>'
+        +'<span class="snav-item__inner"><span class="snav-item__icon">'+iconSvg(it.icon)+'</span>'
+        +'<span class="snav-item__title">'+it.title+'</span></span>'
         +'</button>';
     }).join('');
   }
+  function logoHtml(){
+    return '<div class="snav__logo"><div class="snav__wordmark">'+FLASH_MARK+'<span class="snav__word">flash</span></div>'
+      +'<span class="snav__subtitle">Secondary title</span></div>';
+  }
+  function companyHtml(){
+    return '<div class="snav__company">'
+      +'<div class="snav__companybadge">'+iconSvg('store')+'</div>'
+      +'<span class="snav__companytitle">Company title</span>'
+      +'<button type="button" class="snav__selector"><span class="snav__selector-label">List item</span>'
+      +'<span class="snav__selector-chev">'+iconSvg('chevron-down')+'</span></button></div>';
+  }
+  function accountHtml(){
+    return '<div class="snav__account">'
+      +'<button type="button" class="snav__seclink">'+iconSvg('link')+'<span>Secondary link</span></button>'
+      +'<button type="button" class="snav__seclink">'+iconSvg('link')+'<span>Secondary link</span></button>'
+      +'<hr class="snav__rule">'
+      +'<div class="snav__user"><span class="snav__user-badge">'+iconSvg('user')+'</span><span class="snav__user-name">User name</span></div>'
+      +'<button type="button" class="snav__logout"><span>Log out</span></button></div>';
+  }
+  function panelHtml(colour, size, activeIdx){
+    return '<div class="snav snav--'+colour+(size==='sm'?' snav--sm':'')+'">'
+      +logoHtml()
+      +'<div class="snav__body"><div class="snav__top">'+companyHtml()
+      +'<div class="snav__menu">'+itemsHtml(ITEMS, activeIdx)+'</div></div>'
+      +accountHtml()+'</div></div>';
+  }
 
   function renderPlayground(){
-    stage.innerHTML = '<div class="snav snav--'+state.colour+(state.size==='sm'?' snav--sm':'')+'" id="snav-panel">'+navItemsHtml(ITEMS, state.active)+'</div>';
+    stage.innerHTML = panelHtml(state.colour, state.size, state.active);
     Array.prototype.forEach.call(stage.querySelectorAll('.snav-item'), function(b){
       b.addEventListener('click', function(){ state.active=+b.getAttribute('data-i'); renderPlayground(); });
     });
@@ -9407,24 +9569,25 @@ function renderIcons(root){
   pillToggle('snav-colour-toggle', COLOURS, function(){return state.colour;}, function(k){ state.colour=k; renderPlayground(); });
   pillToggle('snav-size-toggle', SIZES, function(){return state.size;}, function(k){ state.size=k; renderPlayground(); });
 
-  /* Nav colour quick reference */
+  /* Nav colour quick reference — a compact panel (company + items) per context */
   var refEl=document.getElementById('snav-colour-ref');
   if(refEl){
     var refItems=ITEMS.slice(0,4);
     refEl.innerHTML = COLOURS.map(function(c){
-      return '<div><div class="snav-states-cap">'+c.label+'</div><div class="snav snav--'+c.key+'">'+navItemsHtml(refItems, 0)+'</div></div>';
+      return '<div><div class="snav-states-cap">'+c.label+'</div>'
+        +'<div class="snav snav--'+c.key+'">'+companyHtml()+'<div class="snav__menu">'+itemsHtml(refItems, 0)+'</div></div></div>';
     }).join('');
   }
 
-  /* States reference (White, Regular) */
+  /* States reference (White, Regular) — the nav item on its own */
   var statesEl=document.getElementById('snav-states-ref');
   if(statesEl){
     var one=[ITEMS[0]];
     statesEl.innerHTML =
-      '<div><div class="snav-states-cap">Inactive</div><div class="snav snav--white">'+navItemsHtml(one,-1)+'</div></div>'
-      +'<div><div class="snav-states-cap">Hover</div><div class="snav snav--white">'+navItemsHtml(one,-1,['snav-item--hover-look'])+'</div></div>'
-      +'<div><div class="snav-states-cap">Active</div><div class="snav snav--white">'+navItemsHtml(one,0)+'</div></div>'
-      +'<div><div class="snav-states-cap">Focused</div><div class="snav snav--white">'+navItemsHtml(one,-1,['snav-item--focus-look'])+'</div></div>';
+      '<div><div class="snav-states-cap">Inactive</div><div class="snav snav--white"><div class="snav__menu">'+itemsHtml(one,-1)+'</div></div></div>'
+      +'<div><div class="snav-states-cap">Hover</div><div class="snav snav--white"><div class="snav__menu">'+itemsHtml(one,-1,['snav-item--hover-look'])+'</div></div></div>'
+      +'<div><div class="snav-states-cap">Active</div><div class="snav snav--white"><div class="snav__menu">'+itemsHtml(one,0)+'</div></div></div>'
+      +'<div><div class="snav-states-cap">Focused</div><div class="snav snav--white"><div class="snav__menu">'+itemsHtml(one,-1,['snav-item--focus-look'])+'</div></div></div>';
   }
 })();
 /* @@SHADCN_JS@@ */
