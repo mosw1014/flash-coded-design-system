@@ -1353,6 +1353,17 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
 .tbl-tag--failed{background:#eb0029;color:#fff}
 [data-theme="dark"] .tbl-tag--pending{background:rgba(255,255,255,.14);color:#e6e6e6}
 
+/* Playground — customise a single Table Row live */
+.tbl-pg{border:1px solid var(--chrome-border);border-radius:14px;overflow:hidden;background:var(--chrome-bg);transition:background .25s}
+.tbl-pg__stage{display:flex;align-items:center;padding:40px;min-height:120px;overflow-x:auto}
+.tbl-pg__stage .tbl-row{flex:1 1 auto;min-width:640px}
+.tbl-pg__ctrls{display:flex;flex-direction:column;gap:16px;padding:20px 22px;background:var(--chrome-nav);border-top:1px solid var(--chrome-border);transition:background .25s}
+.tbl-pg__group{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.tbl-pg__clabel{font-size:12px;font-weight:600;color:var(--chrome-muted);white-space:nowrap;width:60px;flex-shrink:0}
+.tbl-pg__pill-row{display:flex;gap:2px;background:var(--chrome-bg);border:1px solid var(--chrome-border);border-radius:7px;padding:2px;transition:background .25s}
+.tbl-pg__pill{padding:4px 11px;border-radius:5px;border:none;cursor:pointer;font-family:inherit;font-size:11.5px;font-weight:600;color:var(--chrome-muted);background:transparent;transition:all .15s;white-space:nowrap}
+.tbl-pg__pill.on{background:var(--chrome-txt);color:var(--chrome-bg)}
+
 /* states demo — a labelled stack */
 .tbl-states{display:flex;flex-direction:column;gap:6px;border:1px solid var(--chrome-border);border-radius:14px;padding:18px;background:var(--chrome-bg);overflow-x:auto}
 .tbl-staterow{display:flex;align-items:center;gap:16px;min-width:640px}
@@ -3138,89 +3149,14 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
     <section class="sec" id="s-tables">
       <div class="sec__head">
         <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Tables <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.1</span></h1>
+        <h1 class="sec__title">Tables <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.1.0</span></h1>
         <p class="sec__desc">A selectable, row-based <strong>Table Row</strong> for records and transactions. Each row is assembled from cells &mdash; the <strong>List building block</strong> &mdash; starting with a leading checkbox, a product icon and a bold primary label, then any number of data cells, a status tag and optional trailing links. Rows resolve to five states and stack under a select-all header to form a full table. Adapts to light &amp; dark via semantic tokens.</p>
       </div>
 
       <div class="type-sub">
-        <div class="type-sub__title">States</div>
-        <div class="type-sub__desc">Every table row resolves to one of five states. <strong>Default</strong> sits on the base surface; <strong>Hover</strong> fills with a subtle neutral; <strong>Focused</strong> draws a 2px inverse outline for keyboard navigation; <strong>Checked</strong> tints the row and fills the checkbox in brand green; <strong>Disabled</strong> greys the content and blocks interaction.</div>
-        <div class="tbl-states">
-          <div class="tbl-staterow"><div class="tbl-statelabel">Default</div>
-            <div class="tbl-row">
-              <input type="checkbox" class="fsel__input tbl-check tbl-cell--check" aria-label="Select row">
-              <span class="tbl-pic tbl-pic--1v">1</span>
-              <span class="tbl-cell tbl-cell--name">1Voucher</span>
-              <span class="tbl-cell tbl-cell--col">Lorem ipsum</span>
-              <span class="tbl-cell tbl-cell--col">Lorem ipsum</span>
-              <span class="tbl-cell tbl-cell--col">Lorem ipsum</span>
-              <span class="tbl-tag tbl-tag--pending">Pending</span>
-            </div>
-          </div>
-          <div class="tbl-staterow"><div class="tbl-statelabel">Hover</div>
-            <div class="tbl-row is-hover">
-              <input type="checkbox" class="fsel__input tbl-check tbl-cell--check" aria-label="Select row">
-              <span class="tbl-pic tbl-pic--1v">1</span>
-              <span class="tbl-cell tbl-cell--name">1Voucher</span>
-              <span class="tbl-cell tbl-cell--col">Lorem ipsum</span>
-              <span class="tbl-cell tbl-cell--col">Lorem ipsum</span>
-              <span class="tbl-cell tbl-cell--col">Lorem ipsum</span>
-              <span class="tbl-tag tbl-tag--pending">Pending</span>
-              <span class="tbl-cell--links"><a class="tbl-link">Link text</a><a class="tbl-link">Link text</a></span>
-            </div>
-          </div>
-          <div class="tbl-staterow"><div class="tbl-statelabel">Focused</div>
-            <div class="tbl-row is-focus">
-              <input type="checkbox" class="fsel__input tbl-check tbl-cell--check" aria-label="Select row">
-              <span class="tbl-pic tbl-pic--1v">1</span>
-              <span class="tbl-cell tbl-cell--name">1Voucher</span>
-              <span class="tbl-cell tbl-cell--col">Lorem ipsum</span>
-              <span class="tbl-cell tbl-cell--col">Lorem ipsum</span>
-              <span class="tbl-cell tbl-cell--col">Lorem ipsum</span>
-              <span class="tbl-tag tbl-tag--pending">Pending</span>
-            </div>
-          </div>
-          <div class="tbl-staterow"><div class="tbl-statelabel">Checked</div>
-            <div class="tbl-row is-checked">
-              <input type="checkbox" class="fsel__input tbl-check tbl-cell--check" checked aria-label="Select row">
-              <span class="tbl-pic tbl-pic--1v">1</span>
-              <span class="tbl-cell tbl-cell--name">1Voucher</span>
-              <span class="tbl-cell tbl-cell--col">Lorem ipsum</span>
-              <span class="tbl-cell tbl-cell--col">Lorem ipsum</span>
-              <span class="tbl-cell tbl-cell--col">Lorem ipsum</span>
-              <span class="tbl-tag tbl-tag--pending">Pending</span>
-            </div>
-          </div>
-          <div class="tbl-staterow"><div class="tbl-statelabel">Disabled</div>
-            <div class="tbl-row is-disabled">
-              <input type="checkbox" class="fsel__input tbl-check tbl-cell--check" disabled aria-label="Select row">
-              <span class="tbl-pic tbl-pic--1v">1</span>
-              <span class="tbl-cell tbl-cell--name">1Voucher</span>
-              <span class="tbl-cell tbl-cell--col">Lorem ipsum</span>
-              <span class="tbl-cell tbl-cell--col">Lorem ipsum</span>
-              <span class="tbl-cell tbl-cell--col">Lorem ipsum</span>
-              <span class="tbl-tag tbl-tag--pending">Pending</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="type-sub">
-        <div class="type-sub__title">The cell (List building block)</div>
-        <div class="type-sub__desc">Rows are composed from a small set of interchangeable cells. Mix and match them to fit the data &mdash; a row needs only the leading checkbox and one labelled cell to be valid.</div>
-        <div class="dd-table-wrap">
-          <table class="dd-table">
-            <thead><tr><th>Cell</th><th>Purpose</th><th>Notes</th></tr></thead>
-            <tbody>
-              <tr><td class="dd-table__name">Checkbox</td><td>Row selection</td><td>Always leads the row; drives the Checked state and the header select-all.</td></tr>
-              <tr><td class="dd-table__name">Product icon</td><td>Visual identifier</td><td>30px rounded tile &middot; radius 7px. 1Voucher orange <code>#FF5F00</code>, Gift Voucher pink <code>#E43E79</code>.</td></tr>
-              <tr><td class="dd-table__name">Name</td><td>Primary label</td><td>Body m semibold &middot; 16px, text-primary. One per row.</td></tr>
-              <tr><td class="dd-table__name">Text</td><td>Data value</td><td>Body m medium. Repeatable &mdash; add one per column.</td></tr>
-              <tr><td class="dd-table__name">Tag</td><td>Status</td><td>Pending (neutral), Success (green), Failed (red).</td></tr>
-              <tr><td class="dd-table__name">Link</td><td>Row action</td><td>Optional trailing links; pinned to the right edge.</td></tr>
-            </tbody>
-          </table>
-        </div>
+        <div class="type-sub__title">Playground</div>
+        <div class="type-sub__desc">Customise a single Table Row live &mdash; swap the product, status and preview state, toggle trailing links, or click the checkbox to select it.</div>
+        <div id="tbl-playground"></div>
       </div>
 
       <div class="type-sub">
@@ -3301,6 +3237,87 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
               </div>
             </div>
           </div>
+        </div>
+      </div>
+
+      <div class="type-sub">
+        <div class="type-sub__title">States</div>
+        <div class="type-sub__desc">Every table row resolves to one of five states. <strong>Default</strong> sits on the base surface; <strong>Hover</strong> fills with a subtle neutral; <strong>Focused</strong> draws a 2px inverse outline for keyboard navigation; <strong>Checked</strong> tints the row and fills the checkbox in brand green; <strong>Disabled</strong> greys the content and blocks interaction.</div>
+        <div class="tbl-states">
+          <div class="tbl-staterow"><div class="tbl-statelabel">Default</div>
+            <div class="tbl-row">
+              <input type="checkbox" class="fsel__input tbl-check tbl-cell--check" aria-label="Select row">
+              <span class="tbl-pic tbl-pic--1v">1</span>
+              <span class="tbl-cell tbl-cell--name">1Voucher</span>
+              <span class="tbl-cell tbl-cell--col">Lorem ipsum</span>
+              <span class="tbl-cell tbl-cell--col">Lorem ipsum</span>
+              <span class="tbl-cell tbl-cell--col">Lorem ipsum</span>
+              <span class="tbl-tag tbl-tag--pending">Pending</span>
+            </div>
+          </div>
+          <div class="tbl-staterow"><div class="tbl-statelabel">Hover</div>
+            <div class="tbl-row is-hover">
+              <input type="checkbox" class="fsel__input tbl-check tbl-cell--check" aria-label="Select row">
+              <span class="tbl-pic tbl-pic--1v">1</span>
+              <span class="tbl-cell tbl-cell--name">1Voucher</span>
+              <span class="tbl-cell tbl-cell--col">Lorem ipsum</span>
+              <span class="tbl-cell tbl-cell--col">Lorem ipsum</span>
+              <span class="tbl-cell tbl-cell--col">Lorem ipsum</span>
+              <span class="tbl-tag tbl-tag--pending">Pending</span>
+              <span class="tbl-cell--links"><a class="tbl-link">Link text</a><a class="tbl-link">Link text</a></span>
+            </div>
+          </div>
+          <div class="tbl-staterow"><div class="tbl-statelabel">Focused</div>
+            <div class="tbl-row is-focus">
+              <input type="checkbox" class="fsel__input tbl-check tbl-cell--check" aria-label="Select row">
+              <span class="tbl-pic tbl-pic--1v">1</span>
+              <span class="tbl-cell tbl-cell--name">1Voucher</span>
+              <span class="tbl-cell tbl-cell--col">Lorem ipsum</span>
+              <span class="tbl-cell tbl-cell--col">Lorem ipsum</span>
+              <span class="tbl-cell tbl-cell--col">Lorem ipsum</span>
+              <span class="tbl-tag tbl-tag--pending">Pending</span>
+            </div>
+          </div>
+          <div class="tbl-staterow"><div class="tbl-statelabel">Checked</div>
+            <div class="tbl-row is-checked">
+              <input type="checkbox" class="fsel__input tbl-check tbl-cell--check" checked aria-label="Select row">
+              <span class="tbl-pic tbl-pic--1v">1</span>
+              <span class="tbl-cell tbl-cell--name">1Voucher</span>
+              <span class="tbl-cell tbl-cell--col">Lorem ipsum</span>
+              <span class="tbl-cell tbl-cell--col">Lorem ipsum</span>
+              <span class="tbl-cell tbl-cell--col">Lorem ipsum</span>
+              <span class="tbl-tag tbl-tag--pending">Pending</span>
+            </div>
+          </div>
+          <div class="tbl-staterow"><div class="tbl-statelabel">Disabled</div>
+            <div class="tbl-row is-disabled">
+              <input type="checkbox" class="fsel__input tbl-check tbl-cell--check" disabled aria-label="Select row">
+              <span class="tbl-pic tbl-pic--1v">1</span>
+              <span class="tbl-cell tbl-cell--name">1Voucher</span>
+              <span class="tbl-cell tbl-cell--col">Lorem ipsum</span>
+              <span class="tbl-cell tbl-cell--col">Lorem ipsum</span>
+              <span class="tbl-cell tbl-cell--col">Lorem ipsum</span>
+              <span class="tbl-tag tbl-tag--pending">Pending</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="type-sub">
+        <div class="type-sub__title">The cell (List building block)</div>
+        <div class="type-sub__desc">Rows are composed from a small set of interchangeable cells. Mix and match them to fit the data &mdash; a row needs only the leading checkbox and one labelled cell to be valid.</div>
+        <div class="dd-table-wrap">
+          <table class="dd-table">
+            <thead><tr><th>Cell</th><th>Purpose</th><th>Notes</th></tr></thead>
+            <tbody>
+              <tr><td class="dd-table__name">Checkbox</td><td>Row selection</td><td>Always leads the row; drives the Checked state and the header select-all.</td></tr>
+              <tr><td class="dd-table__name">Product icon</td><td>Visual identifier</td><td>30px rounded tile &middot; radius 7px. 1Voucher orange <code>#FF5F00</code>, Gift Voucher pink <code>#E43E79</code>.</td></tr>
+              <tr><td class="dd-table__name">Name</td><td>Primary label</td><td>Body m semibold &middot; 16px, text-primary. One per row.</td></tr>
+              <tr><td class="dd-table__name">Text</td><td>Data value</td><td>Body m medium. Repeatable &mdash; add one per column.</td></tr>
+              <tr><td class="dd-table__name">Tag</td><td>Status</td><td>Pending (neutral), Success (green), Failed (red).</td></tr>
+              <tr><td class="dd-table__name">Link</td><td>Row action</td><td>Optional trailing links; pinned to the right edge.</td></tr>
+            </tbody>
+          </table>
         </div>
       </div>
 
@@ -7461,12 +7478,16 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.26.1';
+const SYSTEM_VERSION = '1.27.0';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.27.0', date:'2026-07-13', author:'Mo', title:'Tables — playground added, section reordered', changes:[
+        ['added','Playground — customise a single Table Row live (Product, Status, State, Links) plus a real, clickable checkbox for the Checked state'],
+        ['changed','Section now opens with the Playground, followed by the Interactive table, then States / The cell / Anatomy & specs / When to use'],
+      ]},
       {version:'1.26.1', date:'2026-07-13', author:'Mo', title:'Tables — hover reveals row actions', changes:[
         ['fixed','Interactive table rows now reveal their trailing link actions (View / Receipt) on hover and keyboard focus, matching the documented Hover state — previously the live table showed no links on hover'],
         ['added','Trailing actions column with links that fade in on row hover/focus'],
@@ -7994,7 +8015,11 @@ const CHANGELOG = {
         ['added','Progress meters with brand / Warning / Critical fills'],
       ]},
     ]},
-    {secId:'s-tables', name:'Tables', version:'1.0.1', entries:[
+    {secId:'s-tables', name:'Tables', version:'1.1.0', entries:[
+      {version:'1.1.0', date:'2026-07-13', author:'Mo', title:'Playground added, section reordered', changes:[
+        ['added','Playground — customise a single Table Row live: Product (1Voucher / Gift Voucher), Status (Pending / Success / Failed), preview State (Default / Hover / Focused / Disabled), and a Links toggle, plus a real clickable checkbox for the Checked state'],
+        ['changed','Section order is now Playground → Interactive table → States → The cell → Anatomy & specs → When to use'],
+      ]},
       {version:'1.0.1', date:'2026-07-13', author:'Mo', title:'Hover reveals row actions', changes:[
         ['fixed','Interactive table rows now reveal trailing link actions on hover and keyboard focus, matching the Hover state'],
         ['added','Trailing actions column with links that fade in on row hover/focus'],
@@ -8515,6 +8540,80 @@ function renderSectionChangelogs() {
     }).join('');
   }
 })();
+
+/* ── TABLES — playground (customise a single Table Row) ── */
+var tblPg = { product:'1v', status:'pending', state:'default', links:false, checked:false };
+var TBL_PG_GIFT_SVG = '<svg viewBox="0 0 24 24" fill="none"><path d="M20 12v8H4v-8M2 7h20v5H2zM12 22V7M12 7S9 2 6.5 4.5 12 7 12 7zM12 7s3-5 5.5-2.5S12 7 12 7z" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"/></svg>';
+
+function tblPgRowHtml(){
+  var product = tblPg.product === 'gift'
+    ? { cls:'tbl-pic--gift', inner: TBL_PG_GIFT_SVG, name:'Gift Voucher' }
+    : { cls:'tbl-pic--1v', inner:'1', name:'1Voucher' };
+  var status = { pending:{cls:'tbl-tag--pending',label:'Pending'}, success:{cls:'tbl-tag--success',label:'Success'}, failed:{cls:'tbl-tag--failed',label:'Failed'} }[tblPg.status];
+  var rowCls = 'tbl-row';
+  if(tblPg.state === 'hover') rowCls += ' is-hover';
+  if(tblPg.state === 'focus') rowCls += ' is-focus';
+  if(tblPg.state === 'disabled') rowCls += ' is-disabled';
+  if(tblPg.checked) rowCls += ' is-checked';
+  var checkedAttr = tblPg.checked ? 'checked' : '';
+  var disabledAttr = tblPg.state === 'disabled' ? 'disabled' : '';
+  var linksHtml = tblPg.links ? '<span class="tbl-cell--links"><a class="tbl-link">Link text</a><a class="tbl-link">Link text</a></span>' : '';
+  return '<div class="' + rowCls + '" id="tblpg-row">' +
+    '<input type="checkbox" class="fsel__input tbl-check tbl-cell--check" ' + checkedAttr + ' ' + disabledAttr + ' onchange="tblPgToggleChecked(this)" aria-label="Select row">' +
+    '<span class="tbl-pic ' + product.cls + '">' + product.inner + '</span>' +
+    '<span class="tbl-cell tbl-cell--name">' + product.name + '</span>' +
+    '<span class="tbl-cell tbl-cell--col">Lorem ipsum</span>' +
+    '<span class="tbl-cell tbl-cell--col">Lorem ipsum</span>' +
+    '<span class="tbl-cell tbl-cell--col">Lorem ipsum</span>' +
+    '<span class="tbl-tag ' + status.cls + '">' + status.label + '</span>' +
+    linksHtml +
+  '</div>';
+}
+
+function tblPgPillRow(name, options){
+  return options.map(function(o){
+    var on = tblPg[name] === o.key ? ' on' : '';
+    return '<button type="button" class="tbl-pg__pill' + on + '" onclick="tblPgSet(\'' + name + '\',\'' + o.key + '\')">' + o.label + '</button>';
+  }).join('');
+}
+
+function renderTablesPlayground(){
+  var el = document.getElementById('tbl-playground');
+  if(!el) return;
+  var productBtns = tblPgPillRow('product', [{key:'1v',label:'1Voucher'},{key:'gift',label:'Gift Voucher'}]);
+  var statusBtns  = tblPgPillRow('status',  [{key:'pending',label:'Pending'},{key:'success',label:'Success'},{key:'failed',label:'Failed'}]);
+  var stateBtns   = tblPgPillRow('state',   [{key:'default',label:'Default'},{key:'hover',label:'Hover'},{key:'focus',label:'Focused'},{key:'disabled',label:'Disabled'}]);
+  var linksOn = tblPg.links;
+  var linksBtns =
+    '<button type="button" class="tbl-pg__pill' + (!linksOn?' on':'') + '" onclick="tblPgSetLinks(false)">Off</button>' +
+    '<button type="button" class="tbl-pg__pill' + (linksOn?' on':'') + '" onclick="tblPgSetLinks(true)">On</button>';
+
+  el.innerHTML =
+    '<div class="tbl-pg">' +
+      '<div class="tbl-pg__stage">' + tblPgRowHtml() + '</div>' +
+      '<div class="tbl-pg__ctrls">' +
+        '<div class="tbl-pg__group"><span class="tbl-pg__clabel">Product</span><div class="tbl-pg__pill-row">' + productBtns + '</div></div>' +
+        '<div class="tbl-pg__group"><span class="tbl-pg__clabel">Status</span><div class="tbl-pg__pill-row">' + statusBtns + '</div></div>' +
+        '<div class="tbl-pg__group"><span class="tbl-pg__clabel">State</span><div class="tbl-pg__pill-row">' + stateBtns + '</div></div>' +
+        '<div class="tbl-pg__group"><span class="tbl-pg__clabel">Links</span><div class="tbl-pg__pill-row">' + linksBtns + '</div></div>' +
+      '</div>' +
+    '</div>';
+}
+
+function tblPgSet(key, val){
+  tblPg[key] = val;
+  if(key === 'state' && val === 'disabled') tblPg.checked = false;
+  renderTablesPlayground();
+}
+function tblPgSetLinks(val){
+  tblPg.links = val;
+  renderTablesPlayground();
+}
+function tblPgToggleChecked(cb){
+  tblPg.checked = cb.checked;
+  var row = document.getElementById('tblpg-row');
+  if(row) row.classList.toggle('is-checked', cb.checked);
+}
 
 /* ── TABLES — interactive selection ── */
 (function(){
@@ -9298,6 +9397,7 @@ function renderIcons(root){
 })();
 /* @@SHADCN_JS@@ */
 
+try { renderTablesPlayground(); } catch(e){ console.error('tbl-playground',e); }
 try { renderChangelog(); } catch(e){ console.error('changelog',e); }
 try { renderSectionChangelogs(); } catch(e){ console.error('section-changelog',e); }
 
