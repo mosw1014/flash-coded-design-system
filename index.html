@@ -1919,8 +1919,8 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
    Rebuilt to match the Figma SideNav (node 3608:32365): Regular size mirrors the
    Figma "Large" variant exactly; all colour/size differences are driven by --sn-*
    tokens on the root so the Charcoal / Dark green / Small variants only override
-   tokens, never the child rules. (Charcoal, Dark green and Small are provisional
-   until their Figma variant links are supplied.) */
+   tokens, never the child rules. (White and Charcoal match their Figma variants;
+   Dark green and Small are provisional until their Figma links are supplied.) */
 .snav{
   /* --- White colour context (Figma default) --- */
   --sn-bg:var(--prim-white);
@@ -1931,6 +1931,8 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
   --sn-tint:var(--prim-gg-400);              /* green tint #ebf0ef */
   --sn-company-title:var(--prim-black);
   --sn-company-glyph:var(--prim-grey-900);   /* #646464 */
+  --sn-user-glyph:var(--prim-grey-900);      /* #646464 on the #ddd user badge */
+  --sn-user-name:var(--prim-grey-900);       /* #646464 */
   --sn-selector-label:var(--prim-black);
   --sn-idle-badge:var(--prim-grey-400);      /* #ddd */
   --sn-idle-glyph:var(--prim-grey-700);      /* #a4a4a4 */
@@ -1957,18 +1959,28 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
   background:var(--sn-bg);border:var(--sn-border);box-shadow:var(--sn-shadow);
   font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;
   transition:background .2s}
-.snav--charcoal{
-  --sn-bg:#20222c;--sn-border:0;--sn-shadow:none;
-  --sn-logo:#fff;--sn-title:#fff;--sn-tint:rgba(255,255,255,.08);
-  --sn-company-title:#fff;--sn-company-glyph:rgba(255,255,255,.7);--sn-selector-label:#fff;
-  --sn-idle-badge:rgba(255,255,255,.08);--sn-idle-glyph:rgba(255,255,255,.7);--sn-idle-label:rgba(255,255,255,.72);
-  --sn-active-badge:var(--prim-green-500);--sn-active-glyph:#000;--sn-active-label:#fff;
-  --sn-hover-bg:rgba(255,255,255,.07);
-  --sn-link:rgba(255,255,255,.6);--sn-link-glyph:rgba(255,255,255,.4);--sn-divider:rgba(255,255,255,.12);--sn-logout:rgba(255,255,255,.5)}
+.snav--charcoal{  /* matched to Figma node 3608:32967 */
+  --sn-bg:var(--prim-grey-1100);--sn-border:0;--sn-shadow:none;  /* #252525 */
+  --sn-logo:#fff;--sn-title:#fff;
+  --sn-tint:var(--prim-grey-1000);                 /* #414141 badge + selector */
+  --sn-company-title:var(--prim-grey-200);         /* #e6e6e6 */
+  --sn-company-glyph:var(--prim-grey-900);         /* #646464 */
+  --sn-user-glyph:var(--prim-grey-200);            /* #e6e6e6 on the #646464 user badge */
+  --sn-user-name:var(--prim-grey-600);             /* #bdbdbd */
+  --sn-selector-label:#fff;
+  --sn-idle-badge:var(--prim-grey-900);            /* #646464 */
+  --sn-idle-glyph:var(--prim-grey-700);            /* #a4a4a4 */
+  --sn-idle-label:var(--prim-grey-400);            /* #dddddd */
+  --sn-active-badge:var(--prim-green-500);--sn-active-glyph:#fff;--sn-active-label:#fff;
+  --sn-hover-bg:rgba(255,255,255,.06);
+  --sn-link:var(--prim-grey-400);                  /* #dddddd */
+  --sn-link-glyph:rgba(255,255,255,.22);
+  --sn-divider:rgba(255,255,255,.12);
+  --sn-logout:var(--prim-grey-400)}
 .snav--darkgreen{
   --sn-bg:var(--prim-dg-600);--sn-border:0;--sn-shadow:none;
   --sn-logo:#fff;--sn-title:#fff;--sn-tint:rgba(255,255,255,.1);
-  --sn-company-title:#fff;--sn-company-glyph:rgba(255,255,255,.75);--sn-selector-label:#fff;
+  --sn-company-title:#fff;--sn-company-glyph:rgba(255,255,255,.75);--sn-user-glyph:rgba(255,255,255,.85);--sn-user-name:rgba(255,255,255,.7);--sn-selector-label:#fff;
   --sn-idle-badge:rgba(255,255,255,.1);--sn-idle-glyph:rgba(255,255,255,.75);--sn-idle-label:rgba(255,255,255,.75);
   --sn-active-badge:var(--prim-green-400);--sn-active-glyph:#000;--sn-active-label:#fff;
   --sn-hover-bg:rgba(255,255,255,.09);
@@ -2013,8 +2025,8 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
 .snav__rule{height:1px;width:100%;margin:9px 0;border:0;background:var(--sn-divider)}
 .snav__user{display:flex;align-items:center;gap:8px;padding:4px 0}
 .snav__user-badge{display:flex;align-items:center;justify-content:center;padding:4px;border-radius:6px;background:var(--sn-idle-badge)}
-.snav__user-badge svg{width:16px;height:16px;display:block;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;color:var(--sn-company-glyph)}
-.snav__user-name{font-size:13px;font-weight:800;line-height:1.25;color:var(--sn-company-glyph)}
+.snav__user-badge svg{width:16px;height:16px;display:block;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;color:var(--sn-user-glyph)}
+.snav__user-name{font-size:13px;font-weight:800;line-height:1.25;color:var(--sn-user-name)}
 .snav__logout{padding:4px 0;background:none;border:0;cursor:pointer;font-family:inherit;text-align:left;width:100%}
 .snav__logout span{font-size:13px;font-weight:500;line-height:1.3;color:var(--sn-logout)}
 /* Demo scaffolding */
@@ -7260,7 +7272,8 @@ const CHANGELOG = {
         ['added','Side Nav now renders the full Figma panel — logo, company block with account selector, nav menu and account footer — instead of just the item list'],
         ['changed','Nav item matches Figma: single-line bold label (no subtitle), 20px icon chip on 6px padding, and an active state marked by the brand-green chip alone (no row fill), with idle greys #DDD / #A4A4A4 / #8A8A8A'],
         ['fixed','Nav item glyphs now render as proper outline icons inside the chip'],
-        ['changed','Colour contexts and size are token-driven (--sn-*); Charcoal, Dark green and Small are provisional pending their Figma variant links'],
+        ['changed','Colour contexts and size are token-driven (--sn-*); White and Charcoal match their Figma variants, Dark green and Small are provisional pending their Figma variant links'],
+        ['added','Charcoal context matched to its Figma variant (node 3608:32967) — #252525 panel, #414141 company badge/selector, #646464 idle chip with #A4A4A4 glyph and #DDD label, white active glyph + label, and the account footer greys'],
       ]},
       {version:'1.25.2', date:'2026-07-10', author:'Mo', title:'Dropdown — single-select drops the checkbox', changes:[
         ['changed','Single-select rows no longer show a checkbox — just the label, with a trailing check mark on the active choice. Multi-select is unaffected and keeps a real checkbox per row'],
@@ -7722,7 +7735,9 @@ const CHANGELOG = {
         ['changed','Active item is marked by the brand-green icon chip alone with no row fill (was a tinted row); idle chip/glyph/label now use the Figma greys (#DDD / #A4A4A4 / #8A8A8A)'],
         ['changed','Icon chip is now 20px glyph on 6px padding at radius 6px, panel is 208px wide at 20/16 padding and 12px radius — matching the Figma Large variant'],
         ['fixed','Nav item glyphs now render as outline icons (stroke:currentColor) inside the chip'],
-        ['changed','Colour contexts and the Small size driven by --sn-* tokens so future Figma variant links slot in by overriding tokens only; Charcoal, Dark green and Small remain provisional pending their Figma links'],
+        ['changed','Colour contexts and the Small size driven by --sn-* tokens so future Figma variant links slot in by overriding tokens only'],
+        ['added','Charcoal context matched to its Figma variant (node 3608:32967): #252525 panel, #414141 company badge & selector, #646464 idle chip / #A4A4A4 glyph / #DDD label, white active glyph and label, and the correct account-footer greys'],
+        ['changed','Dark green and Small remain provisional pending their Figma links'],
       ]},
       {version:'1.0.0', date:'2026-07-10', author:'Mo', title:'Side Nav — initial release', changes:[
         ['added','Side Nav — icon-chip + two-line label Nav item, Regular/Small sizes, White/Charcoal/Dark green colour contexts'],
