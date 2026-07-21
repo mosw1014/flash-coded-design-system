@@ -1146,10 +1146,15 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
 .ti-journey:last-child{margin-bottom:0}
 .ti-journey__title{font-size:13px;font-weight:700;color:var(--chrome-txt);margin-bottom:3px}
 .ti-journey__desc{font-size:12px;color:var(--chrome-muted);margin-bottom:14px}
-.ti-journey__row{display:flex;align-items:center;gap:8px;overflow-x:auto;padding-bottom:4px}
-.ti-journey__step{flex:0 0 auto;width:220px}
+.ti-journey__row{display:flex;align-items:center;gap:10px;overflow-x:auto;padding-bottom:4px}
+.ti-journey__step{flex:0 0 auto;width:300px}
+.ti-journey__step--wide{width:360px}
 .ti-journey__step-label{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:var(--chrome-muted);margin-bottom:8px;text-align:center}
 .ti-journey__arrow{flex:0 0 auto;color:var(--chrome-border);font-size:18px;padding-top:20px}
+/* Static, non-absolute caret for journey snapshots — flows right after the
+   text in normal layout instead of relying on the live field's JS-measured
+   absolute positioning, so it can never render before/on top of the value. */
+.ti-caret-inline{display:inline-block;width:2px;height:18px;background:var(--ti-green);vertical-align:middle;margin-left:2px;position:relative;top:-1px}
 
 /* ---- Icon sheet ---- */
 .ti-icon-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:10px}
@@ -6764,7 +6769,9 @@ function tiStaticStandard(opts){
   const leadingHtml = o.leading ? `<span class="ti-leading">${TI_ICONS[o.leading][o.size]}</span>` : '';
   const trailingHtml = o.trailing ? `<span class="ti-trailing-icon">${TI_ICONS[o.trailing][o.size]}</span>` : '';
   const clearHtml = o.clear ? `<button class="ti-clear" type="button" tabindex="-1">${TI_CLEAR_SVG}</button>` : '';
-  const caretHtml = o.caret ? `<span class="ti-caret on"></span>` : '';
+  // Static snapshots use a normal-flow caret (not the live field's absolutely
+  // positioned one) so it always renders right after the text, never before it.
+  const caretHtml = o.caret ? `<span class="ti-caret-inline"></span>` : '';
   const helperHtml = o.helper ? `<div class="ti-helper show${o.helperError?' ti-error-text':''}">${o.helper}</div>` : '';
   return `<div class="${cls.join(' ')}" data-bg="${o.bg}" data-size="${o.size}">
     <div class="ti-field" data-bg="${o.bg}" data-size="${o.size}">
@@ -6780,19 +6787,21 @@ function tiStaticStandard(opts){
   </div>`;
 }
 function tiStaticSearch(opts){
-  const o = Object.assign({size:'default', bg:'white', floated:false, focused:false, clear:false, label:'Label', value:'', caret:false, loading:false, icon:'search'}, opts);
+  const o = Object.assign({size:'default', bg:'white', floated:false, focused:false, clear:false, label:'Label', value:'', caret:false, loading:false, icon:'search', inline:false}, opts);
   const cls = ['ti-search'];
   if(o.focused) cls.push('ti-focused');
   if(o.floated) cls.push('ti-floated');
   if(o.clear) cls.push('ti-show-clear');
   if(o.loading) cls.push('ti-loading');
+  if(o.inline) cls.push('ti-inline');
+  if(o.inline && o.value) cls.push('ti-has-value');
   const clearHtml = o.clear ? `<button class="ti-search-clear" type="button" tabindex="-1">${TI_CLEAR_SVG}</button>` : '';
-  const caretHtml = o.caret ? `<span class="ti-caret on"></span>` : '';
+  const caretHtml = o.caret ? `<span class="ti-caret-inline"></span>` : '';
   return `<div class="${cls.join(' ')}" data-bg="${o.bg}" data-size="${o.size}">
     <div class="ti-search-icon">${TI_ICONS[o.icon][o.size]}</div>
     <div class="ti-search-body">
       <span class="ti-search-label">${o.label}</span>
-      <div class="ti-search-value-row" style="opacity:${o.floated?1:0}">
+      <div class="ti-search-value-row" style="opacity:${(o.floated||o.inline)?1:0}">
         <span class="ti-search-input" style="display:inline-block">${o.value}</span>
         ${caretHtml}
       </div>
@@ -6803,8 +6812,8 @@ function tiStaticSearch(opts){
     </div>
   </div>`;
 }
-function tiJourneyStep(labelText, fieldHtml){
-  return `<div class="ti-journey__step"><div class="ti-journey__step-label">${labelText}</div>${fieldHtml}</div>`;
+function tiJourneyStep(labelText, fieldHtml, wide){
+  return `<div class="ti-journey__step${wide?' ti-journey__step--wide':''}"><div class="ti-journey__step-label">${labelText}</div>${fieldHtml}</div>`;
 }
 function tiJourneyArrow(){ return `<div class="ti-journey__arrow">&#8594;</div>`; }
 
@@ -6831,19 +6840,27 @@ function tiRenderJourneys(){
   ].join('');
 
   const journey3 = [
-    tiJourneyStep('Default', tiStaticSearch({label:'Search'})),
+    tiJourneyStep('Default', tiStaticSearch({label:'Search'}), true),
     tiJourneyArrow(),
-    tiJourneyStep('Typing', tiStaticSearch({label:'Search', floated:true, focused:true, value:'transactions', caret:true, clear:true})),
+    tiJourneyStep('Typing', tiStaticSearch({label:'Search', floated:true, focused:true, value:'transactions', caret:true, clear:true}), true),
     tiJourneyArrow(),
-    tiJourneyStep('Enter → Loading', tiStaticSearch({label:'Search', floated:true, value:'transactions', clear:true, loading:true})),
+    tiJourneyStep('Enter → Loading', tiStaticSearch({label:'Search', floated:true, value:'transactions', clear:true, loading:true}), true),
     tiJourneyArrow(),
-    tiJourneyStep('Results loaded', tiStaticSearch({label:'Search', floated:true, value:'transactions', clear:true})),
+    tiJourneyStep('Results loaded', tiStaticSearch({label:'Search', floated:true, value:'transactions', clear:true}), true),
   ].join('');
 
   const journey4 = [
     tiJourneyStep('Typing (masked)', tiStaticStandard({label:'Password', floated:true, focused:true, value:'••••••••', caret:true, clear:true, trailing:'password-hidden'})),
     tiJourneyArrow(),
     tiJourneyStep('Tap the eye → revealed', tiStaticStandard({label:'Password', floated:true, focused:true, value:'flash123', caret:true, clear:true, trailing:'password-visible'})),
+  ].join('');
+
+  // Inline label mode — the label sits at rest size (no shrink/shift) and just
+  // disappears once there's a value, instead of floating up like Caption mode.
+  const journey5 = [
+    tiJourneyStep('Default — label as placeholder', tiStaticSearch({label:'Search', inline:true}), true),
+    tiJourneyArrow(),
+    tiJourneyStep('Typing — label disappears, no shift', tiStaticSearch({label:'Search', value:'transactions', inline:true, caret:true, clear:true}), true),
   ].join('');
 
   el.innerHTML = `
@@ -6866,6 +6883,12 @@ function tiRenderJourneys(){
       <div class="ti-journey__title">Search — querying with a loading state</div>
       <div class="ti-journey__desc">Pressing Enter with text present triggers the loading spinner; it can never show against a blank field.</div>
       <div class="ti-journey__row">${journey3}</div>
+    </div>
+
+    <div class="ti-journey">
+      <div class="ti-journey__title">Search — Inline label mode</div>
+      <div class="ti-journey__desc">Caption mode floats the label above the value (see above); Inline mode never shifts or shrinks it — the label just disappears the moment there's a value.</div>
+      <div class="ti-journey__row">${journey5}</div>
     </div>
 
     <div class="ti-journey">
