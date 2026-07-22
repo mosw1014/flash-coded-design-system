@@ -2545,13 +2545,37 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
     <section class="sec" id="s-buttons">
       <div class="sec__head">
         <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Buttons <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.2.0</span></h1>
+        <h1 class="sec__title">Buttons <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.5.0</span></h1>
         <p class="sec__desc">5 variants · 5 sizes · 5 states · light &amp; dark mode. Use the playground to interact with any combination, then expand variants below to see the full reference grid.</p>
       </div>
       <div id="btn-playground" class="type-sub"></div>
       <div id="btn-reference"  class="type-sub"></div>
       <div id="btn-icon"       class="type-sub"></div>
       <div id="btn-tappable"   class="type-sub"></div>
+
+      <div class="type-sub">
+        <div class="type-sub__title">Hierarchy &amp; when to use which</div>
+        <div class="type-sub__desc">Variants are ordered by emphasis: <strong>Primary</strong> → <strong>Secondary</strong> → <strong>Accent</strong> → <strong>Simple</strong> → <strong>Link</strong>. Reach for Primary and Secondary first &mdash; Accent is a spotlight, not a default.</div>
+        <div class="sel-usage">
+          <div class="sel-usage__card">
+            <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
+            <ul class="sel-usage__list">
+              <li>Use <strong>Primary</strong> for the main action on a screen &mdash; there should usually be only one per view.</li>
+              <li>Use <strong>Secondary</strong> for supporting actions alongside a Primary button.</li>
+              <li>Reserve <strong>Accent</strong> for the one or two moments per page that genuinely need extreme contrast and visual highlighting &mdash; a hero CTA, a rare high-value promo.</li>
+              <li>Use <strong>Simple</strong> and <strong>Link</strong> for low-emphasis or inline actions where a filled button would compete with more important content.</li>
+            </ul>
+          </div>
+          <div class="sel-usage__card">
+            <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don&rsquo;t</div>
+            <ul class="sel-usage__list">
+              <li>Don&rsquo;t default to Accent &mdash; if every button is a spotlight, nothing is.</li>
+              <li>Don&rsquo;t use more than one or two Accent buttons on the same page outside of a deliberate, high-contrast exception.</li>
+              <li>Don&rsquo;t place two Primary buttons side by side &mdash; pair Primary with Secondary or Simple instead.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
     </section>
     <section class="sec" id="s-inputs">
       <div class="sec__head">
@@ -5756,9 +5780,9 @@ const BTN_SIZES = [
 ];
 
 const BTN_VARIANTS = [
-  {key:'accent',    label:'Accent',    desc:'Brand-coloured CTA'},
   {key:'primary',   label:'Primary',   desc:'High-emphasis action'},
   {key:'secondary', label:'Secondary', desc:'Medium-emphasis, outlined'},
+  {key:'accent',    label:'Accent',    desc:'Brand-coloured — sparingly, for the one standout moment on a page'},
   {key:'simple',    label:'Simple',    desc:'Low-emphasis, no border'},
   {key:'link',      label:'Link',      desc:'Inline text action'},
 ];
@@ -5788,7 +5812,7 @@ const BTN_COLORS = {
 };
 
 /* Playground state */
-let pg = { brand:'flash', theme:'light', variant:'accent', size:'reg', icon:false };
+let pg = { brand:'flash', theme:'light', variant:'primary', size:'reg', icon:false };
 
 function stageBg(theme){ return theme === 'dark' ? '#12131a' : '#ffffff'; }
 
@@ -5875,7 +5899,7 @@ function getBtnCodeBlazor(brand, theme, variant, size, icon){
 <span class="code-kw">&#60;/button></span>
 
 <span class="code-kw">@code</span> {
-  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> ButtonVariant Variant { get; set; } = ButtonVariant.Accent;
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> ButtonVariant Variant { get; set; } = ButtonVariant.Primary;
   [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> ButtonSize Size { get; set; } = ButtonSize.Regular;
   [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> <span class="code-cls">bool</span> IconOnly { get; set; }
   [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> <span class="code-cls">bool</span> Disabled { get; set; }
@@ -5884,7 +5908,7 @@ function getBtnCodeBlazor(brand, theme, variant, size, icon){
 
   <span class="code-kw">private</span> <span class="code-cls">string</span> CssClass =>
     $"ds-btn ds-btn--{Size.ToString().ToLower()}" +
-    (Variant != ButtonVariant.Accent ? $" ds-btn--{Variant.ToString().ToLower()}" : "") +
+    (Variant != ButtonVariant.Primary ? $" ds-btn--{Variant.ToString().ToLower()}" : "") +
     (IconOnly ? " ds-btn--icon" : "");
 }`;
 }
@@ -5893,7 +5917,7 @@ function getBtnCodeTSX(brand, theme, variant, size, icon){
   return `<span class="code-cm">// DsButton.tsx</span>
 <span class="code-kw">import</span> React <span class="code-kw">from</span> <span class="code-val">'react'</span>;
 
-<span class="code-kw">type</span> <span class="code-cls">ButtonVariant</span> = <span class="code-val">'accent'</span> | <span class="code-val">'primary'</span> | <span class="code-val">'secondary'</span> | <span class="code-val">'simple'</span> | <span class="code-val">'link'</span>;
+<span class="code-kw">type</span> <span class="code-cls">ButtonVariant</span> = <span class="code-val">'primary'</span> | <span class="code-val">'secondary'</span> | <span class="code-val">'accent'</span> | <span class="code-val">'simple'</span> | <span class="code-val">'link'</span>;
 <span class="code-kw">type</span> <span class="code-cls">ButtonSize</span> = <span class="code-val">'lg'</span> | <span class="code-val">'reg'</span> | <span class="code-val">'sm'</span> | <span class="code-val">'xs'</span> | <span class="code-val">'xxs'</span>;
 
 <span class="code-kw">interface</span> <span class="code-cls">DsButtonProps</span> <span class="code-kw">extends</span> React.ButtonHTMLAttributes&#60;HTMLButtonElement> {
@@ -5903,7 +5927,7 @@ function getBtnCodeTSX(brand, theme, variant, size, icon){
 }
 
 <span class="code-kw">export const</span> <span class="code-cls">DsButton</span>: React.FC&#60;DsButtonProps> = ({
-  variant = <span class="code-val">'accent'</span>,
+  variant = <span class="code-val">'primary'</span>,
   size = <span class="code-val">'reg'</span>,
   iconOnly = <span class="code-kw">false</span>,
   className = <span class="code-val">''</span>,
@@ -5913,7 +5937,7 @@ function getBtnCodeTSX(brand, theme, variant, size, icon){
   <span class="code-kw">const</span> classes = [
     <span class="code-val">'ds-btn'</span>,
     \`ds-btn--\${size}\`,
-    variant !== <span class="code-val">'accent'</span> && \`ds-btn--\${variant}\`,
+    variant !== <span class="code-val">'primary'</span> && \`ds-btn--\${variant}\`,
     iconOnly && <span class="code-val">'ds-btn--icon'</span>,
     className,
   ].filter(Boolean).join(<span class="code-val">' '</span>);
@@ -7360,12 +7384,17 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.30.3';
+const SYSTEM_VERSION = '1.30.4';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.30.4', date:'2026-07-22', author:'Mo', title:'Buttons — accent demoted in the hierarchy', changes:[
+        ['changed','Button variant order is now Primary → Secondary → Accent → Simple → Link, reflected in the playground, reference grid and icon-only grid'],
+        ['changed','Playground defaults to Primary instead of Accent'],
+        ['added','Do/don\'t guidance: Accent is reserved for one or two high-contrast moments per page, not a default choice'],
+      ]},
       {version:'1.30.3', date:'2026-07-22', author:'Mo', title:'Data Display — table header alignment fix', changes:[
         ['fixed','Data table — "Volume" and "Value" header cells stayed left-aligned while their numeric columns below were right-aligned, since the generic thead th rule overrode the .dd-num class; headers now right-align to match'],
       ]},
@@ -7773,7 +7802,12 @@ const CHANGELOG = {
         ['added','5 elevation levels with structured x/y/blur/spread breakdown'],
       ]},
     ]},
-    {secId:'s-buttons', name:'Buttons', version:'1.4.0', entries:[
+    {secId:'s-buttons', name:'Buttons', version:'1.5.0', entries:[
+      {version:'1.5.0', date:'2026-07-22', author:'Mo', title:'Accent demoted in the hierarchy', changes:[
+        ['changed','Variant order across the playground, reference grid and icon-only grid is now Primary → Secondary → Accent → Simple → Link (was Accent → Primary → Secondary → Simple → Link)'],
+        ['changed','Playground now defaults to Primary instead of Accent; Blazor/TSX code samples treat Primary as the implicit no-suffix variant'],
+        ['added','"Hierarchy & when to use which" do/don\'t guidance — Accent is reserved for one or two high-contrast moments per page, not a default choice'],
+      ]},
       {version:'1.4.0', date:'2026-07-06', author:'Mo', title:'Reference follows global theme', changes:[
         ['removed','Per-variant light/dark toggle from the reference grid'],
         ['changed','Variant reference now follows the global light/dark toggle'],
