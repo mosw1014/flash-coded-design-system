@@ -2580,7 +2580,7 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
     <section class="sec" id="s-inputs">
       <div class="sec__head">
         <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Text Inputs <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v2.0.1</span></h1>
+        <h1 class="sec__title">Text Inputs <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v2.0.2</span></h1>
         <p class="sec__desc">Unified Trader input system — Standard (floating/inline label) and Search (pill) families &middot; 2 sizes &middot; every state, background context and icon slot &middot; state-journey map and icon reference sheet below.</p>
       </div>
       <div id="ti-playground" class="type-sub"></div>
@@ -6672,7 +6672,7 @@ function tiBuildSearchField(){
     if(toggle) toggle.classList.toggle('on', on);
   }
 
-  function reflect(focused){
+  function reflect(focused, opts){
     const hasText = input.value.length>0;
     field.classList.toggle('ti-focused', focused);
     field.classList.toggle('ti-floated', focused || hasText);
@@ -6680,7 +6680,7 @@ function tiBuildSearchField(){
     field.classList.toggle('ti-show-clear', focused && hasText);
     caretEl.classList.toggle('on', focused);
     placeCaret(input.value);
-    if(!hasText && tiState.loading) setLoading(false);
+    if(!hasText && tiState.loading && !(opts && opts.initial)) setLoading(false);
     let label='default';
     if(focused && hasText) label='typing'; else if(focused) label='in focus'; else if(hasText) label='complete';
     tiUpdateReadout(label);
@@ -6694,7 +6694,7 @@ function tiBuildSearchField(){
 
   field.classList.toggle('ti-error', tiState.forceError);
 
-  reflect(false);
+  reflect(false, {initial:true});
   return { el: wrap, field };
 }
 
@@ -6734,8 +6734,9 @@ function tiGroup(label, inner){
   return `<div class="ti-pg__group"><span class="ti-pg__clabel">${label}</span>${inner}</div>`;
 }
 function tiSwitchRow(label, key, disabled){
+  const idAttr = key==='loading' ? ' id="ti-toggle-loading"' : '';
   return `<div class="ti-pg__group"><span class="ti-pg__clabel">${label}</span>
-    <div class="ti-pg__switch${tiState[key]?' on':''}" onclick="tiToggle('${key}')"></div>
+    <div class="ti-pg__switch${tiState[key]?' on':''}"${idAttr} onclick="tiToggle('${key}')"></div>
   </div>`;
 }
 function tiIconSelectGroup(label, valueKey, enabledKey, toggleId, defaultIcon){
@@ -7384,12 +7385,15 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.30.4';
+const SYSTEM_VERSION = '1.30.5';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.30.5', date:'2026-07-22', author:'Mo', title:'Text Inputs — Search loading toggle fixed', changes:[
+        ['fixed','Search field playground — the "Loading" sidebar switch had no effect: toggling it rebuilt the field with an empty value, which immediately auto-cleared the loading state and never visually flipped the switch (it was missing its id)'],
+      ]},
       {version:'1.30.4', date:'2026-07-22', author:'Mo', title:'Buttons — accent demoted in the hierarchy', changes:[
         ['changed','Button variant order is now Primary → Secondary → Accent → Simple → Link, reflected in the playground, reference grid and icon-only grid'],
         ['changed','Playground defaults to Primary instead of Accent'],
