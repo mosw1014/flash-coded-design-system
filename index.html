@@ -982,156 +982,186 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
 .ref-code-peek:hover{background:var(--chrome-txt);color:var(--chrome-bg);border-color:var(--chrome-txt)}
 
 /* ================================================================
-   SESSION 5 — TEXT INPUTS
+   TEXT INPUTS — unified Standard + Search component
+   (replaces the old "Text Inputs" and "Text Inputs v2" sections)
 ================================================================ */
-.inp-wrap{display:flex;flex-direction:column;gap:5px;width:100%;position:relative}
-.inp-label{font-family:'Satoshi',sans-serif;font-size:13px;font-weight:600;color:var(--_inp-label,#000);line-height:1.3}
-.inp-field{
-  display:flex;align-items:center;height:var(--_inp-h,48px);
-  background:var(--_inp-bg,#f6f6f6);border:1.5px solid var(--_inp-border,#cbcbd0);
-  border-radius:8px;overflow:hidden;transition:border-color .15s,background .15s;position:relative;
+#s-inputs{
+  --ti-pad-x:20px;
+  --ti-green:#10c504;
+  --ti-error:#c10021;
+  --ti-error-bg:#ffe9e9;
+  --ti-helper-bg:#f0f0f0;
+  --ti-helper-text:#252525;
+  --ti-label-rest:#8a8a8a;
+  --ti-label-focus:#414141;
+  --ti-text-primary:#000000;
+  --ti-icon-subtle:#a4a4a4;
 }
-.inp-field:focus-within{border-color:var(--_inp-border-focus,#000)!important}
-.inp-wrap--error .inp-field:focus-within{border-color:#C10021!important}
-.inp-field--area{height:auto;align-items:flex-start;overflow:visible;border-radius:8px}
-.inp-field--f-focus{border-color:var(--_inp-border-focus,#000)!important}
-.inp-wrap--error .inp-field{background:#FFF4F0!important;border-color:#C10021!important}
-.inp-wrap--errorcorrected .inp-field{background:rgba(16,197,4,0.06)!important;border-color:#10c504!important}
-.inp{
-  flex:1;min-width:0;height:100%;padding:0 12px;
-  background:transparent;border:none;outline:none;
-  font-family:'Satoshi',sans-serif;font-size:var(--_inp-fs,14px);font-weight:500;
-  color:var(--_inp-text,#000);caret-color:var(--_inp-cursor,#10c504);
-}
-.inp::placeholder{color:var(--_inp-ph,#a1a3a8)}
-.inp-area{width:100%;min-height:96px;padding:10px 28px 20px 12px;resize:vertical;border-radius:6px}
-.inp--noleft{padding-left:8px}
-.inp--noright{padding-right:8px}
-.inp-pre{
-  display:flex;align-items:center;justify-content:center;
-  height:100%;padding:0 12px;flex-shrink:0;
-  border-right:1.5px solid var(--_inp-border,#cbcbd0);transition:border-color .15s;
-  font-family:'Satoshi',sans-serif;
-}
-.inp-field:focus-within .inp-pre,.inp-field--f-focus .inp-pre{border-right-color:var(--_inp-border-focus,#000)}
-.inp-wrap--error .inp-pre{border-right-color:#C10021;background:#FDDBDB!important}
-.inp-wrap--error .inp-pre--text{color:#C10021!important}
-.inp-wrap--error .inp-pre--icon{color:var(--_inp-pre-text,#797b7e)!important}
-.inp-wrap--error .inp-suf--icon-btn{color:var(--_inp-suf-text,#797b7e)!important}
-.inp-pre--text{background:var(--_inp-pre-bg,#efeeef);color:var(--_inp-pre-text,#797b7e);font-size:var(--_inp-fs,14px);font-weight:600;user-select:none;min-width:44px;justify-content:center}
-.inp-pre--icon{background:transparent;color:var(--_inp-suf-text,#797b7e);padding:0 10px}
-.inp-pre--btn{
-  background:var(--_inp-pre-bg,#efeeef);color:var(--_inp-pre-text,#797b7e);
-  cursor:pointer;border:none;font-family:'Satoshi',sans-serif;
-  font-size:var(--_inp-fs,13px);font-weight:600;
-  display:flex;align-items:center;gap:4px;white-space:nowrap;padding:0 10px;
-}
-.inp-pre--btn:hover{filter:brightness(.94)}
-.inp-suf.inp-suf--icon-btn{border-left:none!important}
-.inp-suf{
-  display:flex;align-items:center;justify-content:center;
-  height:100%;padding:0 12px;flex-shrink:0;
-  border-left:1.5px solid var(--_inp-border,#cbcbd0);
-  color:var(--_inp-suf-text,#797b7e);transition:border-color .15s;
-}
-.inp-field:focus-within .inp-suf,.inp-field--f-focus .inp-suf{border-left-color:var(--_inp-border-focus,#000)}
-.inp-suf.inp-suf--icon-btn,.inp-wrap--error .inp-suf.inp-suf--icon-btn{border-left:none!important}
-.inp-wrap--error .inp-suf:not(.inp-suf--icon-btn){border-left-color:#C10021}
-.inp-suf--btn{background:transparent;border:none;cursor:pointer;font-family:'Satoshi',sans-serif;font-size:var(--_inp-fs,13px);font-weight:600;color:var(--_inp-suf-text,#797b7e);display:flex;align-items:center;gap:5px;white-space:nowrap}
-.inp-suf--btn:hover,.inp-suf--icon-btn:hover{opacity:.7}
-.inp-suf--icon-btn{background:transparent;border:none;cursor:pointer;color:var(--_inp-suf-text,#797b7e);display:flex;align-items:center;justify-content:center;border-left:none!important}
-.inp-suf--badge{background:var(--_inp-pre-bg,#efeeef);font-family:'Satoshi',sans-serif;font-size:12px;font-weight:600;color:var(--_inp-pre-text,#797b7e);display:flex;align-items:center;gap:4px;cursor:pointer;border:none;padding:0 12px;white-space:nowrap}
-.inp-caption{font-size:12px;color:var(--_inp-caption,#a1a3a8);line-height:1.4;font-family:'Satoshi',sans-serif;margin-top:1px}
-.inp-wrap--error .inp-caption{color:#C10021}
-.inp-wrap--errorcorrected .inp-caption{color:#10c504}
 
-/* Dropdown */
-.inp-drop{position:fixed;z-index:9000;background:var(--chrome-bg,#fff);border:1px solid var(--chrome-border,#ddd);border-radius:10px;box-shadow:0 8px 32px rgba(0,0,0,.13);overflow:hidden;min-width:210px;max-height:260px;overflow-y:auto;transition:background .25s}
-.inp-drop-item{display:flex;align-items:center;gap:10px;padding:10px 14px;cursor:pointer;font-size:13px;font-family:'Satoshi',sans-serif;color:var(--chrome-txt,#000);transition:background .1s}
-.inp-drop-item:hover{background:var(--chrome-hover,rgba(0,0,0,.04))}
-.inp-drop-item.on{background:var(--chrome-hover);font-weight:700}
-.inp-drop__dial{font-size:11px;color:var(--chrome-muted);margin-left:auto;font-family:'SF Mono',monospace}
-.inp-drop__name{font-weight:600;font-size:13px}
-.inp-drop__num{font-size:11px;color:var(--chrome-muted);margin-top:1px;font-family:'SF Mono',monospace}
-.inp-contacts-avatar{width:30px;height:30px;border-radius:50%;flex-shrink:0;background:var(--chrome-border);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--chrome-txt)}
+/* ---- Playground shell (controls + live stage), same convention as .inp-pg__* ---- */
+.ti-pg{border:1px solid var(--chrome-border);border-radius:12px;overflow:hidden;background:var(--chrome-bg);transition:background .25s,border-color .25s}
+.ti-pg__stage{display:flex;align-items:center;justify-content:center;min-height:220px;padding:56px 40px;transition:background .25s}
+.ti-pg__stage-inner{width:100%;max-width:480px}
+.ti-pg__ctrls{display:flex;flex-direction:column;gap:16px;padding:20px 22px;background:var(--chrome-nav);border-top:1px solid var(--chrome-border);transition:background .25s;flex-wrap:wrap}
+.ti-pg__row{display:flex;flex-wrap:wrap;gap:16px}
+.ti-pg__group{display:flex;align-items:flex-start;gap:10px;flex-direction:column}
+.ti-pg__clabel{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--chrome-muted);white-space:nowrap}
+.ti-pg__pr{display:flex;gap:2px;background:var(--chrome-bg);border:1px solid var(--chrome-border);border-radius:8px;padding:2px;transition:background .25s}
+.ti-pg__p{border:none;background:transparent;padding:6px 12px;border-radius:6px;font-family:inherit;font-size:12px;font-weight:600;color:var(--chrome-muted);cursor:pointer;white-space:nowrap;transition:background .15s,color .15s}
+.ti-pg__p.on{background:var(--chrome-txt);color:var(--chrome-bg)}
+.ti-pg__select{background:var(--chrome-bg);border:1px solid var(--chrome-border);border-radius:8px;padding:7px 9px;font-family:inherit;font-size:12px;font-weight:600;color:var(--chrome-txt);cursor:pointer}
+.ti-pg__select:disabled{opacity:.45;cursor:not-allowed}
+.ti-pg__switchrow{display:flex;align-items:center;gap:8px}
+.ti-pg__switch{position:relative;width:32px;height:18px;border-radius:18px;background:var(--chrome-border);cursor:pointer;transition:background .15s;flex:0 0 auto}
+.ti-pg__switch.on{background:var(--ti-green)}
+.ti-pg__switch::after{content:'';position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:50%;background:#fff;transition:transform .15s}
+.ti-pg__switch.on::after{transform:translateX(14px)}
+.ti-pg__readout{font-size:11px;color:var(--chrome-muted);padding:8px 10px;background:var(--chrome-bg);border-radius:8px}
 
-/* Playground */
-.inp-pg{border:1px solid var(--chrome-border);border-radius:12px;overflow:hidden}
-.inp-pg__ctrls{display:flex;flex-direction:column;gap:16px;padding:20px 22px;background:var(--chrome-nav);border-top:1px solid var(--chrome-border);transition:background .25s}
-.inp-pg__group{display:flex;align-items:flex-start;gap:14px}
-.inp-pg__clabel{font-size:12px;font-weight:600;color:var(--chrome-muted);white-space:nowrap;width:48px;flex-shrink:0;padding-top:6px}
-.inp-pg__pr{display:flex;gap:2px;background:var(--chrome-bg);border:1px solid var(--chrome-border);border-radius:7px;padding:2px;transition:background .25s}
-.inp-pg__p{padding:5px 12px;border-radius:5px;border:none;cursor:pointer;font-family:inherit;font-size:12px;font-weight:600;color:var(--chrome-muted);background:transparent;transition:all .15s;white-space:nowrap}
-.inp-pg__p.on{background:var(--chrome-txt);color:var(--chrome-bg)}
-.inp-pg__stage{display:flex;align-items:center;justify-content:center;min-height:200px;padding:48px 40px;transition:background .25s}
-.inp-pg__inner{width:100%;max-width:360px}
+/* ---- Field (standard) ---- */
+.ti-shell{position:relative;width:100%;border-radius:12px;border:2px solid transparent;overflow:hidden;transition:border-color .12s}
+.ti-shell[data-bg="white"]{border-color:#dddddd}
+.ti-shell[data-bg="white"].ti-focused{border-color:#000000}
+.ti-shell[data-bg="grey"]{border-color:#dddddd}
+.ti-shell[data-bg="grey"].ti-focused{border-color:#000000}
+.ti-shell[data-bg="colour"]{border-color:transparent}
+.ti-shell[data-bg="colour"].ti-focused{border-color:#000000}
+.ti-shell.ti-error{border-color:var(--ti-error)!important}
+.ti-shell.ti-error .ti-field{background:#ffffff!important}
 
-/* Reference accordion */
-.inp-accord{border:1px solid var(--chrome-border);border-radius:10px;overflow:hidden;margin-top:20px}
-.inp-ai{border-bottom:1px solid var(--chrome-border)}
-.inp-ai:last-child{border-bottom:none}
-.inp-ah{display:flex;align-items:center;gap:10px;padding:13px 16px;cursor:pointer;background:transparent;border:none;width:100%;text-align:left;font-family:inherit;transition:background .12s}
-.inp-ah:hover{background:var(--chrome-hover)}
-.inp-ah-name{font-size:13px;font-weight:700;color:var(--chrome-txt)}
-.inp-ah-desc{font-size:11px;color:var(--chrome-muted)}
-.inp-ah-chev{font-size:11px;color:var(--chrome-muted);transition:transform .2s;margin-left:auto;line-height:1}
-.inp-ai.open .inp-ah-chev{transform:rotate(90deg)}
-.inp-ab{display:none;border-top:1px solid var(--chrome-border)}
-.inp-ai.open .inp-ab{display:block}
-.inp-ref-row{display:flex;align-items:stretch;border-bottom:1px solid var(--chrome-border)}
-.inp-ref-row:last-child{border-bottom:none}
-.inp-ref-rlabel{width:72px;flex-shrink:0;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--chrome-muted);padding:16px 12px;border-right:1px solid var(--chrome-border);display:flex;align-items:flex-start}
-.inp-ref-cells{display:flex;flex:1;overflow-x:auto}
-.inp-ref-cell{flex:1;min-width:160px;max-width:240px;padding:14px 12px;border-right:1px solid var(--chrome-border);transition:background .25s}
-.inp-ref-cell:last-child{border-right:none}
-.inp-ref-cell-lbl{font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--chrome-muted);margin-bottom:8px}
+.ti-field{position:relative;width:100%;padding-left:var(--ti-pad-x);padding-right:var(--ti-pad-x);display:flex;flex-direction:column;justify-content:center;cursor:text;transition:background .12s}
+.ti-field[data-size="default"]{height:60px}
+.ti-field[data-size="small"]{height:44px}
+.ti-field[data-bg="white"]{background:#f8f8f8}
+.ti-shell.ti-focused[data-bg="white"] .ti-field{background:#ffffff}
+.ti-field[data-bg="grey"]{background:#ffffff}
+.ti-field[data-bg="colour"]{background:#ffffff}
 
-/* ================================================================
-   TEXT INPUTS V2 (Trader — Figma "Master Input Component")
-================================================================ */
-.inpv2-box{display:flex;flex-direction:column;width:100%;border-radius:12px;overflow:hidden;background:var(--_iv2-box-bg,#fff);transition:background .25s}
-.inpv2-row{display:flex;align-items:center;width:100%;height:60px}
-.inpv2-box[data-size="small"] .inpv2-row{height:44px}
-.inpv2-icon{display:flex;align-items:center;justify-content:center;flex-shrink:0;width:28px;height:28px;margin:0 0 0 16px;font-family:'Satoshi',sans-serif;font-weight:900;font-size:16px;color:var(--_iv2-text,#000)}
-.inpv2-box[data-size="small"] .inpv2-icon{width:20px;height:20px;margin-left:12px;font-size:13px}
-.inpv2-body{flex:1;min-width:0;display:flex;flex-direction:column;justify-content:center;gap:2px;padding-left:20px;overflow:hidden}
-.inpv2-label{font-family:'Satoshi',sans-serif;font-weight:650;font-size:16px;color:var(--_iv2-label,#8a8a8a);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:font-size .12s,color .12s}
-.inpv2-box[data-size="small"] .inpv2-label{font-size:13px}
-.inpv2-box[data-state="focus"] .inpv2-label{font-weight:500;font-size:13px;color:var(--_iv2-label-focus,#414141)}
-.inpv2-box[data-size="small"][data-state="focus"] .inpv2-label{font-size:12px}
-.inpv2-value{display:none;align-items:center;gap:2px;font-family:'Satoshi',sans-serif;font-weight:650;font-size:16px;color:var(--_iv2-text,#000);white-space:nowrap}
-.inpv2-box[data-size="small"] .inpv2-value{font-size:13px}
-.inpv2-box[data-state="focus"] .inpv2-value{display:flex}
-.inpv2-cursor{width:2px;height:18px;background:var(--_iv2-cursor,#10c504);flex-shrink:0}
-.inpv2-trailing{display:flex;align-items:center;gap:8px;padding-right:20px;padding-left:8px;flex-shrink:0}
-.inpv2-trailing button{background:transparent;border:none;cursor:pointer;color:var(--_iv2-icon,#a4a4a4);display:flex;align-items:center;justify-content:center;padding:0}
-.inpv2-trailing button:hover{opacity:.7}
-.inpv2-link{display:flex;align-items:center;gap:4px;font-family:'Satoshi',sans-serif;font-weight:700;font-size:12px;color:var(--_iv2-text,#000);white-space:nowrap}
-.inpv2-link svg{color:var(--_iv2-link,#0062eb)}
-.inpv2-helper{padding:4px 20px 6px;font-family:'Satoshi',sans-serif;font-weight:650;font-size:12px;color:var(--_iv2-helper-text,#252525);background:var(--_iv2-helper-bg,#f0f0f0)}
+.ti-leading{position:absolute;left:var(--ti-pad-x);top:50%;transform:translateY(-50%);width:28px;height:28px;pointer-events:none}
+.ti-field[data-size="small"] .ti-leading{width:20px;height:20px}
+.ti-leading svg{width:100%;height:100%;display:block}
+.ti-has-leading .ti-label,.ti-has-leading .ti-value-row{left:68px}
+.ti-field[data-size="small"].ti-has-leading .ti-label,
+.ti-field[data-size="small"].ti-has-leading .ti-value-row{left:56px}
 
-/* Search pill */
-.inpv2-pill{display:flex;align-items:center;width:100%;height:60px;border-radius:80px;border:2px solid transparent;background:transparent;transition:background .15s,border-color .15s;box-sizing:border-box}
-.inpv2-pill[data-size="small"]{height:44px}
-.inpv2-pill[data-bg="white"]{background:var(--_iv2-box-bg,#fff)}
-.inpv2-pill[data-bg="grey"]{background:var(--_iv2-pill-grey,#fff);border-color:var(--_iv2-pill-grey-border,#ddd)}
-.inpv2-pill[data-state="focus"],.inpv2-pill[data-state="typing"]{border-color:var(--_iv2-pill-border-focus,#000)!important;background:var(--_iv2-box-bg,#fff)}
-.inpv2-pill-icon{display:flex;align-items:center;justify-content:center;flex-shrink:0;width:28px;height:28px;margin-left:20px;color:var(--_iv2-icon,#a4a4a4)}
-.inpv2-pill[data-size="small"] .inpv2-pill-icon{width:20px;height:20px;margin-left:16px}
-.inpv2-pill-body{flex:1;min-width:0;display:flex;flex-direction:column;justify-content:center;gap:2px;padding-left:20px;overflow:hidden}
-.inpv2-pill-caption{font-family:'Satoshi',sans-serif;font-weight:500;font-size:13px;color:var(--_iv2-label-focus,#414141);white-space:nowrap}
-.inpv2-pill[data-size="small"] .inpv2-pill-caption{font-size:12px}
-.inpv2-pill-line{display:flex;align-items:center;gap:2px;min-width:0}
-.inpv2-pill-label{font-family:'Satoshi',sans-serif;font-weight:650;font-size:16px;color:var(--_iv2-label,#8a8a8a);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.inpv2-pill[data-size="small"] .inpv2-pill-label{font-size:13px}
-.inpv2-pill-value{display:none;font-family:'Satoshi',sans-serif;font-weight:650;font-size:16px;color:var(--_iv2-text,#000);white-space:nowrap}
-.inpv2-pill[data-size="small"] .inpv2-pill-value{font-size:13px}
-.inpv2-pill-cursor{width:2px;height:18px;background:var(--_iv2-cursor,#10c504);flex-shrink:0;display:none;margin-left:2px}
-.inpv2-pill[data-state="focus"] .inpv2-pill-cursor,.inpv2-pill[data-state="typing"] .inpv2-pill-cursor{display:inline-block}
-.inpv2-pill-trailing{display:flex;align-items:center;padding-right:20px;padding-left:8px;flex-shrink:0}
-.inpv2-pill-trailing button{background:transparent;border:none;cursor:pointer;color:var(--_iv2-icon,#a4a4a4);display:flex;align-items:center;justify-content:center;padding:0}
-.inpv2-pill-trailing button:hover{opacity:.7}
+.ti-trailing{position:absolute;right:var(--ti-pad-x);top:50%;transform:translateY(-50%);display:flex;align-items:center;gap:4px}
+.ti-eye{border:none;background:transparent;padding:0;cursor:pointer;color:var(--ti-icon-subtle);display:none;align-items:center;justify-content:center}
+.ti-field[data-size="default"] .ti-eye{width:28px;height:28px}
+.ti-field[data-size="small"] .ti-eye{width:20px;height:20px}
+.ti-eye svg{width:100%;height:100%}
+.ti-show-eye .ti-eye{display:flex}
+.ti-trailing-icon{display:flex;align-items:center;justify-content:center;pointer-events:none}
+.ti-field[data-size="default"] .ti-trailing-icon{width:28px;height:28px}
+.ti-field[data-size="small"] .ti-trailing-icon{width:20px;height:20px}
+.ti-trailing-icon svg{width:100%;height:100%;display:block}
 
+.ti-label{position:absolute;left:var(--ti-pad-x);right:var(--ti-pad-x);top:50%;transform:translateY(-50%);font-weight:650;color:var(--ti-label-rest);line-height:1.25;font-feature-settings:"ss01" 1,"ss03" 1;pointer-events:none;transform-origin:left top;transition:top .14s ease,transform .14s ease,font-size .14s ease,color .14s ease,font-weight .14s ease;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ti-field[data-size="default"] .ti-label{font-size:16px}
+.ti-field[data-size="small"] .ti-label{font-size:13px;line-height:1.3}
+.ti-shell.ti-floated .ti-label{top:14px;transform:translateY(0);font-size:13px;font-weight:500;color:var(--ti-label-focus);line-height:1.3}
+.ti-shell[data-size="small"].ti-floated .ti-label{top:6px;font-size:12px}
+
+.ti-value-row{position:absolute;left:var(--ti-pad-x);right:var(--ti-pad-x);bottom:8px;height:20px;display:flex;align-items:center;opacity:0;transition:opacity .1s}
+.ti-field[data-size="small"] .ti-value-row{bottom:5px;height:17px}
+.ti-shell.ti-floated .ti-value-row{opacity:1}
+
+/* Inline label mode: label sits where a placeholder would, at rest size always,
+   and just disappears once there's a value — never shifts/shrinks like caption mode. */
+.ti-shell.ti-inline .ti-label{top:50%!important;transform:translateY(-50%)!important;font-size:16px!important;font-weight:650!important;color:var(--ti-label-rest)!important;line-height:1.25!important}
+.ti-shell[data-size="small"].ti-inline .ti-label{font-size:13px!important;line-height:1.3!important}
+.ti-shell.ti-inline.ti-has-value .ti-label{opacity:0}
+.ti-shell.ti-inline .ti-value-row{opacity:1!important;top:0;bottom:0;height:auto!important}
+
+.ti-input{border:none;outline:none;background:transparent;font-family:inherit;font-weight:650;color:var(--ti-text-primary);width:100%;padding:0;caret-color:transparent;font-feature-settings:"ss01" 1,"ss03" 1}
+.ti-field[data-size="default"] .ti-input{font-size:16px;line-height:1.25}
+.ti-field[data-size="small"] .ti-input{font-size:13px;line-height:1.3}
+.ti-input::placeholder{color:transparent}
+
+.ti-dots{display:flex;align-items:center;gap:2px;pointer-events:none}
+.ti-dots span{width:4px;height:4px;border-radius:50%;background:var(--ti-text-primary)}
+.ti-dots--text{font-family:inherit;font-weight:650;color:var(--ti-text-primary);font-feature-settings:"ss01" 1,"ss03" 1}
+.ti-field[data-size="default"] .ti-dots--text{font-size:16px;line-height:1.25}
+.ti-field[data-size="small"] .ti-dots--text{font-size:13px;line-height:1.3}
+
+.ti-caret{position:absolute;top:50%;transform:translateY(-50%);width:2px;height:18px;background:var(--ti-green);pointer-events:none;display:none;animation:ti-caret-blink 1s step-end infinite}
+.ti-caret.on{display:block}
+@keyframes ti-caret-blink{0%,49%{opacity:1}50%,100%{opacity:0}}
+
+.ti-mirror{position:absolute;visibility:hidden;white-space:pre;pointer-events:none}
+
+.ti-clear{border:none;background:transparent;padding:0;cursor:pointer;color:var(--ti-icon-subtle);display:none;align-items:center;justify-content:center}
+.ti-field[data-size="default"] .ti-clear{width:28px;height:28px}
+.ti-field[data-size="small"] .ti-clear{width:20px;height:20px}
+.ti-shell.ti-show-clear .ti-clear{display:flex}
+.ti-clear svg{width:100%;height:100%}
+
+/* Helper/error row sits flush under the field body inside the same shell —
+   no gap, no radius of its own; the shell's overflow:hidden rounds it for us. */
+.ti-helper{padding:4px var(--ti-pad-x) 6px;font-size:12px;font-weight:650;line-height:1.3;color:var(--ti-helper-text);background:var(--ti-helper-bg);display:none;font-feature-settings:"ss01" 1,"ss03" 1}
+.ti-helper.show{display:block}
+.ti-helper.ti-error-text{color:var(--ti-error);background:var(--ti-error-bg)}
+
+/* ---- Search variant (pill) ---- */
+.ti-search{position:relative;width:100%;border-radius:80px;border:2px solid transparent;display:flex;align-items:center;height:60px;cursor:text;transition:border-color .12s,background .12s}
+.ti-search[data-bg="white"]{background:#f8f8f8;border-color:#dddddd}
+.ti-search[data-bg="grey"]{background:#ffffff;border-color:#dddddd}
+.ti-search[data-bg="colour"]{background:#ffffff;border-color:transparent}
+.ti-search.ti-focused{border-color:#000000}
+.ti-search.ti-error{border-color:var(--ti-error)!important;background:#ffffff!important}
+.ti-search[data-size="small"]{height:44px}
+.ti-search-icon{flex:0 0 auto;width:28px;height:28px;margin-left:20px;color:var(--ti-icon-subtle)}
+.ti-search[data-size="small"] .ti-search-icon{width:20px;height:20px}
+.ti-search-icon svg{width:100%;height:100%}
+.ti-search-body{flex:1;min-width:0;position:relative;height:60px;padding-left:20px;display:flex;flex-direction:column;justify-content:center}
+.ti-search[data-size="small"] .ti-search-body{height:44px}
+.ti-search-label{font-size:16px;font-weight:650;color:var(--ti-label-rest);line-height:1.25;position:absolute;left:20px;right:20px;top:50%;transform:translateY(-50%);pointer-events:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:top .14s ease,transform .14s ease,font-size .14s ease,color .14s ease}
+.ti-search[data-size="small"] .ti-search-label{font-size:13px;line-height:1.3}
+.ti-search.ti-floated .ti-search-label{top:14px;transform:translateY(0);font-size:13px;font-weight:500;color:var(--ti-label-focus)}
+.ti-search[data-size="small"].ti-floated .ti-search-label{top:6px;font-size:12px}
+.ti-search-value-row{position:absolute;left:20px;right:20px;bottom:8px;height:20px;opacity:0;transition:opacity .1s;display:flex;align-items:center}
+.ti-search[data-size="small"] .ti-search-value-row{bottom:5px;height:17px}
+.ti-search.ti-floated .ti-search-value-row{opacity:1}
+
+.ti-search.ti-inline .ti-search-label{top:50%!important;transform:translateY(-50%)!important;font-size:16px!important;font-weight:650!important;color:var(--ti-label-rest)!important}
+.ti-search[data-size="small"].ti-inline .ti-search-label{font-size:13px!important}
+.ti-search.ti-inline.ti-has-value .ti-search-label{opacity:0}
+.ti-search.ti-inline .ti-search-value-row{opacity:1!important;top:0;bottom:0;height:auto}
+
+.ti-search-input{border:none;outline:none;background:transparent;font-family:inherit;font-weight:650;font-size:16px;color:var(--ti-text-primary);width:100%;caret-color:transparent}
+.ti-search[data-size="small"] .ti-search-input{font-size:13px}
+.ti-search-input::placeholder{color:transparent}
+.ti-search-trailing{display:flex;align-items:center;gap:4px;margin-right:20px}
+.ti-search-spinner{width:28px;height:28px;display:none;animation:ti-search-spin .8s linear infinite}
+.ti-search[data-size="small"] .ti-search-spinner{width:20px;height:20px}
+.ti-search.ti-loading .ti-search-spinner{display:block}
+.ti-search-spinner svg{width:100%;height:100%;display:block}
+@keyframes ti-search-spin{to{transform:rotate(360deg)}}
+.ti-search-clear{width:28px;height:28px;padding:0;border:none;background:transparent;color:var(--ti-icon-subtle);display:none;align-items:center;justify-content:center;cursor:pointer;flex:0 0 auto}
+.ti-search[data-size="small"] .ti-search-clear{width:20px;height:20px}
+.ti-search-clear svg{width:100%;height:100%}
+.ti-search.ti-show-clear .ti-search-clear{display:flex}
+
+/* ---- State journeys (static, non-interactive showcase) ---- */
+.ti-journey{margin-bottom:28px}
+.ti-journey:last-child{margin-bottom:0}
+.ti-journey__title{font-size:13px;font-weight:700;color:var(--chrome-txt);margin-bottom:3px}
+.ti-journey__desc{font-size:12px;color:var(--chrome-muted);margin-bottom:14px}
+.ti-journey__row{display:flex;align-items:center;gap:10px;overflow-x:auto;padding-bottom:4px}
+.ti-journey__step{flex:0 0 auto;width:300px}
+.ti-journey__step--wide{width:360px}
+.ti-journey__step-label{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:var(--chrome-muted);margin-bottom:8px;text-align:center}
+.ti-journey__arrow{flex:0 0 auto;color:var(--chrome-border);font-size:18px;padding-top:20px}
+/* Static, non-absolute caret for journey snapshots — flows right after the
+   text in normal layout instead of relying on the live field's JS-measured
+   absolute positioning, so it can never render before/on top of the value. */
+.ti-caret-inline{display:inline-block;width:2px;height:18px;background:var(--ti-green);vertical-align:middle;margin-left:2px;position:relative;top:-1px}
+
+/* ---- Icon sheet ---- */
+.ti-icon-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:10px}
+.ti-icon-tile{display:flex;flex-direction:column;align-items:center;gap:8px;padding:14px 8px;border-radius:10px;background:var(--chrome-nav);border:1px solid var(--chrome-border);transition:background .25s,border-color .25s}
+.ti-icon-tile__glyph{width:28px;height:28px;display:flex;align-items:center;justify-content:center}
+.ti-icon-tile__glyph svg{width:100%;height:100%;display:block}
+.ti-icon-tile__name{font-size:10.5px;font-weight:600;color:var(--chrome-muted);text-align:center;word-break:break-word;font-family:'SF Mono','Monaco',monospace}
 /* ================================================================
    CHIPS
 ================================================================ */
@@ -2181,7 +2211,6 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
     <div class="sb-cat">Components</div>
     <a href="javascript:void(0)" onclick="showSection('s-buttons')" class="sb-link"><div class="sb-pip"></div>Buttons</a>
     <a href="javascript:void(0)" onclick="showSection('s-inputs')"  class="sb-link"><div class="sb-pip"></div>Text Inputs</a>
-    <a href="javascript:void(0)" onclick="showSection('s-inputs-v2')" class="sb-link"><div class="sb-pip"></div>Text Inputs v2</a>
     <a href="javascript:void(0)" onclick="showSection('s-selection')" class="sb-link"><div class="sb-pip"></div>Checkboxes &amp; Radios</a>
     <a href="javascript:void(0)" onclick="showSection('s-tags')"    class="sb-link"><div class="sb-pip"></div>Tags &amp; Badges</a>
     <a href="javascript:void(0)" onclick="showSection('s-chips')"   class="sb-link"><div class="sb-pip"></div>Chips &amp; Pills</a>
@@ -2520,20 +2549,12 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
     <section class="sec" id="s-inputs">
       <div class="sec__head">
         <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Text Inputs <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.3.0</span></h1>
-        <p class="sec__desc">9 input types · 2 sizes · 5 states · fully interactive playground with live password toggle, country selector and contacts picker.</p>
+        <h1 class="sec__title">Text Inputs <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v2.0.0</span></h1>
+        <p class="sec__desc">Unified Trader input system — Standard (floating/inline label) and Search (pill) families &middot; 2 sizes &middot; every state, background context and icon slot &middot; state-journey map and icon reference sheet below.</p>
       </div>
-      <div id="inp-playground" class="type-sub"></div>
-      <div id="inp-reference"  class="type-sub"></div>
-    </section>
-    <section class="sec" id="s-inputs-v2">
-      <div class="sec__head">
-        <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Text Inputs v2 <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.0</span></h1>
-        <p class="sec__desc">Trader input system pulled from Figma's Master Input Component &middot; Input (floating label) and Search (pill) families &middot; 2 sizes &middot; every state, background and slot configuration.</p>
-      </div>
-      <div id="inpv2-playground" class="type-sub"></div>
-      <div id="inpv2-reference"  class="type-sub"></div>
+      <div id="ti-playground" class="type-sub"></div>
+      <div id="ti-journeys" class="type-sub"></div>
+      <div id="ti-icon-sheet" class="type-sub"></div>
     </section>
     <section class="sec" id="s-selection">
       <div class="sec__head">
@@ -5097,10 +5118,7 @@ function toggleTheme() {
   try { if(typeof refreshSem==='function') refreshSem(); } catch(e){}
   try { if(typeof renderPlayground==='function' && document.getElementById('btn-playground')) renderPlayground(); } catch(e){}
   try { if(typeof rerenderBtnRef==='function') rerenderBtnRef(); } catch(e){}
-  try { if(typeof renderInpPlayground==='function' && document.getElementById('inp-playground')) renderInpPlayground(); } catch(e){}
-  try { if(typeof rerenderInpRef==='function') rerenderInpRef(); } catch(e){}
-  try { if(typeof renderInpV2Playground==='function' && document.getElementById('inpv2-playground')) renderInpV2Playground(); } catch(e){}
-  try { if(typeof rerenderInpV2Ref==='function') rerenderInpV2Ref(); } catch(e){}
+  try { if(typeof renderTextInputsSection==='function' && document.getElementById('ti-playground')) renderTextInputsSection(); } catch(e){}
   try { if(typeof renderChipPlayground==='function' && document.getElementById('chip-playground')) renderChipPlayground(); } catch(e){}
   try { if(typeof renderTagsBadges==='function' && document.getElementById('tag-playground')) renderTagsBadges(); } catch(e){}
   try { if(typeof renderChipReference==='function' && document.getElementById('chip-reference')) renderChipReference(); } catch(e){}
@@ -6238,929 +6256,670 @@ try {
 try { renderIconOnly();   } catch(e){ console.error('btn-icon',e); }
 try { renderTappable();   } catch(e){ console.error('btn-tappable',e); }
 
-/* ============================================================
-   SESSION 5 — TEXT INPUTS
-============================================================ */
-
-const INP_TYPES = [
-  {key:'text',       label:'Text',               desc:'Basic text entry'},
-  {key:'currency',   label:'Currency',            desc:'Monetary value with R prefix'},
-  {key:'mobile',     label:'Mobile number',       desc:'Phone number with Contacts shortcut'},
-  {key:'foreign',    label:'Foreign number',      desc:'International with country selector'},
-  {key:'password',   label:'Password',            desc:'Masked entry with show/hide toggle'},
-  {key:'search',     label:'Search',              desc:'Search field with leading icon'},
-  {key:'searchdate', label:'Search + date',       desc:'Search with date filter badge'},
-  {key:'multiline',  label:'Textbox (multiline)', desc:'Multi-line textarea'},
-];
-
-const INP_STATES = [
-  {key:'default',       label:'Default'},
-  {key:'focus',         label:'Focus empty'},
-  {key:'typing',        label:'Focus typing'},
-  {key:'completed',     label:'Completed'},
-  {key:'error',         label:'Error'},
-  {key:'errorcorrected',label:'Error corrected'},
-];
-
-const INP_COLORS = {
-  flash:{
-    light:{bg:'#f6f6f6',border:'#cbcbd0',borderFocus:'#000',text:'#000',ph:'#a1a3a8',cursor:'#10c504',label:'#000',caption:'#8c8c91',preBg:'#efeeef',preText:'#797b7e',sufText:'#797b7e',stage:'#ffffff'},
-    dark: {bg:'#25262c',border:'#60636d',borderFocus:'#fff',text:'#fff',ph:'#72747a',cursor:'#10c504',label:'#fff',caption:'#72747a',preBg:'#2e2f35',preText:'#a1a3a8',sufText:'#a1a3a8',stage:'#12131a'},
-  },
+/* ================================================================
+   TEXT INPUTS — unified Standard + Search component
+   Replaces the old "Text Inputs" (v1) and "Text Inputs v2" sections.
+   Icon set ported from the Figma icon building blocks — same keys are
+   used in the Leading/Trailing icon pickers and the icon sheet below.
+================================================================ */
+const TI_CLEAR_SVG = `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M7.75017 18.2383C7.20046 18.788 7.20046 19.6792 7.75017 20.2289C8.29988 20.7786 9.19113 20.7786 9.74083 20.2289L13.986 15.9838L18.2613 20.2592C18.8108 20.8086 19.7016 20.8086 20.251 20.2592C20.8004 19.7098 20.8004 18.819 20.251 18.2695L15.9756 13.9941L20.2289 9.74083C20.7786 9.19113 20.7786 8.29988 20.2289 7.75017C19.6792 7.20046 18.788 7.20046 18.2383 7.75017L13.985 12.0035L9.74125 7.75977C9.19182 7.21034 8.30101 7.21034 7.75158 7.75977C7.20215 8.30921 7.20215 9.20001 7.75158 9.74944L11.9953 13.9932L7.75017 18.2383Z" fill="currentColor"/></svg>`;
+const TI_SPINNER_SVG = `<svg viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 5.5V1.5C10 0.671573 10.6716 0 11.5 0C12.3284 0 13 0.671573 13 1.5V5.5C13 6.32843 12.3284 7 11.5 7C10.6716 7 10 6.32843 10 5.5Z" fill="#666666"/><path d="M10 21.5V17.5C10 16.6716 10.6716 16 11.5 16C12.3284 16 13 16.6716 13 17.5V21.5C13 22.3284 12.3284 23 11.5 23C10.6716 23 10 22.3284 10 21.5Z" fill="#B2B2B2"/><path d="M17.5 10L21.5 10C22.3284 10 23 10.6716 23 11.5C23 12.3284 22.3284 13 21.5 13L17.5 13C16.6716 13 16 12.3284 16 11.5C16 10.6716 16.6716 10 17.5 10Z" fill="#666666"/><path d="M1.5 10L5.5 10C6.32843 10 7 10.6716 7 11.5C7 12.3284 6.32843 13 5.5 13L1.5 13C0.671573 13 -3.62117e-08 12.3284 0 11.5C3.62117e-08 10.6716 0.671573 10 1.5 10Z" fill="#999999"/><path d="M16.8118 14.6109L19.6403 17.4393C20.226 18.0251 20.226 18.9749 19.6403 19.5607C19.0545 20.1464 18.1047 20.1464 17.5189 19.5607L14.6905 16.7322C14.1047 16.1464 14.1047 15.1967 14.6905 14.6109C15.2763 14.0251 16.226 14.0251 16.8118 14.6109Z" fill="#999999"/><path d="M5.5606 3.61091L8.38903 6.43934C8.97482 7.02513 8.97482 7.97487 8.38903 8.56066C7.80324 9.14645 6.8535 9.14645 6.26771 8.56066L3.43928 5.73223C2.8535 5.14645 2.8535 4.1967 3.43928 3.61091C4.02507 3.02513 4.97482 3.02513 5.5606 3.61091Z" fill="#666666"/><path d="M8.32659 16.7322L5.49816 19.5607C4.91237 20.1464 3.96263 20.1464 3.37684 19.5607C2.79105 18.9749 2.79105 18.0251 3.37684 17.4393L6.20527 14.6109C6.79105 14.0251 7.7408 14.0251 8.32659 14.6109C8.91237 15.1967 8.91237 16.1464 8.32659 16.7322Z" fill="#B2B2B2"/><path d="M19.3891 5.73223L16.5607 8.56066C15.9749 9.14645 15.0251 9.14645 14.4393 8.56066C13.8536 7.97487 13.8536 7.02513 14.4393 6.43934L17.2678 3.61091C17.8536 3.02513 18.8033 3.02513 19.3891 3.61091C19.9749 4.1967 19.9749 5.14645 19.3891 5.73223Z" fill="#666666"/></svg>`;
+const TI_EYE_SHOW_SVG = `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M13.8486 6.5C9.00003 6.5 4.83965 9.43933 3.02632 13.6365C2.92612 13.8685 2.92612 14.1315 3.02632 14.3635C4.83965 18.5607 9.00003 21.5 13.8486 21.5C18.6972 21.5 22.8576 18.5607 24.6709 14.3635C24.7711 14.1315 24.7711 13.8685 24.6709 13.6365C22.8576 9.43933 18.6972 6.5 13.8486 6.5ZM13.8486 19C11.0956 19 8.86125 16.76 8.86125 14C8.86125 11.24 11.0956 9 13.8486 9C16.6016 9 18.836 11.24 18.836 14C18.836 16.76 16.6016 19 13.8486 19ZM13.8486 11C12.1928 11 10.8562 12.34 10.8562 14C10.8562 15.66 12.1928 17 13.8486 17C15.5044 17 16.841 15.66 16.841 14C16.841 12.34 15.5044 11 13.8486 11Z" fill="currentColor"/></svg>`;
+const TI_EYE_HIDE_SVG = `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M6.26869 8.55415L4.62906 6.91036C4.2786 6.55902 4.2786 5.99031 4.62906 5.63897C4.98081 5.28633 5.55207 5.28637 5.90377 5.63906L22.309 22.0904C22.6591 22.4415 22.6585 23.0098 22.3077 23.3601C21.9564 23.711 21.387 23.7102 21.0367 23.3583L18.7643 21.0763C18.5073 20.8187 18.1223 20.7429 17.7783 20.8614C16.5835 21.2728 15.3015 21.4962 13.9675 21.4962C9.11981 21.4962 4.96025 18.5573 3.14742 14.3609C3.04736 14.1292 3.04717 13.8666 3.14712 13.6349C3.85069 12.0041 4.91248 10.5685 6.22761 9.4188C6.48491 9.19386 6.51005 8.79612 6.26869 8.55415ZM10.9786 13.8775C10.9942 13.5409 10.9072 13.1994 10.6693 12.9609L10.4982 12.7893C10.0137 12.3036 9.19109 12.4464 9.06376 13.1205C9.01001 13.405 8.98123 13.6979 8.98123 13.9979C8.98123 16.7573 11.2151 18.9968 13.9675 18.9968C14.2681 18.9968 14.5615 18.9677 14.8462 18.9133C15.517 18.7853 15.6581 17.9673 15.1759 17.4838L15.0007 17.3083C14.7607 17.0676 14.4156 16.9806 14.0761 16.9949C14.0401 16.9965 14.0039 16.9972 13.9675 16.9972C12.317 16.9972 10.9757 15.6526 10.9757 13.9979C10.9757 13.9575 10.9767 13.9173 10.9786 13.8775ZM13.9674 8.99906C16.7198 8.99906 18.9537 11.2386 18.9537 13.9979C18.9537 14.4122 18.9002 14.8141 18.8024 15.1983C18.7041 15.5847 18.7819 16.0052 19.0635 16.2875L20.8696 18.0982C21.2358 18.4653 21.8251 18.4948 22.1959 18.1325C23.2884 17.0647 24.1748 15.7859 24.7915 14.3622C24.8922 14.1298 24.8922 13.866 24.7915 13.6336C22.974 9.43787 18.8194 6.49964 13.9675 6.49964C13.1213 6.49964 12.2971 6.59145 11.5027 6.76394C10.7873 6.91927 10.5873 7.79344 11.1049 8.31114L11.6855 8.89181C11.9662 9.17259 12.3844 9.25179 12.769 9.1532C13.1526 9.05487 13.5538 8.99906 13.9674 8.99906ZM13.9676 10.9986C13.9022 11.0045 13.8733 11.084 13.9197 11.1305L16.8274 14.0456C16.8738 14.0921 16.9534 14.0633 16.9593 13.9979C16.9593 12.3433 15.6181 10.9986 13.9676 10.9986Z" fill="currentColor"/></svg>`;
+const TI_ICONS = {
+  "generic": { label: "generic", default: `<svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M14 22C11.125 22 8.5 20.5 7.0625 18C5.625 15.5312 5.625 12.5 7.0625 10C8.5 7.53125 11.125 6 14 6C16.8438 6 19.4688 7.53125 20.9062 10C22.3438 12.5 22.3438 15.5312 20.9062 18C19.4688 20.5 16.8438 22 14 22ZM11.125 16.1875C10.9375 15.9688 10.625 15.9688 10.4062 16.125C10.1875 16.3125 10.1875 16.625 10.3438 16.8438C11.0625 17.6562 12.25 18.5 14 18.5C15.7188 18.5 16.9062 17.6562 17.625 16.8438C17.7812 16.625 17.7812 16.3125 17.5625 16.125C17.3438 15.9688 17.0312 15.9688 16.8438 16.1875C16.3125 16.8438 15.3438 17.5 14 17.5C12.625 17.5 11.6875 16.8438 11.125 16.1875ZM10.5 12.5C10.5 13.0625 10.9375 13.5 11.5 13.5C12.0625 13.5 12.5 13.0625 12.5 12.5C12.5 11.9688 12.0625 11.5 11.5 11.5C10.9375 11.5 10.5 11.9688 10.5 12.5ZM16.5 11.5C15.9375 11.5 15.5 11.9688 15.5 12.5C15.5 13.0625 15.9375 13.5 16.5 13.5C17.0625 13.5 17.5 13.0625 17.5 12.5C17.5 11.9688 17.0625 11.5 16.5 11.5Z" fill="black"/>
+</svg>`, small: `<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M10 16.125C7.66406 16.125 5.53125 14.9062 4.36328 12.875C3.19531 10.8691 3.19531 8.40625 4.36328 6.375C5.53125 4.36914 7.66406 3.125 10 3.125C12.3105 3.125 14.4434 4.36914 15.6113 6.375C16.7793 8.40625 16.7793 10.8691 15.6113 12.875C14.4434 14.9062 12.3105 16.125 10 16.125ZM7.66406 11.4023C7.51172 11.2246 7.25781 11.2246 7.08008 11.3516C6.90234 11.5039 6.90234 11.7578 7.0293 11.9355C7.61328 12.5957 8.57812 13.2812 10 13.2812C11.3965 13.2812 12.3613 12.5957 12.9453 11.9355C13.0723 11.7578 13.0723 11.5039 12.8945 11.3516C12.7168 11.2246 12.4629 11.2246 12.3105 11.4023C11.8789 11.9355 11.0918 12.4688 10 12.4688C8.88281 12.4688 8.12109 11.9355 7.66406 11.4023ZM7.15625 8.40625C7.15625 8.86328 7.51172 9.21875 7.96875 9.21875C8.42578 9.21875 8.78125 8.86328 8.78125 8.40625C8.78125 7.97461 8.42578 7.59375 7.96875 7.59375C7.51172 7.59375 7.15625 7.97461 7.15625 8.40625ZM12.0312 7.59375C11.5742 7.59375 11.2188 7.97461 11.2188 8.40625C11.2188 8.86328 11.5742 9.21875 12.0312 9.21875C12.4883 9.21875 12.8438 8.86328 12.8438 8.40625C12.8438 7.97461 12.4883 7.59375 12.0312 7.59375Z" fill="black"/>
+</svg>` },
+  "search": { label: "search", default: `<svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M3.5 12.0091C3.5 7.03592 7.51758 3 12.4789 3C17.4402 3 21.4578 7.03592 21.4578 12.0091C21.4578 14.0509 20.7801 15.9356 19.6382 17.447L24.101 22.2311C24.6768 22.8702 24.623 23.8576 23.981 24.4299L23.7809 24.6083C23.1462 25.1741 22.1755 25.1206 21.6064 24.4888L17.1457 19.7072C15.7857 20.5389 14.1876 21.0181 12.4789 21.0181C7.51758 21.0181 3.5 16.9822 3.5 12.0091ZM12.4789 6.36821C9.37859 6.36821 6.86104 8.89136 6.86104 12.0091C6.86104 15.1268 9.37859 17.6499 12.4789 17.6499C15.5792 17.6499 18.0968 15.1268 18.0968 12.0091C18.0968 8.89136 15.5792 6.36821 12.4789 6.36821Z" fill="#A4A4A4"/>
+</svg>`, small: `<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M2.5 8.57812C2.5 5.02586 5.3697 2.14307 8.9135 2.14307C12.4573 2.14307 15.327 5.02586 15.327 8.57812C15.327 10.0366 14.8429 11.3828 14.0273 12.4624L17.215 15.8796C17.6263 16.3361 17.5879 17.0413 17.1293 17.4502L16.9864 17.5775C16.533 17.9817 15.8396 17.9435 15.4331 17.4922L12.2469 14.0768C11.2755 14.6708 10.134 15.0132 8.9135 15.0132C5.3697 15.0132 2.5 12.1304 2.5 8.57812ZM8.9135 4.54893C6.69899 4.54893 4.90074 6.35118 4.90074 8.57812C4.90074 10.8051 6.69899 12.6073 8.9135 12.6073C11.128 12.6073 12.9263 10.8051 12.9263 8.57812C12.9263 6.35118 11.128 4.54893 8.9135 4.54893Z" fill="#A4A4A4"/>
+</svg>` },
+  "user": { label: "user", default: `<svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+<circle cx="14" cy="14" r="14" fill="#10C504"/>
+<path d="M5.56713 16.283V15.659H7.38713V16.283C7.38713 16.5863 7.47813 16.8507 7.66013 17.076C7.8508 17.3013 8.1628 17.414 8.59613 17.414C9.0208 17.414 9.32413 17.3057 9.50613 17.089C9.6968 16.8723 9.79213 16.582 9.79213 16.218V9.445H11.6771V16.322C11.6771 16.8767 11.5515 17.3663 11.3001 17.791C11.0575 18.2157 10.7065 18.5537 10.2471 18.805C9.7878 19.0477 9.2418 19.169 8.60913 19.169C7.9418 19.169 7.37846 19.0433 6.91913 18.792C6.46846 18.5407 6.13046 18.1983 5.90513 17.765C5.6798 17.323 5.56713 16.829 5.56713 16.283ZM17.26 19H13.672V9.445H17.156C18.1007 9.445 18.9284 9.64867 19.639 10.056C20.3497 10.4547 20.9044 11.0137 21.303 11.733C21.7104 12.4523 21.914 13.2887 21.914 14.242C21.914 15.178 21.719 16.0057 21.329 16.725C20.939 17.4357 20.393 17.9947 19.691 18.402C18.9977 18.8007 18.1874 19 17.26 19ZM15.557 10.303V18.155L14.66 17.258H17.091C17.6804 17.258 18.1874 17.1367 18.612 16.894C19.0367 16.6513 19.3617 16.3047 19.587 15.854C19.821 15.4033 19.938 14.866 19.938 14.242C19.938 13.6007 19.8167 13.0547 19.574 12.604C19.34 12.1447 19.002 11.7937 18.56 11.551C18.118 11.3083 17.5894 11.187 16.974 11.187H14.66L15.557 10.303Z" fill="white"/>
+</svg>`, small: `<svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+<circle cx="11" cy="11" r="11" fill="#10C504"/>
+<path d="M4.34256 12.701V12.173H5.88256V12.701C5.88256 12.9577 5.95956 13.1813 6.11356 13.372C6.27489 13.5627 6.53889 13.658 6.90556 13.658C7.26489 13.658 7.52156 13.5663 7.67556 13.383C7.83689 13.1997 7.91756 12.954 7.91756 12.646V6.915H9.51256V12.734C9.51256 13.2033 9.40623 13.6177 9.19356 13.977C8.98823 14.3363 8.69123 14.6223 8.30256 14.835C7.91389 15.0403 7.45189 15.143 6.91656 15.143C6.35189 15.143 5.87523 15.0367 5.48656 14.824C5.10523 14.6113 4.81923 14.3217 4.62856 13.955C4.43789 13.581 4.34256 13.163 4.34256 12.701ZM14.2365 15H11.2005V6.915H14.1485C14.9479 6.915 15.6482 7.08733 16.2495 7.432C16.8509 7.76933 17.3202 8.24233 17.6575 8.851C18.0022 9.45967 18.1745 10.1673 18.1745 10.974C18.1745 11.766 18.0095 12.4663 17.6795 13.075C17.3495 13.6763 16.8875 14.1493 16.2935 14.494C15.7069 14.8313 15.0212 15 14.2365 15ZM12.7955 7.641V14.285L12.0365 13.526H14.0935C14.5922 13.526 15.0212 13.4233 15.3805 13.218C15.7399 13.0127 16.0149 12.7193 16.2055 12.338C16.4035 11.9567 16.5025 11.502 16.5025 10.974C16.5025 10.4313 16.3999 9.96933 16.1945 9.588C15.9965 9.19933 15.7105 8.90233 15.3365 8.697C14.9625 8.49167 14.5152 8.389 13.9945 8.389H12.0365L12.7955 7.641Z" fill="white"/>
+</svg>` },
+  "add-user": { label: "add user", default: `<svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M7 10C7 8.59375 7.75 7.28125 9 6.5625C10.2188 5.84375 11.75 5.84375 13 6.5625C14.2188 7.28125 15 8.59375 15 10C15 11.4375 14.2188 12.75 13 13.4688C11.75 14.1875 10.2188 14.1875 9 13.4688C7.75 12.75 7 11.4375 7 10ZM4 21.0938C4 18 6.46875 15.5 9.5625 15.5H12.4062C15.5 15.5 18 18 18 21.0938C18 21.5938 17.5625 22 17.0625 22H4.90625C4.40625 22 4 21.5938 4 21.0938ZM19.75 15.75V13.75H17.75C17.3125 13.75 17 13.4375 17 13C17 12.5938 17.3125 12.25 17.75 12.25H19.75V10.25C19.75 9.84375 20.0625 9.5 20.5 9.5C20.9062 9.5 21.25 9.84375 21.25 10.25V12.25H23.25C23.6562 12.25 24 12.5938 24 13C24 13.4375 23.6562 13.75 23.25 13.75H21.25V15.75C21.25 16.1875 20.9062 16.5 20.5 16.5C20.0625 16.5 19.75 16.1875 19.75 15.75Z" fill="black"/>
+</svg>`, small: `<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M4.75 7.5C4.75 6.44531 5.3125 5.46094 6.25 4.92188C7.16406 4.38281 8.3125 4.38281 9.25 4.92188C10.1641 5.46094 10.75 6.44531 10.75 7.5C10.75 8.57812 10.1641 9.5625 9.25 10.1016C8.3125 10.6406 7.16406 10.6406 6.25 10.1016C5.3125 9.5625 4.75 8.57812 4.75 7.5ZM2.5 15.8203C2.5 13.5 4.35156 11.625 6.67188 11.625H8.80469C11.125 11.625 13 13.5 13 15.8203C13 16.1953 12.6719 16.5 12.2969 16.5H3.17969C2.80469 16.5 2.5 16.1953 2.5 15.8203ZM14.3125 11.8125V10.3125H12.8125C12.4844 10.3125 12.25 10.0781 12.25 9.75C12.25 9.44531 12.4844 9.1875 12.8125 9.1875H14.3125V7.6875C14.3125 7.38281 14.5469 7.125 14.875 7.125C15.1797 7.125 15.4375 7.38281 15.4375 7.6875V9.1875H16.9375C17.2422 9.1875 17.5 9.44531 17.5 9.75C17.5 10.0781 17.2422 10.3125 16.9375 10.3125H15.4375V11.8125C15.4375 12.1406 15.1797 12.375 14.875 12.375C14.5469 12.375 14.3125 12.1406 14.3125 11.8125Z" fill="black"/>
+</svg>` },
+  "address-book": { label: "address book", default: `<svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M8.375 5.25H18.5C19.7305 5.25 20.75 6.26953 20.75 7.5V21C20.75 22.2656 19.7305 23.25 18.5 23.25H8.375C7.10938 23.25 6.125 22.2656 6.125 21V7.5C6.125 6.26953 7.10938 5.25 8.375 5.25ZM12.3125 15.375C10.7305 15.375 9.5 16.6406 9.5 18.1875C9.5 18.5039 9.74609 18.75 10.0625 18.75H16.8125C17.0938 18.75 17.375 18.5039 17.375 18.1875C17.375 16.6406 16.1094 15.375 14.5625 15.375H12.3125ZM11.1875 12C11.1875 12.8086 11.6094 13.5469 12.3125 13.9688C12.9805 14.3555 13.8594 14.3555 14.5625 13.9688C15.2305 13.5469 15.6875 12.8086 15.6875 12C15.6875 11.2266 15.2305 10.4883 14.5625 10.0664C13.8594 9.67969 12.9805 9.67969 12.3125 10.0664C11.6094 10.4883 11.1875 11.2266 11.1875 12ZM23 8.0625V10.3125C23 10.6289 22.7188 10.875 22.4375 10.875C22.1211 10.875 21.875 10.6289 21.875 10.3125V8.0625C21.875 7.78125 22.1211 7.5 22.4375 7.5C22.7188 7.5 23 7.78125 23 8.0625ZM22.4375 12C22.7188 12 23 12.2812 23 12.5625V14.8125C23 15.1289 22.7188 15.375 22.4375 15.375C22.1211 15.375 21.875 15.1289 21.875 14.8125V12.5625C21.875 12.2812 22.1211 12 22.4375 12ZM23 17.0625V19.3125C23 19.6289 22.7188 19.875 22.4375 19.875C22.1211 19.875 21.875 19.6289 21.875 19.3125V17.0625C21.875 16.7812 22.1211 16.5 22.4375 16.5C22.7188 16.5 23 16.7812 23 17.0625Z" fill="#0062EB"/>
+</svg>`, small: `<svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M9.3125 6.375H17.75C18.7754 6.375 19.625 7.22461 19.625 8.25V19.5C19.625 20.5547 18.7754 21.375 17.75 21.375H9.3125C8.25781 21.375 7.4375 20.5547 7.4375 19.5V8.25C7.4375 7.22461 8.25781 6.375 9.3125 6.375ZM12.5938 14.8125C11.2754 14.8125 10.25 15.8672 10.25 17.1562C10.25 17.4199 10.4551 17.625 10.7188 17.625H16.3438C16.5781 17.625 16.8125 17.4199 16.8125 17.1562C16.8125 15.8672 15.7578 14.8125 14.4688 14.8125H12.5938ZM11.6562 12C11.6562 12.6738 12.0078 13.2891 12.5938 13.6406C13.1504 13.9629 13.8828 13.9629 14.4688 13.6406C15.0254 13.2891 15.4062 12.6738 15.4062 12C15.4062 11.3555 15.0254 10.7402 14.4688 10.3887C13.8828 10.0664 13.1504 10.0664 12.5938 10.3887C12.0078 10.7402 11.6562 11.3555 11.6562 12ZM21.5 8.71875V10.5938C21.5 10.8574 21.2656 11.0625 21.0312 11.0625C20.7676 11.0625 20.5625 10.8574 20.5625 10.5938V8.71875C20.5625 8.48438 20.7676 8.25 21.0312 8.25C21.2656 8.25 21.5 8.48438 21.5 8.71875ZM21.0312 12C21.2656 12 21.5 12.2344 21.5 12.4688V14.3438C21.5 14.6074 21.2656 14.8125 21.0312 14.8125C20.7676 14.8125 20.5625 14.6074 20.5625 14.3438V12.4688C20.5625 12.2344 20.7676 12 21.0312 12ZM21.5 16.2188V18.0938C21.5 18.3574 21.2656 18.5625 21.0312 18.5625C20.7676 18.5625 20.5625 18.3574 20.5625 18.0938V16.2188C20.5625 15.9844 20.7676 15.75 21.0312 15.75C21.2656 15.75 21.5 15.9844 21.5 16.2188Z" fill="#0062EB"/>
+</svg>` },
+  "id": { label: "id", default: `<svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M20.75 7H6.75C5.78488 7 5 7.78487 5 8.75V19.25C5 20.2151 5.78488 21 6.75 21H20.75C21.7151 21 22.5 20.2151 22.5 19.25V8.75C22.5 7.78487 21.7151 7 20.75 7ZM10.8756 10.5C11.8828 10.5 12.6256 11.2429 12.6256 12.25C12.6256 13.2571 11.8828 14 10.8756 14C9.8685 14 9.12563 13.2571 9.12563 12.25C9.12563 11.2429 9.86763 10.5 10.8756 10.5ZM14.1263 17.0931C14.1263 17.3178 13.9441 17.5 13.7194 17.5H8.03188C7.80716 17.5 7.625 17.3178 7.625 17.0931C7.625 15.8917 9.0915 14.6562 10.8756 14.6562C12.6598 14.6562 14.1263 15.8917 14.1263 17.0931ZM19.875 15.75C19.875 16.2332 19.4833 16.625 19 16.625H17.25C16.7668 16.625 16.375 16.2332 16.375 15.75C16.375 15.2668 16.7668 14.875 17.25 14.875H19C19.4833 14.875 19.875 15.2668 19.875 15.75ZM19.875 12.25C19.875 12.7332 19.4833 13.125 19 13.125H16.375C15.8918 13.125 15.5 12.7332 15.5 12.25C15.5 11.7668 15.8918 11.375 16.375 11.375H19C19.4833 11.375 19.875 11.7668 19.875 12.25Z" fill="black"/>
+</svg>`, small: `<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M15.0625 4.75H4.5625C3.83866 4.75 3.25 5.33866 3.25 6.0625V13.9375C3.25 14.6613 3.83866 15.25 4.5625 15.25H15.0625C15.7863 15.25 16.375 14.6613 16.375 13.9375V6.0625C16.375 5.33866 15.7863 4.75 15.0625 4.75ZM7.65672 7.375C8.41206 7.375 8.96922 7.93216 8.96922 8.6875C8.96922 9.44284 8.41206 10 7.65672 10C6.90138 10 6.34422 9.44284 6.34422 8.6875C6.34422 7.93216 6.90072 7.375 7.65672 7.375ZM10.0947 12.3198C10.0947 12.4884 9.95807 12.625 9.78953 12.625H5.52391C5.35537 12.625 5.21875 12.4884 5.21875 12.3198C5.21875 11.4188 6.31863 10.4922 7.65672 10.4922C8.99481 10.4922 10.0947 11.4188 10.0947 12.3198ZM14.4063 11.3125C14.4063 11.6749 14.1124 11.9688 13.75 11.9688H12.4375C12.0751 11.9688 11.7813 11.6749 11.7813 11.3125C11.7813 10.9501 12.0751 10.6562 12.4375 10.6562H13.75C14.1124 10.6562 14.4063 10.9501 14.4063 11.3125ZM14.4063 8.6875C14.4063 9.04994 14.1124 9.34375 13.75 9.34375H11.7813C11.4188 9.34375 11.125 9.04994 11.125 8.6875C11.125 8.32506 11.4188 8.03125 11.7813 8.03125H13.75C14.1124 8.03125 14.4063 8.32506 14.4063 8.6875Z" fill="black"/>
+</svg>` },
+  "email": { label: "email", default: `<svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M7.5 8H20.5C21.3125 8 22 8.6875 22 9.5C22 10 21.75 10.4375 21.375 10.7188L14.5938 15.8125C14.2188 16.0938 13.75 16.0938 13.375 15.8125L6.59375 10.7188C6.21875 10.4375 6 10 6 9.5C6 8.6875 6.65625 8 7.5 8ZM6 11.5L12.7812 16.625C13.5 17.1562 14.4688 17.1562 15.1875 16.625L22 11.5V18C22 19.125 21.0938 20 20 20H8C6.875 20 6 19.125 6 18V11.5Z" fill="black"/>
+</svg>`, small: `<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M4.71875 4.75H15.2812C15.9414 4.75 16.5 5.30859 16.5 5.96875C16.5 6.375 16.2969 6.73047 15.9922 6.95898L10.4824 11.0977C10.1777 11.3262 9.79688 11.3262 9.49219 11.0977L3.98242 6.95898C3.67773 6.73047 3.5 6.375 3.5 5.96875C3.5 5.30859 4.0332 4.75 4.71875 4.75ZM3.5 7.59375L9.00977 11.7578C9.59375 12.1895 10.3809 12.1895 10.9648 11.7578L16.5 7.59375V12.875C16.5 13.7891 15.7637 14.5 14.875 14.5H5.125C4.21094 14.5 3.5 13.7891 3.5 12.875V7.59375Z" fill="black"/>
+</svg>` },
+  "phone": { label: "phone", default: `<svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M11.125 6.78125L12.375 9.78125C12.5938 10.2812 12.4688 10.875 12.0312 11.2188L10.5 12.5C11.5312 14.6875 13.3125 16.4688 15.5 17.5L16.7812 15.9688C17.125 15.5312 17.7188 15.4062 18.2188 15.625L21.2188 16.875C21.8125 17.0938 22.0938 17.75 21.9375 18.3438L21.1875 21.0938C21.0312 21.625 20.5625 22 20 22C12.25 22 6 15.75 6 8C6 7.4375 6.375 6.96875 6.90625 6.8125L9.65625 6.0625C10.25 5.90625 10.9062 6.1875 11.125 6.78125Z" fill="black"/>
+</svg>`, small: `<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M7.66406 3.75977L8.67969 6.19727C8.85742 6.60352 8.75586 7.08594 8.40039 7.36523L7.15625 8.40625C7.99414 10.1836 9.44141 11.6309 11.2188 12.4688L12.2598 11.2246C12.5391 10.8691 13.0215 10.7676 13.4277 10.9453L15.8652 11.9609C16.3477 12.1387 16.5762 12.6719 16.4492 13.1543L15.8398 15.3887C15.7129 15.8203 15.332 16.125 14.875 16.125C8.57812 16.125 3.5 11.0469 3.5 4.75C3.5 4.29297 3.80469 3.91211 4.23633 3.78516L6.4707 3.17578C6.95312 3.04883 7.48633 3.27734 7.66406 3.75977Z" fill="black"/>
+</svg>` },
+  "calendar": { label: "calendar", default: `<svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M11 6C11.5312 6 12 6.46875 12 7V8H16V7C16 6.46875 16.4375 6 17 6C17.5312 6 18 6.46875 18 7V8H19.5C20.3125 8 21 8.6875 21 9.5V11H7V9.5C7 8.6875 7.65625 8 8.5 8H10V7C10 6.46875 10.4375 6 11 6ZM7 12H21V20.5C21 21.3438 20.3125 22 19.5 22H8.5C7.65625 22 7 21.3438 7 20.5V12ZM9.5 14C9.21875 14 9 14.25 9 14.5V16.5C9 16.7812 9.21875 17 9.5 17H18.5C18.75 17 19 16.7812 19 16.5V14.5C19 14.25 18.75 14 18.5 14H9.5Z" fill="#0062EB"/>
+</svg>`, small: `<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M7.5625 3.125C7.99414 3.125 8.375 3.50586 8.375 3.9375V4.75H11.625V3.9375C11.625 3.50586 11.9805 3.125 12.4375 3.125C12.8691 3.125 13.25 3.50586 13.25 3.9375V4.75H14.4688C15.1289 4.75 15.6875 5.30859 15.6875 5.96875V7.1875H4.3125V5.96875C4.3125 5.30859 4.8457 4.75 5.53125 4.75H6.75V3.9375C6.75 3.50586 7.10547 3.125 7.5625 3.125ZM4.3125 8H15.6875V14.9062C15.6875 15.5918 15.1289 16.125 14.4688 16.125H5.53125C4.8457 16.125 4.3125 15.5918 4.3125 14.9062V8ZM6.34375 9.625C6.11523 9.625 5.9375 9.82812 5.9375 10.0312V11.6562C5.9375 11.8848 6.11523 12.0625 6.34375 12.0625H13.6562C13.8594 12.0625 14.0625 11.8848 14.0625 11.6562V10.0312C14.0625 9.82812 13.8594 9.625 13.6562 9.625H6.34375Z" fill="#0062EB"/>
+</svg>` },
+  "country-flag": { label: "country flag", default: `<svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_2706_111908)">
+<path d="M14 28.0005C21.732 28.0005 28 21.7325 28 14.0005C28 6.2685 21.732 0.000488281 14 0.000488281C6.26801 0.000488281 0 6.2685 0 14.0005C0 21.7325 6.26801 28.0005 14 28.0005Z" fill="#A4A4A4"/>
+<path d="M16.9151 13.9999C16.9151 14.6987 16.8544 15.3368 16.7936 15.9444H11.173C11.1122 15.3368 11.0818 14.6987 11.0818 13.9999C11.0818 13.3315 11.1122 12.6935 11.173 12.0555H16.7936C16.8544 12.6935 16.9151 13.3315 16.9151 13.9999ZM17.7658 12.0555H21.5028C21.6851 12.6935 21.7763 13.3315 21.7763 13.9999C21.7763 14.6987 21.6851 15.3368 21.5028 15.9444H17.7658C17.8266 15.3368 17.8874 14.6683 17.8874 13.9999C17.8874 13.3315 17.8266 12.6935 17.7658 12.0555ZM21.199 11.0833H17.6443C17.3405 9.16922 16.7329 7.52859 15.9733 6.49561C18.3431 7.13363 20.2875 8.83502 21.199 11.0833ZM16.6721 11.0833H11.2945C11.4768 9.98953 11.7806 9.01731 12.1148 8.22738C12.449 7.49821 12.7832 6.98172 13.1478 6.64752C13.482 6.3437 13.7554 6.22217 13.9985 6.22217C14.2112 6.22217 14.4846 6.3437 14.8188 6.64752C15.1834 6.98172 15.5176 7.49821 15.8518 8.22738C16.186 9.01731 16.4898 9.98953 16.6721 11.0833ZM10.3223 11.0833H6.76758C7.67904 8.83502 9.62348 7.13363 11.9933 6.49561C11.2337 7.52859 10.6261 9.16922 10.3223 11.0833ZM6.46376 12.0555H10.2007C10.14 12.6935 10.1096 13.3315 10.1096 13.9999C10.1096 14.6683 10.14 15.3368 10.2007 15.9444H6.46376C6.28147 15.3368 6.2207 14.6987 6.2207 13.9999C6.2207 13.3315 6.28147 12.6935 6.46376 12.0555ZM12.1148 19.8029C11.7806 19.013 11.4768 18.0407 11.2945 16.9166H16.6721C16.4898 18.0407 16.186 19.013 15.8518 19.8029C15.5176 20.5321 15.1834 21.0486 14.8188 21.3828C14.4846 21.6866 14.2112 21.7777 13.9985 21.7777C13.7554 21.7777 13.482 21.6866 13.1478 21.3828C12.7832 21.0486 12.449 20.5321 12.1148 19.8029ZM10.3223 16.9166C10.6261 18.8611 11.2337 20.5017 11.9933 21.5347C9.62348 20.8966 7.67904 19.1953 6.76758 16.9166H10.3223ZM21.199 16.9166C20.2875 19.1953 18.3431 20.8966 15.9733 21.5347C16.7632 20.5017 17.3405 18.8611 17.6443 16.9166H21.199Z" fill="white"/>
+</g>
+<defs>
+<clipPath id="clip0_2706_111908">
+<rect width="28" height="28" fill="white"/>
+</clipPath>
+</defs>
+</svg>`, small: `<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_2788_59658)">
+<path d="M10 20.0005C15.5228 20.0005 20 15.5233 20 10.0005C20 4.47764 15.5228 0.000488281 10 0.000488281C4.47715 0.000488281 0 4.47764 0 10.0005C0 15.5233 4.47715 20.0005 10 20.0005Z" fill="#A4A4A4"/>
+<path d="M12.0842 10.0004C12.0842 10.4995 12.0408 10.9552 11.9974 11.3893H7.98264C7.93924 10.9552 7.91753 10.4995 7.91753 10.0004C7.91753 9.52295 7.93924 9.06722 7.98264 8.61149H11.9974C12.0408 9.06722 12.0842 9.52295 12.0842 10.0004ZM12.6918 8.61149H15.3611C15.4913 9.06722 15.5564 9.52295 15.5564 10.0004C15.5564 10.4995 15.4913 10.9552 15.3611 11.3893H12.6918C12.7352 10.9552 12.7786 10.4778 12.7786 10.0004C12.7786 9.52295 12.7352 9.06722 12.6918 8.61149ZM15.1441 7.91705H12.605C12.388 6.54986 11.954 5.37798 11.4115 4.64014C13.1042 5.09587 14.4931 6.31114 15.1441 7.91705ZM11.9106 7.91705H8.06944C8.19965 7.1358 8.41667 6.44135 8.65538 5.87712C8.8941 5.35628 9.13281 4.98736 9.39323 4.74864C9.63194 4.53163 9.82726 4.44482 10.0009 4.44482C10.1528 4.44482 10.3481 4.53163 10.5868 4.74864C10.8472 4.98736 11.0859 5.35628 11.3247 5.87712C11.5634 6.44135 11.7804 7.1358 11.9106 7.91705ZM7.375 7.91705H4.83594C5.48698 6.31114 6.87587 5.09587 8.56858 4.64014C8.02604 5.37798 7.59201 6.54986 7.375 7.91705ZM4.61892 8.61149H7.28819C7.24479 9.06722 7.22309 9.52295 7.22309 10.0004C7.22309 10.4778 7.24479 10.9552 7.28819 11.3893H4.61892C4.48872 10.9552 4.44531 10.4995 4.44531 10.0004C4.44531 9.52295 4.48872 9.06722 4.61892 8.61149ZM8.65538 14.1453C8.41667 13.5811 8.19965 12.8867 8.06944 12.0837H11.9106C11.7804 12.8867 11.5634 13.5811 11.3247 14.1453C11.0859 14.6662 10.8472 15.0351 10.5868 15.2738C10.3481 15.4908 10.1528 15.5559 10.0009 15.5559C9.82726 15.5559 9.63194 15.4908 9.39323 15.2738C9.13281 15.0351 8.8941 14.6662 8.65538 14.1453ZM7.375 12.0837C7.59201 13.4726 8.02604 14.6445 8.56858 15.3823C6.87587 14.9266 5.48698 13.7113 4.83594 12.0837H7.375ZM15.1441 12.0837C14.4931 13.7113 13.1042 14.9266 11.4115 15.3823C11.9757 14.6445 12.388 13.4726 12.605 12.0837H15.1441Z" fill="white"/>
+</g>
+<defs>
+<clipPath id="clip0_2788_59658">
+<rect width="20" height="20" fill="white"/>
+</clipPath>
+</defs>
+</svg>` },
+  "qr": { label: "QR", default: `<svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M7.51787 13.0739H11.2216C12.2401 13.0739 13.0734 12.2406 13.0734 11.2221V7.51836C13.0734 6.49984 12.2401 5.6665 11.2216 5.6665H7.51787C6.49935 5.6665 5.66602 6.49984 5.66602 7.51836V11.2221C5.66602 12.2406 6.49935 13.0739 7.51787 13.0739ZM7.51787 7.51836H11.2216V11.2221H7.51787V7.51836Z" fill="black"/>
+<path d="M7.51787 22.3332H11.2216C12.2401 22.3332 13.0734 21.4999 13.0734 20.4813V16.7776C13.0734 15.7591 12.2401 14.9258 11.2216 14.9258H7.51787C6.49935 14.9258 5.66602 15.7591 5.66602 16.7776V20.4813C5.66602 21.4999 6.49935 22.3332 7.51787 22.3332ZM7.51787 16.7776H11.2216V20.4813H7.51787V16.7776Z" fill="black"/>
+<path d="M14.9258 7.51836V11.2221C14.9258 12.2406 15.7591 13.0739 16.7776 13.0739H20.4813C21.4999 13.0739 22.3332 12.2406 22.3332 11.2221V7.51836C22.3332 6.49984 21.4999 5.6665 20.4813 5.6665H16.7776C15.7591 5.6665 14.9258 6.49984 14.9258 7.51836ZM20.4813 11.2221H16.7776V7.51836H20.4813V11.2221Z" fill="black"/>
+<path d="M22.3323 21.8703V20.9444C22.3323 20.6851 22.1286 20.4814 21.8694 20.4814H20.9434C20.6842 20.4814 20.4805 20.6851 20.4805 20.9444V21.8703C20.4805 22.1296 20.6842 22.3333 20.9434 22.3333H21.8694C22.1286 22.3333 22.3323 22.1296 22.3323 21.8703Z" fill="black"/>
+<path d="M14.9258 15.3887V16.3147C14.9258 16.5739 15.1295 16.7776 15.3887 16.7776H16.3147C16.5739 16.7776 16.7776 16.5739 16.7776 16.3147V15.3887C16.7776 15.1295 16.5739 14.9258 16.3147 14.9258H15.3887C15.1295 14.9258 14.9258 15.1295 14.9258 15.3887Z" fill="black"/>
+<path d="M18.1662 16.7778H17.2403C16.981 16.7778 16.7773 16.9815 16.7773 17.2408V18.1667C16.7773 18.426 16.981 18.6297 17.2403 18.6297H18.1662C18.4255 18.6297 18.6292 18.426 18.6292 18.1667V17.2408C18.6292 16.9815 18.4255 16.7778 18.1662 16.7778Z" fill="black"/>
+<path d="M14.9258 19.0924V20.0183C14.9258 20.2775 15.1295 20.4812 15.3887 20.4812H16.3147C16.5739 20.4812 16.7776 20.2775 16.7776 20.0183V19.0924C16.7776 18.8331 16.5739 18.6294 16.3147 18.6294H15.3887C15.1295 18.6294 14.9258 18.8331 14.9258 19.0924Z" fill="black"/>
+<path d="M17.2403 22.3333H18.1662C18.4255 22.3333 18.6292 22.1296 18.6292 21.8703V20.9444C18.6292 20.6851 18.4255 20.4814 18.1662 20.4814H17.2403C16.981 20.4814 16.7773 20.6851 16.7773 20.9444V21.8703C16.7773 22.1296 16.981 22.3333 17.2403 22.3333Z" fill="black"/>
+<path d="M19.0919 20.4812H20.0178C20.2771 20.4812 20.4808 20.2775 20.4808 20.0183V19.0924C20.4808 18.8331 20.2771 18.6294 20.0178 18.6294H19.0919C18.8326 18.6294 18.6289 18.8331 18.6289 19.0924V20.0183C18.6289 20.2775 18.8326 20.4812 19.0919 20.4812Z" fill="black"/>
+<path d="M20.0178 14.9258H19.0919C18.8326 14.9258 18.6289 15.1295 18.6289 15.3887V16.3147C18.6289 16.5739 18.8326 16.7776 19.0919 16.7776H20.0178C20.2771 16.7776 20.4808 16.5739 20.4808 16.3147V15.3887C20.4808 15.1295 20.2771 14.9258 20.0178 14.9258Z" fill="black"/>
+<path d="M20.9434 18.6297H21.8694C22.1286 18.6297 22.3323 18.426 22.3323 18.1667V17.2408C22.3323 16.9815 22.1286 16.7778 21.8694 16.7778H20.9434C20.6842 16.7778 20.4805 16.9815 20.4805 17.2408V18.1667C20.4805 18.426 20.6842 18.6297 20.9434 18.6297Z" fill="black"/>
+</svg>`, small: `<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M4.16667 9.16667H7.5C8.41667 9.16667 9.16667 8.41667 9.16667 7.5V4.16667C9.16667 3.25 8.41667 2.5 7.5 2.5H4.16667C3.25 2.5 2.5 3.25 2.5 4.16667V7.5C2.5 8.41667 3.25 9.16667 4.16667 9.16667ZM4.16667 4.16667H7.5V7.5H4.16667V4.16667Z" fill="black"/>
+<path d="M4.16667 17.5002H7.5C8.41667 17.5002 9.16667 16.7502 9.16667 15.8335V12.5002C9.16667 11.5835 8.41667 10.8335 7.5 10.8335H4.16667C3.25 10.8335 2.5 11.5835 2.5 12.5002V15.8335C2.5 16.7502 3.25 17.5002 4.16667 17.5002ZM4.16667 12.5002H7.5V15.8335H4.16667V12.5002Z" fill="black"/>
+<path d="M10.834 4.16667V7.5C10.834 8.41667 11.584 9.16667 12.5007 9.16667H15.834C16.7507 9.16667 17.5007 8.41667 17.5007 7.5V4.16667C17.5007 3.25 16.7507 2.5 15.834 2.5H12.5007C11.584 2.5 10.834 3.25 10.834 4.16667ZM15.834 7.5H12.5007V4.16667H15.834V7.5Z" fill="black"/>
+<path d="M17.5007 17.0835V16.2502C17.5007 16.0168 17.3173 15.8335 17.084 15.8335H16.2507C16.0173 15.8335 15.834 16.0168 15.834 16.2502V17.0835C15.834 17.3168 16.0173 17.5002 16.2507 17.5002H17.084C17.3173 17.5002 17.5007 17.3168 17.5007 17.0835Z" fill="black"/>
+<path d="M10.834 11.2502V12.0835C10.834 12.3168 11.0173 12.5002 11.2507 12.5002H12.084C12.3173 12.5002 12.5007 12.3168 12.5007 12.0835V11.2502C12.5007 11.0168 12.3173 10.8335 12.084 10.8335H11.2507C11.0173 10.8335 10.834 11.0168 10.834 11.2502Z" fill="black"/>
+<path d="M13.75 12.5H12.9167C12.6833 12.5 12.5 12.6833 12.5 12.9167V13.75C12.5 13.9833 12.6833 14.1667 12.9167 14.1667H13.75C13.9833 14.1667 14.1667 13.9833 14.1667 13.75V12.9167C14.1667 12.6833 13.9833 12.5 13.75 12.5Z" fill="black"/>
+<path d="M10.834 14.5832V15.4165C10.834 15.6498 11.0173 15.8332 11.2507 15.8332H12.084C12.3173 15.8332 12.5007 15.6498 12.5007 15.4165V14.5832C12.5007 14.3498 12.3173 14.1665 12.084 14.1665H11.2507C11.0173 14.1665 10.834 14.3498 10.834 14.5832Z" fill="black"/>
+<path d="M12.9167 17.5002H13.75C13.9833 17.5002 14.1667 17.3168 14.1667 17.0835V16.2502C14.1667 16.0168 13.9833 15.8335 13.75 15.8335H12.9167C12.6833 15.8335 12.5 16.0168 12.5 16.2502V17.0835C12.5 17.3168 12.6833 17.5002 12.9167 17.5002Z" fill="black"/>
+<path d="M14.5827 15.8332H15.416C15.6493 15.8332 15.8327 15.6498 15.8327 15.4165V14.5832C15.8327 14.3498 15.6493 14.1665 15.416 14.1665H14.5827C14.3493 14.1665 14.166 14.3498 14.166 14.5832V15.4165C14.166 15.6498 14.3493 15.8332 14.5827 15.8332Z" fill="black"/>
+<path d="M15.416 10.8335H14.5827C14.3493 10.8335 14.166 11.0168 14.166 11.2502V12.0835C14.166 12.3168 14.3493 12.5002 14.5827 12.5002H15.416C15.6493 12.5002 15.8327 12.3168 15.8327 12.0835V11.2502C15.8327 11.0168 15.6493 10.8335 15.416 10.8335Z" fill="black"/>
+<path d="M16.2507 14.1667H17.084C17.3173 14.1667 17.5007 13.9833 17.5007 13.75V12.9167C17.5007 12.6833 17.3173 12.5 17.084 12.5H16.2507C16.0173 12.5 15.834 12.6833 15.834 12.9167V13.75C15.834 13.9833 16.0173 14.1667 16.2507 14.1667Z" fill="black"/>
+</svg>` },
+  "dropdown": { label: "dropdown", default: `<svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M7.45671 13.6303C6.90648 13.0905 6.84689 12.1568 7.31347 11.5337C7.7913 10.8957 8.64768 10.8151 9.21304 11.3698L13.5 15.5756L17.787 11.3698C18.3523 10.8151 19.2087 10.8957 19.6865 11.5337C20.1531 12.1568 20.0935 13.0905 19.5433 13.6303L14.8584 18.2266C14.0793 18.9909 12.9207 18.9909 12.1416 18.2266L7.45671 13.6303Z" fill="black"/>
+</svg>`, small: `<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M5.32622 9.73623C4.9332 9.35065 4.89064 8.68368 5.22391 8.23865C5.56521 7.78289 6.17691 7.72538 6.58074 8.12157L9.64286 11.1257L12.705 8.12157C13.1088 7.72538 13.7205 7.78289 14.0618 8.23865C14.3951 8.68368 14.3525 9.35065 13.9595 9.73623L10.6131 13.0193C10.0567 13.5652 9.22906 13.5652 8.6726 13.0193L5.32622 9.73623Z" fill="black"/>
+</svg>` },
+  "edit": { label: "edit", default: `<svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M21.4093 10.0335L19.884 11.4424C19.7361 11.579 19.5067 11.5744 19.3644 11.4321L16.4521 8.5198C16.3015 8.36922 16.3064 8.12364 16.4628 7.97916L17.9764 6.58119C18.3894 6.1717 19.0543 6.17281 19.466 6.58452L21.4158 8.53425C21.8286 8.94707 21.8286 9.61446 21.4158 10.0273L21.4093 10.0335ZM6.27539 21.0833V18.5503C6.27539 18.3735 6.34107 18.2167 6.4658 18.0917L15.0094 9.44897C15.1555 9.30113 15.394 9.30038 15.5411 9.44731L18.4563 12.3598C18.6023 12.5057 18.603 12.7422 18.4578 12.8889L9.90483 21.5299C9.78228 21.6633 9.61214 21.7249 9.44998 21.7249H6.917C6.55943 21.7249 6.27539 21.4409 6.27539 21.0833Z" fill="black"/>
+</svg>`, small: `<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_3646_35255)">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M15.763 6.91503L14.5766 8.01084C14.4616 8.11708 14.2832 8.11354 14.1725 8.00282L11.9074 5.73773C11.7903 5.62062 11.7941 5.4296 11.9157 5.31723L13.0929 4.22992C13.4142 3.91143 13.9314 3.91229 14.2516 4.23251L15.768 5.74897C16.0891 6.07005 16.0891 6.58913 15.768 6.91022L15.763 6.91503ZM3.99219 15.5093V13.5392C3.99219 13.4017 4.04327 13.2798 4.14029 13.1826L10.7853 6.46042C10.8989 6.34543 11.0845 6.34485 11.1988 6.45913L13.4662 8.72437C13.5798 8.83785 13.5803 9.02178 13.4674 9.13589L6.81508 15.8567C6.71977 15.9604 6.58744 16.0084 6.46131 16.0084H4.49122C4.21311 16.0084 3.99219 15.7874 3.99219 15.5093Z" fill="black"/>
+</g>
+<defs>
+<clipPath id="clip0_3646_35255">
+<rect width="14" height="14" fill="white" transform="translate(3 3)"/>
+</clipPath>
+</defs>
+</svg>` },
+  "check": { label: "check", default: `<svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M14 3C20.0751 3 25 7.92487 25 14C25 20.0751 20.0751 25 14 25C7.92487 25 3 20.0751 3 14C3 7.92487 7.92487 3 14 3ZM19.5605 9.2959C19.0492 8.85489 18.289 8.91394 17.8477 9.42871L12.4023 15.7793L10.1113 13.3506C9.64704 12.8583 8.88554 12.8366 8.39551 13.3018C7.88845 13.7832 7.86624 14.599 8.34668 15.1084L11.7129 18.6777C12.1317 19.1217 12.8297 19.1046 13.2275 18.6406L19.6924 11.0996C20.149 10.567 20.0895 9.75239 19.5605 9.2959Z" fill="#10C504"/>
+</svg>`, small: `<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_3842_43804)">
+<path d="M10 1.75C14.5563 1.75 18.25 5.44365 18.25 10C18.25 14.5563 14.5563 18.25 10 18.25C5.44365 18.25 1.75 14.5563 1.75 10C1.75 5.44365 5.44365 1.75 10 1.75ZM14.1709 6.47168C13.7874 6.14078 13.2168 6.18515 12.8857 6.57129L8.80176 11.335L7.08301 9.5127C6.73478 9.14353 6.1634 9.12671 5.7959 9.47559C5.41566 9.83658 5.3996 10.449 5.75977 10.8311L8.28418 13.5078C8.5983 13.8409 9.12252 13.8285 9.4209 13.4805L14.2695 7.8252C14.612 7.42575 14.5676 6.81405 14.1709 6.47168Z" fill="#10C504"/>
+</g>
+<defs>
+<clipPath id="clip0_3842_43804">
+<rect width="18" height="18" fill="white" transform="translate(1 1)"/>
+</clipPath>
+</defs>
+</svg>` },
+  "verified": { label: "verified", default: `<svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M25 14L22.56 11.21L22.9 7.52L19.29 6.7L17.4 3.5L14 4.96L10.6 3.5L8.71 6.69L5.1 7.5L5.44 11.2L3 14L5.44 16.79L5.1 20.49L8.71 21.31L10.6 24.5L14 23.03L17.4 24.49L19.29 21.3L22.9 20.48L22.56 16.79L25 14ZM11.38 18.01L9 15.61C8.61 15.22 8.61 14.59 9 14.2L9.07 14.13C9.46 13.74 10.1 13.74 10.49 14.13L12.1 15.75L17.25 10.59C17.64 10.2 18.28 10.2 18.67 10.59L18.74 10.66C19.13 11.05 19.13 11.68 18.74 12.07L12.82 18.01C12.41 18.4 11.78 18.4 11.38 18.01Z" fill="#21A4FC"/>
+</svg>`, small: `<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M18.25 10L16.42 7.9075L16.675 5.14L13.9675 4.525L12.55 2.125L10 3.22L7.45 2.125L6.0325 4.5175L3.325 5.125L3.58 7.9L1.75 10L3.58 12.0925L3.325 14.8675L6.0325 15.4825L7.45 17.875L10 16.7725L12.55 17.8675L13.9675 15.475L16.675 14.86L16.42 12.0925L18.25 10ZM8.035 13.0075L6.25 11.2075C5.9575 10.915 5.9575 10.4425 6.25 10.15L6.3025 10.0975C6.595 9.805 7.075 9.805 7.3675 10.0975L8.575 11.3125L12.4375 7.4425C12.73 7.15 13.21 7.15 13.5025 7.4425L13.555 7.495C13.8475 7.7875 13.8475 8.26 13.555 8.5525L9.115 13.0075C8.8075 13.3 8.335 13.3 8.035 13.0075Z" fill="#21A4FC"/>
+</svg>` },
+  "clear": { label: "clear", default: `<svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M7.75017 18.2383C7.20046 18.788 7.20046 19.6792 7.75017 20.2289C8.29988 20.7786 9.19113 20.7786 9.74083 20.2289L13.986 15.9838L18.2613 20.2592C18.8108 20.8086 19.7016 20.8086 20.251 20.2592C20.8004 19.7098 20.8004 18.819 20.251 18.2695L15.9756 13.9941L20.2289 9.74083C20.7786 9.19113 20.7786 8.29988 20.2289 7.75017C19.6792 7.20046 18.788 7.20046 18.2383 7.75017L13.985 12.0035L9.74125 7.75977C9.19182 7.21034 8.30101 7.21034 7.75158 7.75977C7.20215 8.30921 7.20215 9.20001 7.75158 9.74944L11.9953 13.9932L7.75017 18.2383Z" fill="#A4A4A4"/>
+</svg>`, small: `<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M5.53472 13.0277C5.14207 13.4203 5.14207 14.0569 5.53472 14.4496C5.92737 14.8422 6.56397 14.8422 6.95662 14.4496L9.98885 11.4174L13.0427 14.4712C13.4351 14.8637 14.0714 14.8637 14.4639 14.4712C14.8563 14.0788 14.8563 13.4425 14.4639 13.05L11.41 9.99617L14.4481 6.95809C14.8408 6.56544 14.8408 5.92883 14.4481 5.53618C14.0555 5.14354 13.4189 5.14354 13.0262 5.53618L9.98814 8.57427L6.95692 5.54304C6.56447 5.15059 5.92818 5.15059 5.53573 5.54304C5.14328 5.9355 5.14328 6.57179 5.53573 6.96424L8.56695 9.99546L5.53472 13.0277Z" fill="#A4A4A4"/>
+</svg>` },
+  "trash": { label: "trash", default: `<svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M11.2188 6.5625C11.375 6.21875 11.7188 6 12.0938 6H15.875C16.25 6 16.5938 6.21875 16.75 6.5625L17 7H20C20.5312 7 21 7.46875 21 8C21 8.5625 20.5312 9 20 9H8C7.4375 9 7 8.5625 7 8C7 7.46875 7.4375 7 8 7H11L11.2188 6.5625ZM20 10L19.3125 20.5938C19.2812 21.4062 18.625 22 17.8125 22H10.1562C9.34375 22 8.6875 21.4062 8.65625 20.5938L8 10H20Z" fill="black"/>
+</svg>`, small: `<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M7.74023 3.58203C7.86719 3.30273 8.14648 3.125 8.45117 3.125H11.5234C11.8281 3.125 12.1074 3.30273 12.2344 3.58203L12.4375 3.9375H14.875C15.3066 3.9375 15.6875 4.31836 15.6875 4.75C15.6875 5.20703 15.3066 5.5625 14.875 5.5625H5.125C4.66797 5.5625 4.3125 5.20703 4.3125 4.75C4.3125 4.31836 4.66797 3.9375 5.125 3.9375H7.5625L7.74023 3.58203ZM14.875 6.375L14.3164 14.9824C14.291 15.6426 13.7578 16.125 13.0977 16.125H6.87695C6.2168 16.125 5.68359 15.6426 5.6582 14.9824L5.125 6.375H14.875Z" fill="black"/>
+</svg>` },
+  "back": { label: "back", default: `<svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 14C0 6.26801 6.26801 0 14 0C21.732 0 28 6.26801 28 14C28 21.732 21.732 28 14 28C6.26801 28 0 21.732 0 14Z" fill="black"/>
+<path d="M12.0479 6.71631C12.5277 6.15644 13.3708 6.09097 13.9307 6.5708C14.4905 7.0507 14.555 7.89371 14.0752 8.45361L10.624 12.481H20.1826C20.9199 12.4811 21.5175 13.0786 21.5176 13.8159C21.5176 14.5533 20.92 15.1508 20.1826 15.1509H10.624L14.0752 19.1782C14.5551 19.7381 14.4905 20.5811 13.9307 21.061C13.3708 21.5409 12.5278 21.4762 12.0479 20.9165L7.20312 15.2642C6.48899 14.4308 6.48888 13.201 7.20312 12.3677L12.0479 6.71631Z" fill="white"/>
+</svg>`, small: `<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 10C0 4.47715 4.47715 0 10 0C15.5228 0 20 4.47715 20 10C20 15.5228 15.5228 20 10 20C4.47715 20 0 15.5228 0 10Z" fill="black"/>
+<path d="M8.78027 5.44727C9.08025 5.09752 9.60716 5.05753 9.95703 5.35742C10.3069 5.65739 10.3478 6.18428 10.0479 6.53418L7.88965 9.05078H13.8643C14.325 9.05078 14.699 9.42408 14.6992 9.88477C14.6992 10.3457 14.3252 10.7197 13.8643 10.7197H7.89062L10.0479 13.2363C10.3478 13.5862 10.3069 14.1131 9.95703 14.4131C9.60716 14.713 9.08025 14.673 8.78027 14.3232L5.75293 10.79C5.30651 10.2692 5.30652 9.50133 5.75293 8.98047L8.78027 5.44727Z" fill="white"/>
+</svg>` },
+  "password-visible": { label: "password visible", default: `<svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M6.26869 8.55415L4.62906 6.91036C4.2786 6.55902 4.2786 5.99031 4.62906 5.63897C4.98081 5.28633 5.55207 5.28637 5.90377 5.63906L22.309 22.0904C22.6591 22.4415 22.6585 23.0098 22.3077 23.3601C21.9564 23.711 21.387 23.7102 21.0367 23.3583L18.7643 21.0763C18.5073 20.8187 18.1223 20.7429 17.7783 20.8614C16.5835 21.2728 15.3015 21.4962 13.9675 21.4962C9.11981 21.4962 4.96025 18.5573 3.14742 14.3609C3.04736 14.1292 3.04717 13.8666 3.14712 13.6349C3.85069 12.0041 4.91248 10.5685 6.22761 9.4188C6.48491 9.19386 6.51005 8.79612 6.26869 8.55415ZM10.9786 13.8775C10.9942 13.5409 10.9072 13.1994 10.6693 12.9609L10.4982 12.7893C10.0137 12.3036 9.19109 12.4464 9.06376 13.1205C9.01001 13.405 8.98123 13.6979 8.98123 13.9979C8.98123 16.7573 11.2151 18.9968 13.9675 18.9968C14.2681 18.9968 14.5615 18.9677 14.8462 18.9133C15.517 18.7853 15.6581 17.9673 15.1759 17.4838L15.0007 17.3083C14.7607 17.0676 14.4156 16.9806 14.0761 16.9949C14.0401 16.9965 14.0039 16.9972 13.9675 16.9972C12.317 16.9972 10.9757 15.6526 10.9757 13.9979C10.9757 13.9575 10.9767 13.9173 10.9786 13.8775ZM13.9674 8.99906C16.7198 8.99906 18.9537 11.2386 18.9537 13.9979C18.9537 14.4122 18.9002 14.8141 18.8024 15.1983C18.7041 15.5847 18.7819 16.0052 19.0635 16.2875L20.8696 18.0982C21.2358 18.4653 21.8251 18.4948 22.1959 18.1325C23.2884 17.0647 24.1748 15.7859 24.7915 14.3622C24.8922 14.1298 24.8922 13.866 24.7915 13.6336C22.974 9.43787 18.8194 6.49964 13.9675 6.49964C13.1213 6.49964 12.2971 6.59145 11.5027 6.76394C10.7873 6.91927 10.5873 7.79344 11.1049 8.31114L11.6855 8.89181C11.9662 9.17259 12.3844 9.25179 12.769 9.1532C13.1526 9.05487 13.5538 8.99906 13.9674 8.99906ZM13.9676 10.9986C13.9022 11.0045 13.8733 11.084 13.9197 11.1305L16.8274 14.0456C16.8738 14.0921 16.9534 14.0633 16.9593 13.9979C16.9593 12.3433 15.6181 10.9986 13.9676 10.9986Z" fill="#A4A4A4"/>
+</svg>`, small: `<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M4.47661 6.11004L3.30544 4.93591C3.05511 4.68494 3.05511 4.27873 3.30544 4.02776C3.55669 3.77588 3.96473 3.77591 4.21594 4.02783L15.934 15.7788C16.184 16.0296 16.1836 16.4355 15.933 16.6857C15.6821 16.9363 15.2754 16.9358 15.0251 16.6845L13.402 15.0544C13.2185 14.8705 12.9435 14.8163 12.6977 14.9009C11.8443 15.1948 10.9286 15.3544 9.97574 15.3544C6.5528 15.3544 3.61016 13.303 2.2923 10.3604C2.18917 10.1301 2.18897 9.86679 2.29203 9.63649C2.79435 8.51396 3.53558 7.52463 4.44726 6.72764C4.63104 6.56697 4.649 6.28287 4.47661 6.11004ZM7.83917 9.96056C7.84478 9.68991 7.77706 9.41527 7.58589 9.22361C7.19658 8.83332 6.53463 8.94983 6.45213 9.49488C6.42726 9.65918 6.41413 9.82717 6.41413 9.99845C6.41413 11.9694 8.00974 13.5691 9.97574 13.5691C10.1466 13.5691 10.3142 13.5559 10.4781 13.531C11.0221 13.4481 11.1377 12.788 10.749 12.3983C10.5556 12.2044 10.2772 12.1364 10.0034 12.1406C9.99419 12.1407 9.98498 12.1408 9.97574 12.1408C8.79684 12.1408 7.83878 11.1803 7.83878 9.99845C7.83878 9.98577 7.83891 9.97314 7.83917 9.96056ZM9.97571 6.42783C11.9417 6.42783 13.5373 8.02748 13.5373 9.99846C13.5373 10.2292 13.5141 10.4546 13.4707 10.6729C13.393 11.0639 13.4667 11.4844 13.7483 11.7667L14.721 12.7419C15.0871 13.109 15.6781 13.1395 16.0375 12.7659C16.7079 12.0689 17.2599 11.2566 17.6617 10.3617C17.7655 10.1306 17.7655 9.86621 17.6617 9.63513C16.3406 6.69325 13.4015 4.64253 9.97574 4.64253C9.51454 4.64253 9.06248 4.68071 8.62204 4.75355C7.91579 4.87034 7.71784 5.7232 8.22396 6.22943C8.49846 6.50398 8.90724 6.57757 9.28747 6.49911C9.50997 6.4532 9.74003 6.42783 9.97571 6.42783ZM9.97582 7.85605C9.92909 7.86031 9.9085 7.9171 9.94163 7.95032L12.0185 10.0325C12.0517 10.0657 12.1085 10.0452 12.1128 9.99843C12.1128 8.81654 11.1547 7.85605 9.97582 7.85605Z" fill="#A4A4A4"/>
+</svg>` },
+  "password-hidden": { label: "password hidden", default: `<svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M13.8486 6.5C9.00003 6.5 4.83965 9.43933 3.02632 13.6365C2.92612 13.8685 2.92612 14.1315 3.02632 14.3635C4.83965 18.5607 9.00003 21.5 13.8486 21.5C18.6972 21.5 22.8576 18.5607 24.6709 14.3635C24.7711 14.1315 24.7711 13.8685 24.6709 13.6365C22.8576 9.43933 18.6972 6.5 13.8486 6.5ZM13.8486 19C11.0956 19 8.86125 16.76 8.86125 14C8.86125 11.24 11.0956 9 13.8486 9C16.6016 9 18.836 11.24 18.836 14C18.836 16.76 16.6016 19 13.8486 19ZM13.8486 11C12.1928 11 10.8562 12.34 10.8562 14C10.8562 15.66 12.1928 17 13.8486 17C15.5044 17 16.841 15.66 16.841 14C16.841 12.34 15.5044 11 13.8486 11Z" fill="#A4A4A4"/>
+</svg>`, small: `<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M9.89132 4.64307C6.46779 4.64307 3.52461 6.69469 2.20636 9.63776C2.10309 9.86833 2.10309 10.1321 2.20636 10.3627C3.52461 13.3057 6.46779 15.3574 9.89132 15.3574C13.3149 15.3574 16.258 13.3057 17.5763 10.3627C17.6796 10.1321 17.6796 9.86833 17.5763 9.63776C16.258 6.69469 13.3149 4.64307 9.89132 4.64307ZM9.89132 13.5716C7.92488 13.5716 6.32892 11.9716 6.32892 10.0002C6.32892 8.02878 7.92488 6.42878 9.89132 6.42878C11.8578 6.42878 13.4537 8.02878 13.4537 10.0002C13.4537 11.9716 11.8578 13.5716 9.89132 13.5716ZM9.89132 7.85735C8.70861 7.85735 7.75388 8.81449 7.75388 10.0002C7.75388 11.1859 8.70861 12.1431 9.89132 12.1431C11.074 12.1431 12.0288 11.1859 12.0288 10.0002C12.0288 8.81449 11.074 7.85735 9.89132 7.85735Z" fill="#A4A4A4"/>
+</svg>` },
+  "loading": { label: "loading", default: `<svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M12.625 8.50016V4.8335C12.625 4.0741 13.2406 3.4585 14 3.4585C14.7594 3.4585 15.375 4.0741 15.375 4.8335V8.50016C15.375 9.25955 14.7594 9.87516 14 9.87516C13.2406 9.87516 12.625 9.25955 12.625 8.50016Z" fill="#666666"/>
+<path d="M12.625 23.1667V19.5C12.625 18.7406 13.2406 18.125 14 18.125C14.7594 18.125 15.375 18.7406 15.375 19.5V23.1667C15.375 23.9261 14.7594 24.5417 14 24.5417C13.2406 24.5417 12.625 23.9261 12.625 23.1667Z" fill="#B2B2B2"/>
+<path d="M19.4993 12.625L23.166 12.625C23.9254 12.625 24.541 13.2406 24.541 14C24.541 14.7594 23.9254 15.375 23.166 15.375L19.4993 15.375C18.74 15.375 18.1243 14.7594 18.1243 14C18.1243 13.2406 18.74 12.625 19.4993 12.625Z" fill="#666666"/>
+<path d="M4.83333 12.625L8.5 12.625C9.25939 12.625 9.875 13.2406 9.875 14C9.875 14.7594 9.25939 15.375 8.5 15.375L4.83333 15.375C4.07394 15.375 3.45833 14.7594 3.45833 14C3.45833 13.2406 4.07394 12.625 4.83333 12.625Z" fill="#999999"/>
+<path d="M18.8686 16.852L21.4613 19.4447C21.9983 19.9817 21.9983 20.8523 21.4613 21.3893C20.9244 21.9262 20.0537 21.9262 19.5168 21.3893L16.9241 18.7965C16.3871 18.2596 16.3871 17.389 16.9241 16.852C17.461 16.315 18.3316 16.315 18.8686 16.852Z" fill="#999999"/>
+<path d="M8.55414 6.7685L11.1469 9.36122C11.6838 9.8982 11.6838 10.7688 11.1469 11.3058C10.6099 11.8427 9.7393 11.8427 9.20233 11.3058L6.6096 8.71304C6.07263 8.17607 6.07263 7.30547 6.6096 6.7685C7.14657 6.23153 8.01717 6.23153 8.55414 6.7685Z" fill="#666666"/>
+<path d="M11.0904 18.7963L8.49766 21.3891C7.96069 21.926 7.09009 21.926 6.55312 21.3891C6.01615 20.8521 6.01615 19.9815 6.55312 19.4445L9.14584 16.8518C9.68282 16.3148 10.5534 16.3148 11.0904 16.8518C11.6274 17.3888 11.6274 18.2594 11.0904 18.7963Z" fill="#B2B2B2"/>
+<path d="M21.231 8.71284L18.6383 11.3056C18.1013 11.8425 17.2307 11.8425 16.6937 11.3056C16.1568 10.7686 16.1568 9.89799 16.6937 9.36102L19.2865 6.76829C19.8234 6.23132 20.694 6.23132 21.231 6.76829C21.768 7.30526 21.768 8.17586 21.231 8.71284Z" fill="#666666"/>
+</svg>`, small: `<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M9 6.00016V3.3335C9 2.78121 9.44772 2.3335 10 2.3335C10.5523 2.3335 11 2.78121 11 3.3335V6.00016C11 6.55245 10.5523 7.00016 10 7.00016C9.44772 7.00016 9 6.55245 9 6.00016Z" fill="#666666"/>
+<path d="M9 16.6667V14C9 13.4477 9.44772 13 10 13C10.5523 13 11 13.4477 11 14V16.6667C11 17.219 10.5523 17.6667 10 17.6667C9.44772 17.6667 9 17.219 9 16.6667Z" fill="#B2B2B2"/>
+<path d="M13.9993 9L16.666 9C17.2183 9 17.666 9.44772 17.666 10C17.666 10.5523 17.2183 11 16.666 11L13.9993 11C13.4471 11 12.9993 10.5523 12.9993 10C12.9993 9.44771 13.4471 9 13.9993 9Z" fill="#666666"/>
+<path d="M3.33333 9L6 9C6.55228 9 7 9.44772 7 10C7 10.5523 6.55228 11 6 11L3.33333 11C2.78105 11 2.33333 10.5523 2.33333 10C2.33333 9.44771 2.78105 9 3.33333 9Z" fill="#999999"/>
+<path d="M13.5401 12.0743L15.4257 13.9599C15.8162 14.3504 15.8162 14.9836 15.4257 15.3741C15.0352 15.7646 14.402 15.7646 14.0115 15.3741L12.1259 13.4885C11.7353 13.098 11.7353 12.4648 12.1259 12.0743C12.5164 11.6837 13.1496 11.6837 13.5401 12.0743Z" fill="#999999"/>
+<path d="M6.04009 4.74077L7.92571 6.62639C8.31623 7.01691 8.31623 7.65008 7.92571 8.0406C7.53518 8.43113 6.90202 8.43113 6.51149 8.0406L4.62587 6.15498C4.23535 5.76446 4.23535 5.1313 4.62587 4.74077C5.0164 4.35025 5.64956 4.35025 6.04009 4.74077Z" fill="#666666"/>
+<path d="M7.88374 13.4883L5.99812 15.3739C5.6076 15.7645 4.97443 15.7645 4.58391 15.3739C4.19338 14.9834 4.19338 14.3503 4.58391 13.9597L6.46953 12.0741C6.86005 11.6836 7.49322 11.6836 7.88374 12.0741C8.27427 12.4646 8.27427 13.0978 7.88374 13.4883Z" fill="#B2B2B2"/>
+<path d="M15.2587 6.15483L13.3731 8.04045C12.9826 8.43098 12.3494 8.43098 11.9589 8.04045C11.5684 7.64993 11.5684 7.01676 11.9589 6.62624L13.8445 4.74062C14.2351 4.3501 14.8682 4.3501 15.2587 4.74062C15.6493 5.13115 15.6493 5.76431 15.2587 6.15483Z" fill="#666666"/>
+</svg>` },
+  "rand": { label: "rand", default: `<svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M11.5567 21.1602H8.17578V6.16016H14.1445C16.0227 6.16016 17.4697 6.58583 18.4853 7.43718C19.5149 8.27502 20.0297 9.47097 20.0297 11.025C20.0297 11.998 19.814 12.8291 19.3827 13.5183C18.9653 14.2075 18.3253 14.7683 17.4627 15.2007L20.1758 21.1602H16.4819L14.1653 15.9102H11.5567V21.1602ZM11.5567 9.07908V13.0318H14.1236C14.861 13.0318 15.4314 12.8561 15.8349 12.5048C16.2523 12.1534 16.461 11.6602 16.461 11.025C16.461 10.3899 16.2593 9.91016 15.8558 9.58583C15.4662 9.24799 14.8958 9.07908 14.1445 9.07908H11.5567Z" fill="black"/>
+</svg>`, small: `<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M8.25475 15.1142H5.83984V4.3999H10.1032C11.4448 4.3999 12.4784 4.70396 13.2038 5.31206C13.9392 5.91052 14.3069 6.76477 14.3069 7.87481C14.3069 8.56979 14.1529 9.16342 13.8448 9.65569C13.5467 10.148 13.0895 10.5486 12.4734 10.8574L14.4113 15.1142H11.7728L10.1181 11.3642H8.25475V15.1142ZM8.25475 6.48484V9.3082H10.0883C10.615 9.3082 11.0225 9.18272 11.3107 8.93176C11.6088 8.68079 11.7579 8.32847 11.7579 7.87481C11.7579 7.42114 11.6138 7.07847 11.3256 6.84681C11.0473 6.6055 10.6398 6.48484 10.1032 6.48484H8.25475Z" fill="black"/>
+</svg>` },
+  "whatsapp": { label: "whatsapp", default: `<svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M7.13271 17.8896L6 22L10.2285 20.8889C11.395 21.5235 12.704 21.8581 14.0377 21.8581C18.426 21.8581 22 18.2987 22 13.9288C22.0026 12.8885 21.7979 11.8578 21.3977 10.8958C20.9974 9.93386 20.4095 9.05943 19.6674 8.32259C18.1574 6.82724 16.1606 6 14.0294 6C9.64157 6 6.06714 9.55937 6.06714 13.9288C6.06688 15.3185 6.43425 16.684 7.13271 17.8896ZM11.6816 10.1373C11.8241 10.1373 11.9922 10.1455 12.1429 10.4881C12.2434 10.7113 12.4063 11.1129 12.5419 11.4472C12.6552 11.7264 12.7494 11.9587 12.7723 12.0006C12.8225 12.1005 12.8563 12.2262 12.7892 12.3596C12.7683 12.3964 12.7507 12.43 12.734 12.4618C12.6899 12.5457 12.6524 12.6173 12.5795 12.7022C12.5484 12.7385 12.5156 12.778 12.4824 12.8179C12.4085 12.9069 12.3326 12.9983 12.2689 13.0616C12.1598 13.1619 12.0593 13.2704 12.1767 13.4793C12.1821 13.4878 12.188 13.4973 12.1944 13.5075C12.3382 13.7374 12.7399 14.3798 13.3258 14.8996C13.9993 15.4986 14.5803 15.7448 14.8668 15.8662C14.9161 15.8871 14.9566 15.9043 14.9874 15.9189C15.1889 16.0193 15.3145 16.0026 15.4319 15.8688C15.5579 15.7354 15.9521 15.2757 16.0864 15.0668C16.2206 14.8661 16.3549 14.8996 16.5477 14.9665C16.6973 15.0187 17.3352 15.331 17.7125 15.5158C17.8222 15.5695 17.9099 15.6124 17.9572 15.6351C18.0109 15.664 18.0606 15.6888 18.1053 15.7112C18.2283 15.7727 18.3149 15.8161 18.3518 15.8774C18.402 15.961 18.402 16.3787 18.2344 16.8547C18.0581 17.3397 17.2191 17.7908 16.8418 17.8324C16.8092 17.8361 16.7769 17.8404 16.7438 17.8448C16.3929 17.8914 15.961 17.9488 14.3663 17.323C12.4244 16.5571 11.1438 14.6665 10.8849 14.2843C10.8642 14.2537 10.85 14.2328 10.8426 14.2229L10.8418 14.2219C10.7387 14.085 10.0035 13.1094 10.0035 12.101C10.0035 11.1519 10.469 10.6592 10.686 10.4295C10.7002 10.4145 10.7133 10.4006 10.7252 10.3878C10.9179 10.1789 11.1445 10.1287 11.2787 10.1287C11.4212 10.1287 11.5555 10.1287 11.6816 10.1373Z" fill="black"/>
+</svg>`, small: `<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M4.27791 13.2415L3.33398 16.6668L6.85771 15.7409C7.8298 16.2698 8.92065 16.5485 10.032 16.5485C13.689 16.5485 16.6673 13.5824 16.6673 9.94083C16.6695 9.07388 16.4989 8.21501 16.1654 7.41336C15.8319 6.61171 15.3419 5.88302 14.7235 5.26899C13.4652 4.02286 11.8011 3.3335 10.0252 3.3335C6.36862 3.3335 3.38993 6.29964 3.38993 9.94083C3.38972 11.0989 3.69586 12.2369 4.27791 13.2415ZM8.06863 6.78127C8.18738 6.78127 8.32745 6.78805 8.45305 7.07359C8.53684 7.25956 8.6726 7.59427 8.7856 7.87285C8.87999 8.10553 8.95849 8.29906 8.97754 8.33404C9.01941 8.41729 9.04757 8.52201 8.99162 8.63314C8.97425 8.66379 8.95956 8.69179 8.94564 8.71832C8.90894 8.78828 8.87764 8.84793 8.81692 8.91868C8.79098 8.9489 8.76365 8.9818 8.736 9.01509C8.67439 9.08926 8.61117 9.16537 8.5581 9.21815C8.46714 9.30178 8.3834 9.39219 8.48122 9.56622C8.4857 9.57336 8.49061 9.58121 8.49595 9.58974C8.61579 9.78137 8.95057 10.3167 9.43885 10.7498C10 11.249 10.4842 11.4542 10.723 11.5553C10.764 11.5727 10.7978 11.5871 10.8235 11.5993C10.9914 11.6829 11.096 11.669 11.1939 11.5575C11.2989 11.4463 11.6274 11.0632 11.7393 10.8892C11.8512 10.7219 11.9631 10.7498 12.1237 10.8056C12.2484 10.8491 12.78 11.1094 13.0944 11.2633C13.1859 11.3081 13.2589 11.3439 13.2983 11.3627C13.3431 11.3869 13.3844 11.4075 13.4218 11.4262C13.5242 11.4774 13.5964 11.5135 13.6271 11.5646C13.669 11.6343 13.669 11.9824 13.5293 12.379C13.3824 12.7832 12.6832 13.1592 12.3688 13.1939C12.3417 13.1969 12.3147 13.2005 12.2871 13.2041C11.9948 13.243 11.6348 13.2908 10.3059 12.7693C8.68763 12.131 7.62048 10.5556 7.40473 10.2371C7.38746 10.2116 7.37565 10.1942 7.36944 10.1859L7.36886 10.1851C7.28288 10.071 6.67025 9.25803 6.67025 8.41766C6.67025 7.62676 7.05817 7.21614 7.23895 7.02478C7.25079 7.01225 7.26173 7.00066 7.27163 6.98997C7.43224 6.81593 7.62103 6.77412 7.73293 6.77412C7.85168 6.77412 7.96358 6.77412 8.06863 6.78127Z" fill="black"/>
+</svg>` },
 };
-const COUNTRIES = [
-  {flag:'🇿🇼',dial:'+263',name:'Zimbabwe'},
-  {flag:'🇿🇦',dial:'+27', name:'South Africa'},
-  {flag:'🇰🇪',dial:'+254',name:'Kenya'},
-  {flag:'🇳🇬',dial:'+234',name:'Nigeria'},
-  {flag:'🇬🇭',dial:'+233',name:'Ghana'},
-  {flag:'🇺🇬',dial:'+256',name:'Uganda'},
-  {flag:'🇹🇿',dial:'+255',name:'Tanzania'},
-];
-const CONTACTS_LIST = [
-  {name:'Sipho Dlamini',   num:'+263 77 123 4567',initials:'SD',color:'#c084fc'},
-  {name:'Thabo Mokoena',   num:'+263 71 987 6543',initials:'TM',color:'#34d399'},
-  {name:'Amara Osei',      num:'+27 82 345 6789', initials:'AO',color:'#fb923c'},
-  {name:'Zanele Ndlovu',   num:'+263 78 555 0123',initials:'ZN',color:'#60a5fa'},
-];
 
-let inpPg = {brand:'flash',theme:'light',type:'text',size:'md',state:'default'};
-let inpSelCountry = {...COUNTRIES[0]};
-let _openDrop = null;
+const tiState = { type:'standard', size:'default', bg:'white', forceError:false, password:false, showHelper:false, leading:'none', trailing:'none', leadingEnabled:false, trailingEnabled:false, searchIcon:'search', labelMode:'caption', loading:false };
 
-/* ── SVG icons ── */
-const I = {
-  search:`<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" width="15" height="15"><circle cx="6.5" cy="6.5" r="4.5"/><path d="M10.5 10.5L14 14" stroke-linecap="round"/></svg>`,
-  eye:`<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" width="16" height="16"><path d="M1 8s3-5 7-5 7 5 7 5-3 5-7 5-7-5-7-5z"/><circle cx="8" cy="8" r="2"/></svg>`,
-  eyeOff:`<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" width="16" height="16"><path d="M1 8s3-5 7-5 7 5 7 5-3 5-7 5-7-5-7-5z"/><circle cx="8" cy="8" r="2"/><line x1="2" y1="2" x2="14" y2="14" stroke-linecap="round"/></svg>`,
-  book:`<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" width="15" height="15"><rect x="2" y="1" width="10" height="14" rx="1"/><path d="M5 5h4M5 8h4M5 11h3" stroke-linecap="round"/><path d="M1 3v10" stroke-linecap="round"/></svg>`,
-  calendar:`<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" width="14" height="14"><rect x="1" y="3" width="14" height="12" rx="1.5"/><path d="M1 7h14M5 1v4M11 1v4" stroke-linecap="round"/></svg>`,
-  chev:`<svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5" width="10" height="10"><path d="M2 4l3 3 3-3" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
-  close:`<svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" width="12" height="12"><path d="M2 2l8 8M10 2l-8 8" stroke-linecap="round"/></svg>`,
-  check:`<svg viewBox="0 0 16 16" fill="none" stroke="#10c504" stroke-width="2" width="16" height="16"><path d="M3 8l4 4 6-7" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
-  daterange:`<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" width="14" height="14"><rect x="1" y="3" width="14" height="12" rx="1.5"/><path d="M1 7h14M5 1v4M11 1v4" stroke-linecap="round"/><path d="M5 10h6" stroke-linecap="round"/></svg>`,
-  userPlus:`<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" width="14" height="14"><circle cx="6" cy="5" r="2.5"/><path d="M1.5 14c0-2.5 2-4 4.5-4s4.5 1.5 4.5 4" stroke-linecap="round"/><path d="M12 4v4M10 6h4" stroke-linecap="round"/></svg>`,
-  addressBook:`<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" width="14" height="14"><rect x="3" y="1" width="10" height="14" rx="1.5"/><circle cx="8" cy="6.5" r="1.8"/><path d="M5.3 11.5c0-1.4 1.2-2.3 2.7-2.3s2.7.9 2.7 2.3" stroke-linecap="round"/><path d="M1 5h2M1 8h2M1 11h2" stroke-linecap="round"/></svg>`,
-};
-const BOOK_BADGE = `<svg viewBox="237 17 17 18" width="17" height="18" fill="#0062EB" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;display:block"><path d="M240 18H249C250.094 18 251 18.9062 251 20V32C251 33.125 250.094 34 249 34H240C238.875 34 238 33.125 238 32V20C238 18.9062 238.875 18 240 18ZM243.5 27C242.094 27 241 28.125 241 29.5C241 29.7812 241.219 30 241.5 30H247.5C247.75 30 248 29.7812 248 29.5C248 28.125 246.875 27 245.5 27H243.5ZM242.5 24C242.5 24.7188 242.875 25.375 243.5 25.75C244.094 26.0938 244.875 26.0938 245.5 25.75C246.094 25.375 246.5 24.7188 246.5 24C246.5 23.3125 246.094 22.6562 245.5 22.2812C244.875 21.9375 244.094 21.9375 243.5 22.2812C242.875 22.6562 242.5 23.3125 242.5 24ZM253 20.5V22.5C253 22.7812 252.75 23 252.5 23C252.219 23 252 22.7812 252 22.5V20.5C252 20.25 252.219 20 252.5 20C252.75 20 253 20.25 253 20.5ZM252.5 24C252.75 24 253 24.25 253 24.5V26.5C253 26.7812 252.75 27 252.5 27C252.219 27 252 26.7812 252 26.5V24.5C252 24.25 252.219 24 252.5 24ZM253 28.5V30.5C253 30.7812 252.75 31 252.5 31C252.219 31 252 30.7812 252 30.5V28.5C252 28.25 252.219 28 252.5 28C252.75 28 253 28.25 253 28.5Z"/></svg>`;
-
-/* ── Apply colors to wrapper ── */
-function applyInpColors(wrap, brand, theme) {
-  const c = INP_COLORS[brand][theme];
-  const vars = [
-    ['--_inp-bg',c.bg],['--_inp-border',c.border],['--_inp-border-focus',c.borderFocus],
-    ['--_inp-text',c.text],['--_inp-ph',c.ph],['--_inp-cursor',c.cursor],
-    ['--_inp-label',c.label],['--_inp-caption',c.caption],
-    ['--_inp-pre-bg',c.preBg],['--_inp-pre-text',c.preText],['--_inp-suf-text',c.sufText],
-    ['--_stage-bg',c.stage],
-  ];
-  vars.forEach(([k,v])=>wrap.style.setProperty(k,v));
+function tiRenderPasswordDots(container, count){
+  container.innerHTML='';
+  for(let i=0;i<Math.min(count,10);i++){ container.appendChild(document.createElement('span')); }
 }
 
-/* ── Build inner HTML per type ── */
-function inpInner(type, state, uid) {
-  const hasVal = ['typing','completed','error','errorcorrected'].includes(state);
-  const val    = hasVal ? 'Entered text' : '';
-  const ph     = 'Placeholder';
-
-  switch(type) {
-    case 'text':
-      return `<input class="inp" type="text" placeholder="${ph}" value="${val}">`;
-
-    case 'currency':
-      return `<div class="inp-pre inp-pre--text">R</div>
-        <input class="inp inp--noleft" type="text" placeholder="${ph}" value="${val}">`;
-
-    case 'mobile':
-      return `<input class="inp inp--noright" type="tel" placeholder="${ph}" value="${val}">
-        <button class="inp-suf inp-suf--icon-btn inp-contacts-btn" type="button">${BOOK_BADGE}</button>`;
-
-    case 'foreign':
-      return `<button class="inp-pre inp-pre--btn inp-country-btn" type="button" data-uid="${uid}">
-          ${inpSelCountry.flag}&nbsp;${inpSelCountry.dial}&nbsp;${I.chev}
-        </button>
-        <input class="inp inp--noleft inp--noright" type="tel" placeholder="${ph}" value="${val}">
-        <button class="inp-suf inp-suf--icon-btn inp-contacts-btn" type="button">${BOOK_BADGE}</button>`;
-
-    case 'password':
-      return `<input class="inp inp--noright inp--pw" type="password" placeholder="${ph}" value="${val}">
-        <button class="inp-suf inp-suf--icon-btn inp-pw-toggle" type="button">${I.eyeOff}</button>`;
-
-    case 'search':
-      return `<div class="inp-pre inp-pre--icon">${I.search}</div>
-        <input class="inp inp--noleft" type="search" placeholder="Search…" value="${val}">
-        ${hasVal?`<button class="inp-suf inp-suf--icon-btn inp-clear" type="button">${I.close}</button>`:''}`;
-
-    case 'searchdate':
-      return `<div class="inp-pre inp-pre--icon">${I.search}</div>
-        <input class="inp inp--noleft inp--noright" type="search" placeholder="Search…" value="${val}">
-        <button class="inp-suf inp-suf--badge inp-date-badge" type="button">Date&nbsp;${I.calendar}</button>`;
-
-    case 'multiline':
-      return `<textarea class="inp inp-area" placeholder="${ph}">${val}</textarea>`;
-
-    default:
-      return `<input class="inp" type="text" placeholder="${ph}" value="${val}">`;
-  }
+// Positions a fixed 2x18px caret element right after the rendered text, measured
+// via a hidden same-font mirror span (native caret-color can't guarantee that
+// exact size across browsers, so we draw it ourselves).
+function tiMakeCaretDriver(valueRow, mirror, caretEl){
+  return function place(text){
+    mirror.textContent = text;
+    const w = mirror.getBoundingClientRect().width;
+    const maxLeft = valueRow.clientWidth - 2;
+    caretEl.style.left = Math.min(w, Math.max(0, maxLeft)) + 'px';
+  };
 }
 
-/* ── Build complete input element ── */
-function buildInpEl(type, size, state, brand, theme, uid, isStatic) {
-  uid = uid || ('inp_'+Math.random().toString(36).slice(2,7));
-  const isErr  = state==='error';
-  const isCmpl = state==='completed';
-  const isECrr = state==='errorcorrected';
-  const isFcs  = state==='focus'||state==='typing';
-  const h      = size==='sm' ? 40 : 48;
-  const fs     = size==='sm' ? 13 : 14;
+function tiUpdateReadout(current){
+  const el = document.getElementById('ti-pg-readout');
+  if(!el) return;
+  el.innerHTML = `state: <b>${current || 'default'}</b> &middot; size: <b>${tiState.size}</b> &middot; bg: <b>${tiState.bg}</b>`;
+}
 
+function tiBuildStandardField(){
+  const leadingSvg = (tiState.leadingEnabled && tiState.leading!=='none') ? TI_ICONS[tiState.leading][tiState.size] : null;
+  const trailingSvg = (tiState.trailingEnabled && tiState.trailing!=='none') ? TI_ICONS[tiState.trailing][tiState.size] : null;
   const wrap = document.createElement('div');
-  wrap.className = `inp-wrap${isErr?' inp-wrap--error':''}${isECrr?' inp-wrap--errorcorrected':''}`;
-  wrap.style.setProperty('--_inp-h', h+'px');
-  wrap.style.setProperty('--_inp-fs', fs+'px');
-  applyInpColors(wrap, brand, theme);
-
-  const fieldCls = `inp-field${type==='multiline'?' inp-field--area':''}${(isFcs&&type!=='multiline')?' inp-field--f-focus':''}`;
-  const capText  = isErr ? 'Error message goes here' : 'Assistive caption';
-  const capClass = 'inp-caption';
-
-  // No checkmark suffix — completed is just normal state with text
-  const checkSuf = '';
-
   wrap.innerHTML = `
-    <label class="inp-label">Input label</label>
-    <div class="${fieldCls}">
-      ${inpInner(type, state, uid)}
-      ${checkSuf}
+    <div class="ti-shell" data-bg="${tiState.bg}" data-size="${tiState.size}">
+      <div class="ti-field" data-bg="${tiState.bg}" data-size="${tiState.size}">
+        ${leadingSvg ? `<span class="ti-leading">${leadingSvg}</span>` : ''}
+        <span class="ti-label">Label</span>
+        <div class="ti-value-row">
+          ${tiState.password ? '<div class="ti-dots"></div>' : `<input class="ti-input" type="text" autocomplete="off" spellcheck="false"/>`}
+          <span class="ti-mirror"></span>
+          <span class="ti-caret"></span>
+        </div>
+        <div class="ti-trailing">
+          ${trailingSvg ? `<span class="ti-trailing-icon">${trailingSvg}</span>` : ''}
+          <button class="ti-eye" type="button" aria-label="Toggle password visibility">${TI_EYE_SHOW_SVG}</button>
+          <button class="ti-clear" type="button" aria-label="Clear">${TI_CLEAR_SVG}</button>
+        </div>
+      </div>
+      <div class="ti-helper">Helper text</div>
     </div>
-    <span class="${capClass}">${capText}</span>`;
+  `;
+  const shell = wrap.querySelector('.ti-shell');
+  const field = wrap.querySelector('.ti-field');
+  const valueRow = field.querySelector('.ti-value-row');
+  const clearBtn = field.querySelector('.ti-clear');
+  const eyeBtn = field.querySelector('.ti-eye');
+  const helper = wrap.querySelector('.ti-helper');
+  const mirror = field.querySelector('.ti-mirror');
+  const caretEl = field.querySelector('.ti-caret');
+  let dotsContainer = field.querySelector('.ti-dots');
+  let realInput = field.querySelector('.ti-input');
+  let hiddenValue = '';
+  let revealed = false;
 
-  /* Wire up interactions after paint */
-  if(!isStatic) setTimeout(() => {
-    if(isFcs) {
-      const el = wrap.querySelector('.inp, .inp-area');
-      if(el) el.focus();
-    }
-    // Password toggle
-    const pwBtn = wrap.querySelector('.inp-pw-toggle');
-    if(pwBtn) {
-      pwBtn.onclick = () => {
-        const inp = wrap.querySelector('.inp--pw');
-        if(!inp) return;
-        const show = inp.type==='text';
-        inp.type = show ? 'password' : 'text';
-        pwBtn.innerHTML = show ? I.eyeOff : I.eye;
-      };
-    }
-    // Country dropdown
-    const cBtn = wrap.querySelector('.inp-country-btn');
-    if(cBtn) {
-      cBtn.onclick = (e) => { e.stopPropagation(); openCountryDrop(cBtn, wrap, uid); };
-    }
-    // Contacts picker
-    const kBtn = wrap.querySelector('.inp-contacts-btn');
-    if(kBtn) {
-      kBtn.onclick = (e) => { e.stopPropagation(); openContactsPicker(wrap, uid); };
-    }
-    // Clear btn
-    const clrBtn = wrap.querySelector('.inp-clear');
-    if(clrBtn) {
-      clrBtn.onclick = () => {
-        const inp = wrap.querySelector('.inp'); if(inp){ inp.value=''; inp.focus(); }
-      };
-    }
-  }, 40); // end if(!isStatic)
+  field.classList.toggle('ti-has-leading', !!leadingSvg);
+  field.classList.toggle('ti-show-eye', tiState.password);
+  // Standard is always Caption mode — the Caption/Inline toggle only applies to Search.
 
-  return wrap;
-}
+  mirror.style.fontFamily = 'inherit';
+  mirror.style.fontWeight = '650';
+  mirror.style.fontSize = tiState.size==='small' ? '13px' : '16px';
+  const placeCaret = tiMakeCaretDriver(valueRow, mirror, caretEl);
 
-/* ── Country dropdown ── */
-function openCountryDrop(btn, wrap, uid) {
-  closeAllDrops();
-  const drop = document.createElement('div');
-  drop.className = 'inp-drop';
-  drop.id = 'inp-country-drop';
-  COUNTRIES.forEach(c => {
-    const item = document.createElement('div');
-    item.className = 'inp-drop-item' + (c.dial===inpSelCountry.dial?' on':'');
-    item.innerHTML = `<span style="font-size:18px">${c.flag}</span><span class="inp-drop__name">${c.name}</span><span class="inp-drop__dial">${c.dial}</span>`;
-    item.onclick = () => {
-      inpSelCountry = {...c};
-      btn.innerHTML = `${c.flag}&nbsp;${c.dial}&nbsp;${I.chev}`;
-      closeAllDrops();
-    };
-    drop.appendChild(item);
-  });
-  positionDrop(drop, btn);
-  _openDrop = drop;
-}
+  function currentText(){ return tiState.password ? hiddenValue : (realInput ? realInput.value : ''); }
 
-function openContactsPicker(wrap, uid) {
-  closeAllDrops();
-  const trigger = wrap.querySelector('.inp-contacts-btn');
-  const targetInp = wrap.querySelector('.inp, .inp--noright');
-  const drop = document.createElement('div');
-  drop.className = 'inp-drop';
-  drop.id = 'inp-contacts-drop';
-  drop.style.minWidth = '240px';
-  const hdr = document.createElement('div');
-  hdr.style.cssText = 'padding:10px 14px 6px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--chrome-muted)';
-  hdr.textContent = 'Contacts';
-  drop.appendChild(hdr);
-  CONTACTS_LIST.forEach(ct => {
-    const item = document.createElement('div');
-    item.className = 'inp-drop-item';
-    item.innerHTML = `<div class="inp-contacts-avatar" style="background:${ct.color}20;color:${ct.color}">${ct.initials}</div>
-      <div><div class="inp-drop__name">${ct.name}</div><div class="inp-drop__num">${ct.num}</div></div>`;
-    item.onclick = () => {
-      if(targetInp) targetInp.value = ct.num;
-      closeAllDrops();
-    };
-    drop.appendChild(item);
-  });
-  positionDrop(drop, trigger || wrap);
-  _openDrop = drop;
-}
-
-function positionDrop(drop, anchor) {
-  document.body.appendChild(drop);
-  const r = anchor.getBoundingClientRect();
-  drop.style.top  = (r.bottom + 4 + window.scrollY) + 'px';
-  drop.style.left = (r.left + window.scrollX) + 'px';
-}
-
-function closeAllDrops() {
-  if(_openDrop) { _openDrop.remove(); _openDrop = null; }
-  document.querySelectorAll('.inp-drop').forEach(d=>d.remove());
-}
-
-document.addEventListener('click', closeAllDrops);
-
-/* ── PLAYGROUND ── */
-function renderInpPlayground() {
-  const el = document.getElementById('inp-playground');
-  if(!el) return;
-  // follow global theme
-  inpPg.theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
-  const c = INP_COLORS[inpPg.brand][inpPg.theme];
-
-  const mkRow = (label, opts, key) =>
-    `<div class="inp-pg__group">
-       <span class="inp-pg__clabel">${label}</span>
-       <div class="inp-pg__pr">${opts.map(([v,l])=>`<button class="inp-pg__p${inpPg[key]===v?' on':''}" onclick="inpPgSet('${key}','${v}')">${l}</button>`).join('')}</div>
-     </div>`;
-
-  el.innerHTML = `
-    <div class="type-sub__title">Playground</div>
-    <div class="inp-pg">
-      <div class="inp-pg__stage" id="inp-pg-stage" style="background:${c.stage}">
-        <div class="inp-pg__inner" id="inp-pg-inner"></div>
-      </div>
-      <div class="inp-pg__ctrls">
-        <div class="inp-pg__group">
-          <span class="inp-pg__clabel">Type</span>
-          <div class="inp-pg__pr" style="flex-wrap:wrap">${INP_TYPES.map(t=>`<button class="inp-pg__p${inpPg.type===t.key?' on':''}" onclick="inpPgSet('type','${t.key}')">${t.label}</button>`).join('')}</div>
-        </div>
-        ${mkRow('Size',[['md','Medium'],['sm','Small']],'size')}
-        ${mkRow('State',INP_STATES.map(s=>[s.key,s.label]),'state')}
-      </div>
-      <div class="code-panel" id="inp-code-panel">
-        <div class="code-panel__head" onclick="toggleInpCode()">
-          <span class="code-panel__label">&#60;/&#62; &nbsp;View code</span>
-          <button class="code-copy-btn" onclick="event.stopPropagation();copyInpCode()" id="inp-copy-btn">Copy</button>
-        </div>
-        <div class="code-body">
-          <div class="code-tabs">
-            <button class="code-tab${(typeof inpLang==='undefined'||inpLang==='html')?' on':''}" onclick="setInpLang('html',this)">HTML / CSS</button>
-            <button class="code-tab${typeof inpLang!=='undefined'&&inpLang==='blazor'?' on':''}" onclick="setInpLang('blazor',this)">Blazor</button>
-            <button class="code-tab${typeof inpLang!=='undefined'&&inpLang==='tsx'?' on':''}" onclick="setInpLang('tsx',this)">React TSX</button>
-          </div>
-          <div class="code-block" id="inp-code-block">${(typeof inpLang!=='undefined'&&inpLang==='blazor')?getInpCodeBlazor(inpPg.type,inpPg.size,inpPg.brand,inpPg.theme):(typeof inpLang!=='undefined'&&inpLang==='tsx')?getInpCodeTSX(inpPg.type,inpPg.size,inpPg.brand,inpPg.theme):getInpCodeHTML(inpPg.type,inpPg.size,inpPg.brand,inpPg.theme)}</div>
-        </div>
-      </div>
-    </div>`;
-
-  // Inject live input
-  const inner = document.getElementById('inp-pg-inner');
-  if(inner) {
-    const inputEl = buildInpEl(inpPg.type, inpPg.size, inpPg.state, inpPg.brand, inpPg.theme, 'pg_main');
-    inner.appendChild(inputEl);
+  function renderPasswordField(){
+    if(revealed){ dotsContainer.classList.add('ti-dots--text'); dotsContainer.textContent = hiddenValue; }
+    else { dotsContainer.classList.remove('ti-dots--text'); tiRenderPasswordDots(dotsContainer, hiddenValue.length); }
   }
-}
 
-function inpPgSet(key, val) {
-  inpPg[key] = val;
-  renderInpPlayground();
-}
-
-function toggleInpCode() {
-  document.getElementById('inp-code-panel')?.classList.toggle('open');
-}
-let inpLang = 'html';
-function setInpLang(lang, btn){
-  inpLang = lang;
-  document.querySelectorAll('#inp-code-panel .code-tab').forEach(t=>t.classList.remove('on'));
-  btn.classList.add('on');
-  const block = document.getElementById('inp-code-block');
-  if(!block) return;
-  const gen = lang==='blazor'?getInpCodeBlazor:lang==='tsx'?getInpCodeTSX:getInpCodeHTML;
-  block.innerHTML = gen(inpPg.type, inpPg.size, inpPg.brand, inpPg.theme);
-  document.getElementById('inp-code-panel').classList.add('open');
-}
-function copyInpCode() {
-  const block = document.getElementById('inp-code-block');
-  if(!block) return;
-  navigator.clipboard.writeText(block.innerText||block.textContent).catch(()=>{});
-  const btn = document.getElementById('inp-copy-btn');
-  if(btn){ btn.textContent='Copied!'; setTimeout(()=>btn.textContent='Copy',2000); }
-}
-
-function getInpCodeHTML(type, size, brand, theme) {
-  const c = INP_COLORS[brand][theme];
-  const h = size==='sm'?40:48;
-  const typeMap = {text:'text',currency:'text',mobile:'tel',foreign:'tel',password:'password',search:'search',searchdate:'search',multiline:'textarea'};
-  const t = INP_TYPES.find(x=>x.key===type);
-  const comment = `<span class="code-cm">/* Flash · ${theme==='dark'?'Dark':'Light'} · ${t?t.label:type} · ${size==='sm'?'Small':'Medium'} */</span>`;
-  return `${comment}
-<span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"inp-wrap"</span><span class="code-kw">></span>
-  <span class="code-kw">&#60;label</span> <span class="code-cls">class</span>=<span class="code-val">"inp-label"</span><span class="code-kw">></span>Input label<span class="code-kw">&#60;/label></span>
-  <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"inp-field"</span><span class="code-kw">></span>
-    <span class="code-kw">&#60;input</span> <span class="code-cls">class</span>=<span class="code-val">"inp"</span> <span class="code-cls">type</span>=<span class="code-val">"${typeMap[type]||'text'}"</span> <span class="code-cls">placeholder</span>=<span class="code-val">"Placeholder"</span><span class="code-kw">></span>
-  <span class="code-kw">&#60;/div></span>
-  <span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"inp-caption"</span><span class="code-kw">></span>Assistive caption<span class="code-kw">&#60;/span></span>
-<span class="code-kw">&#60;/div></span>
-
-<span class="code-cm">/* CSS variables */</span>
-<span class="code-cls">.inp-wrap</span> {
-  <span class="code-kw">--_inp-bg</span>: <span class="code-val">${c.bg}</span>;
-  <span class="code-kw">--_inp-border</span>: <span class="code-val">${c.border}</span>;
-  <span class="code-kw">--_inp-border-focus</span>: <span class="code-val">${c.borderFocus}</span>;
-  <span class="code-kw">--_inp-text</span>: <span class="code-val">${c.text}</span>;
-  <span class="code-kw">--_inp-cursor</span>: <span class="code-val">${c.cursor}</span>;
-  <span class="code-kw">--_inp-h</span>: <span class="code-val">${h}px</span>;
-}`;
-}
-
-function getInpCodeBlazor(type, size, brand, theme){
-  const t = INP_TYPES.find(x=>x.key===type);
-  const typePascal = (t?t.label:type).replace(/[^a-zA-Z]/g,'');
-  const sizePascal = size==='sm'?'Small':'Medium';
-  return `<span class="code-cm">@* DsInput.razor — usage *@</span>
-<span class="code-kw">&#60;DsInput</span> <span class="code-attr">Type</span>=<span class="code-val">"InputType.${typePascal}"</span>
-         <span class="code-attr">Size</span>=<span class="code-val">"InputSize.${sizePascal}"</span>
-         <span class="code-attr">Label</span>=<span class="code-val">"Input label"</span>
-         <span class="code-attr">Caption</span>=<span class="code-val">"Assistive caption"</span>
-         <span class="code-attr">@bind-Value</span>=<span class="code-val">"model.Field"</span> /><span class="code-kw"></span>
-
-<span class="code-cm">@* DsInput.razor — component definition *@</span>
-<span class="code-kw">&#60;div</span> <span class="code-attr">class</span>=<span class="code-val">"inp-wrap @StateClass"</span><span class="code-kw">></span>
-  <span class="code-kw">&#60;label</span> <span class="code-attr">class</span>=<span class="code-val">"inp-label"</span><span class="code-kw">></span>@Label<span class="code-kw">&#60;/label></span>
-  <span class="code-kw">&#60;div</span> <span class="code-attr">class</span>=<span class="code-val">"inp-field"</span><span class="code-kw">></span>
-    <span class="code-kw">&#60;input</span> <span class="code-attr">class</span>=<span class="code-val">"inp"</span> <span class="code-attr">@bind</span>=<span class="code-val">"Value"</span> <span class="code-attr">placeholder</span>=<span class="code-val">"@Placeholder"</span> /><span class="code-kw"></span>
-  <span class="code-kw">&#60;/div></span>
-  @if (!<span class="code-cls">string</span>.IsNullOrEmpty(Caption)) {
-    <span class="code-kw">&#60;span</span> <span class="code-attr">class</span>=<span class="code-val">"inp-caption"</span><span class="code-kw">></span>@Caption<span class="code-kw">&#60;/span></span>
-  }
-<span class="code-kw">&#60;/div></span>
-
-<span class="code-kw">@code</span> {
-  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> InputType Type { get; set; } = InputType.Text;
-  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> InputSize Size { get; set; } = InputSize.Medium;
-  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> <span class="code-cls">string</span> Label { get; set; }
-  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> <span class="code-cls">string</span> Caption { get; set; }
-  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> <span class="code-cls">string</span> Placeholder { get; set; } = "Placeholder";
-  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> <span class="code-cls">bool</span> HasError { get; set; }
-  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> <span class="code-cls">string</span> Value { get; set; }
-  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> EventCallback&#60;string> ValueChanged { get; set; }
-
-  <span class="code-kw">private</span> <span class="code-cls">string</span> StateClass => HasError ? "inp-wrap--error" : "";
-}`;
-}
-
-function getInpCodeTSX(type, size, brand, theme){
-  const typeMap = {text:'text',currency:'text',mobile:'tel',foreign:'tel',password:'password',search:'search',searchdate:'search',multiline:'textarea'};
-  return `<span class="code-cm">// DsInput.tsx</span>
-<span class="code-kw">import</span> React <span class="code-kw">from</span> <span class="code-val">'react'</span>;
-
-<span class="code-kw">type</span> <span class="code-cls">InputType</span> = <span class="code-val">'text'</span> | <span class="code-val">'currency'</span> | <span class="code-val">'mobile'</span> | <span class="code-val">'foreign'</span> | <span class="code-val">'password'</span> | <span class="code-val">'search'</span> | <span class="code-val">'multiline'</span>;
-<span class="code-kw">type</span> <span class="code-cls">InputSize</span> = <span class="code-val">'md'</span> | <span class="code-val">'sm'</span>;
-
-<span class="code-kw">interface</span> <span class="code-cls">DsInputProps</span> {
-  type?: <span class="code-cls">InputType</span>;
-  size?: <span class="code-cls">InputSize</span>;
-  label: <span class="code-cls">string</span>;
-  caption?: <span class="code-cls">string</span>;
-  error?: <span class="code-cls">boolean</span>;
-  value: <span class="code-cls">string</span>;
-  onChange: (v: <span class="code-cls">string</span>) => <span class="code-cls">void</span>;
-}
-
-<span class="code-kw">export const</span> <span class="code-cls">DsInput</span>: React.FC&#60;DsInputProps> = ({
-  type = <span class="code-val">'text'</span>, size = <span class="code-val">'md'</span>, label, caption, error, value, onChange,
-}) => {
-  <span class="code-kw">const</span> wrapClass = [<span class="code-val">'inp-wrap'</span>, error && <span class="code-val">'inp-wrap--error'</span>].filter(Boolean).join(<span class="code-val">' '</span>);
-  <span class="code-kw">return</span> (
-    &#60;div className={wrapClass} data-size={size}>
-      &#60;label className=<span class="code-val">"inp-label"</span>>{label}&#60;/label>
-      &#60;div className=<span class="code-val">"inp-field"</span>>
-        &#60;input className=<span class="code-val">"inp"</span> type=<span class="code-val">"${typeMap[type]||'text'}"</span>
-          value={value} onChange={(e) => onChange(e.target.value)} placeholder=<span class="code-val">"Placeholder"</span> />
-      &#60;/div>
-      {caption && &#60;span className=<span class="code-val">"inp-caption"</span>>{caption}&#60;/span>}
-    &#60;/div>
-  );
-};`;
-}
-
-/* ── REFERENCE GRID ── */
-function renderInpReference() {
-  const el = document.getElementById('inp-reference');
-  if(!el) return;
-
-  const items = INP_TYPES.map(t => `
-    <div class="inp-ai" id="inpai-${t.key}">
-      <button class="inp-ah" onclick="toggleInpAccord('${t.key}')">
-        <span class="inp-ah-name">${t.label}</span>
-        <span class="inp-ah-desc">${t.desc}</span>
-        <span class="inp-ah-chev">›</span>
-      </button>
-      <div class="inp-ab" id="inpab-${t.key}">
-        <div id="inprc-${t.key}"></div>
-      </div>
-    </div>`).join('');
-
-  el.innerHTML = `
-    <div class="type-sub__title">All types</div>
-    <div class="type-sub__desc">Expand any type to see both sizes across all five states, in the current light/dark theme.</div>
-    <div class="inp-accord">${items}</div>`;
-}
-
-function toggleInpAccord(key) {
-  const item = document.getElementById('inpai-'+key);
-  const wasOpen = item.classList.contains('open');
-  item.classList.toggle('open');
-  if(!wasOpen) renderInpRefContent(key, currentTheme());
-}
-
-// Re-render any open input-reference type in the current global theme.
-function rerenderInpRef(){
-  const t = currentTheme();
-  INP_TYPES.forEach(tp => {
-    const item = document.getElementById('inpai-'+tp.key);
-    if(item && item.classList.contains('open')) renderInpRefContent(tp.key, t);
-  });
-}
-
-function renderInpRefContent(key, theme) {
-  const cont = document.getElementById('inprc-'+key);
-  if(!cont) return;
-  const brand = 'flash';
-  const c = INP_COLORS[brand][theme];
-  const states = INP_STATES;
-  const sizes  = [{key:'md',label:'Medium'},{key:'sm',label:'Small'}];
-
-  cont.innerHTML = '';
-  sizes.forEach(sz => {
-    const row = document.createElement('div');
-    row.className = 'inp-ref-row';
-
-    const lbl = document.createElement('div');
-    lbl.className = 'inp-ref-rlabel';
-    lbl.textContent = sz.label;
-    row.appendChild(lbl);
-
-    const cells = document.createElement('div');
-    cells.className = 'inp-ref-cells';
-
-    states.forEach(st => {
-      const cell = document.createElement('div');
-      cell.className = 'inp-ref-cell';
-      cell.style.background = c.stage;
-      const cellLbl = document.createElement('div');
-      cellLbl.className = 'inp-ref-cell-lbl';
-      cellLbl.textContent = st.label;
-      cell.appendChild(cellLbl);
-      const uid = `ref_${key}_${sz.key}_${st.key}_${Math.random().toString(36).slice(2,5)}`;
-      const inputEl = buildInpEl(key, sz.key, st.key, brand, theme, uid, true);
-      cell.appendChild(inputEl);
-      cells.appendChild(cell);
-    });
-    row.appendChild(cells);
-    cont.appendChild(row);
-  });
-}
-
-/* ── INIT ── */
-try { renderInpPlayground(); } catch(e){ console.error('inp-playground',e); }
-try { renderInpReference();  } catch(e){ console.error('inp-reference',e);  }
-try {
-  INP_TYPES.forEach(t => {
-    const item = document.getElementById('inpai-'+t.key);
-    if(item && !item.classList.contains('open')){
-      item.classList.add('open');
-      renderInpRefContent(t.key, currentTheme());
-    }
-  });
-} catch(e){ console.error('inp-accord-expand',e); }
-
-/* ============================================================
-   TEXT INPUTS V2 (Trader — Figma "Master Input Component")
-   node-id 3115:5380 · Input Container + Input Text State (box)
-   and Search Component + Search Container (pill)
-============================================================ */
-
-const INPV2_COLORS = {
-  flash: {
-    light:{stage:'#f2f2f3',boxBg:'#ffffff',label:'#8a8a8a',labelFocus:'#414141',text:'#000000',cursor:'#10c504',icon:'#a4a4a4',link:'#0062eb',helperBg:'#f0f0f0',helperText:'#252525',pillBorderFocus:'#000000',pillGrey:'#ffffff',pillGreyBorder:'#dddddd'},
-    dark: {stage:'#12131a',boxBg:'#25262c',label:'#8c8c91',labelFocus:'#c7c8cc',text:'#ffffff',cursor:'#10c504',icon:'#72747a',link:'#4d9dff',helperBg:'#2e2f35',helperText:'#e6e6e6',pillBorderFocus:'#ffffff',pillGrey:'#25262c',pillGreyBorder:'#4a4b52'},
-  },
-};
-
-function applyInpV2Colors(el, theme) {
-  const c = INPV2_COLORS.flash[theme];
-  const vars = [
-    ['--_iv2-stage',c.stage],['--_iv2-box-bg',c.boxBg],['--_iv2-label',c.label],['--_iv2-label-focus',c.labelFocus],
-    ['--_iv2-text',c.text],['--_iv2-cursor',c.cursor],['--_iv2-icon',c.icon],['--_iv2-link',c.link],
-    ['--_iv2-helper-bg',c.helperBg],['--_iv2-helper-text',c.helperText],
-    ['--_iv2-pill-border-focus',c.pillBorderFocus],['--_iv2-pill-grey',c.pillGrey],['--_iv2-pill-grey-border',c.pillGreyBorder],
-  ];
-  vars.forEach(([k,v])=>el.style.setProperty(k,v));
-}
-
-/* ── Build an Input v2 (box / floating-label) element ── */
-function buildInputV2El(size, leftIcon, trailing, helper, state, uid) {
-  uid = uid || ('iv2_'+Math.random().toString(36).slice(2,7));
-  const trailingHTML = (trailing||[]).map(t=>{
-    if(t==='single') return `<button type="button" aria-label="Clear">${I.close}</button>`;
-    if(t==='link')   return `<span class="inpv2-link">${I.userPlus}Link text${I.addressBook}</span>`;
-    if(t==='double') return `<button type="button" aria-label="Clear">${I.close}</button><button type="button" aria-label="Clear">${I.close}</button>`;
-    return '';
-  }).join('');
-  const box = document.createElement('div');
-  box.className = 'inpv2-box';
-  box.dataset.size = size;
-  box.dataset.state = state;
-  box.id = uid;
-  box.innerHTML = `
-    <div class="inpv2-row">
-      ${leftIcon?`<div class="inpv2-icon">R</div>`:''}
-      <div class="inpv2-body">
-        <span class="inpv2-label">Label</span>
-        <span class="inpv2-value"><span>Input text</span><span class="inpv2-cursor"></span></span>
-      </div>
-      ${(trailing&&trailing.length)?`<div class="inpv2-trailing">${trailingHTML}</div>`:''}
-    </div>
-    ${helper?`<div class="inpv2-helper">Helper text</div>`:''}`;
-  return box;
-}
-
-/* ── Build a Search v2 (pill) element ── */
-function buildSearchV2El(size, type, bg, state, uid) {
-  uid = uid || ('sv2_'+Math.random().toString(36).slice(2,7));
-  const hasValue = state==='typing' || state==='complete';
-  const floated  = type==='caption' && state!=='default';
-  let body;
-  if(floated){
-    body = `<span class="inpv2-pill-caption">Label</span>
-      <span class="inpv2-pill-line">
-        ${hasValue?`<span class="inpv2-pill-value" style="display:inline">Input text</span>`:''}
-        <span class="inpv2-pill-cursor"></span>
-      </span>`;
-  } else {
-    body = `<span class="inpv2-pill-line">
-        <span class="inpv2-pill-label"${hasValue?' style="display:none"':''}>Label</span>
-        <span class="inpv2-pill-value"${hasValue?' style="display:inline"':''}>Input text</span>
-        <span class="inpv2-pill-cursor"></span>
-      </span>`;
-  }
-  const pill = document.createElement('div');
-  pill.className = 'inpv2-pill';
-  pill.dataset.size = size;
-  pill.dataset.type = type;
-  pill.dataset.bg = bg;
-  pill.dataset.state = state;
-  pill.id = uid;
-  pill.innerHTML = `
-    <div class="inpv2-pill-icon">${I.search}</div>
-    <div class="inpv2-pill-body">${body}</div>
-    ${state==='typing'?`<div class="inpv2-pill-trailing"><button type="button" aria-label="Clear">${I.close}</button></div>`:''}`;
-  return pill;
-}
-
-/* ── PLAYGROUND ── */
-let iv2Pg = {family:'input', size:'default', leftIcon:true, helper:false, trailSingle:true, trailLink:false, trailDouble:false, state:'default', searchType:'inline', searchBg:'colour', searchState:'default'};
-
-function renderInpV2Playground() {
-  const el = document.getElementById('inpv2-playground');
-  if(!el) return;
-  const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
-  const c = INPV2_COLORS.flash[theme];
-  const isInput = iv2Pg.family === 'input';
-
-  const seg = (label, opts, key) =>
-    `<div class="inp-pg__group">
-       <span class="inp-pg__clabel">${label}</span>
-       <div class="inp-pg__pr" style="flex-wrap:wrap">${opts.map(([v,l])=>`<button class="inp-pg__p${iv2Pg[key]===v?' on':''}" onclick="iv2PgSet('${key}','${v}')">${l}</button>`).join('')}</div>
-     </div>`;
-  const toggle = (label, key) =>
-    `<div class="inp-pg__group">
-       <span class="inp-pg__clabel">${label}</span>
-       <div class="inp-pg__pr"><button class="inp-pg__p${iv2Pg[key]?' on':''}" onclick="iv2PgToggle('${key}')">${iv2Pg[key]?'On':'Off'}</button></div>
-     </div>`;
-
-  const controls = isInput ? `
-      ${seg('Size',[['default','Default'],['small','Small']],'size')}
-      ${toggle('Left icon','leftIcon')}
-      ${toggle('Single icon','trailSingle')}
-      ${toggle('Link text','trailLink')}
-      ${toggle('Double icon','trailDouble')}
-      ${toggle('Helper text','helper')}
-      ${seg('State',[['default','Default'],['focus','Focus']],'state')}
-    ` : `
-      ${seg('Size',[['default','Default'],['small','Small']],'size')}
-      ${seg('Type',[['inline','Inline'],['caption','Caption']],'searchType')}
-      ${seg('Background',[['colour','Colour'],['white','White'],['grey','Grey']],'searchBg')}
-      ${seg('State',[['default','Default'],['focus','Focus'],['typing','Typing'],['complete','Complete']],'searchState')}
-    `;
-
-  el.innerHTML = `
-    <div class="type-sub__title">Playground</div>
-    <div class="inp-pg">
-      <div class="inp-pg__stage" id="inpv2-pg-stage" style="background:${c.stage}">
-        <div class="inp-pg__inner" id="inpv2-pg-inner" style="max-width:420px"></div>
-      </div>
-      <div class="inp-pg__ctrls">
-        <div class="inp-pg__group">
-          <span class="inp-pg__clabel">Family</span>
-          <div class="inp-pg__pr">
-            <button class="inp-pg__p${isInput?' on':''}" onclick="iv2PgSet('family','input')">Input</button>
-            <button class="inp-pg__p${!isInput?' on':''}" onclick="iv2PgSet('family','search')">Search</button>
-          </div>
-        </div>
-        ${controls}
-      </div>
-      <div class="code-panel" id="inpv2-code-panel">
-        <div class="code-panel__head" onclick="toggleInpV2Code()">
-          <span class="code-panel__label">&#60;/&#62; &nbsp;View code</span>
-          <button class="code-copy-btn" onclick="event.stopPropagation();copyInpV2Code()" id="inpv2-copy-btn">Copy</button>
-        </div>
-        <div class="code-body">
-          <div class="code-tabs">
-            <button class="code-tab${(typeof iv2Lang==='undefined'||iv2Lang==='html')?' on':''}" onclick="setInpV2Lang('html',this)">HTML / CSS</button>
-            <button class="code-tab${typeof iv2Lang!=='undefined'&&iv2Lang==='blazor'?' on':''}" onclick="setInpV2Lang('blazor',this)">Blazor</button>
-            <button class="code-tab${typeof iv2Lang!=='undefined'&&iv2Lang==='tsx'?' on':''}" onclick="setInpV2Lang('tsx',this)">React TSX</button>
-          </div>
-          <div class="code-block" id="inpv2-code-block">${(typeof iv2Lang!=='undefined'&&iv2Lang==='blazor')?getInpV2CodeBlazor():(typeof iv2Lang!=='undefined'&&iv2Lang==='tsx')?getInpV2CodeTSX():getInpV2CodeHTML()}</div>
-        </div>
-      </div>
-    </div>`;
-
-  const stage = document.getElementById('inpv2-pg-stage');
-  if(stage) applyInpV2Colors(stage, theme);
-  const inner = document.getElementById('inpv2-pg-inner');
-  if(inner){
-    if(isInput){
-      const trailing = [];
-      if(iv2Pg.trailSingle) trailing.push('single');
-      if(iv2Pg.trailLink)   trailing.push('link');
-      if(iv2Pg.trailDouble) trailing.push('double');
-      inner.appendChild(buildInputV2El(iv2Pg.size, iv2Pg.leftIcon, trailing, iv2Pg.helper, iv2Pg.state, 'iv2_pg_main'));
+  function reflect(focused){
+    const text = currentText();
+    const hasText = text.length>0;
+    shell.classList.toggle('ti-focused', focused);
+    shell.classList.toggle('ti-floated', focused || hasText);
+    shell.classList.toggle('ti-has-value', hasText);
+    shell.classList.toggle('ti-show-clear', focused && hasText);
+    caretEl.classList.toggle('on', focused);
+    if(tiState.password && !revealed){
+      mirror.textContent='';
+      const dotsWidth = dotsContainer ? dotsContainer.getBoundingClientRect().width : 0;
+      caretEl.style.left = (dotsWidth ? dotsWidth+4 : 0) + 'px';
     } else {
-      inner.appendChild(buildSearchV2El(iv2Pg.size, iv2Pg.searchType, iv2Pg.searchBg, iv2Pg.searchState, 'iv2_pg_main'));
+      placeCaret(text);
     }
+    let label='default';
+    if(focused && hasText) label='typing'; else if(focused) label='in focus'; else if(hasText) label='complete';
+    tiUpdateReadout(label);
   }
-}
 
-function iv2PgSet(key, val) { iv2Pg[key] = val; renderInpV2Playground(); }
-function iv2PgToggle(key) { iv2Pg[key] = !iv2Pg[key]; renderInpV2Playground(); }
-
-function toggleInpV2Code() {
-  document.getElementById('inpv2-code-panel')?.classList.toggle('open');
-}
-let iv2Lang = 'html';
-function setInpV2Lang(lang, btn) {
-  iv2Lang = lang;
-  document.querySelectorAll('#inpv2-code-panel .code-tab').forEach(t=>t.classList.remove('on'));
-  btn.classList.add('on');
-  const block = document.getElementById('inpv2-code-block');
-  if(!block) return;
-  const gen = lang==='blazor'?getInpV2CodeBlazor:lang==='tsx'?getInpV2CodeTSX:getInpV2CodeHTML;
-  block.innerHTML = gen();
-  document.getElementById('inpv2-code-panel').classList.add('open');
-}
-function copyInpV2Code() {
-  const block = document.getElementById('inpv2-code-block');
-  if(!block) return;
-  navigator.clipboard.writeText(block.innerText||block.textContent).catch(()=>{});
-  const btn = document.getElementById('inpv2-copy-btn');
-  if(btn){ btn.textContent='Copied!'; setTimeout(()=>btn.textContent='Copy',2000); }
-}
-
-function getInpV2CodeHTML() {
-  const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
-  const c = INPV2_COLORS.flash[theme];
-  if(iv2Pg.family==='input'){
-    const comment = `<span class="code-cm">/* Input v2 · ${theme==='dark'?'Dark':'Light'} · ${iv2Pg.size==='small'?'Small':'Default'} · ${iv2Pg.state==='focus'?'Focus':'Default'} */</span>`;
-    return `${comment}
-<span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"inpv2-box"</span> <span class="code-cls">data-size</span>=<span class="code-val">"${iv2Pg.size}"</span> <span class="code-cls">data-state</span>=<span class="code-val">"${iv2Pg.state}"</span><span class="code-kw">></span>
-  <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"inpv2-row"</span><span class="code-kw">></span>
-    ${iv2Pg.leftIcon?'<span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"inpv2-icon"</span><span class="code-kw">>R&#60;/div></span>':'<span class="code-cm">&#60;!-- left icon off --&#62;</span>'}
-    <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"inpv2-body"</span><span class="code-kw">></span>
-      <span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"inpv2-label"</span><span class="code-kw">></span>Label<span class="code-kw">&#60;/span></span>
-      <span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"inpv2-value"</span><span class="code-kw">></span>Input text<span class="code-kw">&#60;/span></span>
-    <span class="code-kw">&#60;/div></span>
-  <span class="code-kw">&#60;/div></span>
-  ${iv2Pg.helper?'<span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"inpv2-helper"</span><span class="code-kw">>Helper text&#60;/div></span>':'<span class="code-cm">&#60;!-- helper text off --&#62;</span>'}
-<span class="code-kw">&#60;/div></span>
-
-<span class="code-cm">/* CSS variables */</span>
-<span class="code-cls">.inpv2-box</span> {
-  <span class="code-kw">--_iv2-box-bg</span>: <span class="code-val">${c.boxBg}</span>;
-  <span class="code-kw">--_iv2-label</span>: <span class="code-val">${c.label}</span>;
-  <span class="code-kw">--_iv2-label-focus</span>: <span class="code-val">${c.labelFocus}</span>;
-  <span class="code-kw">--_iv2-text</span>: <span class="code-val">${c.text}</span>;
-  <span class="code-kw">--_iv2-cursor</span>: <span class="code-val">${c.cursor}</span>;
-}`;
+  if(tiState.password){
+    const dotsWrap = document.createElement('div');
+    dotsWrap.className='ti-dots';
+    valueRow.insertBefore(dotsWrap, valueRow.firstChild);
+    dotsContainer = dotsWrap;
+    field.tabIndex = 0;
+    field.addEventListener('focus', ()=>reflect(true));
+    field.addEventListener('blur', ()=>reflect(false));
+    field.addEventListener('keydown', (e)=>{
+      if(e.key==='Backspace'){ hiddenValue = hiddenValue.slice(0,-1); }
+      else if(e.key.length===1){ hiddenValue += e.key; }
+      renderPasswordField();
+      reflect(true);
+    });
+    eyeBtn.addEventListener('mousedown', (e)=>e.preventDefault());
+    eyeBtn.addEventListener('click', ()=>{
+      revealed = !revealed;
+      eyeBtn.innerHTML = revealed ? TI_EYE_HIDE_SVG : TI_EYE_SHOW_SVG;
+      eyeBtn.setAttribute('aria-pressed', String(revealed));
+      renderPasswordField();
+      reflect(document.activeElement===field);
+    });
+  } else {
+    realInput.addEventListener('focus', ()=>reflect(true));
+    realInput.addEventListener('blur', ()=>reflect(false));
+    realInput.addEventListener('input', ()=>reflect(true));
   }
-  const comment = `<span class="code-cm">/* Search v2 · ${theme==='dark'?'Dark':'Light'} · ${iv2Pg.searchType} · ${iv2Pg.searchBg} · ${iv2Pg.searchState} */</span>`;
-  return `${comment}
-<span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"inpv2-pill"</span> <span class="code-cls">data-size</span>=<span class="code-val">"${iv2Pg.size}"</span> <span class="code-cls">data-type</span>=<span class="code-val">"${iv2Pg.searchType}"</span> <span class="code-cls">data-bg</span>=<span class="code-val">"${iv2Pg.searchBg}"</span> <span class="code-cls">data-state</span>=<span class="code-val">"${iv2Pg.searchState}"</span><span class="code-kw">></span>
-  <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"inpv2-pill-icon"</span><span class="code-kw">>&#60;!-- search icon --&#62;&#60;/div></span>
-  <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"inpv2-pill-body"</span><span class="code-kw">></span>
-    <span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"inpv2-pill-label"</span><span class="code-kw">></span>Label<span class="code-kw">&#60;/span></span>
-  <span class="code-kw">&#60;/div></span>
-<span class="code-kw">&#60;/div></span>
 
-<span class="code-cm">/* CSS variables */</span>
-<span class="code-cls">.inpv2-pill</span> {
-  <span class="code-kw">--_iv2-box-bg</span>: <span class="code-val">${c.boxBg}</span>;
-  <span class="code-kw">--_iv2-pill-grey-border</span>: <span class="code-val">${c.pillGreyBorder}</span>;
-  <span class="code-kw">--_iv2-pill-border-focus</span>: <span class="code-val">${c.pillBorderFocus}</span>;
-}`;
+  clearBtn.addEventListener('mousedown', (e)=>e.preventDefault());
+  clearBtn.addEventListener('click', ()=>{
+    hiddenValue='';
+    if(realInput) realInput.value='';
+    if(dotsContainer) dotsContainer.innerHTML='';
+    if(!tiState.password && realInput) realInput.focus();
+    reflect(!!(realInput && document.activeElement===realInput));
+  });
+
+  // Force error / show helper — driven by the sidebar toggles, applied once at build time.
+  const showError = tiState.forceError;
+  shell.classList.toggle('ti-error', showError);
+  const helperVisible = showError || tiState.showHelper;
+  helper.classList.toggle('show', helperVisible);
+  helper.classList.toggle('ti-error-text', showError);
+  helper.textContent = showError ? 'Error text' : 'Helper text';
+
+  reflect(false);
+  return { el: wrap, field: shell };
 }
 
-function getInpV2CodeBlazor() {
-  if(iv2Pg.family==='input'){
-    return `<span class="code-cm">@* DsInputV2.razor — usage *@</span>
-<span class="code-kw">&#60;DsInputV2</span> <span class="code-attr">Size</span>=<span class="code-val">"InputSize.${iv2Pg.size==='small'?'Small':'Default'}"</span>
-           <span class="code-attr">LeftIcon</span>=<span class="code-val">"${iv2Pg.leftIcon}"</span>
-           <span class="code-attr">Trailing</span>=<span class="code-val">"TrailingSlots.${['trailSingle','trailLink','trailDouble'].filter(k=>iv2Pg[k]).map(k=>({trailSingle:'SingleIcon',trailLink:'LinkText',trailDouble:'DoubleIcon'})[k]).join(' | ')||'None'}"</span>
-           <span class="code-attr">HelperText</span>=<span class="code-val">"${iv2Pg.helper?'"Helper text"':'null'}"</span>
-           <span class="code-attr">Label</span>=<span class="code-val">"Label"</span>
-           <span class="code-attr">@bind-Value</span>=<span class="code-val">"model.Field"</span> /><span class="code-kw"></span>`;
-  }
-  return `<span class="code-cm">@* DsSearchV2.razor — usage *@</span>
-<span class="code-kw">&#60;DsSearchV2</span> <span class="code-attr">Size</span>=<span class="code-val">"InputSize.${iv2Pg.size==='small'?'Small':'Default'}"</span>
-            <span class="code-attr">Type</span>=<span class="code-val">"SearchType.${iv2Pg.searchType==='caption'?'Caption':'Inline'}"</span>
-            <span class="code-attr">Background</span>=<span class="code-val">"SearchBackground.${iv2Pg.searchBg[0].toUpperCase()+iv2Pg.searchBg.slice(1)}"</span>
-            <span class="code-attr">@bind-Value</span>=<span class="code-val">"model.Query"</span> /><span class="code-kw"></span>`;
-}
-
-function getInpV2CodeTSX() {
-  if(iv2Pg.family==='input'){
-    const slots = ['trailSingle','trailLink','trailDouble'].filter(k=>iv2Pg[k]).map(k=>`'${({trailSingle:'single',trailLink:'link',trailDouble:'double'})[k]}'`).join(', ');
-    return `<span class="code-cm">// DsInputV2.tsx — usage</span>
-<span class="code-kw">&#60;DsInputV2</span>
-  size=<span class="code-val">"${iv2Pg.size}"</span>
-  leftIcon={${iv2Pg.leftIcon}}
-  trailing={[${slots}]}
-  helperText={${iv2Pg.helper?'"Helper text"':'undefined'}}
-  label=<span class="code-val">"Label"</span>
-  value={value}
-  onChange={setValue}
-/&#62;`;
-  }
-  return `<span class="code-cm">// DsSearchV2.tsx — usage</span>
-<span class="code-kw">&#60;DsSearchV2</span>
-  size=<span class="code-val">"${iv2Pg.size}"</span>
-  type=<span class="code-val">"${iv2Pg.searchType}"</span>
-  background=<span class="code-val">"${iv2Pg.searchBg}"</span>
-  label=<span class="code-val">"Label"</span>
-  value={query}
-  onChange={setQuery}
-/&#62;`;
-}
-
-/* ── REFERENCE GRID ── */
-const INPV2_PRESETS = [
-  {key:'default', label:'Default',      desc:'No icon, no trailing, no helper',                leftIcon:false, trailing:[],                        helper:false},
-  {key:'leading', label:'Leading icon', desc:'Currency/user icon in the leading slot',          leftIcon:true,  trailing:[],                        helper:false},
-  {key:'single',  label:'Single icon',  desc:'One trailing icon button',                        leftIcon:false, trailing:['single'],                helper:false},
-  {key:'link',    label:'Link text',    desc:'Icon + label + icon trailing group',              leftIcon:false, trailing:['link'],                  helper:false},
-  {key:'double',  label:'Double icon',  desc:'Two trailing icon buttons',                       leftIcon:false, trailing:['double'],                helper:false},
-  {key:'helper',  label:'Helper text',  desc:'Assistive caption below the field',               leftIcon:false, trailing:[],                        helper:true},
-  {key:'loaded',  label:'Fully loaded', desc:'Leading icon + all trailing slots + helper text', leftIcon:true,  trailing:['single','link','double'], helper:true},
-];
-const INPV2_SEARCH_COMBOS = [
-  {key:'inline-colour',  label:'Inline · Colour',  type:'inline',  bg:'colour'},
-  {key:'inline-white',   label:'Inline · White',   type:'inline',  bg:'white'},
-  {key:'inline-grey',    label:'Inline · Grey',    type:'inline',  bg:'grey'},
-  {key:'caption-colour', label:'Caption · Colour', type:'caption', bg:'colour'},
-  {key:'caption-white',  label:'Caption · White',  type:'caption', bg:'white'},
-  {key:'caption-grey',   label:'Caption · Grey',   type:'caption', bg:'grey'},
-];
-const INPV2_SIZES = [{key:'default',label:'Default'},{key:'small',label:'Small'}];
-const INPV2_STATES_INPUT  = [{key:'default',label:'Default'},{key:'focus',label:'Focus'}];
-const INPV2_STATES_SEARCH = [{key:'default',label:'Default'},{key:'focus',label:'Focus'},{key:'typing',label:'Typing'},{key:'complete',label:'Complete'}];
-function renderInpV2Reference() {
-  const el = document.getElementById('inpv2-reference');
-  if(!el) return;
-
-  const accItem = (key, name, desc) => `
-    <div class="inp-ai" id="inpv2ai-${key}">
-      <button class="inp-ah" onclick="toggleInpV2Accord('${key}')">
-        <span class="inp-ah-name">${name}</span>
-        <span class="inp-ah-desc">${desc}</span>
-        <span class="inp-ah-chev">›</span>
-      </button>
-      <div class="inp-ab" id="inpv2ab-${key}">
-        <div id="inpv2rc-${key}"></div>
+function tiBuildSearchField(){
+  const iconSvg = TI_ICONS[tiState.searchIcon][tiState.size];
+  const wrap = document.createElement('div');
+  wrap.innerHTML = `
+    <div class="ti-search" data-bg="${tiState.bg}" data-size="${tiState.size}">
+      <div class="ti-search-icon">${iconSvg}</div>
+      <div class="ti-search-body">
+        <span class="ti-search-label">Label</span>
+        <div class="ti-search-value-row">
+          <input class="ti-search-input" type="text" autocomplete="off" spellcheck="false"/>
+          <span class="ti-mirror"></span>
+          <span class="ti-caret"></span>
+        </div>
       </div>
-    </div>`;
+      <div class="ti-search-trailing">
+        <span class="ti-search-spinner">${TI_SPINNER_SVG}</span>
+        <button class="ti-search-clear" type="button" aria-label="Clear">${TI_CLEAR_SVG}</button>
+      </div>
+    </div>
+  `;
+  const field = wrap.querySelector('.ti-search');
+  const valueRow = field.querySelector('.ti-search-value-row');
+  const input = wrap.querySelector('.ti-search-input');
+  const clearBtn = wrap.querySelector('.ti-search-clear');
+  const mirror = field.querySelector('.ti-mirror');
+  const caretEl = field.querySelector('.ti-caret');
+  mirror.style.fontFamily = 'inherit';
+  mirror.style.fontWeight = '650';
+  mirror.style.fontSize = tiState.size==='small' ? '13px' : '16px';
+  const placeCaret = tiMakeCaretDriver(valueRow, mirror, caretEl);
 
-  const inputItems  = INPV2_PRESETS.map(p => accItem(p.key, p.label, p.desc)).join('');
-  const searchItems = INPV2_SEARCH_COMBOS.map(s => accItem(s.key, s.label, 'Search pill')).join('');
+  field.classList.toggle('ti-inline', tiState.labelMode==='inline');
+  field.classList.toggle('ti-loading', tiState.loading);
+
+  // Loading only ever shows against a real query — turns on when the user
+  // submits (Enter) with text present, and off the instant the field is empty.
+  function setLoading(on){
+    tiState.loading = on;
+    field.classList.toggle('ti-loading', on);
+    const toggle = document.getElementById('ti-toggle-loading');
+    if(toggle) toggle.classList.toggle('on', on);
+  }
+
+  function reflect(focused){
+    const hasText = input.value.length>0;
+    field.classList.toggle('ti-focused', focused);
+    field.classList.toggle('ti-floated', focused || hasText);
+    field.classList.toggle('ti-has-value', hasText);
+    field.classList.toggle('ti-show-clear', focused && hasText);
+    caretEl.classList.toggle('on', focused);
+    placeCaret(input.value);
+    if(!hasText && tiState.loading) setLoading(false);
+    let label='default';
+    if(focused && hasText) label='typing'; else if(focused) label='in focus'; else if(hasText) label='complete';
+    tiUpdateReadout(label);
+  }
+  input.addEventListener('focus', ()=>reflect(true));
+  input.addEventListener('blur', ()=>reflect(false));
+  input.addEventListener('input', ()=>reflect(true));
+  input.addEventListener('keydown', (e)=>{ if(e.key==='Enter' && input.value.length>0){ setLoading(true); } });
+  clearBtn.addEventListener('mousedown', e=>e.preventDefault());
+  clearBtn.addEventListener('click', ()=>{ input.value=''; input.focus(); reflect(true); });
+
+  field.classList.toggle('ti-error', tiState.forceError);
+
+  reflect(false);
+  return { el: wrap, field };
+}
+
+function tiRenderStage(){
+  const stageInner = document.getElementById('ti-pg-stage-inner');
+  if(!stageInner) return;
+  stageInner.innerHTML='';
+  const built = tiState.type==='search' ? tiBuildSearchField() : tiBuildStandardField();
+  stageInner.appendChild(built.el);
+  const stage = document.getElementById('ti-pg-stage');
+  if(stage) stage.setAttribute('data-bg', tiState.bg);
+}
+
+function tiSet(key, val){
+  tiState[key] = val;
+  if(key==='type' && val==='standard') tiState.labelMode='caption';
+  tiRenderControls();
+}
+function tiToggle(key){
+  tiState[key] = !tiState[key];
+  tiRenderControls();
+}
+function tiSelectIcon(key, val){
+  tiState[key] = val;
+  tiRenderControls();
+}
+function tiToggleIconEnabled(enabledKey, valueKey, defaultIcon){
+  tiState[enabledKey] = !tiState[enabledKey];
+  if(tiState[enabledKey] && tiState[valueKey]==='none') tiState[valueKey] = defaultIcon;
+  tiRenderControls();
+}
+
+function tiPr(opts, key){
+  return `<div class="ti-pg__pr">${opts.map(([v,l])=>`<button class="ti-pg__p${tiState[key]===v?' on':''}" onclick="tiSet('${key}','${v}')">${l}</button>`).join('')}</div>`;
+}
+function tiGroup(label, inner){
+  return `<div class="ti-pg__group"><span class="ti-pg__clabel">${label}</span>${inner}</div>`;
+}
+function tiSwitchRow(label, key, disabled){
+  return `<div class="ti-pg__group"><span class="ti-pg__clabel">${label}</span>
+    <div class="ti-pg__switch${tiState[key]?' on':''}" onclick="tiToggle('${key}')"></div>
+  </div>`;
+}
+function tiIconSelectGroup(label, valueKey, enabledKey, toggleId, defaultIcon){
+  const options = ['none', ...Object.keys(TI_ICONS)];
+  const optHtml = options.map(k=>`<option value="${k}"${tiState[valueKey]===k?' selected':''}>${k==='none'?'None':TI_ICONS[k].label}</option>`).join('');
+  return `<div class="ti-pg__group">
+    <div class="ti-pg__switchrow" style="justify-content:space-between;width:100%">
+      <span class="ti-pg__clabel">${label}</span>
+      <div class="ti-pg__switch${tiState[enabledKey]?' on':''}" id="${toggleId}" onclick="tiToggleIconEnabled('${enabledKey}','${valueKey}','${defaultIcon}')"></div>
+    </div>
+    <select class="ti-pg__select" ${tiState[enabledKey]?'':'disabled'} onchange="tiSelectIcon('${valueKey}', this.value)">${optHtml}</select>
+  </div>`;
+}
+
+function tiRenderControls(){
+  const el = document.getElementById('ti-playground');
+  if(!el) return;
+  const isSearch = tiState.type==='search';
+
+  const rows = [];
+  rows.push(tiGroup('Component', tiPr([['standard','Standard'],['search','Search']], 'type')));
+  rows.push(tiGroup('Size', tiPr([['default','Default'],['small','Small']], 'size')));
+  rows.push(tiGroup('Background colour', tiPr([['white','White'],['grey','Grey'],['colour','Colour']], 'bg')));
+  if(isSearch){
+    rows.push(tiGroup('Search icon', tiPr([['search','Search'],['back','Back']], 'searchIcon')));
+    rows.push(tiGroup('Label mode while typing', tiPr([['caption','Caption'],['inline','Inline']], 'labelMode')));
+    rows.push(tiSwitchRow('Loading', 'loading'));
+  } else {
+    rows.push(tiIconSelectGroup('Leading icon', 'leading', 'leadingEnabled', 'ti-toggle-leading', 'rand'));
+    rows.push(tiIconSelectGroup('Trailing icon', 'trailing', 'trailingEnabled', 'ti-toggle-trailing', 'password-visible'));
+    rows.push(tiSwitchRow('Show helper text', 'showHelper'));
+    rows.push(tiSwitchRow('Force error', 'forceError'));
+    rows.push(tiSwitchRow('Password mode', 'password'));
+  }
 
   el.innerHTML = `
-    <div class="type-sub__title">Input — all configurations</div>
-    <div class="type-sub__desc">Expand a preset to see both sizes across Default and Focus, in the current light/dark theme.</div>
-    <div class="inp-accord">${inputItems}</div>
-    <div class="type-sub__title" style="margin-top:36px">Search — all configurations</div>
-    <div class="type-sub__desc">Expand a Type &times; Background combination to see both sizes across all four states.</div>
-    <div class="inp-accord">${searchItems}</div>`;
+    <div class="type-sub__title">Playground</div>
+    <div class="type-sub__desc">Every state, size, background context, and icon slot — click in, type, and toggle the controls below to test it live.</div>
+    <div class="ti-pg">
+      <div class="ti-pg__stage" id="ti-pg-stage" data-bg="${tiState.bg}">
+        <div class="ti-pg__stage-inner" id="ti-pg-stage-inner"></div>
+      </div>
+      <div class="ti-pg__ctrls">
+        <div class="ti-pg__row">${rows.join('')}</div>
+        <div class="ti-pg__readout" id="ti-pg-readout">state: <b>default</b></div>
+      </div>
+    </div>
+  `;
+  tiRenderStage();
 }
 
-function toggleInpV2Accord(key) {
-  const item = document.getElementById('inpv2ai-'+key);
-  const wasOpen = item.classList.contains('open');
-  item.classList.toggle('open');
-  if(!wasOpen) renderInpV2RefContent(key, currentTheme());
+/* ---- State journeys — static, non-interactive snapshots of a few
+   representative flows (not every variation — just the shape of each). ---- */
+function tiStaticStandard(opts){
+  const o = Object.assign({size:'default', bg:'white', floated:false, focused:false, error:false, clear:false, label:'Label', value:'', caret:false, helper:null, helperError:false, leading:null, trailing:null}, opts);
+  const cls = ['ti-shell'];
+  if(o.focused) cls.push('ti-focused');
+  if(o.floated) cls.push('ti-floated');
+  if(o.clear) cls.push('ti-show-clear');
+  if(o.error) cls.push('ti-error');
+  if(o.leading) cls.push('ti-has-leading');
+  const leadingHtml = o.leading ? `<span class="ti-leading">${TI_ICONS[o.leading][o.size]}</span>` : '';
+  const trailingHtml = o.trailing ? `<span class="ti-trailing-icon">${TI_ICONS[o.trailing][o.size]}</span>` : '';
+  const clearHtml = o.clear ? `<button class="ti-clear" type="button" tabindex="-1">${TI_CLEAR_SVG}</button>` : '';
+  // Static snapshots use a normal-flow caret (not the live field's absolutely
+  // positioned one) so it always renders right after the text, never before it.
+  const caretHtml = o.caret ? `<span class="ti-caret-inline"></span>` : '';
+  const helperHtml = o.helper ? `<div class="ti-helper show${o.helperError?' ti-error-text':''}">${o.helper}</div>` : '';
+  return `<div class="${cls.join(' ')}" data-bg="${o.bg}" data-size="${o.size}">
+    <div class="ti-field" data-bg="${o.bg}" data-size="${o.size}">
+      ${leadingHtml}
+      <span class="ti-label">${o.label}</span>
+      <div class="ti-value-row" style="opacity:${o.floated?1:0}">
+        <span class="ti-input" style="display:inline-block;width:auto">${o.value}</span>
+        ${caretHtml}
+      </div>
+      <div class="ti-trailing">${trailingHtml}${clearHtml}</div>
+    </div>
+    ${helperHtml}
+  </div>`;
+}
+function tiStaticSearch(opts){
+  const o = Object.assign({size:'default', bg:'white', floated:false, focused:false, clear:false, label:'Label', value:'', caret:false, loading:false, icon:'search', inline:false}, opts);
+  const cls = ['ti-search'];
+  if(o.focused) cls.push('ti-focused');
+  if(o.floated) cls.push('ti-floated');
+  if(o.clear) cls.push('ti-show-clear');
+  if(o.loading) cls.push('ti-loading');
+  if(o.inline) cls.push('ti-inline');
+  if(o.inline && o.value) cls.push('ti-has-value');
+  const clearHtml = o.clear ? `<button class="ti-search-clear" type="button" tabindex="-1">${TI_CLEAR_SVG}</button>` : '';
+  const caretHtml = o.caret ? `<span class="ti-caret-inline"></span>` : '';
+  return `<div class="${cls.join(' ')}" data-bg="${o.bg}" data-size="${o.size}">
+    <div class="ti-search-icon">${TI_ICONS[o.icon][o.size]}</div>
+    <div class="ti-search-body">
+      <span class="ti-search-label">${o.label}</span>
+      <div class="ti-search-value-row" style="opacity:${(o.floated||o.inline)?1:0}">
+        <span class="ti-search-input" style="display:inline-block;width:auto">${o.value}</span>
+        ${caretHtml}
+      </div>
+    </div>
+    <div class="ti-search-trailing">
+      <span class="ti-search-spinner" style="display:${o.loading?'block':'none'}">${TI_SPINNER_SVG}</span>
+      ${clearHtml}
+    </div>
+  </div>`;
+}
+function tiJourneyStep(labelText, fieldHtml, wide){
+  return `<div class="ti-journey__step${wide?' ti-journey__step--wide':''}"><div class="ti-journey__step-label">${labelText}</div>${fieldHtml}</div>`;
+}
+function tiJourneyArrow(){ return `<div class="ti-journey__arrow">&#8594;</div>`; }
+
+function tiRenderJourneys(){
+  const el = document.getElementById('ti-journeys');
+  if(!el) return;
+
+  const journey1 = [
+    tiJourneyStep('Default', tiStaticStandard({label:'Email address'})),
+    tiJourneyArrow(),
+    tiJourneyStep('In focus', tiStaticStandard({label:'Email address', floated:true, focused:true, caret:true})),
+    tiJourneyArrow(),
+    tiJourneyStep('Typing', tiStaticStandard({label:'Email address', floated:true, focused:true, value:'jane@flash.co', caret:true, clear:true})),
+    tiJourneyArrow(),
+    tiJourneyStep('Complete', tiStaticStandard({label:'Email address', floated:true, value:'jane@flash.co.za'})),
+  ].join('');
+
+  const journey2 = [
+    tiJourneyStep('Complete', tiStaticStandard({label:'Email address', floated:true, value:'jane@flash.co.za'})),
+    tiJourneyArrow(),
+    tiJourneyStep('Submit → Error', tiStaticStandard({label:'Email address', floated:true, value:'jane@flash.co.za', error:true, helper:'Enter a valid email address', helperError:true})),
+    tiJourneyArrow(),
+    tiJourneyStep('Typing again — error clears', tiStaticStandard({label:'Email address', floated:true, focused:true, value:'jane@flash.co.za', caret:true, clear:true})),
+  ].join('');
+
+  const journey3 = [
+    tiJourneyStep('Default', tiStaticSearch({label:'Search'}), true),
+    tiJourneyArrow(),
+    tiJourneyStep('Typing', tiStaticSearch({label:'Search', floated:true, focused:true, value:'transactions', caret:true, clear:true}), true),
+    tiJourneyArrow(),
+    tiJourneyStep('Enter → Loading', tiStaticSearch({label:'Search', floated:true, value:'transactions', clear:true, loading:true}), true),
+    tiJourneyArrow(),
+    tiJourneyStep('Results loaded', tiStaticSearch({label:'Search', floated:true, value:'transactions', clear:true}), true),
+  ].join('');
+
+  const journey4 = [
+    tiJourneyStep('Typing (masked)', tiStaticStandard({label:'Password', floated:true, focused:true, value:'••••••••', clear:true, trailing:'password-hidden'})),
+    tiJourneyArrow(),
+    tiJourneyStep('Tap the eye → revealed', tiStaticStandard({label:'Password', floated:true, focused:true, value:'flash123', clear:true, trailing:'password-visible'})),
+  ].join('');
+
+  // Inline label mode — the label sits at rest size (no shrink/shift) and just
+  // disappears once there's a value, instead of floating up like Caption mode.
+  const journey5 = [
+    tiJourneyStep('Default — label as placeholder', tiStaticSearch({label:'Search', inline:true}), true),
+    tiJourneyArrow(),
+    tiJourneyStep('Typing — label disappears, no shift', tiStaticSearch({label:'Search', value:'transactions', inline:true, caret:true, clear:true}), true),
+  ].join('');
+
+  el.innerHTML = `
+    <div class="type-sub__title">State journeys</div>
+    <div class="type-sub__desc">A few representative flows through the component's states — not every variation, just the shape of each journey. Static snapshots (not interactive); use the playground above to try them live.</div>
+
+    <div class="ti-journey">
+      <div class="ti-journey__title">Standard — filling in a field</div>
+      <div class="ti-journey__desc">Label floats up on focus, value types in below it, clear icon appears while typing, field settles on blur.</div>
+      <div class="ti-journey__row">${journey1}</div>
+    </div>
+
+    <div class="ti-journey">
+      <div class="ti-journey__title">Standard — required field validation</div>
+      <div class="ti-journey__desc">Error only appears after a submit attempt (Enter) — never live while typing — and clears the instant the user edits the value again.</div>
+      <div class="ti-journey__row">${journey2}</div>
+    </div>
+
+    <div class="ti-journey">
+      <div class="ti-journey__title">Search — querying with a loading state</div>
+      <div class="ti-journey__desc">Pressing Enter with text present triggers the loading spinner; it can never show against a blank field.</div>
+      <div class="ti-journey__row">${journey3}</div>
+    </div>
+
+    <div class="ti-journey">
+      <div class="ti-journey__title">Search — Inline label mode</div>
+      <div class="ti-journey__desc">Caption mode floats the label above the value (see above); Inline mode never shifts or shrinks it — the label just disappears the moment there's a value.</div>
+      <div class="ti-journey__row">${journey5}</div>
+    </div>
+
+    <div class="ti-journey">
+      <div class="ti-journey__title">Password reveal</div>
+      <div class="ti-journey__desc">Masked by default (custom dot glyphs, not the browser's native bullets); the eye toggle reveals the raw value.</div>
+      <div class="ti-journey__row">${journey4}</div>
+    </div>
+  `;
 }
 
-// Re-render any open Input V2 reference row in the current global theme.
-function rerenderInpV2Ref(){
-  const t = currentTheme();
-  [...INPV2_PRESETS, ...INPV2_SEARCH_COMBOS].forEach(p => {
-    const item = document.getElementById('inpv2ai-'+p.key);
-    if(item && item.classList.contains('open')) renderInpV2RefContent(p.key, t);
-  });
+/* ---- Icon sheet — every Leading/Trailing icon option, with its exact key ---- */
+function tiRenderIconSheet(){
+  const el = document.getElementById('ti-icon-sheet');
+  if(!el) return;
+  const names = Object.keys(TI_ICONS).sort();
+  el.innerHTML = `
+    <div class="type-sub__title">Icon sheet</div>
+    <div class="type-sub__desc">${names.length} icons available for the Leading icon / Trailing icon slots above (Standard) and the Search icon slot (Search). Each tile shows the exact key to reference in code or when asking for a specific icon.</div>
+    <div class="ti-icon-grid">
+      ${names.map(n=>`<div class="ti-icon-tile"><span class="ti-icon-tile__glyph">${TI_ICONS[n].default}</span><span class="ti-icon-tile__name">${n}</span></div>`).join('')}
+    </div>
+  `;
 }
 
-function renderInpV2RefContent(key, theme) {
-  const cont = document.getElementById('inpv2rc-'+key);
-  if(!cont) return;
-  const c = INPV2_COLORS.flash[theme];
-  const preset = INPV2_PRESETS.find(p=>p.key===key);
-  const combo  = INPV2_SEARCH_COMBOS.find(s=>s.key===key);
-  const states = preset ? INPV2_STATES_INPUT : INPV2_STATES_SEARCH;
-
-  cont.innerHTML = '';
-  INPV2_SIZES.forEach(sz => {
-    const row = document.createElement('div');
-    row.className = 'inp-ref-row';
-
-    const lbl = document.createElement('div');
-    lbl.className = 'inp-ref-rlabel';
-    lbl.textContent = sz.label;
-    row.appendChild(lbl);
-
-    const cells = document.createElement('div');
-    cells.className = 'inp-ref-cells';
-
-    states.forEach(st => {
-      const cell = document.createElement('div');
-      cell.className = 'inp-ref-cell';
-      cell.style.background = c.stage;
-      applyInpV2Colors(cell, theme);
-      const cellLbl = document.createElement('div');
-      cellLbl.className = 'inp-ref-cell-lbl';
-      cellLbl.textContent = st.label;
-      cell.appendChild(cellLbl);
-      const uid = `iv2ref_${key}_${sz.key}_${st.key}`;
-      const fieldEl = preset
-        ? buildInputV2El(sz.key, preset.leftIcon, preset.trailing, preset.helper, st.key, uid)
-        : buildSearchV2El(sz.key, combo.type, combo.bg, st.key, uid);
-      cell.appendChild(fieldEl);
-      cells.appendChild(cell);
-    });
-    row.appendChild(cells);
-    cont.appendChild(row);
-  });
+function renderTextInputsSection(){
+  if(!document.getElementById('ti-playground')) return;
+  tiRenderControls();
+  tiRenderJourneys();
+  tiRenderIconSheet();
 }
-
-/* ── INIT ── */
-try { renderInpV2Playground(); } catch(e){ console.error('inpv2-playground',e); }
-try { renderInpV2Reference();  } catch(e){ console.error('inpv2-reference',e);  }
-try {
-  [...INPV2_PRESETS, ...INPV2_SEARCH_COMBOS].forEach(p => {
-    const item = document.getElementById('inpv2ai-'+p.key);
-    if(item && !item.classList.contains('open')){
-      item.classList.add('open');
-      renderInpV2RefContent(p.key, currentTheme());
-    }
-  });
-} catch(e){ console.error('inpv2-accord-expand',e); }
-
+renderTextInputsSection();
 /* ============================================================
    CHIPS
 ============================================================ */
@@ -7594,12 +7353,25 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.28.0';
+const SYSTEM_VERSION = '1.29.0';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.29.0', date:'2026-07-21', author:'Mo', title:'Text Inputs — rebuilt as one unified component', changes:[
+        ['added','Single "Text Inputs" component replacing the separate v1 and v2 sections — Standard (floating/inline label) and Search (pill) families in one playground'],
+        ['added','Caption (floating) and Inline label modes — Inline just disappears on typing instead of shrinking/shifting like Caption'],
+        ['added','Leading icon and Trailing icon slots for Standard, each toggled on/off independently and selectable from the full icon set'],
+        ['added','Search-specific leading icon toggle between Search and Back (rounded button, for search-with-navigation headers)'],
+        ['added','Password field masks with custom dot glyphs (not the browser default) with a working show/hide eye toggle'],
+        ['added','Search loading state — a spinner that only ever shows once the user submits (Enter) with a query typed, and clears the instant the field goes back to empty'],
+        ['added','State-journey map — static, non-interactive walkthroughs of representative flows (filling a field, a validation error, a search-with-loading, and password reveal)'],
+        ['added','Icon sheet — every Leading/Trailing icon option with its exact reference key'],
+        ['changed','Error styling always shows a white fill (even on the White background context, which otherwise rests on a light grey fill) and only activates on submit (Enter), never live while typing'],
+        ['changed','Clear (×) button now only shows while the field is focused and has a value — it no longer lingers after blur'],
+        ['removed','The old "Text Inputs" (v1) and "Text Inputs v2" sections and their separate playgrounds'],
+      ]},
       {version:'1.28.0', date:'2026-07-13', author:'Mo', title:'Navigation — realigned to the Figma SideNav', changes:[
         ['added','Side Nav now renders the full Figma panel — logo, company block with account selector, nav menu and account footer — instead of just the item list'],
         ['changed','Nav item matches Figma: single-line bold label (no subtitle), 20px icon chip on 6px padding, and an active state marked by the brand-green chip alone (no row fill), with idle greys #DDD / #A4A4A4 / #8A8A8A'],
@@ -7990,41 +7762,15 @@ const CHANGELOG = {
         ['added','5 variants × 5 sizes × 5 states, icon-only grid, tappable-area overlays'],
       ]},
     ]},
-    {secId:'s-inputs', name:'Text Inputs', version:'1.5.0', entries:[
-      {version:'1.5.0', date:'2026-07-06', author:'Mo', title:'Reference follows global theme', changes:[
-        ['removed','Per-type light/dark toggle from the reference grid'],
-        ['changed','Type reference now follows the global light/dark toggle'],
-      ]},
-      {version:'1.4.0', date:'2026-06-23', time:'14:05', author:'Mo', title:'Playground simplification', changes:[
-        ['changed','Stage moved above controls — live preview is now the focal point'],
-        ['removed','In-playground theme toggle (follows global toggle now)'],
-        ['removed','Hint text line'],
-        ['changed','Type selector promoted to first control group'],
-        ['changed','Code panel language tabs hidden until panel is opened'],
-      ]},
-      {version:'1.3.0', date:'2026-06-22', time:'11:22', author:'Mo', title:'Multi-framework code', changes:[
-        ['added','Blazor and React TSX output in the code panel'],
-      ]},
-      {version:'1.2.0', date:'2026-06-20', time:'16:39', author:'Mo', title:'Spec corrections', changes:[
-        ['fixed','Error state colours matched to spec (#C10021 border, #FFF4F0 fill, #FDDBDB prefix)'],
-        ['fixed','Contacts icon rebuilt as exact address-book glyph in #0062EB'],
-        ['changed','Completed state no longer green; added Error-corrected state'],
-        ['fixed','Textarea resize handle no longer clipped'],
-      ]},
-      {version:'1.0.0', date:'2026-06-20', time:'13:56', author:'Mo', title:'Initial release', changes:[
-        ['added','9 input types, 2 sizes, interactive playground, full reference grid'],
-      ]},
-    ]},
-    {secId:'s-inputs-v2', name:'Text Inputs v2', version:'1.1.0', entries:[
-      {version:'1.1.0', date:'2026-07-06', author:'Mo', title:'Reference follows global theme', changes:[
-        ['removed','Per-row light/dark toggle from the reference grid'],
-        ['changed','Input and Search references now follow the global light/dark toggle'],
-      ]},
-      {version:'1.0.0', date:'2026-07-06', author:'Mo', title:'Initial release', changes:[
-        ['added','Input family (floating-label box) — 2 sizes, leading icon, 3 independent trailing slots, helper text, Default/Focus states'],
-        ['added','Search family (pill) — 2 sizes, Inline/Caption label type, Colour/White/Grey background, Default/Focus/Typing/Complete states'],
-        ['added','Interactive playground with Input/Search family switch and HTML/CSS · Blazor · React TSX code panel'],
-        ['added','Full reference grid — 7 Input presets and 6 Search Type×Background combinations, each across every state and both sizes'],
+    {secId:'s-inputs', name:'Text Inputs', version:'2.0.0', entries:[
+      {version:'2.0.0', date:'2026-07-21', author:'Mo', title:'Rebuilt as one unified component (replaces v1 and v2)', changes:[
+        ['added','Standard (floating/inline label) and Search (pill) families, 2 sizes, White/Grey/Colour background contexts'],
+        ['added','Leading/Trailing icon slots (Standard) and a Search/Back icon toggle (Search), sourced from the full icon set'],
+        ['added','Password masking with custom dot glyphs and a show/hide eye toggle'],
+        ['added','Search loading state, triggered on submit (Enter) with a query present, and cleared automatically on empty'],
+        ['added','State-journey map and icon reference sheet below the playground'],
+        ['changed','Error state always shows a white fill and only triggers on submit — never live while typing'],
+        ['removed','The separate v1 and v2 implementations'],
       ]},
     ]},
     {secId:'s-selection', name:'Checkboxes & Radios', version:'1.1.0', entries:[
