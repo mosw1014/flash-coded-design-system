@@ -105,6 +105,7 @@
   --chrome-bg:var(--prim-white); --chrome-nav:var(--prim-gg-200);
   --chrome-bar:var(--prim-black); --chrome-bar-txt:var(--prim-white);
   --chrome-accent:var(--prim-green-500); --chrome-accent2:var(--prim-yg-500);
+  --chrome-accent-text:var(--prim-green-800);
   --chrome-txt:var(--prim-black); --chrome-muted:var(--prim-grey-900);
   --chrome-border:var(--prim-grey-400); --chrome-hover:rgba(0,0,0,0.04);
 }
@@ -137,6 +138,7 @@
   --chrome-bg:var(--prim-gb-700); --chrome-nav:var(--prim-gb-500);
   --chrome-bar:var(--prim-gb-500); --chrome-bar-txt:var(--prim-white);
   --chrome-accent:var(--prim-green-500); --chrome-accent2:var(--prim-yg-500);
+  --chrome-accent-text:var(--prim-green-500);
   --chrome-txt:var(--prim-white); --chrome-muted:var(--prim-grey-400);
   --chrome-border:var(--prim-gb-425); --chrome-hover:rgba(255,255,255,0.05);
 }
@@ -193,7 +195,7 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
 .sb-link.on{color:var(--chrome-txt);border-left-color:var(--chrome-accent);background:var(--chrome-hover);font-weight:700}
 .sb-icon{width:15px;height:15px;flex-shrink:0;color:var(--chrome-muted);transition:color .15s}
 .sb-link:hover .sb-icon{color:var(--chrome-txt)}
-.sb-link.on .sb-icon{color:var(--chrome-accent)}
+.sb-link.on .sb-icon{color:var(--chrome-accent-text)}
 .sb-tag{margin-left:auto;font-size:9.5px;padding:1px 6px;border-radius:10px;background:var(--chrome-border);color:var(--chrome-muted);white-space:nowrap}
 
 /* Main */
@@ -204,7 +206,7 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
 ================================================================ */
 .sec{margin-bottom:72px}
 .sec__head{margin-bottom:0;padding-bottom:20px;border-bottom:1px solid var(--chrome-border)}
-.sec__eye{font-size:10.5px;font-weight:700;letter-spacing:1.8px;text-transform:uppercase;color:var(--chrome-accent);margin-bottom:10px;transition:color .25s}
+.sec__eye{font-size:10.5px;font-weight:700;letter-spacing:1.8px;text-transform:uppercase;color:var(--chrome-accent-text);margin-bottom:10px;transition:color .25s}
 .sec__title{font-size:26px;font-weight:900;color:var(--chrome-txt);margin-bottom:8px}
 .sec__desc{font-size:13px;line-height:1.65;color:var(--chrome-muted);max-width:560px}
 .coming{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;min-height:110px;border-radius:10px;border:1.5px dashed var(--chrome-border);color:var(--chrome-muted);font-size:13px;font-weight:500;text-align:center;padding:24px;margin-top:28px}
@@ -431,7 +433,7 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
   color:var(--chrome-txt);cursor:pointer;
   white-space:nowrap;
 }
-.sem-var:hover{color:var(--chrome-accent)}
+.sem-var:hover{color:var(--chrome-accent-text)}
 
 /* ── Col 2: swatch + hex + prim ── */
 .sem-color-cell{display:flex;align-items:center;gap:10px}
@@ -449,7 +451,7 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
 .tok-table tr:last-child td{border-bottom:none}
 .tok-table tr:hover td{background:var(--chrome-hover)}
 .tok-var{font-family:'SF Mono','Fira Code',monospace;font-size:11.5px;color:var(--chrome-txt);cursor:pointer;transition:color .1s}
-.tok-var:hover{color:var(--chrome-accent)}
+.tok-var:hover{color:var(--chrome-accent-text)}
 .tok-note{font-size:11px;color:var(--chrome-muted)}
 
 /* ================================================================
@@ -889,7 +891,7 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
 .brand-essence__card{border:1px solid var(--chrome-border);border-radius:14px;padding:22px 20px;transition:border-color .2s,transform .2s}
 .brand-essence__card:hover{border-color:var(--chrome-accent);transform:translateY(-2px)}
 .brand-essence__word{font-family:'Satoshi',sans-serif;font-weight:900;font-size:24px;color:var(--chrome-txt);margin-bottom:8px}
-.brand-essence__card:first-child .brand-essence__word{color:#10c504}
+.brand-essence__card:first-child .brand-essence__word{color:var(--chrome-accent-text)}
 .brand-essence__desc{font-size:13px;line-height:1.55;color:var(--chrome-muted)}
 
 .brand-swatches{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
@@ -7357,12 +7359,17 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.30.1';
+const SYSTEM_VERSION = '1.30.2';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.30.2', date:'2026-07-22', author:'Mo', title:'Deep green for brand-coloured text on white/grey surfaces', changes:[
+        ['added','New --chrome-accent-text token: a deep green (Green 800, #218A29) for foreground text/icon colour on light surfaces, vs. the brighter --chrome-accent used for backgrounds and fills'],
+        ['fixed','Selected sidebar icon, section "eyebrow" labels (e.g. "Components"), token-table hover text, and the "Bold" word in the Brand Essence cards were all using the bright brand green as text on white/grey — now use the deep green for legibility'],
+        ['changed','Dark mode is unaffected — brand green already has strong contrast on dark chrome surfaces, so --chrome-accent-text stays the same bright green there'],
+      ]},
       {version:'1.30.1', date:'2026-07-22', author:'Mo', title:'Sidebar — divider line added to category labels', changes:[
         ['added','A thin divider line now runs inline after each category label (Brand, Foundations, Components, Coming soon, About), vertically centred with the text'],
       ]},
