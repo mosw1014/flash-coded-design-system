@@ -105,6 +105,7 @@
   --chrome-bg:var(--prim-white); --chrome-nav:var(--prim-gg-200);
   --chrome-bar:var(--prim-black); --chrome-bar-txt:var(--prim-white);
   --chrome-accent:var(--prim-green-500); --chrome-accent2:var(--prim-yg-500);
+  --chrome-accent-text:var(--prim-green-800);
   --chrome-txt:var(--prim-black); --chrome-muted:var(--prim-grey-900);
   --chrome-border:var(--prim-grey-400); --chrome-hover:rgba(0,0,0,0.04);
 }
@@ -137,6 +138,7 @@
   --chrome-bg:var(--prim-gb-700); --chrome-nav:var(--prim-gb-500);
   --chrome-bar:var(--prim-gb-500); --chrome-bar-txt:var(--prim-white);
   --chrome-accent:var(--prim-green-500); --chrome-accent2:var(--prim-yg-500);
+  --chrome-accent-text:var(--prim-green-500);
   --chrome-txt:var(--prim-white); --chrome-muted:var(--prim-grey-400);
   --chrome-border:var(--prim-gb-425); --chrome-hover:rgba(255,255,255,0.05);
 }
@@ -185,13 +187,15 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
 
 /* Sidebar */
 .sidebar{width:210px;flex-shrink:0;background:var(--chrome-nav);border-right:1px solid var(--chrome-border);position:sticky;top:52px;height:calc(100vh - 52px);overflow-y:auto;padding:20px 0;transition:background .25s}
-.sb-cat{font-size:9.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--chrome-muted);padding:0 16px;margin:18px 0 5px}
+.sb-cat{display:flex;align-items:center;gap:8px;font-size:9.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--chrome-muted);padding:0 16px;margin:18px 0 5px}
 .sb-cat:first-child{margin-top:0}
+.sb-cat::after{content:'';flex:1;height:1px;background:var(--chrome-border)}
 .sb-link{display:flex;align-items:center;gap:8px;padding:7px 16px;font-size:12.5px;font-weight:500;color:var(--chrome-muted);text-decoration:none;border-left:2px solid transparent;transition:all .15s}
 .sb-link:hover{color:var(--chrome-txt);background:var(--chrome-hover)}
 .sb-link.on{color:var(--chrome-txt);border-left-color:var(--chrome-accent);background:var(--chrome-hover);font-weight:700}
-.sb-pip{width:6px;height:6px;border-radius:50%;background:var(--chrome-accent);flex-shrink:0;opacity:0;transition:opacity .15s}
-.sb-link.on .sb-pip{opacity:1}
+.sb-icon{width:15px;height:15px;flex-shrink:0;color:var(--chrome-muted);transition:color .15s}
+.sb-link:hover .sb-icon{color:var(--chrome-txt)}
+.sb-link.on .sb-icon{color:var(--chrome-accent-text)}
 .sb-tag{margin-left:auto;font-size:9.5px;padding:1px 6px;border-radius:10px;background:var(--chrome-border);color:var(--chrome-muted);white-space:nowrap}
 
 /* Main */
@@ -202,7 +206,7 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
 ================================================================ */
 .sec{margin-bottom:72px}
 .sec__head{margin-bottom:0;padding-bottom:20px;border-bottom:1px solid var(--chrome-border)}
-.sec__eye{font-size:10.5px;font-weight:700;letter-spacing:1.8px;text-transform:uppercase;color:var(--chrome-accent);margin-bottom:10px;transition:color .25s}
+.sec__eye{font-size:10.5px;font-weight:700;letter-spacing:1.8px;text-transform:uppercase;color:var(--chrome-accent-text);margin-bottom:10px;transition:color .25s}
 .sec__title{font-size:26px;font-weight:900;color:var(--chrome-txt);margin-bottom:8px}
 .sec__desc{font-size:13px;line-height:1.65;color:var(--chrome-muted);max-width:560px}
 .coming{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;min-height:110px;border-radius:10px;border:1.5px dashed var(--chrome-border);color:var(--chrome-muted);font-size:13px;font-weight:500;text-align:center;padding:24px;margin-top:28px}
@@ -429,7 +433,7 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
   color:var(--chrome-txt);cursor:pointer;
   white-space:nowrap;
 }
-.sem-var:hover{color:var(--chrome-accent)}
+.sem-var:hover{color:var(--chrome-accent-text)}
 
 /* ── Col 2: swatch + hex + prim ── */
 .sem-color-cell{display:flex;align-items:center;gap:10px}
@@ -447,7 +451,7 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
 .tok-table tr:last-child td{border-bottom:none}
 .tok-table tr:hover td{background:var(--chrome-hover)}
 .tok-var{font-family:'SF Mono','Fira Code',monospace;font-size:11.5px;color:var(--chrome-txt);cursor:pointer;transition:color .1s}
-.tok-var:hover{color:var(--chrome-accent)}
+.tok-var:hover{color:var(--chrome-accent-text)}
 .tok-note{font-size:11px;color:var(--chrome-muted)}
 
 /* ================================================================
@@ -887,7 +891,7 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
 .brand-essence__card{border:1px solid var(--chrome-border);border-radius:14px;padding:22px 20px;transition:border-color .2s,transform .2s}
 .brand-essence__card:hover{border-color:var(--chrome-accent);transform:translateY(-2px)}
 .brand-essence__word{font-family:'Satoshi',sans-serif;font-weight:900;font-size:24px;color:var(--chrome-txt);margin-bottom:8px}
-.brand-essence__card:first-child .brand-essence__word{color:#10c504}
+.brand-essence__card:first-child .brand-essence__word{color:var(--chrome-accent-text)}
 .brand-essence__desc{font-size:13px;line-height:1.55;color:var(--chrome-muted)}
 
 .brand-swatches{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
@@ -1263,6 +1267,7 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
 .dd-table-wrap{border:1px solid var(--chrome-border);border-radius:12px;overflow:hidden;overflow-x:auto}
 .dd-table{width:100%;border-collapse:collapse;font-size:13px;min-width:540px}
 .dd-table thead th{text-align:left;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--chrome-muted);padding:13px 16px;background:var(--chrome-nav);border-bottom:1px solid var(--chrome-border);white-space:nowrap}
+.dd-table thead th.dd-num{text-align:right}
 .dd-table tbody td{padding:13px 16px;border-bottom:1px solid var(--chrome-border);color:var(--chrome-txt);font-weight:500}
 .dd-table tbody tr:last-child td{border-bottom:none}
 .dd-table tbody tr{transition:background .12s}
@@ -1308,8 +1313,10 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
 .dd-empty__icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:var(--chrome-nav);color:var(--chrome-muted)}
 .dd-empty__title{font-size:14px;font-weight:800;color:var(--chrome-txt)}
 .dd-empty__desc{font-size:12.5px;color:var(--chrome-muted);max-width:340px;line-height:1.55}
-.dd-empty__action{margin-top:6px;font-family:inherit;font-size:12.5px;font-weight:700;color:var(--color-btn-p-txt);background:var(--chrome-accent);border:none;border-radius:8px;padding:9px 16px;cursor:pointer;transition:filter .15s}
-.dd-empty__action:hover{filter:brightness(1.06)}
+.dd-empty__action{margin-top:6px;font-family:inherit;font-size:12.5px;font-weight:700;color:#fff;background:#000;border:none;border-radius:8px;padding:9px 16px;cursor:pointer;transition:background .15s}
+.dd-empty__action:hover{background:#252525}
+[data-theme="dark"] .dd-empty__action{background:#fff;color:#000}
+[data-theme="dark"] .dd-empty__action:hover{background:#f0f0f0}
 /* Distribution bars */
 .dd-dist{border:1px solid var(--chrome-border);border-radius:12px;padding:22px}
 .dd-dist__row{margin-bottom:16px}
@@ -1904,9 +1911,8 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
 .cht__cap{font-size:13px;font-weight:700;color:var(--chrome-txt);margin-bottom:2px}
 .cht__sub{font-size:11.5px;color:var(--chrome-muted);margin-bottom:16px}
 .cht svg{display:block;width:100%;height:auto;overflow:visible}
-.cht__bar{fill:var(--c1);transition:opacity .15s;cursor:pointer}
-.cht svg.is-hot .cht__bar{opacity:.28}
-.cht svg.is-hot .cht__bar.on{opacity:1}
+.cht__bar{fill:var(--chrome-muted);opacity:.45;transition:fill .15s,opacity .15s;cursor:pointer}
+.cht__bar.on{fill:var(--c1);opacity:1}
 .cht__line{fill:none;stroke:var(--c1);stroke-width:2.5;stroke-linejoin:round;stroke-linecap:round}
 .cht__area{fill:url(#chtAreaGrad)}
 .cht__dot{fill:var(--chrome-bg);stroke:var(--c1);stroke-width:2.5;transition:fill .12s}
@@ -2201,51 +2207,52 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
   <!-- SIDEBAR -->
   <aside class="sidebar">
     <div class="sb-cat">Brand</div>
-    <a href="javascript:void(0)" onclick="showSection('s-brand')" class="sb-link on"><div class="sb-pip"></div>Introduction</a>
+    <a href="javascript:void(0)" onclick="showSection('s-brand')" class="sb-link on"><svg class="sb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5"/><path d="M5.5 9.5V20a1 1 0 0 0 1 1H9a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1h2.5a1 1 0 0 0 1-1V9.5"/></svg>Introduction</a>
     <div class="sb-cat">Foundations</div>
-    <a href="javascript:void(0)" onclick="showSection('s-colours')" class="sb-link"><div class="sb-pip"></div>Colours</a>
-    <a href="javascript:void(0)" onclick="showSection('s-type')"    class="sb-link"><div class="sb-pip"></div>Typography</a>
-    <a href="javascript:void(0)" onclick="showSection('s-spacing')" class="sb-link"><div class="sb-pip"></div>Spacing &amp; Grid</a>
-    <a href="javascript:void(0)" onclick="showSection('s-elev')"    class="sb-link"><div class="sb-pip"></div>Elevation</a>
-    <a href="javascript:void(0)" onclick="showSection('s-icons')"   class="sb-link"><div class="sb-pip"></div>Icons</a>
+    <a href="javascript:void(0)" onclick="showSection('s-colours')" class="sb-link"><svg class="sb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="9" r="5"/><circle cx="15" cy="9" r="5"/><circle cx="12" cy="15" r="5"/></svg>Colours</a>
+    <a href="javascript:void(0)" onclick="showSection('s-type')"    class="sb-link"><svg class="sb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 6h14M5 12h9M5 18h6"/></svg>Typography</a>
+    <a href="javascript:void(0)" onclick="showSection('s-spacing')" class="sb-link"><svg class="sb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.5"/></svg>Spacing &amp; Grid</a>
+    <a href="javascript:void(0)" onclick="showSection('s-elev')"    class="sb-link"><svg class="sb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 4.5-8 4.5-8-4.5L12 3Z"/><path d="M4 12.5 12 17l8-4.5"/><path d="M4 16.5 12 21l8-4.5"/></svg>Elevation</a>
+    <a href="javascript:void(0)" onclick="showSection('s-icons')"   class="sb-link"><svg class="sb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5l2.6 5.6 6 .7-4.5 4.1 1.3 6-5.4-3-5.4 3 1.3-6-4.5-4.1 6-.7L12 3.5Z"/></svg>Icons</a>
     <div class="sb-cat">Components</div>
-    <a href="javascript:void(0)" onclick="showSection('s-buttons')" class="sb-link"><div class="sb-pip"></div>Buttons</a>
-    <a href="javascript:void(0)" onclick="showSection('s-inputs')"  class="sb-link"><div class="sb-pip"></div>Text Inputs</a>
-    <a href="javascript:void(0)" onclick="showSection('s-selection')" class="sb-link"><div class="sb-pip"></div>Checkboxes &amp; Radios</a>
-    <a href="javascript:void(0)" onclick="showSection('s-tags')"    class="sb-link"><div class="sb-pip"></div>Tags &amp; Badges</a>
-    <a href="javascript:void(0)" onclick="showSection('s-chips')"   class="sb-link"><div class="sb-pip"></div>Chips &amp; Pills</a>
-    <a href="javascript:void(0)" onclick="showSection('s-cards')"   class="sb-link"><div class="sb-pip"></div>Cards</a>
-    <a href="javascript:void(0)" onclick="showSection('s-modals')"  class="sb-link"><div class="sb-pip"></div>Modals</a>
-    <a href="javascript:void(0)" onclick="showSection('s-drawers')" class="sb-link"><div class="sb-pip"></div>Bottom Sheets</a>
-    <a href="javascript:void(0)" onclick="showSection('s-toasts')"  class="sb-link"><div class="sb-pip"></div>Toasts</a>
-    <a href="javascript:void(0)" onclick="showSection('s-nav')"     class="sb-link"><div class="sb-pip"></div>Navigation</a>
-    <a href="javascript:void(0)" onclick="showSection('s-tabs')"    class="sb-link"><div class="sb-pip"></div>Tabs</a>
-    <a href="javascript:void(0)" onclick="showSection('s-dropdown')" class="sb-link"><div class="sb-pip"></div>Dropdown</a>
-    <a href="javascript:void(0)" onclick="showSection('s-data')"    class="sb-link"><div class="sb-pip"></div>Data Display</a>
-    <a href="javascript:void(0)" onclick="showSection('s-tables')"  class="sb-link"><div class="sb-pip"></div>Tables</a>
-    <a href="javascript:void(0)" onclick="showSection('s-accordion')" class="sb-link"><div class="sb-pip"></div>Accordion</a>
-    <a href="javascript:void(0)" onclick="showSection('s-alert')" class="sb-link"><div class="sb-pip"></div>Alert</a>
-    <a href="javascript:void(0)" onclick="showSection('s-avatar')" class="sb-link"><div class="sb-pip"></div>Avatar</a>
-    <a href="javascript:void(0)" onclick="showSection('s-breadcrumb')" class="sb-link"><div class="sb-pip"></div>Breadcrumb</a>
-    <a href="javascript:void(0)" onclick="showSection('s-calendar')" class="sb-link"><div class="sb-pip"></div>Calendar</a>
-    <a href="javascript:void(0)" onclick="showSection('s-carousel')" class="sb-link"><div class="sb-pip"></div>Carousel</a>
-    <a href="javascript:void(0)" onclick="showSection('s-charts')" class="sb-link"><div class="sb-pip"></div>Charts</a>
-    <a href="javascript:void(0)" onclick="showSection('s-command')" class="sb-link"><div class="sb-pip"></div>Command</a>
-    <a href="javascript:void(0)" onclick="showSection('s-context-menu')" class="sb-link"><div class="sb-pip"></div>Context Menu</a>
-    <a href="javascript:void(0)" onclick="showSection('s-hover-card')" class="sb-link"><div class="sb-pip"></div>Hover Card</a>
-    <a href="javascript:void(0)" onclick="showSection('s-input-otp')" class="sb-link"><div class="sb-pip"></div>Input OTP</a>
-    <a href="javascript:void(0)" onclick="showSection('s-kbd')" class="sb-link"><div class="sb-pip"></div>Kbd</a>
-    <a href="javascript:void(0)" onclick="showSection('s-pagination')" class="sb-link"><div class="sb-pip"></div>Pagination</a>
-    <a href="javascript:void(0)" onclick="showSection('s-popover')" class="sb-link"><div class="sb-pip"></div>Popover</a>
-    <a href="javascript:void(0)" onclick="showSection('s-separator')" class="sb-link"><div class="sb-pip"></div>Separator</a>
-    <a href="javascript:void(0)" onclick="showSection('s-skeleton')" class="sb-link"><div class="sb-pip"></div>Skeleton</a>
-    <a href="javascript:void(0)" onclick="showSection('s-slider')" class="sb-link"><div class="sb-pip"></div>Slider</a>
-    <a href="javascript:void(0)" onclick="showSection('s-spinner')" class="sb-link"><div class="sb-pip"></div>Spinner</a>
-    <a href="javascript:void(0)" onclick="showSection('s-switch')" class="sb-link"><div class="sb-pip"></div>Switch</a>
-    <a href="javascript:void(0)" onclick="showSection('s-toggle-group')" class="sb-link"><div class="sb-pip"></div>Toggle Group</a>
-    <a href="javascript:void(0)" onclick="showSection('s-tooltip')" class="sb-link"><div class="sb-pip"></div>Tooltip</a>
+    <a href="javascript:void(0)" onclick="showSection('s-buttons')" class="sb-link"><svg class="sb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="8" width="18" height="8" rx="4"/></svg>Buttons</a>
+    <a href="javascript:void(0)" onclick="showSection('s-inputs')"  class="sb-link"><svg class="sb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="18" height="10" rx="2"/><path d="M8 10.5v3"/></svg>Text Inputs</a>
+    <a href="javascript:void(0)" onclick="showSection('s-selection')" class="sb-link"><svg class="sb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M8 12.5l2.5 2.5L16 9.5"/></svg>Checkboxes &amp; Radios</a>
+    <a href="javascript:void(0)" onclick="showSection('s-tags')"    class="sb-link"><svg class="sb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12.6 3.5H5A1.5 1.5 0 0 0 3.5 5v7.6c0 .4.15.78.44 1.06l8.4 8.4c.58.58 1.53.58 2.12 0l6.6-6.6c.58-.58.58-1.53 0-2.12l-8.4-8.4a1.5 1.5 0 0 0-1.06-.44Z"/><circle cx="8.2" cy="8.2" r="1.3" fill="currentColor" stroke="none"/></svg>Tags &amp; Badges</a>
+    <a href="javascript:void(0)" onclick="showSection('s-chips')"   class="sb-link"><svg class="sb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="8.5" width="18" height="7" rx="3.5"/><circle cx="17" cy="12" r="1.4" fill="currentColor" stroke="none"/></svg>Chips &amp; Pills</a>
+    <a href="javascript:void(0)" onclick="showSection('s-cards')"   class="sb-link"><svg class="sb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.2"/><path d="M3 10h18"/></svg>Cards</a>
+    <a href="javascript:void(0)" onclick="showSection('s-drawers')" class="sb-link"><svg class="sb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="6" width="17" height="14" rx="2.5"/><path d="M10.5 9h3"/></svg>Bottom Sheets</a>
+    <a href="javascript:void(0)" onclick="showSection('s-nav')"     class="sb-link"><svg class="sb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="4" width="17" height="16" rx="2.2"/><path d="M9 4v16"/></svg>Navigation</a>
+    <a href="javascript:void(0)" onclick="showSection('s-tabs')"    class="sb-link"><svg class="sb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="5" width="6" height="4" rx="1.2"/><rect x="11" y="5" width="6" height="4" rx="1.2"/><rect x="4" y="10.5" width="16" height="8.5" rx="2"/></svg>Tabs</a>
+    <a href="javascript:void(0)" onclick="showSection('s-dropdown')" class="sb-link"><svg class="sb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4.5" width="16" height="15" rx="2.2"/><path d="M8.5 10.5l3.5 3.5 3.5-3.5"/></svg>Dropdown</a>
+    <a href="javascript:void(0)" onclick="showSection('s-data')"    class="sb-link"><svg class="sb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="4" width="7" height="7" rx="1.5"/><rect x="13.5" y="4" width="7" height="7" rx="1.5"/><path d="M3.5 15h17M3.5 19h10"/></svg>Data Display</a>
+    <a href="javascript:void(0)" onclick="showSection('s-tables')"  class="sb-link"><svg class="sb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="4.5" width="17" height="15" rx="2"/><path d="M3.5 10h17M3.5 15h17M10 4.5v15"/></svg>Tables</a>
+    <a href="javascript:void(0)" onclick="showSection('s-accordion')" class="sb-link"><svg class="sb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="4.5" width="17" height="4.5" rx="1.4"/><path d="M17 6.7l-1.6 1.6-1.6-1.6"/><rect x="3.5" y="10.5" width="17" height="4" rx="1.2"/><rect x="3.5" y="16" width="17" height="4" rx="1.2"/></svg>Accordion</a>
+    <a href="javascript:void(0)" onclick="showSection('s-alert')" class="sb-link"><svg class="sb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5 22 20H2L12 3.5Z"/><path d="M12 10v4.5"/><circle cx="12" cy="17.3" r="0.9" fill="currentColor" stroke="none"/></svg>Alert</a>
+    <a href="javascript:void(0)" onclick="showSection('s-avatar')" class="sb-link"><svg class="sb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="3.5"/><path d="M4.5 20c0-4.1 3.4-7 7.5-7s7.5 2.9 7.5 7"/></svg>Avatar</a>
+    <a href="javascript:void(0)" onclick="showSection('s-breadcrumb')" class="sb-link"><svg class="sb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h3M9.5 7l5 5-5 5M16 7l5 5-5 5"/></svg>Breadcrumb</a>
+    <a href="javascript:void(0)" onclick="showSection('s-calendar')" class="sb-link"><svg class="sb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4.5" width="18" height="16" rx="2.5"/><path d="M3 9h18M8 2.5v4M16 2.5v4"/></svg>Calendar</a>
+    <a href="javascript:void(0)" onclick="showSection('s-carousel')" class="sb-link"><svg class="sb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6.5" y="5" width="11" height="14" rx="1.8"/><path d="M3.5 8.5v7M20.5 8.5v7"/></svg>Carousel</a>
+    <a href="javascript:void(0)" onclick="showSection('s-charts')" class="sb-link"><svg class="sb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="13" width="3.2" height="7" rx="0.8"/><rect x="10.4" y="9" width="3.2" height="11" rx="0.8"/><rect x="16.8" y="5" width="3.2" height="15" rx="0.8"/></svg>Charts</a>
+    <a href="javascript:void(0)" onclick="showSection('s-command')" class="sb-link"><svg class="sb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.8-3.8"/></svg>Command</a>
+    <a href="javascript:void(0)" onclick="showSection('s-context-menu')" class="sb-link"><svg class="sb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="5" cy="12" r="1.4" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.4" fill="currentColor" stroke="none"/><circle cx="19" cy="12" r="1.4" fill="currentColor" stroke="none"/></svg>Context Menu</a>
+    <a href="javascript:void(0)" onclick="showSection('s-hover-card')" class="sb-link"><svg class="sb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v6"/><circle cx="12" cy="7.8" r="0.9" fill="currentColor" stroke="none"/></svg>Hover Card</a>
+    <a href="javascript:void(0)" onclick="showSection('s-input-otp')" class="sb-link"><svg class="sb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="8" width="4" height="8" rx="1.2"/><rect x="7.2" y="8" width="4" height="8" rx="1.2"/><rect x="12.4" y="8" width="4" height="8" rx="1.2"/><rect x="17.6" y="8" width="4" height="8" rx="1.2"/></svg>Input OTP</a>
+    <a href="javascript:void(0)" onclick="showSection('s-kbd')" class="sb-link"><svg class="sb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="7" width="16" height="11" rx="2.5"/><path d="M9 12.5h6"/></svg>Keyboard Shortcuts</a>
+    <a href="javascript:void(0)" onclick="showSection('s-pagination')" class="sb-link"><svg class="sb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 7l-2.2 5L5 17"/><path d="M19 7l2.2 5L19 17"/><circle cx="12" cy="12" r="1.3" fill="currentColor" stroke="none"/></svg>Pagination</a>
+    <a href="javascript:void(0)" onclick="showSection('s-popover')" class="sb-link"><svg class="sb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5.5h16a1.5 1.5 0 0 1 1.5 1.5v8a1.5 1.5 0 0 1-1.5 1.5H9l-4 3.5v-3.5H4A1.5 1.5 0 0 1 2.5 15V7A1.5 1.5 0 0 1 4 5.5Z"/></svg>Popover</a>
+    <a href="javascript:void(0)" onclick="showSection('s-separator')" class="sb-link"><svg class="sb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v16"/><path d="M8 4h8M8 20h8"/></svg>Separator</a>
+    <a href="javascript:void(0)" onclick="showSection('s-skeleton')" class="sb-link"><svg class="sb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="6" width="16" height="3" rx="1.5"/><rect x="4" y="11" width="11" height="3" rx="1.5"/><rect x="4" y="16" width="7" height="3" rx="1.5"/></svg>Skeleton</a>
+    <a href="javascript:void(0)" onclick="showSection('s-slider')" class="sb-link"><svg class="sb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h18"/><circle cx="14" cy="12" r="3"/></svg>Slider</a>
+    <a href="javascript:void(0)" onclick="showSection('s-spinner')" class="sb-link"><svg class="sb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 11A8 8 0 0 0 6.3 6.3L4 8.5"/><path d="M4 4v4.5h4.5"/><path d="M4 13a8 8 0 0 0 13.7 4.7L20 15.5"/><path d="M20 20v-4.5h-4.5"/></svg>Spinner</a>
+    <a href="javascript:void(0)" onclick="showSection('s-switch')" class="sb-link"><svg class="sb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="7" width="19" height="10" rx="5"/><circle cx="16" cy="12" r="3.3" fill="currentColor" stroke="none"/></svg>Switch</a>
+    <a href="javascript:void(0)" onclick="showSection('s-toggle-group')" class="sb-link"><svg class="sb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="8" width="19" height="8" rx="2"/><path d="M9.2 8v8M14.8 8v8"/><rect x="9.4" y="8.5" width="5.2" height="7" fill="currentColor" stroke="none"/></svg>Toggle Group</a>
+    <a href="javascript:void(0)" onclick="showSection('s-tooltip')" class="sb-link"><svg class="sb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="5" width="16" height="9" rx="2.2"/><path d="M10.5 14l1.5 3 1.5-3"/></svg>Tooltip</a>
+    <div class="sb-cat">Coming soon</div>
+    <a href="javascript:void(0)" onclick="showSection('s-modals')"  class="sb-link"><svg class="sb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2.5"/><path d="M4 9h16"/></svg>Modals<span class="sb-tag">Soon</span></a>
+    <a href="javascript:void(0)" onclick="showSection('s-toasts')"  class="sb-link"><svg class="sb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9a6 6 0 0 1 12 0c0 4 1.5 5.5 1.5 6.5H4.5C4.5 14.5 6 13 6 9Z"/><path d="M9.5 19a2.5 2.5 0 0 0 5 0"/></svg>Toasts<span class="sb-tag">Soon</span></a>
     <div class="sb-cat">About</div>
-    <a href="javascript:void(0)" onclick="showSection('s-changelog')" class="sb-link"><div class="sb-pip"></div>Changelog</a>
+    <a href="javascript:void(0)" onclick="showSection('s-changelog')" class="sb-link"><svg class="sb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12.5" r="8.5"/><path d="M12 7.5V12.5l4 2"/></svg>Changelog</a>
   </aside>
 
   <!-- MAIN -->
@@ -3074,7 +3081,7 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
     <section class="sec" id="s-data">
       <div class="sec__head">
         <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Data Display <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.3.0</span></h1>
+        <h1 class="sec__title">Data Display <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.3.2</span></h1>
         <p class="sec__desc">Patterns for surfacing numbers and records — stat tiles, tables, key&ndash;value lists, progress meters and filter chips. All built on chrome and semantic tokens, so they adapt to light &amp; dark automatically.</p>
       </div>
 
@@ -4291,7 +4298,7 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
     <section class="sec" id="s-charts">
       <div class="sec__head">
         <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Charts <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.0</span></h1>
+        <h1 class="sec__title">Charts <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.1</span></h1>
         <p class="sec__desc">Lightweight, interactive data visualisations rendered as inline SVG &mdash; no charting library. Four core types cover most needs. Hover any bar, point or segment for its value; the donut pops the hovered slice and shows its share in the centre. Series and categories use the Flash colour palette (brand green, blue, purple, orange); single-series charts lead with the brand green.</p>
       </div>
       <div class="type-sub">
@@ -4580,7 +4587,7 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
     <section class="sec" id="s-kbd">
       <div class="sec__head">
         <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Kbd <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.0</span></h1>
+        <h1 class="sec__title">Keyboard Shortcuts <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.1</span></h1>
         <p class="sec__desc">A small key-cap for representing keyboard input &mdash; single keys or shortcut combinations. Monospaced, with a subtle bottom edge so it reads as a physical key.</p>
       </div>
       <div class="type-sub">
@@ -7377,16 +7384,35 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.30.0';
+const SYSTEM_VERSION = '1.30.4';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
-      {version:'1.30.0', date:'2026-07-22', author:'Mo', title:'Buttons — accent demoted in the hierarchy', changes:[
+      {version:'1.30.4', date:'2026-07-22', author:'Mo', title:'Buttons — accent demoted in the hierarchy', changes:[
         ['changed','Button variant order is now Primary → Secondary → Accent → Simple → Link, reflected in the playground, reference grid and icon-only grid'],
         ['changed','Playground defaults to Primary instead of Accent'],
         ['added','Do/don\'t guidance: Accent is reserved for one or two high-contrast moments per page, not a default choice'],
+      ]},
+      {version:'1.30.3', date:'2026-07-22', author:'Mo', title:'Data Display — table header alignment fix', changes:[
+        ['fixed','Data table — "Volume" and "Value" header cells stayed left-aligned while their numeric columns below were right-aligned, since the generic thead th rule overrode the .dd-num class; headers now right-align to match'],
+      ]},
+      {version:'1.30.2', date:'2026-07-22', author:'Mo', title:'Deep green for brand-coloured text on white/grey surfaces', changes:[
+        ['added','New --chrome-accent-text token: a deep green (Green 800, #218A29) for foreground text/icon colour on light surfaces, vs. the brighter --chrome-accent used for backgrounds and fills'],
+        ['fixed','Selected sidebar icon, section "eyebrow" labels (e.g. "Components"), token-table hover text, and the "Bold" word in the Brand Essence cards were all using the bright brand green as text on white/grey — now use the deep green for legibility'],
+        ['changed','Dark mode is unaffected — brand green already has strong contrast on dark chrome surfaces, so --chrome-accent-text stays the same bright green there'],
+      ]},
+      {version:'1.30.1', date:'2026-07-22', author:'Mo', title:'Sidebar — divider line added to category labels', changes:[
+        ['added','A thin divider line now runs inline after each category label (Brand, Foundations, Components, Coming soon, About), vertically centred with the text'],
+      ]},
+      {version:'1.30.0', date:'2026-07-22', author:'Mo', title:'Nav icons, chart/button fixes, Kbd renamed', changes:[
+        ['added','Left sidebar — every component/foundation link now has a small representative icon'],
+        ['changed','Sidebar selected state — the green dot indicator is removed; the item\'s icon (and label) turns brand green when selected instead'],
+        ['changed','Sidebar — "Modals" and "Toasts" (both still "Coming in a future session") moved into a new "Coming soon" group at the bottom of the nav, each tagged with a "Soon" chip'],
+        ['fixed','Data Display — "Clear filters" button was hardcoded to brand green; now matches the Primary button variant in both light and dark mode'],
+        ['fixed','Charts — the Bar chart rendered every bar in brand green by default; bars now default to neutral grey and only the hovered/selected bar turns green'],
+        ['changed','"Kbd" renamed to "Keyboard Shortcuts" in the nav and section title for clarity (the underlying .kbd CSS class is unchanged)'],
       ]},
       {version:'1.29.1', date:'2026-07-22', author:'Mo', title:'Text Inputs — playground field narrowed', changes:[
         ['changed','Playground stage field max-width reduced from 480px to 320px, more closely matching the v3 inputs playground reference'],
@@ -7598,7 +7624,10 @@ const CHANGELOG = {
     ]
   },
   components: [
-    {secId:'s-charts', name:'Charts', version:'1.0.0', entries:[
+    {secId:'s-charts', name:'Charts', version:'1.0.1', entries:[
+      {version:'1.0.1', date:'2026-07-22', author:'Mo', title:'Bar chart — only the selected bar is green', changes:[
+        ['fixed','Bar chart rendered every bar in brand green by default (hover only changed opacity); bars now default to a neutral grey and only the hovered/selected bar turns green'],
+      ]},
       {version:'1.0.0', date:'2026-07-09', author:'Mo', title:'Initial release', changes:[
         ['added','Interactive inline-SVG bar, line, area and donut charts rendered from data, Flash colour palette, with hover tooltips, dim-the-rest emphasis, donut pop-out and an interactive legend'],
       ]},
@@ -7628,7 +7657,10 @@ const CHANGELOG = {
         ['added','Horizontal, vertical and labelled hairline dividers on the border token'],
       ]},
     ]},
-    {secId:'s-kbd', name:'Kbd', version:'1.0.0', entries:[
+    {secId:'s-kbd', name:'Keyboard Shortcuts', version:'1.0.1', entries:[
+      {version:'1.0.1', date:'2026-07-22', author:'Mo', title:'Renamed from "Kbd" to "Keyboard Shortcuts"', changes:[
+        ['changed','Nav label and section title renamed from "Kbd" to the friendlier "Keyboard Shortcuts" — the CSS class name (.kbd) is unchanged'],
+      ]},
       {version:'1.0.0', date:'2026-07-09', author:'Mo', title:'Initial release', changes:[
         ['added','Keyboard key-caps for single keys and chained shortcut combinations'],
       ]},
@@ -7932,7 +7964,13 @@ const CHANGELOG = {
         ['added','Interactive playground with real open/select/close, click-outside and Escape-to-dismiss behaviour'],
       ]},
     ]},
-    {secId:'s-data', name:'Data Display', version:'1.3.0', entries:[
+    {secId:'s-data', name:'Data Display', version:'1.3.2', entries:[
+      {version:'1.3.2', date:'2026-07-22', author:'Mo', title:'Data table — header alignment fix', changes:[
+        ['fixed','"Volume" and "Value" header cells were left-aligned while their numeric columns were right-aligned; headers now right-align to match'],
+      ]},
+      {version:'1.3.1', date:'2026-07-22', author:'Mo', title:'Empty state — "Clear filters" now uses the Primary button style', changes:[
+        ['fixed','"Clear filters" button in the empty state was hardcoded to brand green (bypassing the Buttons variant system entirely); it now matches the Primary variant — black/white in light mode, white/black in dark mode'],
+      ]},
       {version:'1.3.0', date:'2026-07-06', author:'Helen', title:'Filter chips', changes:[
         ['added','Filter chips — removable chips summarising active filters, sharing tokens with Chips & Pills'],
       ]},
