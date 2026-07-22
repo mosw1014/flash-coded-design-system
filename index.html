@@ -1267,6 +1267,7 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
 .dd-table-wrap{border:1px solid var(--chrome-border);border-radius:12px;overflow:hidden;overflow-x:auto}
 .dd-table{width:100%;border-collapse:collapse;font-size:13px;min-width:540px}
 .dd-table thead th{text-align:left;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--chrome-muted);padding:13px 16px;background:var(--chrome-nav);border-bottom:1px solid var(--chrome-border);white-space:nowrap}
+.dd-table thead th.dd-num{text-align:right}
 .dd-table tbody td{padding:13px 16px;border-bottom:1px solid var(--chrome-border);color:var(--chrome-txt);font-weight:500}
 .dd-table tbody tr:last-child td{border-bottom:none}
 .dd-table tbody tr{transition:background .12s}
@@ -3056,7 +3057,7 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
     <section class="sec" id="s-data">
       <div class="sec__head">
         <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Data Display <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.3.1</span></h1>
+        <h1 class="sec__title">Data Display <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.3.2</span></h1>
         <p class="sec__desc">Patterns for surfacing numbers and records — stat tiles, tables, key&ndash;value lists, progress meters and filter chips. All built on chrome and semantic tokens, so they adapt to light &amp; dark automatically.</p>
       </div>
 
@@ -7359,12 +7360,15 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.30.2';
+const SYSTEM_VERSION = '1.30.3';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.30.3', date:'2026-07-22', author:'Mo', title:'Data Display — table header alignment fix', changes:[
+        ['fixed','Data table — "Volume" and "Value" header cells stayed left-aligned while their numeric columns below were right-aligned, since the generic thead th rule overrode the .dd-num class; headers now right-align to match'],
+      ]},
       {version:'1.30.2', date:'2026-07-22', author:'Mo', title:'Deep green for brand-coloured text on white/grey surfaces', changes:[
         ['added','New --chrome-accent-text token: a deep green (Green 800, #218A29) for foreground text/icon colour on light surfaces, vs. the brighter --chrome-accent used for backgrounds and fills'],
         ['fixed','Selected sidebar icon, section "eyebrow" labels (e.g. "Components"), token-table hover text, and the "Bold" word in the Brand Essence cards were all using the bright brand green as text on white/grey — now use the deep green for legibility'],
@@ -7926,7 +7930,10 @@ const CHANGELOG = {
         ['added','Interactive playground with real open/select/close, click-outside and Escape-to-dismiss behaviour'],
       ]},
     ]},
-    {secId:'s-data', name:'Data Display', version:'1.3.1', entries:[
+    {secId:'s-data', name:'Data Display', version:'1.3.2', entries:[
+      {version:'1.3.2', date:'2026-07-22', author:'Mo', title:'Data table — header alignment fix', changes:[
+        ['fixed','"Volume" and "Value" header cells were left-aligned while their numeric columns were right-aligned; headers now right-align to match'],
+      ]},
       {version:'1.3.1', date:'2026-07-22', author:'Mo', title:'Empty state — "Clear filters" now uses the Primary button style', changes:[
         ['fixed','"Clear filters" button in the empty state was hardcoded to brand green (bypassing the Buttons variant system entirely); it now matches the Primary variant — black/white in light mode, white/black in dark mode'],
       ]},
