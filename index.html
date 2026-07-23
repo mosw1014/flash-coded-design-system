@@ -1138,11 +1138,31 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
 .ti-search[data-size="small"] .ti-search-input{font-size:13px}
 .ti-search-input::placeholder{color:transparent}
 .ti-search-trailing{display:flex;align-items:center;gap:4px;margin-right:20px}
-.ti-search-spinner{width:28px;height:28px;display:none;animation:ti-search-spin .8s linear infinite}
+.ti-search-spinner{width:28px;height:28px;display:none}
 .ti-search[data-size="small"] .ti-search-spinner{width:20px;height:20px}
 .ti-search.ti-loading .ti-search-spinner{display:block}
 .ti-search-spinner svg{width:100%;height:100%;display:block}
-@keyframes ti-search-spin{to{transform:rotate(360deg)}}
+/* Blades stay put — only their opacity chases around the ring, like a comet trail. */
+.ti-search-spinner svg path{animation:ti-search-spin-fade .8s linear infinite}
+.ti-search-spinner svg path:nth-child(1){animation-delay:0s}
+.ti-search-spinner svg path:nth-child(8){animation-delay:-.1s}
+.ti-search-spinner svg path:nth-child(3){animation-delay:-.2s}
+.ti-search-spinner svg path:nth-child(5){animation-delay:-.3s}
+.ti-search-spinner svg path:nth-child(2){animation-delay:-.4s}
+.ti-search-spinner svg path:nth-child(7){animation-delay:-.5s}
+.ti-search-spinner svg path:nth-child(4){animation-delay:-.6s}
+.ti-search-spinner svg path:nth-child(6){animation-delay:-.7s}
+@keyframes ti-search-spin-fade{
+  0%{opacity:1}
+  12.5%{opacity:.82}
+  25%{opacity:.64}
+  37.5%{opacity:.48}
+  50%{opacity:.35}
+  62.5%{opacity:.25}
+  75%{opacity:.18}
+  87.5%{opacity:.12}
+  100%{opacity:1}
+}
 .ti-search-clear{width:28px;height:28px;padding:0;border:none;background:transparent;color:var(--ti-icon-subtle);display:none;align-items:center;justify-content:center;cursor:pointer;flex:0 0 auto}
 .ti-search[data-size="small"] .ti-search-clear{width:20px;height:20px}
 .ti-search-clear svg{width:100%;height:100%}
@@ -2803,10 +2823,10 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
         <p class="sec__desc">A drawer-style sheet that slides up from the bottom of the screen, built from the SheetHeader block (with or without a back arrow, compact or full screen) plus a body and a footer button group. Flash brand only &middot; interactive playground included.</p>
       </div>
 
+      <div id="bsh-playground"  class="type-sub"></div>
       <div id="bsh-quickcopy"   class="type-sub"></div>
       <div id="bsh-header-ref"  class="type-sub"></div>
       <div id="bsh-footer-ref"  class="type-sub"></div>
-      <div id="bsh-playground"  class="type-sub"></div>
 
       <div class="type-sub">
         <div class="type-sub__title">When to use which</div>
@@ -7388,12 +7408,16 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.30.6';
+const SYSTEM_VERSION = '1.30.7';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.30.7', date:'2026-07-23', author:'Mo', title:'Search loading spinner — blades now chase in place instead of spinning; Bottom Sheets playground moved up', changes:[
+        ['changed','Search field loading spinner — the 8 blades used to physically rotate as one rigid shape; they now stay fixed in place and only the dark highlight fades around the ring in sequence, matching the reference motion'],
+        ['changed','Bottom Sheets section — Playground moved to the top of the page, ahead of Quick copy and the reference grids, matching the convention used by every other component section'],
+      ]},
       {version:'1.30.6', date:'2026-07-23', author:'Mo', title:'Text Inputs — playground stage background context fixed', changes:[
         ['fixed','Playground "Background colour" control (White/Grey/Colour) only ever restyled the field itself — the stage behind it stayed white regardless, so Grey and Colour never actually showed their context; the stage now switches to a real grey or brand-colour surface'],
       ]},
