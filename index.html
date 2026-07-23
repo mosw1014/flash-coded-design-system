@@ -1005,6 +1005,9 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
 /* ---- Playground shell (controls + live stage), same convention as .inp-pg__* ---- */
 .ti-pg{border:1px solid var(--chrome-border);border-radius:12px;overflow:hidden;background:var(--chrome-bg);transition:background .25s,border-color .25s}
 .ti-pg__stage{display:flex;align-items:center;justify-content:center;min-height:220px;padding:56px 40px;transition:background .25s}
+.ti-pg__stage[data-bg="white"]{background:var(--chrome-bg)}
+.ti-pg__stage[data-bg="grey"]{background:var(--chrome-nav)}
+.ti-pg__stage[data-bg="colour"]{background:var(--chrome-accent)}
 .ti-pg__stage-inner{width:100%;max-width:320px}
 .ti-pg__ctrls{display:flex;flex-direction:column;gap:16px;padding:20px 22px;background:var(--chrome-nav);border-top:1px solid var(--chrome-border);transition:background .25s;flex-wrap:wrap}
 .ti-pg__row{display:flex;flex-wrap:wrap;gap:16px}
@@ -7385,12 +7388,15 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.30.5';
+const SYSTEM_VERSION = '1.30.6';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.30.6', date:'2026-07-23', author:'Mo', title:'Text Inputs — playground stage background context fixed', changes:[
+        ['fixed','Playground "Background colour" control (White/Grey/Colour) only ever restyled the field itself — the stage behind it stayed white regardless, so Grey and Colour never actually showed their context; the stage now switches to a real grey or brand-colour surface'],
+      ]},
       {version:'1.30.5', date:'2026-07-22', author:'Mo', title:'Text Inputs — Search loading toggle fixed', changes:[
         ['fixed','Search field playground — the "Loading" sidebar switch had no effect: toggling it rebuilt the field with an empty value, which immediately auto-cleared the loading state and never visually flipped the switch (it was missing its id)'],
       ]},
