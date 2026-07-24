@@ -72,11 +72,42 @@ markup, or with a real gotcha a plain read wouldn't reveal).
 | Field | Purpose |
 |---|---|
 | `status` | `"static"` (safe to read the section's HTML/CSS directly), `"js-rendered"` (real markup only exists inside JS — see `builderFunctions`), or `"placeholder"` (not a real component yet — don't extract it as if it were). |
-| `builderFunctions` | Array of function names that actually build this component's DOM, for `"js-rendered"` components whose static section HTML is just an empty mount. |
+| `builderFunctions` | Array of **every** identifier (functions and data consts alike) whose source makes up the `js` field below — not only actual `function` declarations. This must list everything `js` was built from, or a consumer re-deriving `contentHash` from the live file can't reproduce it. |
 | `realClasses` | Array of CSS class names that are genuinely reusable outside this doc site (as opposed to doc-site-only chrome classes that happen to live in the same stylesheet). |
 | `noReusableClass` | `true` when the component has no standalone class of its own at all — visual identity is applied ad hoc (e.g. via inline JS custom properties) purely for this doc site's own playground. Signals: reconstruct from tokens, don't copy markup. |
-| `specs` | Flat key/value object of exact values worth stating plainly rather than parsed out of code — dimensions, radii, breakpoints, whatever's most load-bearing for that component. |
-| `note` | Short free-text flag for anything else a plain read wouldn't reveal. |
+| `css` | The **verbatim** real CSS rules for `realClasses` — not a hand-summarized description, the actual rule text, generated (see below), never hand-typed. |
+| `js` | The **verbatim** real JS for `builderFunctions`/relevant data consts — same principle: real source, not a paraphrase. |
+| `contentHash` | A hash tying `css`+`js` to the exact live source they were extracted from (see "Keeping this honest" below). |
+| `note` | Short free-text flag for anything a plain read wouldn't reveal — scope caveats, gotchas, anything `css`/`js` alone don't make obvious. |
+
+`css`/`js` are deliberately **verbatim, not summarized**. Earlier drafts of this convention used a
+hand-picked `specs` object (a few named numbers like radius/height) — dropped in favour of embedding
+the real source directly, because hand-picking which facts matter is exactly the kind of judgement
+call that goes stale silently: a color, a state, a spacing value nobody thought to name doesn't show
+up in a curated summary, but it's right there if the actual CSS is embedded. This is also *why*
+`realClasses`/`builderFunctions` still matter as separate fields — they tell the generator (and a
+human) exactly what to re-extract, so `css`/`js` stay scoped and small rather than pulling in
+unrelated rules.
+
+### Keeping this honest: `contentHash` and the generator script
+
+A tab that silently drifts out of sync with the component it describes is worse than no tab at all —
+tooling is told to trust it. So `css`/`js` are never hand-typed and never trusted blindly:
+
+1. **Generate, don't transcribe.** A script (companion tooling, not part of this file) reads the
+   live `index.html`, extracts the real CSS rules matching a section's `realClasses` and the real
+   source of its `builderFunctions`/data consts, and prints the full tab ready to paste in. Run it
+   again and paste over the old tab whenever you touch that component's markup, CSS, or JS.
+2. **`contentHash`** is `sha256(css + "\n" + js)` — computed once at generation time over the exact
+   `css`/`js` text embedded in the same tab, using the untrimmed strings exactly as embedded, joined
+   with a single newline.
+3. **Consuming tooling re-derives the same hash from the live file at read time** (using the tab's
+   own `realClasses`/`builderFunctions` as the extraction targets) and compares it to the stored
+   `contentHash`. A match means the tab is provably current — trust `css`/`js` as-is and skip
+   re-parsing the file for that component entirely (this is what makes a valid tab genuinely lean:
+   the expensive part only ever has to run once, at generation time, not on every read). A mismatch
+   means the component changed since the tab was last generated — tooling must fall back to its own
+   fresh extraction and should flag the tab as stale rather than silently using either version.
 
 ### Two examples (format only — not a claim that these exist in the file yet)
 
@@ -88,8 +119,9 @@ A simple, fully static, already-reusable component:
   <pre data-ai-context="EXAMPLE_A">
 {
   "status": "static",
-  "realClasses": [".tag", ".tag--sm", ".tag--reg", ".tag--neutral", ".tag--info", ".tag--success", ".tag--warning", ".tag--error", ".tag__dot"],
-  "specs": { "radius": "6px", "heightSm": "20px", "heightReg": "24px" }
+  "realClasses": [".tag", ".tag--sm", ".tag--reg", ".tag--neutral"],
+  "css": ".tag{display:inline-flex;...}\n.tag--sm{height:20px;padding:0 7px;font-size:11px}\n...",
+  "contentHash": "e3b0c44298fc1c14..."
 }
   </pre>
 </details>
@@ -106,17 +138,19 @@ A JS-rendered component with the "no reusable class" gotcha:
   "builderFunctions": ["makeSomeEl", "applySomeColors"],
   "noReusableClass": true,
   "note": "Colors/shape applied inline via JS custom props for this doc site's own playground — rebuild from tokens, don't copy markup.",
-  "specs": { "shape": "pill", "radius": "999px" }
+  "js": "function makeSomeEl(...) {...}\nfunction applySomeColors(...) {...}",
+  "contentHash": "9f86d081884c7d65..."
 }
   </pre>
 </details>
 ```
 
 **Maintenance rule:** when you add a component, rename a render function, or change whether a
-component is static vs. JS-rendered, add or update its tab in the same PR — same habit as updating
-`CHANGELOG`. Consuming tooling always treats a missing or stale tab as "fall back to live
-detection," never as ground truth it can't question — so this degrades gracefully rather than
-breaking, but an accurate tab is always more useful than a guess.
+component is static vs. JS-rendered, **regenerate and paste over** its tab in the same PR — same
+habit as updating `CHANGELOG`, but mechanical rather than manual. Consuming tooling always treats a
+missing OR hash-mismatched tab as "fall back to live detection," never as ground truth it can't
+question — so this degrades gracefully rather than breaking, but a fresh, hash-verified tab lets
+tooling skip re-parsing the file for that component entirely.
 
 ## File structure notes (apply to the whole file, not any one component)
 

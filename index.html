@@ -2737,9 +2737,27 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
         <pre data-ai-context="s-tags">
 {
   "status": "static",
-  "realClasses": [".tag", ".tag--sm", ".tag--reg", ".tag--neutral", ".tag--info", ".tag--success", ".tag--warning", ".tag--error", ".tag__dot"],
-  "specs": { "shape": "pill", "radius": "6px", "heightSm": "20px", "heightReg": "24px" },
-  "note": "Built by tagHTML(). Covers the Tag component only — the Count/Avatar/Status badges documented in this same section are not yet described here."
+  "builderFunctions": [
+    "TAG_VARIANTS",
+    "TAG_SIZES",
+    "tagHTML"
+  ],
+  "realClasses": [
+    ".tag",
+    ".tag--sm",
+    ".tag--reg",
+    ".tag--neutral",
+    ".tag--info",
+    ".tag--success",
+    ".tag--warning",
+    ".tag--error",
+    ".tag__dot",
+    ".tag__label"
+  ],
+  "css": "/* ================================================================\n   TAGS &amp; BADGES\n   Tags = subtle, static category labels (tinted, softly-rounded —\n   deliberately NOT the saturated pill of a Chip). Badges = count,\n   avatar and status-dot markers. All colours ride the semantic\n   --color-*-h / --color-*-l token pairs, so they flip with theme.\n================================================================ */\n/* Tag */\n.tag { display:inline-flex;align-items:center;gap:5px;border-radius:6px;font-family:inherit;font-weight:700;line-height:1;white-space:nowrap;background:var(--tag-bg);color:var(--tag-fg) }\n.tag--sm { height:20px;padding:0 7px;font-size:11px }\n.tag--reg { height:24px;padding:0 9px;font-size:12px }\n.tag__dot { width:6px;height:6px;border-radius:50%;background:currentColor;flex-shrink:0 }\n.tag--neutral { --tag-bg:var(--chrome-nav);--tag-fg:var(--chrome-muted) }\n.tag--info { --tag-bg:var(--color-info-l);--tag-fg:var(--color-info-h) }\n.tag--success { --tag-bg:var(--color-success-l);--tag-fg:var(--color-success-h) }\n.tag--warning { --tag-bg:var(--color-warn-l);--tag-fg:var(--color-warn-h) }\n.tag--error { --tag-bg:var(--color-crit-l);--tag-fg:var(--color-crit-h) }",
+  "js": "const TAG_VARIANTS = [\n  {key:'neutral', label:'Neutral'},\n  {key:'info',    label:'Info'},\n  {key:'success', label:'Success'},\n  {key:'warning', label:'Warning'},\n  {key:'error',   label:'Error'},\n];\n\nconst TAG_SIZES = [ {key:'sm', label:'Small'}, {key:'reg', label:'Regular'} ];\n\nfunction tagHTML(variant, size, label, dot){\n  const d = dot ? `&lt;span class=\"tag__dot\"&gt;&lt;/span&gt;` : '';\n  return `&lt;span class=\"tag tag--${variant} tag--${size}\"&gt;${d}&lt;span class=\"tag__label\"&gt;${tbEsc(label)}&lt;/span&gt;&lt;/span&gt;`;\n}",
+  "contentHash": "618566a6dcfffe4fd202687162cc0743b7c3327567e07a8072fa1e804efc42d4",
+  "note": "Covers the Tag component only — the Count/Avatar/Status badges documented in this same section are not yet described here."
 }
         </pre>
       </details>
