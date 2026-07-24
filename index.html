@@ -91,8 +91,8 @@
   --color-text-m:var(--prim-grey-700); --color-text-inv:var(--prim-white);
   --color-icon-1:var(--prim-black); --color-icon-2:var(--prim-green-500);
   --color-icon-3:var(--prim-yg-500); --color-icon-s:var(--prim-grey-700); --color-icon-inv:var(--prim-white);
-  --color-btn-p-bg:var(--prim-green-500); --color-btn-p-bg-h:var(--prim-green-600);
-  --color-btn-p-txt:var(--prim-black); --color-btn-p-dis:var(--prim-grey-400);
+  --color-btn-a-bg:var(--prim-bg-600); --color-btn-a-bg-h:var(--prim-bg-700);
+  --color-btn-a-txt:var(--prim-black); --color-btn-a-dis:var(--prim-grey-400);
   --color-btn-s-bg:var(--prim-black); --color-btn-s-txt:var(--prim-white);
   --color-btn-o-border:var(--prim-black); --color-btn-o-txt:var(--prim-black);
   --color-info-h:var(--prim-pb-500); --color-info-l:var(--prim-pb-200);
@@ -124,8 +124,8 @@
   --color-text-m:var(--prim-grey-500); --color-text-inv:var(--prim-black);
   --color-icon-1:var(--prim-white); --color-icon-2:var(--prim-green-500);
   --color-icon-3:var(--prim-yg-500); --color-icon-s:var(--prim-grey-500); --color-icon-inv:var(--prim-black);
-  --color-btn-p-bg:var(--prim-green-500); --color-btn-p-bg-h:var(--prim-green-400);
-  --color-btn-p-txt:var(--prim-black); --color-btn-p-dis:rgba(255,255,255,0.2);
+  --color-btn-a-bg:var(--prim-bg-600); --color-btn-a-bg-h:var(--prim-bg-700);
+  --color-btn-a-txt:var(--prim-black); --color-btn-a-dis:rgba(255,255,255,0.15);
   --color-btn-s-bg:var(--prim-white); --color-btn-s-txt:var(--prim-black);
   --color-btn-o-border:var(--prim-white); --color-btn-o-txt:var(--prim-white);
   --color-info-h:var(--prim-pb-500); --color-info-l:var(--prim-pb-300);
@@ -5019,10 +5019,10 @@ const SEM = {
   btns: {
     title:'Buttons', desc:'Component-level tokens used directly in button variants.',
     rows:[
-      ['--color-btn-p-bg','#10c504','#10c504','#000000','#ffffff','Primary button — background'],
-      ['--color-btn-p-bg-h','#2bb135','#59ce61','#252525','#f0f0f0','Primary button — hover bg'],
-      ['--color-btn-p-txt','#000000','#000000','#ffffff','#000000','Primary button — label'],
-      ['--color-btn-p-dis','#dddddd','rgba(255,255,255,0.2)','#dddddd','#414141','Primary button — disabled bg'],
+      ['--color-btn-a-bg','#1ae10e','#1ae10e','#000000','#ffffff','Accent button — background'],
+      ['--color-btn-a-bg-h','#17ca0d','#17ca0d','#252525','#f0f0f0','Accent button — hover bg'],
+      ['--color-btn-a-txt','#000000','#000000','#ffffff','#000000','Accent button — label'],
+      ['--color-btn-a-dis','#dddddd','rgba(255,255,255,0.15)','#dddddd','#414141','Accent button — disabled bg'],
       ['--color-btn-s-bg','#000000','#ffffff','#f0f0f0','#2d2e34','Secondary button — background'],
       ['--color-btn-s-txt','#ffffff','#000000','#000000','#ffffff','Secondary button — label'],
       ['--color-btn-o-border','#000000','#ffffff','#000000','#2d2e34','Outlined button — border'],
@@ -7476,12 +7476,15 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.31.1';
+const SYSTEM_VERSION = '1.31.2';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.31.2', date:'2026-07-24', author:'Mo', title:'Colours tab — Accent button token corrected', changes:[
+        ['fixed','Colours tab listed a --color-btn-p-* token family labeled "Primary button" that actually held the old Accent green (#10C504/#2BB135) — renamed to --color-btn-a-* and relabeled "Accent button", now pointing at the new #1AE10E/#17CA0D fills'],
+      ]},
       {version:'1.31.1', date:'2026-07-24', author:'Mo', title:'Accent button fill colour refresh', changes:[
         ['changed','Accent button default fill is now #1AE10E (was #10C504)'],
         ['changed','Accent button hover fill is now #17CA0D (was #2BB135)'],
@@ -7873,7 +7876,11 @@ const CHANGELOG = {
         ['added','Default landing page for the design system'],
       ]},
     ]},
-    {secId:'s-colours', name:'Colours', version:'1.4.0', entries:[
+    {secId:'s-colours', name:'Colours', version:'1.4.1', entries:[
+      {version:'1.4.1', date:'2026-07-24', author:'Mo', title:'Button token family renamed Accent, values corrected', changes:[
+        ['fixed','The --color-btn-p-* button token family was mislabeled "Primary button" but actually held the old Accent button colours (#10C504/#2BB135) — a leftover from before Accent was demoted in the button hierarchy (see Buttons v1.5.0). Renamed to --color-btn-a-* and relabeled "Accent button" to match reality'],
+        ['changed','--color-btn-a-bg / --color-btn-a-bg-h now reference the Bright green primitive scale (--prim-bg-600 / --prim-bg-700, i.e. #1AE10E / #17CA0D) instead of hardcoded old-accent hex, matching the Buttons component update'],
+      ]},
       {version:'1.4.0', date:'2026-07-06', author:'Mo', title:'Semantics follow global theme', changes:[
         ['removed','Light/dark toggle above the semantic tokens table'],
         ['changed','Semantic colour values now switch with the global light/dark toggle'],
