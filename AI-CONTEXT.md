@@ -152,6 +152,12 @@ missing OR hash-mismatched tab as "fall back to live detection," never as ground
 question — so this degrades gracefully rather than breaking, but a fresh, hash-verified tab lets
 tooling skip re-parsing the file for that component entirely.
 
+**This is enforced by CI, not just documented here.** `.github/workflows/verify-ai-context.yml`
+runs `scripts/verify-ai-context-tabs.mjs` on every PR touching `index.html`, which re-derives every
+existing tab's hash from the live file and fails the check if any tab has gone stale — printing the
+exact `generate-ai-context-tab.mjs` command to fix it. You do not need to have read this file to get
+a failing PR check telling you what to run; it works the same way a failing test would.
+
 ## File structure notes (apply to the whole file, not any one component)
 
 - There are **two `<style>` blocks** in `index.html`: a small one near the top (doc-site chrome

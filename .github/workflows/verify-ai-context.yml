@@ -1,0 +1,29 @@
+name: Verify AI context tabs
+
+# Enforces AI-CONTEXT.md's maintenance rule mechanically, so contributors
+# never need to know this system exists to keep it correct: any per-section
+# AI context tab whose contentHash no longer matches the live file fails
+# this check, with the exact fix command printed in the log — same as a
+# failing test, not something that needs reading documentation to resolve.
+
+on:
+  pull_request:
+    paths:
+      - 'index.html'
+      - 'scripts/verify-ai-context-tabs.mjs'
+  push:
+    branches: [main]
+    paths:
+      - 'index.html'
+      - 'scripts/verify-ai-context-tabs.mjs'
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Check every AI context tab is current
+        run: node scripts/verify-ai-context-tabs.mjs
