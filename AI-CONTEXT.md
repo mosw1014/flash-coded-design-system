@@ -10,28 +10,61 @@ entirely by JavaScript for the doc site's own playgrounds — the static HTML fo
 just an empty mount `<div>`. Tooling that only reads the static markup gets nothing useful for
 those. Rather than track per-component facts in one central file (which drifts out of sync the
 moment someone changes a component without remembering to update a separate document), that detail
-lives **inside each section itself**, as a small inert data block. This file only documents the
+lives **inside each section itself**, as a small collapsed disclosure. This file only documents the
 convention — it deliberately does not enumerate specific sections, so it never goes stale as
 components are added, renamed, or restructured.
 
-## The per-section machine context block
+## The per-section machine context tab
 
-Any `<section>` may optionally include one inert, non-rendering block carrying machine-readable
-facts about that component:
+Any `<section>` may optionally include one collapsed `<details>` disclosure carrying
+machine-readable facts about that component — **visible, not hidden**, but styled to sit at the
+very bottom of the visual hierarchy, well below the actual component documentation:
 
 ```html
-<script type="application/json" data-ai-context="SECTION_ID">
+<details class="ai-ctx">
+  <summary>AI context</summary>
+  <pre data-ai-context="SECTION_ID">
 { ... }
-</script>
+  </pre>
+</details>
 ```
 
-`type="application/json"` means browsers never parse or execute it — zero effect on the live page.
-`data-ai-context` must match the enclosing section's own `id` so tooling can verify it's reading the
-right block. Place it anywhere inside the section (start or end both work).
+`<details>/<summary>` is a native, fully accessible disclosure — keyboard-operable and correctly
+announced by screen readers with zero extra ARIA or JS required. Collapsed by default, so it never
+competes with the real documentation above it, but a curious human can still expand it to see
+exactly what the AI tooling reads — useful for spot-checking that it's accurate. `data-ai-context`
+must match the enclosing section's own `id` so tooling can verify it's reading the right tab. Place
+it at the end of the section.
 
-**Adoption is optional and incremental.** A section with no block is not an error — tooling falls
-back to reading the section's live HTML/CSS directly and inferring what it can. A block is only
-worth adding where that fallback would actually miss something (chiefly: components with no static
+### Suggested styling (low visual hierarchy, still meets contrast requirements)
+
+```css
+.ai-ctx { margin-top: 20px; font-size: 11px; }
+.ai-ctx summary {
+  display: inline-flex; align-items: center; gap: 4px;
+  cursor: pointer; list-style: none; user-select: none;
+  color: var(--chrome-muted); font-weight: 600; letter-spacing: .02em;
+}
+.ai-ctx summary::-webkit-details-marker { display: none; }
+.ai-ctx summary::before { content: '▸'; font-size: 9px; }
+.ai-ctx[open] summary::before { content: '▾'; }
+.ai-ctx summary:focus-visible { outline: 2px solid var(--color-input-focus); outline-offset: 2px; }
+.ai-ctx pre {
+  margin: 6px 0 0; padding: 10px 12px;
+  background: var(--chrome-nav); border-radius: 8px;
+  font-family: 'SF Mono', Consolas, monospace; font-size: 10.5px; line-height: 1.5;
+  color: var(--chrome-muted); overflow-x: auto; white-space: pre-wrap;
+}
+```
+
+Reuses `--chrome-muted` — the same token already used for `.sec__desc` body copy elsewhere in this
+file — rather than inventing a lighter, lower-contrast grey purely to look more "hidden." Low visual
+hierarchy comes from size, position, and the collapsed state, not from making the text hard to read
+once it's open.
+
+**Adoption is optional and incremental.** A section with no tab is not an error — tooling falls back
+to reading the section's live HTML/CSS directly and inferring what it can. A tab is only worth
+adding where that fallback would actually miss something (chiefly: components with no static
 markup, or with a real gotcha a plain read wouldn't reveal).
 
 ### Fields (all optional — include only what's actually useful for that component)
@@ -50,19 +83,24 @@ markup, or with a real gotcha a plain read wouldn't reveal).
 A simple, fully static, already-reusable component:
 
 ```html
-<script type="application/json" data-ai-context="EXAMPLE_A">
+<details class="ai-ctx">
+  <summary>AI context</summary>
+  <pre data-ai-context="EXAMPLE_A">
 {
   "status": "static",
   "realClasses": [".tag", ".tag--sm", ".tag--reg", ".tag--neutral", ".tag--info", ".tag--success", ".tag--warning", ".tag--error", ".tag__dot"],
   "specs": { "radius": "6px", "heightSm": "20px", "heightReg": "24px" }
 }
-</script>
+  </pre>
+</details>
 ```
 
 A JS-rendered component with the "no reusable class" gotcha:
 
 ```html
-<script type="application/json" data-ai-context="EXAMPLE_B">
+<details class="ai-ctx">
+  <summary>AI context</summary>
+  <pre data-ai-context="EXAMPLE_B">
 {
   "status": "js-rendered",
   "builderFunctions": ["makeSomeEl", "applySomeColors"],
@@ -70,14 +108,15 @@ A JS-rendered component with the "no reusable class" gotcha:
   "note": "Colors/shape applied inline via JS custom props for this doc site's own playground — rebuild from tokens, don't copy markup.",
   "specs": { "shape": "pill", "radius": "999px" }
 }
-</script>
+  </pre>
+</details>
 ```
 
 **Maintenance rule:** when you add a component, rename a render function, or change whether a
-component is static vs. JS-rendered, add or update its block in the same PR — same habit as updating
-`CHANGELOG`. Consuming tooling always treats a missing or stale block as "fall back to live
+component is static vs. JS-rendered, add or update its tab in the same PR — same habit as updating
+`CHANGELOG`. Consuming tooling always treats a missing or stale tab as "fall back to live
 detection," never as ground truth it can't question — so this degrades gracefully rather than
-breaking, but an accurate block is always more useful than a guess.
+breaking, but an accurate tab is always more useful than a guess.
 
 ## File structure notes (apply to the whole file, not any one component)
 
