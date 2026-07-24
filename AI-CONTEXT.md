@@ -5,18 +5,154 @@ This file is read by AI tooling that consumes this design system programmaticall
 `index.html` itself (`raw.githubusercontent.com/mosw1014/flash-coded-design-system/main/AI-CONTEXT.md`).
 It is not read by the doc site and has no effect on the live page.
 
-**Why this file exists:** `index.html` is a single ~9,500-line file where most components are
-rendered entirely by JavaScript for the doc site's own playgrounds — the static HTML for those
-sections is just an empty mount `<div>`. Tooling that only reads the static markup gets nothing
-useful for those components. This file tells it where the real markup/CSS actually lives.
+**Why this matters:** `index.html` is a single ~9,500-line file where many components are rendered
+entirely by JavaScript for the doc site's own playgrounds — the static HTML for those sections is
+just an empty mount `<div>`. Tooling that only reads the static markup gets nothing useful for
+those. Rather than track per-component facts in one central file (which drifts out of sync the
+moment someone changes a component without remembering to update a separate document), that detail
+lives **inside each section itself**, as a small collapsed disclosure. This file only documents the
+convention — it deliberately does not enumerate specific sections, so it never goes stale as
+components are added, renamed, or restructured.
 
-**Maintenance rule:** if you add a component, rename a render function, or change whether a
-component is static vs. JS-rendered, update its entry below in the same PR — same habit as
-updating `CHANGELOG` for humans. If this file doesn't mention a component, tooling falls back to
-reading the live section directly and guessing from context, so a stale/missing entry degrades
-gracefully rather than breaking — but an accurate entry is always better than a guess.
+## The per-section machine context tab
 
-## File structure notes
+Any `<section>` may optionally include one collapsed `<details>` disclosure carrying
+machine-readable facts about that component — **visible, not hidden**, but styled to sit at the
+very bottom of the visual hierarchy, well below the actual component documentation:
+
+```html
+<details class="ai-ctx">
+  <summary>AI context</summary>
+  <pre data-ai-context="SECTION_ID">
+{ ... }
+  </pre>
+</details>
+```
+
+`<details>/<summary>` is a native, fully accessible disclosure — keyboard-operable and correctly
+announced by screen readers with zero extra ARIA or JS required. Collapsed by default, so it never
+competes with the real documentation above it, but a curious human can still expand it to see
+exactly what the AI tooling reads — useful for spot-checking that it's accurate. `data-ai-context`
+must match the enclosing section's own `id` so tooling can verify it's reading the right tab. Place
+it at the end of the section.
+
+### Suggested styling (low visual hierarchy, still meets contrast requirements)
+
+```css
+.ai-ctx { margin-top: 20px; font-size: 11px; }
+.ai-ctx summary {
+  display: inline-flex; align-items: center; gap: 4px;
+  cursor: pointer; list-style: none; user-select: none;
+  color: var(--chrome-muted); font-weight: 600; letter-spacing: .02em;
+}
+.ai-ctx summary::-webkit-details-marker { display: none; }
+.ai-ctx summary::before { content: '▸'; font-size: 9px; }
+.ai-ctx[open] summary::before { content: '▾'; }
+.ai-ctx summary:focus-visible { outline: 2px solid var(--color-input-focus); outline-offset: 2px; }
+.ai-ctx pre {
+  margin: 6px 0 0; padding: 10px 12px;
+  background: var(--chrome-nav); border-radius: 8px;
+  font-family: 'SF Mono', Consolas, monospace; font-size: 10.5px; line-height: 1.5;
+  color: var(--chrome-muted); overflow-x: auto; white-space: pre-wrap;
+}
+```
+
+Reuses `--chrome-muted` — the same token already used for `.sec__desc` body copy elsewhere in this
+file — rather than inventing a lighter, lower-contrast grey purely to look more "hidden." Low visual
+hierarchy comes from size, position, and the collapsed state, not from making the text hard to read
+once it's open.
+
+**Adoption is optional and incremental.** A section with no tab is not an error — tooling falls back
+to reading the section's live HTML/CSS directly and inferring what it can. A tab is only worth
+adding where that fallback would actually miss something (chiefly: components with no static
+markup, or with a real gotcha a plain read wouldn't reveal).
+
+### Fields (all optional — include only what's actually useful for that component)
+
+| Field | Purpose |
+|---|---|
+| `status` | `"static"` (safe to read the section's HTML/CSS directly), `"js-rendered"` (real markup only exists inside JS — see `builderFunctions`), or `"placeholder"` (not a real component yet — don't extract it as if it were). |
+| `builderFunctions` | Array of **every** identifier (functions and data consts alike) whose source makes up the `js` field below — not only actual `function` declarations. This must list everything `js` was built from, or a consumer re-deriving `contentHash` from the live file can't reproduce it. |
+| `realClasses` | Array of CSS class names that are genuinely reusable outside this doc site (as opposed to doc-site-only chrome classes that happen to live in the same stylesheet). |
+| `noReusableClass` | `true` when the component has no standalone class of its own at all — visual identity is applied ad hoc (e.g. via inline JS custom properties) purely for this doc site's own playground. Signals: reconstruct from tokens, don't copy markup. |
+| `css` | The **verbatim** real CSS rules for `realClasses` — not a hand-summarized description, the actual rule text, generated (see below), never hand-typed. |
+| `js` | The **verbatim** real JS for `builderFunctions`/relevant data consts — same principle: real source, not a paraphrase. |
+| `contentHash` | A hash tying `css`+`js` to the exact live source they were extracted from (see "Keeping this honest" below). |
+| `note` | Short free-text flag for anything a plain read wouldn't reveal — scope caveats, gotchas, anything `css`/`js` alone don't make obvious. |
+
+`css`/`js` are deliberately **verbatim, not summarized**. Earlier drafts of this convention used a
+hand-picked `specs` object (a few named numbers like radius/height) — dropped in favour of embedding
+the real source directly, because hand-picking which facts matter is exactly the kind of judgement
+call that goes stale silently: a color, a state, a spacing value nobody thought to name doesn't show
+up in a curated summary, but it's right there if the actual CSS is embedded. This is also *why*
+`realClasses`/`builderFunctions` still matter as separate fields — they tell the generator (and a
+human) exactly what to re-extract, so `css`/`js` stay scoped and small rather than pulling in
+unrelated rules.
+
+### Keeping this honest: `contentHash` and the generator script
+
+A tab that silently drifts out of sync with the component it describes is worse than no tab at all —
+tooling is told to trust it. So `css`/`js` are never hand-typed and never trusted blindly:
+
+1. **Generate, don't transcribe.** A script (companion tooling, not part of this file) reads the
+   live `index.html`, extracts the real CSS rules matching a section's `realClasses` and the real
+   source of its `builderFunctions`/data consts, and prints the full tab ready to paste in. Run it
+   again and paste over the old tab whenever you touch that component's markup, CSS, or JS.
+2. **`contentHash`** is `sha256(css + "\n" + js)` — computed once at generation time over the exact
+   `css`/`js` text embedded in the same tab, using the untrimmed strings exactly as embedded, joined
+   with a single newline.
+3. **Consuming tooling re-derives the same hash from the live file at read time** (using the tab's
+   own `realClasses`/`builderFunctions` as the extraction targets) and compares it to the stored
+   `contentHash`. A match means the tab is provably current — trust `css`/`js` as-is and skip
+   re-parsing the file for that component entirely (this is what makes a valid tab genuinely lean:
+   the expensive part only ever has to run once, at generation time, not on every read). A mismatch
+   means the component changed since the tab was last generated — tooling must fall back to its own
+   fresh extraction and should flag the tab as stale rather than silently using either version.
+
+### Two examples (format only — not a claim that these exist in the file yet)
+
+A simple, fully static, already-reusable component:
+
+```html
+<details class="ai-ctx">
+  <summary>AI context</summary>
+  <pre data-ai-context="EXAMPLE_A">
+{
+  "status": "static",
+  "realClasses": [".tag", ".tag--sm", ".tag--reg", ".tag--neutral"],
+  "css": ".tag{display:inline-flex;...}\n.tag--sm{height:20px;padding:0 7px;font-size:11px}\n...",
+  "contentHash": "e3b0c44298fc1c14..."
+}
+  </pre>
+</details>
+```
+
+A JS-rendered component with the "no reusable class" gotcha:
+
+```html
+<details class="ai-ctx">
+  <summary>AI context</summary>
+  <pre data-ai-context="EXAMPLE_B">
+{
+  "status": "js-rendered",
+  "builderFunctions": ["makeSomeEl", "applySomeColors"],
+  "noReusableClass": true,
+  "note": "Colors/shape applied inline via JS custom props for this doc site's own playground — rebuild from tokens, don't copy markup.",
+  "js": "function makeSomeEl(...) {...}\nfunction applySomeColors(...) {...}",
+  "contentHash": "9f86d081884c7d65..."
+}
+  </pre>
+</details>
+```
+
+**Maintenance rule:** when you add a component, rename a render function, or change whether a
+component is static vs. JS-rendered, **regenerate and paste over** its tab in the same PR — same
+habit as updating `CHANGELOG`, but mechanical rather than manual. Consuming tooling always treats a
+missing OR hash-mismatched tab as "fall back to live detection," never as ground truth it can't
+question — so this degrades gracefully rather than breaking, but a fresh, hash-verified tab lets
+tooling skip re-parsing the file for that component entirely.
+
+## File structure notes (apply to the whole file, not any one component)
 
 - There are **two `<style>` blocks** in `index.html`: a small one near the top (doc-site chrome
   reset) and a much larger one further down containing virtually all real component CSS. Tooling
@@ -28,53 +164,3 @@ gracefully rather than breaking — but an accurate entry is always better than 
 - The `CHANGELOG` JS object has two parts: `CHANGELOG.system` (global entries) and
   `CHANGELOG.components` (one array per section, keyed by `secId`). Both need updating for a
   component change, per this repo's `CLAUDE.md`.
-
-## Components with no static markup — read the render function, not the section HTML
-
-For these, the section's own HTML is just an empty `<div id="...-playground">` or similar mount —
-the actual DOM structure, class names, and states only exist inside the listed function(s).
-
-- **Buttons** (`s-buttons`) — built by `makeBtnEl()` (colors applied via `applyBtnColors()`,
-  classes via `getBtnClasses()`). **No standalone reusable `.btn` class exists** — colors/shape are
-  applied inline via JS custom properties for the doc site's own playground. When reskinning
-  elsewhere, reconstruct buttons from the semantic tokens (`--color-btn-p-bg`, `--color-btn-p-txt`,
-  `--color-btn-s-bg`, `--color-btn-s-txt`, `--color-btn-o-border`, `--color-btn-o-txt`) and the
-  documented shape: fully pill-rounded (`border-radius: 999px`).
-- **Text Inputs** (`s-inputs`) — built by `tiBuildStandardField()` (Standard/floating-label variant)
-  and `tiBuildSearchField()` (Search/pill variant). State lives in the `tiState` object. Unlike
-  Buttons, these **do** produce genuine reusable classes (`.ti-shell`, `.ti-field`, `.ti-label`,
-  `.ti-value-row`, `.ti-input`, `.ti-leading`, `.ti-trailing-icon`, `.ti-clear`, `.ti-eye`,
-  `.ti-error`) — safe to copy the CSS for these directly once extracted from the function/style
-  block, since they're not doc-only.
-- **Tags** (`s-tags`) — built by `tagHTML()`. Simple and already genuinely reusable:
-  `.tag`, `.tag--{sm|reg}`, `.tag--{neutral|info|success|warning|error}`, `.tag__dot`.
-- **Chips** (`s-chips`) — built by `makeChipHTML()` / `makeChipEl()`. Reusable classes: `.chip`,
-  `.chip--{sm|reg|lg}`, `.chip__label`, `.chip__x`.
-- **Bottom Sheets / Drawers** (`s-drawers`) — built by `bshBuildSheetEl()` (and
-  `bshBuildFooter()` for the footer layout variants).
-- **Navigation / Side Nav** (`s-nav`) — rendered live into `#snav-play-stage`; there is no single
-  named builder function as clean as the others above, and no static reference markup either. Use
-  the written **Anatomy & specs** table in this section instead (exact px values: 208px panel width
-  / 170px small, 12px corner radius, 4px 8px item padding, 20px icon chip / 12px small, idle vs.
-  active colors) — it's more reliable to transcribe than to parse out of the render logic.
-
-## Components that are mostly static — safe to read the section HTML directly
-
-Switch (`s-switch`), Tabs (`s-tabs`), Cards (`s-cards`), Alert (`s-alert`), Accordion
-(`s-accordion`), Breadcrumb (`s-breadcrumb`), Pagination (`s-pagination`), Avatar (`s-avatar`),
-Separator (`s-separator`), Kbd (`s-kbd`), and most of the remaining sections not listed above use
-plain BEM markup written directly in the section, so their real classes and CSS are already visible
-without needing to unpack a render function.
-
-**Tables** (`s-tables`) is mostly static hand-authored markup (`.tbl-wrap`, `.tbl-row`, `.tbl-cell`,
-`.tbl-link`, `.tbl-pic`, etc.) — safe to read directly. It also has a small separate JS playground
-widget (`#tbl-playground`) for the doc site's own interactive demo, which can be ignored; it doesn't
-carry additional component spec beyond what the static markup already shows.
-
-## Known placeholder sections (not yet real components)
-
-- **Modals & Dialogs** (`s-modals`) — "Coming in a future session." Compose from Card + Button /
-  overlay primitives instead of inventing a one-off design, and report the gap.
-- **Toasts & Snackbars** (`s-toasts`) — same status as above. Compose from Alert primitives instead.
-
-If either of these ships for real, remove its entry here (or mark it accordingly) in the same PR.

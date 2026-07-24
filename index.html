@@ -1232,6 +1232,17 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
 .tag--warning{--tag-bg:var(--color-warn-l);--tag-fg:var(--color-warn-h)}
 .tag--error{--tag-bg:var(--color-crit-l);--tag-fg:var(--color-crit-h)}
 
+/* AI context tab — shared across any section that adopts one, see AI-CONTEXT.md.
+   Low visual hierarchy by size/position/collapsed-state, not by low contrast:
+   reuses --chrome-muted, the same token already used for .sec__desc body copy. */
+.ai-ctx{margin-top:20px;font-size:11px}
+.ai-ctx summary{display:inline-flex;align-items:center;gap:4px;cursor:pointer;list-style:none;user-select:none;color:var(--chrome-muted);font-weight:600;letter-spacing:.02em}
+.ai-ctx summary::-webkit-details-marker{display:none}
+.ai-ctx summary::before{content:'▸';font-size:9px}
+.ai-ctx[open] summary::before{content:'▾'}
+.ai-ctx summary:focus-visible{outline:2px solid var(--color-input-focus);outline-offset:2px}
+.ai-ctx pre{margin:6px 0 0;padding:10px 12px;background:var(--chrome-nav);border-radius:8px;font-family:'SF Mono',Consolas,monospace;font-size:10.5px;line-height:1.5;color:var(--chrome-muted);overflow-x:auto;white-space:pre-wrap}
+
 /* Count / notification badge */
 .badge-ct{display:inline-flex;align-items:center;justify-content:center;box-sizing:border-box;border-radius:999px;font-family:inherit;font-weight:800;line-height:1;color:#fff;background:var(--bc-bg,#EB0029);font-variant-numeric:tabular-nums}
 .badge-ct--dot{width:9px;height:9px;padding:0}
@@ -2721,6 +2732,63 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
           </div>
         </div>
       </div>
+      <details class="ai-ctx">
+        <summary>AI context</summary>
+        <pre data-ai-context="s-tags">
+{
+  "status": "static",
+  "builderFunctions": [
+    "TAG_VARIANTS",
+    "TAG_SIZES",
+    "tagHTML",
+    "STATUS_BADGES",
+    "renderBadgeCountRef",
+    "renderBadgeAvatarRef",
+    "renderBadgeStatusRef"
+  ],
+  "realClasses": [
+    ".tag",
+    ".tag--sm",
+    ".tag--reg",
+    ".tag--neutral",
+    ".tag--info",
+    ".tag--success",
+    ".tag--warning",
+    ".tag--error",
+    ".tag__dot",
+    ".tag__label",
+    ".badge-ct",
+    ".badge-ct--dot",
+    ".badge-ct--sm",
+    ".badge-ct--md",
+    ".badge-ct--accent",
+    ".badge-ct--error",
+    ".badge-ct--neutral",
+    ".badge-host",
+    ".badge-host__mark",
+    ".badge-host__badge",
+    ".badge-av",
+    ".badge-av__img",
+    ".badge-av--sm",
+    ".badge-av--md",
+    ".badge-av--lg",
+    ".badge-av--brand",
+    ".badge-av__status",
+    ".badge-st",
+    ".badge-st__dot",
+    ".badge-st--success",
+    ".badge-st--warning",
+    ".badge-st--error",
+    ".badge-st--info",
+    ".badge-st--neutral"
+  ],
+  "css": "/* ================================================================\n   TAGS &amp; BADGES\n   Tags = subtle, static category labels (tinted, softly-rounded —\n   deliberately NOT the saturated pill of a Chip). Badges = count,\n   avatar and status-dot markers. All colours ride the semantic\n   --color-*-h / --color-*-l token pairs, so they flip with theme.\n================================================================ */\n/* Tag */\n.tag { display:inline-flex;align-items:center;gap:5px;border-radius:6px;font-family:inherit;font-weight:700;line-height:1;white-space:nowrap;background:var(--tag-bg);color:var(--tag-fg) }\n.tag--sm { height:20px;padding:0 7px;font-size:11px }\n.tag--reg { height:24px;padding:0 9px;font-size:12px }\n.tag__dot { width:6px;height:6px;border-radius:50%;background:currentColor;flex-shrink:0 }\n.tag--neutral { --tag-bg:var(--chrome-nav);--tag-fg:var(--chrome-muted) }\n.tag--info { --tag-bg:var(--color-info-l);--tag-fg:var(--color-info-h) }\n.tag--success { --tag-bg:var(--color-success-l);--tag-fg:var(--color-success-h) }\n.tag--warning { --tag-bg:var(--color-warn-l);--tag-fg:var(--color-warn-h) }\n.tag--error { --tag-bg:var(--color-crit-l);--tag-fg:var(--color-crit-h) }\n/* Count / notification badge */\n.badge-ct { display:inline-flex;align-items:center;justify-content:center;box-sizing:border-box;border-radius:999px;font-family:inherit;font-weight:800;line-height:1;color:#fff;background:var(--bc-bg,#EB0029);font-variant-numeric:tabular-nums }\n.badge-ct--dot { width:9px;height:9px;padding:0 }\n.badge-ct--sm { min-width:16px;height:16px;padding:0 4px;font-size:10px }\n.badge-ct--md { min-width:20px;height:20px;padding:0 6px;font-size:11px }\n.badge-ct--accent { --bc-bg:#0062EB }\n.badge-ct--error { --bc-bg:#EB0029 }\n.badge-ct--neutral { --bc-bg:var(--chrome-muted) }\n/* Host wrapper — anchors a badge to the corner of an icon/avatar */\n.badge-host { position:relative;display:inline-flex }\n.badge-host__mark { display:inline-flex;align-items:center;justify-content:center;color:var(--chrome-muted) }\n.badge-host__badge { position:absolute;top:-4px;right:-6px }\n/* Avatar / image badge */\n.badge-av { position:relative;display:inline-flex;align-items:center;justify-content:center;border-radius:50%;background:var(--av-bg,var(--chrome-nav));color:var(--av-fg,var(--chrome-muted));font-family:inherit;font-weight:800;flex-shrink:0 }\n.badge-av__img { width:100%;height:100%;border-radius:50%;object-fit:cover;display:block }\n.badge-av--sm { width:24px;height:24px;font-size:10px }\n.badge-av--md { width:32px;height:32px;font-size:12px }\n.badge-av--lg { width:48px;height:48px;font-size:17px }\n.badge-av--brand { --av-bg:var(--chrome-accent);--av-fg:#0a2a12 }\n.badge-av__status { position:absolute;bottom:0;right:0;border-radius:50%;border:2px solid var(--chrome-bg);background:var(--st-c,var(--chrome-muted)) }\n/* Status-dot badge */\n.badge-st { display:inline-flex;align-items:center;gap:7px;font-family:inherit;font-size:12px;font-weight:600;color:var(--chrome-txt);white-space:nowrap }\n.badge-st__dot { width:8px;height:8px;border-radius:50%;flex-shrink:0;background:var(--st-c,var(--chrome-muted)) }\n.badge-st--success { --st-c:var(--color-success-h) }\n.badge-st--warning { --st-c:var(--color-warn-h) }\n.badge-st--error { --st-c:var(--color-crit-h) }\n.badge-st--info { --st-c:var(--color-info-h) }\n.badge-st--neutral { --st-c:var(--chrome-muted) }",
+  "js": "const TAG_VARIANTS = [\n  {key:'neutral', label:'Neutral'},\n  {key:'info',    label:'Info'},\n  {key:'success', label:'Success'},\n  {key:'warning', label:'Warning'},\n  {key:'error',   label:'Error'},\n];\n\nconst TAG_SIZES = [ {key:'sm', label:'Small'}, {key:'reg', label:'Regular'} ];\n\nfunction tagHTML(variant, size, label, dot){\n  const d = dot ? `&lt;span class=\"tag__dot\"&gt;&lt;/span&gt;` : '';\n  return `&lt;span class=\"tag tag--${variant} tag--${size}\"&gt;${d}&lt;span class=\"tag__label\"&gt;${tbEsc(label)}&lt;/span&gt;&lt;/span&gt;`;\n}\n\nconst STATUS_BADGES = [\n  {key:'success', label:'Active'},\n  {key:'info',    label:'Processing'},\n  {key:'warning', label:'Degraded'},\n  {key:'error',   label:'Offline'},\n  {key:'neutral', label:'Unknown'},\n];\n\nfunction renderBadgeCountRef(){\n  const root = document.getElementById('badge-count-ref');\n  if(!root) return;\n  const sbg = stageBg(tbTheme());\n  const cell = (inner, cap)=&gt;`&lt;div class=\"tb-ref__cell\"&gt;${inner}&lt;span class=\"tb-ref__cell-cap\"&gt;${cap}&lt;/span&gt;&lt;/div&gt;`;\n  const variantsRow = ['error','accent','neutral'].map(v=&gt;cell(`&lt;span class=\"badge-ct badge-ct--md badge-ct--${v}\"&gt;3&lt;/span&gt;`, cap(v==='accent'?'accent':v))).join('');\n  const sizesRow = cell(`&lt;span class=\"badge-ct badge-ct--dot badge-ct--error\"&gt;&lt;/span&gt;`,'Dot')\n    + cell(`&lt;span class=\"badge-ct badge-ct--sm badge-ct--error\"&gt;5&lt;/span&gt;`,'Small')\n    + cell(`&lt;span class=\"badge-ct badge-ct--md badge-ct--error\"&gt;5&lt;/span&gt;`,'Medium')\n    + cell(`&lt;span class=\"badge-ct badge-ct--md badge-ct--error\"&gt;99+&lt;/span&gt;`,'Overflow');\n  const anchoredRow = cell(`&lt;span class=\"badge-host\"&gt;&lt;span class=\"badge-host__mark\"&gt;${bellSVG()}&lt;/span&gt;&lt;span class=\"badge-host__badge\"&gt;&lt;span class=\"badge-ct badge-ct--sm badge-ct--error\"&gt;4&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;`,'Count')\n    + cell(`&lt;span class=\"badge-host\"&gt;&lt;span class=\"badge-host__mark\"&gt;${bellSVG()}&lt;/span&gt;&lt;span class=\"badge-host__badge\"&gt;&lt;span class=\"badge-ct badge-ct--dot badge-ct--error\"&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;`,'Dot');\n  root.innerHTML = `\n    &lt;div class=\"type-sub__title\"&gt;Count &amp;amp; notification badges&lt;/div&gt;\n    &lt;div class=\"type-sub__desc\"&gt;A small solid marker for unread or pending totals. Use the dot form when the exact number doesn&amp;rsquo;t matter, and &amp;ldquo;99+&amp;rdquo; past two digits. Hide it entirely at zero.&lt;/div&gt;\n    &lt;div class=\"tb-ref\" style=\"background:${sbg}\"&gt;\n      &lt;div class=\"tb-ref__row\"&gt;&lt;div class=\"tb-ref__label\"&gt;Variant&lt;/div&gt;&lt;div class=\"tb-ref__cells\"&gt;${variantsRow}&lt;/div&gt;&lt;/div&gt;\n      &lt;div class=\"tb-ref__row\"&gt;&lt;div class=\"tb-ref__label\"&gt;Size &amp;amp; form&lt;/div&gt;&lt;div class=\"tb-ref__cells\"&gt;${sizesRow}&lt;/div&gt;&lt;/div&gt;\n      &lt;div class=\"tb-ref__row\"&gt;&lt;div class=\"tb-ref__label\"&gt;Anchored&lt;/div&gt;&lt;div class=\"tb-ref__cells\"&gt;${anchoredRow}&lt;/div&gt;&lt;/div&gt;\n    &lt;/div&gt;`;\n}\n\nfunction renderBadgeAvatarRef(){\n  const root = document.getElementById('badge-avatar-ref');\n  if(!root) return;\n  const sbg = stageBg(tbTheme());\n  const cell = (inner, cap)=&gt;`&lt;div class=\"tb-ref__cell\"&gt;${inner}&lt;span class=\"tb-ref__cell-cap\"&gt;${cap}&lt;/span&gt;&lt;/div&gt;`;\n  const sizesRow = cell(`&lt;span class=\"badge-av badge-av--sm\"&gt;RB&lt;/span&gt;`,'Small 24')\n    + cell(`&lt;span class=\"badge-av badge-av--md\"&gt;RB&lt;/span&gt;`,'Medium 32')\n    + cell(`&lt;span class=\"badge-av badge-av--lg\"&gt;RB&lt;/span&gt;`,'Large 48');\n  const variantsRow = cell(`&lt;span class=\"badge-av badge-av--md\"&gt;RB&lt;/span&gt;`,'Neutral')\n    + cell(`&lt;span class=\"badge-av badge-av--md badge-av--brand\"&gt;RB&lt;/span&gt;`,'Brand');\n  const overlayRow = cell(`&lt;span class=\"badge-av badge-av--md\"&gt;RB&lt;span class=\"badge-av__status badge-st--success\" style=\"width:10px;height:10px\"&gt;&lt;/span&gt;&lt;/span&gt;`,'+ status')\n    + cell(`&lt;span class=\"badge-host\"&gt;&lt;span class=\"badge-av badge-av--md\"&gt;RB&lt;/span&gt;&lt;span class=\"badge-host__badge\"&gt;&lt;span class=\"badge-ct badge-ct--sm badge-ct--error\"&gt;2&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;`,'+ count');\n  root.innerHTML = `\n    &lt;div class=\"type-sub__title\"&gt;Avatar &amp;amp; image badges&lt;/div&gt;\n    &lt;div class=\"type-sub__desc\"&gt;A circular identity mark &amp;mdash; initials, a photo, or a product/brand logo. Pair with a status dot to show presence, or a count badge for pending items.&lt;/div&gt;\n    &lt;div class=\"tb-ref\" style=\"background:${sbg}\"&gt;\n      &lt;div class=\"tb-ref__row\"&gt;&lt;div class=\"tb-ref__label\"&gt;Size&lt;/div&gt;&lt;div class=\"tb-ref__cells\"&gt;${sizesRow}&lt;/div&gt;&lt;/div&gt;\n      &lt;div class=\"tb-ref__row\"&gt;&lt;div class=\"tb-ref__label\"&gt;Fill&lt;/div&gt;&lt;div class=\"tb-ref__cells\"&gt;${variantsRow}&lt;/div&gt;&lt;/div&gt;\n      &lt;div class=\"tb-ref__row\"&gt;&lt;div class=\"tb-ref__label\"&gt;Overlay&lt;/div&gt;&lt;div class=\"tb-ref__cells\"&gt;${overlayRow}&lt;/div&gt;&lt;/div&gt;\n    &lt;/div&gt;`;\n}\n\nfunction renderBadgeStatusRef(){\n  const root = document.getElementById('badge-status-ref');\n  if(!root) return;\n  const sbg = stageBg(tbTheme());\n  const cell = (inner, cap)=&gt;`&lt;div class=\"tb-ref__cell\"&gt;${inner}&lt;span class=\"tb-ref__cell-cap\"&gt;${cap}&lt;/span&gt;&lt;/div&gt;`;\n  const labelled = STATUS_BADGES.map(s=&gt;cell(`&lt;span class=\"badge-st badge-st--${s.key}\"&gt;&lt;span class=\"badge-st__dot\"&gt;&lt;/span&gt;${s.label}&lt;/span&gt;`, cap(s.key))).join('');\n  const dotsOnly = STATUS_BADGES.map(s=&gt;cell(`&lt;span class=\"badge-st badge-st--${s.key}\"&gt;&lt;span class=\"badge-st__dot\"&gt;&lt;/span&gt;&lt;/span&gt;`, cap(s.key))).join('');\n  root.innerHTML = `\n    &lt;div class=\"type-sub__title\"&gt;Status dots&lt;/div&gt;\n    &lt;div class=\"type-sub__desc\"&gt;A tiny coloured dot for live state. Always pair the dot with a text label for anything critical &amp;mdash; colour alone isn&amp;rsquo;t accessible.&lt;/div&gt;\n    &lt;div class=\"tb-ref\" style=\"background:${sbg}\"&gt;\n      &lt;div class=\"tb-ref__row\"&gt;&lt;div class=\"tb-ref__label\"&gt;With label&lt;/div&gt;&lt;div class=\"tb-ref__cells\"&gt;${labelled}&lt;/div&gt;&lt;/div&gt;\n      &lt;div class=\"tb-ref__row\"&gt;&lt;div class=\"tb-ref__label\"&gt;Dot only&lt;/div&gt;&lt;div class=\"tb-ref__cells\"&gt;${dotsOnly}&lt;/div&gt;&lt;/div&gt;\n    &lt;/div&gt;`;\n}",
+  "contentHash": "b0eb28b98453aab321d9682d0452ea701b8757f1f23019ff9337db59f75382df",
+  "note": "Covers Tags, Count badges, Avatar/image badges, and Status dots — the full Tags &amp; Badges section."
+}
+        </pre>
+      </details>
     </section>
     <section class="sec" id="s-chips">
       <div class="sec__head">
@@ -7408,12 +7476,15 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.30.7';
+const SYSTEM_VERSION = '1.31.0';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.31.0', date:'2026-07-24', author:'Mo', title:'First AI context tab — Tags & Badges', changes:[
+        ['added','Low-key "AI context" disclosure at the bottom of the Tags & Badges section — a collapsed, accessible details/summary tab carrying machine-readable facts (real classes, exact specs) for AI tooling that consumes this design system, per the convention documented in AI-CONTEXT.md'],
+      ]},
       {version:'1.30.7', date:'2026-07-23', author:'Mo', title:'Search loading spinner — blades now chase in place instead of spinning; Bottom Sheets playground moved up', changes:[
         ['changed','Search field loading spinner — the 8 blades used to physically rotate as one rigid shape; they now stay fixed in place and only the dark highlight fades around the ring in sequence, matching the reference motion'],
         ['changed','Bottom Sheets section — Playground moved to the top of the page, ahead of Quick copy and the reference grids, matching the convention used by every other component section'],
@@ -7889,7 +7960,10 @@ const CHANGELOG = {
         ['added','Light & dark reference grid, quick-copy card, tap-target guidance and usage do/don\'t'],
       ]},
     ]},
-    {secId:'s-tags', name:'Tags & Badges', version:'1.0.0', entries:[
+    {secId:'s-tags', name:'Tags & Badges', version:'1.1.0', entries:[
+      {version:'1.1.0', date:'2026-07-24', author:'Mo', title:'Added an AI context tab', changes:[
+        ['added','Collapsed "AI context" disclosure at the end of the section — low visual hierarchy, fully accessible via a native details/summary element, documenting the Tag component real classes and specs for AI tooling'],
+      ]},
       {version:'1.0.0', date:'2026-07-09', author:'Mo', title:'Tags & Badges', changes:[
         ['added','Tag component — 5 semantic variants (Neutral, Info, Success, Warning, Error) × 2 sizes, optional leading dot, light & dark reference grid'],
         ['added','Interactive tag playground with live code panel'],
