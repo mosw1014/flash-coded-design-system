@@ -1232,6 +1232,17 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
 .tag--warning{--tag-bg:var(--color-warn-l);--tag-fg:var(--color-warn-h)}
 .tag--error{--tag-bg:var(--color-crit-l);--tag-fg:var(--color-crit-h)}
 
+/* AI context tab — shared across any section that adopts one, see AI-CONTEXT.md.
+   Low visual hierarchy by size/position/collapsed-state, not by low contrast:
+   reuses --chrome-muted, the same token already used for .sec__desc body copy. */
+.ai-ctx{margin-top:20px;font-size:11px}
+.ai-ctx summary{display:inline-flex;align-items:center;gap:4px;cursor:pointer;list-style:none;user-select:none;color:var(--chrome-muted);font-weight:600;letter-spacing:.02em}
+.ai-ctx summary::-webkit-details-marker{display:none}
+.ai-ctx summary::before{content:'▸';font-size:9px}
+.ai-ctx[open] summary::before{content:'▾'}
+.ai-ctx summary:focus-visible{outline:2px solid var(--color-input-focus);outline-offset:2px}
+.ai-ctx pre{margin:6px 0 0;padding:10px 12px;background:var(--chrome-nav);border-radius:8px;font-family:'SF Mono',Consolas,monospace;font-size:10.5px;line-height:1.5;color:var(--chrome-muted);overflow-x:auto;white-space:pre-wrap}
+
 /* Count / notification badge */
 .badge-ct{display:inline-flex;align-items:center;justify-content:center;box-sizing:border-box;border-radius:999px;font-family:inherit;font-weight:800;line-height:1;color:#fff;background:var(--bc-bg,#EB0029);font-variant-numeric:tabular-nums}
 .badge-ct--dot{width:9px;height:9px;padding:0}
@@ -2721,6 +2732,17 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
           </div>
         </div>
       </div>
+      <details class="ai-ctx">
+        <summary>AI context</summary>
+        <pre data-ai-context="s-tags">
+{
+  "status": "static",
+  "realClasses": [".tag", ".tag--sm", ".tag--reg", ".tag--neutral", ".tag--info", ".tag--success", ".tag--warning", ".tag--error", ".tag__dot"],
+  "specs": { "shape": "pill", "radius": "6px", "heightSm": "20px", "heightReg": "24px" },
+  "note": "Built by tagHTML(). Covers the Tag component only — the Count/Avatar/Status badges documented in this same section are not yet described here."
+}
+        </pre>
+      </details>
     </section>
     <section class="sec" id="s-chips">
       <div class="sec__head">
@@ -7408,12 +7430,15 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.30.7';
+const SYSTEM_VERSION = '1.31.0';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.31.0', date:'2026-07-24', author:'Mo', title:'First AI context tab — Tags & Badges', changes:[
+        ['added','Low-key "AI context" disclosure at the bottom of the Tags & Badges section — a collapsed, accessible details/summary tab carrying machine-readable facts (real classes, exact specs) for AI tooling that consumes this design system, per the convention documented in AI-CONTEXT.md'],
+      ]},
       {version:'1.30.7', date:'2026-07-23', author:'Mo', title:'Search loading spinner — blades now chase in place instead of spinning; Bottom Sheets playground moved up', changes:[
         ['changed','Search field loading spinner — the 8 blades used to physically rotate as one rigid shape; they now stay fixed in place and only the dark highlight fades around the ring in sequence, matching the reference motion'],
         ['changed','Bottom Sheets section — Playground moved to the top of the page, ahead of Quick copy and the reference grids, matching the convention used by every other component section'],
@@ -7889,7 +7914,10 @@ const CHANGELOG = {
         ['added','Light & dark reference grid, quick-copy card, tap-target guidance and usage do/don\'t'],
       ]},
     ]},
-    {secId:'s-tags', name:'Tags & Badges', version:'1.0.0', entries:[
+    {secId:'s-tags', name:'Tags & Badges', version:'1.1.0', entries:[
+      {version:'1.1.0', date:'2026-07-24', author:'Mo', title:'Added an AI context tab', changes:[
+        ['added','Collapsed "AI context" disclosure at the end of the section — low visual hierarchy, fully accessible via a native details/summary element, documenting the Tag component real classes and specs for AI tooling'],
+      ]},
       {version:'1.0.0', date:'2026-07-09', author:'Mo', title:'Tags & Badges', changes:[
         ['added','Tag component — 5 semantic variants (Neutral, Info, Success, Warning, Error) × 2 sizes, optional leading dot, light & dark reference grid'],
         ['added','Interactive tag playground with live code panel'],
