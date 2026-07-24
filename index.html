@@ -2579,7 +2579,7 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
     <section class="sec" id="s-buttons">
       <div class="sec__head">
         <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Buttons <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.5.1</span></h1>
+        <h1 class="sec__title">Buttons <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.5.2</span></h1>
         <p class="sec__desc">5 variants · 5 sizes · 5 states · light &amp; dark mode. Use the playground to interact with any combination, then expand variants below to see the full reference grid.</p>
       </div>
       <div id="btn-playground" class="type-sub"></div>
@@ -6009,14 +6009,14 @@ const BTN_VARIANTS = [
 const BTN_COLORS = {
   flash:{
     light:{
-      accent:    {bg:'#10c504',bgHover:'#2bb135',bgPressed:'#218a29',text:'#000',border:'transparent',disBg:'#dddddd',disText:'#a4a4a4',focusRing:'#000'},
+      accent:    {bg:'#1ae10e',bgHover:'#17ca0d',bgPressed:'#218a29',text:'#000',border:'transparent',disBg:'#dddddd',disText:'#a4a4a4',focusRing:'#000'},
       primary:   {bg:'#000000',bgHover:'#252525',bgPressed:'#414141',text:'#fff',border:'transparent',disBg:'#dddddd',disText:'#a4a4a4',focusRing:'#000'},
       secondary: {bg:'transparent',bgHover:'#f0f0f0',bgPressed:'#e6e6e6',text:'#000',border:'#000',borderHover:'#000',disBg:'transparent',disText:'#a4a4a4',disBorder:'#dddddd',focusRing:'#000'},
       simple:    {bg:'transparent',bgHover:'#f0f0f0',bgPressed:'#e6e6e6',text:'#000',border:'transparent',disBg:'transparent',disText:'#a4a4a4',focusRing:'#000'},
       link:      {bg:'transparent',text:'#000',border:'transparent',disBg:'transparent',disText:'#a4a4a4',focusRing:'#0062eb',linkText:'#0062eb',linkHover:'#0049d2'},
     },
     dark:{
-      accent:    {bg:'#10c504',bgHover:'#2bb135',bgPressed:'#218a29',text:'#000',border:'transparent',disBg:'rgba(255,255,255,0.15)',disText:'#60636d',focusRing:'#10c504'},
+      accent:    {bg:'#1ae10e',bgHover:'#17ca0d',bgPressed:'#218a29',text:'#000',border:'transparent',disBg:'rgba(255,255,255,0.15)',disText:'#60636d',focusRing:'#1ae10e'},
       primary:   {bg:'#ffffff',bgHover:'#f0f0f0',bgPressed:'#e6e6e6',text:'#000',border:'transparent',disBg:'rgba(255,255,255,0.15)',disText:'#60636d',focusRing:'#fff'},
       secondary: {bg:'transparent',bgHover:'rgba(255,255,255,0.1)',bgPressed:'rgba(255,255,255,0.18)',text:'#fff',border:'#fff',borderHover:'#fff',disBg:'transparent',disText:'#60636d',disBorder:'rgba(255,255,255,0.2)',focusRing:'#fff'},
       simple:    {bg:'transparent',bgHover:'rgba(255,255,255,0.1)',bgPressed:'rgba(255,255,255,0.18)',text:'#fff',border:'transparent',disBg:'transparent',disText:'#60636d',focusRing:'#fff'},
@@ -7610,6 +7610,13 @@ const CHANGELOG = {
         ['added','Text Inputs — AI context tab covering both the Standard and Search field families, all real .ti-*/.ti-search-* classes and states'],
         ['added','Tables — AI context tab documenting the static, hand-authored reference table markup and its five row states'],
       ]},
+      {version:'1.31.2', date:'2026-07-24', author:'Mo', title:'Colours tab — Accent button token corrected', changes:[
+        ['fixed','Colours tab listed a --color-btn-p-* token family labeled "Primary button" that actually held the old Accent green (#10C504/#2BB135) — renamed to --color-btn-a-* and relabeled "Accent button", now pointing at the new #1AE10E/#17CA0D fills'],
+      ]},
+      {version:'1.31.1', date:'2026-07-24', author:'Mo', title:'Accent button fill colour refresh', changes:[
+        ['changed','Accent button default fill is now #1AE10E (was #10C504)'],
+        ['changed','Accent button hover fill is now #17CA0D (was #2BB135)'],
+      ]},
       {version:'1.31.0', date:'2026-07-24', author:'Mo', title:'First AI context tab — Tags & Badges', changes:[
         ['added','Low-key "AI context" disclosure at the bottom of the Tags & Badges section — a collapsed, accessible details/summary tab carrying machine-readable facts (real classes, exact specs) for AI tooling that consumes this design system, per the convention documented in AI-CONTEXT.md'],
       ]},
@@ -7997,7 +8004,11 @@ const CHANGELOG = {
         ['added','Default landing page for the design system'],
       ]},
     ]},
-    {secId:'s-colours', name:'Colours', version:'1.4.0', entries:[
+    {secId:'s-colours', name:'Colours', version:'1.4.1', entries:[
+      {version:'1.4.1', date:'2026-07-24', author:'Mo', title:'Button token family renamed Accent, values corrected', changes:[
+        ['fixed','The --color-btn-p-* button token family was mislabeled "Primary button" but actually held the old Accent button colours (#10C504/#2BB135) — a leftover from before Accent was demoted in the button hierarchy (see Buttons v1.5.0). Renamed to --color-btn-a-* and relabeled "Accent button" to match reality'],
+        ['changed','--color-btn-a-bg / --color-btn-a-bg-h now reference the Bright green primitive scale (--prim-bg-600 / --prim-bg-700, i.e. #1AE10E / #17CA0D) instead of hardcoded old-accent hex, matching the Buttons component update'],
+      ]},
       {version:'1.4.0', date:'2026-07-06', author:'Mo', title:'Semantics follow global theme', changes:[
         ['removed','Light/dark toggle above the semantic tokens table'],
         ['changed','Semantic colour values now switch with the global light/dark toggle'],
@@ -8035,9 +8046,13 @@ const CHANGELOG = {
         ['added','5 elevation levels with structured x/y/blur/spread breakdown'],
       ]},
     ]},
-    {secId:'s-buttons', name:'Buttons', version:'1.5.1', entries:[
-      {version:'1.5.1', date:'2026-07-24', author:'Mo', title:'Added an AI context tab', changes:[
+    {secId:'s-buttons', name:'Buttons', version:'1.5.2', entries:[
+      {version:'1.5.2', date:'2026-07-24', author:'Mo', title:'Added an AI context tab', changes:[
         ['added','Collapsed "AI context" disclosure documenting the real .ds-btn class, its size/state modifiers, and how BTN_COLORS/applyBtnColors apply colour via inline custom properties'],
+      ]},
+      {version:'1.5.1', date:'2026-07-24', author:'Mo', title:'Accent fill colour refresh', changes:[
+        ['changed','Accent button default fill is now #1AE10E (was #10C504)'],
+        ['changed','Accent button hover fill is now #17CA0D (was #2BB135)'],
       ]},
       {version:'1.5.0', date:'2026-07-22', author:'Mo', title:'Accent demoted in the hierarchy', changes:[
         ['changed','Variant order across the playground, reference grid and icon-only grid is now Primary → Secondary → Accent → Simple → Link (was Accent → Primary → Secondary → Simple → Link)'],
