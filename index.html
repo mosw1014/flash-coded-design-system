@@ -1211,11 +1211,12 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
 #s-chips .cpg-anatomy{margin-top:96px}
 #s-chips .chip-anatomy-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
 #s-chips .chip-anatomy-card{border:1px solid var(--chrome-border);border-radius:12px;overflow:hidden;background:var(--chrome-bg);transition:background .25s,border-color .25s}
-#s-chips .chip-anatomy-card__stage{display:flex;align-items:center;justify-content:center;padding:28px 16px;min-height:72px;transition:background .25s}
-#s-chips .chip-anatomy-card__title{padding:12px 16px 2px;font-size:13px;font-weight:700;color:var(--chrome-txt);border-top:1px solid var(--chrome-border)}
-#s-chips .chip-anatomy-card__legend{list-style:none;margin:0;padding:8px 16px 16px;display:flex;flex-direction:column;gap:6px}
-#s-chips .chip-anatomy-card__legend li{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--chrome-muted)}
-#s-chips .chip-anatomy-card__badge{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:50%;background:var(--chrome-accent-text);color:#fff;font-size:10px;font-weight:800;flex-shrink:0}
+#s-chips .chip-anatomy-card__stage{position:relative;display:flex;align-items:center;justify-content:center;padding:64px 70px;min-height:72px;transition:background .25s}
+#s-chips .chip-anatomy-card__title{padding:12px 16px;font-size:13px;font-weight:700;color:var(--chrome-txt);border-top:1px solid var(--chrome-border)}
+#s-chips .chip-anatomy-num{position:absolute;top:10px;left:10px;display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;background:var(--chrome-accent-text);color:#fff;font-size:11px;font-weight:800}
+#s-chips .chip-anatomy-dot{position:absolute;width:6px;height:6px;margin:-3px;border-radius:50%;background:var(--chrome-accent-text)}
+#s-chips .chip-anatomy-line{position:absolute;background:var(--chrome-accent-text);opacity:.55}
+#s-chips .chip-anatomy-badge{position:absolute;display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;margin:-10px;border-radius:50%;background:var(--chrome-accent-text);color:#fff;font-size:10px;font-weight:800;cursor:default}
 @media (max-width:600px){#s-chips .chip-anatomy-grid{grid-template-columns:1fr}}
 @media (max-width:900px){
   #s-chips .cpg-layout{flex-direction:column}
@@ -3005,7 +3006,7 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
           <span>Components</span>
         </button>
         <h1 class="sec__title">Chips and pills</h1>
-        <div><span class="comp-ver-badge" style="margin-left:0">v1.4.1</span></div>
+        <div><span class="comp-ver-badge" style="margin-left:0">v1.4.2</span></div>
       </div>
       <div class="tabs-list chip-tabs" id="chip-tabs-list">
         <button type="button" class="tab-item on" data-chip-tab="overview" onclick="chipTabSwitch('overview')"><span class="tab-item__inner"><span class="tab-item__label">Overview</span></span><span class="tab-item__line"></span></button>
@@ -5687,9 +5688,27 @@ function showSection(id) {
   // Scroll main content to top
   const main = document.querySelector('.main');
   if (main) main.scrollTop = 0;
+  // Chip Anatomy annotations are measured from real rendered geometry, which
+  // collapses to zero while the section is display:none — recompute now
+  // that it's actually visible.
+  if(id==='s-chips'){ try { if(typeof renderChipAnatomy==='function') renderChipAnatomy(); } catch(e){} }
 }
 // Show brand intro on load
 showSection('s-brand');
+
+// Re-measure Chip Anatomy annotations on resize, since their positions are
+// computed in px from real geometry rather than pure CSS.
+let _chipAnatomyResizeTimer;
+window.addEventListener('resize', () => {
+  const anatomyEl = document.getElementById('chip-anatomy');
+  const sChips = document.getElementById('s-chips');
+  if(!anatomyEl || !sChips || !sChips.classList.contains('active')) return;
+  if(!anatomyEl.closest('.tabs-panel[data-chip-panel="overview"]').classList.contains('on')) return;
+  clearTimeout(_chipAnatomyResizeTimer);
+  _chipAnatomyResizeTimer = setTimeout(() => {
+    try { if(typeof renderChipAnatomy==='function') renderChipAnatomy(); } catch(e){}
+  }, 150);
+});
 
 /* ============================================================
    SCROLL SPY — family jump links
@@ -7591,21 +7610,41 @@ function renderChipAnatomy(){
   const dismissBtn = `<button class="chip__x" type="button" tabindex="-1" aria-hidden="true"><svg width="${xSize}" height="${xSize}" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg></button>`;
 
   const items = [
-    { title:'1. Static', chip:`<span class="chip chip--reg" style="${chipStyle}">${iconSvg}<span class="chip__label">Chip</span></span>`,
-      parts:[['A','Icon (optional)'],['B','Label'],['C','Container']] },
-    { title:'2. Removable', chip:`<span class="chip chip--reg" style="${chipStyle}">${iconSvg}<span class="chip__label">Chip</span>${dismissBtn}</span>`,
-      parts:[['A','Icon (optional)'],['B','Label'],['C','Container'],['D','Dismiss icon']] },
-    { title:'3. Selectable', chip:`<span class="chip chip--reg is-selectable" style="${chipStyle}">${iconSvg}<span class="chip__label">Chip</span></span>`,
-      parts:[['A','Icon (optional)'],['B','Label'],['C','Container']] },
-    { title:'4. Selected', chip:`<span class="chip chip--reg is-selectable is-selected" style="${chipStyle};--cpg-stage-bg:${stageBg(theme)}">${iconSvg}<span class="chip__label">Chip</span></span>`,
-      parts:[['A','Icon (optional)'],['B','Label'],['C','Container'],['D','Selected ring']] },
+    { key:'static', num:1, name:'Static', chip:`<span class="chip chip--reg" style="${chipStyle}">${iconSvg}<span class="chip__label">Chip</span></span>`,
+      annots:[
+        {letter:'A', label:'Icon (optional)', target:'.chip__icon', side:'left'},
+        {letter:'B', label:'Label', target:'.chip__label', side:'top'},
+        {letter:'C', label:'Container', target:null, side:'right'},
+      ] },
+    { key:'removable', num:2, name:'Removable', chip:`<span class="chip chip--reg" style="${chipStyle}">${iconSvg}<span class="chip__label">Chip</span>${dismissBtn}</span>`,
+      annots:[
+        {letter:'A', label:'Icon (optional)', target:'.chip__icon', side:'left'},
+        {letter:'B', label:'Label', target:'.chip__label', side:'top'},
+        {letter:'C', label:'Container', target:null, side:'right'},
+        {letter:'D', label:'Dismiss icon', target:'.chip__x', side:'bottom'},
+      ] },
+    { key:'selectable', num:3, name:'Selectable', chip:`<span class="chip chip--reg is-selectable" style="${chipStyle}">${iconSvg}<span class="chip__label">Chip</span></span>`,
+      annots:[
+        {letter:'A', label:'Icon (optional)', target:'.chip__icon', side:'left'},
+        {letter:'B', label:'Label', target:'.chip__label', side:'top'},
+        {letter:'C', label:'Container', target:null, side:'right'},
+      ] },
+    { key:'selected', num:4, name:'Selected', chip:`<span class="chip chip--reg is-selectable is-selected" style="${chipStyle};--cpg-stage-bg:${stageBg(theme)}">${iconSvg}<span class="chip__label">Chip</span></span>`,
+      annots:[
+        {letter:'A', label:'Icon (optional)', target:'.chip__icon', side:'left'},
+        {letter:'B', label:'Label', target:'.chip__label', side:'top'},
+        {letter:'C', label:'Container', target:null, side:'right'},
+        {letter:'D', label:'Selected ring', target:null, side:'bottom'},
+      ] },
   ];
 
   const cards = items.map(it=>`
     <div class="chip-anatomy-card">
-      <div class="chip-anatomy-card__stage" style="background:${stageBg(theme)}">${it.chip}</div>
-      <div class="chip-anatomy-card__title">${it.title}</div>
-      <ul class="chip-anatomy-card__legend">${it.parts.map(([l,d])=>`<li><span class="chip-anatomy-card__badge">${l}</span>${d}</li>`).join('')}</ul>
+      <div class="chip-anatomy-card__stage" data-anatomy-key="${it.key}" style="background:${stageBg(theme)}">
+        <span class="chip-anatomy-num">${it.num}</span>
+        ${it.chip}
+      </div>
+      <div class="chip-anatomy-card__title">${it.name}</div>
     </div>`).join('');
 
   root.innerHTML = `
@@ -7618,6 +7657,39 @@ function renderChipAnatomy(){
         <div class="chip-anatomy-grid">${cards}</div>
       </div>
     </div>`;
+
+  // Second pass: overlay lettered annotations (badge + connector line + dot)
+  // using the real rendered geometry of each part, so they stay accurate
+  // however label length/icon size change.
+  items.forEach(it=>{
+    const stage = root.querySelector(`.chip-anatomy-card__stage[data-anatomy-key="${it.key}"]`);
+    if(stage) annotateChipStage(stage, it.annots);
+  });
+}
+
+function annotateChipStage(stage, annots){
+  const stageRect = stage.getBoundingClientRect();
+  const chipEl = stage.querySelector('.chip');
+  const REACH = 30; // px the badge sits out from its anchor point
+  let html = '';
+  annots.forEach(a=>{
+    const targetEl = a.target ? stage.querySelector(a.target) : chipEl;
+    if(!targetEl) return;
+    const r = targetEl.getBoundingClientRect();
+    const left = r.left - stageRect.left, right = r.right - stageRect.left;
+    const top = r.top - stageRect.top, bottom = r.bottom - stageRect.top;
+    const cx = (left+right)/2, cy = (top+bottom)/2;
+    let ax, ay, bx, by, lineStyle;
+    if(a.side==='left'){ ax=left; ay=cy; bx=ax-REACH; by=ay; lineStyle=`top:${ay}px;left:${bx}px;width:${REACH}px;height:1px;`; }
+    else if(a.side==='right'){ ax=right; ay=cy; bx=ax+REACH; by=ay; lineStyle=`top:${ay}px;left:${ax}px;width:${REACH}px;height:1px;`; }
+    else if(a.side==='top'){ ax=cx; ay=top; bx=ax; by=ay-REACH; lineStyle=`left:${ax}px;top:${by}px;width:1px;height:${REACH}px;`; }
+    else { ax=cx; ay=bottom; bx=ax; by=ay+REACH; lineStyle=`left:${ax}px;top:${ay}px;width:1px;height:${REACH}px;`; }
+
+    html += `<span class="chip-anatomy-dot" style="left:${ax}px;top:${ay}px"></span>`;
+    html += `<span class="chip-anatomy-line" style="${lineStyle}"></span>`;
+    html += `<span class="chip-anatomy-badge" style="left:${bx}px;top:${by}px" title="${a.label}" aria-label="${a.letter}: ${a.label}">${a.letter}</span>`;
+  });
+  stage.insertAdjacentHTML('beforeend', html);
 }
 
 function cpgSet(key, val){
@@ -7680,6 +7752,9 @@ function chipTabSwitch(tab){
   if(!nav) return;
   nav.querySelectorAll('.tab-item').forEach(btn=>btn.classList.toggle('on', btn.getAttribute('data-chip-tab')===tab));
   document.querySelectorAll('#s-chips .tabs-panel[data-chip-panel]').forEach(p=>p.classList.toggle('on', p.getAttribute('data-chip-panel')===tab));
+  // Anatomy annotations are measured from real geometry, which collapses to
+  // zero while the Overview panel is display:none — recompute now it's visible.
+  if(tab==='overview'){ try { if(typeof renderChipAnatomy==='function') renderChipAnatomy(); } catch(e){} }
 }
 
 /* ============================================================
@@ -7934,12 +8009,18 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.34.1';
+const SYSTEM_VERSION = '1.34.2';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.34.2', date:'2026-07-29', author:'Helen', title:'Chips & Pills — Anatomy examples now use on-visual annotations instead of a text legend', changes:[
+        ['changed','Each Anatomy example (Static, Removable, Selectable, Selected) now shows lettered badges (A/B/C/D) with connector lines and dots pointing directly at the real Icon/Label/Container/Dismiss-icon/Selected-ring elements, matching the annotated-diagram reference the user supplied, instead of a plain text list below the chip'],
+        ['added','A numbered corner badge (1-4) on each example stage, echoing the reference\'s numbered diagrams'],
+        ['added','annotateChipStage() measures the real rendered geometry of each chip part (getBoundingClientRect) to position badges/lines/dots accurately rather than guessing fixed offsets'],
+        ['fixed','Annotation positions could collapse to (0,0) if measured while the Overview tab/section was display:none (e.g. on first page load, or after a tab switch/resize while another chip tab was active); renderChipAnatomy() now re-runs on showSection(\'s-chips\'), on switching to the Overview tab, and on window resize (only while Overview is actually visible)'],
+      ]},
       {version:'1.34.1', date:'2026-07-29', author:'Helen', title:'Chips & Pills — more space between Try the component and Anatomy', changes:[
         ['changed','Gap between the "Try the component" row and the "Anatomy" row increased from 56px to 96px (#s-chips .cpg-anatomy)'],
       ]},
@@ -8550,7 +8631,12 @@ const CHANGELOG = {
         ['added','“Tag or Chip?” guidance clarifying when to use each'],
       ]},
     ]},
-    {secId:'s-chips', name:'Chips & Pills', version:'1.4.1', entries:[
+    {secId:'s-chips', name:'Chips & Pills', version:'1.4.2', entries:[
+      {version:'1.4.2', date:'2026-07-29', author:'Helen', title:'Anatomy examples now use on-visual annotations instead of a text legend', changes:[
+        ['changed','Each example now shows lettered badges with connector lines pointing directly at the real Icon/Label/Container/Dismiss-icon/Selected-ring parts, instead of a text list below the chip'],
+        ['added','Numbered corner badge (1-4) on each example stage'],
+        ['fixed','Annotation positions could collapse to (0,0) if measured while the section/tab was hidden; now recomputed on section navigation, Overview tab switch, and resize'],
+      ]},
       {version:'1.4.1', date:'2026-07-29', author:'Helen', title:'More space between Try the component and Anatomy', changes:[
         ['changed','Gap between the "Try the component" row and the "Anatomy" row increased from 56px to 96px'],
       ]},
