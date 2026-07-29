@@ -1,0 +1,24 @@
+name: Verify changelog updated
+
+# Enforces CLAUDE.md rule 4 mechanically: any PR that changes index.html must
+# also add a new entry to the in-app CHANGELOG. Same spirit as
+# verify-ai-context.yml — a contributor (or an AI session) doesn't need to
+# have read CLAUDE.md to get an actionable failing check.
+
+on:
+  pull_request:
+    paths:
+      - 'index.html'
+
+jobs:
+  verify-changelog:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Check a CHANGELOG entry was added
+        run: node scripts/verify-changelog.mjs --base "origin/${{ github.event.pull_request.base.ref }}"
