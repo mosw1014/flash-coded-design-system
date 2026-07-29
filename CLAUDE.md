@@ -12,7 +12,11 @@ At the start of a session, if the person hasn't stated their name, ask for it be
 
 Before making any change, get the latest version of `main`. If the project folder is empty or not yet a git repository — which happens if someone is working from a brand-new, empty project folder — clone it from `https://github.com/mosw1014/flash-coded-design-system` instead of failing. Don't assume the folder is already set up; check, and self-heal if it isn't.
 
-## 3. Log every non-trivial change to the in-app changelog
+## 3. Read `AI-CONTEXT.md` before touching `index.html`
+
+`AI-CONTEXT.md` documents the conventions, tokens, and structure this design system depends on. Before making any change to `index.html` — a new component, variant, visual fix, or behaviour change — read `AI-CONTEXT.md` in full first. This is not optional and not skippable because a change looks small: the file exists precisely so changes stay consistent with decisions that aren't obvious from the code alone.
+
+## 4. Log every non-trivial change to the in-app changelog
 
 `index.html` has its own changelog built in — a `CHANGELOG` data structure rendered by JS inside the file itself, separate from git history. For any new component, variant, visual fix, or behaviour change, add an entry with:
 
@@ -24,7 +28,7 @@ Before making any change, get the latest version of `main`. If the project folde
 
 Update both the relevant per-section changelog and the global one, following the existing structure already in the file. Don't invent a new format or skip this step because a change seems small — log it with a brief description regardless.
 
-## 4. Always work on a branch — never commit directly to `main`
+## 5. Always work on a branch — never commit directly to `main`
 
 For every change:
 1. Create a new branch (ask the person for a name, or pick a short, sensible one automatically)
@@ -34,18 +38,18 @@ For every change:
 
 **Do not merge the pull request yourself.** A human reviews and merges — that's the team's checkpoint before anything becomes official. Opening a PR is not the same as publishing.
 
-## 5. Keep changes scoped
+## 6. Keep changes scoped
 
 Do one clear thing per branch. Don't refactor unrelated sections, rename unrelated tokens, or "clean up while you're in there" unless the person explicitly asked for that too. Small, focused changes are easier to review and far easier to resolve if they ever conflict with someone else's work.
 
-## 6. Never handle credentials in chat
+## 7. Never handle credentials in chat
 
 If GitHub authentication is needed, a separate system prompt (browser popup or terminal credential prompt) will handle it — never ask the person to paste a token into the conversation, and never echo one back if they do by mistake. If a token or password does appear in the chat, tell them plainly to treat it as compromised and generate a new one immediately in GitHub settings.
 
-## 7. The live preview updates itself
+## 8. The live preview updates itself
 
 This repo is connected to GitHub Pages, serving from `main`. Once a pull request is merged, the live site at the project's GitHub Pages URL updates automatically within a couple of minutes. Nothing needs to be manually published, synced, or announced — don't suggest extra steps here.
 
-## 8. Defer to the full guide for anything outside your control
+## 9. Defer to the full guide for anything outside your control
 
 Manual, human-only steps — generating a GitHub token, reviewing a pull request, DNS setup for a custom domain — are documented in `TEAM_SETUP_GUIDE.md` and `CONTRIBUTING.md` in this repo. If someone seems stuck on one of these, point them there rather than guessing at UI details you can't see.
