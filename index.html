@@ -1203,6 +1203,7 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
 #s-chips .chip-back-link:hover .chip-back-link__icon{transform:translateX(-2px)}
 #s-chips .chip-tabs{margin-top:32px;gap:28px}
 #s-chips .tabs-panel{padding-top:36px}
+#s-chips .cpg-section-block{border:1px solid var(--chrome-border);border-radius:16px;background:var(--chrome-nav);padding:32px;transition:background .25s,border-color .25s}
 #s-chips .cpg-layout{display:flex;gap:40px;align-items:stretch}
 #s-chips .cpg-layout__intro{flex:1 1 0%;display:flex;flex-direction:column;justify-content:center}
 #s-chips .cpg-layout__demo{flex:2 1 0%;min-width:0}
@@ -3022,7 +3023,7 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
         </button>
         <h1 class="sec__title">Chips and pills</h1>
         <div class="chip-header-meta">
-          <span class="comp-ver-badge" style="margin-left:0">v1.5.3</span>
+          <span class="comp-ver-badge" style="margin-left:0">v1.5.4</span>
           <details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-chips">
@@ -7582,21 +7583,23 @@ function renderChipPlayground(){
   const selBtns = ['off','on'].map(x=>`<button class="btn-pg__pill${(cpg.selectable?(x==='on'):(x==='off'))?' on':''}" onclick="cpgSet('selectable','${x}')">${x==='on'?'Selectable':'Display'}</button>`).join('');
 
   root.innerHTML = `
-    <div class="cpg-layout">
-      <div class="cpg-layout__intro">
-        <div class="cpg-layout__title">Try the component</div>
-        <div class="cpg-layout__desc">Use chips to show a status, mark a category, or let people pick a filter at a glance.</div>
-      </div>
-      <div class="cpg-layout__demo">
-        <div class="btn-pg">
-          <div class="btn-pg__stage" id="cpg-stage" style="background:${sbg}"></div>
-          <div class="btn-pg__ctrls">
-            <div class="btn-pg__group"><span class="btn-pg__clabel">Variant</span><div class="btn-pg__pill-row">${varBtns}</div></div>
-            <div class="btn-pg__group"><span class="btn-pg__clabel">Size</span><div class="btn-pg__pill-row">${szBtns}</div></div>
-            <div class="btn-pg__group"><span class="btn-pg__clabel">Icon</span><div class="btn-pg__pill-row">${iconBtns}</div></div>
-            <div class="btn-pg__group"><span class="btn-pg__clabel">Dismiss</span><div class="btn-pg__pill-row">${rmBtns}</div></div>
-            <div class="btn-pg__group"><span class="btn-pg__clabel">Behaviour</span><div class="btn-pg__pill-row">${selBtns}</div></div>
-            <div class="btn-pg__group"><span class="btn-pg__clabel">Label</span><input class="cpg-label-input" id="cpg-label-input" value="${cpgEsc(cpg.label)}" maxlength="24" oninput="cpgSetLabel(this.value)" placeholder="Chip"></div>
+    <div class="cpg-section-block">
+      <div class="cpg-layout">
+        <div class="cpg-layout__intro">
+          <div class="cpg-layout__title">Try the component</div>
+          <div class="cpg-layout__desc">Use chips to show a status, mark a category, or let people pick a filter at a glance.</div>
+        </div>
+        <div class="cpg-layout__demo">
+          <div class="btn-pg">
+            <div class="btn-pg__stage" id="cpg-stage" style="background:${sbg}"></div>
+            <div class="btn-pg__ctrls">
+              <div class="btn-pg__group"><span class="btn-pg__clabel">Variant</span><div class="btn-pg__pill-row">${varBtns}</div></div>
+              <div class="btn-pg__group"><span class="btn-pg__clabel">Size</span><div class="btn-pg__pill-row">${szBtns}</div></div>
+              <div class="btn-pg__group"><span class="btn-pg__clabel">Icon</span><div class="btn-pg__pill-row">${iconBtns}</div></div>
+              <div class="btn-pg__group"><span class="btn-pg__clabel">Dismiss</span><div class="btn-pg__pill-row">${rmBtns}</div></div>
+              <div class="btn-pg__group"><span class="btn-pg__clabel">Behaviour</span><div class="btn-pg__pill-row">${selBtns}</div></div>
+              <div class="btn-pg__group"><span class="btn-pg__clabel">Label</span><input class="cpg-label-input" id="cpg-label-input" value="${cpgEsc(cpg.label)}" maxlength="24" oninput="cpgSetLabel(this.value)" placeholder="Chip"></div>
+            </div>
           </div>
         </div>
       </div>
@@ -8135,12 +8138,15 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.35.3';
+const SYSTEM_VERSION = '1.35.4';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.35.4', date:'2026-07-29', author:'Helen', title:'Chips & Pills — Try the component wrapped in its own block', changes:[
+        ['added','"Try the component" (heading, explainer and Playground) now sits inside a bordered, tinted block (#s-chips .cpg-section-block), visually separating it from Anatomy/Iconography/Variants/Size below, which stay on the plain page background'],
+      ]},
       {version:'1.35.3', date:'2026-07-29', author:'Helen', title:'Chips & Pills — Iconography redone as its own Overview section', changes:[
         ['changed','Reverted the previous change that merged the Playground\'s "Icon" and "Dismiss" controls into one group — they\'re back to two separate rows, matching every other control'],
         ['added','New "Iconography" section on the Overview tab (below Anatomy), matching the Anatomy/Variants/Size heading-left, visuals-right format: the Icon behaviour (No icon / With icon) and Dismiss behaviour (Static / Removable) shown as labelled swatches, grouped under their own sub-headings'],
@@ -8774,7 +8780,10 @@ const CHANGELOG = {
         ['added','“Tag or Chip?” guidance clarifying when to use each'],
       ]},
     ]},
-    {secId:'s-chips', name:'Chips & Pills', version:'1.5.3', entries:[
+    {secId:'s-chips', name:'Chips & Pills', version:'1.5.4', entries:[
+      {version:'1.5.4', date:'2026-07-29', author:'Helen', title:'Try the component wrapped in its own block', changes:[
+        ['added','"Try the component" (heading, explainer, Playground) now sits inside a bordered, tinted block, separating it visually from Anatomy/Iconography/Variants/Size below'],
+      ]},
       {version:'1.5.3', date:'2026-07-29', author:'Helen', title:'Iconography redone as its own Overview section', changes:[
         ['changed','Reverted the merged Playground "Icon"/"Dismiss" group back to two separate control rows'],
         ['added','New "Iconography" section on the Overview tab (below Anatomy): Icon (No icon/With icon) and Dismiss (Static/Removable) shown as labelled swatches, matching the Anatomy/Variants/Size format'],
