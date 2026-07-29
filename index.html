@@ -1223,6 +1223,15 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
 #s-chips .chip-variant-cell__stage{display:flex;align-items:center;justify-content:center;padding:24px 12px;min-height:60px;transition:background .25s}
 #s-chips .chip-variant-cell__name{padding:10px 12px 0;font-size:13px;font-weight:700;color:var(--chrome-txt);border-top:1px solid var(--chrome-border)}
 #s-chips .chip-variant-cell__desc{padding:2px 12px 12px;font-size:11.5px;color:var(--chrome-muted)}
+#s-chips .btn-pg__group--iconography{flex-direction:column;align-items:flex-start;gap:10px}
+#s-chips .btn-pg__subrows{display:flex;flex-direction:column;gap:8px;width:100%}
+#s-chips .btn-pg__subrow{display:flex;align-items:center;gap:14px}
+#s-chips .btn-pg__sublabel{font-size:11.5px;font-weight:600;color:var(--chrome-muted);width:60px;flex-shrink:0}
+#s-chips .chip-header-meta{display:flex;align-items:center;gap:8px;position:relative}
+#s-chips .chip-header-meta .ai-ctx{margin-top:0}
+#s-chips .chip-header-meta .ai-ctx summary{font-size:10px;font-weight:700;font-family:'SF Mono',monospace;letter-spacing:0;color:var(--chrome-muted);background:var(--chrome-nav);padding:2px 7px;border-radius:4px}
+#s-chips .chip-header-meta .ai-ctx summary::before{font-size:8px}
+#s-chips .chip-header-meta .ai-ctx pre{position:absolute;z-index:5;max-width:560px}
 @media (max-width:600px){#s-chips .chip-anatomy-grid{grid-template-columns:1fr}}
 @media (max-width:900px){
   #s-chips .cpg-layout{flex-direction:column}
@@ -3012,25 +3021,8 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
           <span>Components</span>
         </button>
         <h1 class="sec__title">Chips and pills</h1>
-        <div><span class="comp-ver-badge" style="margin-left:0">v1.5.1</span></div>
-      </div>
-      <div class="tabs-list chip-tabs" id="chip-tabs-list">
-        <button type="button" class="tab-item on" data-chip-tab="overview" onclick="chipTabSwitch('overview')"><span class="tab-item__inner"><span class="tab-item__label">Overview</span></span><span class="tab-item__line"></span></button>
-        <button type="button" class="tab-item" data-chip-tab="style" onclick="chipTabSwitch('style')"><span class="tab-item__inner"><span class="tab-item__label">Style</span></span><span class="tab-item__line"></span></button>
-        <button type="button" class="tab-item" data-chip-tab="code" onclick="chipTabSwitch('code')"><span class="tab-item__inner"><span class="tab-item__label">Code</span></span><span class="tab-item__line"></span></button>
-        <button type="button" class="tab-item" data-chip-tab="changelog" onclick="chipTabSwitch('changelog')"><span class="tab-item__inner"><span class="tab-item__label">Changelog</span></span><span class="tab-item__line"></span></button>
-      </div>
-      <div class="tabs-panel on" data-chip-panel="overview">
-        <div id="chip-playground" class="type-sub"></div>
-        <div id="chip-anatomy" class="type-sub"></div>
-        <div id="chip-variants" class="type-sub"></div>
-        <div id="chip-sizes" class="type-sub"></div>
-      </div>
-      <div class="tabs-panel" data-chip-panel="style">
-        <div id="chip-reference" class="type-sub"></div>
-      </div>
-      <div class="tabs-panel" data-chip-panel="code">
-        <div id="chip-code-tab" class="type-sub"></div>
+        <div class="chip-header-meta">
+          <span class="comp-ver-badge" style="margin-left:0">v1.5.2</span>
           <details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-chips">
@@ -3059,6 +3051,25 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
 }
   </pre>
 </details>
+        </div>
+      </div>
+      <div class="tabs-list chip-tabs" id="chip-tabs-list">
+        <button type="button" class="tab-item on" data-chip-tab="overview" onclick="chipTabSwitch('overview')"><span class="tab-item__inner"><span class="tab-item__label">Overview</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-chip-tab="style" onclick="chipTabSwitch('style')"><span class="tab-item__inner"><span class="tab-item__label">Style</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-chip-tab="code" onclick="chipTabSwitch('code')"><span class="tab-item__inner"><span class="tab-item__label">Code</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-chip-tab="changelog" onclick="chipTabSwitch('changelog')"><span class="tab-item__inner"><span class="tab-item__label">Changelog</span></span><span class="tab-item__line"></span></button>
+      </div>
+      <div class="tabs-panel on" data-chip-panel="overview">
+        <div id="chip-playground" class="type-sub"></div>
+        <div id="chip-anatomy" class="type-sub"></div>
+        <div id="chip-variants" class="type-sub"></div>
+        <div id="chip-sizes" class="type-sub"></div>
+      </div>
+      <div class="tabs-panel" data-chip-panel="style">
+        <div id="chip-reference" class="type-sub"></div>
+      </div>
+      <div class="tabs-panel" data-chip-panel="code">
+        <div id="chip-code-tab" class="type-sub"></div>
       </div>
       <div class="tabs-panel" data-chip-panel="changelog" id="chip-changelog-panel"></div>
     </section>
@@ -7580,8 +7591,13 @@ function renderChipPlayground(){
           <div class="btn-pg__ctrls">
             <div class="btn-pg__group"><span class="btn-pg__clabel">Variant</span><div class="btn-pg__pill-row">${varBtns}</div></div>
             <div class="btn-pg__group"><span class="btn-pg__clabel">Size</span><div class="btn-pg__pill-row">${szBtns}</div></div>
-            <div class="btn-pg__group"><span class="btn-pg__clabel">Icon</span><div class="btn-pg__pill-row">${iconBtns}</div></div>
-            <div class="btn-pg__group"><span class="btn-pg__clabel">Dismiss</span><div class="btn-pg__pill-row">${rmBtns}</div></div>
+            <div class="btn-pg__group btn-pg__group--iconography">
+              <span class="btn-pg__clabel">Iconography</span>
+              <div class="btn-pg__subrows">
+                <div class="btn-pg__subrow"><span class="btn-pg__sublabel">Icon</span><div class="btn-pg__pill-row">${iconBtns}</div></div>
+                <div class="btn-pg__subrow"><span class="btn-pg__sublabel">Dismiss</span><div class="btn-pg__pill-row">${rmBtns}</div></div>
+              </div>
+            </div>
             <div class="btn-pg__group"><span class="btn-pg__clabel">Behaviour</span><div class="btn-pg__pill-row">${selBtns}</div></div>
             <div class="btn-pg__group"><span class="btn-pg__clabel">Label</span><input class="cpg-label-input" id="cpg-label-input" value="${cpgEsc(cpg.label)}" maxlength="24" oninput="cpgSetLabel(this.value)" placeholder="Chip"></div>
           </div>
@@ -8077,12 +8093,17 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.35.1';
+const SYSTEM_VERSION = '1.35.2';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.35.2', date:'2026-07-29', author:'Helen', title:'Chips & Pills — Iconography grouping, AI context moved to header, Changelog tab always open', changes:[
+        ['changed','Playground\'s separate "Icon" and "Dismiss" controls combined under one "Iconography" group label, each keeping its own sub-label (Icon / Dismiss) above its pill row'],
+        ['changed','AI context disclosure moved from the Code tab to sit next to the version pill under the main heading, restyled to match the version pill\'s small monospace badge look (scoped to this instance only — other sections\' AI context tabs keep their original low-key style)'],
+        ['changed','Changelog tab\'s version-history block is now always open with no click-to-collapse chevron, since it\'s the only content on that tab and has no reason to hide itself; every other section\'s changelog accordion is untouched and still collapses as before'],
+      ]},
       {version:'1.35.1', date:'2026-07-29', author:'Helen', title:'Chips & Pills — new Size section, Variants explainer simplified', changes:[
         ['added','Size section added below Variants, same heading-left/visuals-right format: all 3 sizes (Small, Regular, Large) shown as labelled swatches with their pixel height (24px/28px/33px)'],
         ['changed','Variants explainer shortened to a single line: "Chips come in five semantic colours." (dropped the second sentence)'],
@@ -8707,7 +8728,12 @@ const CHANGELOG = {
         ['added','“Tag or Chip?” guidance clarifying when to use each'],
       ]},
     ]},
-    {secId:'s-chips', name:'Chips & Pills', version:'1.5.1', entries:[
+    {secId:'s-chips', name:'Chips & Pills', version:'1.5.2', entries:[
+      {version:'1.5.2', date:'2026-07-29', author:'Helen', title:'Iconography grouping, AI context moved to header, Changelog tab always open', changes:[
+        ['changed','Playground\'s "Icon" and "Dismiss" controls combined under one "Iconography" group label'],
+        ['changed','AI context disclosure moved from the Code tab to sit next to the version pill under the heading, restyled to match the version pill'],
+        ['changed','Changelog tab\'s version-history block is now always open, with no click-to-collapse chevron'],
+      ]},
       {version:'1.5.1', date:'2026-07-29', author:'Helen', title:'New Size section, Variants explainer simplified', changes:[
         ['added','Size section added below Variants: all 3 sizes shown as labelled swatches with their pixel height'],
         ['changed','Variants explainer shortened to "Chips come in five semantic colours."'],
@@ -10346,7 +10372,19 @@ try { renderSectionChangelogs(); } catch(e){ console.error('section-changelog',e
 try {
   const chipsChlog = document.querySelector('#s-chips > .sec-chlog');
   const chipsChlogPanel = document.getElementById('chip-changelog-panel');
-  if(chipsChlog && chipsChlogPanel) chipsChlogPanel.appendChild(chipsChlog);
+  if(chipsChlog && chipsChlogPanel){
+    chipsChlogPanel.appendChild(chipsChlog);
+    // It's the only thing on the Changelog tab, so it doesn't need to
+    // collapse — force it open and drop the click-to-toggle affordance.
+    chipsChlog.classList.add('open');
+    const toggle = chipsChlog.querySelector('.sec-chlog-toggle');
+    if(toggle){
+      toggle.removeAttribute('onclick');
+      toggle.style.cursor = 'default';
+      const chev = toggle.querySelector('.sec-chlog-chev');
+      if(chev) chev.remove();
+    }
+  }
 } catch(e){ console.error('chip-changelog-relocate',e); }
 
 </script>
