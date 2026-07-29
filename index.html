@@ -187,7 +187,9 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;font-feature-
 
 /* Sidebar */
 .sidebar{width:210px;flex-shrink:0;background:var(--chrome-nav);border-right:1px solid var(--chrome-border);position:sticky;top:52px;height:calc(100vh - 52px);overflow-y:auto;padding:20px 0;transition:background .25s}
-.sb-cat{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:800;letter-spacing:0;text-transform:lowercase;color:var(--chrome-muted);padding:0 16px;margin:18px 0 5px}
+.sb-cat{display:flex;align-items:center;gap:8px;font-size:12.5px;font-weight:800;letter-spacing:0;color:var(--chrome-txt);padding:0 16px;margin:18px 0 5px}
+.sb-cat__icon{width:14px;height:14px;flex-shrink:0;display:inline-flex}
+.sb-cat__icon svg{width:100%;height:100%;fill:currentColor;display:block}
 .sb-cat:first-child{margin-top:0}
 .sb-cat::after{content:'';flex:1;height:1px;background:var(--chrome-border)}
 .sb-link{display:flex;align-items:center;gap:8px;padding:7px 16px;font-size:12.5px;font-weight:500;color:var(--chrome-muted);text-decoration:none;border-left:2px solid transparent;transition:all .15s}
@@ -198,8 +200,8 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;font-feature-
 .sb-link.on .sb-icon{color:var(--chrome-accent-text)}
 
 /* ===== Sidebar category as landing link ===== */
-.sb-cat--link{cursor:pointer;background:none;border:0;font:inherit;text-align:left;text-decoration:none;color:var(--chrome-muted);transition:color .15s}
-.sb-cat--link:hover{color:var(--chrome-txt)}
+.sb-cat--link{cursor:pointer;background:none;border:0;font-family:inherit;text-align:left;text-decoration:none;color:var(--chrome-txt);transition:color .15s}
+.sb-cat--link:hover{color:var(--chrome-accent-text)}
 .sb-cat--link.on{color:var(--chrome-accent-text)}
 /* ===== Breadcrumb ===== */
 .crumb{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:600;margin-bottom:16px}
@@ -8731,12 +8733,17 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.33.0';
+const SYSTEM_VERSION = '1.33.1';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.33.1', date:'2026-07-29', author:'Jaco', title:'Sidebar category headings restyled — sentence case, bolder, with icons on the landing categories', changes:[
+        ['changed','Sidebar category headings (.sb-cat) are now sentence case instead of all-lowercase (dropped text-transform:lowercase) and use the full text colour instead of the muted grey, so they stand out from the nav links'],
+        ['fixed','Landing-category headings (.sb-cat--link — Brand, Components, Coming soon) were rendering at the inherited body weight because font:inherit clobbered .sb-cat\'s font-weight:800; swapped to font-family:inherit so they render bold like the rest'],
+        ['added','An icon beside each landing category in the sidebar — star (Brand), copy (Components), calendar (Coming soon); driven by a new optional icon field on the NAV manifest groups and a .sb-cat__icon span. Single-item categories (About) stay icon-free'],
+      ]},
       {version:'1.33.0', date:'2026-07-29', author:'Jaco', title:'Introduction reworked into a sidebar-less home page; brand foundations moved to their own pages', changes:[
         ['changed','Introduction is now the home/landing page — shown full-width with the sidebar hidden (body.home), reachable by clicking "Flash Design System" in the top header (the logo now targets s-brand instead of s-colours)'],
         ['removed','Introduction removed from the sidebar and category nav (the Overview / s-brand item was dropped from the NAV manifest)'],
@@ -11003,7 +11010,7 @@ try { renderSectionChangelogs(); } catch(e){ console.error('section-changelog',e
    alphabetised items, clickable category landings + breadcrumbs)
 ============================================================ */
 const NAV = [
-  { cat:'Brand', landing:'s-cat-brand',
+  { cat:'Brand', landing:'s-cat-brand', icon:'star',
     intro:'The visual foundations of Flash — colour, type, spacing, elevation and iconography. These tokens sit beneath every component.',
     items:[
       {id:'s-colours', label:'Colours',        desc:'Primitive and semantic colour tokens for light and dark.'},
@@ -11013,7 +11020,7 @@ const NAV = [
       {id:'s-spacing', label:'Spacing & Grid', desc:'An 8px base scale for spacing, radius and grid.'},
       {id:'s-type',    label:'Typography',     desc:'The Satoshi type scale and weight tokens.'},
     ]},
-  { cat:'Components', landing:'s-cat-components',
+  { cat:'Components', landing:'s-cat-components', icon:'copy',
     intro:'Flexible, reusable building blocks for Flash apps and sites. Every component shares the same tokens, spacing and states — pick one to see its playground, specs and code.',
     items:[
       {id:'s-accordion',    label:'Accordion',           desc:'Collapsible stacked sections.'},
@@ -11050,7 +11057,7 @@ const NAV = [
       {id:'s-toggle-group', label:'Toggle Group',        desc:'Segmented single / multi choice.'},
       {id:'s-tooltip',      label:'Tooltip',             desc:'Brief on-hover hints.'},
     ]},
-  { cat:'Coming soon', landing:'s-cat-coming',
+  { cat:'Coming soon', landing:'s-cat-coming', icon:'calendar',
     intro:'Components on the roadmap. The patterns are defined — full playgrounds and specs are on the way.',
     items:[
       {id:'s-modals', label:'Modals', tag:'Soon', desc:'Focused dialogs and confirmations.'},
@@ -11119,7 +11126,8 @@ function buildSidebar(){
   var html = '';
   NAV.forEach(function(g){
     if(g.landing){
-      html += '<a href="javascript:void(0)" class="sb-cat sb-cat--link" onclick="showSection(\'' + g.landing + '\')">'+g.cat+'</a>';
+      var catIcon = g.icon ? '<span class="sb-cat__icon">'+iconSvg(g.icon)+'</span>' : '';
+      html += '<a href="javascript:void(0)" class="sb-cat sb-cat--link" onclick="showSection(\'' + g.landing + '\')">'+catIcon+g.cat+'</a>';
     } else {
       html += '<div class="sb-cat">'+g.cat+'</div>';
     }
