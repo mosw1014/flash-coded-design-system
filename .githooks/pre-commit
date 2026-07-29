@@ -1,0 +1,24 @@
+#!/bin/sh
+# Auto-updates AI context tabs (the "ML blobs") whenever a commit touches
+# index.html, so nobody has to remember to hand-run
+# scripts/generate-ai-context-tab.mjs after editing a component that already
+# has a tab. See AI-CONTEXT.md and CLAUDE.md rule 3 for the full convention.
+#
+# One-time setup per clone (git doesn't auto-enable tracked hooks):
+#   git config core.hooksPath .githooks
+#
+# This only refreshes tabs that already exist — it never invents a tab for a
+# section that doesn't have one yet, since choosing which classes/consts
+# matter for a brand-new component is still a deliberate, one-time call made
+# by hand (see scripts/generate-ai-context-tab.mjs).
+
+if git diff --cached --name-only | grep -q '^index\.html$'; then
+  node scripts/auto-update-ai-context.mjs --quiet
+  if [ $? -ne 0 ]; then
+    echo "pre-commit: scripts/auto-update-ai-context.mjs failed — commit aborted." >&2
+    exit 1
+  fi
+  git add index.html
+fi
+
+exit 0
