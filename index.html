@@ -3012,7 +3012,7 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
           <span>Components</span>
         </button>
         <h1 class="sec__title">Chips and pills</h1>
-        <div><span class="comp-ver-badge" style="margin-left:0">v1.5.0</span></div>
+        <div><span class="comp-ver-badge" style="margin-left:0">v1.5.1</span></div>
       </div>
       <div class="tabs-list chip-tabs" id="chip-tabs-list">
         <button type="button" class="tab-item on" data-chip-tab="overview" onclick="chipTabSwitch('overview')"><span class="tab-item__inner"><span class="tab-item__label">Overview</span></span><span class="tab-item__line"></span></button>
@@ -3024,6 +3024,7 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
         <div id="chip-playground" class="type-sub"></div>
         <div id="chip-anatomy" class="type-sub"></div>
         <div id="chip-variants" class="type-sub"></div>
+        <div id="chip-sizes" class="type-sub"></div>
       </div>
       <div class="tabs-panel" data-chip-panel="style">
         <div id="chip-reference" class="type-sub"></div>
@@ -5645,6 +5646,7 @@ function toggleTheme() {
   try { if(typeof renderChipPlayground==='function' && document.getElementById('chip-playground')) renderChipPlayground(); } catch(e){}
   try { if(typeof renderChipAnatomy==='function' && document.getElementById('chip-anatomy')) renderChipAnatomy(); } catch(e){}
   try { if(typeof renderChipVariants==='function' && document.getElementById('chip-variants')) renderChipVariants(); } catch(e){}
+  try { if(typeof renderChipSizes==='function' && document.getElementById('chip-sizes')) renderChipSizes(); } catch(e){}
   try { if(typeof renderTagsBadges==='function' && document.getElementById('tag-playground')) renderTagsBadges(); } catch(e){}
   try { if(typeof renderChipReference==='function' && document.getElementById('chip-reference')) renderChipReference(); } catch(e){}
   try { if(typeof renderSelReference==='function' && document.getElementById('sel-reference')) renderSelReference(); } catch(e){}
@@ -7723,7 +7725,32 @@ function renderChipVariants(){
     <div class="cpg-layout cpg-variants">
       <div class="cpg-layout__intro">
         <div class="cpg-layout__title">Variants</div>
-        <div class="cpg-layout__desc">Chips come in five semantic colours. Pick the one that matches what the chip is communicating, not just a colour you like.</div>
+        <div class="cpg-layout__desc">Chips come in five semantic colours.</div>
+      </div>
+      <div class="cpg-layout__demo">
+        <div class="chip-variants-grid">${cells}</div>
+      </div>
+    </div>`;
+}
+
+function renderChipSizes(){
+  const root = document.getElementById('chip-sizes');
+  if(!root) return;
+  const theme = currentTheme();
+  const v = CHIP_VARIANTS.find(x=>x.key==='accent') || CHIP_VARIANTS[0];
+
+  const cells = CHIP_SIZES.map(sz=>`
+    <div class="chip-variant-cell">
+      <div class="chip-variant-cell__stage" style="background:${stageBg(theme)}">${makeChipHTML(v, sz.key, theme)}</div>
+      <div class="chip-variant-cell__name">${sz.label}</div>
+      <div class="chip-variant-cell__desc">${sz.h}px</div>
+    </div>`).join('');
+
+  root.innerHTML = `
+    <div class="cpg-layout cpg-variants">
+      <div class="cpg-layout__intro">
+        <div class="cpg-layout__title">Size</div>
+        <div class="cpg-layout__desc">Chips come in three sizes.</div>
       </div>
       <div class="cpg-layout__demo">
         <div class="chip-variants-grid">${cells}</div>
@@ -7785,6 +7812,7 @@ try { renderChipCodeTab(); } catch(e){ console.error('chip-code-tab',e); }
 try { renderChipPlayground(); } catch(e){ console.error('chip-playground',e); }
 try { renderChipAnatomy(); } catch(e){ console.error('chip-anatomy',e); }
 try { renderChipVariants(); } catch(e){ console.error('chip-variants',e); }
+try { renderChipSizes(); } catch(e){ console.error('chip-sizes',e); }
 try { renderChipReference(); } catch(e){ console.error('chip-reference',e); }
 
 function chipTabSwitch(tab){
@@ -8049,12 +8077,16 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.35.0';
+const SYSTEM_VERSION = '1.35.1';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.35.1', date:'2026-07-29', author:'Helen', title:'Chips & Pills — new Size section, Variants explainer simplified', changes:[
+        ['added','Size section added below Variants, same heading-left/visuals-right format: all 3 sizes (Small, Regular, Large) shown as labelled swatches with their pixel height (24px/28px/33px)'],
+        ['changed','Variants explainer shortened to a single line: "Chips come in five semantic colours." (dropped the second sentence)'],
+      ]},
       {version:'1.35.0', date:'2026-07-29', author:'Helen', title:'Chips & Pills — new Variants section on the Overview tab', changes:[
         ['added','Variants section added below Anatomy, matching the "Try the component"/Anatomy heading-left, visuals-right format: all 5 semantic variants (Accent, Muted, Success, Warning, Error) shown as labelled swatches with a one-line usage descriptor each'],
         ['added','renderChipVariants() builds each swatch from the real CHIP_VARIANTS data and makeChipHTML(), so colours stay in sync with the actual component and the theme toggle'],
@@ -8675,7 +8707,11 @@ const CHANGELOG = {
         ['added','“Tag or Chip?” guidance clarifying when to use each'],
       ]},
     ]},
-    {secId:'s-chips', name:'Chips & Pills', version:'1.5.0', entries:[
+    {secId:'s-chips', name:'Chips & Pills', version:'1.5.1', entries:[
+      {version:'1.5.1', date:'2026-07-29', author:'Helen', title:'New Size section, Variants explainer simplified', changes:[
+        ['added','Size section added below Variants: all 3 sizes shown as labelled swatches with their pixel height'],
+        ['changed','Variants explainer shortened to "Chips come in five semantic colours."'],
+      ]},
       {version:'1.5.0', date:'2026-07-29', author:'Helen', title:'New Variants section on the Overview tab', changes:[
         ['added','Variants section added below Anatomy, matching the heading-left/visuals-right format: all 5 semantic variants shown as labelled swatches with a one-line usage descriptor each'],
       ]},
