@@ -126,6 +126,57 @@ function extractCss(html, classNames) {
   return out.join('\n');
 }
 
+// Same section-slicing and Do/Dont extraction as generate-ai-context-tab.mjs
+// — must stay identical or the re-derived hash here won't match a tab whose
+// usage field was computed there. See AI-CONTEXT.md.
+function extractSectionHtml(html, sectionId) {
+  const startRe = new RegExp(`<section class="sec[^"]*" id="${escapeRegex(sectionId)}">`);
+  const m = startRe.exec(html);
+  if (!m) return null;
+  const start = m.index + m[0].length;
+  const nextRe = /<section class="sec/g;
+  nextRe.lastIndex = start;
+  const next = nextRe.exec(html);
+  return html.slice(start, next ? next.index : html.length);
+}
+
+const NAMED_ENTITIES = {
+  mdash: '—', ndash: '–', rsquo: '’', lsquo: '‘', ldquo: '“', rdquo: '”',
+  hellip: '…', nbsp: ' ', amp: '&', lt: '<', gt: '>', quot: '"', apos: "'",
+};
+function decodeEntitiesForText(s) {
+  return s.replace(/&(#x[0-9a-fA-F]+|#\d+|[a-zA-Z]+);/g, (full, code) => {
+    if (code[0] === '#') {
+      const cp = code[1] === 'x' || code[1] === 'X' ? parseInt(code.slice(2), 16) : parseInt(code.slice(1), 10);
+      return Number.isFinite(cp) ? String.fromCodePoint(cp) : full;
+    }
+    return NAMED_ENTITIES[code] ?? full;
+  });
+}
+
+function stripTags(s) {
+  return decodeEntitiesForText(s.replace(/<[^>]+>/g, '')).replace(/\s+/g, ' ').trim();
+}
+
+function extractUsage(sectionHtml) {
+  if (!sectionHtml) return null;
+  const doItems = [];
+  const dontItems = [];
+  const cardRe = /<div class="sel-usage__tag sel-usage__tag--(do|dont)">[\s\S]*?<\/div>\s*<ul class="sel-usage__list">([\s\S]*?)<\/ul>/g;
+  let m;
+  while ((m = cardRe.exec(sectionHtml))) {
+    const kind = m[1];
+    const liRe = /<li>([\s\S]*?)<\/li>/g;
+    let li;
+    while ((li = liRe.exec(m[2]))) {
+      const text = stripTags(li[1]);
+      if (text) (kind === 'do' ? doItems : dontItems).push(text);
+    }
+  }
+  if (doItems.length === 0 && dontItems.length === 0) return null;
+  return { do: doItems, dont: dontItems };
+}
+
 // Find every tab in the ORIGINAL (unstripped) file — this is the only place
 // we need the tabs' own text, everything else works against cleanHtml.
 const tabs = [...rawHtml.matchAll(/<pre data-ai-context="([^"]*)">([\s\S]*?)<\/pre>/g)]
@@ -165,7 +216,15 @@ for (const { sectionId, raw } of tabs) {
   }
   const freshJs = freshJsParts.join('\n\n');
 
-  const freshHash = crypto.createHash('sha256').update(freshCss + '\n' + freshJs).digest('hex');
+  const freshSectionHtml = extractSectionHtml(cleanHtml, sectionId);
+  const freshUsage = extractUsage(freshSectionHtml);
+
+  // contentHash covers css + js + usage — same formula as
+  // generate-ai-context-tab.mjs, or a tab whose Do/Dont guidance changed
+  // without CSS/JS changing would never be flagged stale here.
+  const freshHash = crypto.createHash('sha256')
+    .update(freshCss + '\n' + freshJs + '\n' + JSON.stringify(freshUsage))
+    .digest('hex');
 
   if (freshHash === block.contentHash) {
     console.log(`✓ ${sectionId}: AI context tab is current.`);
