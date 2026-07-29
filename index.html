@@ -4083,7 +4083,7 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
     <section class="sec" id="s-switch">
       <div class="sec__head">
         <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Switch <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.0</span></h1>
+        <h1 class="sec__title">Switch <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.1</span></h1>
         <p class="sec__desc">A toggle for a single on/off setting that applies immediately &mdash; no save step. Built on a real checkbox input, so it works with the keyboard and screen readers out of the box, and lights up in Flash green when on.</p>
       </div>
       <div class="type-sub">
@@ -4148,6 +4148,36 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
           </div>
         </div>
       </div>
+      <details class="ai-ctx">
+  <summary>AI context</summary>
+  <pre data-ai-context="s-switch">
+{
+  "status": "static",
+  "realClasses": [
+    ".sw",
+    ".sw__input",
+    ".sw__track",
+    ".sw__thumb",
+    ".sw__label",
+    ".sw--sm"
+  ],
+  "css": "/* ---- Switch ---- */\n.sw { display:inline-flex;align-items:center;gap:10px;cursor:pointer;user-select:none;vertical-align:middle }\n.sw__input { position:absolute;opacity:0;width:0;height:0;margin:0 }\n.sw__track { position:relative;flex-shrink:0;width:40px;height:24px;border-radius:999px;background:var(--color-surface-n3);transition:background .2s ease }\n.sw__thumb { position:absolute;top:2px;left:2px;width:20px;height:20px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.28);transition:transform .2s ease }\n.sw__input:checked + .sw__track { background:var(--color-brand) }\n.sw__input:checked + .sw__track .sw__thumb { transform:translateX(16px) }\n.sw__input:focus-visible + .sw__track { outline:2px solid var(--color-input-focus);outline-offset:2px }\n.sw__label { font-size:13px;font-weight:500;color:var(--chrome-txt) }\n.sw--sm .sw__track { width:32px;height:18px }\n.sw--sm .sw__thumb { width:14px;height:14px }\n.sw--sm .sw__input:checked + .sw__track .sw__thumb { transform:translateX(14px) }\n.sw--sm .sw__label { font-size:12px }\n.sw:has(.sw__input:disabled) { opacity:.45;cursor:not-allowed }",
+  "usage": {
+    "do": [
+      "Use for a single setting that takes effect the moment it’s toggled.",
+      "Pair every switch with a clear text label describing the “on” state.",
+      "Keep the label static — don’t change its wording between on and off."
+    ],
+    "dont": [
+      "Don’t use a switch inside a form that needs a Save button — use a checkbox.",
+      "Don’t use switches for multi-select lists — that’s checkboxes.",
+      "Don’t rely on colour alone; the thumb position must read clearly too."
+    ]
+  },
+  "contentHash": "dcdedd5967489d03ff987719a2aafc2b123cd54e93c592ffbe412d706b76765e"
+}
+  </pre>
+</details>
     </section>
 
     <!-- ============================================================
@@ -4258,7 +4288,7 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
     <section class="sec" id="s-alert">
       <div class="sec__head">
         <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Alert <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.0</span></h1>
+        <h1 class="sec__title">Alert <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.1.1</span></h1>
         <p class="sec__desc">An inline banner that draws attention to a status or message tied to the surrounding content. Four semantic variants map straight onto the Flash Info / Success / Warning / Critical tokens, so they stay on-brand in light and dark.</p>
       </div>
       <div class="type-sub">
@@ -4300,6 +4330,41 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
           </div>
         </div>
       </div>
+      <details class="ai-ctx">
+  <summary>AI context</summary>
+  <pre data-ai-context="s-alert">
+{
+  "status": "static",
+  "realClasses": [
+    ".alrt",
+    ".alrt--info",
+    ".alrt--success",
+    ".alrt--warn",
+    ".alrt--crit",
+    ".alrt__ico",
+    ".alrt__bd",
+    ".alrt__title",
+    ".alrt__msg",
+    ".alrt__x"
+  ],
+  "css": "/* ---- Alert / Callout ---- */\n.alrt { display:flex;align-items:center;gap:11px;padding:13px 15px;border-radius:10px;font-size:13px;line-height:1.5;max-width:620px }\n.alrt + .alrt { margin-top:12px }\n.alrt__ico { flex-shrink:0;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:800;font-style:normal }\n.alrt__bd { flex:1;min-width:0 }\n.alrt__title { font-weight:700;color:var(--chrome-txt);margin-bottom:2px }\n.alrt__msg { color:var(--chrome-muted) }\n.alrt__x { align-self:flex-start;background:none;border:0;color:var(--chrome-muted);cursor:pointer;font-size:15px;line-height:1;padding:2px 5px;border-radius:5px;flex-shrink:0 }\n.alrt__x:hover { background:var(--chrome-hover);color:var(--chrome-txt) }\n.alrt--info { background:var(--color-info-l) }\n.alrt--info .alrt__ico { background:var(--color-info-h) }\n.alrt--success { background:var(--color-success-l) }\n.alrt--success .alrt__ico { background:var(--color-success-h) }\n.alrt--warn { background:var(--color-warn-l) }\n.alrt--warn .alrt__ico { background:var(--color-warn-h) }\n.alrt--crit { background:var(--color-crit-l) }\n.alrt--crit .alrt__ico { background:var(--color-crit-h) }\n/* --color-info-l stays light in dark mode (unlike its siblings), which would leave\n   light text unreadable — give the info alert a deep-navy tint in dark only. */\n[data-theme=\"dark\"] .alrt--info { background:var(--prim-sup-blue-3) }",
+  "usage": {
+    "do": [
+      "Place the alert next to the content or form it refers to.",
+      "Match the variant to the severity of the message.",
+      "Lead with a short title, then a plain-language explanation."
+    ],
+    "dont": [
+      "Don’t use an alert for a fleeting confirmation — that’s a toast.",
+      "Don’t stack many alerts — prioritise the one that matters.",
+      "Don’t use critical red for routine, non-urgent information."
+    ]
+  },
+  "contentHash": "89977240b75ca00c874ed954f34c841984c8dc222531a35608e44bac711364a4",
+  "note": "Dismiss uses an inline onclick on the .alrt__x button (this.closest('.alrt').style.display='none'), not a named JS function — nothing to extract as a builder."
+}
+  </pre>
+</details>
     </section>
 
     <!-- ============================================================
@@ -4308,7 +4373,7 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
     <section class="sec" id="s-skeleton">
       <div class="sec__head">
         <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Skeleton <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.0</span></h1>
+        <h1 class="sec__title">Skeleton <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.1</span></h1>
         <p class="sec__desc">A shimmering placeholder that mirrors content&rsquo;s shape while it loads, so the layout doesn&rsquo;t jump when data arrives. Built from neutral surface tokens and honours <code>prefers-reduced-motion</code>.</p>
       </div>
       <div class="type-sub">
@@ -4350,6 +4415,38 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
           </div>
         </div>
       </div>
+      <details class="ai-ctx">
+  <summary>AI context</summary>
+  <pre data-ai-context="s-skeleton">
+{
+  "status": "static",
+  "realClasses": [
+    ".skl",
+    ".skl--line",
+    ".skl--circle",
+    ".skl--block",
+    ".skl--title",
+    ".skl-media",
+    ".skl-media__txt",
+    ".skl-card"
+  ],
+  "css": ".skl { background:linear-gradient(90deg,var(--color-surface-n1) 25%,var(--color-surface-n2) 37%,var(--color-surface-n1) 63%);background-size:200% 100%;animation:skl-shimmer 1.5s ease-in-out infinite;border-radius:6px }\n.skl--line { height:12px;margin-bottom:9px }\n.skl--title { height:18px;width:55%;margin-bottom:14px }\n.skl--circle { border-radius:50% }\n.skl--block { height:120px;border-radius:10px;margin-bottom:14px }\n.skl-card { border:1px solid var(--chrome-border);border-radius:12px;padding:16px;width:280px;max-width:100% }\n.skl-media { display:flex;gap:13px;align-items:center;width:320px;max-width:100% }\n.skl-media__txt { flex:1 }\n.skl-media__txt .skl--line:last-child { margin-bottom:0 }",
+  "usage": {
+    "do": [
+      "Mirror the final layout so content doesn’t shift on load.",
+      "Use for lists, tables and cards fetched from the network.",
+      "Keep the shimmer subtle and stop it for reduced-motion users."
+    ],
+    "dont": [
+      "Don’t use a skeleton for a sub-second load — it just flickers.",
+      "Don’t use one for a small indeterminate action — use a spinner.",
+      "Don’t let the placeholder differ wildly from the real content."
+    ]
+  },
+  "contentHash": "f8dde62363cc6cda9736d39a73f206e72a87238ba241d447d26d3a1ede2c2c10"
+}
+  </pre>
+</details>
     </section>
 
     <!-- ============================================================
@@ -4358,7 +4455,7 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
     <section class="sec" id="s-spinner">
       <div class="sec__head">
         <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Spinner <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.1.0</span></h1>
+        <h1 class="sec__title">Spinner <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.1.1</span></h1>
         <p class="sec__desc">An indeterminate loading indicator for short waits where progress can&rsquo;t be measured. Two styles cover most needs: a solid arc spinning over a neutral ring, or a fading 8-blade activity indicator (from the Figma component library). Both flip black/white with the theme.</p>
       </div>
       <div class="type-sub">
@@ -4418,6 +4515,41 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
           </div>
         </div>
       </div>
+      <details class="ai-ctx">
+  <summary>AI context</summary>
+  <pre data-ai-context="s-spinner">
+{
+  "status": "static",
+  "realClasses": [
+    ".spn",
+    ".spn--sm",
+    ".spn--lg",
+    ".spn--btn",
+    ".spn-activity",
+    ".spn-activity__blades",
+    ".spn-activity--sm",
+    ".spn-activity--lg",
+    ".spn-activity--btn",
+    ".spn-btn",
+    ".spn-inline"
+  ],
+  "css": ".spn { display:inline-block;width:24px;height:24px;border-radius:50%;border:2.5px solid var(--color-surface-n3);border-top-color:var(--color-surface-inverse);animation:spn-rot .7s linear infinite;vertical-align:middle;box-sizing:border-box }\n.spn--sm { width:16px;height:16px;border-width:2px }\n.spn--lg { width:36px;height:36px;border-width:3px }\n.spn--btn { width:15px;height:15px;border-width:2px;border-color:transparent;border-top-color:currentColor }\n.spn-btn { display:inline-flex;align-items:center;gap:9px;background:var(--color-btn-s-bg);color:var(--color-btn-s-txt);border:0;border-radius:999px;padding:10px 18px;font-size:13px;font-weight:700;font-family:inherit;cursor:default }\n.spn-inline { display:inline-flex;align-items:center;gap:9px;font-size:13px;color:var(--chrome-muted) }\n/* Activity (blade) spinner — Figma \"New Icons/Spinner\" */\n.spn-activity { display:inline-block;width:24px;height:24px;vertical-align:middle;color:var(--chrome-txt) }\n.spn-activity svg { display:block;width:100%;height:100% }\n.spn-activity__blades { fill:currentColor;transform-origin:12px 12px;animation:spn-activity-step .9s steps(8) infinite }\n.spn-activity--sm { width:16px;height:16px }\n.spn-activity--lg { width:36px;height:36px }\n.spn-activity--btn { color:currentColor }",
+  "usage": {
+    "do": [
+      "Use for short, indeterminate waits — submitting, saving, fetching.",
+      "Place it where the result will appear, or inside the triggering button.",
+      "Keep one spinner per action, not many at once."
+    ],
+    "dont": [
+      "Don’t use a spinner for long, content-shaped loads — use a skeleton.",
+      "Don’t leave it spinning with no resolution or error path.",
+      "Don’t scatter multiple spinners across one view."
+    ]
+  },
+  "contentHash": "2358046509278210d1dfce868d70a2e3d5f1730e7890690e3c46114c37ad7760"
+}
+  </pre>
+</details>
     </section>
 
     <!-- ============================================================
@@ -7987,12 +8119,18 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.32.5';
+const SYSTEM_VERSION = '1.32.6';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.32.6', date:'2026-07-29', author:'Mo', title:'AI context tabs added to Switch, Alert, Skeleton, and Spinner', changes:[
+        ['added','Switch — AI context tab documenting the real, fully static .sw/.sw__*/.sw--sm markup, plus its existing "When to use" Do/Dont guidance (3 do / 3 dont)'],
+        ['added','Alert — AI context tab documenting the real, fully static .alrt/.alrt__*/severity-variant markup, plus its existing "When to use" Do/Dont guidance (3 do / 3 dont); notes the dismiss control is a plain inline onclick, not a named JS builder'],
+        ['added','Skeleton — AI context tab documenting the real, fully static .skl/.skl__*/.skl-card/.skl-media markup, plus its existing "When to use" Do/Dont guidance (3 do / 3 dont)'],
+        ['added','Spinner — AI context tab documenting the real, fully static .spn/.spn-activity/.spn-btn/.spn-inline markup (spinning-ring and blade variants), plus its existing "When to use" Do/Dont guidance (3 do / 3 dont)'],
+      ]},
       {version:'1.32.5', date:'2026-07-29', author:'Mo', title:'AI context tabs added to Navigation, Tabs, Breadcrumb, and Pagination', changes:[
         ['added','Navigation (Side Nav) — AI context tab documenting the real .snav/.snav-item structural classes across all three colour contexts (White/Charcoal/Dark green) and both sizes (Regular/Small), plus the itemsHtml/logoHtml/companyHtml/accountHtml/panelHtml builders and existing "When to use" Do/Dont guidance (3 do / 3 dont)'],
         ['added','Tabs — AI context tab documenting the real .tab-item/.tabs-list structural classes and the tabItem/tabsList builders, plus its existing "When to use" Do/Dont guidance (4 do / 4 dont); notes that .tabs-swatch/.tabs-skel* are doc-site-only demo chrome, excluded from the tab'],
@@ -8325,7 +8463,10 @@ const CHANGELOG = {
         ['added','Scroll-snap slider with prev/next arrows and position dots'],
       ]},
     ]},
-    {secId:'s-switch', name:'Switch', version:'1.0.0', entries:[
+    {secId:'s-switch', name:'Switch', version:'1.0.1', entries:[
+      {version:'1.0.1', date:'2026-07-29', author:'Mo', title:'AI context tab added', changes:[
+        ['added','AI context tab documenting the real, fully static .sw/.sw__*/.sw--sm markup, plus its existing "When to use" Do/Dont guidance (3 do / 3 dont)'],
+      ]},
       {version:'1.0.0', date:'2026-07-09', author:'Mo', title:'Initial release', changes:[
         ['added','Native-checkbox toggle, Regular/Small sizes, Off/On/Disabled states, anatomy specs and usage guidance'],
       ]},
@@ -8340,7 +8481,10 @@ const CHANGELOG = {
         ['added','Native <details> disclosure with single-open and multiple-open variants'],
       ]},
     ]},
-    {secId:'s-alert', name:'Alert', version:'1.1.0', entries:[
+    {secId:'s-alert', name:'Alert', version:'1.1.1', entries:[
+      {version:'1.1.1', date:'2026-07-29', author:'Mo', title:'AI context tab added', changes:[
+        ['added','AI context tab documenting the real, fully static .alrt/.alrt__*/severity-variant markup, plus its existing "When to use" Do/Dont guidance (3 do / 3 dont); notes the dismiss control is a plain inline onclick, not a named JS builder'],
+      ]},
       {version:'1.1.0', date:'2026-07-10', author:'Mo', title:'Centred icon alignment', changes:[
         ['fixed','Icon is now vertically centred against the card instead of top-aligned to the first line'],
       ]},
@@ -8348,12 +8492,18 @@ const CHANGELOG = {
         ['added','Info / Success / Warning / Critical inline banner on the semantic tokens, with a dismissible variant'],
       ]},
     ]},
-    {secId:'s-skeleton', name:'Skeleton', version:'1.0.0', entries:[
+    {secId:'s-skeleton', name:'Skeleton', version:'1.0.1', entries:[
+      {version:'1.0.1', date:'2026-07-29', author:'Mo', title:'AI context tab added', changes:[
+        ['added','AI context tab documenting the real, fully static .skl/.skl__*/.skl-card/.skl-media markup, plus its existing "When to use" Do/Dont guidance (3 do / 3 dont)'],
+      ]},
       {version:'1.0.0', date:'2026-07-09', author:'Mo', title:'Initial release', changes:[
         ['added','Shimmering placeholders (lines, blocks, circles) and composed media/card examples; respects reduced-motion'],
       ]},
     ]},
-    {secId:'s-spinner', name:'Spinner', version:'1.1.0', entries:[
+    {secId:'s-spinner', name:'Spinner', version:'1.1.1', entries:[
+      {version:'1.1.1', date:'2026-07-29', author:'Mo', title:'AI context tab added', changes:[
+        ['added','AI context tab documenting the real, fully static .spn/.spn-activity/.spn-btn/.spn-inline markup (spinning-ring and blade variants), plus its existing "When to use" Do/Dont guidance (3 do / 3 dont)'],
+      ]},
       {version:'1.1.0', date:'2026-07-09', author:'Mo', title:'Activity type + rounded button fix', changes:[
         ['fixed','Busy button in "In context" is now fully rounded (999px), matching every other button in the system'],
         ['added','Activity type — 8-blade fading loader from the Figma component library, in three sizes, plus a Type comparison and an in-button/inline example'],
