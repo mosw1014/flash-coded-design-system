@@ -1363,12 +1363,11 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;font-feature-
 .dd-table-wrap{border:1px solid var(--chrome-border);border-radius:12px;overflow:hidden;overflow-x:auto}
 .dd-table{width:100%;border-collapse:collapse;font-size:13px;min-width:540px}
 .dd-table thead th{text-align:left;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--chrome-muted);padding:13px 16px;background:var(--chrome-nav);border-bottom:1px solid var(--chrome-border);white-space:nowrap}
-.dd-table thead th.dd-num{text-align:right}
 .dd-table tbody td{padding:13px 16px;border-bottom:1px solid var(--chrome-border);color:var(--chrome-txt);font-weight:500}
 .dd-table tbody tr:last-child td{border-bottom:none}
 .dd-table tbody tr{transition:background .12s}
 .dd-table tbody tr:hover{background:var(--chrome-hover)}
-.dd-num{text-align:right;font-variant-numeric:tabular-nums;font-weight:700}
+.dd-num{text-align:left;font-variant-numeric:tabular-nums;font-weight:700}
 .dd-table__name{font-weight:700;color:var(--chrome-txt)}
 .dd-status{display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:600;white-space:nowrap}
 .dd-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
@@ -3974,7 +3973,7 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;font-feature-
     <section class="sec" id="s-data">
       <div class="sec__head">
         <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Data Display <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.3.2</span></h1>
+        <h1 class="sec__title">Data Display <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.3.3</span></h1>
         <p class="sec__desc">Patterns for surfacing numbers and records — stat tiles, tables, key&ndash;value lists, progress meters and filter chips. All built on chrome and semantic tokens, so they adapt to light &amp; dark automatically.</p>
       </div>
 
@@ -8838,19 +8837,22 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.32.14';
+const SYSTEM_VERSION = '1.32.15';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
-      {version:'1.32.14', date:'2026-07-29', author:'Mo', title:'AI context tabs added to Colours, Typography, Spacing & Grid, Elevation, Icons, and Logos', changes:[
+      {version:'1.32.15', date:'2026-07-29', author:'Mo', title:'AI context tabs added to Colours, Typography, Spacing & Grid, Elevation, Icons, and Logos', changes:[
         ['added','Colours — AI context tab documenting the real FAMILIES/YELLOW_FAM/CATS/SEM/HEX_PRIM primitive+semantic colour DATA and the renderFamily/getSemHex/renderSemGroup/refreshSem builders; notes these are primitives only — the consumable CSS custom properties live in the brand/theme blocks elsewhere, per AI-CONTEXT.md'],
         ['added','Typography — AI context tab documenting the real WEIGHTS/HEADS/BODY/INPUT_STYLES/TYPE_TOKEN_GROUPS DATA and the renderHeadRows builder'],
         ['added','Spacing, Radius & Grid — AI context tab documenting the real SCALE_PRIMS/SPACING/RADIUS/GRID DATA and the buildSpacingRows/buildRadiusRows builders'],
         ['added','Elevation — AI context tab documenting the real ELEVATION DATA (5 shadow levels); render logic is inline, not a separately named builder'],
         ['added','Icons — AI context tab documenting the real .icn/.icn--sm/--lg/--xl markup and the ICONS/renderIcons builders, plus its existing "When to use" Do/Dont guidance (3 do / 3 dont); notes iconSvg(name) is omitted from js because an unrelated same-named local const inside Text Inputs\' search-field builder would collide with the generator\'s name-based lookup'],
         ['added','Logos — AI context tab documenting the real .logo-grid/.logo-card/.logo-dl gallery markup, plus its existing "When to use" Do/Dont guidance (4 do / 5 dont); notes the actual deliverable is external asset files (assets/logos/*.svg/.png), not inline SVG or a data const'],
+      ]},
+      {version:'1.32.14', date:'2026-07-29', author:'Mo', title:'Data Display — table columns all left-aligned', changes:[
+        ['changed','Data table — Volume and Value are now left-aligned like every other column, instead of right-aligned; the previous fix synced the header to the numeric right-alignment, but the simpler, correct answer was to make the whole row consistently left-aligned'],
       ]},
       {version:'1.32.13', date:'2026-07-29', author:'Mo', title:'AI context tabs added to Tooltip, Toggle Group, Modals, and Toasts', changes:[
         ['added','Tooltip — AI context tab documenting the real, fully static .tip/.tip__bubble/placement-variant markup, plus its existing "When to use" Do/Dont guidance (3 do / 3 dont)'],
@@ -9655,7 +9657,10 @@ const CHANGELOG = {
         ['added','Interactive playground with real open/select/close, click-outside and Escape-to-dismiss behaviour'],
       ]},
     ]},
-    {secId:'s-data', name:'Data Display', version:'1.3.2', entries:[
+    {secId:'s-data', name:'Data Display', version:'1.3.3', entries:[
+      {version:'1.3.3', date:'2026-07-22', author:'Mo', title:'Data table — all columns left-aligned', changes:[
+        ['changed','Volume and Value columns are now left-aligned like the rest of the table, instead of right-aligned'],
+      ]},
       {version:'1.3.2', date:'2026-07-22', author:'Mo', title:'Data table — header alignment fix', changes:[
         ['fixed','"Volume" and "Value" header cells were left-aligned while their numeric columns were right-aligned; headers now right-align to match'],
       ]},
