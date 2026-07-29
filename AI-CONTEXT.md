@@ -77,7 +77,8 @@ markup, or with a real gotcha a plain read wouldn't reveal).
 | `noReusableClass` | `true` when the component has no standalone class of its own at all — visual identity is applied ad hoc (e.g. via inline JS custom properties) purely for this doc site's own playground. Signals: reconstruct from tokens, don't copy markup. |
 | `css` | The **verbatim** real CSS rules for `realClasses` — not a hand-summarized description, the actual rule text, generated (see below), never hand-typed. |
 | `js` | The **verbatim** real JS for `builderFunctions`/relevant data consts — same principle: real source, not a paraphrase. |
-| `contentHash` | A hash tying `css`+`js` to the exact live source they were extracted from (see "Keeping this honest" below). |
+| `usage` | `{ do: [...], dont: [...] }` — auto-extracted from the section's own `.sel-usage__card` Do/Dont blocks (the plain-prose guidance on when to reach for this component vs. a neighbour, and what not to do with it). `null`/omitted for sections with no such block. Same rule as `css`/`js`: generated from the live section HTML, never hand-typed. |
+| `contentHash` | A hash tying `css`+`js`+`usage` to the exact live source they were extracted from (see "Keeping this honest" below). |
 | `note` | Short free-text flag for anything a plain read wouldn't reveal — scope caveats, gotchas, anything `css`/`js` alone don't make obvious. |
 
 `css`/`js` are deliberately **verbatim, not summarized**. Earlier drafts of this convention used a
@@ -98,9 +99,17 @@ tooling is told to trust it. So `css`/`js` are never hand-typed and never truste
    live `index.html`, extracts the real CSS rules matching a section's `realClasses` and the real
    source of its `builderFunctions`/data consts, and prints the full tab ready to paste in. Run it
    again and paste over the old tab whenever you touch that component's markup, CSS, or JS.
-2. **`contentHash`** is `sha256(css + "\n" + js)` — computed once at generation time over the exact
-   `css`/`js` text embedded in the same tab, using the untrimmed strings exactly as embedded, joined
-   with a single newline.
+   For sections that already have a tab, this also happens **automatically**: a `pre-commit` git hook
+   (`.githooks/pre-commit`, running `scripts/auto-update-ai-context.mjs`) re-derives every existing
+   tab's hash on every commit touching `index.html`, regenerates any that drifted, and re-stages the
+   file before the commit lands — enable it once per clone with `git config core.hooksPath .githooks`.
+   It only refreshes tabs that already exist; a brand-new component's first tab is still a deliberate
+   one-time manual step. See `CLAUDE.md` rule 5.
+2. **`contentHash`** is `sha256(css + "\n" + js + "\n" + JSON.stringify(usage))` — computed once at
+   generation time over the exact `css`/`js` text embedded in the same tab plus the extracted `usage`
+   object (or `null`), using the untrimmed strings exactly as embedded, joined with a single newline.
+   `usage` is included so Do/Dont guidance changing on its own (with no CSS/JS change) still flags the
+   tab as stale, rather than silently drifting.
 3. **Consuming tooling re-derives the same hash from the live file at read time** (using the tab's
    own `realClasses`/`builderFunctions` as the extraction targets) and compares it to the stored
    `contentHash`. A match means the tab is provably current — trust `css`/`js` as-is and skip
