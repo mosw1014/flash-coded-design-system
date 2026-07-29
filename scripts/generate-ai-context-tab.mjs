@@ -145,6 +145,66 @@ function extractCss(html, classNames) {
   return out.join('\n');
 }
 
+// Slice out just this section's own HTML (start tag through the next
+// top-level <section class="sec...">, or EOF) — same boundary logic as the
+// design-system-reskin skill's resolver.
+function extractSectionHtml(html, sectionId) {
+  const startRe = new RegExp(`<section class="sec[^"]*" id="${escapeRegex(sectionId)}">`);
+  const m = startRe.exec(html);
+  if (!m) return null;
+  const start = m.index + m[0].length;
+  const nextRe = /<section class="sec/g;
+  nextRe.lastIndex = start;
+  const next = nextRe.exec(html);
+  return html.slice(start, next ? next.index : html.length);
+}
+
+// Named entities this file is known to use in prose, plus generic numeric
+// entities (&#NNN; / &#xHHH;) so an entity nobody thought to name explicitly
+// still decodes correctly instead of leaking into the extracted text as-is.
+const NAMED_ENTITIES = {
+  mdash: '—', ndash: '–', rsquo: '’', lsquo: '‘', ldquo: '“', rdquo: '”',
+  hellip: '…', nbsp: ' ', amp: '&', lt: '<', gt: '>', quot: '"', apos: "'",
+};
+function decodeEntitiesForText(s) {
+  return s.replace(/&(#x[0-9a-fA-F]+|#\d+|[a-zA-Z]+);/g, (full, code) => {
+    if (code[0] === '#') {
+      const cp = code[1] === 'x' || code[1] === 'X' ? parseInt(code.slice(2), 16) : parseInt(code.slice(1), 10);
+      return Number.isFinite(cp) ? String.fromCodePoint(cp) : full;
+    }
+    return NAMED_ENTITIES[code] ?? full;
+  });
+}
+
+function stripTags(s) {
+  return decodeEntitiesForText(s.replace(/<[^>]+>/g, '')).replace(/\s+/g, ' ').trim();
+}
+
+// Auto-extract "Do"/"Don't" usage guidance from the section's own
+// `.sel-usage__card` blocks — the plain-prose judgment calls (when to reach
+// for this component vs. a neighbour, what not to do with it) that no
+// class-name or identifier list captures, but that genuinely change how a
+// reskin should apply the component. Automatic and unconditional — this is
+// the "bake it in" version of reading it by hand.
+function extractUsage(sectionHtml) {
+  if (!sectionHtml) return null;
+  const doItems = [];
+  const dontItems = [];
+  const cardRe = /<div class="sel-usage__tag sel-usage__tag--(do|dont)">[\s\S]*?<\/div>\s*<ul class="sel-usage__list">([\s\S]*?)<\/ul>/g;
+  let m;
+  while ((m = cardRe.exec(sectionHtml))) {
+    const kind = m[1];
+    const liRe = /<li>([\s\S]*?)<\/li>/g;
+    let li;
+    while ((li = liRe.exec(m[2]))) {
+      const text = stripTags(li[1]);
+      if (text) (kind === 'do' ? doItems : dontItems).push(text);
+    }
+  }
+  if (doItems.length === 0 && dontItems.length === 0) return null;
+  return { do: doItems, dont: dontItems };
+}
+
 if (classNames.length === 0 && constNames.length === 0 && status !== 'placeholder') {
   fail('provide at least --classes and/or --consts (or use --status placeholder)');
 }
@@ -165,7 +225,16 @@ for (const name of constNames) {
 }
 const jsText = jsParts.join('\n\n');
 
-const contentHash = crypto.createHash('sha256').update(cssText + '\n' + jsText).digest('hex');
+const sectionHtml = extractSectionHtml(html, sectionId);
+const usage = extractUsage(sectionHtml);
+
+// contentHash covers css + js + usage — if the Do/Don't guidance changes
+// without the CSS/JS changing, the tab should still be flagged stale, so
+// usage has to be part of what's hashed, not a side note that can silently
+// drift on its own.
+const contentHash = crypto.createHash('sha256')
+  .update(cssText + '\n' + jsText + '\n' + JSON.stringify(usage))
+  .digest('hex');
 
 const blob = { status };
 // Every identifier passed via --consts, not just the ones that happen to be
@@ -178,6 +247,7 @@ if (classNames.length) blob.realClasses = classNames.map(c => '.' + c);
 if (noReusableClass) blob.noReusableClass = true;
 if (cssText) blob.css = cssText;
 if (jsText) blob.js = jsText;
+if (usage) blob.usage = usage;
 blob.contentHash = contentHash;
 if (note) blob.note = note;
 
