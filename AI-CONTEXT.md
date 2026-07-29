@@ -99,6 +99,12 @@ tooling is told to trust it. So `css`/`js` are never hand-typed and never truste
    live `index.html`, extracts the real CSS rules matching a section's `realClasses` and the real
    source of its `builderFunctions`/data consts, and prints the full tab ready to paste in. Run it
    again and paste over the old tab whenever you touch that component's markup, CSS, or JS.
+   For sections that already have a tab, this also happens **automatically**: a `pre-commit` git hook
+   (`.githooks/pre-commit`, running `scripts/auto-update-ai-context.mjs`) re-derives every existing
+   tab's hash on every commit touching `index.html`, regenerates any that drifted, and re-stages the
+   file before the commit lands — enable it once per clone with `git config core.hooksPath .githooks`.
+   It only refreshes tabs that already exist; a brand-new component's first tab is still a deliberate
+   one-time manual step. See `CLAUDE.md` rule 5.
 2. **`contentHash`** is `sha256(css + "\n" + js + "\n" + JSON.stringify(usage))` — computed once at
    generation time over the exact `css`/`js` text embedded in the same tab plus the extracted `usage`
    object (or `null`), using the untrimmed strings exactly as embedded, joined with a single newline.
