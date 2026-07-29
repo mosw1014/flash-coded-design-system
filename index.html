@@ -1214,6 +1214,7 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
 #s-chips .cpg-layout__desc{font-size:20px;line-height:1.5;color:var(--chrome-muted)}
 #s-chips .cpg-layout__title--sm{font-size:20px;margin-bottom:8px}
 #s-chips .cpg-layout__desc--sm{font-size:13px}
+#s-chips .cpg-overview-heading{font-size:24px;font-weight:800;line-height:1.35;color:var(--chrome-txt);margin-bottom:24px}
 #s-chips #chip-code-playground{margin-bottom:32px}
 #s-chips .cpg-anatomy{margin-top:96px}
 #s-chips .chip-anatomy-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
@@ -3029,7 +3030,7 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
         </button>
         <h1 class="sec__title">Chips and pills</h1>
         <div class="chip-header-meta">
-          <span class="comp-ver-badge" style="margin-left:0">v1.6.0</span>
+          <span class="comp-ver-badge" style="margin-left:0">v1.6.1</span>
           <details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-chips">
@@ -7583,7 +7584,7 @@ function cpgRefresh(){
    demo, and a smaller copy on the Code tab) so both stay in sync with
    the same shared cpg state. */
 const CHIP_PLAYGROUND_MOUNTS = [
-  {rootId:'chip-playground', idSuffix:'', wrap:true, size:'lg', title:'Try the component', desc:'Use chips to show a status, mark a category, or let people pick a filter at a glance.'},
+  {rootId:'chip-playground', idSuffix:'', wrap:true, size:'lg', title:'Try the component', desc:'Adjust the filters to test component states.', headingAbove:'Use chips to show a status, mark a category, or let people pick a filter at a glance.'},
   {rootId:'chip-code-playground', idSuffix:'-code', wrap:false, size:'sm', title:'Playground', desc:'Live demo of the component.'},
 ];
 
@@ -7623,7 +7624,8 @@ function renderChipPlayground(){
           </div>
         </div>
       </div>`;
-    root.innerHTML = mount.wrap ? `<div class="cpg-section-block">${inner}</div>` : inner;
+    const wrapped = mount.wrap ? `<div class="cpg-section-block">${inner}</div>` : inner;
+    root.innerHTML = (mount.headingAbove ? `<div class="cpg-overview-heading">${mount.headingAbove}</div>` : '') + wrapped;
   });
 
   cpgRefresh();
@@ -8159,12 +8161,16 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.36.0';
+const SYSTEM_VERSION = '1.36.1';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.36.1', date:'2026-07-29', author:'Helen', title:'Chips & Pills — new heading above the Playground block, explainer updated', changes:[
+        ['added','New heading above the "Try the component" block on the Overview tab: "Use chips to show a status, mark a category, or let people pick a filter at a glance." (the sentence previously used as the block\'s own explainer)'],
+        ['changed','The block\'s explainer line now reads "Adjust the filters to test component states." instead; the Code tab\'s smaller Playground copy is unaffected and keeps its own heading/explainer'],
+      ]},
       {version:'1.36.0', date:'2026-07-29', author:'Helen', title:'Chips & Pills — Playground added to the Code tab', changes:[
         ['added','A second, smaller copy of the Playground now sits above the code snippet on the Code tab, with its own heading ("Playground") and explainer ("Live demo of the component."), unwrapped (no bordered block) unlike the Overview tab\'s copy'],
         ['changed','renderChipPlayground()/cpgRefresh() refactored to render into multiple mounts sharing the same cpg state (via CHIP_PLAYGROUND_MOUNTS), so changing a control or the label in either the Overview or Code tab\'s Playground updates both instantly — including the label input, which now syncs across mounts without disrupting whichever one is focused'],
@@ -8809,7 +8815,11 @@ const CHANGELOG = {
         ['added','“Tag or Chip?” guidance clarifying when to use each'],
       ]},
     ]},
-    {secId:'s-chips', name:'Chips & Pills', version:'1.6.0', entries:[
+    {secId:'s-chips', name:'Chips & Pills', version:'1.6.1', entries:[
+      {version:'1.6.1', date:'2026-07-29', author:'Helen', title:'New heading above the Playground block, explainer updated', changes:[
+        ['added','New heading above the "Try the component" block: "Use chips to show a status, mark a category, or let people pick a filter at a glance."'],
+        ['changed','Block\'s explainer line now reads "Adjust the filters to test component states."'],
+      ]},
       {version:'1.6.0', date:'2026-07-29', author:'Helen', title:'Playground added to the Code tab', changes:[
         ['added','A second, smaller copy of the Playground now sits above the code snippet on the Code tab ("Playground" / "Live demo of the component.")'],
         ['changed','Playground now renders into multiple mounts sharing the same state, so the Overview and Code tab copies stay in sync as you use either one'],
