@@ -1219,14 +1219,14 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
 #s-chips .chip-anatomy-badge{position:absolute;display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;margin:-10px;border-radius:50%;background:var(--chrome-accent-text);color:#fff;font-size:10px;font-weight:800;cursor:default}
 #s-chips .cpg-variants{margin-top:96px}
 #s-chips .chip-variants-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:16px}
+#s-chips .chip-variants-grid--pair{grid-template-columns:repeat(auto-fit,minmax(120px,160px));justify-content:start}
+#s-chips .chip-icono-group{margin-bottom:24px}
+#s-chips .chip-icono-group:last-child{margin-bottom:0}
+#s-chips .chip-icono-group__label{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--chrome-muted);margin-bottom:10px}
 #s-chips .chip-variant-cell{border:1px solid var(--chrome-border);border-radius:12px;overflow:hidden;background:var(--chrome-bg);transition:background .25s,border-color .25s}
 #s-chips .chip-variant-cell__stage{display:flex;align-items:center;justify-content:center;padding:24px 12px;min-height:60px;transition:background .25s}
 #s-chips .chip-variant-cell__name{padding:10px 12px 0;font-size:13px;font-weight:700;color:var(--chrome-txt);border-top:1px solid var(--chrome-border)}
 #s-chips .chip-variant-cell__desc{padding:2px 12px 12px;font-size:11.5px;color:var(--chrome-muted)}
-#s-chips .btn-pg__group--iconography{flex-direction:column;align-items:flex-start;gap:10px}
-#s-chips .btn-pg__subrows{display:flex;flex-direction:column;gap:8px;width:100%}
-#s-chips .btn-pg__subrow{display:flex;align-items:center;gap:14px}
-#s-chips .btn-pg__sublabel{font-size:11.5px;font-weight:600;color:var(--chrome-muted);width:60px;flex-shrink:0}
 #s-chips .chip-header-meta{display:flex;align-items:center;gap:8px;position:relative}
 #s-chips .chip-header-meta .ai-ctx{margin-top:0}
 #s-chips .chip-header-meta .ai-ctx summary{font-size:10px;font-weight:700;font-family:'SF Mono',monospace;letter-spacing:0;color:var(--chrome-muted);background:var(--chrome-nav);padding:2px 7px;border-radius:4px}
@@ -3022,7 +3022,7 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
         </button>
         <h1 class="sec__title">Chips and pills</h1>
         <div class="chip-header-meta">
-          <span class="comp-ver-badge" style="margin-left:0">v1.5.2</span>
+          <span class="comp-ver-badge" style="margin-left:0">v1.5.3</span>
           <details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-chips">
@@ -3062,6 +3062,7 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
       <div class="tabs-panel on" data-chip-panel="overview">
         <div id="chip-playground" class="type-sub"></div>
         <div id="chip-anatomy" class="type-sub"></div>
+        <div id="chip-iconography" class="type-sub"></div>
         <div id="chip-variants" class="type-sub"></div>
         <div id="chip-sizes" class="type-sub"></div>
       </div>
@@ -5656,6 +5657,7 @@ function toggleTheme() {
   try { if(typeof renderTextInputsSection==='function' && document.getElementById('ti-playground')) renderTextInputsSection(); } catch(e){}
   try { if(typeof renderChipPlayground==='function' && document.getElementById('chip-playground')) renderChipPlayground(); } catch(e){}
   try { if(typeof renderChipAnatomy==='function' && document.getElementById('chip-anatomy')) renderChipAnatomy(); } catch(e){}
+  try { if(typeof renderChipIconography==='function' && document.getElementById('chip-iconography')) renderChipIconography(); } catch(e){}
   try { if(typeof renderChipVariants==='function' && document.getElementById('chip-variants')) renderChipVariants(); } catch(e){}
   try { if(typeof renderChipSizes==='function' && document.getElementById('chip-sizes')) renderChipSizes(); } catch(e){}
   try { if(typeof renderTagsBadges==='function' && document.getElementById('tag-playground')) renderTagsBadges(); } catch(e){}
@@ -7591,13 +7593,8 @@ function renderChipPlayground(){
           <div class="btn-pg__ctrls">
             <div class="btn-pg__group"><span class="btn-pg__clabel">Variant</span><div class="btn-pg__pill-row">${varBtns}</div></div>
             <div class="btn-pg__group"><span class="btn-pg__clabel">Size</span><div class="btn-pg__pill-row">${szBtns}</div></div>
-            <div class="btn-pg__group btn-pg__group--iconography">
-              <span class="btn-pg__clabel">Iconography</span>
-              <div class="btn-pg__subrows">
-                <div class="btn-pg__subrow"><span class="btn-pg__sublabel">Icon</span><div class="btn-pg__pill-row">${iconBtns}</div></div>
-                <div class="btn-pg__subrow"><span class="btn-pg__sublabel">Dismiss</span><div class="btn-pg__pill-row">${rmBtns}</div></div>
-              </div>
-            </div>
+            <div class="btn-pg__group"><span class="btn-pg__clabel">Icon</span><div class="btn-pg__pill-row">${iconBtns}</div></div>
+            <div class="btn-pg__group"><span class="btn-pg__clabel">Dismiss</span><div class="btn-pg__pill-row">${rmBtns}</div></div>
             <div class="btn-pg__group"><span class="btn-pg__clabel">Behaviour</span><div class="btn-pg__pill-row">${selBtns}</div></div>
             <div class="btn-pg__group"><span class="btn-pg__clabel">Label</span><input class="cpg-label-input" id="cpg-label-input" value="${cpgEsc(cpg.label)}" maxlength="24" oninput="cpgSetLabel(this.value)" placeholder="Chip"></div>
           </div>
@@ -7718,6 +7715,50 @@ function annotateChipStage(stage, annots){
   stage.insertAdjacentHTML('beforeend', html);
 }
 
+function renderChipIconography(){
+  const root = document.getElementById('chip-iconography');
+  if(!root) return;
+  const theme = currentTheme();
+  const v = CHIP_VARIANTS.find(x=>x.key==='accent') || CHIP_VARIANTS[0];
+  const c = v[theme];
+  const sz = CHIP_SIZES.find(s=>s.key==='reg') || CHIP_SIZES[1];
+  const chipStyle = `--chip-bg:${c.bg};--chip-text:${c.text};font-size:${sz.fs}px;gap:${sz.gap}px;padding:0 ${sz.padX}px 0 ${sz.padX-2}px`;
+  const iconSvg = chipHeartSVG(sz.icon, c.text);
+  const xSize = Math.round(sz.icon*0.82);
+  const dismissBtn = `<button class="chip__x" type="button" tabindex="-1" aria-hidden="true"><svg width="${xSize}" height="${xSize}" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg></button>`;
+
+  const cell = (chipHtml, name, desc) => `
+    <div class="chip-variant-cell">
+      <div class="chip-variant-cell__stage" style="background:${stageBg(theme)}">${chipHtml}</div>
+      <div class="chip-variant-cell__name">${name}</div>
+      <div class="chip-variant-cell__desc">${desc}</div>
+    </div>`;
+
+  const iconCells = cell(`<span class="chip chip--reg" style="${chipStyle}"><span class="chip__label">Chip</span></span>`, 'No icon', 'Label only')
+    + cell(`<span class="chip chip--reg" style="${chipStyle}">${iconSvg}<span class="chip__label">Chip</span></span>`, 'With icon', 'Leading icon');
+
+  const dismissCells = cell(`<span class="chip chip--reg" style="${chipStyle}">${iconSvg}<span class="chip__label">Chip</span></span>`, 'Static', 'Display only')
+    + cell(`<span class="chip chip--reg" style="${chipStyle}">${iconSvg}<span class="chip__label">Chip</span>${dismissBtn}</span>`, 'Removable', 'Adds a close icon');
+
+  root.innerHTML = `
+    <div class="cpg-layout cpg-variants">
+      <div class="cpg-layout__intro">
+        <div class="cpg-layout__title">Iconography</div>
+        <div class="cpg-layout__desc">Chips can show a leading icon, and removable chips add a close icon.</div>
+      </div>
+      <div class="cpg-layout__demo">
+        <div class="chip-icono-group">
+          <div class="chip-icono-group__label">Icon</div>
+          <div class="chip-variants-grid chip-variants-grid--pair">${iconCells}</div>
+        </div>
+        <div class="chip-icono-group">
+          <div class="chip-icono-group__label">Dismiss</div>
+          <div class="chip-variants-grid chip-variants-grid--pair">${dismissCells}</div>
+        </div>
+      </div>
+    </div>`;
+}
+
 function renderChipVariants(){
   const root = document.getElementById('chip-variants');
   if(!root) return;
@@ -7827,6 +7868,7 @@ function renderChipReference(){
 try { renderChipCodeTab(); } catch(e){ console.error('chip-code-tab',e); }
 try { renderChipPlayground(); } catch(e){ console.error('chip-playground',e); }
 try { renderChipAnatomy(); } catch(e){ console.error('chip-anatomy',e); }
+try { renderChipIconography(); } catch(e){ console.error('chip-iconography',e); }
 try { renderChipVariants(); } catch(e){ console.error('chip-variants',e); }
 try { renderChipSizes(); } catch(e){ console.error('chip-sizes',e); }
 try { renderChipReference(); } catch(e){ console.error('chip-reference',e); }
@@ -8093,12 +8135,16 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.35.2';
+const SYSTEM_VERSION = '1.35.3';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.35.3', date:'2026-07-29', author:'Helen', title:'Chips & Pills — Iconography redone as its own Overview section', changes:[
+        ['changed','Reverted the previous change that merged the Playground\'s "Icon" and "Dismiss" controls into one group — they\'re back to two separate rows, matching every other control'],
+        ['added','New "Iconography" section on the Overview tab (below Anatomy), matching the Anatomy/Variants/Size heading-left, visuals-right format: the Icon behaviour (No icon / With icon) and Dismiss behaviour (Static / Removable) shown as labelled swatches, grouped under their own sub-headings'],
+      ]},
       {version:'1.35.2', date:'2026-07-29', author:'Helen', title:'Chips & Pills — Iconography grouping, AI context moved to header, Changelog tab always open', changes:[
         ['changed','Playground\'s separate "Icon" and "Dismiss" controls combined under one "Iconography" group label, each keeping its own sub-label (Icon / Dismiss) above its pill row'],
         ['changed','AI context disclosure moved from the Code tab to sit next to the version pill under the main heading, restyled to match the version pill\'s small monospace badge look (scoped to this instance only — other sections\' AI context tabs keep their original low-key style)'],
@@ -8728,7 +8774,11 @@ const CHANGELOG = {
         ['added','“Tag or Chip?” guidance clarifying when to use each'],
       ]},
     ]},
-    {secId:'s-chips', name:'Chips & Pills', version:'1.5.2', entries:[
+    {secId:'s-chips', name:'Chips & Pills', version:'1.5.3', entries:[
+      {version:'1.5.3', date:'2026-07-29', author:'Helen', title:'Iconography redone as its own Overview section', changes:[
+        ['changed','Reverted the merged Playground "Icon"/"Dismiss" group back to two separate control rows'],
+        ['added','New "Iconography" section on the Overview tab (below Anatomy): Icon (No icon/With icon) and Dismiss (Static/Removable) shown as labelled swatches, matching the Anatomy/Variants/Size format'],
+      ]},
       {version:'1.5.2', date:'2026-07-29', author:'Helen', title:'Iconography grouping, AI context moved to header, Changelog tab always open', changes:[
         ['changed','Playground\'s "Icon" and "Dismiss" controls combined under one "Iconography" group label'],
         ['changed','AI context disclosure moved from the Code tab to sit next to the version pill under the heading, restyled to match the version pill'],
