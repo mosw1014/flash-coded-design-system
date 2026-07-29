@@ -70,7 +70,7 @@ function findMatchingClose(html, openIndex) {
 }
 
 function extractConst(html, name) {
-  const re = new RegExp(`const\\s+${escapeRegex(name)}\\s*=`);
+  const re = new RegExp(`(?:const|let|var)\\s+${escapeRegex(name)}\\s*=`);
   const m = re.exec(html);
   if (!m) return null;
   let i = m.index + m[0].length;
