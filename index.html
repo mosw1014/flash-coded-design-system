@@ -154,7 +154,7 @@
 ================================================================ */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{font-size:14px;scroll-behavior:smooth}
-body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:var(--chrome-bg);color:var(--chrome-txt);min-height:100vh;transition:background .25s,color .25s}
+body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;font-feature-settings:'ss01' 1,'ss03' 1;background:var(--chrome-bg);color:var(--chrome-txt);min-height:100vh;transition:background .25s,color .25s}
 ::-webkit-scrollbar{width:5px;height:5px}
 ::-webkit-scrollbar-track{background:transparent}
 ::-webkit-scrollbar-thumb{background:var(--chrome-border);border-radius:3px}
@@ -187,7 +187,7 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
 
 /* Sidebar */
 .sidebar{width:210px;flex-shrink:0;background:var(--chrome-nav);border-right:1px solid var(--chrome-border);position:sticky;top:52px;height:calc(100vh - 52px);overflow-y:auto;padding:20px 0;transition:background .25s}
-.sb-cat{display:flex;align-items:center;gap:8px;font-size:9.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--chrome-muted);padding:0 16px;margin:18px 0 5px}
+.sb-cat{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:800;letter-spacing:0;text-transform:lowercase;color:var(--chrome-muted);padding:0 16px;margin:18px 0 5px}
 .sb-cat:first-child{margin-top:0}
 .sb-cat::after{content:'';flex:1;height:1px;background:var(--chrome-border)}
 .sb-link{display:flex;align-items:center;gap:8px;padding:7px 16px;font-size:12.5px;font-weight:500;color:var(--chrome-muted);text-decoration:none;border-left:2px solid transparent;transition:all .15s}
@@ -196,6 +196,68 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
 .sb-icon{width:15px;height:15px;flex-shrink:0;color:var(--chrome-muted);transition:color .15s}
 .sb-link:hover .sb-icon{color:var(--chrome-txt)}
 .sb-link.on .sb-icon{color:var(--chrome-accent-text)}
+
+/* ===== Sidebar category as landing link ===== */
+.sb-cat--link{cursor:pointer;background:none;border:0;font:inherit;text-align:left;text-decoration:none;color:var(--chrome-muted);transition:color .15s}
+.sb-cat--link:hover{color:var(--chrome-txt)}
+.sb-cat--link.on{color:var(--chrome-accent-text)}
+/* ===== Breadcrumb ===== */
+.crumb{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:600;margin-bottom:16px}
+.crumb__link{color:var(--chrome-muted);text-decoration:none;transition:color .15s;cursor:pointer}
+.crumb__link:hover{color:var(--chrome-txt)}
+.crumb__sep{color:var(--chrome-border);font-weight:400}
+.crumb__here{color:var(--chrome-txt);font-weight:700}
+/* ===== Landing grid + cards ===== */
+.lp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px}
+.lp-card{display:flex;flex-direction:column;border:1px solid var(--chrome-border);border-radius:16px;background:var(--chrome-bg);overflow:hidden;text-decoration:none;cursor:pointer;transition:transform .15s,border-color .15s,box-shadow .15s}
+.lp-card:hover{transform:translateY(-3px);border-color:var(--color-text-s);box-shadow:0 12px 32px rgba(0,0,0,.10)}
+.lp-prev{position:relative;height:178px;display:flex;align-items:center;justify-content:center;background:var(--chrome-nav);border-bottom:1px solid var(--chrome-border);overflow:hidden}
+.lp-card__meta{padding:15px 18px 17px}
+.lp-card__row{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:5px}
+.lp-card__name{font-size:15.5px;font-weight:800;color:var(--chrome-txt)}
+.lp-card__tag{font-family:'SF Mono',monospace;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--color-brand);border:1px solid var(--color-brand);border-radius:999px;padding:2px 8px}
+.lp-card__desc{font-size:12.5px;line-height:1.5;color:var(--chrome-muted)}
+/* ===== Mock primitives ===== */
+.mk{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;width:100%;padding:0 22px}
+.mk-col{flex-direction:column}
+.mk-pill{height:30px;padding:0 15px;border-radius:999px;font:800 12px 'Satoshi',sans-serif;display:inline-flex;align-items:center;white-space:nowrap}
+.mk-pill--dark{background:var(--chrome-txt);color:var(--chrome-bg)}
+.mk-pill--brand{background:var(--color-brand);color:#000}
+.mk-pill--ghost{background:transparent;color:var(--chrome-txt);border:1.5px solid var(--chrome-border)}
+.mk-card{background:var(--chrome-bg);border:1px solid var(--chrome-border);border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,.12)}
+.mk-bar{height:9px;border-radius:6px;background:var(--chrome-border);display:block}
+.mk-bar--brand{background:var(--color-brand)}
+.mk-bar--txt{background:var(--chrome-txt);opacity:.85}
+.mk-chip{height:27px;padding:0 12px;border-radius:999px;background:var(--chrome-bg);border:1px solid var(--chrome-border);font:700 11px 'Satoshi',sans-serif;display:inline-flex;align-items:center;gap:6px;color:var(--chrome-txt);white-space:nowrap}
+.mk-dot{width:7px;height:7px;border-radius:50%;background:var(--color-brand);flex:none}
+.mk-sq{border-radius:7px;background:var(--chrome-border)}
+.mk-circle{border-radius:50%;background:var(--chrome-border);flex:none}
+.mk-glyph{width:26px;height:26px;color:var(--chrome-txt);display:inline-flex}
+.mk-glyph svg{width:100%;height:100%;fill:currentColor}
+.mk-sk{display:flex;flex-direction:column;gap:9px;width:66%}
+.mk-sk__row{height:11px;border-radius:6px;background:var(--chrome-border)}
+.mk-sk__row.s2{width:80%}
+.mk-sk__row.s3{width:55%}
+.mk-spin{width:40px;height:40px;border-radius:50%;border:4px solid var(--chrome-border);border-top-color:var(--color-brand);animation:mk-spin 1s linear infinite}
+@keyframes mk-spin{to{transform:rotate(360deg)}}
+.mk-switch{width:52px;height:30px;border-radius:999px;background:var(--color-brand);position:relative}
+.mk-switch::after{content:'';position:absolute;top:4px;right:4px;width:22px;height:22px;border-radius:50%;background:#fff}
+.mk-seg{display:flex;border:1px solid var(--chrome-border);border-radius:9px;overflow:hidden}
+.mk-seg span{padding:8px 16px;font:700 11px 'Satoshi',sans-serif;color:var(--chrome-muted)}
+.mk-seg span.on{background:var(--chrome-txt);color:var(--chrome-bg)}
+.mk-check{width:26px;height:26px;border-radius:7px;background:var(--color-brand);display:flex;align-items:center;justify-content:center}
+.mk-check svg{width:15px;height:15px;fill:none;stroke:#fff;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.mk-radio{width:26px;height:26px;border-radius:50%;border:3px solid var(--color-brand);display:flex;align-items:center;justify-content:center}
+.mk-radio::after{content:'';width:11px;height:11px;border-radius:50%;background:var(--color-brand)}
+.mk-slider{width:70%;height:6px;border-radius:999px;background:var(--chrome-border);position:relative}
+.mk-slider__fill{position:absolute;left:0;top:0;height:100%;width:55%;border-radius:999px;background:var(--color-brand)}
+.mk-slider__thumb{position:absolute;left:55%;top:50%;transform:translate(-50%,-50%);width:18px;height:18px;border-radius:50%;background:var(--color-brand);box-shadow:0 2px 6px rgba(0,0,0,.3)}
+.mk-otp{display:flex;gap:8px}
+.mk-otp span{width:34px;height:42px;border-radius:8px;border:1.5px solid var(--chrome-border);display:flex;align-items:center;justify-content:center;font:800 18px 'Satoshi',sans-serif;color:var(--chrome-txt)}
+.mk-otp span.on{border-color:var(--chrome-txt)}
+.mk-key{min-width:30px;height:30px;padding:0 8px;border-radius:7px;border:1px solid var(--chrome-border);border-bottom-width:3px;background:var(--chrome-bg);font:800 13px 'Satoshi',sans-serif;color:var(--chrome-txt);display:inline-flex;align-items:center;justify-content:center}
+.mk-tip{position:relative;background:var(--chrome-txt);color:var(--chrome-bg);font:700 11px 'Satoshi',sans-serif;padding:7px 11px;border-radius:8px}
+.mk-tip::after{content:'';position:absolute;left:50%;bottom:-5px;transform:translateX(-50%);border:5px solid transparent;border-top-color:var(--chrome-txt);border-bottom:0}
 .sb-tag{margin-left:auto;font-size:9.5px;padding:1px 6px;border-radius:10px;background:var(--chrome-border);color:var(--chrome-muted);white-space:nowrap}
 
 /* Main */
@@ -206,7 +268,7 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
 ================================================================ */
 .sec{margin-bottom:72px}
 .sec__head{margin-bottom:0;padding-bottom:20px;border-bottom:1px solid var(--chrome-border)}
-.sec__eye{font-size:10.5px;font-weight:700;letter-spacing:1.8px;text-transform:uppercase;color:var(--chrome-accent-text);margin-bottom:10px;transition:color .25s}
+.sec__eye{font-size:13px;font-weight:800;letter-spacing:0;text-transform:lowercase;color:var(--chrome-accent-text);margin-bottom:10px;transition:color .25s}
 .sec__title{font-size:26px;font-weight:900;color:var(--chrome-txt);margin-bottom:8px}
 .sec__desc{font-size:13px;line-height:1.65;color:var(--chrome-muted);max-width:560px}
 .coming{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;min-height:110px;border-radius:10px;border:1.5px dashed var(--chrome-border);color:var(--chrome-muted);font-size:13px;font-weight:500;text-align:center;padding:24px;margin-top:28px}
@@ -936,7 +998,7 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
   background-image:radial-gradient(circle at 90% 50%, rgba(29,250,15,0.16), transparent 60%);
 }
 .brand-cta:hover{transform:translateY(-2px)}
-.brand-cta__label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#1dfa0f;margin-bottom:4px}
+.brand-cta__label{font-size:12px;font-weight:800;text-transform:lowercase;letter-spacing:0;color:#1dfa0f;margin-bottom:4px}
 .brand-cta__title{font-family:'Satoshi',sans-serif;font-weight:900;font-size:22px;color:#fff}
 
 /* ── CHANGELOG ── */
@@ -2052,7 +2114,7 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
 .car__dot.is-active{background:var(--color-surface-inverse);width:20px;border-radius:4px}
 /* ---- Icons (Foundations) ---- */
 .icn{--icn-size:24px;display:inline-flex;align-items:center;justify-content:center;width:var(--icn-size);height:var(--icn-size);color:var(--chrome-txt);flex-shrink:0}
-.icn svg{display:block;width:100%;height:100%;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.icn svg{display:block;width:100%;height:100%;fill:currentColor;stroke:none}
 .icn--sm{--icn-size:16px}
 .icn--lg{--icn-size:32px}
 .icn--xl{--icn-size:48px}
@@ -2070,6 +2132,19 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
 .icn-tile:hover{background:var(--chrome-hover);border-color:var(--color-text-s)}
 .icn-tile__name{font-size:10.5px;color:var(--chrome-muted);text-align:center;word-break:break-word}
 .icn-tile.copied .icn-tile__name{color:var(--color-success-h);font-weight:700}
+/* ---- Logos (Brand) ---- */
+.logo-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px}
+.logo-card{border:1px solid var(--chrome-border);border-radius:12px;overflow:hidden;background:var(--chrome-bg);display:flex;flex-direction:column}
+.logo-card__stage{display:flex;align-items:center;justify-content:center;padding:28px;min-height:120px;border-bottom:1px solid var(--chrome-border)}
+.logo-card__stage--light{background:#ffffff}
+.logo-card__stage--dark{background:#17181d}
+.logo-card__img{max-width:100%;max-height:96px;display:block}
+.logo-card__meta{padding:12px 14px 14px;display:flex;flex-direction:column;gap:8px}
+.logo-card__name{font-size:13px;font-weight:700;color:var(--chrome-txt)}
+.logo-card__desc{font-size:11.5px;color:var(--chrome-muted);line-height:1.4}
+.logo-card__actions{display:flex;gap:8px;margin-top:2px}
+.logo-dl{display:inline-flex;align-items:center;justify-content:center;height:30px;padding:0 14px;border-radius:999px;border:1px solid var(--chrome-border);font-size:11.5px;font-weight:700;color:var(--chrome-txt);text-decoration:none;background:transparent;transition:background .12s,border-color .12s;font-family:inherit;cursor:pointer}
+.logo-dl:hover{background:var(--chrome-hover);border-color:var(--color-text-s)}
 
 /* ---- Navigation / Side Nav ----
    Rebuilt to match the Figma SideNav (node 3608:32365): Regular size mirrors the
@@ -2239,55 +2314,7 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
 <div class="layout">
 
   <!-- SIDEBAR -->
-  <aside class="sidebar">
-    <div class="sb-cat">Overview</div>
-    <a href="javascript:void(0)" onclick="showSection('s-brand')" class="sb-link on"><svg class="sb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5"/><path d="M5.5 9.5V20a1 1 0 0 0 1 1H9a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1h2.5a1 1 0 0 0 1-1V9.5"/></svg>Introduction</a>
-    <div class="sb-cat">Brand</div>
-    <a href="javascript:void(0)" onclick="showSection('s-colours')" class="sb-link"><svg class="sb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="9" r="5"/><circle cx="15" cy="9" r="5"/><circle cx="12" cy="15" r="5"/></svg>Colours</a>
-    <a href="javascript:void(0)" onclick="showSection('s-type')"    class="sb-link"><svg class="sb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 6h14M5 12h9M5 18h6"/></svg>Typography</a>
-    <a href="javascript:void(0)" onclick="showSection('s-spacing')" class="sb-link"><svg class="sb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.5"/></svg>Spacing &amp; Grid</a>
-    <a href="javascript:void(0)" onclick="showSection('s-elev')"    class="sb-link"><svg class="sb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 4.5-8 4.5-8-4.5L12 3Z"/><path d="M4 12.5 12 17l8-4.5"/><path d="M4 16.5 12 21l8-4.5"/></svg>Elevation</a>
-    <a href="javascript:void(0)" onclick="showSection('s-icons')"   class="sb-link"><svg class="sb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5l2.6 5.6 6 .7-4.5 4.1 1.3 6-5.4-3-5.4 3 1.3-6-4.5-4.1 6-.7L12 3.5Z"/></svg>Icons</a>
-    <div class="sb-cat">Components</div>
-    <a href="javascript:void(0)" onclick="showSection('s-buttons')" class="sb-link"><svg class="sb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="8" width="18" height="8" rx="4"/></svg>Buttons</a>
-    <a href="javascript:void(0)" onclick="showSection('s-inputs')"  class="sb-link"><svg class="sb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="18" height="10" rx="2"/><path d="M8 10.5v3"/></svg>Text Inputs</a>
-    <a href="javascript:void(0)" onclick="showSection('s-selection')" class="sb-link"><svg class="sb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M8 12.5l2.5 2.5L16 9.5"/></svg>Checkboxes &amp; Radios</a>
-    <a href="javascript:void(0)" onclick="showSection('s-tags')"    class="sb-link"><svg class="sb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12.6 3.5H5A1.5 1.5 0 0 0 3.5 5v7.6c0 .4.15.78.44 1.06l8.4 8.4c.58.58 1.53.58 2.12 0l6.6-6.6c.58-.58.58-1.53 0-2.12l-8.4-8.4a1.5 1.5 0 0 0-1.06-.44Z"/><circle cx="8.2" cy="8.2" r="1.3" fill="currentColor" stroke="none"/></svg>Tags &amp; Badges</a>
-    <a href="javascript:void(0)" onclick="showSection('s-chips')"   class="sb-link"><svg class="sb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="8.5" width="18" height="7" rx="3.5"/><circle cx="17" cy="12" r="1.4" fill="currentColor" stroke="none"/></svg>Chips &amp; Pills</a>
-    <a href="javascript:void(0)" onclick="showSection('s-cards')"   class="sb-link"><svg class="sb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.2"/><path d="M3 10h18"/></svg>Cards</a>
-    <a href="javascript:void(0)" onclick="showSection('s-drawers')" class="sb-link"><svg class="sb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="6" width="17" height="14" rx="2.5"/><path d="M10.5 9h3"/></svg>Bottom Sheets</a>
-    <a href="javascript:void(0)" onclick="showSection('s-nav')"     class="sb-link"><svg class="sb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="4" width="17" height="16" rx="2.2"/><path d="M9 4v16"/></svg>Navigation</a>
-    <a href="javascript:void(0)" onclick="showSection('s-tabs')"    class="sb-link"><svg class="sb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="5" width="6" height="4" rx="1.2"/><rect x="11" y="5" width="6" height="4" rx="1.2"/><rect x="4" y="10.5" width="16" height="8.5" rx="2"/></svg>Tabs</a>
-    <a href="javascript:void(0)" onclick="showSection('s-dropdown')" class="sb-link"><svg class="sb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4.5" width="16" height="15" rx="2.2"/><path d="M8.5 10.5l3.5 3.5 3.5-3.5"/></svg>Dropdown</a>
-    <a href="javascript:void(0)" onclick="showSection('s-data')"    class="sb-link"><svg class="sb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="4" width="7" height="7" rx="1.5"/><rect x="13.5" y="4" width="7" height="7" rx="1.5"/><path d="M3.5 15h17M3.5 19h10"/></svg>Data Display</a>
-    <a href="javascript:void(0)" onclick="showSection('s-tables')"  class="sb-link"><svg class="sb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="4.5" width="17" height="15" rx="2"/><path d="M3.5 10h17M3.5 15h17M10 4.5v15"/></svg>Tables</a>
-    <a href="javascript:void(0)" onclick="showSection('s-accordion')" class="sb-link"><svg class="sb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="4.5" width="17" height="4.5" rx="1.4"/><path d="M17 6.7l-1.6 1.6-1.6-1.6"/><rect x="3.5" y="10.5" width="17" height="4" rx="1.2"/><rect x="3.5" y="16" width="17" height="4" rx="1.2"/></svg>Accordion</a>
-    <a href="javascript:void(0)" onclick="showSection('s-alert')" class="sb-link"><svg class="sb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5 22 20H2L12 3.5Z"/><path d="M12 10v4.5"/><circle cx="12" cy="17.3" r="0.9" fill="currentColor" stroke="none"/></svg>Alert</a>
-    <a href="javascript:void(0)" onclick="showSection('s-avatar')" class="sb-link"><svg class="sb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="3.5"/><path d="M4.5 20c0-4.1 3.4-7 7.5-7s7.5 2.9 7.5 7"/></svg>Avatar</a>
-    <a href="javascript:void(0)" onclick="showSection('s-breadcrumb')" class="sb-link"><svg class="sb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h3M9.5 7l5 5-5 5M16 7l5 5-5 5"/></svg>Breadcrumb</a>
-    <a href="javascript:void(0)" onclick="showSection('s-calendar')" class="sb-link"><svg class="sb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4.5" width="18" height="16" rx="2.5"/><path d="M3 9h18M8 2.5v4M16 2.5v4"/></svg>Calendar</a>
-    <a href="javascript:void(0)" onclick="showSection('s-carousel')" class="sb-link"><svg class="sb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6.5" y="5" width="11" height="14" rx="1.8"/><path d="M3.5 8.5v7M20.5 8.5v7"/></svg>Carousel</a>
-    <a href="javascript:void(0)" onclick="showSection('s-charts')" class="sb-link"><svg class="sb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="13" width="3.2" height="7" rx="0.8"/><rect x="10.4" y="9" width="3.2" height="11" rx="0.8"/><rect x="16.8" y="5" width="3.2" height="15" rx="0.8"/></svg>Charts</a>
-    <a href="javascript:void(0)" onclick="showSection('s-command')" class="sb-link"><svg class="sb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.8-3.8"/></svg>Command</a>
-    <a href="javascript:void(0)" onclick="showSection('s-context-menu')" class="sb-link"><svg class="sb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="5" cy="12" r="1.4" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.4" fill="currentColor" stroke="none"/><circle cx="19" cy="12" r="1.4" fill="currentColor" stroke="none"/></svg>Context Menu</a>
-    <a href="javascript:void(0)" onclick="showSection('s-hover-card')" class="sb-link"><svg class="sb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v6"/><circle cx="12" cy="7.8" r="0.9" fill="currentColor" stroke="none"/></svg>Hover Card</a>
-    <a href="javascript:void(0)" onclick="showSection('s-input-otp')" class="sb-link"><svg class="sb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="8" width="4" height="8" rx="1.2"/><rect x="7.2" y="8" width="4" height="8" rx="1.2"/><rect x="12.4" y="8" width="4" height="8" rx="1.2"/><rect x="17.6" y="8" width="4" height="8" rx="1.2"/></svg>Input OTP</a>
-    <a href="javascript:void(0)" onclick="showSection('s-kbd')" class="sb-link"><svg class="sb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="7" width="16" height="11" rx="2.5"/><path d="M9 12.5h6"/></svg>Keyboard Shortcuts</a>
-    <a href="javascript:void(0)" onclick="showSection('s-pagination')" class="sb-link"><svg class="sb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 7l-2.2 5L5 17"/><path d="M19 7l2.2 5L19 17"/><circle cx="12" cy="12" r="1.3" fill="currentColor" stroke="none"/></svg>Pagination</a>
-    <a href="javascript:void(0)" onclick="showSection('s-popover')" class="sb-link"><svg class="sb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5.5h16a1.5 1.5 0 0 1 1.5 1.5v8a1.5 1.5 0 0 1-1.5 1.5H9l-4 3.5v-3.5H4A1.5 1.5 0 0 1 2.5 15V7A1.5 1.5 0 0 1 4 5.5Z"/></svg>Popover</a>
-    <a href="javascript:void(0)" onclick="showSection('s-separator')" class="sb-link"><svg class="sb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v16"/><path d="M8 4h8M8 20h8"/></svg>Separator</a>
-    <a href="javascript:void(0)" onclick="showSection('s-skeleton')" class="sb-link"><svg class="sb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="6" width="16" height="3" rx="1.5"/><rect x="4" y="11" width="11" height="3" rx="1.5"/><rect x="4" y="16" width="7" height="3" rx="1.5"/></svg>Skeleton</a>
-    <a href="javascript:void(0)" onclick="showSection('s-slider')" class="sb-link"><svg class="sb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h18"/><circle cx="14" cy="12" r="3"/></svg>Slider</a>
-    <a href="javascript:void(0)" onclick="showSection('s-spinner')" class="sb-link"><svg class="sb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 11A8 8 0 0 0 6.3 6.3L4 8.5"/><path d="M4 4v4.5h4.5"/><path d="M4 13a8 8 0 0 0 13.7 4.7L20 15.5"/><path d="M20 20v-4.5h-4.5"/></svg>Spinner</a>
-    <a href="javascript:void(0)" onclick="showSection('s-switch')" class="sb-link"><svg class="sb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="7" width="19" height="10" rx="5"/><circle cx="16" cy="12" r="3.3" fill="currentColor" stroke="none"/></svg>Switch</a>
-    <a href="javascript:void(0)" onclick="showSection('s-toggle-group')" class="sb-link"><svg class="sb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="8" width="19" height="8" rx="2"/><path d="M9.2 8v8M14.8 8v8"/><rect x="9.4" y="8.5" width="5.2" height="7" fill="currentColor" stroke="none"/></svg>Toggle Group</a>
-    <a href="javascript:void(0)" onclick="showSection('s-tooltip')" class="sb-link"><svg class="sb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="5" width="16" height="9" rx="2.2"/><path d="M10.5 14l1.5 3 1.5-3"/></svg>Tooltip</a>
-    <div class="sb-cat">Coming soon</div>
-    <a href="javascript:void(0)" onclick="showSection('s-modals')"  class="sb-link"><svg class="sb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2.5"/><path d="M4 9h16"/></svg>Modals<span class="sb-tag">Soon</span></a>
-    <a href="javascript:void(0)" onclick="showSection('s-toasts')"  class="sb-link"><svg class="sb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9a6 6 0 0 1 12 0c0 4 1.5 5.5 1.5 6.5H4.5C4.5 14.5 6 13 6 9Z"/><path d="M9.5 19a2.5 2.5 0 0 0 5 0"/></svg>Toasts<span class="sb-tag">Soon</span></a>
-    <div class="sb-cat">About</div>
-    <a href="javascript:void(0)" onclick="showSection('s-changelog')" class="sb-link"><svg class="sb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12.5" r="8.5"/><path d="M12 7.5V12.5l4 2"/></svg>Changelog</a>
-  </aside>
+  <aside class="sidebar" id="sidebar"></aside>
 
   <!-- MAIN -->
   <main class="main">
@@ -2503,7 +2530,7 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
       <div class="sec__head">
         <div class="sec__eye">Foundations</div>
         <h1 class="sec__title">Icons <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.0</span></h1>
-        <p class="sec__desc">A set of outline icons built as inline SVG on a shared 24&times;24 grid &mdash; no icon font, no build step. Every icon is fully customisable with plain CSS: set <code>color</code> to recolour, and the <code>--icn-size</code> custom property (or width/height) to resize.</p>
+        <p class="sec__desc">Font Awesome Solid icons, vendored as inline SVG &mdash; no icon font, no build step, no external requests. Every icon is fully customisable with plain CSS: set <code>color</code> to recolour, and the <code>--icn-size</code> custom property (or width/height) to resize. Icons by <a href="https://fontawesome.com" target="_blank" rel="noopener">Font Awesome</a>, used under <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a>.</p>
       </div>
       <div class="type-sub">
         <div class="type-sub__title">Customise size &amp; colour</div>
@@ -2540,12 +2567,13 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
       </div>
       <div class="type-sub">
         <div class="type-sub__title">Anatomy &amp; specs</div>
-        <div class="type-sub__desc">One consistent grid and stroke weight, so any icon can substitute for another without a visual seam.</div>
+        <div class="type-sub__desc">Every icon is Font Awesome Solid &mdash; a single filled shape, so any icon can substitute for another without a visual seam.</div>
         <div class="dd-table-wrap"><table class="dd-table">
           <thead><tr><th>Property</th><th>Value</th></tr></thead>
           <tbody>
-            <tr><td class="dd-table__name">Grid</td><td>24 &times; 24 viewBox</td></tr>
-            <tr><td class="dd-table__name">Stroke</td><td>1.8px, round caps &amp; joins</td></tr>
+            <tr><td class="dd-table__name">Source</td><td>Font Awesome 6 Solid, vendored as inline SVG</td></tr>
+            <tr><td class="dd-table__name">Fill</td><td><code>currentColor</code>, no stroke</td></tr>
+            <tr><td class="dd-table__name">Grid</td><td>Per-icon viewBox (Font Awesome's native proportions)</td></tr>
             <tr><td class="dd-table__name">Colour</td><td><code>currentColor</code> &mdash; set <code>color</code> on <code>.icn</code></td></tr>
             <tr><td class="dd-table__name">Size</td><td><code>--icn-size</code> custom property (default 24px)</td></tr>
             <tr><td class="dd-table__name">Markup</td><td><code>&lt;span class="icn"&gt;&lt;svg&gt;&hellip;&lt;/svg&gt;&lt;/span&gt;</code></td></tr>
@@ -2559,7 +2587,7 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
           <div class="sel-usage__card">
             <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
             <ul class="sel-usage__list">
-              <li>Keep every icon on the same 24px grid and 1.8px stroke &mdash; never mix weights.</li>
+              <li>Stick to Font Awesome Solid throughout &mdash; never mix in outline or other icon sets.</li>
               <li>Recolour and resize with <code>color</code> and <code>--icn-size</code>, not by editing the SVG.</li>
               <li>Label icon-only buttons with <code>aria-label</code> or a tooltip.</li>
             </ul>
@@ -2567,9 +2595,154 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;background:va
           <div class="sel-usage__card">
             <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don&rsquo;t</div>
             <ul class="sel-usage__list">
-              <li>Don&rsquo;t mix filled and outline styles in the same view.</li>
+              <li>Don&rsquo;t mix Solid with other Font Awesome styles (Regular, Light, Duotone) in the same view.</li>
               <li>Don&rsquo;t use an icon alone for a critical, unfamiliar action.</li>
               <li>Don&rsquo;t hardcode a fill colour on an icon &mdash; it breaks dark mode.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec" id="s-logos">
+      <div class="sec__head">
+        <div class="sec__eye">Brand</div>
+        <h1 class="sec__title">Logos</h1>
+        <p class="sec__desc">The Flash mark and wordmark, in the four supported colour treatments &mdash; each as a horizontal lockup and a stacked lockup. Every tile is downloadable as SVG or PNG.</p>
+      </div>
+      <div class="type-sub">
+        <div class="type-sub__title">Primary</div>
+        <div class="type-sub__desc">Green mark, black wordmark. Default lockup for light backgrounds.</div>
+        <div class="logo-grid">
+          <div class="logo-card">
+            <div class="logo-card__stage logo-card__stage--light"><img class="logo-card__img" src="assets/logos/flash-logo-primary.svg" alt="Flash logo — Primary"></div>
+            <div class="logo-card__meta">
+              <div class="logo-card__name">Horizontal</div>
+              <div class="logo-card__desc">Mark and wordmark side by side.</div>
+              <div class="logo-card__actions">
+                <a class="logo-dl" href="assets/logos/flash-logo-primary.svg" download>SVG</a>
+                <a class="logo-dl" href="assets/logos/flash-logo-primary.png" download>PNG</a>
+              </div>
+            </div>
+          </div>
+          <div class="logo-card">
+            <div class="logo-card__stage logo-card__stage--light"><img class="logo-card__img" src="assets/logos/flash-logo-primary-stacked.svg" alt="Flash logo — Primary stacked"></div>
+            <div class="logo-card__meta">
+              <div class="logo-card__name">Stacked</div>
+              <div class="logo-card__desc">Mark above wordmark, for tighter or square spaces.</div>
+              <div class="logo-card__actions">
+                <a class="logo-dl" href="assets/logos/flash-logo-primary-stacked.svg" download>SVG</a>
+                <a class="logo-dl" href="assets/logos/flash-logo-primary-stacked.png" download>PNG</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="type-sub">
+        <div class="type-sub__title">White</div>
+        <div class="type-sub__desc">Green mark, white wordmark. For dark or brand-coloured backgrounds.</div>
+        <div class="logo-grid">
+          <div class="logo-card">
+            <div class="logo-card__stage logo-card__stage--dark"><img class="logo-card__img" src="assets/logos/flash-logo-white.svg" alt="Flash logo — White"></div>
+            <div class="logo-card__meta">
+              <div class="logo-card__name">Horizontal</div>
+              <div class="logo-card__desc">Mark and wordmark side by side.</div>
+              <div class="logo-card__actions">
+                <a class="logo-dl" href="assets/logos/flash-logo-white.svg" download>SVG</a>
+                <a class="logo-dl" href="assets/logos/flash-logo-white.png" download>PNG</a>
+              </div>
+            </div>
+          </div>
+          <div class="logo-card">
+            <div class="logo-card__stage logo-card__stage--dark"><img class="logo-card__img" src="assets/logos/flash-logo-white-stacked.svg" alt="Flash logo — White stacked"></div>
+            <div class="logo-card__meta">
+              <div class="logo-card__name">Stacked</div>
+              <div class="logo-card__desc">Mark above wordmark, for tighter or square spaces.</div>
+              <div class="logo-card__actions">
+                <a class="logo-dl" href="assets/logos/flash-logo-white-stacked.svg" download>SVG</a>
+                <a class="logo-dl" href="assets/logos/flash-logo-white-stacked.png" download>PNG</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="type-sub">
+        <div class="type-sub__title">Monochrome — Black</div>
+        <div class="type-sub__desc">Single-colour black, for contexts where the brand green can't be reproduced.</div>
+        <div class="logo-grid">
+          <div class="logo-card">
+            <div class="logo-card__stage logo-card__stage--light"><img class="logo-card__img" src="assets/logos/flash-logo-mono-black.svg" alt="Flash logo — Monochrome black"></div>
+            <div class="logo-card__meta">
+              <div class="logo-card__name">Horizontal</div>
+              <div class="logo-card__desc">Mark and wordmark side by side.</div>
+              <div class="logo-card__actions">
+                <a class="logo-dl" href="assets/logos/flash-logo-mono-black.svg" download>SVG</a>
+                <a class="logo-dl" href="assets/logos/flash-logo-mono-black.png" download>PNG</a>
+              </div>
+            </div>
+          </div>
+          <div class="logo-card">
+            <div class="logo-card__stage logo-card__stage--light"><img class="logo-card__img" src="assets/logos/flash-logo-mono-black-stacked.svg" alt="Flash logo — Monochrome black stacked"></div>
+            <div class="logo-card__meta">
+              <div class="logo-card__name">Stacked</div>
+              <div class="logo-card__desc">Mark above wordmark, for tighter or square spaces.</div>
+              <div class="logo-card__actions">
+                <a class="logo-dl" href="assets/logos/flash-logo-mono-black-stacked.svg" download>SVG</a>
+                <a class="logo-dl" href="assets/logos/flash-logo-mono-black-stacked.png" download>PNG</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="type-sub">
+        <div class="type-sub__title">Monochrome — White</div>
+        <div class="type-sub__desc">Single-colour white, for dark or photographic backgrounds where colour can't be reproduced.</div>
+        <div class="logo-grid">
+          <div class="logo-card">
+            <div class="logo-card__stage logo-card__stage--dark"><img class="logo-card__img" src="assets/logos/flash-logo-mono-white.svg" alt="Flash logo — Monochrome white"></div>
+            <div class="logo-card__meta">
+              <div class="logo-card__name">Horizontal</div>
+              <div class="logo-card__desc">Mark and wordmark side by side.</div>
+              <div class="logo-card__actions">
+                <a class="logo-dl" href="assets/logos/flash-logo-mono-white.svg" download>SVG</a>
+                <a class="logo-dl" href="assets/logos/flash-logo-mono-white.png" download>PNG</a>
+              </div>
+            </div>
+          </div>
+          <div class="logo-card">
+            <div class="logo-card__stage logo-card__stage--dark"><img class="logo-card__img" src="assets/logos/flash-logo-mono-white-stacked.svg" alt="Flash logo — Monochrome white stacked"></div>
+            <div class="logo-card__meta">
+              <div class="logo-card__name">Stacked</div>
+              <div class="logo-card__desc">Mark above wordmark, for tighter or square spaces.</div>
+              <div class="logo-card__actions">
+                <a class="logo-dl" href="assets/logos/flash-logo-mono-white-stacked.svg" download>SVG</a>
+                <a class="logo-dl" href="assets/logos/flash-logo-mono-white-stacked.png" download>PNG</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="type-sub">
+        <div class="type-sub__title">Usage</div>
+        <div class="type-sub__desc">The mark and wordmark are fixed assets &mdash; treat them as a single unit, not raw material to restyle.</div>
+        <div class="sel-usage">
+          <div class="sel-usage__card">
+            <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
+            <ul class="sel-usage__list">
+              <li>Pick the variant (Primary, White, Monochrome Black/White) that gives the strongest contrast against its background.</li>
+              <li>Keep clear space around the logo &mdash; at least the height of the bull mark on every side.</li>
+              <li>Use the stacked lockup when horizontal space is tight or the container is square; use horizontal everywhere else.</li>
+              <li>Scale the logo proportionally using the SVG whenever possible for crisp rendering at any size.</li>
+            </ul>
+          </div>
+          <div class="sel-usage__card">
+            <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don&rsquo;t</div>
+            <ul class="sel-usage__list">
+              <li>Don&rsquo;t place the logo over busy photography, patterned, or low-contrast backgrounds.</li>
+              <li>Don&rsquo;t recolour, gradient-fill, or apply drop shadows, outlines, or other effects to the mark or wordmark.</li>
+              <li>Don&rsquo;t stretch, skew, rotate, or otherwise distort the logo&rsquo;s proportions.</li>
+              <li>Don&rsquo;t redraw, crop, or separate the bull mark from the wordmark outside of the provided lockups.</li>
+              <li>Don&rsquo;t place the logo tighter than its minimum clear space, or shrink it below a legible size.</li>
             </ul>
           </div>
         </div>
@@ -5964,6 +6137,10 @@ function showSection(id) {
     const matches = l.getAttribute('onclick') && l.getAttribute('onclick').includes("'" + id + "'");
     l.classList.toggle('on', matches);
   });
+  document.querySelectorAll('.sb-cat--link').forEach(l => {
+    const oc = l.getAttribute('onclick') || '';
+    l.classList.toggle('on', oc.indexOf("'" + id + "'") > -1);
+  });
   // Scroll main content to top
   const main = document.querySelector('.main');
   if (main) main.scrollTop = 0;
@@ -8150,12 +8327,32 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.32.6';
+const SYSTEM_VERSION = '1.32.10';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.32.10', date:'2026-07-29', author:'Jaco', title:'Logos page added under Brand', changes:[
+        ['added','New "Logos" page under the Brand category listing all 8 Flash logo variations (Primary, White, Monochrome Black, Monochrome White — each horizontal and stacked), each downloadable as a transparent SVG or PNG from assets/logos/'],
+        ['added','Usage section with Do/Don\'t guidance (background contrast, clear space, horizontal vs stacked, no recolouring/distortion)'],
+        ['added','Wired into the restructured nav — appears in the Brand sidebar group and Brand landing grid (alphabetical), with a breadcrumb on the sub-page'],
+      ]},
+      {version:'1.32.9', date:'2026-07-29', author:'Jaco', title:'Typography — Satoshi stylistic sets applied globally; lowercase bold headings', changes:[
+        ['added','Enabled Satoshi OpenType stylistic sets ss01 + ss03 globally on the body (alternate a / G / registered sign, alternate t), matching the Text Inputs component; standard ligatures and kerning remain on, alternate g/Q, rare ligatures, ordinals and fractions stay off'],
+        ['changed','Heading labels no longer use full uppercase with wide letter-spacing — sidebar category headings (.sb-cat), section eyebrows (.sec__eye) and the brand CTA eyebrow (.brand-cta__label) are now lowercase bold with normal tracking'],
+      ]},
+      {version:'1.32.8', date:'2026-07-29', author:'Jaco', title:'Navigation restructured — icon-free sidebar, category landing pages, breadcrumbs', changes:[
+        ['changed','Removed icons from every sidebar item and sorted items alphabetically within each category'],
+        ['added','Multi-item category headings (Brand, Components, Coming soon) are now clickable landing pages with a heading, intro and a responsive grid of item cards (alphabetical), each with a hybrid mock preview'],
+        ['added','Every sub-page now has a breadcrumb linking back to its category landing page; the redundant category eyebrow on sub-pages is hidden'],
+        ['changed','Sidebar, landing pages and breadcrumbs are generated from a single NAV manifest for consistency and maintainability'],
+      ]},
+      {version:'1.32.7', date:'2026-07-29', author:'Jaco', title:'Icons switched to Font Awesome Solid', changes:[
+        ['changed','All 42 sidebar navigation icons and all 32 icons in the Icons library page replaced with Font Awesome 6 Solid equivalents, vendored as inline SVG (no CDN, no icon font)'],
+        ['changed','.icn/.sb-icon rendering switched from stroke-based outline icons to filled (fill:currentColor, no stroke); ICONS entries now carry a per-icon viewBox instead of a fixed 24×24 grid'],
+        ['changed','Icons page copy, Anatomy & specs table, and Do/Don\'t guidance updated to describe the Solid icon set, with Font Awesome / CC BY 4.0 attribution added'],
+      ]},
       {version:'1.32.6', date:'2026-07-29', author:'Mo', title:'AI context tabs added to Dropdown, Popover, Context Menu, and Hover Card', changes:[
         ['added','Dropdown — AI context tab documenting the real .dpd-field/.dpd-trigger/.dpd-menu/.dpd-item structural classes and the itemHtml/itemHtmlCheckbox/menuHtml/triggerHtml/fieldHtml/interactiveFieldHtml/wireInteractive/interactiveMultiFieldHtml/wireInteractiveMulti builders plus the CHEVRON/SEARCH_ICON/CHECK_ICON/OPTIONS data, and its existing "When to use" Do/Dont guidance (5 do / 6 dont)'],
         ['added','Popover — AI context tab documenting the real, fully static .pop/.pop__* markup, plus its existing "When to use" Do/Dont guidance (3 do / 3 dont); notes the JS is generic open/close/outside-click/Escape wiring, not a markup builder'],
@@ -10133,42 +10330,42 @@ function tblPgToggleChecked(cb){
 })();
 /* Icons — shared SVG icon system (used by the Icons gallery and Navigation) */
 const ICONS = {
-  home: '<path d="M3 10.5 12 3l9 7.5"/><path d="M5.5 9.5V20a1 1 0 0 0 1 1H9a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1h2.5a1 1 0 0 0 1-1V9.5"/>',
-  search: '<circle cx="11" cy="11" r="7"/><path d="M20 20l-3.8-3.8"/>',
-  user: '<circle cx="12" cy="8" r="3.5"/><path d="M4.5 20c0-4.1 3.4-7 7.5-7s7.5 2.9 7.5 7"/>',
-  users: '<circle cx="9" cy="8" r="3"/><path d="M2.5 20c0-3.6 2.9-6 6.5-6s6.5 2.4 6.5 6"/><path d="M16 4.8c1.5.4 2.5 1.7 2.5 3.2s-1 2.8-2.5 3.2"/><path d="M18.5 14.3c2 .6 3.5 2.6 3.5 5.2"/>',
-  settings: '<circle cx="12" cy="12" r="3"/><path d="M12 3v2.2M12 18.8V21M4.2 7.5l1.9 1.1M17.9 15.4l1.9 1.1M3 12h2.2M18.8 12H21M4.2 16.5l1.9-1.1M17.9 8.6l1.9-1.1M7.5 4.2l1.1 1.9M15.4 17.9l1.1 1.9M7.5 19.8l1.1-1.9M15.4 6.1l1.1-1.9"/>',
-  bell: '<path d="M6 9a6 6 0 0 1 12 0c0 4 1.5 5.5 1.5 6.5H4.5C4.5 14.5 6 13 6 9Z"/><path d="M9.5 19a2.5 2.5 0 0 0 5 0"/>',
-  check: '<path d="M4 12.5l5.5 5.5L20 6.5"/>',
-  close: '<path d="M5 5l14 14M19 5L5 19"/>',
-  'chevron-down': '<path d="M5 8.5l7 7 7-7"/>',
-  'chevron-right': '<path d="M8.5 5l7 7-7 7"/>',
-  plus: '<path d="M12 4.5v15M4.5 12h15"/>',
-  trash: '<path d="M4 7h16"/><path d="M9 7V4.6c0-.3.3-.6.6-.6h4.8c.3 0 .6.3.6.6V7"/><path d="M6 7l1 12.4c0 .9.7 1.6 1.6 1.6h6.8c.9 0 1.6-.7 1.6-1.6L18 7"/><path d="M10 11v6M14 11v6"/>',
-  edit: '<path d="M4 20l.9-3.8L15.6 5.5a1.7 1.7 0 0 1 2.4 0l.5.5a1.7 1.7 0 0 1 0 2.4L7.8 19.1 4 20Z"/><path d="M13.5 7.5l3 3"/>',
-  info: '<circle cx="12" cy="12" r="9"/><path d="M12 11v6"/><circle cx="12" cy="7.8" r="0.9" fill="currentColor" stroke="none"/>',
-  warning: '<path d="M12 3.5 22 20H2L12 3.5Z"/><path d="M12 10v4.5"/><circle cx="12" cy="17.3" r="0.9" fill="currentColor" stroke="none"/>',
-  download: '<path d="M12 3v12.5"/><path d="M7 11l5 5 5-5"/><path d="M4.5 19h15"/>',
-  upload: '<path d="M12 20V7.5"/><path d="M7 12l5-5 5 5"/><path d="M4.5 19h15"/>',
-  calendar: '<rect x="3" y="4.5" width="18" height="16" rx="2.5"/><path d="M3 9h18M8 2.5v4M16 2.5v4"/>',
-  filter: '<path d="M3.5 5h17L14 13.2V19l-4 2v-7.8L3.5 5Z"/>',
-  more: '<circle cx="5" cy="12" r="1.4" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.4" fill="currentColor" stroke="none"/><circle cx="19" cy="12" r="1.4" fill="currentColor" stroke="none"/>',
-  'arrow-right': '<path d="M4 12h16M13 5l7 7-7 7"/>',
-  'external-link': '<path d="M10 6H5.5A1.5 1.5 0 0 0 4 7.5v11A1.5 1.5 0 0 0 5.5 20h11a1.5 1.5 0 0 0 1.5-1.5V14"/><path d="M14 4h6v6"/><path d="M10 14 20 4"/>',
-  copy: '<rect x="8.5" y="8.5" width="11" height="11" rx="1.8"/><path d="M15.5 8.5V6A1.5 1.5 0 0 0 14 4.5H6A1.5 1.5 0 0 0 4.5 6v8A1.5 1.5 0 0 0 6 15.5h2.5"/>',
-  eye: '<path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z"/><circle cx="12" cy="12" r="3"/>',
-  lock: '<rect x="5" y="10.5" width="14" height="10" rx="2"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/>',
-  star: '<path d="M12 3.5l2.6 5.6 6 .7-4.5 4.1 1.3 6-5.4-3-5.4 3 1.3-6-4.5-4.1 6-.7L12 3.5Z"/>',
-  mail: '<rect x="3" y="5.5" width="18" height="13" rx="2"/><path d="M3.5 6.5 12 13l8.5-6.5"/>',
-  'credit-card': '<rect x="2.5" y="5.5" width="19" height="13" rx="2.2"/><path d="M2.5 10h19"/><path d="M6 15h4"/>',
-  wallet: '<rect x="3" y="6.5" width="18" height="12.5" rx="2.2"/><path d="M3 10.5h18"/><circle cx="17" cy="14.3" r="1" fill="currentColor" stroke="none"/>',
-  refresh: '<path d="M20 11A8 8 0 0 0 6.3 6.3L4 8.5"/><path d="M4 4v4.5h4.5"/><path d="M4 13a8 8 0 0 0 13.7 4.7L20 15.5"/><path d="M20 20v-4.5h-4.5"/>',
-  store: '<path d="M4 9.5V20a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V9.5"/><path d="M3 5.5h18l-1 4.2a2.4 2.4 0 0 1-4.6 0 2.4 2.4 0 0 1-4.7 0 2.4 2.4 0 0 1-4.7 0L3 5.5Z"/><path d="M9.5 21v-5h5v5"/>',
-  link: '<path d="M9.5 14.5 14.5 9.5"/><path d="M8 11 6.5 12.5a3 3 0 0 0 4.2 4.2L12.5 15"/><path d="M16 13l1.5-1.5a3 3 0 0 0-4.2-4.2L11.5 9"/>'
+  home: {vb:'0 0 576 512', d:'<path d="M575.8 255.5c0 18-15 32.1-32 32.1l-32 0 .7 160.2c0 2.7-.2 5.4-.5 8.1l0 16.2c0 22.1-17.9 40-40 40l-16 0c-1.1 0-2.2 0-3.3-.1c-1.4 .1-2.8 .1-4.2 .1L416 512l-24 0c-22.1 0-40-17.9-40-40l0-24 0-64c0-17.7-14.3-32-32-32l-64 0c-17.7 0-32 14.3-32 32l0 64 0 24c0 22.1-17.9 40-40 40l-24 0-31.9 0c-1.5 0-3-.1-4.5-.2c-1.2 .1-2.4 .2-3.6 .2l-16 0c-22.1 0-40-17.9-40-40l0-112c0-.9 0-1.9 .1-2.8l0-69.7-32 0c-18 0-32-14-32-32.1c0-9 3-17 10-24L266.4 8c7-7 15-8 22-8s15 2 21 7L564.8 231.5c8 7 12 15 11 24z"/>'},
+  search: {vb:'0 0 512 512', d:'<path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/>'},
+  user: {vb:'0 0 448 512', d:'<path d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512l388.6 0c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304l-91.4 0z"/>'},
+  users: {vb:'0 0 640 512', d:'<path d="M96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM0 482.3C0 383.8 79.8 304 178.3 304l91.4 0C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7L29.7 512C13.3 512 0 498.7 0 482.3zM609.3 512l-137.8 0c5.4-9.4 8.6-20.3 8.6-32l0-8c0-60.7-27.1-115.2-69.8-151.8c2.4-.1 4.7-.2 7.1-.2l61.4 0C567.8 320 640 392.2 640 481.3c0 17-13.8 30.7-30.7 30.7zM432 256c-31 0-59-12.6-79.3-32.9C372.4 196.5 384 163.6 384 128c0-26.8-6.6-52.1-18.3-74.3C384.3 40.1 407.2 32 432 32c61.9 0 112 50.1 112 112s-50.1 112-112 112z"/>'},
+  settings: {vb:'0 0 512 512', d:'<path d="M495.9 166.6c3.2 8.7 .5 18.4-6.4 24.6l-43.3 39.4c1.1 8.3 1.7 16.8 1.7 25.4s-.6 17.1-1.7 25.4l43.3 39.4c6.9 6.2 9.6 15.9 6.4 24.6c-4.4 11.9-9.7 23.3-15.8 34.3l-4.7 8.1c-6.6 11-14 21.4-22.1 31.2c-5.9 7.2-15.7 9.6-24.5 6.8l-55.7-17.7c-13.4 10.3-28.2 18.9-44 25.4l-12.5 57.1c-2 9.1-9 16.3-18.2 17.8c-13.8 2.3-28 3.5-42.5 3.5s-28.7-1.2-42.5-3.5c-9.2-1.5-16.2-8.7-18.2-17.8l-12.5-57.1c-15.8-6.5-30.6-15.1-44-25.4L83.1 425.9c-8.8 2.8-18.6 .3-24.5-6.8c-8.1-9.8-15.5-20.2-22.1-31.2l-4.7-8.1c-6.1-11-11.4-22.4-15.8-34.3c-3.2-8.7-.5-18.4 6.4-24.6l43.3-39.4C64.6 273.1 64 264.6 64 256s.6-17.1 1.7-25.4L22.4 191.2c-6.9-6.2-9.6-15.9-6.4-24.6c4.4-11.9 9.7-23.3 15.8-34.3l4.7-8.1c6.6-11 14-21.4 22.1-31.2c5.9-7.2 15.7-9.6 24.5-6.8l55.7 17.7c13.4-10.3 28.2-18.9 44-25.4l12.5-57.1c2-9.1 9-16.3 18.2-17.8C227.3 1.2 241.5 0 256 0s28.7 1.2 42.5 3.5c9.2 1.5 16.2 8.7 18.2 17.8l12.5 57.1c15.8 6.5 30.6 15.1 44 25.4l55.7-17.7c8.8-2.8 18.6-.3 24.5 6.8c8.1 9.8 15.5 20.2 22.1 31.2l4.7 8.1c6.1 11 11.4 22.4 15.8 34.3zM256 336a80 80 0 1 0 0-160 80 80 0 1 0 0 160z"/>'},
+  bell: {vb:'0 0 448 512', d:'<path d="M224 0c-17.7 0-32 14.3-32 32l0 19.2C119 66 64 130.6 64 208l0 18.8c0 47-17.3 92.4-48.5 127.6l-7.4 8.3c-8.4 9.4-10.4 22.9-5.3 34.4S19.4 416 32 416l384 0c12.6 0 24-7.4 29.2-18.9s3.1-25-5.3-34.4l-7.4-8.3C401.3 319.2 384 273.9 384 226.8l0-18.8c0-77.4-55-142-128-156.8L256 32c0-17.7-14.3-32-32-32zm45.3 493.3c12-12 18.7-28.3 18.7-45.3l-64 0-64 0c0 17 6.7 33.3 18.7 45.3s28.3 18.7 45.3 18.7s33.3-6.7 45.3-18.7z"/>'},
+  check: {vb:'0 0 448 512', d:'<path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/>'},
+  close: {vb:'0 0 384 512', d:'<path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/>'},
+  'chevron-down': {vb:'0 0 512 512', d:'<path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"/>'},
+  'chevron-right': {vb:'0 0 320 512', d:'<path d="M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"/>'},
+  plus: {vb:'0 0 448 512', d:'<path d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 144L48 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l144 0 0 144c0 17.7 14.3 32 32 32s32-14.3 32-32l0-144 144 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-144 0 0-144z"/>'},
+  trash: {vb:'0 0 448 512', d:'<path d="M135.2 17.7L128 32 32 32C14.3 32 0 46.3 0 64S14.3 96 32 96l384 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-96 0-7.2-14.3C307.4 6.8 296.3 0 284.2 0L163.8 0c-12.1 0-23.2 6.8-28.6 17.7zM416 128L32 128 53.2 467c1.6 25.3 22.6 45 47.9 45l245.8 0c25.3 0 46.3-19.7 47.9-45L416 128z"/>'},
+  edit: {vb:'0 0 512 512', d:'<path d="M471.6 21.7c-21.9-21.9-57.3-21.9-79.2 0L362.3 51.7l97.9 97.9 30.1-30.1c21.9-21.9 21.9-57.3 0-79.2L471.6 21.7zm-299.2 220c-6.1 6.1-10.8 13.6-13.5 21.9l-29.6 88.8c-2.9 8.6-.6 18.1 5.8 24.6s15.9 8.7 24.6 5.8l88.8-29.6c8.2-2.7 15.7-7.4 21.9-13.5L437.7 172.3 339.7 74.3 172.4 241.7zM96 64C43 64 0 107 0 160L0 416c0 53 43 96 96 96l256 0c53 0 96-43 96-96l0-96c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 96c0 17.7-14.3 32-32 32L96 448c-17.7 0-32-14.3-32-32l0-256c0-17.7 14.3-32 32-32l96 0c17.7 0 32-14.3 32-32s-14.3-32-32-32L96 64z"/>'},
+  info: {vb:'0 0 512 512', d:'<path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM216 336l24 0 0-64-24 0c-13.3 0-24-10.7-24-24s10.7-24 24-24l48 0c13.3 0 24 10.7 24 24l0 88 8 0c13.3 0 24 10.7 24 24s-10.7 24-24 24l-80 0c-13.3 0-24-10.7-24-24s10.7-24 24-24zm40-208a32 32 0 1 1 0 64 32 32 0 1 1 0-64z"/>'},
+  warning: {vb:'0 0 512 512', d:'<path d="M256 32c14.2 0 27.3 7.5 34.5 19.8l216 368c7.3 12.4 7.3 27.7 .2 40.1S486.3 480 472 480L40 480c-14.3 0-27.6-7.7-34.7-20.1s-7-27.8 .2-40.1l216-368C228.7 39.5 241.8 32 256 32zm0 128c-13.3 0-24 10.7-24 24l0 112c0 13.3 10.7 24 24 24s24-10.7 24-24l0-112c0-13.3-10.7-24-24-24zm32 224a32 32 0 1 0 -64 0 32 32 0 1 0 64 0z"/>'},
+  download: {vb:'0 0 512 512', d:'<path d="M288 32c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 242.7-73.4-73.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l128 128c12.5 12.5 32.8 12.5 45.3 0l128-128c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L288 274.7 288 32zM64 352c-35.3 0-64 28.7-64 64l0 32c0 35.3 28.7 64 64 64l384 0c35.3 0 64-28.7 64-64l0-32c0-35.3-28.7-64-64-64l-101.5 0-45.3 45.3c-25 25-65.5 25-90.5 0L165.5 352 64 352zm368 56a24 24 0 1 1 0 48 24 24 0 1 1 0-48z"/>'},
+  upload: {vb:'0 0 512 512', d:'<path d="M288 109.3L288 352c0 17.7-14.3 32-32 32s-32-14.3-32-32l0-242.7-73.4 73.4c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3l128-128c12.5-12.5 32.8-12.5 45.3 0l128 128c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L288 109.3zM64 352l128 0c0 35.3 28.7 64 64 64s64-28.7 64-64l128 0c35.3 0 64 28.7 64 64l0 32c0 35.3-28.7 64-64 64L64 512c-35.3 0-64-28.7-64-64l0-32c0-35.3 28.7-64 64-64zM432 456a24 24 0 1 0 0-48 24 24 0 1 0 0 48z"/>'},
+  calendar: {vb:'0 0 448 512', d:'<path d="M128 0c17.7 0 32 14.3 32 32l0 32 128 0 0-32c0-17.7 14.3-32 32-32s32 14.3 32 32l0 32 48 0c26.5 0 48 21.5 48 48l0 48L0 160l0-48C0 85.5 21.5 64 48 64l48 0 0-32c0-17.7 14.3-32 32-32zM0 192l448 0 0 272c0 26.5-21.5 48-48 48L48 512c-26.5 0-48-21.5-48-48L0 192zm64 80l0 32c0 8.8 7.2 16 16 16l32 0c8.8 0 16-7.2 16-16l0-32c0-8.8-7.2-16-16-16l-32 0c-8.8 0-16 7.2-16 16zm128 0l0 32c0 8.8 7.2 16 16 16l32 0c8.8 0 16-7.2 16-16l0-32c0-8.8-7.2-16-16-16l-32 0c-8.8 0-16 7.2-16 16zm144-16c-8.8 0-16 7.2-16 16l0 32c0 8.8 7.2 16 16 16l32 0c8.8 0 16-7.2 16-16l0-32c0-8.8-7.2-16-16-16l-32 0zM64 400l0 32c0 8.8 7.2 16 16 16l32 0c8.8 0 16-7.2 16-16l0-32c0-8.8-7.2-16-16-16l-32 0c-8.8 0-16 7.2-16 16zm144-16c-8.8 0-16 7.2-16 16l0 32c0 8.8 7.2 16 16 16l32 0c8.8 0 16-7.2 16-16l0-32c0-8.8-7.2-16-16-16l-32 0zm112 16l0 32c0 8.8 7.2 16 16 16l32 0c8.8 0 16-7.2 16-16l0-32c0-8.8-7.2-16-16-16l-32 0c-8.8 0-16 7.2-16 16z"/>'},
+  filter: {vb:'0 0 512 512', d:'<path d="M3.9 54.9C10.5 40.9 24.5 32 40 32l432 0c15.5 0 29.5 8.9 36.1 22.9s4.6 30.5-5.2 42.5L320 320.9 320 448c0 12.1-6.8 23.2-17.7 28.6s-23.8 4.3-33.5-3l-64-48c-8.1-6-12.8-15.5-12.8-25.6l0-79.1L9 97.3C-.7 85.4-2.8 68.8 3.9 54.9z"/>'},
+  more: {vb:'0 0 448 512', d:'<path d="M8 256a56 56 0 1 1 112 0A56 56 0 1 1 8 256zm160 0a56 56 0 1 1 112 0 56 56 0 1 1 -112 0zm216-56a56 56 0 1 1 0 112 56 56 0 1 1 0-112z"/>'},
+  'arrow-right': {vb:'0 0 448 512', d:'<path d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"/>'},
+  'external-link': {vb:'0 0 512 512', d:'<path d="M320 0c-17.7 0-32 14.3-32 32s14.3 32 32 32l82.7 0L201.4 265.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L448 109.3l0 82.7c0 17.7 14.3 32 32 32s32-14.3 32-32l0-160c0-17.7-14.3-32-32-32L320 0zM80 32C35.8 32 0 67.8 0 112L0 432c0 44.2 35.8 80 80 80l320 0c44.2 0 80-35.8 80-80l0-112c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 112c0 8.8-7.2 16-16 16L80 448c-8.8 0-16-7.2-16-16l0-320c0-8.8 7.2-16 16-16l112 0c17.7 0 32-14.3 32-32s-14.3-32-32-32L80 32z"/>'},
+  copy: {vb:'0 0 448 512', d:'<path d="M208 0L332.1 0c12.7 0 24.9 5.1 33.9 14.1l67.9 67.9c9 9 14.1 21.2 14.1 33.9L448 336c0 26.5-21.5 48-48 48l-192 0c-26.5 0-48-21.5-48-48l0-288c0-26.5 21.5-48 48-48zM48 128l80 0 0 64-64 0 0 256 192 0 0-32 64 0 0 48c0 26.5-21.5 48-48 48L48 512c-26.5 0-48-21.5-48-48L0 176c0-26.5 21.5-48 48-48z"/>'},
+  eye: {vb:'0 0 576 512', d:'<path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM144 256a144 144 0 1 1 288 0 144 144 0 1 1 -288 0zm144-64c0 35.3-28.7 64-64 64c-7.1 0-13.9-1.2-20.3-3.3c-5.5-1.8-11.9 1.6-11.7 7.4c.3 6.9 1.3 13.8 3.2 20.7c13.7 51.2 66.4 81.6 117.6 67.9s81.6-66.4 67.9-117.6c-11.1-41.5-47.8-69.4-88.6-71.1c-5.8-.2-9.2 6.1-7.4 11.7c2.1 6.4 3.3 13.2 3.3 20.3z"/>'},
+  lock: {vb:'0 0 448 512', d:'<path d="M144 144l0 48 160 0 0-48c0-44.2-35.8-80-80-80s-80 35.8-80 80zM80 192l0-48C80 64.5 144.5 0 224 0s144 64.5 144 144l0 48 16 0c35.3 0 64 28.7 64 64l0 192c0 35.3-28.7 64-64 64L64 512c-35.3 0-64-28.7-64-64L0 256c0-35.3 28.7-64 64-64l16 0z"/>'},
+  star: {vb:'0 0 576 512', d:'<path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"/>'},
+  mail: {vb:'0 0 512 512', d:'<path d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4L236.8 313.6c11.4 8.5 27 8.5 38.4 0L492.8 150.4c12.1-9.1 19.2-23.3 19.2-38.4c0-26.5-21.5-48-48-48L48 64zM0 176L0 384c0 35.3 28.7 64 64 64l384 0c35.3 0 64-28.7 64-64l0-208L294.4 339.2c-22.8 17.1-54 17.1-76.8 0L0 176z"/>'},
+  'credit-card': {vb:'0 0 576 512', d:'<path d="M64 32C28.7 32 0 60.7 0 96l0 32 576 0 0-32c0-35.3-28.7-64-64-64L64 32zM576 224L0 224 0 416c0 35.3 28.7 64 64 64l448 0c35.3 0 64-28.7 64-64l0-192zM112 352l64 0c8.8 0 16 7.2 16 16s-7.2 16-16 16l-64 0c-8.8 0-16-7.2-16-16s7.2-16 16-16zm112 16c0-8.8 7.2-16 16-16l128 0c8.8 0 16 7.2 16 16s-7.2 16-16 16l-128 0c-8.8 0-16-7.2-16-16z"/>'},
+  wallet: {vb:'0 0 512 512', d:'<path d="M64 32C28.7 32 0 60.7 0 96L0 416c0 35.3 28.7 64 64 64l384 0c35.3 0 64-28.7 64-64l0-224c0-35.3-28.7-64-64-64L80 128c-8.8 0-16-7.2-16-16s7.2-16 16-16l368 0c17.7 0 32-14.3 32-32s-14.3-32-32-32L64 32zM416 272a32 32 0 1 1 0 64 32 32 0 1 1 0-64z"/>'},
+  refresh: {vb:'0 0 512 512', d:'<path d="M105.1 202.6c7.7-21.8 20.2-42.3 37.8-59.8c62.5-62.5 163.8-62.5 226.3 0L386.3 160 352 160c-17.7 0-32 14.3-32 32s14.3 32 32 32l111.5 0c0 0 0 0 0 0l.4 0c17.7 0 32-14.3 32-32l0-112c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 35.2L414.4 97.6c-87.5-87.5-229.3-87.5-316.8 0C73.2 122 55.6 150.7 44.8 181.4c-5.9 16.7 2.9 34.9 19.5 40.8s34.9-2.9 40.8-19.5zM39 289.3c-5 1.5-9.8 4.2-13.7 8.2c-4 4-6.7 8.8-8.1 14c-.3 1.2-.6 2.5-.8 3.8c-.3 1.7-.4 3.4-.4 5.1L16 432c0 17.7 14.3 32 32 32s32-14.3 32-32l0-35.1 17.6 17.5c0 0 0 0 0 0c87.5 87.4 229.3 87.4 316.7 0c24.4-24.4 42.1-53.1 52.9-83.8c5.9-16.7-2.9-34.9-19.5-40.8s-34.9 2.9-40.8 19.5c-7.7 21.8-20.2 42.3-37.8 59.8c-62.5 62.5-163.8 62.5-226.3 0l-.1-.1L125.6 352l34.4 0c17.7 0 32-14.3 32-32s-14.3-32-32-32L48.4 288c-1.6 0-3.2 .1-4.8 .3s-3.1 .5-4.6 1z"/>'},
+  store: {vb:'0 0 576 512', d:'<path d="M547.6 103.8L490.3 13.1C485.2 5 476.1 0 466.4 0L109.6 0C99.9 0 90.8 5 85.7 13.1L28.3 103.8c-29.6 46.8-3.4 111.9 51.9 119.4c4 .5 8.1 .8 12.1 .8c26.1 0 49.3-11.4 65.2-29c15.9 17.6 39.1 29 65.2 29c26.1 0 49.3-11.4 65.2-29c15.9 17.6 39.1 29 65.2 29c26.2 0 49.3-11.4 65.2-29c16 17.6 39.1 29 65.2 29c4.1 0 8.1-.3 12.1-.8c55.5-7.4 81.8-72.5 52.1-119.4zM499.7 254.9c0 0 0 0-.1 0c-5.3 .7-10.7 1.1-16.2 1.1c-12.4 0-24.3-1.9-35.4-5.3L448 384l-320 0 0-133.4c-11.2 3.5-23.2 5.4-35.6 5.4c-5.5 0-11-.4-16.3-1.1l-.1 0c-4.1-.6-8.1-1.3-12-2.3L64 384l0 64c0 35.3 28.7 64 64 64l320 0c35.3 0 64-28.7 64-64l0-64 0-131.4c-4 1-8 1.8-12.3 2.3z"/>'},
+  link: {vb:'0 0 640 512', d:'<path d="M579.8 267.7c56.5-56.5 56.5-148 0-204.5c-50-50-128.8-56.5-186.3-15.4l-1.6 1.1c-14.4 10.3-17.7 30.3-7.4 44.6s30.3 17.7 44.6 7.4l1.6-1.1c32.1-22.9 76-19.3 103.8 8.6c31.5 31.5 31.5 82.5 0 114L422.3 334.8c-31.5 31.5-82.5 31.5-114 0c-27.9-27.9-31.5-71.8-8.6-103.8l1.1-1.6c10.3-14.4 6.9-34.4-7.4-44.6s-34.4-6.9-44.6 7.4l-1.1 1.6C206.5 251.2 213 330 263 380c56.5 56.5 148 56.5 204.5 0L579.8 267.7zM60.2 244.3c-56.5 56.5-56.5 148 0 204.5c50 50 128.8 56.5 186.3 15.4l1.6-1.1c14.4-10.3 17.7-30.3 7.4-44.6s-30.3-17.7-44.6-7.4l-1.6 1.1c-32.1 22.9-76 19.3-103.8-8.6C74 372 74 321 105.5 289.5L217.7 177.2c31.5-31.5 82.5-31.5 114 0c27.9 27.9 31.5 71.8 8.6 103.9l-1.1 1.6c-10.3 14.4-6.9 34.4 7.4 44.6s34.4 6.9 44.6-7.4l1.1-1.6C433.5 260.8 427 182 377 132c-56.5-56.5-148-56.5-204.5 0L60.2 244.3z"/>'}
 };
 function iconSvg(name){
-  var d = ICONS[name] || ICONS.info;
-  return '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">'+d+'</svg>';
+  var ic = ICONS[name] || ICONS.info;
+  return '<svg viewBox="'+ic.vb+'" xmlns="http://www.w3.org/2000/svg" fill="currentColor" aria-hidden="true">'+ic.d+'</svg>';
 }
 function renderIcons(root){
   Array.prototype.forEach.call((root||document).querySelectorAll('[data-icon]'), function(el){
@@ -10323,6 +10520,180 @@ function renderIcons(root){
 try { renderTablesPlayground(); } catch(e){ console.error('tbl-playground',e); }
 try { renderChangelog(); } catch(e){ console.error('changelog',e); }
 try { renderSectionChangelogs(); } catch(e){ console.error('section-changelog',e); }
+
+/* ============================================================
+   NAV MANIFEST + CATEGORY LANDING PAGES  (icon-free sidebar,
+   alphabetised items, clickable category landings + breadcrumbs)
+============================================================ */
+const NAV = [
+  { cat:'Overview', items:[ {id:'s-brand', label:'Introduction'} ] },
+  { cat:'Brand', landing:'s-cat-brand',
+    intro:'The visual foundations of Flash — colour, type, spacing, elevation and iconography. These tokens sit beneath every component.',
+    items:[
+      {id:'s-colours', label:'Colours',        desc:'Primitive and semantic colour tokens for light and dark.'},
+      {id:'s-elev',    label:'Elevation',      desc:'Five shadow levels for layering surfaces.'},
+      {id:'s-icons',   label:'Icons',          desc:'Font Awesome Solid — recolourable and resizable.'},
+      {id:'s-logos',   label:'Logos',          desc:'The Flash logo — four colour treatments, horizontal and stacked.'},
+      {id:'s-spacing', label:'Spacing & Grid', desc:'An 8px base scale for spacing, radius and grid.'},
+      {id:'s-type',    label:'Typography',     desc:'The Satoshi type scale and weight tokens.'},
+    ]},
+  { cat:'Components', landing:'s-cat-components',
+    intro:'Flexible, reusable building blocks for Flash apps and sites. Every component shares the same tokens, spacing and states — pick one to see its playground, specs and code.',
+    items:[
+      {id:'s-accordion',    label:'Accordion',           desc:'Collapsible stacked sections.'},
+      {id:'s-alert',        label:'Alert',               desc:'Inline messages for status and feedback.'},
+      {id:'s-avatar',       label:'Avatar',              desc:'User and brand identity marks.'},
+      {id:'s-drawers',      label:'Bottom Sheets',       desc:'Panels that slide up from the bottom edge.'},
+      {id:'s-breadcrumb',   label:'Breadcrumb',          desc:'Shows the path back through a hierarchy.'},
+      {id:'s-buttons',      label:'Buttons',             desc:'Primary, secondary, accent, simple and link.'},
+      {id:'s-calendar',     label:'Calendar',            desc:'Date pickers and month grids.'},
+      {id:'s-cards',        label:'Cards',               desc:'Flexible containers for grouped content.'},
+      {id:'s-carousel',     label:'Carousel',            desc:'Swipeable slides with pagination.'},
+      {id:'s-charts',       label:'Charts',              desc:'Data visualisation with brand-styled charts.'},
+      {id:'s-selection',    label:'Checkboxes & Radios', desc:'Multi- and single-select controls.'},
+      {id:'s-chips',        label:'Chips & Pills',       desc:'Compact selectable and filter tokens.'},
+      {id:'s-command',      label:'Command',             desc:'Searchable command palette.'},
+      {id:'s-context-menu', label:'Context Menu',        desc:'Right-click and overflow action menus.'},
+      {id:'s-data',         label:'Data Display',        desc:'Stat tiles and key-value lists.'},
+      {id:'s-dropdown',     label:'Dropdown',            desc:'Single- and multi-select menus.'},
+      {id:'s-hover-card',   label:'Hover Card',          desc:'Rich preview shown on hover.'},
+      {id:'s-input-otp',    label:'Input OTP',           desc:'One-time passcode entry fields.'},
+      {id:'s-kbd',          label:'Keyboard Shortcuts',  desc:'Keycaps and shortcut hints.'},
+      {id:'s-nav',          label:'Navigation',          desc:'Side navigation and menu systems.'},
+      {id:'s-pagination',   label:'Pagination',          desc:'Page-by-page navigation controls.'},
+      {id:'s-popover',      label:'Popover',             desc:'Anchored floating content.'},
+      {id:'s-separator',    label:'Separator',           desc:'Dividers between content groups.'},
+      {id:'s-skeleton',     label:'Skeleton',            desc:'Loading placeholders.'},
+      {id:'s-slider',       label:'Slider',              desc:'Range and value selection.'},
+      {id:'s-spinner',      label:'Spinner',             desc:'Indeterminate loading indicators.'},
+      {id:'s-switch',       label:'Switch',              desc:'On / off toggles.'},
+      {id:'s-tables',       label:'Tables',              desc:'Structured, selectable data tables.'},
+      {id:'s-tabs',         label:'Tabs',                desc:'Switch between related views.'},
+      {id:'s-tags',         label:'Tags & Badges',       desc:'Labels, counts and status markers.'},
+      {id:'s-inputs',       label:'Text Inputs',         desc:'Text, search and password fields.'},
+      {id:'s-toggle-group', label:'Toggle Group',        desc:'Segmented single / multi choice.'},
+      {id:'s-tooltip',      label:'Tooltip',             desc:'Brief on-hover hints.'},
+    ]},
+  { cat:'Coming soon', landing:'s-cat-coming',
+    intro:'Components on the roadmap. The patterns are defined — full playgrounds and specs are on the way.',
+    items:[
+      {id:'s-modals', label:'Modals', tag:'Soon', desc:'Focused dialogs and confirmations.'},
+      {id:'s-toasts', label:'Toasts', tag:'Soon', desc:'Transient status notifications.'},
+    ]},
+  { cat:'About', items:[ {id:'s-changelog', label:'Changelog'} ] },
+];
+
+const MOCKS = {
+  's-colours': '<div class="mk"><span class="mk-circle" style="width:46px;height:46px;background:var(--color-brand)"></span><span class="mk-circle" style="width:46px;height:46px;background:var(--chrome-txt)"></span><span class="mk-circle" style="width:46px;height:46px;background:var(--chrome-bg);border:1px solid var(--chrome-border)"></span></div>',
+  's-elev': '<div style="position:relative;width:96px;height:74px"><span class="mk-card" style="position:absolute;left:0;top:0;width:70px;height:50px"></span><span class="mk-card" style="position:absolute;left:13px;top:12px;width:70px;height:50px"></span><span class="mk-card" style="position:absolute;left:26px;top:24px;width:70px;height:50px"></span></div>',
+  's-icons': '<div class="mk"><span class="mk-glyph">'+iconSvg('star')+'</span><span class="mk-glyph">'+iconSvg('bell')+'</span><span class="mk-glyph">'+iconSvg('wallet')+'</span><span class="mk-glyph">'+iconSvg('calendar')+'</span></div>',
+  's-spacing': '<div style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px">'+('<span class="mk-sq" style="width:34px;height:34px"></span>').repeat(4)+'</div>',
+  's-logos': '<div class="mk" style="gap:12px"><span class="mk-circle" style="width:50px;height:50px;background:var(--color-brand)"></span><span style="font:900 30px \'Satoshi\',sans-serif;color:var(--chrome-txt)">flash</span></div>',
+  's-type': '<div style="font:900 64px \'Satoshi\',sans-serif;color:var(--chrome-txt);line-height:1">Aa</div>',
+  's-accordion': '<div class="mk-card" style="width:74%"><div style="display:flex;justify-content:space-between;align-items:center;padding:11px 13px;border-bottom:1px solid var(--chrome-border)"><span class="mk-bar" style="width:70px"></span><span style="color:var(--chrome-muted);font-size:12px">▾</span></div><div style="padding:11px 13px;display:flex;flex-direction:column;gap:7px"><span class="mk-bar" style="width:90%"></span><span class="mk-bar" style="width:60%"></span></div></div>',
+  's-alert': '<div class="mk-card" style="width:80%;display:flex;gap:10px;align-items:center;padding:13px;border-left:4px solid var(--color-brand)"><span class="mk-glyph" style="width:20px;height:20px;color:var(--color-brand)">'+iconSvg('info')+'</span><div style="flex:1;display:flex;flex-direction:column;gap:6px"><span class="mk-bar" style="width:55%"></span><span class="mk-bar" style="width:90%"></span></div></div>',
+  's-avatar': '<div class="mk" style="gap:0"><span class="mk-circle" style="width:44px;height:44px;background:var(--color-brand);border:3px solid var(--chrome-nav)"></span><span class="mk-circle" style="width:44px;height:44px;background:var(--chrome-txt);border:3px solid var(--chrome-nav);margin-left:-14px"></span><span class="mk-circle" style="width:44px;height:44px;background:var(--chrome-border);border:3px solid var(--chrome-nav);margin-left:-14px"></span></div>',
+  's-drawers': '<div class="mk-card" style="width:74%;height:96px;align-self:flex-end;margin-bottom:-1px;border-radius:16px 16px 0 0;display:flex;flex-direction:column;align-items:center;gap:9px;padding:12px"><span style="width:36px;height:5px;border-radius:3px;background:var(--chrome-border)"></span><span class="mk-bar" style="width:80%"></span><span class="mk-bar" style="width:60%"></span></div>',
+  's-breadcrumb': '<div class="mk"><span class="mk-chip">Home</span><span style="color:var(--chrome-muted)">/</span><span class="mk-chip">Library</span><span style="color:var(--chrome-muted)">/</span><span class="mk-chip" style="border-color:var(--chrome-txt);font-weight:800">Item</span></div>',
+  's-buttons': '<div class="mk"><span class="mk-pill mk-pill--dark">Button</span><span class="mk-pill mk-pill--brand">Button</span></div>',
+  's-calendar': '<div class="mk-card" style="width:64%;padding:12px"><div style="display:flex;justify-content:space-between;margin-bottom:9px"><span class="mk-bar" style="width:50px"></span><span class="mk-bar" style="width:20px"></span></div><div style="display:grid;grid-template-columns:repeat(7,1fr);gap:5px">'+Array.from({length:21}).map(function(_,i){return '<span class="mk-sq" style="width:100%;aspect-ratio:1;'+(i===9?'background:var(--color-brand)':'')+'"></span>';}).join('')+'</div></div>',
+  's-cards': '<div class="mk-card" style="width:60%;overflow:hidden"><div style="height:46px;background:var(--chrome-border)"></div><div style="padding:11px;display:flex;flex-direction:column;gap:7px"><span class="mk-bar mk-bar--txt" style="width:70%"></span><span class="mk-bar" style="width:95%"></span><span class="mk-bar" style="width:50%"></span></div></div>',
+  's-carousel': '<div style="display:flex;flex-direction:column;align-items:center;gap:10px"><div style="display:flex;gap:8px;align-items:center"><span class="mk-sq" style="width:32px;height:52px;opacity:.4"></span><span class="mk-sq" style="width:64px;height:60px;background:var(--color-brand)"></span><span class="mk-sq" style="width:32px;height:52px;opacity:.4"></span></div><div style="display:flex;gap:5px"><span class="mk-dot"></span><span class="mk-dot" style="background:var(--chrome-border)"></span><span class="mk-dot" style="background:var(--chrome-border)"></span></div></div>',
+  's-charts': '<div style="display:flex;align-items:flex-end;gap:9px;height:82px"><span class="mk-sq" style="width:18px;height:40%"></span><span class="mk-sq" style="width:18px;height:70%"></span><span class="mk-sq" style="width:18px;height:55%;background:var(--color-brand)"></span><span class="mk-sq" style="width:18px;height:90%"></span><span class="mk-sq" style="width:18px;height:35%"></span></div>',
+  's-selection': '<div class="mk"><span class="mk-check"><svg viewBox="0 0 24 24"><path d="M4 12.5l5.5 5.5L20 6.5"/></svg></span><span class="mk-radio"></span></div>',
+  's-chips': '<div class="mk"><span class="mk-chip"><span class="mk-dot"></span>Active</span><span class="mk-chip">Label</span><span class="mk-chip">Filter</span></div>',
+  's-command': '<div class="mk-card" style="width:80%;padding:11px 13px;display:flex;align-items:center;gap:9px"><span class="mk-glyph" style="width:16px;height:16px;color:var(--chrome-muted)">'+iconSvg('search')+'</span><span class="mk-bar" style="flex:1"></span><span class="mk-key">⌘K</span></div>',
+  's-context-menu': '<div class="mk-card" style="width:60%;padding:7px"><div style="display:flex;flex-direction:column;gap:3px">'+['70%','90%','55%'].map(function(w,i){return '<span style="display:flex;align-items:center;gap:8px;padding:7px 9px;border-radius:6px;'+(i===1?'background:var(--chrome-hover)':'')+'"><span class="mk-bar" style="width:'+w+'"></span></span>';}).join('')+'</div></div>',
+  's-data': '<div class="mk"><div class="mk-card" style="width:40%;padding:11px;display:flex;flex-direction:column;gap:7px"><span class="mk-bar" style="width:60%"></span><span class="mk-bar mk-bar--txt" style="width:45%;height:14px"></span></div><div class="mk-card" style="width:40%;padding:11px;display:flex;flex-direction:column;gap:7px"><span class="mk-bar" style="width:60%"></span><span class="mk-bar mk-bar--brand" style="width:45%;height:14px"></span></div></div>',
+  's-dropdown': '<div class="mk mk-col" style="gap:7px"><div class="mk-card" style="width:70%;padding:9px 12px;display:flex;justify-content:space-between;align-items:center"><span class="mk-bar" style="width:55px"></span><span style="color:var(--chrome-muted)">▾</span></div><div class="mk-card" style="width:70%;padding:6px"><div style="display:flex;flex-direction:column;gap:4px"><span style="padding:6px 8px;border-radius:5px;background:var(--chrome-hover)"><span class="mk-bar" style="width:70%"></span></span><span style="padding:6px 8px;display:block"><span class="mk-bar" style="width:50%"></span></span></div></div></div>',
+  's-hover-card': '<div class="mk-card" style="width:72%;padding:12px;display:flex;gap:10px"><span class="mk-circle" style="width:38px;height:38px;background:var(--color-brand)"></span><div style="flex:1;display:flex;flex-direction:column;gap:6px"><span class="mk-bar mk-bar--txt" style="width:55%"></span><span class="mk-bar" style="width:90%"></span><span class="mk-bar" style="width:75%"></span></div></div>',
+  's-input-otp': '<div class="mk-otp"><span class="on">4</span><span class="on">2</span><span></span><span></span></div>',
+  's-kbd': '<div class="mk"><span class="mk-key">⌘</span><span style="color:var(--chrome-muted);font-weight:800">+</span><span class="mk-key">K</span></div>',
+  's-nav': '<div class="mk-card" style="width:58%;padding:9px"><div style="display:flex;flex-direction:column;gap:4px">'+[0,1,2,3].map(function(i){return '<span style="display:flex;align-items:center;gap:9px;padding:7px 8px;border-radius:6px;'+(i===1?'background:var(--chrome-hover)':'')+'"><span class="mk-sq" style="width:14px;height:14px;'+(i===1?'background:var(--color-brand)':'')+'"></span><span class="mk-bar" style="flex:1"></span></span>';}).join('')+'</div></div>',
+  's-pagination': '<div class="mk"><span class="mk-key" style="border-bottom-width:1px">‹</span><span class="mk-key" style="border-bottom-width:1px;background:var(--chrome-txt);color:var(--chrome-bg);border-color:var(--chrome-txt)">1</span><span class="mk-key" style="border-bottom-width:1px">2</span><span class="mk-key" style="border-bottom-width:1px">3</span><span class="mk-key" style="border-bottom-width:1px">›</span></div>',
+  's-popover': '<div class="mk-card" style="width:66%;padding:12px;position:relative;display:flex;flex-direction:column;gap:7px"><span class="mk-bar mk-bar--txt" style="width:50%"></span><span class="mk-bar" style="width:95%"></span><span class="mk-bar" style="width:80%"></span><span style="position:absolute;left:50%;bottom:-7px;transform:translateX(-50%);width:0;height:0;border:7px solid transparent;border-top-color:var(--chrome-bg);border-bottom:0"></span></div>',
+  's-separator': '<div class="mk mk-col" style="gap:12px;width:70%"><span class="mk-bar" style="width:100%"></span><span style="width:100%;height:1px;background:var(--chrome-border)"></span><span class="mk-bar" style="width:100%"></span></div>',
+  's-skeleton': '<div class="mk-sk" style="width:70%"><div class="mk-sk__row"></div><div class="mk-sk__row s2"></div><div class="mk-sk__row s3"></div></div>',
+  's-slider': '<div class="mk-slider"><span class="mk-slider__fill"></span><span class="mk-slider__thumb"></span></div>',
+  's-spinner': '<div class="mk-spin"></div>',
+  's-switch': '<div class="mk-switch"></div>',
+  's-tables': '<div class="mk-card" style="width:80%;overflow:hidden"><div style="display:grid;grid-template-columns:1fr 1fr 1fr;background:var(--chrome-nav);padding:8px 10px;gap:8px">'+('<span class="mk-bar" style="width:80%"></span>').repeat(3)+'</div>'+[0,1,2].map(function(){return '<div style="display:grid;grid-template-columns:1fr 1fr 1fr;padding:8px 10px;gap:8px;border-top:1px solid var(--chrome-border)">'+('<span class="mk-bar" style="width:70%"></span>').repeat(3)+'</div>';}).join('')+'</div>',
+  's-tabs': '<div style="width:74%"><div style="display:flex;gap:18px;border-bottom:2px solid var(--chrome-border)"><span style="padding-bottom:9px;border-bottom:2px solid var(--chrome-txt);margin-bottom:-2px"><span class="mk-bar mk-bar--txt" style="width:44px"></span></span><span style="padding-bottom:9px"><span class="mk-bar" style="width:44px"></span></span><span style="padding-bottom:9px"><span class="mk-bar" style="width:44px"></span></span></div></div>',
+  's-tags': '<div class="mk"><span class="mk-chip" style="background:rgba(16,197,4,.14);border-color:transparent;color:var(--color-brand)">Success</span><span class="mk-chip">Neutral</span><span class="mk-chip" style="border:0;background:var(--chrome-txt);color:var(--chrome-bg)">3</span></div>',
+  's-inputs': '<div class="mk-card" style="width:80%;padding:10px 13px;display:flex;flex-direction:column;gap:8px"><span class="mk-bar" style="width:35px;height:7px"></span><div style="display:flex;align-items:center;gap:2px"><span class="mk-bar mk-bar--txt" style="width:64%"></span><span style="width:2px;height:16px;background:var(--color-brand)"></span></div></div>',
+  's-toggle-group': '<div class="mk-seg"><span>Day</span><span class="on">Week</span><span>Month</span></div>',
+  's-tooltip': '<div class="mk-tip">Tooltip</div>',
+  's-modals': '<div class="mk-card" style="width:72%;padding:14px;display:flex;flex-direction:column;gap:9px"><span class="mk-bar mk-bar--txt" style="width:55%;height:12px"></span><span class="mk-bar" style="width:95%"></span><span class="mk-bar" style="width:80%"></span><div style="display:flex;gap:8px;justify-content:flex-end;margin-top:4px"><span class="mk-pill mk-pill--ghost" style="height:26px;font-size:11px">Cancel</span><span class="mk-pill mk-pill--dark" style="height:26px;font-size:11px">OK</span></div></div>',
+  's-toasts': '<div class="mk-card" style="width:82%;padding:12px;display:flex;align-items:center;gap:10px;border-left:4px solid var(--color-brand)"><span class="mk-glyph" style="width:18px;height:18px;color:var(--color-brand)">'+iconSvg('check')+'</span><div style="flex:1;display:flex;flex-direction:column;gap:5px"><span class="mk-bar mk-bar--txt" style="width:50%"></span><span class="mk-bar" style="width:80%"></span></div></div>',
+};
+function lpMock(id){ return MOCKS[id] || '<div class="mk-sk"><div class="mk-sk__row"></div><div class="mk-sk__row s2"></div><div class="mk-sk__row s3"></div></div>'; }
+
+function lpCardHTML(item){
+  var tag = item.tag ? '<span class="lp-card__tag">'+item.tag+'</span>' : '';
+  return '<a class="lp-card" href="javascript:void(0)" onclick="showSection(\'' + item.id + '\')">'
+       +   '<div class="lp-prev">'+lpMock(item.id)+'</div>'
+       +   '<div class="lp-card__meta"><div class="lp-card__row"><span class="lp-card__name">'+item.label+'</span>'+tag+'</div>'
+       +   '<div class="lp-card__desc">'+(item.desc||'')+'</div></div>'
+       + '</a>';
+}
+
+function buildSidebar(){
+  var aside = document.getElementById('sidebar');
+  if(!aside) return;
+  var html = '';
+  NAV.forEach(function(g){
+    if(g.landing){
+      html += '<a href="javascript:void(0)" class="sb-cat sb-cat--link" onclick="showSection(\'' + g.landing + '\')">'+g.cat+'</a>';
+    } else {
+      html += '<div class="sb-cat">'+g.cat+'</div>';
+    }
+    g.items.forEach(function(it){
+      var tag = it.tag ? '<span class="sb-tag">'+it.tag+'</span>' : '';
+      html += '<a href="javascript:void(0)" onclick="showSection(\'' + it.id + '\')" class="sb-link">'+it.label+tag+'</a>';
+    });
+  });
+  aside.innerHTML = html;
+}
+
+function buildLandings(){
+  var main = document.querySelector('.main');
+  if(!main) return;
+  NAV.forEach(function(g){
+    if(!g.landing || document.getElementById(g.landing)) return;
+    var sec = document.createElement('section');
+    sec.className = 'sec';
+    sec.id = g.landing;
+    sec.innerHTML = '<div class="sec__head"><div class="sec__eye">'+g.cat+'</div>'
+      + '<h1 class="sec__title">'+g.cat+'</h1>'
+      + '<p class="sec__desc">'+g.intro+'</p></div>'
+      + '<div class="lp-grid">'+g.items.map(lpCardHTML).join('')+'</div>';
+    main.appendChild(sec);
+  });
+}
+
+function injectBreadcrumbs(){
+  NAV.forEach(function(g){
+    if(!g.landing) return;
+    g.items.forEach(function(it){
+      var sec = document.getElementById(it.id);
+      if(!sec) return;
+      var eye = sec.querySelector('.sec__head .sec__eye');
+      if(eye) eye.style.display = 'none';
+      if(sec.querySelector('.crumb')) return;
+      var nav = document.createElement('nav');
+      nav.className = 'crumb';
+      nav.innerHTML = '<a href="javascript:void(0)" class="crumb__link" onclick="showSection(\'' + g.landing + '\')">'+g.cat+'</a>'
+        + '<span class="crumb__sep">/</span><span class="crumb__here">'+it.label+'</span>';
+      sec.insertBefore(nav, sec.firstChild);
+    });
+  });
+}
+
+buildSidebar();
+buildLandings();
+injectBreadcrumbs();
+showSection('s-brand');
+
 
 </script>
 </body>
