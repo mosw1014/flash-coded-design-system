@@ -4475,7 +4475,7 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;font-feature-
     <section class="sec" id="s-accordion">
       <div class="sec__head">
         <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Accordion <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.0</span></h1>
+        <h1 class="sec__title">Accordion <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.1</span></h1>
         <p class="sec__desc">Stacked headers that expand to reveal content, for progressively disclosing long or secondary information. Built on native <code>&lt;details&gt;</code> elements, so expand/collapse works without JavaScript and stays accessible.</p>
       </div>
       <div class="type-sub">
@@ -4517,6 +4517,35 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;font-feature-
           </div>
         </div>
       </div>
+      <details class="ai-ctx">
+  <summary>AI context</summary>
+  <pre data-ai-context="s-accordion">
+{
+  "status": "static",
+  "realClasses": [
+    ".acc",
+    ".acc__item",
+    ".acc__sum",
+    ".acc__chev",
+    ".acc__body"
+  ],
+  "css": "/* ---- Accordion ---- */\n.acc { border:1px solid var(--chrome-border);border-radius:12px;overflow:hidden;background:var(--chrome-bg);max-width:620px;transition:background .25s }\n.acc__item { border-bottom:1px solid var(--chrome-border) }\n.acc__item:last-child { border-bottom:none }\n.acc__sum { list-style:none;cursor:pointer;display:flex;align-items:center;gap:12px;padding:15px 18px;font-size:14px;font-weight:600;color:var(--chrome-txt);transition:background .15s }\n.acc__sum::-webkit-details-marker { display:none }\n.acc__sum:hover { background:var(--chrome-hover) }\n.acc__sum:focus-visible { outline:2px solid var(--color-input-focus);outline-offset:-2px }\n.acc__chev { margin-left:auto;flex-shrink:0;font-size:19px;line-height:1;color:var(--chrome-muted);transition:transform .2s,color .2s }\n.acc__item[open] &gt; .acc__sum .acc__chev { transform:rotate(90deg);color:var(--color-text-1) }\n.acc__body { padding:0 18px 16px;font-size:13px;line-height:1.6;color:var(--chrome-muted) }",
+  "usage": {
+    "do": [
+      "Use for FAQs, optional settings and long secondary content.",
+      "Write headers that describe exactly what’s inside.",
+      "Default the most useful item open when it helps."
+    ],
+    "dont": [
+      "Don’t bury content users need on every visit.",
+      "Don’t nest accordions inside accordions.",
+      "Don’t use one for a single item — just show it."
+    ]
+  },
+  "contentHash": "ce27b4094162612562e8da073834b2a876248dc6d96daeb8d05567c580f2b5fc"
+}
+  </pre>
+</details>
     </section>
 
     <!-- ============================================================
@@ -5353,7 +5382,7 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;font-feature-
     <section class="sec" id="s-calendar">
       <div class="sec__head">
         <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Calendar &amp; Date Picker <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.0</span></h1>
+        <h1 class="sec__title">Calendar &amp; Date Picker <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.1</span></h1>
         <p class="sec__desc">A month-grid calendar for choosing a date, and a compact field that opens it in a popover. Fully interactive &mdash; navigate months and pick a day. The selected day uses the primary (black) style; today is outlined.</p>
       </div>
       <div class="type-sub">
@@ -5393,6 +5422,50 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;font-feature-
           </div>
         </div>
       </div>
+      <details class="ai-ctx">
+  <summary>AI context</summary>
+  <pre data-ai-context="s-calendar">
+{
+  "status": "js-rendered",
+  "builderFunctions": [
+    "build",
+    "MONTHS",
+    "DOW"
+  ],
+  "realClasses": [
+    ".cal",
+    ".cal__head",
+    ".cal__nav",
+    ".cal__title",
+    ".cal__grid",
+    ".cal__dow",
+    ".cal__day",
+    ".cal__day--muted",
+    ".cal__day--today",
+    ".cal__day--sel",
+    ".dp",
+    ".dp__field",
+    ".dp__val",
+    ".dp__pop"
+  ],
+  "css": "/* ---- Calendar &amp; Date Picker ---- */\n.cal { width:280px;max-width:100%;border:1px solid var(--chrome-border);border-radius:14px;padding:16px;background:var(--chrome-bg) }\n.cal__head { display:flex;align-items:center;justify-content:space-between;margin-bottom:12px }\n.cal__title { font-size:13px;font-weight:700;color:var(--chrome-txt) }\n.cal__nav { display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:7px;border:1px solid var(--chrome-border);background:var(--chrome-bg);color:var(--chrome-txt);cursor:pointer;font-size:15px;font-family:inherit;line-height:1 }\n.cal__nav:hover { background:var(--chrome-hover) }\n.cal__grid { display:grid;grid-template-columns:repeat(7,1fr);gap:2px }\n.cal__dow { font-size:9.5px;font-weight:700;color:var(--chrome-muted);text-align:center;padding:4px 0;text-transform:uppercase }\n.cal__day { aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:12.5px;color:var(--chrome-txt);border:none;background:none;border-radius:8px;cursor:pointer;font-family:inherit;transition:background .12s }\n.cal__day:hover { background:var(--chrome-hover) }\n.cal__day--muted { color:var(--chrome-muted);opacity:.4;cursor:default }\n.cal__day--muted:hover { background:none }\n.cal__day--today { font-weight:800;box-shadow:inset 0 0 0 1px var(--chrome-border) }\n.cal__day--sel { background:var(--color-btn-s-bg);color:var(--color-btn-s-txt);font-weight:700 }\n.cal__day--sel:hover { background:var(--color-btn-s-bg);opacity:.85 }\n.dp { position:relative;display:inline-block }\n.dp__field { display:inline-flex;align-items:center;gap:10px;min-width:220px;padding:10px 14px;border:1.5px solid var(--color-input-border);border-radius:10px;background:var(--color-input-bg);color:var(--chrome-txt);font-size:13px;font-family:inherit;cursor:pointer;text-align:left }\n.dp__field:hover { border-color:var(--color-text-s) }\n.dp__val { color:var(--chrome-muted);font-weight:500 }\n.dp__field svg { width:16px;height:16px;margin-left:auto;color:var(--chrome-muted);flex-shrink:0 }\n.dp__pop { position:absolute;top:calc(100% + 6px);left:0;z-index:40;opacity:0;transform:translateY(-6px);pointer-events:none;transition:opacity .15s,transform .15s }\n.dp.is-open .dp__pop { opacity:1;transform:translateY(0);pointer-events:auto }",
+  "js": "function build(host, onSelect){\n    var now=new Date();\n    var st={y:now.getFullYear(), m:now.getMonth(), sel:null};\n    function render(){\n      var first=new Date(st.y,st.m,1).getDay(), days=new Date(st.y,st.m+1,0).getDate(), prev=new Date(st.y,st.m,0).getDate();\n      var cells='';\n      for(var i=0;i&lt;first;i++){ cells+='&lt;button class=\"cal__day cal__day--muted\" tabindex=\"-1\"&gt;'+(prev-first+1+i)+'&lt;/button&gt;'; }\n      for(var d=1;d&lt;=days;d++){\n        var isT=(st.y===now.getFullYear()&amp;&amp;st.m===now.getMonth()&amp;&amp;d===now.getDate());\n        var isS=(st.sel&amp;&amp;st.sel.y===st.y&amp;&amp;st.sel.m===st.m&amp;&amp;st.sel.d===d);\n        cells+='&lt;button class=\"cal__day'+(isT?' cal__day--today':'')+(isS?' cal__day--sel':'')+'\" data-d=\"'+d+'\"&gt;'+d+'&lt;/button&gt;';\n      }\n      var total=first+days, trail=(7-total%7)%7;\n      for(var t=1;t&lt;=trail;t++){ cells+='&lt;button class=\"cal__day cal__day--muted\" tabindex=\"-1\"&gt;'+t+'&lt;/button&gt;'; }\n      host.innerHTML='&lt;div class=\"cal\"&gt;&lt;div class=\"cal__head\"&gt;'\n        +'&lt;button class=\"cal__nav\" data-nav=\"-1\" aria-label=\"Previous month\"&gt;&amp;lsaquo;&lt;/button&gt;'\n        +'&lt;div class=\"cal__title\"&gt;'+MONTHS[st.m]+' '+st.y+'&lt;/div&gt;'\n        +'&lt;button class=\"cal__nav\" data-nav=\"1\" aria-label=\"Next month\"&gt;&amp;rsaquo;&lt;/button&gt;&lt;/div&gt;'\n        +'&lt;div class=\"cal__grid\"&gt;'+DOW.map(function(x){return '&lt;div class=\"cal__dow\"&gt;'+x+'&lt;/div&gt;';}).join('')+cells+'&lt;/div&gt;&lt;/div&gt;';\n      host.querySelector('[data-nav=\"-1\"]').onclick=function(){ if(--st.m&lt;0){st.m=11;st.y--;} render(); };\n      host.querySelector('[data-nav=\"1\"]').onclick=function(){ if(++st.m&gt;11){st.m=0;st.y++;} render(); };\n      Array.prototype.forEach.call(host.querySelectorAll('[data-d]'),function(b){\n        b.onclick=function(){ st.sel={y:st.y,m:st.m,d:+b.getAttribute('data-d')}; render(); if(onSelect) onSelect(st.sel,MONTHS); };\n      });\n    }\n    render();\n  }\n\nvar MONTHS=['January','February','March','April','May','June','July','August','September','October','November','December'];\n\nvar DOW=['Su','Mo','Tu','We','Th','Fr','Sa'];",
+  "usage": {
+    "do": [
+      "Use the field in forms; use the inline calendar when picking a date is the main task.",
+      "Mark today and make the selected date unmistakable.",
+      "Also accept typed dates for accessibility and speed where you can."
+    ],
+    "dont": [
+      "Don’t use a calendar for far-off dates like birth year — a select is faster.",
+      "Don’t trap keyboard users — allow Escape and typed entry.",
+      "Don’t hide which month is shown or which day is selected."
+    ]
+  },
+  "contentHash": "c34a7d04d47e6b20f12f9245aef1f8d601b7f0e13aa9b5a0ccd8f1c67478baaf"
+}
+  </pre>
+</details>
     </section>
 
     <!-- ============================================================
@@ -5401,7 +5474,7 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;font-feature-
     <section class="sec" id="s-command">
       <div class="sec__head">
         <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Command <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.0</span></h1>
+        <h1 class="sec__title">Command <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.1</span></h1>
         <p class="sec__desc">A searchable command palette for jumping to actions and destinations fast. Type to filter; use &uarr; &darr; to move and Enter to run. Typically summoned with a shortcut like <span class="kbd-combo"><span class="kbd">&#8984;</span><span class="kbd-combo__plus">+</span><span class="kbd">K</span></span>.</p>
       </div>
       <div class="type-sub">
@@ -5431,6 +5504,46 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;font-feature-
           </div>
         </div>
       </div>
+      <details class="ai-ctx">
+  <summary>AI context</summary>
+  <pre data-ai-context="s-command">
+{
+  "status": "js-rendered",
+  "builderFunctions": [
+    "CMD",
+    "draw",
+    "hi"
+  ],
+  "realClasses": [
+    ".cmd",
+    ".cmd__search",
+    ".cmd__input",
+    ".cmd__list",
+    ".cmd__glabel",
+    ".cmd__item",
+    ".cmd__ico",
+    ".cmd__empty",
+    ".kbd"
+  ],
+  "css": "/* ---- Kbd (shared: used by Command &amp; Context Menu too) ---- */\n.kbd { display:inline-flex;align-items:center;justify-content:center;min-width:20px;height:20px;padding:0 6px;font-family:'SF Mono',ui-monospace,monospace;font-size:11px;font-weight:600;color:var(--chrome-txt);background:var(--color-surface-n1);border:1px solid var(--chrome-border);border-bottom-width:2px;border-radius:6px;line-height:1 }\n/* ---- Command palette ---- */\n.cmd { width:420px;max-width:100%;border:1px solid var(--chrome-border);border-radius:14px;background:var(--chrome-bg);overflow:hidden;box-shadow:0 14px 36px rgba(0,0,0,.12) }\n.cmd__search { display:flex;align-items:center;gap:10px;padding:13px 16px;border-bottom:1px solid var(--chrome-border) }\n.cmd__search svg { width:16px;height:16px;color:var(--chrome-muted);flex-shrink:0 }\n.cmd__input { flex:1;border:0;background:none;outline:none;font-family:inherit;font-size:14px;color:var(--chrome-txt);min-width:0 }\n.cmd__input::placeholder { color:var(--chrome-muted) }\n.cmd__list { max-height:264px;overflow-y:auto;padding:6px }\n.cmd__glabel { font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--chrome-muted);padding:10px 10px 4px }\n.cmd__item { display:flex;align-items:center;gap:11px;padding:9px 10px;border-radius:8px;font-size:13.5px;color:var(--chrome-txt);cursor:pointer }\n.cmd__item.is-active,.cmd__item:hover { background:var(--chrome-hover) }\n.cmd__ico { width:16px;text-align:center;color:var(--chrome-muted);flex-shrink:0 }\n.cmd__item .kbd { margin-left:auto }\n.cmd__empty { padding:28px;text-align:center;font-size:13px;color:var(--chrome-muted) }\n.ctx-item .cmd__ico,.ctx-item .ctx-ico { width:16px;text-align:center;color:var(--chrome-muted);flex-shrink:0 }\n.ctx-item .kbd { margin-left:auto }",
+  "js": "var CMD=[\n    {group:'Navigation', items:[{ico:'⌂',label:'Go to Dashboard',kbd:'G D'},{ico:'⇄',label:'Go to Transactions',kbd:'G T'},{ico:'↑',label:'Go to Payouts'}]},\n    {group:'Actions', items:[{ico:'＋',label:'New payment link',kbd:'N'},{ico:'↓',label:'Export to CSV'},{ico:'⟳',label:'Refresh data',kbd:'R'}]},\n    {group:'Settings', items:[{ico:'☾',label:'Toggle dark mode'},{ico:'⚙',label:'Open settings',kbd:','}]}\n  ];\n\nfunction draw(){\n    var q=input.value.toLowerCase().trim(), html='', count=0;\n    CMD.forEach(function(g){\n      var m=g.items.filter(function(it){return it.label.toLowerCase().indexOf(q)&gt;=0;});\n      if(!m.length) return;\n      html+='&lt;div class=\"cmd__glabel\"&gt;'+g.group+'&lt;/div&gt;';\n      m.forEach(function(it){ html+='&lt;div class=\"cmd__item\" data-i=\"'+(count++)+'\"&gt;&lt;span class=\"cmd__ico\"&gt;'+it.ico+'&lt;/span&gt;'+it.label+(it.kbd?'&lt;span class=\"kbd\"&gt;'+it.kbd+'&lt;/span&gt;':'')+'&lt;/div&gt;'; });\n    });\n    listEl.innerHTML=count?html:'&lt;div class=\"cmd__empty\"&gt;No results found&lt;/div&gt;';\n    items=Array.prototype.slice.call(listEl.querySelectorAll('.cmd__item'));\n    active=count?0:-1; hi();\n    items.forEach(function(el){ el.addEventListener('mousemove',function(){ active=+el.getAttribute('data-i'); hi(); }); });\n  }\n\nfunction hi(){ items.forEach(function(el,i){ el.classList.toggle('is-active', i===active); }); if(active&gt;=0&amp;&amp;items[active]) items[active].scrollIntoView({block:'nearest'}); }",
+  "usage": {
+    "do": [
+      "Aggregate common actions and destinations behind one search.",
+      "Support full keyboard use and show shortcuts inline.",
+      "Group results and show a clear empty state."
+    ],
+    "dont": [
+      "Don’t make it the only way to reach a feature.",
+      "Don’t dump every action in with no grouping or ranking.",
+      "Don’t hide it with no discoverable shortcut or entry point."
+    ]
+  },
+  "contentHash": "faf9b4c0c730111c3f97e6c89f6221df04bb52c04dfbb2400cc2d1650991d4b0",
+  "note": "Shares .kbd with Context Menu (see s-context-menu's tab) and Kbd (s-kbd); its own CSS here is what Command specifically references."
+}
+  </pre>
+</details>
     </section>
 
     <!-- ============================================================
@@ -5713,7 +5826,7 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;font-feature-
     <section class="sec" id="s-carousel">
       <div class="sec__head">
         <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Carousel <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.0</span></h1>
+        <h1 class="sec__title">Carousel <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.1</span></h1>
         <p class="sec__desc">A horizontally scrollable, snapping set of slides for browsing a small collection &mdash; features, images, onboarding steps. Drag/swipe, use the arrows, or jump with the dots.</p>
       </div>
       <div class="type-sub">
@@ -5755,6 +5868,39 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;font-feature-
           </div>
         </div>
       </div>
+      <details class="ai-ctx">
+  <summary>AI context</summary>
+  <pre data-ai-context="s-carousel">
+{
+  "status": "static",
+  "realClasses": [
+    ".car",
+    ".car__arrow",
+    ".car__arrow--prev",
+    ".car__arrow--next",
+    ".car__track",
+    ".car__slide",
+    ".car__dots",
+    ".car__dot"
+  ],
+  "css": "/* ---- Carousel ---- */\n.car { position:relative;width:440px;max-width:100% }\n.car__track { display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;scrollbar-width:none;border-radius:14px }\n.car__track::-webkit-scrollbar { display:none }\n.car__slide { flex:0 0 100%;scroll-snap-align:center;min-height:196px;border-radius:14px;display:flex;align-items:flex-end;padding:20px;color:#fff;font-weight:800;font-size:17px;background:linear-gradient(135deg,var(--prim-grey-600),var(--prim-grey-1100)) }\n.car__slide:nth-child(2) { background:linear-gradient(135deg,var(--prim-gb-300),var(--prim-gb-700)) }\n.car__slide:nth-child(3) { background:linear-gradient(135deg,var(--prim-grey-800),var(--prim-dg-700)) }\n.car__slide:nth-child(4) { background:linear-gradient(135deg,var(--prim-gb-200),var(--prim-gb-600)) }\n.car__arrow { position:absolute;top:98px;transform:translateY(-50%);width:34px;height:34px;border-radius:50%;background:var(--color-btn-s-bg);color:var(--color-btn-s-txt);border:0;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;font-family:inherit;box-shadow:0 2px 10px rgba(0,0,0,.25);z-index:2;transition:opacity .15s }\n.car__arrow:hover { opacity:.85 }\n.car__arrow--prev { left:10px }\n.car__arrow--next { right:10px }\n.car__dots { display:flex;gap:7px;justify-content:center;margin-top:14px }\n.car__dot { width:7px;height:7px;border-radius:50%;background:var(--color-surface-n3);border:0;cursor:pointer;padding:0;transition:width .2s,background .2s }\n.car__dot.is-active { background:var(--color-surface-inverse);width:20px;border-radius:4px }",
+  "usage": {
+    "do": [
+      "Use for a handful of equally-weighted, self-contained slides.",
+      "Show position with dots and offer arrows plus swipe.",
+      "Keep each slide understandable on its own."
+    ],
+    "dont": [
+      "Don’t hide critical content or primary actions in later slides.",
+      "Don’t auto-advance without a pause control — it fights the reader.",
+      "Don’t use a carousel where a simple list would show everything at once."
+    ]
+  },
+  "contentHash": "7fd6b022053a4c68646b11cec1cc8b6a31805b7d23b459a219b3aa893a14a5b7",
+  "note": "Slide/track/arrow markup is static; only the .car__dot buttons are generated by an inline string-concatenation loop inside an anonymous IIFE (no separately named builder function/const to extract — update()/go() just toggle .is-active and scroll, they don't build markup)."
+}
+  </pre>
+</details>
     </section>
 
     <!-- @@SHADCN_SECTIONS@@ -->
@@ -8459,12 +8605,18 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.32.11';
+const SYSTEM_VERSION = '1.32.12';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.32.12', date:'2026-07-29', author:'Mo', title:'AI context tabs added to Accordion, Carousel, Command, and Calendar', changes:[
+        ['added','Accordion — AI context tab documenting the real, fully static .acc/.acc__*/native-<details> markup, plus its existing "When to use" Do/Dont guidance (3 do / 3 dont)'],
+        ['added','Carousel — AI context tab documenting the real .car/.car__arrow/.car__track/.car__slide/.car__dots/.car__dot markup, plus its existing "When to use" Do/Dont guidance (3 do / 3 dont); notes the dot buttons are generated by an inline loop with no separately named builder to extract'],
+        ['added','Command Palette — AI context tab documenting the real .cmd/.cmd__*/.kbd structural classes and the CMD/draw/hi builders (search, grouping, keyboard highlight), plus its existing "When to use" Do/Dont guidance (3 do / 3 dont); notes .kbd is shared with Context Menu'],
+        ['added','Calendar & Date Picker — AI context tab documenting the real .cal/.cal__*/.dp/.dp__* structural classes and the build/MONTHS/DOW builder (shared by the inline calendar and the date-picker popover), plus its existing "When to use" Do/Dont guidance (3 do / 3 dont)'],
+      ]},
       {version:'1.32.11', date:'2026-07-29', author:'Mo', title:'AI context tabs added to Switch, Alert, Skeleton, and Spinner', changes:[
         ['added','Switch — AI context tab documenting the real, fully static .sw/.sw__*/.sw--sm markup, plus its existing "When to use" Do/Dont guidance (3 do / 3 dont)'],
         ['added','Alert — AI context tab documenting the real, fully static .alrt/.alrt__*/severity-variant markup, plus its existing "When to use" Do/Dont guidance (3 do / 3 dont); notes the dismiss control is a plain inline onclick, not a named JS builder'],
@@ -8792,12 +8944,18 @@ const CHANGELOG = {
         ['added','Interactive inline-SVG bar, line, area and donut charts rendered from data, Flash colour palette, with hover tooltips, dim-the-rest emphasis, donut pop-out and an interactive legend'],
       ]},
     ]},
-    {secId:'s-calendar', name:'Calendar & Date Picker', version:'1.0.0', entries:[
+    {secId:'s-calendar', name:'Calendar & Date Picker', version:'1.0.1', entries:[
+      {version:'1.0.1', date:'2026-07-29', author:'Mo', title:'AI context tab added', changes:[
+        ['added','AI context tab documenting the real .cal/.cal__*/.dp/.dp__* structural classes and the build/MONTHS/DOW builder shared by the inline calendar and the date-picker popover, plus its existing "When to use" Do/Dont guidance (3 do / 3 dont)'],
+      ]},
       {version:'1.0.0', date:'2026-07-09', author:'Mo', title:'Initial release', changes:[
         ['added','Interactive month-grid calendar (month nav, today marker, day select) and a date-picker field that opens it in a popover'],
       ]},
     ]},
-    {secId:'s-command', name:'Command', version:'1.0.0', entries:[
+    {secId:'s-command', name:'Command', version:'1.0.1', entries:[
+      {version:'1.0.1', date:'2026-07-29', author:'Mo', title:'AI context tab added', changes:[
+        ['added','AI context tab documenting the real .cmd/.cmd__*/.kbd structural classes and the CMD/draw/hi builders, plus its existing "When to use" Do/Dont guidance (3 do / 3 dont); notes .kbd is shared with Context Menu'],
+      ]},
       {version:'1.0.0', date:'2026-07-09', author:'Mo', title:'Initial release', changes:[
         ['added','Searchable command palette with grouped results, live filtering, arrow-key navigation, inline shortcuts and an empty state'],
       ]},
@@ -8831,7 +8989,10 @@ const CHANGELOG = {
         ['added','Keyboard key-caps for single keys and chained shortcut combinations'],
       ]},
     ]},
-    {secId:'s-carousel', name:'Carousel', version:'1.0.0', entries:[
+    {secId:'s-carousel', name:'Carousel', version:'1.0.1', entries:[
+      {version:'1.0.1', date:'2026-07-29', author:'Mo', title:'AI context tab added', changes:[
+        ['added','AI context tab documenting the real .car/.car__arrow/.car__track/.car__slide/.car__dots/.car__dot markup, plus its existing "When to use" Do/Dont guidance (3 do / 3 dont); notes the dot buttons are generated by an inline loop with no separately named builder to extract'],
+      ]},
       {version:'1.0.0', date:'2026-07-09', author:'Mo', title:'Initial release', changes:[
         ['added','Scroll-snap slider with prev/next arrows and position dots'],
       ]},
@@ -8849,7 +9010,10 @@ const CHANGELOG = {
         ['added','Pure-CSS hover/focus tooltip with four placements and an icon-button example'],
       ]},
     ]},
-    {secId:'s-accordion', name:'Accordion', version:'1.0.0', entries:[
+    {secId:'s-accordion', name:'Accordion', version:'1.0.1', entries:[
+      {version:'1.0.1', date:'2026-07-29', author:'Mo', title:'AI context tab added', changes:[
+        ['added','AI context tab documenting the real, fully static .acc/.acc__*/native-<details> markup, plus its existing "When to use" Do/Dont guidance (3 do / 3 dont)'],
+      ]},
       {version:'1.0.0', date:'2026-07-09', author:'Mo', title:'Initial release', changes:[
         ['added','Native <details> disclosure with single-open and multiple-open variants'],
       ]},
