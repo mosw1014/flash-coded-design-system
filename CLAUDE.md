@@ -12,9 +12,11 @@ At the start of a session, if the person hasn't stated their name, ask for it be
 
 Before making any change, get the latest version of `main`. If the project folder is empty or not yet a git repository — which happens if someone is working from a brand-new, empty project folder — clone it from `https://github.com/mosw1014/flash-coded-design-system` instead of failing. Don't assume the folder is already set up; check, and self-heal if it isn't.
 
-## 3. Read `AI-CONTEXT.md` before touching `index.html`
+## 3. Read `AI-CONTEXT.md` before touching `index.html` — then read the component's own tab
 
 `AI-CONTEXT.md` documents the conventions, tokens, and structure this design system depends on. Before making any change to `index.html` — a new component, variant, visual fix, or behaviour change — read `AI-CONTEXT.md` in full first. This is not optional and not skippable because a change looks small: the file exists precisely so changes stay consistent with decisions that aren't obvious from the code alone.
+
+Reading `AI-CONTEXT.md` only tells you the `<details class="ai-ctx">` tab convention exists — by design, it never enumerates specific components, so it can't tell you what any one component's tab actually says. That's a second, separate step: **before extracting, reimplementing, or reskinning a specific component (in this repo or elsewhere), open that component's own section in `index.html` and check whether it carries an `ai-ctx` tab, and read it if so.** A tab is the authoritative source for exactly the details a plain CSS/JS read misses — JS-only state, a component's real behaviour, gotchas like a caret-color token or a clear-button widget that a static style copy would silently drop. Grepping the stylesheet directly is a fallback for when no tab exists (or its hash is stale per rule 5) — not a substitute for checking first.
 
 ## 4. Log every non-trivial change to the in-app changelog
 
@@ -50,7 +52,7 @@ Some sections of `index.html` carry a machine-readable `<details class="ai-ctx">
 - **One-time setup per clone**: run `git config core.hooksPath .githooks` once. Git doesn't enable tracked hooks automatically — do this yourself if you haven't, and check it's set (`git config core.hooksPath`) before assuming a commit will self-heal.
 - With that set, a `pre-commit` hook (`.githooks/pre-commit`) runs `scripts/auto-update-ai-context.mjs` on every commit touching `index.html`. It re-derives every **existing** tab's hash, regenerates any that drifted (e.g. because you edited a component's classes, JS, or its Do/Don't copy), and re-stages `index.html` before the commit lands — no separate step needed.
 - This only refreshes tabs that **already exist**. Adding the first tab to a section not yet covered is still a deliberate, one-time manual step — see `AI-CONTEXT.md`'s "Keeping this honest" section and run `scripts/generate-ai-context-tab.mjs` yourself.
-- If the hook isn't enabled (fresh clone, setup skipped) and `verify-ai-context-tabs.mjs` in CI flags a tab stale, that's expected, not a bug — enable the hook and it stops happening, or run the generator manually per the command CI prints.
+- This is enforced by the hook, not CI — there is no automated PR check for stale tabs. If you haven't enabled the hook (or edited `index.html` outside git, e.g. via GitHub's web UI), a tab can go stale silently. Run `node scripts/verify-ai-context-tabs.mjs` yourself if you want to check, and regenerate per the command it prints.
 - Never edit the JSON inside a `<pre data-ai-context="...">` block directly. It's a computed artifact of the real markup/CSS/JS/Do-Don't copy elsewhere in the section — edit the actual component instead and let the hook (or the generator) regenerate the tab from that.
 
 ## 6. Always work on a branch — never commit directly to `main`

@@ -161,11 +161,16 @@ missing OR hash-mismatched tab as "fall back to live detection," never as ground
 question — so this degrades gracefully rather than breaking, but a fresh, hash-verified tab lets
 tooling skip re-parsing the file for that component entirely.
 
-**This is enforced by CI, not just documented here.** `.github/workflows/verify-ai-context.yml`
-runs `scripts/verify-ai-context-tabs.mjs` on every PR touching `index.html`, which re-derives every
-existing tab's hash from the live file and fails the check if any tab has gone stale — printing the
-exact `generate-ai-context-tab.mjs` command to fix it. You do not need to have read this file to get
-a failing PR check telling you what to run; it works the same way a failing test would.
+**This is enforced automatically, not just documented here — via a pre-commit hook, not CI.** A
+`pre-commit` git hook (`.githooks/pre-commit`, running `scripts/auto-update-ai-context.mjs`) regenerates
+any existing tab that's drifted every time a commit touches `index.html`, before the commit lands.
+Enable it once per clone with `git config core.hooksPath .githooks`. `scripts/verify-ai-context-tabs.mjs`
+is still available as a manual, read-only check (`node scripts/verify-ai-context-tabs.mjs`) — it
+re-derives every existing tab's hash from the live file and reports any that are stale, printing the
+exact `generate-ai-context-tab.mjs` command to fix it, but it no longer runs in CI. A commit made
+without the hook enabled (or an edit made outside git entirely, e.g. via GitHub's web UI) can still
+leave a tab stale without anything catching it automatically — run the manual check yourself if
+you're unsure.
 
 ## File structure notes (apply to the whole file, not any one component)
 
