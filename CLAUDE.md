@@ -18,15 +18,30 @@ Before making any change, get the latest version of `main`. If the project folde
 
 ## 4. Log every non-trivial change to the in-app changelog
 
-`index.html` has its own changelog built in — a `CHANGELOG` data structure rendered by JS inside the file itself, separate from git history. For any new component, variant, visual fix, or behaviour change, add an entry with:
+`index.html` has its own changelog built in — a `CHANGELOG` const rendered by JS inside the file itself (around line 7604), separate from git history. It is not optional documentation; treat updating it as part of making the change, not a follow-up step. (This is still part of touching `index.html` — rule 3's requirement to read `AI-CONTEXT.md` first applies here too.)
 
-- **version** — bump patch for fixes, minor for new features
-- **date** — today's date
-- **author** — the person's stated name from rule 1
-- **title** — one-line summary
-- **changes[]** — tagged as one of: `added` / `changed` / `fixed` / `removed`
+**Structure.** `CHANGELOG` has two parts, and a real change touches both:
 
-Update both the relevant per-section changelog and the global one, following the existing structure already in the file. Don't invent a new format or skip this step because a change seems small — log it with a brief description regardless.
+- `CHANGELOG.system` — one global version/history for the whole design system. Bump `SYSTEM_VERSION` (declared just above `CHANGELOG`) and `CHANGELOG.system.version` to match, then prepend a new entry to the **front** of `CHANGELOG.system.entries` (newest first — do not append to the end).
+- `CHANGELOG.components` — an array of per-component objects (`{secId, name, version, entries}`), one per section (Charts, Buttons, Text Inputs, etc.). Find the object whose `secId`/`name` matches the section you changed, bump **its own** `version` field, and prepend a matching entry to the **front** of that object's `entries` array.
+  - If the change doesn't belong to any existing component/foundation section (e.g. a global nav or theming change), it's fine to log it in `system` only.
+  - If you're adding a brand-new section, add a new object to `CHANGELOG.components` with `secId` (must match the `showSection('...')` id used elsewhere in the file), `name`, starting `version` (e.g. `'1.0.0'`), and its own `entries`.
+
+**Each entry, in both places, is:**
+
+```js
+{version:'X.Y.Z', date:'YYYY-MM-DD', author:'Name', title:'One-line summary', changes:[
+  ['added'|'changed'|'fixed'|'removed', 'Specific, concrete description of what changed and, where useful, why'],
+]}
+```
+
+- **version** — semver-ish: bump the patch digit for fixes/small tweaks, the minor digit for new features/components, reset patch to 0 on a minor bump. The `system` version and a component's own `version` are independent counters — bumping one does not require bumping the other unless both were actually touched.
+- **date** — today's actual date (`YYYY-MM-DD`), not the date of a past entry.
+- **author** — the person's stated name from rule 1, exactly as given (this drives the avatar initials in the UI).
+- **title** — one line, specific enough to identify the change without reading the tags below it.
+- **changes[]** — one array entry per distinct change, each a `[tag, description]` pair. Tag must be exactly one of `added` / `changed` / `fixed` / `removed`. Descriptions should be concrete (name the actual class/token/component touched and the before→after), matching the level of detail already present in existing entries — not vague filler like "misc improvements."
+
+Don't invent a new format, don't skip a field, and don't skip this step because a change seems small — every non-trivial change gets an entry with a real, specific description.
 
 ## 5. Always work on a branch — never commit directly to `main`
 
