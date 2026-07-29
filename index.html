@@ -3346,7 +3346,7 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;font-feature-
       <div class="sec__head">
         <h1 class="sec__title">Chips and pills</h1>
         <div class="chip-header-meta">
-          <span class="comp-ver-badge" style="margin-left:0">v1.6.1</span>
+          <span class="comp-ver-badge" style="margin-left:0">v1.6.2</span>
           <details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-chips">
@@ -3368,10 +3368,10 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;font-feature-
     ".chip__icon",
     ".chip__x"
   ],
-  "css": "/* ================================================================\n   CHIPS\n================================================================ */\n.chip { display:inline-flex;align-items:center;border-radius:999px;font-family:inherit;font-weight:700;white-space:nowrap;background:var(--chip-bg);color:var(--chip-text);line-height:1 }\n.chip__icon { flex-shrink:0 }\n.chip--sm { height:24px }\n.chip--reg { height:28px }\n.chip--lg { height:33px }\n.chip__x { display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;margin-left:1px;margin-right:-2px;width:1.15em;height:1.15em;border-radius:999px;border:none;background:transparent;color:inherit;cursor:pointer;padding:0;opacity:.72;transition:opacity .12s,background .12s }\n.chip__x:hover { opacity:1;background:rgba(0,0,0,.2) }\n.chip.is-selectable { cursor:pointer }\n.chip.is-selected { box-shadow:0 0 0 2px var(--cpg-stage-bg,#fff),0 0 0 4px var(--chip-bg) }\n.dd-chips .chip { box-shadow:none;padding:0 14px }",
+  "css": ".chip { display:inline-flex;align-items:center;border-radius:999px;font-family:inherit;font-weight:700;white-space:nowrap;background:var(--chip-bg);color:var(--chip-text);line-height:1 }\n.chip__icon { flex-shrink:0 }\n.chip--sm { height:24px }\n.chip--reg { height:28px }\n.chip--lg { height:33px }\n.chip__x { display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;margin-left:1px;margin-right:-2px;width:1.15em;height:1.15em;border-radius:999px;border:none;background:transparent;color:inherit;cursor:pointer;padding:0;opacity:.72;transition:opacity .12s,background .12s }\n.chip__x:hover { opacity:1;background:rgba(0,0,0,.2) }\n.chip.is-selectable { cursor:pointer }\n.chip.is-selected { box-shadow:0 0 0 2px var(--cpg-stage-bg,#fff),0 0 0 4px var(--chip-bg) }\n.dd-chips .chip { box-shadow:none;padding:0 14px }",
   "js": "const CHIP_SIZES = [\n  {key:'sm',  label:'Small',   h:24, padY:'0', padX:9,  fs:11,   gap:4, icon:11},\n  {key:'reg', label:'Regular', h:28, padY:'0', padX:11, fs:12.5, gap:5, icon:13},\n  {key:'lg',  label:'Large',   h:33, padY:'0', padX:13, fs:13.5, gap:6, icon:15},\n];\n\nconst CHIP_VARIANTS = [\n  {key:'accent',  label:'Accent',  light:{bg:'#0062EB',text:'#ffffff'}, dark:{bg:'#0062EB',text:'#ffffff'}},\n  {key:'muted',   label:'Muted',   light:{bg:'#E6E6E6',text:'#646464'}, dark:{bg:'#33343A',text:'#A1A3A8'}},\n  {key:'success', label:'Success', light:{bg:'#16A220',text:'#ffffff'}, dark:{bg:'#16A220',text:'#ffffff'}},\n  {key:'warning', label:'Warning', light:{bg:'#FF8900',text:'#ffffff'}, dark:{bg:'#FF8900',text:'#ffffff'}},\n  {key:'error',   label:'Error',   light:{bg:'#EB0029',text:'#ffffff'}, dark:{bg:'#EB0029',text:'#ffffff'}},\n];\n\nfunction chipHeartSVG(size, color){\n  return `&lt;svg class=\"chip__icon\" width=\"${size}\" height=\"${size}\" viewBox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\"&gt;&lt;path fill=\"${color}\" d=\"M12 21.3s-7.6-4.7-10.3-9.4C.1 8.9 1.3 5.1 5 4.2c2.2-.5 4.2.4 5.5 2.2.4.5 1.1.5 1.5 0C13.3 4.6 15.3 3.7 17.5 4.2c3.7.9 4.9 4.7 3.3 7.7-2.7 4.7-8.8 9.4-8.8 9.4z\"/&gt;&lt;/svg&gt;`;\n}\n\nfunction makeChipHTML(variant, sizeKey, theme){\n  const sz = CHIP_SIZES.find(s=&gt;s.key===sizeKey);\n  const c  = variant[theme];\n  const style = `--chip-bg:${c.bg};--chip-text:${c.text};font-size:${sz.fs}px;gap:${sz.gap}px;padding:0 ${sz.padX}px 0 ${sz.padX-2}px`;\n  return `&lt;span class=\"chip chip--${sizeKey}\" style=\"${style}\"&gt;${chipHeartSVG(sz.icon, c.text)}&lt;span class=\"chip__label\"&gt;Chip&lt;/span&gt;&lt;/span&gt;`;\n}\n\nfunction makeChipEl(){\n  const sz = CHIP_SIZES.find(s=&gt;s.key===cpg.size)||CHIP_SIZES[1];\n  const v  = CHIP_VARIANTS.find(x=&gt;x.key===cpg.variant)||CHIP_VARIANTS[0];\n  const c  = v[cpg.theme];\n  const chip = document.createElement('span');\n  chip.className = `chip chip--${cpg.size}${cpg.selectable?' is-selectable':''}${(cpg.selectable&amp;&amp;cpg.selected)?' is-selected':''}`;\n  chip.style.cssText = `--chip-bg:${c.bg};--chip-text:${c.text};font-size:${sz.fs}px;gap:${sz.gap}px;padding:0 ${sz.padX}px 0 ${sz.padX-2}px`;\n  chip.style.setProperty('--cpg-stage-bg', stageBg(cpg.theme));\n  let inner = '';\n  if(cpg.icon) inner += chipHeartSVG(sz.icon, c.text);\n  inner += `&lt;span class=\"chip__label\"&gt;${cpgEsc(cpg.label||'Chip')}&lt;/span&gt;`;\n  chip.innerHTML = inner;\n  if(cpg.removable){\n    const x = document.createElement('button');\n    x.className = 'chip__x'; x.type = 'button'; x.setAttribute('aria-label','Remove');\n    const xs = Math.round(sz.icon*0.82);\n    x.innerHTML = `&lt;svg width=\"${xs}\" height=\"${xs}\" viewBox=\"0 0 24 24\" fill=\"none\"&gt;&lt;path d=\"M6 6l12 12M18 6L6 18\" stroke=\"currentColor\" stroke-width=\"2.6\" stroke-linecap=\"round\"/&gt;&lt;/svg&gt;`;\n    x.onclick = (e)=&gt;{ e.stopPropagation(); cpg.dismissed = true; cpgRefresh(); };\n    chip.appendChild(x);\n  }\n  if(cpg.selectable){\n    chip.onclick = ()=&gt;{ cpg.selected = !cpg.selected; cpgRefresh(); };\n  }\n  return chip;\n}",
-  "contentHash": "f8fc667309081c1cdc6084f8f95a480ad1c324dc7841496c0000e5186f6986f9",
-  "note": "makeChipHTML is the minimal real-markup builder (variant+size+theme -&gt; chip HTML string); makeChipEl is the fuller version also handling removable (.chip__x) and selectable (.is-selectable/.is-selected, captured via the .chip boundary already) states. cpg (playground state)/getChipCodeHTML/renderChipPlayground/renderChipReference are doc-site-only playground plumbing, excluded."
+  "contentHash": "5bafb76fb0c2997b3d4d1171561afdd64c65de175d65bdacbcdac5fa30bb1f20",
+  "note": "makeChipHTML is the minimal real-markup builder (variant+size+theme -&gt; chip HTML string); makeChipEl is the fuller version also handling removable (.chip__x) and selectable (.is-selectable/.is-selected, captured via the .chip boundary already) states. cpg (playground state)/getChipCodeHTML/renderChipPlayground/renderChipReference/renderChipAnatomy/renderChipIconography/renderChipVariants/renderChipSizes/annotateChipStage are doc-site-only playground plumbing, excluded."
 }
   </pre>
 </details>
@@ -9168,12 +9168,15 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.32.37';
+const SYSTEM_VERSION = '1.32.38';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.32.38', date:'2026-07-29', author:'Helen', title:'Chips & Pills — AI context tab regenerated', changes:[
+        ['fixed','The section\'s AI context tab had gone stale across this session\'s changes (new Overview sections, the multi-mount Playground refactor, etc.) — regenerated with scripts/generate-ai-context-tab.mjs; verify-ai-context-tabs.mjs now reports it (and all 34 tabs) current. The real chip markup/data (CHIP_SIZES, CHIP_VARIANTS, chipHeartSVG, makeChipHTML, makeChipEl, .chip* classes) were unchanged by this session\'s work — only doc-site playground/layout code changed — but the stored contentHash no longer matched, so the tab needed regenerating anyway; its note now also lists the new doc-site-only renderers (renderChipAnatomy/Iconography/Variants/Sizes, annotateChipStage) as excluded plumbing'],
+      ]},
       {version:'1.32.37', date:'2026-07-29', author:'Helen', title:'Chips & Pills — new heading above the Playground block, explainer updated', changes:[
         ['added','New heading above the "Try the component" block on the Overview tab: "Use chips to show a status, mark a category, or let people pick a filter at a glance." (the sentence previously used as the block\'s own explainer)'],
         ['changed','The block\'s explainer line now reads "Adjust the filters to test component states." instead; the Code tab\'s smaller Playground copy is unaffected and keeps its own heading/explainer'],
@@ -9949,7 +9952,10 @@ const CHANGELOG = {
         ['added','“Tag or Chip?” guidance clarifying when to use each'],
       ]},
     ]},
-    {secId:'s-chips', name:'Chips & Pills', version:'1.6.1', entries:[
+    {secId:'s-chips', name:'Chips & Pills', version:'1.6.2', entries:[
+      {version:'1.6.2', date:'2026-07-29', author:'Helen', title:'AI context tab regenerated', changes:[
+        ['fixed','AI context tab had gone stale across this session\'s changes; regenerated with scripts/generate-ai-context-tab.mjs and verified current'],
+      ]},
       {version:'1.6.1', date:'2026-07-29', author:'Helen', title:'New heading above the Playground block, explainer updated', changes:[
         ['added','New heading above the "Try the component" block: "Use chips to show a status, mark a category, or let people pick a filter at a glance."'],
         ['changed','Block\'s explainer line now reads "Adjust the filters to test component states."'],
