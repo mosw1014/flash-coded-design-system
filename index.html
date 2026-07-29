@@ -191,7 +191,6 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;font-feature-
 .sb-cat__icon{width:14px;height:14px;flex-shrink:0;display:inline-flex}
 .sb-cat__icon svg{width:100%;height:100%;fill:currentColor;display:block}
 .sb-cat:first-child{margin-top:0}
-.sb-cat::after{content:'';flex:1;height:1px;background:var(--chrome-border)}
 .sb-link{display:flex;align-items:center;gap:8px;padding:7px 16px;font-size:12.5px;font-weight:500;color:var(--chrome-muted);text-decoration:none;border-left:2px solid transparent;transition:all .15s}
 .sb-link:hover{color:var(--chrome-txt);background:var(--chrome-hover)}
 .sb-link.on{color:var(--chrome-txt);border-left-color:var(--chrome-accent);background:var(--chrome-hover);font-weight:700}
@@ -214,6 +213,10 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;font-feature-
 .lp-card{display:flex;flex-direction:column;border:1px solid var(--chrome-border);border-radius:16px;background:var(--chrome-bg);overflow:hidden;text-decoration:none;cursor:pointer;transition:transform .15s,border-color .15s,box-shadow .15s}
 .lp-card:hover{transform:translateY(-3px);border-color:var(--color-text-s);box-shadow:0 12px 32px rgba(0,0,0,.10)}
 .lp-prev{position:relative;height:178px;display:flex;align-items:center;justify-content:center;background:var(--chrome-nav);border-bottom:1px solid var(--chrome-border);overflow:hidden}
+.lp-logo{height:54px;width:auto;max-width:78%;display:block}
+.lp-logo--d{display:none}
+[data-theme="dark"] .lp-logo--l{display:none}
+[data-theme="dark"] .lp-logo--d{display:block}
 .lp-card__meta{padding:15px 18px 17px}
 .lp-card__row{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:5px}
 .lp-card__name{font-size:15.5px;font-weight:800;color:var(--chrome-txt)}
@@ -270,6 +273,8 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;font-feature-
 ================================================================ */
 .sec{margin-bottom:72px}
 .sec__head{margin-bottom:0;padding-bottom:20px;border-bottom:1px solid var(--chrome-border)}
+/* Category landing pages: no divider between the header text and the card grid */
+[id^="s-cat-"] .sec__head{border-bottom:none;padding-bottom:8px}
 .sec__eye{font-size:13px;font-weight:800;letter-spacing:0;text-transform:lowercase;color:var(--chrome-accent-text);margin-bottom:10px;transition:color .25s}
 .sec__title{font-size:26px;font-weight:900;color:var(--chrome-txt);margin-bottom:8px}
 .sec__desc{font-size:13px;line-height:1.65;color:var(--chrome-muted);max-width:560px}
@@ -8885,12 +8890,17 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.33.1';
+const SYSTEM_VERSION = '1.33.2';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.33.2', date:'2026-07-29', author:'Jaco', title:'Removed stray divider lines in the sidebar and on landing pages; real Flash logo on the Logos landing card', changes:[
+        ['removed','Thin grey divider line beside every sidebar category heading (dropped the .sb-cat::after 1px flex line)'],
+        ['removed','Thin grey underline between the header text and the card grid on the category landing pages (border-bottom removed from .sec__head under [id^="s-cat-"])'],
+        ['fixed','Logos card on the Brand landing page now shows the real Flash logo (assets/logos/flash-logo-primary.svg in light, flash-logo-white.svg in dark via a new .lp-logo helper) instead of the placeholder green-circle-plus-"flash"-text mock'],
+      ]},
       {version:'1.33.1', date:'2026-07-29', author:'Jaco', title:'Sidebar category headings restyled — sentence case, bolder, with icons on the landing categories', changes:[
         ['changed','Sidebar category headings (.sb-cat) are now sentence case instead of all-lowercase (dropped text-transform:lowercase) and use the full text colour instead of the muted grey, so they stand out from the nav links'],
         ['fixed','Landing-category headings (.sb-cat--link — Brand, Components, Coming soon) were rendering at the inherited body weight because font:inherit clobbered .sb-cat\'s font-weight:800; swapped to font-family:inherit so they render bold like the rest'],
@@ -11257,7 +11267,7 @@ const MOCKS = {
   's-elev': '<div style="position:relative;width:96px;height:74px"><span class="mk-card" style="position:absolute;left:0;top:0;width:70px;height:50px"></span><span class="mk-card" style="position:absolute;left:13px;top:12px;width:70px;height:50px"></span><span class="mk-card" style="position:absolute;left:26px;top:24px;width:70px;height:50px"></span></div>',
   's-icons': '<div class="mk"><span class="mk-glyph">'+iconSvg('star')+'</span><span class="mk-glyph">'+iconSvg('bell')+'</span><span class="mk-glyph">'+iconSvg('wallet')+'</span><span class="mk-glyph">'+iconSvg('calendar')+'</span></div>',
   's-spacing': '<div style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px">'+('<span class="mk-sq" style="width:34px;height:34px"></span>').repeat(4)+'</div>',
-  's-logos': '<div class="mk" style="gap:12px"><span class="mk-circle" style="width:50px;height:50px;background:var(--color-brand)"></span><span style="font:900 30px \'Satoshi\',sans-serif;color:var(--chrome-txt)">flash</span></div>',
+  's-logos': '<div class="mk"><img class="lp-logo lp-logo--l" src="assets/logos/flash-logo-primary.svg" alt="Flash logo"><img class="lp-logo lp-logo--d" src="assets/logos/flash-logo-white.svg" alt="Flash logo"></div>',
   's-type': '<div style="font:900 64px \'Satoshi\',sans-serif;color:var(--chrome-txt);line-height:1">Aa</div>',
   's-accordion': '<div class="mk-card" style="width:74%"><div style="display:flex;justify-content:space-between;align-items:center;padding:11px 13px;border-bottom:1px solid var(--chrome-border)"><span class="mk-bar" style="width:70px"></span><span style="color:var(--chrome-muted);font-size:12px">▾</span></div><div style="padding:11px 13px;display:flex;flex-direction:column;gap:7px"><span class="mk-bar" style="width:90%"></span><span class="mk-bar" style="width:60%"></span></div></div>',
   's-alert': '<div class="mk-card" style="width:80%;display:flex;gap:10px;align-items:center;padding:13px;border-left:4px solid var(--color-brand)"><span class="mk-glyph" style="width:20px;height:20px;color:var(--color-brand)">'+iconSvg('info')+'</span><div style="flex:1;display:flex;flex-direction:column;gap:6px"><span class="mk-bar" style="width:55%"></span><span class="mk-bar" style="width:90%"></span></div></div>',
