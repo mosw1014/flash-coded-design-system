@@ -1,0 +1,427 @@
+---
+document: Flash UI Reskin Guide
+version: 2.0.0
+design_system: https://mosw1014.github.io/flash-coded-design-system/
+purpose: Guide design judgement while the live design system supplies tokens, components and implementation.
+scope: Existing interfaces created with Claude, Replit, Lovable or similar tools.
+---
+
+# Flash UI Reskin Guide
+
+Use this file to clean up, rearrange and visually refine an existing interface with the live Flash Design System.
+
+This file owns design judgement:
+
+- hierarchy;
+- layout;
+- spacing;
+- alignment;
+- typography roles and weights;
+- component and variant selection;
+- visual restraint;
+- responsive prioritisation.
+
+The [live Flash Design System](https://mosw1014.github.io/flash-coded-design-system/) owns:
+
+- exact tokens and values;
+- component anatomy;
+- classes;
+- states;
+- CSS;
+- JavaScript and builder functions;
+- implementation examples;
+- current component availability.
+
+Do not duplicate the design system inside this file. Always treat the live system as the current source of truth.
+
+## 1. Scope
+
+This is a reskin and refinement task, not an unrestricted product redesign.
+
+### Preserve unless explicitly authorised
+
+- routes and navigation destinations;
+- features and business logic;
+- data and API behaviour;
+- working interactions;
+- form requirements;
+- approved content;
+- analytics and event hooks;
+- accessibility semantics;
+- framework and project structure.
+
+### You may change
+
+- content order within a page;
+- section grouping;
+- widths, columns and responsive reflow;
+- visual hierarchy;
+- spacing and alignment;
+- typography size, role and weight;
+- surface, border, radius and elevation treatment;
+- which Flash component represents an existing function;
+- which available component variant and size is most appropriate;
+- placement and visual priority of actions.
+
+Do not remove content or functionality merely to make the interface look cleaner. Reduce visual noise before reducing information.
+
+### Priority order
+
+1. Explicit user requirements
+2. Working product behaviour and verified content
+3. Live Flash Design System
+4. This design judgement guide
+5. Agent preference
+
+When this file and the live system differ on an exact component value, use the live system.
+
+## 2. Read the live system selectively
+
+Do not read the complete design-system source line by line.
+
+### At the start of a reskin
+
+1. Inspect the existing interface and list the components actually present.
+2. Read the live Brand, Colours, Spacing & Grid, Typography, Elevation and Icons foundations.
+3. Read only the live component sections required by the interface.
+4. Inspect the visible component example and its `AI context`.
+5. Implement from the live component source; use this file to choose and compose it.
+
+### AI context
+
+The live site contains `<pre data-ai-context="…">` blocks. Build a lightweight index from these blocks and load only the relevant entries.
+
+For each selected entry, inspect:
+
+- `status`;
+- `realClasses`;
+- `css`;
+- `js` and `builderFunctions`;
+- `usage`;
+- `note`;
+- the visible example and variant controls.
+
+Interpret `status` as follows:
+
+- `static`: use the real markup and classes shown by the component.
+- `js-rendered`: use the provided classes and only the builder or interaction logic required.
+- `placeholder`: the component is not available. Do not reconstruct or pretend it exists.
+
+The current Modals and Toasts sections are placeholders. Preserve an existing working pattern or use another suitable available component; do not fabricate a Flash modal or toast.
+
+Do not copy documentation-only playgrounds, galleries, phone frames, reference grids or navigation chrome into the product. Copy the reusable component, not the page demonstrating it.
+
+## 3. Flash design character
+
+Every result should feel:
+
+- bold;
+- direct;
+- energetic;
+- clear;
+- controlled.
+
+Apply that character through confident hierarchy and selective contrast—not constant decoration.
+
+### The green spark
+
+Black, white and neutral surfaces should do most of the structural work. Green marks the most important moment.
+
+- Aim for one dominant green moment per screen.
+- Use green for a primary brand highlight, active marker or rare standout action.
+- Do not scatter green across headings, icons, borders, badges and buttons.
+- On light surfaces, use the accessible green token identified by the live system; do not use bright Flash Green as body text on white.
+- Use semantic success green for success, not as general decoration.
+
+The coded Button system distinguishes `Primary` from `Accent`: Primary is the normal high-emphasis action; Accent is the rare brand-coloured spotlight. Do not treat Accent as the default primary button.
+
+### Shape
+
+Use generous rounding for major brand surfaces and large containers. Use the exact radius built into each coded component for buttons, cards, inputs, navigation and overlays.
+
+Do not apply one large radius to every object. Large layout surfaces and reusable UI components have different scales.
+
+## 4. Reskin sequence
+
+Work in this order:
+
+1. Understand the screen’s task.
+2. Identify the primary information and action.
+3. Rearrange the layout and grouping.
+4. Establish shared alignment lines.
+5. Apply Flash spacing and grid tokens.
+6. Choose typography roles and weights.
+7. Replace ad hoc UI with appropriate Flash components.
+8. Select component variants and sizes.
+9. Apply colour, surfaces and elevation.
+10. Implement states and responsive behaviour.
+11. Inspect the running interface.
+
+Do not start by changing colours. A successful reskin should improve comprehension even in greyscale.
+
+## 5. Hierarchy and layout judgement
+
+### One focal point
+
+Each screen should have one dominant purpose, value or action. Supporting information must remain visibly subordinate.
+
+- Make the page title and primary task obvious.
+- Keep one primary action per decision group.
+- Place actions near the content they affect.
+- Quiet secondary and rare actions rather than hiding them.
+- Use size, weight, position and space before colour.
+
+### Rearrangement
+
+You may reorder and regroup existing content when it improves the task.
+
+Good interventions include:
+
+- moving the primary action closer to the decision;
+- placing related controls together;
+- separating unrelated content;
+- replacing an arbitrary card grid with a list or table;
+- converting an unstructured stack into a clear grid;
+- moving rare actions into an available menu or contextual pattern;
+- placing filters beside the results they control;
+- moving supporting information after the primary content;
+- stacking columns when their readable width becomes weak.
+
+Do not reorder content solely to make the composition unusual.
+
+### Grid and spacing
+
+Use the live 8px-based spacing system and grid:
+
+- 4 columns on mobile;
+- 8 columns on tablet;
+- 12 columns on desktop and wide screens.
+
+Use the live margin and gutter tokens for each viewport.
+
+Spacing rules:
+
+- space within a group is smaller than space between groups;
+- section separation is larger than component spacing;
+- repeated items use identical gaps;
+- alignment takes priority over filling every empty area;
+- use white space before borders, shadows or extra containers.
+
+### Containers and cards
+
+Do not turn every section into a card.
+
+Use a Card only for one coherent object, record, summary or destination. Use ordinary layout and spacing for page structure.
+
+Avoid:
+
+- cards nested inside cards;
+- many equal-weight metric cards;
+- separate borders around every text group;
+- decorative surfaces without a grouping purpose.
+
+## 6. Typography decisions
+
+Use the live typography tokens. Do not invent intermediate sizes or weights.
+
+### Typeface
+
+- Use Satoshi for app UI, body copy, labels, inputs, navigation and most headings.
+- Use Kilimanjaro Sans only for short, punchy marketing display copy.
+- Never use Kilimanjaro Sans for body copy, forms, dashboards or functional UI.
+
+### Weight selection
+
+Use the weight to communicate role:
+
+| Weight | Use |
+| ---: | --- |
+| 900 Black | One dominant hero or page-level heading; major display moments |
+| 800 Bold | Section headings, important values, strong emphasis |
+| 650 Semibold | Buttons, input text, UI labels, navigation and compact controls |
+| 500 Medium | Body copy, supporting text, captions and reduced-emphasis headings |
+
+Do not make every heading Black. If several headings compete, lower their size or weight according to hierarchy.
+
+### Size selection
+
+Choose a live heading token by semantic role, not by which size happens to fit.
+
+- Hero tokens: marketing and splash moments only.
+- Page-title tokens: one per page.
+- Section-heading tokens: major content divisions.
+- Component-heading tokens: cards, panels and local groups.
+- Body L: introductions or featured explanatory content.
+- Body M: default interface reading.
+- Body S: helper text and secondary detail.
+- Body XS/XXS: metadata, timestamps and legal text only.
+
+Use the separate mobile heading tokens at narrow widths.
+
+Keep paragraphs readable and avoid forcing manual line breaks. Heading hierarchy should primarily use size and weight; use muted text tokens for genuinely secondary supporting copy, not to compensate for weak structure.
+
+## 7. Colour, surfaces and elevation
+
+### Colour
+
+- Use semantic tokens rather than arbitrary hex values.
+- Use black or white for normal high-emphasis actions and text.
+- Reserve brand green for the most important brand moment.
+- Use blue for links and informational interaction where defined.
+- Use status colours only for their actual semantic meaning.
+- Prefer neutral or subtle green-tinted surfaces over decorative colour blocks.
+- Verify contrast in the implemented context.
+
+### Surfaces
+
+Choose the lightest treatment that communicates the relationship:
+
+1. spacing;
+2. alignment;
+3. subtle surface tone;
+4. border;
+5. elevation.
+
+Do not use a shadow merely to make an object feel “premium”.
+
+### Elevation
+
+Use the live elevation level associated with the layer:
+
+- XS for cards and tiles;
+- S for tooltips and secondary overlays;
+- M for menus and dropdowns;
+- L for drawers and high overlays;
+- XL only for the highest-priority notification layer.
+
+If the component already defines its elevation, use that implementation.
+
+## 8. Component selection
+
+Read the relevant live component page before implementing any component below.
+
+| Need | Choose | Decision rule |
+| --- | --- | --- |
+| Main action | Buttons `s-buttons` | Primary for the normal main action; Secondary for support; Accent only for a rare standout moment; Simple for low emphasis; Link for inline action |
+| Group one coherent object | Cards `s-cards` | Basic for content, Footer when actions need separation, Media when imagery matters, Interactive only when the whole card has one destination |
+| Persistent app destinations | Navigation `s-nav` | Side Nav for a small set of top-level destinations; one active item; one colour context and size per panel |
+| Related views of one object | Tabs `s-tabs` | One active tab; short parallel labels; do not use for unrelated destinations |
+| Two to five modes or options | Toggle Group `s-toggle-group` | Use instead of a dropdown when options benefit from immediate comparison |
+| Five to fifteen known options | Dropdown `s-dropdown` | Single-select by default; multi-select only when multiple answers are valid; use one field style consistently |
+| Typed data | Text Inputs `s-inputs` | Standard field for submitted values; Caption label is the default; Inline only in genuinely compact layouts |
+| Filtering a result set | Search field `s-inputs` | Use the Search pill only for finding or filtering, with a real loading state |
+| Independent choices | Checkboxes `s-selection` | Use for opt-ins and multiple independent selections |
+| One choice from visible options | Radios `s-selection` | Use when exactly one option is required and the set is worth showing |
+| Immediate on/off setting | Switch `s-switch` | Use only when the change takes effect immediately; otherwise use a checkbox |
+| Read-only metadata or state | Tags & Badges `s-tags` | Tags are not interactive; use semantic colour only when it adds meaning |
+| Interactive filter or removable value | Chips `s-chips` | Use chips for selection, filtering or removal—not passive metadata |
+| Comparable records | Tables `s-tables` | Use for records users scan across columns; right-align numeric values |
+| Optional secondary content | Accordion `s-accordion` | Use for FAQs, optional settings or long supporting content |
+| Persistent contextual message | Alert `s-alert` | Match severity; place beside the affected content; do not use critical styling for routine information |
+| Short mobile task | Bottom Sheet `s-drawers` | Compact for short tasks; full screen for long lists, multi-field forms or stepped mobile flows |
+| Brief explanation | Tooltip `s-tooltip` | Short, non-essential text only |
+| Compact contextual interaction | Popover `s-popover` | Use for one focused action or detail connected to a trigger |
+| Preview on pointer or focus | Hover Card `s-hover-card` | Never make its content essential; touch users must have another route |
+| Short indeterminate wait | Spinner `s-spinner` | Place at the trigger or result location |
+| Content-shaped loading | Skeleton `s-skeleton` | Mirror the final layout and prevent shifts |
+| Deep hierarchy | Breadcrumb `s-breadcrumb` | Use only for structures at least three levels deep |
+| Large countable result set | Pagination `s-pagination` | Keep current, previous and next controls available |
+| Date is the main choice | Calendar `s-calendar` | Inline for date-focused tasks; field pattern inside forms |
+
+If a component is not listed here, inspect its live page and `AI context` before choosing it.
+
+### Size judgement
+
+- Use Regular component sizes by default.
+- Use Large for dominant, high-consideration or spacious marketing actions.
+- Use Small in compact product areas.
+- Use XSmall or XXSmall only in dense toolbars, rows or secondary controls.
+- Preserve the live minimum 44×44px tappable area when the visible control is smaller.
+- Keep one size within a component group unless hierarchy requires a clear exception.
+
+## 9. Responsive and accessibility
+
+Responsive design must reprioritise and reflow the interface, not merely shrink it.
+
+When width becomes limited:
+
+1. stack or reflow columns;
+2. preserve the primary content and action;
+3. reduce gaps using live spacing tokens;
+4. move genuinely secondary controls;
+5. change to the appropriate mobile component pattern;
+6. use the mobile typography tokens.
+
+Requirements:
+
+- no horizontal page overflow;
+- no clipped content;
+- no essential hover-only interaction;
+- minimum 44×44px touch targets;
+- visible keyboard focus;
+- logical tab order;
+- persistent field labels;
+- colour is never the only state cue;
+- content remains usable at 200% zoom;
+- reduced-motion preferences are respected.
+
+Validate at approximately 390px, 768px, 1280px and 1440px, plus every width where the layout changes.
+
+## 10. Restraint
+
+Do not add:
+
+- generic blue-purple gradients;
+- glow, glass or floating decorative orbs;
+- a card around every section;
+- unnecessary pills and badges;
+- multiple green focal points;
+- decorative icons without meaning;
+- icon sets that conflict with Font Awesome Solid;
+- arbitrary colours, radii, shadows or spacing;
+- large marketing typography inside functional product screens;
+- animation that does not explain a state change;
+- invented testimonials, metrics, claims or content.
+
+Do not make the result look like a generic AI template. Flash character comes from confident typography, contrast, spacing, rounded brand surfaces and the controlled green spark.
+
+## 11. Implementation
+
+- Preserve the existing framework and functional code.
+- Reuse the live component’s real classes, CSS, states and required interaction logic.
+- Adapt markup to the project framework without changing component appearance or behaviour.
+- Use native semantic elements where applicable.
+- Reuse the live semantic tokens.
+- Remove or isolate old styles that visibly conflict with the reskin.
+- Implement default, hover, focus, pressed, disabled, loading and error states when applicable.
+- Do not install another component library to recreate something already available in Flash.
+- Do not claim a live Flash component exists when its `AI context` says `placeholder`.
+
+## 12. Completion check
+
+Before finishing, confirm:
+
+- [ ] Product behaviour and required content are preserved.
+- [ ] The screen has one clear focal point.
+- [ ] Primary and secondary actions have the correct hierarchy.
+- [ ] Green is used as a controlled spark, not decoration.
+- [ ] Satoshi and the live type tokens are used correctly.
+- [ ] Weight choices follow semantic roles.
+- [ ] Layout follows the live grid and spacing system.
+- [ ] Cards and containers have a real grouping purpose.
+- [ ] Every changed component was read from the live design system.
+- [ ] Component variants and sizes match their intended use.
+- [ ] No placeholder component was fabricated.
+- [ ] Font Awesome Solid remains the only icon style.
+- [ ] Responsive layouts were inspected at the required widths.
+- [ ] Keyboard focus, touch targets, contrast and zoom remain usable.
+- [ ] Loading, empty, error and disabled states remain coherent.
+- [ ] No generic AI decoration was introduced.
+- [ ] The running interface—not only the source—was visually inspected.
+
+After implementation, report only:
+
+- the major layout decisions;
+- the Flash components and variants selected;
+- any unavailable component or justified exception;
+- the viewport widths inspected.
