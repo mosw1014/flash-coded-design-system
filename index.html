@@ -164,8 +164,10 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;font-feature-
 ================================================================ */
 .bar{position:sticky;top:0;z-index:200;height:52px;background:var(--chrome-bar);color:var(--chrome-bar-txt);display:flex;align-items:center;gap:12px;padding:0 20px;border-bottom:1px solid rgba(255,255,255,0.07);transition:background .25s}
 .bar__logo{font-weight:900;font-size:15px;letter-spacing:-.4px;color:var(--chrome-bar-txt);text-decoration:none;display:flex;align-items:center;gap:8px;white-space:nowrap}
-.bar__mark{width:24px;height:24px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.bar__mark svg{width:100%;height:100%;display:block}
+.bar__logo-img{height:28px;width:auto;display:block;flex-shrink:0}
+.bar__logo-design{font-family:'Satoshi',sans-serif;font-weight:500;font-size:16px;letter-spacing:-.5px;color:#1dfa0f;line-height:1}
+.bar__changelog{background:#1dfa0f;color:#000;font-family:'Satoshi',sans-serif;font-weight:900;font-size:13px;line-height:1;letter-spacing:-.2px;padding:9px 16px;border-radius:56px;text-decoration:none;white-space:nowrap;transition:filter .15s}
+.bar__changelog:hover{filter:brightness(.92)}
 .bar__div{width:1px;height:22px;background:rgba(255,255,255,.15);flex-shrink:0}
 
 .bar__sp{flex:1}
@@ -942,27 +944,6 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;font-feature-
 .code-tab.on{background:var(--chrome-bg);color:var(--chrome-txt)}
 
 /* ── BRAND INTRODUCTION ── */
-.brand-hero{
-  background:#000;border-radius:20px;padding:48px 40px;margin-bottom:40px;
-  position:relative;overflow:hidden;
-  display:flex;flex-direction:column;align-items:center;text-align:center;
-  background-image:radial-gradient(circle at 80% 20%, rgba(29,250,15,0.18), transparent 55%),radial-gradient(circle at 10% 90%, rgba(16,197,4,0.12), transparent 50%);
-}
-.brand-hero__logo{height:76px;width:auto;margin-bottom:28px;display:block}
-.brand-hero__title{
-  font-family:'Satoshi',sans-serif;font-weight:900;color:#fff;
-  font-size:42px;line-height:1.08;letter-spacing:-1px;margin-bottom:16px;max-width:600px;
-}
-.brand-hero__sub{font-size:15px;line-height:1.6;color:#fff;max-width:560px;font-weight:500;margin:0 auto}
-
-.brand-essence{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-@media(max-width:720px){.brand-essence{grid-template-columns:1fr}}
-.brand-essence__card{border:1px solid var(--chrome-border);border-radius:14px;padding:22px 20px;transition:border-color .2s,transform .2s}
-.brand-essence__card:hover{border-color:var(--chrome-accent);transform:translateY(-2px)}
-.brand-essence__word{font-family:'Satoshi',sans-serif;font-weight:900;font-size:24px;color:var(--chrome-txt);margin-bottom:8px}
-.brand-essence__card:first-child .brand-essence__word{color:var(--chrome-accent-text)}
-.brand-essence__desc{font-size:13px;line-height:1.55;color:var(--chrome-muted)}
-
 .brand-swatches{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
 @media(max-width:720px){.brand-swatches{grid-template-columns:1fr 1fr}}
 .brand-sw{border-radius:14px;padding:20px;min-height:110px;display:flex;flex-direction:column;justify-content:flex-end;gap:2px}
@@ -990,46 +971,74 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;font-feature-
 .brand-logo-tile{border-radius:14px;height:110px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
 .brand-logo-tile__cap{font-size:10.5px;font-weight:600}
 
-.brand-principles{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
-.brand-principle{display:flex;gap:14px;align-items:flex-start;font-size:13.5px;line-height:1.55;color:var(--chrome-txt)}
-.brand-principle strong{font-weight:700}
-.brand-principle__n{
-  flex-shrink:0;width:24px;height:24px;border-radius:50%;
-  background:#10c504;color:#fff;font-size:12px;font-weight:800;
-  display:flex;align-items:center;justify-content:center;margin-top:1px;
-}
-/* Introduction entry points — the two clickable Brand / Components blocks */
-.brand-entries{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:44px}
-@media(max-width:720px){.brand-entries{grid-template-columns:1fr}}
-.brand-entry{
-  position:relative;overflow:hidden;
-  border:1px solid var(--chrome-border);border-radius:20px;
-  background:var(--chrome-nav);
-  padding:26px 26px 22px;min-height:210px;
-  display:flex;flex-direction:column;
-  text-decoration:none;color:var(--chrome-txt);cursor:pointer;
-  transition:border-color .2s,transform .2s,box-shadow .2s,background .25s;
-}
-.brand-entry:hover{border-color:var(--chrome-accent);transform:translateY(-3px);box-shadow:0 12px 34px rgba(0,0,0,.12)}
-.brand-entry--brand{background-image:radial-gradient(circle at 88% 12%, rgba(29,250,15,0.16), transparent 55%)}
-.brand-entry__top{display:flex;align-items:center;justify-content:space-between}
-.brand-entry__eyebrow{font-size:12px;font-weight:800;text-transform:lowercase;letter-spacing:0;color:var(--chrome-muted)}
-.brand-entry__arrow{font-size:22px;line-height:1;color:var(--chrome-muted);transition:transform .2s,color .2s}
-.brand-entry:hover .brand-entry__arrow{transform:translateX(5px);color:var(--chrome-accent-text)}
-.brand-entry__title{font-family:'Satoshi',sans-serif;font-weight:900;font-size:34px;line-height:1;color:var(--chrome-txt);margin:16px 0 8px}
-.brand-entry__desc{font-size:13.5px;line-height:1.55;color:var(--chrome-muted);max-width:42ch}
-.brand-entry__preview{display:flex;align-items:center;gap:9px;margin-top:auto;padding-top:20px}
-.be-dot{width:26px;height:26px;border-radius:50%;flex-shrink:0}
-.be-aa{font-family:'Satoshi',sans-serif;font-weight:900;font-size:22px;color:var(--chrome-txt);margin-left:2px;line-height:1}
-.be-pill{width:52px;height:22px;border-radius:11px;background:var(--chrome-border);flex-shrink:0}
-.be-pill--brand{background:#10c504;width:64px}
-.be-switch{width:38px;height:22px;border-radius:11px;background:#10c504;position:relative;flex-shrink:0}
-.be-switch::after{content:'';position:absolute;top:3px;right:3px;width:16px;height:16px;border-radius:50%;background:#fff}
-
-/* Home / landing view — Introduction shown full-width without the sidebar */
+/* ============================================================
+   HOME — Flash Design System landing (fixed light design)
+============================================================ */
 body.home .sidebar{display:none}
-body.home .main{max-width:920px;margin-inline:auto;padding-top:32px}
-body.home .type-sub__title{font-size:20px}
+body.home .main{max-width:none;margin:0;padding:0}
+#s-brand{margin:0}
+#s-brand .sec-chlog{display:none}
+.fds-hero__inner,.fds-statement,.fds-cards,.fds-essence__title,.fds-essence__grid{max-width:1200px;margin-left:auto;margin-right:auto}
+
+/* Hero */
+.fds-hero{background:#000;color:#fff;overflow:hidden;padding:72px 48px 104px;
+  background-image:radial-gradient(75% 65% at 60% 120%, rgba(29,250,15,.5), rgba(29,250,15,0) 62%)}
+.fds-hero__inner{display:flex;align-items:center;justify-content:space-between;gap:48px}
+.fds-hero__copy{flex:1 1 auto;min-width:0}
+.fds-hero__title{font-family:'Kilimanjaro','Satoshi',sans-serif;font-weight:400;text-transform:uppercase;
+  line-height:.84;letter-spacing:-.02em;font-size:clamp(52px,8.6vw,128px);margin:0 0 30px;color:#fff}
+.fds-hero__title-accent{color:#1dfa0f}
+.fds-hero__sub{font-family:'Satoshi',sans-serif;font-weight:500;font-size:clamp(15px,1.45vw,20px);
+  line-height:1.5;color:#d1d1d1;max-width:400px;margin:0}
+.fds-hero__marks{flex:0 0 auto;width:clamp(230px,40vw,468px)}
+.fds-hero__marks img{width:100%;height:auto;display:block}
+
+/* Unified statement */
+.fds-band--statement{background:#fff;padding:76px 48px 8px}
+.fds-statement{font-family:'Satoshi',sans-serif;font-weight:700;color:#000;text-align:center;
+  font-size:clamp(23px,3vw,40px);line-height:1.15;letter-spacing:-.025em;margin:0 auto;max-width:840px}
+
+/* Entry cards */
+.fds-band--cards{background:#fff;padding:56px 48px 88px}
+.fds-cards{display:grid;grid-template-columns:1fr 1fr;gap:36px}
+@media(max-width:760px){.fds-cards{grid-template-columns:1fr}}
+.fds-card{position:relative;border-radius:34px;padding:44px;min-height:clamp(360px,37vw,460px);
+  display:flex;flex-direction:column;justify-content:center;text-decoration:none;overflow:hidden;
+  transition:transform .18s,box-shadow .18s}
+.fds-card:hover{transform:translateY(-4px);box-shadow:0 22px 54px rgba(0,0,0,.13)}
+.fds-card--brand{background:linear-gradient(48.7deg,#f0f0f0 13%,#1dfa0f 289%)}
+.fds-card--components{background:#f0f0f0}
+.fds-card__arrow{position:absolute;top:40px;right:40px;width:26px;height:26px;transform:rotate(180deg)}
+.fds-card__icon{display:block;margin-bottom:36px}
+.fds-card__title{font-family:'Satoshi',sans-serif;font-weight:900;color:#000;letter-spacing:-.02em;
+  line-height:1;font-size:clamp(34px,4.4vw,56px);margin:0}
+.fds-card__desc{font-family:'Satoshi',sans-serif;font-weight:500;color:#414141;line-height:1.25;
+  font-size:clamp(15px,1.5vw,20px);margin:16px 0 0;max-width:34ch}
+
+/* Brand essence */
+.fds-essence{background:#f0f0f0;padding:64px 48px 44px}
+.fds-essence__title{font-family:'Kilimanjaro','Satoshi',sans-serif;font-weight:400;text-transform:uppercase;
+  text-align:center;letter-spacing:-.02em;line-height:.9;color:#000;font-size:clamp(40px,6.6vw,80px);margin:0 auto 60px}
+.fds-essence__title-accent{color:#10c504}
+.fds-essence__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:32px}
+@media(max-width:760px){.fds-essence__grid{grid-template-columns:1fr;gap:48px}}
+.fds-essence__item{display:flex;flex-direction:column;align-items:center;text-align:center}
+.fds-essence__icon{height:70px;display:flex;align-items:flex-end;justify-content:center;margin-bottom:20px}
+.fds-essence__icon img{display:block}
+.fds-essence__aa{font-family:'Satoshi',sans-serif;font-weight:900;line-height:1;font-size:58px;
+  background:linear-gradient(#1dfa0f,#119409);-webkit-background-clip:text;background-clip:text;color:transparent}
+.fds-essence__name{font-family:'Satoshi',sans-serif;font-weight:900;color:#000;letter-spacing:-.02em;
+  line-height:1.1;font-size:clamp(22px,2.3vw,32px);margin-bottom:12px}
+.fds-essence__desc{font-family:'Satoshi',sans-serif;font-weight:500;color:#414141;line-height:1.25;
+  font-size:clamp(15px,1.5vw,19px);max-width:30ch}
+.fds-footer{text-align:center;color:#a7a7a7;font-family:'Satoshi',sans-serif;font-weight:500;font-size:14px;margin-top:60px}
+
+@media(max-width:760px){
+  .fds-hero{padding:48px 28px 72px}
+  .fds-hero__inner{flex-direction:column;align-items:flex-start;gap:32px}
+  .fds-hero__marks{width:80%;align-self:center}
+  .fds-band--statement,.fds-band--cards,.fds-essence{padding-left:24px;padding-right:24px}
+}
 
 /* ── CHANGELOG ── */
 .chlog-version{font-size:11px;font-weight:700;font-family:'SF Mono',monospace;color:#10a002;background:rgba(16,197,4,0.1);padding:2px 8px;border-radius:5px;display:inline-block}
@@ -2379,10 +2388,11 @@ body.home .type-sub__title{font-size:20px}
 <!-- TOP BAR -->
 <header class="bar">
   <a href="javascript:void(0)" class="bar__logo" onclick="showSection('s-brand')">
-    <span class="bar__mark" aria-hidden="true"><svg viewBox="0 0 96 94" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M95.072 46.934C95.072 56.2167 92.2841 65.2909 87.0608 73.0091C81.8374 80.7274 74.4133 86.743 65.7272 90.2954C57.0412 93.8477 47.4833 94.7771 38.2622 92.9662C29.0411 91.1552 20.571 86.6852 13.923 80.1214C7.27497 73.5575 2.74759 65.1947 0.913407 56.0904C-0.920779 46.9861 0.0206106 37.5492 3.6185 28.9731C7.21638 20.3971 13.3092 13.067 21.1264 7.90979C28.9437 2.75262 38.1343 0 47.536 0C60.1433 0 72.2343 4.9448 81.149 13.7466C90.0638 22.5485 95.072 34.4863 95.072 46.934Z" fill="#1DFA0F"/><path d="M76.1999 39.374C74.4368 38.2722 72.9882 36.7436 71.9919 34.9335C70.9955 33.1234 70.4843 31.0918 70.507 29.0317C71.374 28.8152 72.1838 28.4171 72.8812 27.8642C73.5787 27.3114 74.1474 26.6169 74.5489 25.8278C75.0431 24.9282 75.2296 23.895 75.0809 22.8822C74.9322 21.8693 74.456 20.931 73.7235 20.207C73.676 20.1531 73.6124 20.1155 73.542 20.0996C73.4715 20.0837 73.3977 20.0903 73.3312 20.1184C73.2648 20.1465 73.2091 20.1947 73.1721 20.2561C73.1352 20.3175 73.1189 20.3888 73.1257 20.4599C73.2471 20.9366 73.2691 21.4327 73.1903 21.918C73.1116 22.4033 72.9336 22.8678 72.6674 23.2831C72.4012 23.6985 72.0522 24.056 71.6416 24.334C71.2311 24.612 70.7676 24.8047 70.2792 24.9004C66.3679 25.6207 62.3246 24.9221 58.8934 22.9331C57.0432 21.2469 56.8439 19.2514 58.5234 16.1038C58.5538 16.0408 58.5637 15.9701 58.5518 15.9014C58.5398 15.8327 58.5066 15.7693 58.4566 15.72C58.4067 15.6706 58.3425 15.6378 58.2729 15.626C58.2033 15.6142 58.1317 15.6241 58.0679 15.6541C56.7615 16.1308 55.643 17.0064 54.8752 18.1537C54.1073 19.301 53.73 20.6602 53.7982 22.0338C53.786 23.2948 54.1526 24.5312 54.8518 25.5867C55.5509 26.6422 56.5512 27.4693 57.7263 27.9637C46.9667 31.2519 42.5262 27.2893 30.3149 27.1206C20.153 27.1206 17.7905 35.3552 18.3313 43.9832C18.4805 47.3799 18.8801 50.7613 19.5268 54.1007C20.4854 56.0867 21.0644 58.2305 21.2347 60.4241C21.0072 62.2064 21.0072 64.0098 21.2347 65.792C21.2712 66.0115 21.3712 66.2158 21.5228 66.3804C21.6743 66.5449 21.8708 66.6627 22.0886 66.7195C23.1589 67.0172 24.2917 67.0172 25.3621 66.7195C25.9313 66.5508 26.3583 66.2698 26.2444 65.792C24.9712 61.2766 24.6514 56.551 25.3051 51.9085C25.3186 51.7487 25.3752 51.5954 25.469 51.4644C25.5627 51.3334 25.6903 51.2296 25.8383 51.1636C25.9864 51.0977 26.1497 51.0721 26.3112 51.0894C26.4727 51.1067 26.6265 51.1664 26.7568 51.2621C28.5077 52.3189 30.0905 53.6258 31.4535 55.1405C34.6808 58.855 36.7473 63.4142 37.4026 68.2652C37.4053 68.5711 37.4984 68.8696 37.6702 69.1242C37.8421 69.3787 38.0854 69.5783 38.3704 69.6985C38.9915 69.9404 39.6572 70.0504 40.3242 70.0213C40.9912 69.9923 41.6445 69.8248 42.2416 69.5299C42.4066 69.4513 42.5392 69.3189 42.6169 69.1551C42.6947 68.9913 42.7129 68.806 42.6686 68.6305C41.6438 64.4711 38.285 59.4686 37.9719 55.0843C37.9719 54.1569 38.2281 54.1007 38.9681 54.2131C39.9104 54.3685 40.8607 54.4717 41.8146 54.5222C41.9509 54.5241 42.0851 54.5552 42.208 54.6135C42.3309 54.6717 42.4395 54.7557 42.5262 54.8595C45.9704 59.0189 49.8416 64.8927 49.557 71.0194C49.5525 71.1808 49.5862 71.3411 49.6554 71.4874C49.7246 71.6338 49.8273 71.7622 49.9555 71.8625C51.151 72.8462 51.1795 74.9821 51.3503 76.9494C51.3742 77.1453 51.4499 77.3316 51.5698 77.4894C51.6897 77.6473 51.8496 77.7712 52.0334 77.8487C53.564 78.426 55.2564 78.426 56.787 77.8487C56.9143 77.8051 57.0229 77.7203 57.0952 77.608C57.1676 77.4958 57.1994 77.3627 57.1855 77.2304C56.6162 73.3801 53.542 70.1482 54.3391 64.3868C54.5098 63.1221 55.5061 61.3235 56.1893 58.9908C57.7833 53.37 57.3848 51.7399 59.0357 48.5923C60.032 46.5688 62.3376 43.9551 65.5541 45.7818C67.2867 46.9533 69.3876 47.4719 71.4748 47.2432C72.8978 46.9436 74.1987 46.2334 75.2122 45.2026C76.2258 44.1719 76.9064 42.8671 77.1677 41.4538C77.2649 41.0737 77.2465 40.6737 77.1149 40.3038C76.9833 39.934 76.7442 39.6106 76.4276 39.374" fill="black"/></svg></span>
-    Flash Design System
+    <img class="bar__logo-img" src="assets/home/logo-flash.svg" alt="Flash" width="73" height="28">
+    <span class="bar__logo-design">Design</span>
   </a>
   <div class="bar__sp"></div>
+  <a href="javascript:void(0)" class="bar__changelog" onclick="showSection('s-changelog')">Changelog</a>
   <button class="bar__toggle" onclick="toggleTheme()">
     <div class="tk"><div class="tk__k"></div></div>
     <span id="theme-lbl">&#9728; Light</span>
@@ -2401,74 +2411,61 @@ body.home .type-sub__title{font-size:20px}
          BRAND INTRODUCTION
     ============================================================ -->
     <section class="sec active" id="s-brand">
-      <!-- Hero -->
-      <div class="brand-hero">
-        <svg class="brand-hero__logo" viewBox="0 0 139 151" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Flash logo" role="img"><path d="M118.089 46.934C118.089 56.2167 115.301 65.2909 110.078 73.0091C104.855 80.7274 97.4304 86.743 88.7443 90.2954C80.0583 93.8477 70.5004 94.7771 61.2793 92.9662C52.0582 91.1552 43.5881 86.6852 36.9401 80.1214C30.2921 73.5575 25.7647 65.1947 23.9305 56.0904C22.0963 46.9861 23.0377 37.5492 26.6356 28.9731C30.2335 20.3971 36.3263 13.067 44.1435 7.90979C51.9608 2.75262 61.1514 0 70.5531 0C83.1604 0 95.2514 4.9448 104.166 13.7466C113.081 22.5485 118.089 34.4863 118.089 46.934Z" fill="#1DFA0F"/><path d="M99.217 39.374C97.4539 38.2722 96.0053 36.7436 95.0089 34.9335C94.0126 33.1234 93.5014 31.0918 93.5241 29.0317C94.3911 28.8152 95.2009 28.4171 95.8983 27.8642C96.5957 27.3114 97.1645 26.6169 97.566 25.8278C98.0601 24.9282 98.2467 23.895 98.098 22.8822C97.9492 21.8693 97.4731 20.931 96.7406 20.207C96.6931 20.1531 96.6295 20.1155 96.559 20.0996C96.4886 20.0837 96.4148 20.0903 96.3483 20.1184C96.2819 20.1465 96.2262 20.1947 96.1892 20.2561C96.1523 20.3175 96.136 20.3888 96.1428 20.4599C96.2642 20.9366 96.2862 21.4327 96.2074 21.918C96.1286 22.4033 95.9507 22.8678 95.6845 23.2831C95.4183 23.6985 95.0693 24.056 94.6587 24.334C94.2482 24.612 93.7847 24.8047 93.2963 24.9004C89.3849 25.6207 85.3417 24.9221 81.9105 22.9331C80.0603 21.2469 79.861 19.2514 81.5404 16.1038C81.5709 16.0408 81.5808 15.9701 81.5689 15.9014C81.5569 15.8327 81.5237 15.7693 81.4737 15.72C81.4238 15.6706 81.3596 15.6378 81.29 15.626C81.2203 15.6142 81.1487 15.6241 81.085 15.6541C79.7785 16.1308 78.6601 17.0064 77.8922 18.1537C77.1244 19.301 76.7471 20.6602 76.8153 22.0338C76.8031 23.2948 77.1697 24.5312 77.8689 25.5867C78.568 26.6422 79.5683 27.4693 80.7434 27.9637C69.9838 31.2519 65.5433 27.2893 53.332 27.1206C43.1701 27.1206 40.8075 35.3552 41.3484 43.9832C41.4976 47.3799 41.8972 50.7613 42.5439 54.1007C43.5025 56.0867 44.0815 58.2305 44.2518 60.4241C44.0243 62.2064 44.0243 64.0098 44.2518 65.792C44.2883 66.0115 44.3883 66.2158 44.5399 66.3804C44.6914 66.5449 44.8879 66.6627 45.1057 66.7195C46.176 67.0172 47.3088 67.0172 48.3791 66.7195C48.9484 66.5508 49.3754 66.2698 49.2615 65.792C47.9882 61.2766 47.6685 56.551 48.3222 51.9085C48.3357 51.7487 48.3923 51.5954 48.4861 51.4644C48.5798 51.3334 48.7074 51.2296 48.8554 51.1636C49.0035 51.0977 49.1668 51.0721 49.3283 51.0894C49.4897 51.1067 49.6436 51.1664 49.7739 51.2621C51.5248 52.3189 53.1076 53.6258 54.4706 55.1405C57.6978 58.855 59.7644 63.4142 60.4197 68.2652C60.4224 68.5711 60.5154 68.8696 60.6873 69.1242C60.8592 69.3787 61.1025 69.5783 61.3875 69.6985C62.0086 69.9404 62.6743 70.0504 63.3413 70.0213C64.0083 69.9923 64.6616 69.8248 65.2587 69.5299C65.4237 69.4513 65.5563 69.3189 65.634 69.1551C65.7118 68.9913 65.73 68.806 65.6856 68.6305C64.6609 64.4711 61.3021 59.4686 60.989 55.0843C60.989 54.1569 61.2452 54.1007 61.9852 54.2131C62.9275 54.3685 63.8778 54.4717 64.8317 54.5222C64.968 54.5241 65.1022 54.5552 65.2251 54.6135C65.348 54.6717 65.4566 54.7557 65.5433 54.8595C68.9875 59.0189 72.8587 64.8927 72.5741 71.0194C72.5696 71.1808 72.6033 71.3411 72.6725 71.4874C72.7417 71.6338 72.8444 71.7622 72.9726 71.8625C74.1681 72.8462 74.1966 74.9821 74.3673 76.9494C74.3913 77.1453 74.467 77.3316 74.5869 77.4894C74.7068 77.6473 74.8667 77.7712 75.0505 77.8487C76.5811 78.426 78.2735 78.426 79.8041 77.8487C79.9314 77.8051 80.04 77.7203 80.1123 77.608C80.1847 77.4958 80.2165 77.3627 80.2026 77.2304C79.6333 73.3801 76.5591 70.1482 77.3561 64.3868C77.5269 63.1221 78.5232 61.3235 79.2063 58.9908C80.8004 53.37 80.4019 51.7399 82.0528 48.5923C83.0491 46.5688 85.3547 43.9551 88.5712 45.7818C90.3038 46.9533 92.4047 47.4719 94.4918 47.2432C95.9149 46.9436 97.2158 46.2334 98.2293 45.2026C99.2429 44.1719 99.9235 42.8671 100.185 41.4538C100.282 41.0737 100.264 40.6737 100.132 40.3038C100 39.934 99.7613 39.6106 99.4447 39.374" fill="black"/><path d="M57.5557 140.774C56.057 140.774 54.592 140.335 53.3462 139.512C52.1005 138.689 51.1301 137.52 50.5578 136.152C49.9856 134.785 49.8373 133.28 50.1318 131.829C50.4263 130.378 51.1502 129.046 52.212 128.002C53.2737 126.958 54.6255 126.248 56.0961 125.963C57.5668 125.677 59.09 125.829 60.4731 126.4C61.8561 126.97 63.0366 127.932 63.8652 129.165C64.6937 130.398 65.133 131.847 65.1274 133.326C65.1274 134.307 64.9313 135.277 64.5505 136.183C64.1696 137.088 63.6114 137.911 62.908 138.602C62.2045 139.294 61.3696 139.842 60.4511 140.215C59.5327 140.588 58.5487 140.778 57.5557 140.774ZM65.0135 117.082V119.302L63.3341 118.234C61.3211 116.938 58.9627 116.263 56.5595 116.295C52.198 116.598 48.1152 118.523 45.1341 121.681C42.153 124.839 40.4954 128.995 40.4954 133.312C40.4954 137.629 42.153 141.785 45.1341 144.943C48.1152 148.101 52.198 150.026 56.5595 150.329C58.9568 150.378 61.3148 149.723 63.3341 148.446L65.0135 147.378V149.57H74.1507V117.082H65.0135Z" fill="white"/><path d="M91.9696 150.329C85.0812 150.329 77.9081 145.074 76.3425 143.837L81.3808 137.486C84.1598 139.858 87.6053 141.339 91.258 141.729H91.5426C93.129 141.899 94.7203 141.456 95.9831 140.493C96.0901 140.387 96.1714 140.259 96.2207 140.118C96.27 139.976 96.2861 139.826 96.2678 139.678C96.2523 139.514 96.204 139.356 96.1258 139.211C96.0476 139.066 95.9411 138.938 95.8123 138.835C94.2355 138.078 92.5427 137.584 90.8025 137.373C82.6617 135.659 78.5343 132.118 78.5343 126.778C78.5343 121.438 83.5441 116.295 92.7666 116.295C97.179 116.293 101.477 117.681 105.035 120.258L105.69 120.792L100.708 127.958L99.9397 127.368C97.8326 125.896 95.3444 125.048 92.7666 124.923C91.1865 124.775 89.6085 125.227 88.3546 126.188C88.2501 126.301 88.1709 126.434 88.1218 126.579C88.0728 126.725 88.0551 126.878 88.0699 127.031C88.089 127.184 88.1456 127.331 88.2349 127.459C88.3241 127.586 88.4433 127.69 88.5823 127.761C90.522 128.605 92.5728 129.172 94.6737 129.448C101.448 130.881 106.06 133.214 106.06 139.987C106.06 145.973 100.167 150.329 92.0265 150.329" fill="white"/><path d="M128.631 131.359V149.571H138.309V128.802C138.387 127.167 138.125 125.535 137.537 124.005C136.95 122.475 136.051 121.08 134.895 119.908C133.74 118.735 132.352 117.809 130.819 117.188C129.286 116.566 127.641 116.263 125.984 116.295C123.793 116.279 121.642 116.873 119.779 118.01L118.128 119.05V98.0557H108.421V149.571H118.156V131.359C118.079 130.635 118.158 129.903 118.386 129.21C118.614 128.517 118.988 127.88 119.481 127.339C119.975 126.798 120.579 126.365 121.253 126.069C121.926 125.773 122.656 125.62 123.394 125.62C124.131 125.62 124.861 125.773 125.535 126.069C126.208 126.365 126.812 126.798 127.306 127.339C127.799 127.88 128.173 128.517 128.401 129.21C128.629 129.903 128.708 130.635 128.631 131.359Z" fill="white"/><path d="M37.8866 98.0557H28.1802V149.571H37.8866V98.0557Z" fill="white"/><path d="M6.40454 149.571V125.71H0V117.138H6.40454V111.518C6.25796 109.722 6.50882 107.916 7.13973 106.225C7.77065 104.534 8.76651 102.999 10.0582 101.727C11.35 100.454 12.9066 99.4741 14.6203 98.8547C16.3339 98.2353 18.1635 97.9914 19.9822 98.1399H24.7073V106.993H19.9822C19.4215 107.024 18.8731 107.167 18.3705 107.415C17.868 107.662 17.4218 108.008 17.0594 108.432C16.697 108.855 16.426 109.348 16.2629 109.878C16.0999 110.409 16.0481 110.967 16.111 111.518V117.138H22.4871V125.71H16.111V149.571H6.40454Z" fill="white"/></svg>
-        <h1 class="brand-hero__title">A bold, direct, energetic brand.</h1>
-        <p class="brand-hero__sub">This design system turns the Flash brand into reusable building blocks. Before the tokens and components, here's a quick acquaintance with what makes Flash look and feel like Flash.</p>
-      </div>
-
-      <!-- Entry points -->
-      <div class="brand-entries">
-        <a class="brand-entry brand-entry--brand" href="javascript:void(0)" onclick="showSection('s-cat-brand')">
-          <div class="brand-entry__top">
-            <span class="brand-entry__eyebrow">Foundations</span>
-            <span class="brand-entry__arrow" aria-hidden="true">&rarr;</span>
+      <!-- HERO -->
+      <div class="fds-hero">
+        <div class="fds-hero__inner">
+          <div class="fds-hero__copy">
+            <h1 class="fds-hero__title"><span class="fds-hero__title-accent">Flash</span><br>Design<br>System</h1>
+            <p class="fds-hero__sub">Built for designers and engineers, the Flash Design System provides the foundations, components and guidance needed to create fast, accessible and recognisably Flash interfaces.</p>
           </div>
-          <div class="brand-entry__title">Brand</div>
-          <div class="brand-entry__desc">Colour, type, spacing, elevation, iconography and logos &mdash; the tokens that sit beneath every component.</div>
-          <div class="brand-entry__preview">
-            <span class="be-dot" style="background:#1DFA0F"></span>
-            <span class="be-dot" style="background:#000"></span>
-            <span class="be-dot" style="background:#fff;border:1px solid var(--chrome-border)"></span>
-            <span class="be-aa">Aa</span>
-          </div>
-        </a>
-        <a class="brand-entry brand-entry--components" href="javascript:void(0)" onclick="showSection('s-cat-components')">
-          <div class="brand-entry__top">
-            <span class="brand-entry__eyebrow">Building blocks</span>
-            <span class="brand-entry__arrow" aria-hidden="true">&rarr;</span>
-          </div>
-          <div class="brand-entry__title">Components</div>
-          <div class="brand-entry__desc">Buttons, inputs, tables, navigation and more &mdash; reusable, tokenised and ready for Flash apps and sites.</div>
-          <div class="brand-entry__preview">
-            <span class="be-pill be-pill--brand"></span>
-            <span class="be-pill"></span>
-            <span class="be-switch"></span>
-          </div>
-        </a>
-      </div>
-
-      <!-- Essence -->
-      <div class="type-sub">
-        <div class="type-sub__title">Brand essence</div>
-        <div class="type-sub__desc">Three words guide every Flash surface. When in doubt, choose the option that is bolder, clearer, and more energetic.</div>
-        <div class="brand-essence">
-          <div class="brand-essence__card">
-            <div class="brand-essence__word">Bold</div>
-            <div class="brand-essence__desc">Confident and unafraid. Big type, strong contrast, one clear focal point per surface.</div>
-          </div>
-          <div class="brand-essence__card">
-            <div class="brand-essence__word">Direct</div>
-            <div class="brand-essence__desc">Plain, confident English. No hype, no filler — say the thing and move on.</div>
-          </div>
-          <div class="brand-essence__card">
-            <div class="brand-essence__word">Energetic</div>
-            <div class="brand-essence__desc">Alive and electric. Flash Green is the spark — used sparingly so it always lands.</div>
-          </div>
+          <div class="fds-hero__marks"><img src="assets/home/hero-marks.svg" alt="" aria-hidden="true"></div>
         </div>
       </div>
 
-      <!-- Principles -->
-      <div class="type-sub">
-        <div class="type-sub__title">Working principles</div>
-        <div class="type-sub__desc">A handful of rules keep every Flash surface consistent.</div>
-        <ul class="brand-principles">
-          <li class="brand-principle"><span class="brand-principle__n">1</span><div><strong>Green is the spark.</strong> Reserve it for the single most important element. Everything else is black or white.</div></li>
-          <li class="brand-principle"><span class="brand-principle__n">2</span><div><strong>Hierarchy through size and weight</strong> — never grey or reduced opacity. Same level, same style.</div></li>
-          <li class="brand-principle"><span class="brand-principle__n">3</span><div><strong>Generous, rounded shapes.</strong> 30px radius on cards and containers, fully rounded pills and buttons.</div></li>
-          <li class="brand-principle"><span class="brand-principle__n">4</span><div><strong>Plain, confident words.</strong> Direct and energetic — say the thing without hype.</div></li>
-        </ul>
+      <!-- UNIFIED STATEMENT -->
+      <div class="fds-band fds-band--statement">
+        <p class="fds-statement">A unified system of principles, components and patterns for building consistent Flash experiences across products and platforms.</p>
+      </div>
+
+      <!-- ENTRY CARDS -->
+      <div class="fds-band fds-band--cards">
+        <div class="fds-cards">
+          <a class="fds-card fds-card--brand" href="javascript:void(0)" onclick="showSection('s-cat-brand')">
+            <img class="fds-card__arrow" src="assets/home/icon-arrow.svg" alt="" aria-hidden="true" width="26" height="26">
+            <img class="fds-card__icon" src="assets/home/icon-brand.svg" alt="" aria-hidden="true" width="120" height="88">
+            <div class="fds-card__title">Brand</div>
+            <div class="fds-card__desc">Colour, typography, iconography and layout foundations that define the Flash visual language.</div>
+          </a>
+          <a class="fds-card fds-card--components" href="javascript:void(0)" onclick="showSection('s-cat-components')">
+            <img class="fds-card__arrow" src="assets/home/icon-arrow.svg" alt="" aria-hidden="true" width="26" height="26">
+            <img class="fds-card__icon" src="assets/home/icon-components.svg" alt="" aria-hidden="true" width="104" height="110">
+            <div class="fds-card__title">Components</div>
+            <div class="fds-card__desc">Reusable building blocks designed for consistency, scalability and implementation across products.</div>
+          </a>
+        </div>
+      </div>
+
+      <!-- BRAND ESSENCE -->
+      <div class="fds-band fds-essence">
+        <h2 class="fds-essence__title"><span class="fds-essence__title-accent">Brand</span> essence</h2>
+        <div class="fds-essence__grid">
+          <div class="fds-essence__item">
+            <div class="fds-essence__icon"><img src="assets/home/icon-clarity.svg" alt="" aria-hidden="true" width="84" height="65"></div>
+            <div class="fds-essence__name">Clarity</div>
+            <div class="fds-essence__desc">Interfaces should communicate hierarchy and intent immediately.</div>
+          </div>
+          <div class="fds-essence__item">
+            <div class="fds-essence__icon"><span class="fds-essence__aa">Aa</span></div>
+            <div class="fds-essence__name">Confidence</div>
+            <div class="fds-essence__desc">Use strong typography, deliberate spacing and clear actions.</div>
+          </div>
+          <div class="fds-essence__item">
+            <div class="fds-essence__icon"><img src="assets/home/icon-energy.svg" alt="" aria-hidden="true" width="49" height="64"></div>
+            <div class="fds-essence__name">Energy</div>
+            <div class="fds-essence__desc">Use Flash Green intentionally to create emphasis and momentum.</div>
+          </div>
+        </div>
+        <div class="fds-footer">© Flash Group 2026 | All rights reserved</div>
       </div>
     </section>
 
@@ -9221,12 +9218,20 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.33.2';
+const SYSTEM_VERSION = '1.34.0';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.34.0', date:'2026-07-31', author:'Jaco', title:'Home page rebuilt to the new Flash Design System landing design; site logo updated', changes:[
+        ['changed','Site header logo (whole site) replaced with the new Flash lockup — bull mark + "flash" wordmark (assets/home/logo-flash.svg) + green "Design" label — swapping out the old inline bull mark + "Flash Design System" text'],
+        ['added','"Changelog" pill added to the top-right of the header (links to the Changelog page); the light/dark toggle is kept alongside it'],
+        ['changed','Home page (s-brand) rebuilt to match the Figma landing design: full-bleed black hero (Kilimanjaro "FLASH / DESIGN / SYSTEM" headline with green FLASH, intro paragraph, decorative mark cluster and green glow), centred unified-system statement, Brand + Components entry cards (gradient / grey, top-right arrow) and a "BRAND ESSENCE" band (Clarity / Confidence / Energy) with a footer'],
+        ['removed','Previous Introduction content — Brand essence (Bold/Direct/Energetic), Working principles, and the .brand-hero/.brand-entries/.brand-essence/.brand-principle styles — replaced by the new .fds-* home styles'],
+        ['added','Home landing assets under assets/home/ (hero-marks, card + essence icons, arrow, logo) exported from Figma; the home page renders as a fixed light design regardless of the site theme'],
+        ['changed','Home shown full-bleed (body.home clears the main max-width/padding); the per-section Changelog history strip is hidden on the home page'],
+      ]},
       {version:'1.33.2', date:'2026-07-29', author:'Jaco', title:'Removed stray divider lines in the sidebar and on landing pages; real Flash logo on the Logos landing card', changes:[
         ['removed','Thin grey divider line beside every sidebar category heading (dropped the .sb-cat::after 1px flex line)'],
         ['removed','Thin grey underline between the header text and the card grid on the category landing pages (border-bottom removed from .sec__head under [id^="s-cat-"])'],
