@@ -1374,6 +1374,24 @@ body.home .main{max-width:none;margin:0;padding:0}
 .chip-ref__rowlabel{padding:12px 14px;font-size:12px;font-weight:700;color:var(--chrome-txt);display:flex;align-items:center}
 .chip-ref__cell{display:flex;align-items:center;padding:12px 14px}
 
+/* Chip Style / Specs tab */
+#s-chips .chip-spec-hero{border:1px solid var(--chrome-border);border-radius:14px;display:flex;align-items:center;justify-content:center;padding:48px 20px;margin-bottom:16px;transition:background .25s,border-color .25s}
+#s-chips .chip-parts{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+#s-chips .chip-part{border:1px solid var(--chrome-border);border-radius:12px;overflow:hidden;background:var(--chrome-bg);transition:background .25s,border-color .25s}
+#s-chips .chip-part__stage{display:flex;align-items:center;justify-content:center;height:66px;transition:background .25s}
+#s-chips .chip-part__body{padding:12px 14px;border-top:1px solid var(--chrome-border)}
+#s-chips .chip-part__name{display:flex;align-items:center;gap:7px;font-size:13px;font-weight:700;color:var(--chrome-txt)}
+#s-chips .chip-part__num{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:50%;background:var(--chrome-accent-text);color:#fff;font-size:10.5px;font-weight:800;flex-shrink:0}
+#s-chips .chip-part__note{margin-top:5px;font-size:11.5px;line-height:1.5;color:var(--chrome-muted)}
+#s-chips .chip-part__pill{width:46px;height:22px;border-radius:999px;border:2px dashed var(--chrome-muted);opacity:.65}
+#s-chips .chip-size-demo{display:flex;align-items:flex-end;gap:30px;flex-wrap:wrap;padding:30px 24px;border:1px solid var(--chrome-border);border-radius:14px;margin-bottom:16px;transition:background .25s,border-color .25s}
+#s-chips .chip-size-item{display:flex;flex-direction:column;align-items:center;gap:10px}
+#s-chips .chip-size-item__lbl{font-size:11px;font-weight:700;color:var(--chrome-muted)}
+#s-chips .chip-tok-cell{display:flex;align-items:center;gap:7px;white-space:nowrap}
+#s-chips .chip-tok-sw{display:inline-block;width:16px;height:16px;border-radius:5px;border:1px solid rgba(128,128,128,.28);flex-shrink:0}
+#s-chips .dd-table code,#s-chips .chip-tok-cell code{font-family:'SF Mono',Consolas,monospace;font-size:12px;color:var(--chrome-txt)}
+@media(max-width:720px){#s-chips .chip-parts{grid-template-columns:1fr 1fr}}
+
 /* Chip playground */
 .cpg-label-input{background:var(--chrome-bg);border:1px solid var(--chrome-border);border-radius:7px;padding:5px 10px;font-family:inherit;font-size:12px;font-weight:600;color:var(--chrome-txt);width:170px;max-width:100%;transition:border-color .15s}
 .cpg-label-input:focus{outline:none;border-color:var(--chrome-accent)}
@@ -3428,7 +3446,7 @@ body.home .main{max-width:none;margin:0;padding:0}
       <div class="sec__head">
         <h1 class="sec__title">Chips and pills</h1>
         <div class="chip-header-meta">
-          <span class="comp-ver-badge" style="margin-left:0">v1.7.0</span>
+          <span class="comp-ver-badge" style="margin-left:0">v1.8.0</span>
           <details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-chips">
@@ -9100,31 +9118,123 @@ function renderChipReference(){
   if(!root) return;
 
   const theme = currentTheme();
+  const sbg = stageBg(theme);
   const stageBgCol = theme==='dark' ? '#12131a' : '#ffffff';
   const sizeHeadColor = theme==='dark' ? ';color:#A1A3A8' : '';
   const rows = CHIP_VARIANTS.length;
+  const xStroke = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="var(--chrome-txt)" stroke-width="2.2" stroke-linecap="round"/></svg>`;
 
-  let cells = '';
-  // Stage background behind the size columns, painted first so cells stack on top.
-  cells += `<div style="grid-column:2/5;grid-row:1/${2+rows};background:${stageBgCol}"></div>`;
+  /* ---- Anatomy ---- */
+  const heroChip = `<span class="chip" style="--chip-bg:#0062EB;--chip-text:#ffffff;font-size:18px;gap:8px;padding:0 20px 0 16px;height:46px">${chipHeartSVG(22,'#ffffff')}<span class="chip__label">Label</span><button class="chip__x" type="button" tabindex="-1" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg></button></span>`;
 
-  cells += `<div style="grid-column:1;grid-row:1"></div>`;
+  const parts = [
+    {num:1, name:'Leading icon', note:'Optional. Sits before the label to add meaning at a glance.', vis:chipHeartSVG(24,'#0062EB')},
+    {num:2, name:'Label',        note:'The chip text — keep it to one or two words.',                 vis:'<span style="font-weight:700;font-size:15px;color:var(--chrome-txt)">Label</span>'},
+    {num:3, name:'Container',    note:'Pill-shaped surface, 999px radius, coloured by variant.',       vis:'<span class="chip-part__pill"></span>'},
+    {num:4, name:'Dismiss',      note:'Optional close button, shown on removable chips.',              vis:xStroke},
+  ];
+  const partCards = parts.map(p=>`
+    <div class="chip-part">
+      <div class="chip-part__stage" style="background:${sbg}">${p.vis}</div>
+      <div class="chip-part__body">
+        <div class="chip-part__name"><span class="chip-part__num">${p.num}</span>${p.name}</div>
+        <div class="chip-part__note">${p.note}</div>
+      </div>
+    </div>`).join('');
+
+  /* ---- Size & dimensions ---- */
+  const sizeDemo = CHIP_SIZES.map(sz=>`
+    <div class="chip-size-item">
+      ${ovChip({variant:'accent', size:sz.key, label:sz.label, icon:true, theme})}
+      <span class="chip-size-item__lbl">${sz.h}px</span>
+    </div>`).join('');
+
+  const sizeRows = CHIP_SIZES.map(sz=>`
+    <tr>
+      <td class="dd-table__name">${sz.label}</td>
+      <td>${sz.h}px</td>
+      <td>${sz.fs}px</td>
+      <td>${sz.padX-2} / ${sz.padX}px</td>
+      <td>${sz.icon}px</td>
+      <td>${sz.gap}px</td>
+    </tr>`).join('');
+
+  /* ---- Colour variants + tokens ---- */
+  let grid = '';
+  grid += `<div style="grid-column:2/5;grid-row:1/${2+rows};background:${stageBgCol}"></div>`;
+  grid += `<div style="grid-column:1;grid-row:1"></div>`;
   CHIP_SIZES.forEach((sz,i)=>{
-    cells += `<div class="chip-ref__sizehead" style="grid-column:${2+i};grid-row:1${sizeHeadColor}">${sz.label}</div>`;
+    grid += `<div class="chip-ref__sizehead" style="grid-column:${2+i};grid-row:1${sizeHeadColor}">${sz.label}</div>`;
   });
-
   CHIP_VARIANTS.forEach((v, ri)=>{
     const row = 2+ri;
-    cells += `<div class="chip-ref__rowlabel" style="grid-column:1;grid-row:${row}">${v.label}</div>`;
+    grid += `<div class="chip-ref__rowlabel" style="grid-column:1;grid-row:${row}">${v.label}</div>`;
     CHIP_SIZES.forEach((sz,i)=>{
-      cells += `<div class="chip-ref__cell" style="grid-column:${2+i};grid-row:${row}">${makeChipHTML(v, sz.key, theme)}</div>`;
+      grid += `<div class="chip-ref__cell" style="grid-column:${2+i};grid-row:${row}">${makeChipHTML(v, sz.key, theme)}</div>`;
     });
   });
 
+  const tokCell = (lh, dh) => {
+    let html = `<div class="chip-tok-cell"><span class="chip-tok-sw" style="background:${lh}"></span><code>${lh.toUpperCase()}</code></div>`;
+    if(dh.toLowerCase() !== lh.toLowerCase()){
+      html += `<div class="chip-tok-cell" style="margin-top:6px"><span class="chip-tok-sw" style="background:${dh}"></span><code>${dh.toUpperCase()}</code><span style="color:var(--chrome-muted);font-size:11px">dark</span></div>`;
+    }
+    return html;
+  };
+  const tokRows = CHIP_VARIANTS.map(v=>`
+    <tr>
+      <td class="dd-table__name">${v.label}</td>
+      <td>${tokCell(v.light.bg, v.dark.bg)}</td>
+      <td>${tokCell(v.light.text, v.dark.text)}</td>
+    </tr>`).join('');
+
+  /* ---- States ---- */
+  const states = [
+    {name:'Default',    note:'Display only.',                        chip:ovChip({variant:'accent', size:'reg', label:'Chip', icon:true, theme})},
+    {name:'Selectable', note:'Clickable; cursor changes on hover.',  chip:ovChip({variant:'accent', size:'reg', label:'Chip', icon:true, selectable:true, theme})},
+    {name:'Selected',   note:'2px ring in the chip colour.',         chip:ovChip({variant:'accent', size:'reg', label:'Chip', icon:true, selectable:true, selected:true, theme})},
+    {name:'Removable',  note:'Adds a dismiss button (72% opacity).', chip:ovChip({variant:'accent', size:'reg', label:'Chip', icon:true, removable:true, theme})},
+  ];
+  const stateCells = states.map(s=>`
+    <div class="chip-variant-cell">
+      <div class="chip-variant-cell__stage" style="background:${sbg}">${s.chip}</div>
+      <div class="chip-variant-cell__name">${s.name}</div>
+      <div class="chip-variant-cell__desc">${s.note}</div>
+    </div>`).join('');
+
   root.innerHTML = `
-    <div class="type-sub__title">Reference grid</div>
-    <div class="type-sub__desc">5 semantic variants across 3 sizes, shown in the current light/dark theme.</div>
-    <div class="chip-ref"><div class="chip-ref__grid">${cells}</div></div>`;
+    <div class="type-sub">
+      <div class="type-sub__title">Anatomy</div>
+      <div class="type-sub__desc">A chip is a pill-shaped container with a text label, plus an optional leading icon and trailing dismiss button.</div>
+      <div class="chip-spec-hero" style="background:${sbg}">${heroChip}</div>
+      <div class="chip-parts">${partCards}</div>
+    </div>
+
+    <div class="type-sub">
+      <div class="type-sub__title">Size &amp; dimensions</div>
+      <div class="type-sub__desc">Three sizes share one shape and weight; height, text, padding and icon scale together. All sizes use a 999px (pill) radius, 700 weight and line-height 1.</div>
+      <div class="chip-size-demo" style="background:${sbg}">${sizeDemo}</div>
+      <div class="dd-table-wrap"><table class="dd-table">
+        <thead><tr><th>Size</th><th>Height</th><th>Text</th><th>Padding&nbsp;(L&nbsp;/&nbsp;R)</th><th>Icon</th><th>Gap</th></tr></thead>
+        <tbody>${sizeRows}</tbody>
+      </table></div>
+    </div>
+
+    <div class="type-sub">
+      <div class="type-sub__title">Colour variants</div>
+      <div class="type-sub__desc">Five semantic variants across three sizes, in the current theme. The token table below lists each fill and label colour — muted is the only variant that changes between light and dark.</div>
+      <div class="chip-ref" style="margin-bottom:16px"><div class="chip-ref__grid">${grid}</div></div>
+      <div class="dd-table-wrap"><table class="dd-table" style="min-width:420px">
+        <thead><tr><th>Variant</th><th>Background</th><th>Label text</th></tr></thead>
+        <tbody>${tokRows}</tbody>
+      </table></div>
+    </div>
+
+    <div class="type-sub" style="margin-bottom:0">
+      <div class="type-sub__title">States</div>
+      <div class="type-sub__desc">Beyond the static display chip, chips can be selectable, show a selected ring, or carry a dismiss button.</div>
+      <div class="chip-variants-grid">${stateCells}</div>
+    </div>`;
 }
 
 try { renderChipCodeTab(); } catch(e){ console.error('chip-code-tab',e); }
@@ -9392,12 +9502,18 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.35.0';
+const SYSTEM_VERSION = '1.36.0';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.36.0', date:'2026-08-03', author:'Helen', title:'Rebuilt the Chips & Pills Style tab into a full spec sheet', changes:[
+        ['added','Style tab now opens with an "Anatomy" section — an enlarged reference chip plus four numbered part cards (leading icon, label, container, dismiss)'],
+        ['added','"Size & dimensions" section with the three sizes shown side by side and a table of exact height, text size, padding (left/right), icon size and gap pulled from CHIP_SIZES'],
+        ['added','"States" section illustrating default, selectable, selected (ring) and removable chips'],
+        ['changed','The old bare reference grid is now the "Colour variants" section, paired with a colour-token table listing each variant\'s background and label hex (and the dark value where it differs — only muted)'],
+      ]},
       {version:'1.35.0', date:'2026-08-03', author:'Helen', title:'Redesigned the Chips & Pills Overview tab around real-world usage', changes:[
         ['added','Overview now has a "Key variants" section — the five semantic colours each shown with a plain-language job and a real example label (Accent/Featured, Muted/Draft, Success/Paid, Warning/Pending, Error/Overdue) instead of five identical "Chip" swatches'],
         ['added','New "In context" section with three stylised, theme-aware mini-mockups showing the everyday jobs a chip does: status-per-row in a list, a filter bar (selected filter in accent, the rest muted), and removable tags inside a form field'],
@@ -10248,7 +10364,13 @@ const CHANGELOG = {
         ['added','“Tag or Chip?” guidance clarifying when to use each'],
       ]},
     ]},
-    {secId:'s-chips', name:'Chips & Pills', version:'1.7.0', entries:[
+    {secId:'s-chips', name:'Chips & Pills', version:'1.8.0', entries:[
+      {version:'1.8.0', date:'2026-08-03', author:'Helen', title:'Style tab rebuilt into a spec sheet', changes:[
+        ['added','Anatomy section — enlarged reference chip and four numbered part cards (leading icon, label, container, dismiss)'],
+        ['added','Size & dimensions section — the three sizes side by side plus a table of height, text, padding (L/R), icon and gap read straight from CHIP_SIZES'],
+        ['added','States section — default, selectable, selected (2px ring) and removable chips'],
+        ['changed','renderChipReference() now renders the whole spec sheet; the former standalone reference grid is folded in as the "Colour variants" section with a variant→hex token table (dark value shown only where it differs)'],
+      ]},
       {version:'1.7.0', date:'2026-08-03', author:'Helen', title:'Overview tab rebuilt around real-world usage', changes:[
         ['added','"Key variants" section — each of the five semantic colours shown with a plain-language job and a real example label (Featured, Draft, Paid, Pending, Overdue) instead of five identical "Chip" swatches'],
         ['added','"In context" section — three stylised, theme-aware mockups showing status chips in a list, a filter bar, and removable tags in a form field'],
