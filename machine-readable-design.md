@@ -309,13 +309,13 @@ Read the relevant live component page before implementing any component below.
 | Two to five modes or options | Toggle Group `s-toggle-group` | Use instead of a dropdown when options benefit from immediate comparison |
 | Five to fifteen known options | Dropdown `s-dropdown` | Single-select by default; multi-select only when multiple answers are valid; use one field style consistently |
 | Typed data | Text Inputs `s-inputs` | Standard field for submitted values; Caption label is the default; Inline only in genuinely compact layouts |
-| Filtering a result set | Search field `s-inputs` | Use the Search pill only for finding or filtering, with a real loading state |
+| Filtering a result set | Search field `s-inputs` | Use the Search pill only for finding or filtering, with a real loading state. **When it sits in the same row as a Small button (e.g. a "Filters" trigger), size the search field to match that button's height** — the same one-size-per-cluster rule below applies across a search+button row, not just a button-only row |
 | Independent choices | Checkboxes `s-selection` | Use for opt-ins and multiple independent selections |
 | One choice from visible options | Radios `s-selection` | Use when exactly one option is required and the set is worth showing |
 | Immediate on/off setting | Switch `s-switch` | Use only when the change takes effect immediately; otherwise use a checkbox |
 | Read-only metadata or state | Tags & Badges `s-tags` | Tags are not interactive; use semantic colour only when it adds meaning |
 | Interactive filter or removable value | Chips `s-chips` | Use chips for selection, filtering or removal—not passive metadata |
-| Comparable records | Tables `s-tables` | Use for records users scan across columns; right-align numeric values |
+| Comparable records | Tables `s-tables` | Use for records users scan across columns; right-align numeric values. **An avatar-plus-name cell is a flex row, not two inline `<span>`s with a hand-tuned margin** — lay it out as `[avatar] [name (+ optional subtitle stacked under it)]` in a flex container with the avatar `flex-shrink:0`, so a long name wraps to a second line *inside its own column*, aligned under the first line of the name, instead of sliding left and re-appearing underneath the avatar |
 | Optional secondary content | Accordion `s-accordion` | Use for FAQs, optional settings or long supporting content |
 | Persistent contextual message | Alert `s-alert` | Match severity; place beside the affected content; do not use critical styling for routine information |
 | Short mobile task | Bottom Sheet `s-drawers` | Compact for short tasks; full screen for long lists, multi-field forms or stepped mobile flows |
@@ -419,7 +419,10 @@ Before finishing, confirm:
 - [ ] Every changed component was read from the live design system.
 - [ ] Component variants and sizes match their intended use.
 - [ ] Every button within a single header / toolbar / filter cluster shares one size (heights
-      match); primary emphasis comes from variant, not from a taller button.
+      match); primary emphasis comes from variant, not from a taller button. A search field
+      sharing that row is sized to match too.
+- [ ] Every avatar-plus-name/label cell uses a flex layout (avatar `flex-shrink:0` beside a text
+      column) — checked by actually wrapping a long name, not just eyeballing the short ones.
 - [ ] No placeholder component was fabricated.
 - [ ] Font Awesome Solid remains the only icon style.
 - [ ] Responsive layouts were inspected at the required widths.
