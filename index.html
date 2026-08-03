@@ -227,7 +227,7 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;font-feature-
 .crumb{margin-bottom:20px}
 .crumb__link{display:inline-flex;align-items:center;gap:10px;text-decoration:none;cursor:pointer}
 .crumb__back{display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;width:30px;height:30px;border-radius:50%;background:var(--chrome-txt);color:var(--chrome-bg);transition:opacity .15s,background .25s,color .25s}
-.crumb__back svg{width:13px;height:13px}
+.crumb__back svg{width:100%;height:100%}
 .crumb__link:hover .crumb__back{opacity:.78}
 .crumb__cat{font-size:14px;font-weight:800;color:var(--chrome-txt);transition:color .15s}
 .crumb__link:hover .crumb__cat{color:var(--chrome-muted)}
@@ -9516,12 +9516,15 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.37.1';
+const SYSTEM_VERSION = '1.37.2';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.37.2', date:'2026-08-03', author:'Helen', title:'Fixed the breadcrumb back-arrow rendering too small', changes:[
+        ['fixed','.crumb__back svg was hardcoded to 13px while its viewBox (0 0 26 26) still carried the original asset\'s full canvas — since the arrow only occupies ~45% of that canvas, the fixed 13px size scaled it down to a barely-visible sliver; now sized to 100%/100% of its circle so the arrow keeps the same proportion as the supplied source icon, site-wide'],
+      ]},
       {version:'1.37.1', date:'2026-08-03', author:'Helen', title:'Polished the new breadcrumb and Chips & Pills hero', changes:[
         ['changed','Breadcrumb category label (.crumb__cat) weight increased from 700 to 800 for stronger visual presence next to the back button'],
         ['changed','Breadcrumb back-button icon (CRUMB_BACK_SVG) swapped for the designer-supplied arrow glyph, site-wide'],
