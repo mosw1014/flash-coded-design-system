@@ -338,6 +338,13 @@ If a component is not listed here, inspect its live page and `AI context` before
 - Use XSmall or XXSmall only in dense toolbars, rows or secondary controls.
 - Preserve the live minimum 44×44px tappable area when the visible control is smaller.
 - Keep one size within a component group unless hierarchy requires a clear exception.
+- **A header / toolbar / filter row of buttons is one group: every button in it takes the same
+  size — no mixing Small and Regular in the same cluster.** Emphasis on the primary action comes
+  from its *variant* (a filled Primary/Accent among Secondary/Simple buttons), never from making it
+  taller than its neighbours. Default a compact action cluster to Small; reserve Regular for a
+  button standing alone (or a spacious modal/drawer footer, kept consistent within that footer).
+  A Small utility button beside a Regular create button in the same row is the failure this rule
+  exists to prevent — check button heights actually match, don't just eyeball the variants.
 
 ## 9. Responsive and accessibility
 
@@ -411,6 +418,8 @@ Before finishing, confirm:
 - [ ] Cards and containers have a real grouping purpose.
 - [ ] Every changed component was read from the live design system.
 - [ ] Component variants and sizes match their intended use.
+- [ ] Every button within a single header / toolbar / filter cluster shares one size (heights
+      match); primary emphasis comes from variant, not from a taller button.
 - [ ] No placeholder component was fabricated.
 - [ ] Font Awesome Solid remains the only icon style.
 - [ ] Responsive layouts were inspected at the required widths.
