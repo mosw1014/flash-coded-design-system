@@ -1333,20 +1333,21 @@ body.home .main{max-width:none;margin:0;padding:0}
 #s-chips .cpg-overview-heading{font-size:24px;font-weight:800;line-height:1.35;color:var(--chrome-txt);margin-bottom:24px}
 #s-chips #chip-code-playground{margin-bottom:32px}
 #s-chips .cpg-anatomy{margin-top:96px}
-#s-chips .chip-anatomy-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
-#s-chips .chip-anatomy-card{border:1px solid var(--chrome-border);border-radius:12px;overflow:hidden;background:var(--chrome-bg);transition:background .25s,border-color .25s}
-#s-chips .chip-anatomy-card__stage{position:relative;display:flex;align-items:center;justify-content:center;padding:64px 70px;min-height:72px;transition:background .25s}
-#s-chips .chip-anatomy-card__title{padding:12px 16px;font-size:13px;font-weight:700;color:var(--chrome-txt);border-top:1px solid var(--chrome-border)}
-#s-chips .chip-anatomy-num{position:absolute;top:10px;left:10px;display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;background:var(--chrome-accent-text);color:#fff;font-size:11px;font-weight:800}
-#s-chips .chip-anatomy-dot{position:absolute;width:6px;height:6px;margin:-3px;border-radius:50%;background:var(--chrome-accent-text)}
-#s-chips .chip-anatomy-line{position:absolute;background:var(--chrome-accent-text);opacity:.55}
-#s-chips .chip-anatomy-badge{position:absolute;display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;margin:-10px;border-radius:50%;background:var(--chrome-accent-text);color:#fff;font-size:10px;font-weight:800;cursor:default}
 #s-chips .cpg-variants{margin-top:96px}
 #s-chips .chip-variants-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:16px}
-#s-chips .chip-variants-grid--pair{grid-template-columns:repeat(auto-fit,minmax(120px,160px));justify-content:start}
-#s-chips .chip-icono-group{margin-bottom:24px}
-#s-chips .chip-icono-group:last-child{margin-bottom:0}
-#s-chips .chip-icono-group__label{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--chrome-muted);margin-bottom:10px}
+#s-chips .chip-insitu-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+#s-chips .chip-mock{border:1px solid var(--chrome-border);border-radius:12px;overflow:hidden;background:var(--chrome-bg);display:flex;flex-direction:column;transition:background .25s,border-color .25s}
+#s-chips .chip-mock__stage{flex:1;padding:22px 20px;display:flex;flex-direction:column;justify-content:center;gap:12px;min-height:150px;transition:background .25s}
+#s-chips .chip-mock__cap{padding:12px 16px;border-top:1px solid var(--chrome-border);font-size:12px;line-height:1.5;color:var(--chrome-muted)}
+#s-chips .chip-mock__cap b{display:block;font-size:13px;font-weight:700;color:var(--chrome-txt);margin-bottom:2px}
+#s-chips .chip-mock__row{display:flex;align-items:center;gap:10px}
+#s-chips .chip-mock__bar{height:9px;border-radius:5px;background:var(--color-surface-n2);flex-shrink:0}
+#s-chips .chip-mock__spacer{flex:1}
+#s-chips .chip-mock__filterrow{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:4px}
+#s-chips .chip-mock__label{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--chrome-muted)}
+#s-chips .chip-mock__field{display:flex;flex-wrap:wrap;align-items:center;gap:6px;padding:8px 10px;border:1.5px solid var(--chrome-border);border-radius:10px;background:var(--color-surface-base)}
+#s-chips .chip-mock__caret{width:1.5px;height:18px;background:var(--chrome-txt);opacity:.45}
+#s-chips .chip-usage-demo{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:14px;padding-top:14px;border-top:1px dashed var(--chrome-border)}
 #s-chips .chip-variant-cell{border:1px solid var(--chrome-border);border-radius:12px;overflow:hidden;background:var(--chrome-bg);transition:background .25s,border-color .25s}
 #s-chips .chip-variant-cell__stage{display:flex;align-items:center;justify-content:center;padding:24px 12px;min-height:60px;transition:background .25s}
 #s-chips .chip-variant-cell__name{padding:10px 12px 0;font-size:13px;font-weight:700;color:var(--chrome-txt);border-top:1px solid var(--chrome-border)}
@@ -1356,10 +1357,10 @@ body.home .main{max-width:none;margin:0;padding:0}
 #s-chips .chip-header-meta .ai-ctx summary{font-size:10px;font-weight:700;font-family:'SF Mono',monospace;letter-spacing:0;color:var(--chrome-muted);background:var(--chrome-nav);padding:2px 7px;border-radius:4px}
 #s-chips .chip-header-meta .ai-ctx summary::before{font-size:8px}
 #s-chips .chip-header-meta .ai-ctx pre{position:absolute;z-index:5;max-width:560px}
-@media (max-width:600px){#s-chips .chip-anatomy-grid{grid-template-columns:1fr}}
 @media (max-width:900px){
   #s-chips .cpg-layout{flex-direction:column}
   #s-chips .cpg-layout__intro{position:static}
+  #s-chips .chip-insitu-grid{grid-template-columns:1fr}
 }
 .chip{display:inline-flex;align-items:center;border-radius:999px;font-family:inherit;font-weight:700;white-space:nowrap;background:var(--chip-bg);color:var(--chip-text);line-height:1}
 .chip__icon{flex-shrink:0}
@@ -3427,7 +3428,7 @@ body.home .main{max-width:none;margin:0;padding:0}
       <div class="sec__head">
         <h1 class="sec__title">Chips and pills</h1>
         <div class="chip-header-meta">
-          <span class="comp-ver-badge" style="margin-left:0">v1.6.1</span>
+          <span class="comp-ver-badge" style="margin-left:0">v1.7.0</span>
           <details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-chips">
@@ -3451,7 +3452,19 @@ body.home .main{max-width:none;margin:0;padding:0}
   ],
   "css": ".chip { display:inline-flex;align-items:center;border-radius:999px;font-family:inherit;font-weight:700;white-space:nowrap;background:var(--chip-bg);color:var(--chip-text);line-height:1 }\n.chip__icon { flex-shrink:0 }\n.chip--sm { height:24px }\n.chip--reg { height:28px }\n.chip--lg { height:33px }\n.chip__x { display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;margin-left:1px;margin-right:-2px;width:1.15em;height:1.15em;border-radius:999px;border:none;background:transparent;color:inherit;cursor:pointer;padding:0;opacity:.72;transition:opacity .12s,background .12s }\n.chip__x:hover { opacity:1;background:rgba(0,0,0,.2) }\n.chip.is-selectable { cursor:pointer }\n.chip.is-selected { box-shadow:0 0 0 2px var(--cpg-stage-bg,#fff),0 0 0 4px var(--chip-bg) }\n.dd-chips .chip { box-shadow:none;padding:0 14px }",
   "js": "const CHIP_SIZES = [\n  {key:'sm',  label:'Small',   h:24, padY:'0', padX:9,  fs:11,   gap:4, icon:11},\n  {key:'reg', label:'Regular', h:28, padY:'0', padX:11, fs:12.5, gap:5, icon:13},\n  {key:'lg',  label:'Large',   h:33, padY:'0', padX:13, fs:13.5, gap:6, icon:15},\n];\n\nconst CHIP_VARIANTS = [\n  {key:'accent',  label:'Accent',  light:{bg:'#0062EB',text:'#ffffff'}, dark:{bg:'#0062EB',text:'#ffffff'}},\n  {key:'muted',   label:'Muted',   light:{bg:'#E6E6E6',text:'#646464'}, dark:{bg:'#33343A',text:'#A1A3A8'}},\n  {key:'success', label:'Success', light:{bg:'#16A220',text:'#ffffff'}, dark:{bg:'#16A220',text:'#ffffff'}},\n  {key:'warning', label:'Warning', light:{bg:'#FF8900',text:'#ffffff'}, dark:{bg:'#FF8900',text:'#ffffff'}},\n  {key:'error',   label:'Error',   light:{bg:'#EB0029',text:'#ffffff'}, dark:{bg:'#EB0029',text:'#ffffff'}},\n];\n\nfunction chipHeartSVG(size, color){\n  return `&lt;svg class=\"chip__icon\" width=\"${size}\" height=\"${size}\" viewBox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\"&gt;&lt;path fill=\"${color}\" d=\"M12 21.3s-7.6-4.7-10.3-9.4C.1 8.9 1.3 5.1 5 4.2c2.2-.5 4.2.4 5.5 2.2.4.5 1.1.5 1.5 0C13.3 4.6 15.3 3.7 17.5 4.2c3.7.9 4.9 4.7 3.3 7.7-2.7 4.7-8.8 9.4-8.8 9.4z\"/&gt;&lt;/svg&gt;`;\n}\n\nfunction makeChipHTML(variant, sizeKey, theme){\n  const sz = CHIP_SIZES.find(s=&gt;s.key===sizeKey);\n  const c  = variant[theme];\n  const style = `--chip-bg:${c.bg};--chip-text:${c.text};font-size:${sz.fs}px;gap:${sz.gap}px;padding:0 ${sz.padX}px 0 ${sz.padX-2}px`;\n  return `&lt;span class=\"chip chip--${sizeKey}\" style=\"${style}\"&gt;${chipHeartSVG(sz.icon, c.text)}&lt;span class=\"chip__label\"&gt;Chip&lt;/span&gt;&lt;/span&gt;`;\n}\n\nfunction makeChipEl(){\n  const sz = CHIP_SIZES.find(s=&gt;s.key===cpg.size)||CHIP_SIZES[1];\n  const v  = CHIP_VARIANTS.find(x=&gt;x.key===cpg.variant)||CHIP_VARIANTS[0];\n  const c  = v[cpg.theme];\n  const chip = document.createElement('span');\n  chip.className = `chip chip--${cpg.size}${cpg.selectable?' is-selectable':''}${(cpg.selectable&amp;&amp;cpg.selected)?' is-selected':''}`;\n  chip.style.cssText = `--chip-bg:${c.bg};--chip-text:${c.text};font-size:${sz.fs}px;gap:${sz.gap}px;padding:0 ${sz.padX}px 0 ${sz.padX-2}px`;\n  chip.style.setProperty('--cpg-stage-bg', stageBg(cpg.theme));\n  let inner = '';\n  if(cpg.icon) inner += chipHeartSVG(sz.icon, c.text);\n  inner += `&lt;span class=\"chip__label\"&gt;${cpgEsc(cpg.label||'Chip')}&lt;/span&gt;`;\n  chip.innerHTML = inner;\n  if(cpg.removable){\n    const x = document.createElement('button');\n    x.className = 'chip__x'; x.type = 'button'; x.setAttribute('aria-label','Remove');\n    const xs = Math.round(sz.icon*0.82);\n    x.innerHTML = `&lt;svg width=\"${xs}\" height=\"${xs}\" viewBox=\"0 0 24 24\" fill=\"none\"&gt;&lt;path d=\"M6 6l12 12M18 6L6 18\" stroke=\"currentColor\" stroke-width=\"2.6\" stroke-linecap=\"round\"/&gt;&lt;/svg&gt;`;\n    x.onclick = (e)=&gt;{ e.stopPropagation(); cpg.dismissed = true; cpgRefresh(); };\n    chip.appendChild(x);\n  }\n  if(cpg.selectable){\n    chip.onclick = ()=&gt;{ cpg.selected = !cpg.selected; cpgRefresh(); };\n  }\n  return chip;\n}",
-  "contentHash": "5bafb76fb0c2997b3d4d1171561afdd64c65de175d65bdacbcdac5fa30bb1f20",
+  "usage": {
+    "do": [
+      "Keep labels to a word or two so they stay easy to scan.",
+      "Match the colour to the meaning — green for done, red for a problem.",
+      "Group related chips together, like a row of filters."
+    ],
+    "dont": [
+      "Don't write a full sentence inside a chip — shorten it or use plain text.",
+      "Don't use a chip as a main button; buttons are for actions.",
+      "Don't colour chips just for decoration — colour should carry meaning."
+    ]
+  },
+  "contentHash": "d6359e7aaabac22c7dfd11847df32fdff7b6b2b58883a03f71412bfdb7124967",
   "note": "makeChipHTML is the minimal real-markup builder (variant+size+theme -&gt; chip HTML string); makeChipEl is the fuller version also handling removable (.chip__x) and selectable (.is-selectable/.is-selected, captured via the .chip boundary already) states. cpg (playground state)/getChipCodeHTML/renderChipPlayground/renderChipReference are doc-site-only playground plumbing, excluded."
 }
   </pre>
@@ -3466,10 +3479,44 @@ body.home .main{max-width:none;margin:0;padding:0}
       </div>
       <div class="tabs-panel on" data-chip-panel="overview">
         <div id="chip-playground" class="type-sub"></div>
-        <div id="chip-anatomy" class="type-sub"></div>
-        <div id="chip-iconography" class="type-sub"></div>
         <div id="chip-variants" class="type-sub"></div>
-        <div id="chip-sizes" class="type-sub"></div>
+        <div id="chip-insitu" class="type-sub"></div>
+        <div class="type-sub cpg-variants" id="chip-usage">
+          <div class="cpg-layout">
+            <div class="cpg-layout__intro">
+              <div class="cpg-layout__title">Do's &amp; don'ts</div>
+              <div class="cpg-layout__desc">A few simple rules that keep chips readable and predictable.</div>
+            </div>
+            <div class="cpg-layout__demo">
+              <div class="sel-usage">
+                <div class="sel-usage__card">
+                  <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
+                  <ul class="sel-usage__list">
+                    <li>Keep labels to a word or two so they stay easy to scan.</li>
+                    <li>Match the colour to the meaning &mdash; green for done, red for a problem.</li>
+                    <li>Group related chips together, like a row of filters.</li>
+                  </ul>
+                  <div class="chip-usage-demo">
+                    <span class="chip chip--reg" style="--chip-bg:#16A220;--chip-text:#ffffff;font-size:12.5px;padding:0 11px"><span class="chip__label">Paid</span></span>
+                    <span class="chip chip--reg" style="--chip-bg:#FF8900;--chip-text:#ffffff;font-size:12.5px;padding:0 11px"><span class="chip__label">Pending</span></span>
+                    <span class="chip chip--reg" style="--chip-bg:#EB0029;--chip-text:#ffffff;font-size:12.5px;padding:0 11px"><span class="chip__label">Overdue</span></span>
+                  </div>
+                </div>
+                <div class="sel-usage__card">
+                  <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don't</div>
+                  <ul class="sel-usage__list">
+                    <li>Don't write a full sentence inside a chip &mdash; shorten it or use plain text.</li>
+                    <li>Don't use a chip as a main button; buttons are for actions.</li>
+                    <li>Don't colour chips just for decoration &mdash; colour should carry meaning.</li>
+                  </ul>
+                  <div class="chip-usage-demo">
+                    <span class="chip chip--reg" style="--chip-bg:#0062EB;--chip-text:#ffffff;font-size:12.5px;padding:0 11px"><span class="chip__label">This invoice is now overdue</span></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="tabs-panel" data-chip-panel="style">
         <div id="chip-reference" class="type-sub"></div>
@@ -6949,10 +6996,8 @@ function toggleTheme() {
   try { if(typeof rerenderBtnRef==='function') rerenderBtnRef(); } catch(e){}
   try { if(typeof renderTextInputsSection==='function' && document.getElementById('ti-playground')) renderTextInputsSection(); } catch(e){}
   try { if(typeof renderChipPlayground==='function' && document.getElementById('chip-playground')) renderChipPlayground(); } catch(e){}
-  try { if(typeof renderChipAnatomy==='function' && document.getElementById('chip-anatomy')) renderChipAnatomy(); } catch(e){}
-  try { if(typeof renderChipIconography==='function' && document.getElementById('chip-iconography')) renderChipIconography(); } catch(e){}
   try { if(typeof renderChipVariants==='function' && document.getElementById('chip-variants')) renderChipVariants(); } catch(e){}
-  try { if(typeof renderChipSizes==='function' && document.getElementById('chip-sizes')) renderChipSizes(); } catch(e){}
+  try { if(typeof renderChipInSitu==='function' && document.getElementById('chip-insitu')) renderChipInSitu(); } catch(e){}
   try { if(typeof renderTagsBadges==='function' && document.getElementById('tag-playground')) renderTagsBadges(); } catch(e){}
   try { if(typeof renderChipReference==='function' && document.getElementById('chip-reference')) renderChipReference(); } catch(e){}
   try { if(typeof renderSelReference==='function' && document.getElementById('sel-reference')) renderSelReference(); } catch(e){}
@@ -7010,27 +7055,9 @@ function showSection(id) {
   // Scroll main content to top
   const main = document.querySelector('.main');
   if (main) main.scrollTop = 0;
-  // Chip Anatomy annotations are measured from real rendered geometry, which
-  // collapses to zero while the section is display:none — recompute now
-  // that it's actually visible.
-  if(id==='s-chips'){ try { if(typeof renderChipAnatomy==='function') renderChipAnatomy(); } catch(e){} }
 }
 // Show brand intro on load
 showSection('s-brand');
-
-// Re-measure Chip Anatomy annotations on resize, since their positions are
-// computed in px from real geometry rather than pure CSS.
-let _chipAnatomyResizeTimer;
-window.addEventListener('resize', () => {
-  const anatomyEl = document.getElementById('chip-anatomy');
-  const sChips = document.getElementById('s-chips');
-  if(!anatomyEl || !sChips || !sChips.classList.contains('active')) return;
-  if(!anatomyEl.closest('.tabs-panel[data-chip-panel="overview"]').classList.contains('on')) return;
-  clearTimeout(_chipAnatomyResizeTimer);
-  _chipAnatomyResizeTimer = setTimeout(() => {
-    try { if(typeof renderChipAnatomy==='function') renderChipAnatomy(); } catch(e){}
-  }, 150);
-});
 
 /* ============================================================
    SCROLL SPY — family jump links
@@ -8936,169 +8963,52 @@ function renderChipCodeTab(){
     </div>`;
 }
 
-function renderChipAnatomy(){
-  const root = document.getElementById('chip-anatomy');
-  if(!root) return;
-  const theme = currentTheme();
-  const v = CHIP_VARIANTS.find(x=>x.key==='accent') || CHIP_VARIANTS[0];
-  const c = v[theme];
-  const sz = CHIP_SIZES.find(s=>s.key==='reg') || CHIP_SIZES[1];
-  const chipStyle = `--chip-bg:${c.bg};--chip-text:${c.text};font-size:${sz.fs}px;gap:${sz.gap}px;padding:0 ${sz.padX}px 0 ${sz.padX-2}px`;
-  const iconSvg = chipHeartSVG(sz.icon, c.text);
-  const xSize = Math.round(sz.icon*0.82);
-  const dismissBtn = `<button class="chip__x" type="button" tabindex="-1" aria-hidden="true"><svg width="${xSize}" height="${xSize}" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg></button>`;
-
-  const items = [
-    { key:'static', num:1, name:'Static', chip:`<span class="chip chip--reg" style="${chipStyle}">${iconSvg}<span class="chip__label">Chip</span></span>`,
-      annots:[
-        {letter:'A', label:'Icon (optional)', target:'.chip__icon', side:'left'},
-        {letter:'B', label:'Label', target:'.chip__label', side:'top'},
-        {letter:'C', label:'Container', target:null, side:'right'},
-      ] },
-    { key:'removable', num:2, name:'Removable', chip:`<span class="chip chip--reg" style="${chipStyle}">${iconSvg}<span class="chip__label">Chip</span>${dismissBtn}</span>`,
-      annots:[
-        {letter:'A', label:'Icon (optional)', target:'.chip__icon', side:'left'},
-        {letter:'B', label:'Label', target:'.chip__label', side:'top'},
-        {letter:'C', label:'Container', target:null, side:'right'},
-        {letter:'D', label:'Dismiss icon', target:'.chip__x', side:'bottom'},
-      ] },
-    { key:'selectable', num:3, name:'Selectable', chip:`<span class="chip chip--reg is-selectable" style="${chipStyle}">${iconSvg}<span class="chip__label">Chip</span></span>`,
-      annots:[
-        {letter:'A', label:'Icon (optional)', target:'.chip__icon', side:'left'},
-        {letter:'B', label:'Label', target:'.chip__label', side:'top'},
-        {letter:'C', label:'Container', target:null, side:'right'},
-      ] },
-    { key:'selected', num:4, name:'Selected', chip:`<span class="chip chip--reg is-selectable is-selected" style="${chipStyle};--cpg-stage-bg:${stageBg(theme)}">${iconSvg}<span class="chip__label">Chip</span></span>`,
-      annots:[
-        {letter:'A', label:'Icon (optional)', target:'.chip__icon', side:'left'},
-        {letter:'B', label:'Label', target:'.chip__label', side:'top'},
-        {letter:'C', label:'Container', target:null, side:'right'},
-        {letter:'D', label:'Selected ring', target:null, side:'bottom'},
-      ] },
-  ];
-
-  const cards = items.map(it=>`
-    <div class="chip-anatomy-card">
-      <div class="chip-anatomy-card__stage" data-anatomy-key="${it.key}" style="background:${stageBg(theme)}">
-        <span class="chip-anatomy-num">${it.num}</span>
-        ${it.chip}
-      </div>
-      <div class="chip-anatomy-card__title">${it.name}</div>
-    </div>`).join('');
-
-  root.innerHTML = `
-    <div class="cpg-layout cpg-anatomy">
-      <div class="cpg-layout__intro">
-        <div class="cpg-layout__title">Anatomy</div>
-        <div class="cpg-layout__desc">Every chip is a container with a label and an optional leading icon. Removable chips add a close icon; selectable chips highlight with a ring once picked.</div>
-      </div>
-      <div class="cpg-layout__demo">
-        <div class="chip-anatomy-grid">${cards}</div>
-      </div>
-    </div>`;
-
-  // Second pass: overlay lettered annotations (badge + connector line + dot)
-  // using the real rendered geometry of each part, so they stay accurate
-  // however label length/icon size change.
-  items.forEach(it=>{
-    const stage = root.querySelector(`.chip-anatomy-card__stage[data-anatomy-key="${it.key}"]`);
-    if(stage) annotateChipStage(stage, it.annots);
-  });
+/* Flexible chip markup builder for the Overview's illustrative sections
+   (key variants, in-context mockups) — real .chip markup with optional
+   icon / label / removable / selectable / selected. Doc-site-only helper;
+   makeChipHTML / makeChipEl remain the canonical builders. */
+function ovChip({variant='accent', size='sm', label='Chip', icon=false, removable=false, selectable=false, selected=false, theme}){
+  const sz = CHIP_SIZES.find(s=>s.key===size) || CHIP_SIZES[0];
+  const v  = CHIP_VARIANTS.find(x=>x.key===variant) || CHIP_VARIANTS[0];
+  const c  = v[theme];
+  const cls = `chip chip--${size}${selectable?' is-selectable':''}${selected?' is-selected':''}`;
+  let style = `--chip-bg:${c.bg};--chip-text:${c.text};font-size:${sz.fs}px;gap:${sz.gap}px;padding:0 ${sz.padX}px 0 ${sz.padX-2}px`;
+  if(selected) style += `;--cpg-stage-bg:${stageBg(theme)}`;
+  let inner = '';
+  if(icon) inner += chipHeartSVG(sz.icon, c.text);
+  inner += `<span class="chip__label">${cpgEsc(label)}</span>`;
+  if(removable){
+    const xs = Math.round(sz.icon*0.82);
+    inner += `<button class="chip__x" type="button" tabindex="-1" aria-hidden="true"><svg width="${xs}" height="${xs}" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg></button>`;
+  }
+  return `<span class="${cls}" style="${style}">${inner}</span>`;
 }
 
-function annotateChipStage(stage, annots){
-  const stageRect = stage.getBoundingClientRect();
-  const chipEl = stage.querySelector('.chip');
-  const REACH = 30; // px the badge sits out from its anchor point
-  let html = '';
-  annots.forEach(a=>{
-    const targetEl = a.target ? stage.querySelector(a.target) : chipEl;
-    if(!targetEl) return;
-    const r = targetEl.getBoundingClientRect();
-    const left = r.left - stageRect.left, right = r.right - stageRect.left;
-    const top = r.top - stageRect.top, bottom = r.bottom - stageRect.top;
-    const cx = (left+right)/2, cy = (top+bottom)/2;
-    let ax, ay, bx, by, lineStyle;
-    if(a.side==='left'){ ax=left; ay=cy; bx=ax-REACH; by=ay; lineStyle=`top:${ay}px;left:${bx}px;width:${REACH}px;height:1px;`; }
-    else if(a.side==='right'){ ax=right; ay=cy; bx=ax+REACH; by=ay; lineStyle=`top:${ay}px;left:${ax}px;width:${REACH}px;height:1px;`; }
-    else if(a.side==='top'){ ax=cx; ay=top; bx=ax; by=ay-REACH; lineStyle=`left:${ax}px;top:${by}px;width:1px;height:${REACH}px;`; }
-    else { ax=cx; ay=bottom; bx=ax; by=ay+REACH; lineStyle=`left:${ax}px;top:${ay}px;width:1px;height:${REACH}px;`; }
-
-    html += `<span class="chip-anatomy-dot" style="left:${ax}px;top:${ay}px"></span>`;
-    html += `<span class="chip-anatomy-line" style="${lineStyle}"></span>`;
-    html += `<span class="chip-anatomy-badge" style="left:${bx}px;top:${by}px" title="${a.label}" aria-label="${a.letter}: ${a.label}">${a.letter}</span>`;
-  });
-  stage.insertAdjacentHTML('beforeend', html);
-}
-
-function renderChipIconography(){
-  const root = document.getElementById('chip-iconography');
-  if(!root) return;
-  const theme = currentTheme();
-  const v = CHIP_VARIANTS.find(x=>x.key==='accent') || CHIP_VARIANTS[0];
-  const c = v[theme];
-  const sz = CHIP_SIZES.find(s=>s.key==='reg') || CHIP_SIZES[1];
-  const chipStyle = `--chip-bg:${c.bg};--chip-text:${c.text};font-size:${sz.fs}px;gap:${sz.gap}px;padding:0 ${sz.padX}px 0 ${sz.padX-2}px`;
-  const iconSvg = chipHeartSVG(sz.icon, c.text);
-  const xSize = Math.round(sz.icon*0.82);
-  const dismissBtn = `<button class="chip__x" type="button" tabindex="-1" aria-hidden="true"><svg width="${xSize}" height="${xSize}" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg></button>`;
-
-  const cell = (chipHtml, name, desc) => `
-    <div class="chip-variant-cell">
-      <div class="chip-variant-cell__stage" style="background:${stageBg(theme)}">${chipHtml}</div>
-      <div class="chip-variant-cell__name">${name}</div>
-      <div class="chip-variant-cell__desc">${desc}</div>
-    </div>`;
-
-  const iconCells = cell(`<span class="chip chip--reg" style="${chipStyle}"><span class="chip__label">Chip</span></span>`, 'No icon', 'Label only')
-    + cell(`<span class="chip chip--reg" style="${chipStyle}">${iconSvg}<span class="chip__label">Chip</span></span>`, 'With icon', 'Leading icon');
-
-  const dismissCells = cell(`<span class="chip chip--reg" style="${chipStyle}">${iconSvg}<span class="chip__label">Chip</span></span>`, 'Static', 'Display only')
-    + cell(`<span class="chip chip--reg" style="${chipStyle}">${iconSvg}<span class="chip__label">Chip</span>${dismissBtn}</span>`, 'Removable', 'Adds a close icon');
-
-  root.innerHTML = `
-    <div class="cpg-layout cpg-variants">
-      <div class="cpg-layout__intro">
-        <div class="cpg-layout__title">Iconography</div>
-        <div class="cpg-layout__desc">Chips can show a leading icon, and removable chips add a close icon.</div>
-      </div>
-      <div class="cpg-layout__demo">
-        <div class="chip-icono-group">
-          <div class="chip-icono-group__label">Icon</div>
-          <div class="chip-variants-grid chip-variants-grid--pair">${iconCells}</div>
-        </div>
-        <div class="chip-icono-group">
-          <div class="chip-icono-group__label">Dismiss</div>
-          <div class="chip-variants-grid chip-variants-grid--pair">${dismissCells}</div>
-        </div>
-      </div>
-    </div>`;
-}
+const KEY_VARIANTS = [
+  {key:'accent',  name:'Accent',  label:'Featured', use:'Default emphasis, or an active choice'},
+  {key:'muted',   name:'Muted',   label:'Draft',    use:'Quiet categories and low-key tags'},
+  {key:'success', name:'Success', label:'Paid',     use:'A positive, finished state'},
+  {key:'warning', name:'Warning', label:'Pending',  use:'Something that needs attention'},
+  {key:'error',   name:'Error',   label:'Overdue',  use:'A blocking or failed state'},
+];
 
 function renderChipVariants(){
   const root = document.getElementById('chip-variants');
   if(!root) return;
   const theme = currentTheme();
-  const descriptors = {
-    accent:'Default emphasis',
-    muted:'Neutral, low emphasis',
-    success:'Positive status',
-    warning:'Needs attention',
-    error:'Critical or blocking',
-  };
 
-  const cells = CHIP_VARIANTS.map(v=>`
+  const cells = KEY_VARIANTS.map(v=>`
     <div class="chip-variant-cell">
-      <div class="chip-variant-cell__stage" style="background:${stageBg(theme)}">${makeChipHTML(v, 'reg', theme)}</div>
-      <div class="chip-variant-cell__name">${v.label}</div>
-      <div class="chip-variant-cell__desc">${descriptors[v.key]||''}</div>
+      <div class="chip-variant-cell__stage" style="background:${stageBg(theme)}">${ovChip({variant:v.key, size:'reg', label:v.label, theme})}</div>
+      <div class="chip-variant-cell__name">${v.name}</div>
+      <div class="chip-variant-cell__desc">${v.use}</div>
     </div>`).join('');
 
   root.innerHTML = `
     <div class="cpg-layout cpg-variants">
       <div class="cpg-layout__intro">
-        <div class="cpg-layout__title">Variants</div>
-        <div class="cpg-layout__desc">Chips come in five semantic colours.</div>
+        <div class="cpg-layout__title">Key variants</div>
+        <div class="cpg-layout__desc">Five semantic colours, each with a job. Match the colour to the meaning &mdash; not the decoration.</div>
       </div>
       <div class="cpg-layout__demo">
         <div class="chip-variants-grid">${cells}</div>
@@ -9106,27 +9016,63 @@ function renderChipVariants(){
     </div>`;
 }
 
-function renderChipSizes(){
-  const root = document.getElementById('chip-sizes');
+function renderChipInSitu(){
+  const root = document.getElementById('chip-insitu');
   if(!root) return;
   const theme = currentTheme();
-  const v = CHIP_VARIANTS.find(x=>x.key==='accent') || CHIP_VARIANTS[0];
+  const sbg = stageBg(theme);
 
-  const cells = CHIP_SIZES.map(sz=>`
-    <div class="chip-variant-cell">
-      <div class="chip-variant-cell__stage" style="background:${stageBg(theme)}">${makeChipHTML(v, sz.key, theme)}</div>
-      <div class="chip-variant-cell__name">${sz.label}</div>
-      <div class="chip-variant-cell__desc">${sz.h}px</div>
-    </div>`).join('');
+  const bar = w => `<span class="chip-mock__bar" style="width:${w}"></span>`;
+
+  // 1. Status in a list — one status chip per row
+  const listRows = [
+    {w:'70px', variant:'success', label:'Paid'},
+    {w:'52px', variant:'warning', label:'Pending'},
+    {w:'62px', variant:'error',   label:'Overdue'},
+  ].map(r=>`<div class="chip-mock__row">${bar(r.w)}<span class="chip-mock__spacer"></span>${ovChip({variant:r.variant, size:'sm', label:r.label, theme})}</div>`).join('');
+
+  const listMock = `
+    <div class="chip-mock__stage" style="background:${sbg}">${listRows}</div>
+    <div class="chip-mock__cap"><b>Status at a glance</b>One chip per row shows where each item stands.</div>`;
+
+  // 2. Filter bar — selected filter in accent, the rest muted
+  const filterMock = `
+    <div class="chip-mock__stage" style="background:${sbg}">
+      <div class="chip-mock__filterrow">
+        ${ovChip({variant:'accent', size:'sm', label:'Unpaid',     theme})}
+        ${ovChip({variant:'muted',  size:'sm', label:'All',        theme})}
+        ${ovChip({variant:'muted',  size:'sm', label:'This month', theme})}
+      </div>
+      <div class="chip-mock__row">${bar('100%')}</div>
+      <div class="chip-mock__row">${bar('72%')}</div>
+      <div class="chip-mock__row">${bar('88%')}</div>
+    </div>
+    <div class="chip-mock__cap"><b>Filter a list</b>Pick a chip to narrow what's shown.</div>`;
+
+  // 3. Tags in a field — removable chips inside an input
+  const fieldMock = `
+    <div class="chip-mock__stage" style="background:${sbg}">
+      <div class="chip-mock__label">Team</div>
+      <div class="chip-mock__field">
+        ${ovChip({variant:'muted', size:'sm', label:'Design',  removable:true, theme})}
+        ${ovChip({variant:'muted', size:'sm', label:'Finance', removable:true, theme})}
+        <span class="chip-mock__caret"></span>
+      </div>
+    </div>
+    <div class="chip-mock__cap"><b>Tags in a field</b>Removable chips collect several choices in one input.</div>`;
 
   root.innerHTML = `
     <div class="cpg-layout cpg-variants">
       <div class="cpg-layout__intro">
-        <div class="cpg-layout__title">Size</div>
-        <div class="cpg-layout__desc">Chips come in three sizes.</div>
+        <div class="cpg-layout__title">In context</div>
+        <div class="cpg-layout__desc">The same chip does three everyday jobs &mdash; showing status, filtering a list, and collecting tags.</div>
       </div>
       <div class="cpg-layout__demo">
-        <div class="chip-variants-grid">${cells}</div>
+        <div class="chip-insitu-grid">
+          <div class="chip-mock">${listMock}</div>
+          <div class="chip-mock">${filterMock}</div>
+          <div class="chip-mock">${fieldMock}</div>
+        </div>
       </div>
     </div>`;
 }
@@ -9183,10 +9129,8 @@ function renderChipReference(){
 
 try { renderChipCodeTab(); } catch(e){ console.error('chip-code-tab',e); }
 try { renderChipPlayground(); } catch(e){ console.error('chip-playground',e); }
-try { renderChipAnatomy(); } catch(e){ console.error('chip-anatomy',e); }
-try { renderChipIconography(); } catch(e){ console.error('chip-iconography',e); }
 try { renderChipVariants(); } catch(e){ console.error('chip-variants',e); }
-try { renderChipSizes(); } catch(e){ console.error('chip-sizes',e); }
+try { renderChipInSitu(); } catch(e){ console.error('chip-insitu',e); }
 try { renderChipReference(); } catch(e){ console.error('chip-reference',e); }
 
 function chipTabSwitch(tab){
@@ -9194,9 +9138,6 @@ function chipTabSwitch(tab){
   if(!nav) return;
   nav.querySelectorAll('.tab-item').forEach(btn=>btn.classList.toggle('on', btn.getAttribute('data-chip-tab')===tab));
   document.querySelectorAll('#s-chips .tabs-panel[data-chip-panel]').forEach(p=>p.classList.toggle('on', p.getAttribute('data-chip-panel')===tab));
-  // Anatomy annotations are measured from real geometry, which collapses to
-  // zero while the Overview panel is display:none — recompute now it's visible.
-  if(tab==='overview'){ try { if(typeof renderChipAnatomy==='function') renderChipAnatomy(); } catch(e){} }
 }
 
 /* ============================================================
@@ -9451,12 +9392,18 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.34.4';
+const SYSTEM_VERSION = '1.35.0';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.35.0', date:'2026-08-03', author:'Helen', title:'Redesigned the Chips & Pills Overview tab around real-world usage', changes:[
+        ['added','Overview now has a "Key variants" section — the five semantic colours each shown with a plain-language job and a real example label (Accent/Featured, Muted/Draft, Success/Paid, Warning/Pending, Error/Overdue) instead of five identical "Chip" swatches'],
+        ['added','New "In context" section with three stylised, theme-aware mini-mockups showing the everyday jobs a chip does: status-per-row in a list, a filter bar (selected filter in accent, the rest muted), and removable tags inside a form field'],
+        ['added','New "Do\'s & don\'ts" block (standard .sel-usage cards, so it feeds the AI context usage guidance) with a small worked chip example under each — short semantic labels vs. a full-sentence chip'],
+        ['removed','Dropped the Anatomy, Iconography and Size sections from the Overview (and their render/annotation code) — anatomy/size detail is spec-level and the Style tab\'s reference grid already covers every size; keeps the Overview scannable for a general reader'],
+      ]},
       {version:'1.34.4', date:'2026-08-03', author:'Mo', title:'Added AI context tabs to Charts, Input OTP, Keyboard Shortcuts, Separator, Slider and Avatar', changes:[
         ['added','AI context tab added to Charts (s-charts), Input OTP (s-input-otp), Keyboard Shortcuts (s-kbd), Separator (s-separator), Slider (s-slider) and Avatar (s-avatar) — the last remaining component sections without one, generated with scripts/generate-ai-context-tab.mjs and verified current with scripts/verify-ai-context-tabs.mjs'],
       ]},
@@ -10301,7 +10248,13 @@ const CHANGELOG = {
         ['added','“Tag or Chip?” guidance clarifying when to use each'],
       ]},
     ]},
-    {secId:'s-chips', name:'Chips & Pills', version:'1.6.1', entries:[
+    {secId:'s-chips', name:'Chips & Pills', version:'1.7.0', entries:[
+      {version:'1.7.0', date:'2026-08-03', author:'Helen', title:'Overview tab rebuilt around real-world usage', changes:[
+        ['added','"Key variants" section — each of the five semantic colours shown with a plain-language job and a real example label (Featured, Draft, Paid, Pending, Overdue) instead of five identical "Chip" swatches'],
+        ['added','"In context" section — three stylised, theme-aware mockups showing status chips in a list, a filter bar, and removable tags in a form field'],
+        ['added','"Do\'s & don\'ts" cards with a worked chip example under each; uses the shared .sel-usage pattern so the guidance also feeds the section\'s AI context tab'],
+        ['removed','Anatomy, Iconography and Size sections (and renderChipAnatomy/annotateChipStage/renderChipIconography/renderChipSizes plus the anatomy resize/re-measure plumbing) — size is covered by the Style tab reference grid, keeping the Overview focused'],
+      ]},
       {version:'1.6.1', date:'2026-07-29', author:'Helen', title:'New heading above the Playground block, explainer updated', changes:[
         ['added','New heading above the "Try the component" block: "Use chips to show a status, mark a category, or let people pick a filter at a glance."'],
         ['changed','Block\'s explainer line now reads "Adjust the filters to test component states."'],
