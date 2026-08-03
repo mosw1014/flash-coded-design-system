@@ -224,11 +224,13 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;font-feature-
 .sb-cat--link:hover{color:var(--chrome-accent-text)}
 .sb-cat--link.on{color:var(--chrome-accent-text)}
 /* ===== Breadcrumb ===== */
-.crumb{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:600;margin-bottom:16px}
-.crumb__link{color:var(--chrome-muted);text-decoration:none;transition:color .15s;cursor:pointer}
-.crumb__link:hover{color:var(--chrome-txt)}
-.crumb__sep{color:var(--chrome-border);font-weight:400}
-.crumb__here{color:var(--chrome-txt);font-weight:700}
+.crumb{margin-bottom:20px}
+.crumb__link{display:inline-flex;align-items:center;gap:10px;text-decoration:none;cursor:pointer}
+.crumb__back{display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;width:30px;height:30px;border-radius:50%;background:var(--chrome-txt);color:var(--chrome-bg);transition:opacity .15s,background .25s,color .25s}
+.crumb__back svg{width:13px;height:13px}
+.crumb__link:hover .crumb__back{opacity:.78}
+.crumb__cat{font-size:14px;font-weight:700;color:var(--chrome-txt);transition:color .15s}
+.crumb__link:hover .crumb__cat{color:var(--chrome-muted)}
 /* ===== Landing grid + cards ===== */
 .lp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px}
 .lp-card{display:flex;flex-direction:column;border:1px solid var(--chrome-border);border-radius:16px;background:var(--chrome-bg);overflow:hidden;text-decoration:none;cursor:pointer;transition:transform .15s,border-color .15s,box-shadow .15s}
@@ -1316,7 +1318,10 @@ body.home .main{max-width:none;margin:0;padding:0}
    changes on Chips & Pills before rolling anything out to other pages. */
 #s-chips{max-width:1280px;margin-left:auto;margin-right:auto;padding-top:56px}
 #s-chips .sec__title{font-size:64px;font-weight:900;line-height:1.05;letter-spacing:-.02em}
-#s-chips .sec__head{border-bottom:none;padding-bottom:0}
+#s-chips .sec__head{border-bottom:none;padding-bottom:0;flex:1 1 0%;min-width:0}
+#s-chips .chip-hero{display:flex;align-items:flex-start;justify-content:space-between;gap:32px}
+#s-chips .chip-hero__preview{flex:0 0 320px;height:180px;border-radius:18px;background:var(--chrome-nav);border:1px solid var(--chrome-border);display:flex;align-items:center;justify-content:center;overflow:hidden;transition:background .25s,border-color .25s}
+@media (max-width:900px){#s-chips .chip-hero{flex-direction:column}#s-chips .chip-hero__preview{width:100%;flex:none}}
 #s-chips .chip-tabs{margin-top:32px;gap:28px}
 #s-chips .tabs-panel{padding-top:36px}
 #s-chips .cpg-section-block{border:1px solid var(--chrome-border);border-radius:16px;background:var(--chrome-nav);padding:32px;transition:background .25s,border-color .25s}
@@ -1330,7 +1335,9 @@ body.home .main{max-width:none;margin:0;padding:0}
 #s-chips .cpg-layout__desc{font-size:20px;line-height:1.5;color:var(--chrome-muted)}
 #s-chips .cpg-layout__title--sm{font-size:20px;margin-bottom:8px}
 #s-chips .cpg-layout__desc--sm{font-size:13px}
-#s-chips .cpg-overview-heading{font-size:24px;font-weight:800;line-height:1.35;color:var(--chrome-txt);margin-bottom:24px}
+#s-chips .cpg-overview-heading{display:flex;align-items:center;gap:14px;background:var(--chrome-nav);border:1px solid var(--chrome-border);border-radius:14px;padding:20px 24px;font-size:19px;font-weight:800;line-height:1.4;color:var(--chrome-txt);margin-bottom:24px;transition:background .25s,border-color .25s}
+#s-chips .cpg-overview-heading__icon{flex-shrink:0;width:22px;height:22px;color:var(--chrome-txt)}
+#s-chips .cpg-cursor-icon{display:block;width:26px;height:26px;color:var(--chrome-txt);margin-bottom:16px}
 #s-chips #chip-code-playground{margin-bottom:32px}
 #s-chips .cpg-anatomy{margin-top:96px}
 #s-chips .cpg-variants{margin-top:96px}
@@ -3443,10 +3450,11 @@ body.home .main{max-width:none;margin:0;padding:0}
 </details>
     </section>
     <section class="sec" id="s-chips">
+      <div class="chip-hero">
       <div class="sec__head">
         <h1 class="sec__title">Chips and pills</h1>
         <div class="chip-header-meta">
-          <span class="comp-ver-badge" style="margin-left:0">v1.8.0</span>
+          <span class="comp-ver-badge" style="margin-left:0">v1.9.0</span>
           <details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-chips">
@@ -3488,6 +3496,8 @@ body.home .main{max-width:none;margin:0;padding:0}
   </pre>
 </details>
         </div>
+      </div>
+      <div class="chip-hero__preview"><div class="mk"><span class="mk-chip"><span class="mk-dot"></span>Active</span><span class="mk-chip">Label</span><span class="mk-chip">Filter</span></div></div>
       </div>
       <div class="tabs-list chip-tabs" id="chip-tabs-list">
         <button type="button" class="tab-item on" data-chip-tab="overview" onclick="chipTabSwitch('overview')"><span class="tab-item__inner"><span class="tab-item__label">Overview</span></span><span class="tab-item__line"></span></button>
@@ -8923,6 +8933,9 @@ const CHIP_PLAYGROUND_MOUNTS = [
   {rootId:'chip-code-playground', idSuffix:'-code', wrap:false, size:'sm', title:'Playground', desc:'Live demo of the component.'},
 ];
 
+const CPG_INFO_ICON_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="3" width="6" height="5" rx="1"/><rect x="2" y="16" width="6" height="5" rx="1"/><rect x="16" y="16" width="6" height="5" rx="1"/><path d="M12 8v4M5 16v-2a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v2"/></svg>';
+const CPG_CURSOR_ICON_SVG = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4 3l6 17 2.2-7.2L19 10.5 4 3z"/></svg>';
+
 function renderChipPlayground(){
   cpg.theme = document.documentElement.getAttribute('data-theme')==='dark' ? 'dark' : 'light';
   const sbg = stageBg(cpg.theme);
@@ -8942,6 +8955,7 @@ function renderChipPlayground(){
     const inner = `
       <div class="cpg-layout">
         <div class="cpg-layout__intro">
+          ${mount.wrap ? `<span class="cpg-cursor-icon">${CPG_CURSOR_ICON_SVG}</span>` : ''}
           <div class="${titleClass}">${mount.title}</div>
           <div class="${descClass}">${mount.desc}</div>
         </div>
@@ -8960,7 +8974,7 @@ function renderChipPlayground(){
         </div>
       </div>`;
     const wrapped = mount.wrap ? `<div class="cpg-section-block">${inner}</div>` : inner;
-    root.innerHTML = (mount.headingAbove ? `<div class="cpg-overview-heading">${mount.headingAbove}</div>` : '') + wrapped;
+    root.innerHTML = (mount.headingAbove ? `<div class="cpg-overview-heading"><span class="cpg-overview-heading__icon">${CPG_INFO_ICON_SVG}</span><span>${mount.headingAbove}</span></div>` : '') + wrapped;
   });
 
   cpgRefresh();
@@ -9502,12 +9516,18 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.36.0';
+const SYSTEM_VERSION = '1.37.0';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.37.0', date:'2026-08-03', author:'Helen', title:'Redesigned the component detail page header and breadcrumb', changes:[
+        ['changed','Breadcrumb (.crumb, injectBreadcrumbs()) redesigned site-wide: the old "Category / Item" text trail is now a single circular back button (a chrome-txt/chrome-bg icon circle that inverts correctly in dark mode) plus the category name only — applies to every component and foundation page'],
+        ['added','Chips & Pills header rebuilt into a two-column hero (#s-chips .chip-hero): title/version/AI-context on the left, a rounded preview card on the right reusing the same chip mockup shown for Chips & Pills on the Components landing page'],
+        ['changed','The "Use chips to show a status..." explainer is now a bordered, icon-led callout card (#s-chips .cpg-overview-heading) instead of plain bold text; added a small cursor icon above the "Try the component" heading'],
+        ['fixed','renderSectionChangelogs() insertBefore() crash: it anchored on .sec__head\'s direct nextSibling, which broke once Chips & Pills wrapped .sec__head inside the new .chip-hero row (nextSibling was no longer a child of the section) — now walks up to the nearest direct-child ancestor of the section before inserting'],
+      ]},
       {version:'1.36.0', date:'2026-08-03', author:'Helen', title:'Rebuilt the Chips & Pills Style tab into a full spec sheet', changes:[
         ['added','Style tab now opens with an "Anatomy" section — an enlarged reference chip plus four numbered part cards (leading icon, label, container, dismiss)'],
         ['added','"Size & dimensions" section with the three sizes shown side by side and a table of exact height, text size, padding (left/right), icon size and gap pulled from CHIP_SIZES'],
@@ -10364,7 +10384,12 @@ const CHANGELOG = {
         ['added','“Tag or Chip?” guidance clarifying when to use each'],
       ]},
     ]},
-    {secId:'s-chips', name:'Chips & Pills', version:'1.8.0', entries:[
+    {secId:'s-chips', name:'Chips & Pills', version:'1.9.0', entries:[
+      {version:'1.9.0', date:'2026-08-03', author:'Helen', title:'Header rebuilt into a hero row with a preview image', changes:[
+        ['added','New .chip-hero wrapper puts the title/version/AI-context block side by side with a rounded preview card (.chip-hero__preview) that reuses the same "Active / Label / Filter" chip mockup shown for Chips & Pills on the Components landing page'],
+        ['changed','The "Use chips to show a status..." explainer (.cpg-overview-heading) is now a bordered, tinted callout card with a small sitemap-style icon, instead of plain bold text'],
+        ['added','A small cursor icon above the "Try the component" heading (.cpg-cursor-icon), shown only on the main Overview playground, not the smaller Code-tab copy'],
+      ]},
       {version:'1.8.0', date:'2026-08-03', author:'Helen', title:'Style tab rebuilt into a spec sheet', changes:[
         ['added','Anatomy section — enlarged reference chip and four numbered part cards (leading icon, label, container, dismiss)'],
         ['added','Size & dimensions section — the three sizes side by side plus a table of height, text, padding (L/R), icon and gap read straight from CHIP_SIZES'],
@@ -11039,9 +11064,13 @@ function renderSectionChangelogs() {
       <div class="sec-chlog-body">
         ${c.entries.map(chlogEntryHtml).join('')}
       </div>`;
-    // Insert after sec__head, before first content block
-    const head = sec.querySelector('.sec__head');
-    if(head && head.nextSibling) sec.insertBefore(wrap, head.nextSibling);
+    // Insert after sec__head, before first content block. sec__head is
+    // usually a direct child of sec, but some sections (e.g. Chips & Pills)
+    // wrap it in an intermediate row — walk up to the direct-child ancestor
+    // so the changelog block still lands as a direct child of sec.
+    let anchor = sec.querySelector('.sec__head');
+    while(anchor && anchor.parentNode !== sec) anchor = anchor.parentNode;
+    if(anchor && anchor.nextSibling) sec.insertBefore(wrap, anchor.nextSibling);
     else sec.appendChild(wrap);
   });
 }
@@ -12228,6 +12257,8 @@ function buildLandings(){
   });
 }
 
+var CRUMB_BACK_SVG = '<svg viewBox="0 0 448 512" fill="currentColor" aria-hidden="true"><path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 288 416 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-306.7 0 105.4-105.4c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg>';
+
 function injectBreadcrumbs(){
   NAV.forEach(function(g){
     if(!g.landing) return;
@@ -12239,8 +12270,10 @@ function injectBreadcrumbs(){
       if(sec.querySelector('.crumb')) return;
       var nav = document.createElement('nav');
       nav.className = 'crumb';
-      nav.innerHTML = '<a href="javascript:void(0)" class="crumb__link" onclick="showSection(\'' + g.landing + '\')">'+g.cat+'</a>'
-        + '<span class="crumb__sep">/</span><span class="crumb__here">'+it.label+'</span>';
+      nav.innerHTML = '<a href="javascript:void(0)" class="crumb__link" onclick="showSection(\'' + g.landing + '\')" aria-label="Back to '+g.cat+'">'
+        + '<span class="crumb__back">'+CRUMB_BACK_SVG+'</span>'
+        + '<span class="crumb__cat">'+g.cat+'</span>'
+        + '</a>';
       sec.insertBefore(nav, sec.firstChild);
     });
   });
