@@ -403,6 +403,14 @@ Do not make the result look like a generic AI template. Flash character comes fr
 - Implement default, hover, focus, pressed, disabled, loading and error states when applicable.
 - Do not install another component library to recreate something already available in Flash.
 - Do not claim a live Flash component exists when its `AI context` says `placeholder`.
+- **Every inline `<svg>` icon needs `display:block`.** An `<svg>` defaults to inline, which reserves
+  invisible baseline/descender space around it — even when its own width/height exactly fill a
+  sized container, the icon renders visibly off-centre inside that container. `vertical-align`
+  does not fix this; only `display:block` (or making the icon's direct parent a centred flex box)
+  removes the inline formatting context that causes it. This is easy to miss because a generously
+  padded icon slot can absorb the offset invisibly — it only becomes visible once an icon is placed
+  in a tightly-sized box (a small/dense control size, a compact toolbar icon). Check icon centring
+  at the smallest size variant actually used, not just the default size.
 
 ## 12. Completion check
 
@@ -423,6 +431,8 @@ Before finishing, confirm:
       sharing that row is sized to match too.
 - [ ] Every avatar-plus-name/label cell uses a flex layout (avatar `flex-shrink:0` beside a text
       column) — checked by actually wrapping a long name, not just eyeballing the short ones.
+- [ ] Every icon SVG renders `display:block` and sits visibly centred in its box at the smallest
+      size it's actually used at, not just at the default size.
 - [ ] No placeholder component was fabricated.
 - [ ] Font Awesome Solid remains the only icon style.
 - [ ] Responsive layouts were inspected at the required widths.
