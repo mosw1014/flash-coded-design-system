@@ -9453,12 +9453,17 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.34.6';
+const SYSTEM_VERSION = '1.34.7';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.34.7', date:'2026-08-03', author:'Mo', title:'Changelog "By section" list sorted by last updated, with the date in each row header', changes:[
+        ['changed','"By section" component blocks are now sorted by each component\'s most recent entries[0].date (descending) instead of the CHANGELOG.components array\'s declared order'],
+        ['added','Each row header now shows that component\'s last-updated date (via a new .chlog-date badge) alongside its name and version, so recency is visible without expanding the row'],
+        ['changed','Section description updated from "Individual version history for each foundation and component" to "Sorted by most recently updated" to reflect the new ordering'],
+      ]},
       {version:'1.34.6', date:'2026-08-03', author:'Mo', title:'Changelog page sections are now collapsible', changes:[
         ['changed','renderChangelog() now wraps the "Design System" block and every "By section" component block in the existing .sec-chlog accordion (same toggle/chevron pattern already used for the per-section changelog injected into each component page) instead of static, always-expanded blocks'],
         ['changed','Design System block defaults to open (it\'s the primary content on page load); each of the 42 per-component blocks in "By section" defaults to closed so the page reads as a scannable list of names + versions until expanded'],
@@ -10629,12 +10634,19 @@ function renderChangelog() {
       </div>
     </div>`;
 
-  const compHtml = CHANGELOG.components.map(c => `
+  const byLastUpdated = [...CHANGELOG.components].sort((a, b) => {
+    const da = a.entries[0] ? a.entries[0].date : '';
+    const db = b.entries[0] ? b.entries[0].date : '';
+    return db.localeCompare(da);
+  });
+
+  const compHtml = byLastUpdated.map(c => `
     <div class="sec-chlog chlog-comp-section">
       <div class="sec-chlog-toggle" onclick="this.parentNode.classList.toggle('open')">
         <span class="sec-chlog-toggle-label">
           <a href="javascript:void(0)" onclick="event.stopPropagation();showSection('${c.secId}')" style="color:inherit;text-decoration:none">${c.name}</a>
         </span>
+        <span class="chlog-date">${c.entries[0] ? c.entries[0].date : ''}</span>
         <span class="comp-ver-badge">v${c.version}</span>
         <span class="sec-chlog-chev">›</span>
       </div>
@@ -10647,7 +10659,7 @@ function renderChangelog() {
     ${systemHtml}
     <div style="height:1px;background:var(--chrome-border);margin:40px 0 32px"></div>
     <div class="type-sub__title">By section</div>
-    <div class="type-sub__desc">Individual version history for each foundation and component. Click a name to jump to that section, or a row to expand its history.</div>
+    <div class="type-sub__desc">Sorted by most recently updated. Click a name to jump to that section, or a row to expand its history.</div>
     <div style="margin-top:16px">${compHtml}</div>`;
 }
 
