@@ -1068,6 +1068,8 @@ body.home .main{max-width:none;margin:0;padding:0}
 .chlog-entry:last-child{padding-bottom:0}
 .chlog-head{display:flex;align-items:center;gap:10px;margin-bottom:4px;flex-wrap:wrap}
 .chlog-date{font-size:11px;color:var(--chrome-muted);font-family:'SF Mono',monospace}
+.chlog-updated{font-size:11px;color:var(--chrome-muted);white-space:nowrap}
+.chlog-updated__date{font-weight:600;color:var(--chrome-txt)}
 .chlog-title{font-size:13px;font-weight:700;color:var(--chrome-txt)}
 .chlog-author{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--chrome-muted);margin-left:auto}
 .chlog-author__avatar{
@@ -4995,7 +4997,7 @@ body.home .main{max-width:none;margin:0;padding:0}
     <section class="sec" id="s-skeleton">
       <div class="sec__head">
         <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Skeleton <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.1</span></h1>
+        <h1 class="sec__title">Skeleton loader <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.2</span></h1>
         <p class="sec__desc">A shimmering placeholder that mirrors content&rsquo;s shape while it loads, so the layout doesn&rsquo;t jump when data arrives. Built from neutral surface tokens and honours <code>prefers-reduced-motion</code>.</p>
       </div>
       <div class="type-sub">
@@ -5004,7 +5006,7 @@ body.home .main{max-width:none;margin:0;padding:0}
         <div class="sg-stage"><div class="sg-row sg-row--top" style="gap:40px">
           <div class="sg-swatch" style="width:220px"><span class="sg-swatch__cap">Text lines</span><div style="width:100%"><div class="skl skl--line"></div><div class="skl skl--line"></div><div class="skl skl--line" style="width:70%;margin-bottom:0"></div></div></div>
           <div class="sg-swatch"><span class="sg-swatch__cap">Circle</span><div class="skl skl--circle" style="width:48px;height:48px"></div></div>
-          <div class="sg-swatch" style="width:160px"><span class="sg-swatch__cap">Block</span><div class="skl skl--block" style="margin-bottom:0;height:80px"></div></div>
+          <div class="sg-swatch" style="width:160px"><span class="sg-swatch__cap">Block</span><div class="skl skl--block" style="width:100%;margin-bottom:0;height:80px"></div></div>
         </div></div>
       </div>
       <div class="type-sub">
@@ -5017,7 +5019,7 @@ body.home .main{max-width:none;margin:0;padding:0}
       </div>
       <div class="type-sub">
         <div class="type-sub__title">When to use</div>
-        <div class="type-sub__desc">Skeletons work best when you know the shape of what&rsquo;s coming and the wait is more than a moment.</div>
+        <div class="type-sub__desc">Skeleton loaders work best when you know the shape of what&rsquo;s coming and the wait is more than a moment.</div>
         <div class="sel-usage">
           <div class="sel-usage__card">
             <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
@@ -9453,12 +9455,15 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.34.7';
+const SYSTEM_VERSION = '1.34.8';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.34.8', date:'2026-08-03', author:'Mo', title:'Clearer "last updated" labels on the Changelog page', changes:[
+        ['changed','"By section" row headers now read "Updated 3 Aug 2026" (a .chlog-updated label + human-formatted date) instead of a bare unlabeled ISO date like "2026-08-03", which read ambiguously next to the version badge'],
+      ]},
       {version:'1.34.7', date:'2026-08-03', author:'Mo', title:'Changelog "By section" list sorted by last updated, with the date in each row header', changes:[
         ['changed','"By section" component blocks are now sorted by each component\'s most recent entries[0].date (descending) instead of the CHANGELOG.components array\'s declared order'],
         ['added','Each row header now shows that component\'s last-updated date (via a new .chlog-date badge) alongside its name and version, so recency is visible without expanding the row'],
@@ -10051,7 +10056,11 @@ const CHANGELOG = {
         ['added','Info / Success / Warning / Critical inline banner on the semantic tokens, with a dismissible variant'],
       ]},
     ]},
-    {secId:'s-skeleton', name:'Skeleton', version:'1.0.1', entries:[
+    {secId:'s-skeleton', name:'Skeleton loader', version:'1.0.2', entries:[
+      {version:'1.0.2', date:'2026-08-03', author:'Mo', title:'Renamed to Skeleton loader; fixed missing Block variant in Building blocks', changes:[
+        ['fixed','The "Block" swatch under Building blocks rendered empty — .sg-swatch is a column flexbox with align-items:flex-start, so the bare .skl--block div (unlike the Text lines swatch, which wraps its lines in a width:100% container) collapsed to 0 width. Added width:100% to the block\'s inline style'],
+        ['changed','Section renamed from "Skeleton" to "Skeleton loader" (page title, sidebar nav label, and this changelog entry\'s component name) to describe what the component is for, not just its visual technique; secId (s-skeleton) and all CSS classes (.skl, .skl--*) are unchanged'],
+      ]},
       {version:'1.0.1', date:'2026-07-29', author:'Mo', title:'AI context tab added', changes:[
         ['added','AI context tab documenting the real, fully static .skl/.skl__*/.skl-card/.skl-media markup, plus its existing "When to use" Do/Dont guidance (3 do / 3 dont)'],
       ]},
@@ -10640,13 +10649,18 @@ function renderChangelog() {
     return db.localeCompare(da);
   });
 
+  const chlogFmtDate = iso => {
+    const d = new Date(iso + 'T00:00:00');
+    return isNaN(d) ? iso : d.toLocaleDateString('en-GB', {day:'numeric', month:'short', year:'numeric'});
+  };
+
   const compHtml = byLastUpdated.map(c => `
     <div class="sec-chlog chlog-comp-section">
       <div class="sec-chlog-toggle" onclick="this.parentNode.classList.toggle('open')">
         <span class="sec-chlog-toggle-label">
           <a href="javascript:void(0)" onclick="event.stopPropagation();showSection('${c.secId}')" style="color:inherit;text-decoration:none">${c.name}</a>
         </span>
-        <span class="chlog-date">${c.entries[0] ? c.entries[0].date : ''}</span>
+        ${c.entries[0] ? `<span class="chlog-updated">Updated <span class="chlog-updated__date">${chlogFmtDate(c.entries[0].date)}</span></span>` : ''}
         <span class="comp-ver-badge">v${c.version}</span>
         <span class="sec-chlog-chev">›</span>
       </div>
@@ -12086,7 +12100,7 @@ const NAV = [
       {id:'s-pagination',   label:'Pagination',          desc:'Page-by-page navigation controls.'},
       {id:'s-popover',      label:'Popover',             desc:'Anchored floating content.'},
       {id:'s-separator',    label:'Separator',           desc:'Dividers between content groups.'},
-      {id:'s-skeleton',     label:'Skeleton',            desc:'Loading placeholders.'},
+      {id:'s-skeleton',     label:'Skeleton loader',     desc:'Loading placeholders.'},
       {id:'s-slider',       label:'Slider',              desc:'Range and value selection.'},
       {id:'s-spinner',      label:'Spinner',             desc:'Indeterminate loading indicators.'},
       {id:'s-switch',       label:'Switch',              desc:'On / off toggles.'},
