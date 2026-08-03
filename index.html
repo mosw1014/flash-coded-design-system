@@ -1089,7 +1089,9 @@ body.home .main{max-width:none;margin:0;padding:0}
 [data-theme="dark"] .chlog-tag--removed{background:rgba(193,0,33,0.25);color:#ff6b7d}
 .chlog-comp-section{margin-bottom:32px}
 .chlog-comp-title{font-size:14px;font-weight:700;color:var(--chrome-txt);margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--chrome-border);display:flex;align-items:center;gap:8px}
-.comp-ver-badge{font-size:10px;font-weight:700;font-family:'SF Mono',monospace;color:var(--chrome-muted);background:var(--chrome-nav);padding:2px 7px;border-radius:4px;margin-left:auto}
+.comp-ver-badge{font-size:10px;font-weight:700;font-family:'SF Mono',monospace;color:var(--chrome-txt);background:var(--chrome-bg);border:1px solid var(--chrome-border);padding:3px 8px;border-radius:20px;margin-left:auto}
+.sec-chlog-meta{display:flex;align-items:center;gap:10px;margin-left:auto}
+.sec-chlog-meta .comp-ver-badge{margin-left:0}
 
 /* Per-section changelog block */
 .sec-chlog{border:1px solid var(--chrome-border);border-radius:10px;overflow:hidden;margin-top:8px}
@@ -9455,12 +9457,16 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.34.8';
+const SYSTEM_VERSION = '1.34.9';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.34.9', date:'2026-08-03', author:'Mo', title:'Changelog row header layout: "Updated" moved next to the version, version now a real badge', changes:[
+        ['changed','"By section" (and per-section) row headers now group "Updated D Mon YYYY" and the version together on the right in a new .sec-chlog-meta flex wrapper, instead of the date sitting mid-row with a large gap before the version'],
+        ['changed','.comp-ver-badge restyled into an actual pill badge — bordered, rounded-full, var(--chrome-bg) background — since it previously used the same background as its parent .sec-chlog-toggle row (var(--chrome-nav)) and was effectively invisible as a "badge"'],
+      ]},
       {version:'1.34.8', date:'2026-08-03', author:'Mo', title:'Clearer "last updated" labels on the Changelog page', changes:[
         ['changed','"By section" row headers now read "Updated 3 Aug 2026" (a .chlog-updated label + human-formatted date) instead of a bare unlabeled ISO date like "2026-08-03", which read ambiguously next to the version badge'],
       ]},
@@ -10660,8 +10666,10 @@ function renderChangelog() {
         <span class="sec-chlog-toggle-label">
           <a href="javascript:void(0)" onclick="event.stopPropagation();showSection('${c.secId}')" style="color:inherit;text-decoration:none">${c.name}</a>
         </span>
-        ${c.entries[0] ? `<span class="chlog-updated">Updated <span class="chlog-updated__date">${chlogFmtDate(c.entries[0].date)}</span></span>` : ''}
-        <span class="comp-ver-badge">v${c.version}</span>
+        <span class="sec-chlog-meta">
+          ${c.entries[0] ? `<span class="chlog-updated">Updated <span class="chlog-updated__date">${chlogFmtDate(c.entries[0].date)}</span></span>` : ''}
+          <span class="comp-ver-badge">v${c.version}</span>
+        </span>
         <span class="sec-chlog-chev">›</span>
       </div>
       <div class="sec-chlog-body">
