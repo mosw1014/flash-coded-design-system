@@ -9453,12 +9453,17 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.34.5';
+const SYSTEM_VERSION = '1.34.6';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.34.6', date:'2026-08-03', author:'Mo', title:'Changelog page sections are now collapsible', changes:[
+        ['changed','renderChangelog() now wraps the "Design System" block and every "By section" component block in the existing .sec-chlog accordion (same toggle/chevron pattern already used for the per-section changelog injected into each component page) instead of static, always-expanded blocks'],
+        ['changed','Design System block defaults to open (it\'s the primary content on page load); each of the 42 per-component blocks in "By section" defaults to closed so the page reads as a scannable list of names + versions until expanded'],
+        ['changed','Clicking a component name still jumps straight to that section via showSection() (event.stopPropagation() keeps it from also toggling the accordion) — only clicking elsewhere in the row expands/collapses its history'],
+      ]},
       {version:'1.34.5', date:'2026-08-03', author:'Mo', title:'Colour token table now generated from the CSS + a token validator in the pre-commit hook', changes:[
         ['added','scripts/sync-token-tables.mjs — regenerates every SEM (Colours page) light/dark hex directly from the real --color-* declarations in the [data-brand="flash"][data-theme] CSS blocks (resolving var() chains), so a hand-typed SEM value can no longer silently drift from the CSS the browser paints with. Only token names and descriptions stay hand-authored. Same generate-not-transcribe + pre-commit philosophy as the AI context tabs'],
         ['added','The same script validates that every var(--token) referenced anywhere in the stylesheet is actually declared, and aborts the commit on a broken or renamed token; wired into .githooks/pre-commit ahead of the AI-context step. Read-only report: node scripts/sync-token-tables.mjs --check'],
@@ -10612,24 +10617,37 @@ function renderChangelog() {
 
   const sys = CHANGELOG.system;
   const systemHtml = `
-    <div class="type-sub__title">Design System <span class="chlog-version" style="margin-left:8px">v${sys.version}</span></div>
-    <div class="type-sub__desc">Complete release history across all foundations and components.</div>
-    <div style="margin:16px 0 8px">${sys.entries.map(chlogEntryHtml).join('')}</div>`;
+    <div class="sec-chlog open">
+      <div class="sec-chlog-toggle" onclick="this.parentNode.classList.toggle('open')">
+        <span class="sec-chlog-toggle-label">Design System</span>
+        <span class="chlog-version" style="margin-left:auto">v${sys.version}</span>
+        <span class="sec-chlog-chev">›</span>
+      </div>
+      <div class="sec-chlog-body">
+        <div class="type-sub__desc">Complete release history across all foundations and components.</div>
+        <div style="margin:16px 0 8px">${sys.entries.map(chlogEntryHtml).join('')}</div>
+      </div>
+    </div>`;
 
   const compHtml = CHANGELOG.components.map(c => `
-    <div class="chlog-comp-section">
-      <div class="chlog-comp-title">
-        <a href="javascript:void(0)" onclick="showSection('${c.secId}')" style="color:inherit;text-decoration:none">${c.name}</a>
+    <div class="sec-chlog chlog-comp-section">
+      <div class="sec-chlog-toggle" onclick="this.parentNode.classList.toggle('open')">
+        <span class="sec-chlog-toggle-label">
+          <a href="javascript:void(0)" onclick="event.stopPropagation();showSection('${c.secId}')" style="color:inherit;text-decoration:none">${c.name}</a>
+        </span>
         <span class="comp-ver-badge">v${c.version}</span>
+        <span class="sec-chlog-chev">›</span>
       </div>
-      ${c.entries.map(chlogEntryHtml).join('')}
+      <div class="sec-chlog-body">
+        ${c.entries.map(chlogEntryHtml).join('')}
+      </div>
     </div>`).join('');
 
   root.innerHTML = `
     ${systemHtml}
     <div style="height:1px;background:var(--chrome-border);margin:40px 0 32px"></div>
     <div class="type-sub__title">By section</div>
-    <div class="type-sub__desc">Individual version history for each foundation and component. Click a name to jump to that section.</div>
+    <div class="type-sub__desc">Individual version history for each foundation and component. Click a name to jump to that section, or a row to expand its history.</div>
     <div style="margin-top:16px">${compHtml}</div>`;
 }
 
