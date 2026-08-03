@@ -309,13 +309,13 @@ Read the relevant live component page before implementing any component below.
 | Two to five modes or options | Toggle Group `s-toggle-group` | Use instead of a dropdown when options benefit from immediate comparison |
 | Five to fifteen known options | Dropdown `s-dropdown` | Single-select by default; multi-select only when multiple answers are valid; use one field style consistently |
 | Typed data | Text Inputs `s-inputs` | Standard field for submitted values; Caption label is the default; Inline only in genuinely compact layouts |
-| Filtering a result set | Search field `s-inputs` | Use the Search pill only for finding or filtering, with a real loading state |
+| Filtering a result set | Search field `s-inputs` | Use the Search pill only for finding or filtering, with a real loading state. **When it sits in the same row as a Small button (e.g. a "Filters" trigger), size the search field to match that button's height** — the same one-size-per-cluster rule below applies across a search+button row, not just a button-only row |
 | Independent choices | Checkboxes `s-selection` | Use for opt-ins and multiple independent selections |
 | One choice from visible options | Radios `s-selection` | Use when exactly one option is required and the set is worth showing |
 | Immediate on/off setting | Switch `s-switch` | Use only when the change takes effect immediately; otherwise use a checkbox |
 | Read-only metadata or state | Tags & Badges `s-tags` | Tags are not interactive; use semantic colour only when it adds meaning |
 | Interactive filter or removable value | Chips `s-chips` | Use chips for selection, filtering or removal—not passive metadata |
-| Comparable records | Tables `s-tables` | Use for records users scan across columns; right-align numeric values |
+| Comparable records | Tables `s-tables` | Use for records users scan across columns; right-align numeric values. **An avatar-plus-name cell is a flex row, not two inline `<span>`s with a hand-tuned margin** — lay it out as `[avatar] [name (+ optional subtitle stacked under it)]` in a flex container with the avatar `flex-shrink:0`, so a long name wraps to a second line *inside its own column*, aligned under the first line of the name, instead of sliding left and re-appearing underneath the avatar |
 | Optional secondary content | Accordion `s-accordion` | Use for FAQs, optional settings or long supporting content |
 | Persistent contextual message | Alert `s-alert` | Match severity; place beside the affected content; do not use critical styling for routine information |
 | Short mobile task | Bottom Sheet `s-drawers` | Compact for short tasks; full screen for long lists, multi-field forms or stepped mobile flows |
@@ -338,6 +338,13 @@ If a component is not listed here, inspect its live page and `AI context` before
 - Use XSmall or XXSmall only in dense toolbars, rows or secondary controls.
 - Preserve the live minimum 44×44px tappable area when the visible control is smaller.
 - Keep one size within a component group unless hierarchy requires a clear exception.
+- **A header / toolbar / filter row of buttons is one group: every button in it takes the same
+  size — no mixing Small and Regular in the same cluster.** Emphasis on the primary action comes
+  from its *variant* (a filled Primary/Accent among Secondary/Simple buttons), never from making it
+  taller than its neighbours. Default a compact action cluster to Small; reserve Regular for a
+  button standing alone (or a spacious modal/drawer footer, kept consistent within that footer).
+  A Small utility button beside a Regular create button in the same row is the failure this rule
+  exists to prevent — check button heights actually match, don't just eyeball the variants.
 
 ## 9. Responsive and accessibility
 
@@ -396,6 +403,14 @@ Do not make the result look like a generic AI template. Flash character comes fr
 - Implement default, hover, focus, pressed, disabled, loading and error states when applicable.
 - Do not install another component library to recreate something already available in Flash.
 - Do not claim a live Flash component exists when its `AI context` says `placeholder`.
+- **Every inline `<svg>` icon needs `display:block`.** An `<svg>` defaults to inline, which reserves
+  invisible baseline/descender space around it — even when its own width/height exactly fill a
+  sized container, the icon renders visibly off-centre inside that container. `vertical-align`
+  does not fix this; only `display:block` (or making the icon's direct parent a centred flex box)
+  removes the inline formatting context that causes it. This is easy to miss because a generously
+  padded icon slot can absorb the offset invisibly — it only becomes visible once an icon is placed
+  in a tightly-sized box (a small/dense control size, a compact toolbar icon). Check icon centring
+  at the smallest size variant actually used, not just the default size.
 
 ## 12. Completion check
 
@@ -411,6 +426,13 @@ Before finishing, confirm:
 - [ ] Cards and containers have a real grouping purpose.
 - [ ] Every changed component was read from the live design system.
 - [ ] Component variants and sizes match their intended use.
+- [ ] Every button within a single header / toolbar / filter cluster shares one size (heights
+      match); primary emphasis comes from variant, not from a taller button. A search field
+      sharing that row is sized to match too.
+- [ ] Every avatar-plus-name/label cell uses a flex layout (avatar `flex-shrink:0` beside a text
+      column) — checked by actually wrapping a long name, not just eyeballing the short ones.
+- [ ] Every icon SVG renders `display:block` and sits visibly centred in its box at the smallest
+      size it's actually used at, not just at the default size.
 - [ ] No placeholder component was fabricated.
 - [ ] Font Awesome Solid remains the only icon style.
 - [ ] Responsive layouts were inspected at the required widths.

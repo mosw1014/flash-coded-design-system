@@ -13,6 +13,18 @@
 # by hand (see scripts/generate-ai-context-tab.mjs).
 
 if git diff --cached --name-only | grep -q '^index\.html$'; then
+  # 1. Regenerate the semantic COLOUR table (const SEM) from the real CSS
+  #    custom properties, and validate that every var(--token) referenced in
+  #    the stylesheet is actually declared. Runs FIRST so the s-colours AI
+  #    context tab (which embeds SEM) is regenerated from the fresh values in
+  #    the step below. Aborts the commit on an undeclared/renamed token.
+  node scripts/sync-token-tables.mjs --quiet
+  if [ $? -ne 0 ]; then
+    echo "pre-commit: scripts/sync-token-tables.mjs failed — commit aborted." >&2
+    exit 1
+  fi
+
+  # 2. Regenerate any drifted AI context tabs.
   node scripts/auto-update-ai-context.mjs --quiet
   if [ $? -ne 0 ]; then
     echo "pre-commit: scripts/auto-update-ai-context.mjs failed — commit aborted." >&2

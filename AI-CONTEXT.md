@@ -180,7 +180,20 @@ you're unsure.
 - Design tokens: raw palette values live in `:root`; semantic tokens are scoped per brand/theme in
   `[data-brand="flash"][data-theme="light"]` and `[data-brand="flash"][data-theme="dark"]` blocks
   (e.g. `--color-btn-p-bg`, `--color-surface-n1`, `--color-info-h`). These are genuine, reusable
-  CSS custom properties — safe to reference directly in another project.
+  CSS custom properties — safe to reference directly in another project. **These blocks are the
+  single source of truth for colour.** The Colours page's semantic table (`const SEM`) is a
+  *generated artifact* of them: `scripts/sync-token-tables.mjs` re-derives every SEM light/dark hex
+  from these declarations (resolving `var()` chains) and rewrites them in place, run automatically by
+  the pre-commit hook — so a hand-typed SEM value can never silently drift from the CSS the browser
+  actually paints with. Only the token *names* and descriptions in SEM are hand-authored. The same
+  script also validates that every `var(--token)` referenced anywhere in the stylesheet is actually
+  declared, and fails the commit on a broken/renamed token. Run `node scripts/sync-token-tables.mjs --check`
+  for a read-only report.
+- **Typography tokens are a known exception, documented but not (yet) real CSS.** `--font-size-*`,
+  `--font-weight-*`, and `--font-family-*` appear in the Typography page's `TYPE_TOKEN_GROUPS` table
+  but are **not** declared as CSS custom properties anywhere — components hard-code the literal
+  `font-size`/`font-weight` values instead. So, unlike colour, there is no CSS source to generate the
+  type table from; `TYPE_TOKEN_GROUPS` is itself the source of record for those values.
 - The `CHANGELOG` JS object has two parts: `CHANGELOG.system` (global entries) and
   `CHANGELOG.components` (one array per section, keyed by `secId`). Both need updating for a
   component change, per this repo's `CLAUDE.md`.
