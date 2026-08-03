@@ -102,6 +102,7 @@
   --color-link:var(--prim-bb-700); --color-link-h:var(--prim-bb-800);
   --color-input-bg:#f6f6f6; --color-input-border:var(--prim-gb-50);
   --color-input-focus:var(--prim-black); --color-input-cur:var(--prim-green-500);
+  --color-input-placeholder:var(--prim-gb-100);
   --chrome-bg:var(--prim-white); --chrome-nav:var(--prim-gg-200);
   --chrome-bar:var(--prim-black); --chrome-bar-txt:var(--prim-white);
   --chrome-accent:var(--prim-green-500); --chrome-accent2:var(--prim-yg-500);
@@ -135,6 +136,7 @@
   --color-link:var(--prim-bb-400); --color-link-h:var(--prim-bb-500);
   --color-input-bg:var(--prim-gb-500); --color-input-border:var(--prim-gb-400);
   --color-input-focus:var(--prim-white); --color-input-cur:var(--prim-green-500);
+  --color-input-placeholder:var(--prim-grey-800);
   --chrome-bg:var(--prim-gb-700); --chrome-nav:var(--prim-gb-500);
   --chrome-bar:var(--prim-gb-500); --chrome-bar-txt:var(--prim-white);
   --chrome-accent:var(--prim-green-500); --chrome-accent2:var(--prim-yg-500);
@@ -9451,12 +9453,18 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.34.4';
+const SYSTEM_VERSION = '1.34.5';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.34.5', date:'2026-08-03', author:'Mo', title:'Colour token table now generated from the CSS + a token validator in the pre-commit hook', changes:[
+        ['added','scripts/sync-token-tables.mjs — regenerates every SEM (Colours page) light/dark hex directly from the real --color-* declarations in the [data-brand="flash"][data-theme] CSS blocks (resolving var() chains), so a hand-typed SEM value can no longer silently drift from the CSS the browser paints with. Only token names and descriptions stay hand-authored. Same generate-not-transcribe + pre-commit philosophy as the AI context tabs'],
+        ['added','The same script validates that every var(--token) referenced anywhere in the stylesheet is actually declared, and aborts the commit on a broken or renamed token; wired into .githooks/pre-commit ahead of the AI-context step. Read-only report: node scripts/sync-token-tables.mjs --check'],
+        ['fixed','--color-input-placeholder was listed in the Colours semantic table but never actually declared in the CSS (a phantom token, unreferenced by any component) — now declared in both themes (light var(--prim-gb-100) #a1a3a8, dark var(--prim-grey-800) #8a8a8a), matching the values the table already documented. Surfaced by the new validator'],
+        ['changed','AI-CONTEXT.md documents the colour-generation/validation mechanism, and records that the typography --font-* tokens are documented in TYPE_TOKEN_GROUPS but not declared as real CSS custom properties (so, unlike colour, the type table has no CSS source to generate from)'],
+      ]},
       {version:'1.34.4', date:'2026-08-03', author:'Mo', title:'Added AI context tabs to Charts, Input OTP, Keyboard Shortcuts, Separator, Slider and Avatar', changes:[
         ['added','AI context tab added to Charts (s-charts), Input OTP (s-input-otp), Keyboard Shortcuts (s-kbd), Separator (s-separator), Slider (s-slider) and Avatar (s-avatar) — the last remaining component sections without one, generated with scripts/generate-ai-context-tab.mjs and verified current with scripts/verify-ai-context-tabs.mjs'],
       ]},
@@ -10145,7 +10153,11 @@ const CHANGELOG = {
         ['added','New "Logos" page under the Brand category listing all 8 Flash logo variations (Primary, White, Monochrome Black, Monochrome White — each horizontal and stacked), each downloadable as a transparent SVG or PNG from assets/logos/'],
       ]},
     ]},
-    {secId:'s-colours', name:'Colours', version:'1.4.3', entries:[
+    {secId:'s-colours', name:'Colours', version:'1.5.0', entries:[
+      {version:'1.5.0', date:'2026-08-03', author:'Mo', title:'Semantic colour table (SEM) now generated from the CSS; phantom placeholder token made real', changes:[
+        ['changed','The SEM semantic-token table\'s light/dark hex values are now generated from the real [data-brand="flash"][data-theme] CSS by scripts/sync-token-tables.mjs (run in the pre-commit hook) instead of being hand-typed — the CSS is the single source of truth and the table can no longer drift from it. Token names and usage notes remain hand-authored'],
+        ['fixed','--color-input-placeholder appeared in the Inputs token group but was never declared in the CSS — now declared in both themes (light #a1a3a8, dark #8a8a8a, via --prim-gb-100 / --prim-grey-800) to match the documented values'],
+      ]},
       {version:'1.4.3', date:'2026-07-29', author:'Jaco', title:'Core colours brand block added to the top of the page', changes:[
         ['added','"Core colours" brand block (three-colour palette, green tints and the "green is emphasis, not decoration" note) relocated here from the Introduction, sitting above the primitive/semantic token tables'],
       ]},
