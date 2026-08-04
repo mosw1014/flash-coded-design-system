@@ -1332,6 +1332,9 @@ body.home .main{max-width:none;margin:0;padding:0}
 #s-chips .chip-tabs{margin-top:32px;gap:28px}
 #s-chips #chip-reference .type-sub{margin-bottom:72px}
 #s-chips #chip-reference .type-sub:last-child{margin-bottom:0}
+#s-chips #chip-reference .type-sub__title{font-size:22px;margin-bottom:8px}
+#s-chips #chip-reference .type-sub__desc{font-size:14px;margin-bottom:24px}
+#s-chips .cpg-section-outline{border:1px solid var(--chrome-border);border-radius:16px;padding:32px;transition:border-color .25s}
 #s-chips .tabs-panel{padding-top:36px}
 #s-chips .cpg-section-block{border:1px solid var(--chrome-border);border-radius:16px;background:var(--chrome-nav);padding:32px;transition:background .25s,border-color .25s}
 #s-chips .cpg-section-heading{margin-bottom:24px}
@@ -3478,7 +3481,7 @@ body.home .main{max-width:none;margin:0;padding:0}
       <div class="sec__head">
         <h1 class="sec__title">Chips and pills</h1>
         <div class="chip-header-meta">
-          <span class="comp-ver-badge" style="margin-left:0">v1.11.1</span>
+          <span class="comp-ver-badge" style="margin-left:0">v1.12.0</span>
           <details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-chips">
@@ -9238,34 +9241,42 @@ function renderChipReference(){
     <div class="type-sub">
       <div class="type-sub__title">Anatomy</div>
       <div class="type-sub__desc">A chip is a pill-shaped container with a text label, plus an optional leading icon and trailing dismiss button.</div>
-      <div class="chip-spec-hero" style="background:${sbg}">${heroChip}</div>
-      <div class="chip-parts">${partCards}</div>
+      <div class="cpg-section-outline">
+        <div class="chip-spec-hero" style="background:${sbg}">${heroChip}</div>
+        <div class="chip-parts">${partCards}</div>
+      </div>
     </div>
 
     <div class="type-sub">
       <div class="type-sub__title">Size &amp; dimensions</div>
       <div class="type-sub__desc">Three sizes share one shape and weight; height, text, padding and icon scale together. All sizes use a 999px (pill) radius, 700 weight and line-height 1.</div>
-      <div class="chip-size-demo" style="background:${sbg}">${sizeDemo}</div>
-      <div class="dd-table-wrap"><table class="dd-table">
-        <thead><tr><th>Size</th><th>Height</th><th>Text</th><th>Padding&nbsp;(L&nbsp;/&nbsp;R)</th><th>Icon</th><th>Gap</th></tr></thead>
-        <tbody>${sizeRows}</tbody>
-      </table></div>
+      <div class="cpg-section-outline">
+        <div class="chip-size-demo" style="background:${sbg}">${sizeDemo}</div>
+        <div class="dd-table-wrap"><table class="dd-table">
+          <thead><tr><th>Size</th><th>Height</th><th>Text</th><th>Padding&nbsp;(L&nbsp;/&nbsp;R)</th><th>Icon</th><th>Gap</th></tr></thead>
+          <tbody>${sizeRows}</tbody>
+        </table></div>
+      </div>
     </div>
 
     <div class="type-sub">
       <div class="type-sub__title">Colour variants</div>
       <div class="type-sub__desc">Five semantic variants across three sizes, in the current theme. The token table below lists each fill and label colour — muted is the only variant that changes between light and dark.</div>
-      <div class="chip-ref" style="margin-bottom:16px"><div class="chip-ref__grid">${grid}</div></div>
-      <div class="dd-table-wrap"><table class="dd-table" style="min-width:420px">
-        <thead><tr><th>Variant</th><th>Background</th><th>Label text</th></tr></thead>
-        <tbody>${tokRows}</tbody>
-      </table></div>
+      <div class="cpg-section-outline">
+        <div class="chip-ref" style="margin-bottom:16px"><div class="chip-ref__grid">${grid}</div></div>
+        <div class="dd-table-wrap"><table class="dd-table" style="min-width:420px">
+          <thead><tr><th>Variant</th><th>Background</th><th>Label text</th></tr></thead>
+          <tbody>${tokRows}</tbody>
+        </table></div>
+      </div>
     </div>
 
     <div class="type-sub" style="margin-bottom:0">
       <div class="type-sub__title">States</div>
       <div class="type-sub__desc">Beyond the static display chip, chips can be selectable, show a selected ring, or carry a dismiss button.</div>
-      <div class="chip-variants-grid">${stateCells}</div>
+      <div class="cpg-section-outline">
+        <div class="chip-variants-grid">${stateCells}</div>
+      </div>
     </div>`;
 }
 
@@ -9534,12 +9545,16 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.39.1';
+const SYSTEM_VERSION = '1.40.0';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.40.0', date:'2026-08-03', author:'Helen', title:'Enlarged Style tab headers and contained their content in outline-only cards', changes:[
+        ['changed','#chip-reference .type-sub__title (Anatomy, Size & dimensions, Colour variants, States) increased from 15px to 22px, and .type-sub__desc from 12px to 14px — a step up from the previous caption-like size, but still well short of the Overview tab\'s 44px/16px headings'],
+        ['added','Each Style tab section\'s visual content is now wrapped in a new #s-chips .cpg-section-outline block — a bordered card with no background fill (unlike the tinted .cpg-section-block used on the Overview tab), so it reads as an outline only, not a grey block'],
+      ]},
       {version:'1.39.1', date:'2026-08-03', author:'Helen', title:'Fixed v1.39.0: only the visual content should sit in the card, not the heading', changes:[
         ['fixed','v1.39.0 wrapped the whole .cpg-layout (heading + description together with the demo) inside .cpg-section-block for "Key variants", "In context" and "Do\'s & don\'ts" — matching the reference more closely, the heading/description now sit above the card as a plain, full-width block (.cpg-section-heading), and only the visual demo content (the variant cards / mockups / sel-usage grid) is inside .cpg-section-block'],
         ['changed','"Try the component" is unaffected — its heading legitimately sits inside its own .cpg-section-block, side-by-side with the playground, per the same reference'],
@@ -10476,7 +10491,11 @@ const CHANGELOG = {
         ['added','“Tag or Chip?” guidance clarifying when to use each'],
       ]},
     ]},
-    {secId:'s-chips', name:'Chips & Pills', version:'1.11.1', entries:[
+    {secId:'s-chips', name:'Chips & Pills', version:'1.12.0', entries:[
+      {version:'1.12.0', date:'2026-08-03', author:'Helen', title:'Enlarged Style tab headers, contained content in outline-only cards', changes:[
+        ['changed','Style tab section headers (Anatomy, Size & dimensions, Colour variants, States) increased from 15px/12px to 22px/14px — bigger than before, still smaller than the Overview tab\'s 44px/16px'],
+        ['added','Each section\'s visual content now sits in a bordered, no-fill outline card (.cpg-section-outline) — same containment idea as the Overview tab\'s sections, but outline-only instead of a tinted background'],
+      ]},
       {version:'1.11.1', date:'2026-08-03', author:'Helen', title:'Fixed the section cards: heading stays outside, only the demo content is contained', changes:[
         ['fixed','"Key variants", "In context" and "Do\'s & don\'ts" previously put the heading + description inside .cpg-section-block alongside the demo (matching "Try the component"\'s layout, which was wrong for these three) — now the heading sits above the card as a plain, full-width block, and only the cards/mockups/sel-usage grid are inside it'],
       ]},
