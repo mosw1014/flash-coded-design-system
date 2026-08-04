@@ -977,6 +977,35 @@ body.home .bar__inner{max-width:1366px;margin:0 auto}
 .code-tab:hover{color:var(--chrome-txt)}
 .code-tab.on{background:var(--chrome-bg);color:var(--chrome-txt)}
 
+/* Bare code panel — drops the --chrome-nav fill and top rule so the panel can
+   sit inside a bordered outline card without stacking a second grey band on it. */
+.code-panel--bare{background:transparent;border-top:0}
+.code-panel--bare .code-panel__head{cursor:default;padding:0 0 12px;gap:16px}
+.code-panel--bare .code-panel__head:hover{background:transparent}
+.code-panel--bare .code-body{padding:0}
+
+/* Code language switcher — segmented control. Reuses the same filled-active
+   idiom as .btn-pg__pill-row so it reads as one system, but is a real
+   tablist (arrow-key navigable) rather than a row of unlabelled buttons. */
+.code-seg{display:flex;gap:2px;background:var(--chrome-bg);border:1px solid var(--chrome-border);border-radius:8px;padding:3px;transition:background .25s,border-color .25s}
+.code-seg__btn{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:5px 12px;border-radius:6px;border:none;cursor:pointer;
+  font-family:inherit;font-size:11.5px;font-weight:600;white-space:nowrap;
+  color:var(--chrome-muted);background:transparent;transition:all .15s;
+}
+.code-seg__btn:hover{color:var(--chrome-txt)}
+.code-seg__btn[aria-selected="true"]{background:var(--chrome-txt);color:var(--chrome-bg)}
+.code-seg__btn:focus-visible{outline:2px solid var(--color-input-focus);outline-offset:2px}
+/* Language dot — a quiet colour cue so each tab is identifiable at a glance,
+   not just by reading the label. Inherits the active tab's inverted text colour. */
+.code-seg__dot{width:6px;height:6px;border-radius:999px;background:var(--_dot);flex-shrink:0;transition:background .15s}
+.code-seg__btn[aria-selected="true"] .code-seg__dot{background:currentColor}
+.code-lang-file{
+  margin-left:auto;font-family:'SF Mono','Fira Code',Consolas,monospace;
+  font-size:11px;color:var(--chrome-muted);white-space:nowrap;
+}
+
 /* ── BRAND INTRODUCTION ── */
 .brand-swatches{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
 @media(max-width:720px){.brand-swatches{grid-template-columns:1fr 1fr}}
@@ -3500,7 +3529,7 @@ body.home .main{max-width:none;margin:0;padding:0}
       <div class="sec__head">
         <h1 class="sec__title">Chips and pills</h1>
         <div class="chip-header-meta">
-          <span class="comp-ver-badge" style="margin-left:0">v1.13.1</span>
+          <span class="comp-ver-badge" style="margin-left:0">v1.14.0</span>
           <details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-chips">
@@ -9006,6 +9035,193 @@ function getChipCodeHTML(){
 <span class="code-kw">&#60;/span></span>`;
 }
 
+/* ── CODE PANEL LANGUAGES ──
+   HTML/CSS is the source of truth (real .chip markup). Blazor and React TSX are
+   illustrative wrappers over the same classes and the same --chip-bg/--chip-text
+   custom props, so the variant colour map stays the single thing a consumer ports.
+   dot = the language's own identity colour, used only as a scanning cue. */
+const CHIP_LANGS = [
+  {key:'html',   label:'HTML / CSS', file:'chip.html',    dot:'#E34F26'},
+  {key:'blazor', label:'Blazor',     file:'DsChip.razor', dot:'#512BD4'},
+  {key:'tsx',    label:'React TSX',  file:'DsChip.tsx',   dot:'#3178C6'},
+];
+let chipLang = 'html';
+
+const CHIP_SIZE_PASCAL = {sm:'Small', reg:'Regular', lg:'Large'};
+
+/* Muted is the one variant whose fill differs between light & dark, so the
+   generated samples call that out rather than silently emitting one theme's hex. */
+function chipMutedNote(){
+  return cpg.variant==='muted'
+    ? `\n<span class="code-cm">// Muted is the one variant that flips between themes — light #E6E6E6/#646464, dark #33343A/#A1A3A8.</span>`
+    : '';
+}
+
+function getChipCodeBlazor(){
+  const v = CHIP_VARIANTS.find(x=>x.key===cpg.variant)||CHIP_VARIANTS[0];
+  const c = v[cpg.theme];
+  const variantPascal = cap(cpg.variant);
+  const sizePascal = CHIP_SIZE_PASCAL[cpg.size]||'Regular';
+  const label = cpgEsc(cpg.label||'Chip');
+  const opt = (name)=>`\n        <span class="code-attr">${name}</span>=<span class="code-val">"true"</span>`;
+  const swatch = CHIP_VARIANTS.map(x=>{
+    const lc = x[cpg.theme];
+    return `    ChipVariant.${cap(x.key)}${' '.repeat(Math.max(1, 8-x.key.length))}=> <span class="code-val">"--chip-bg:${lc.bg};--chip-text:${lc.text}"</span>,`;
+  }).join('\n');
+  return `<span class="code-cm">@* DsChip.razor — usage *@</span>
+<span class="code-kw">&#60;DsChip</span> <span class="code-attr">Variant</span>=<span class="code-val">"ChipVariant.${variantPascal}"</span>
+        <span class="code-attr">Size</span>=<span class="code-val">"ChipSize.${sizePascal}"</span>
+        <span class="code-attr">Label</span>=<span class="code-val">"${label}"</span>${cpg.icon?opt('Icon'):''}${cpg.removable?opt('Removable'):''}${cpg.selectable?opt('Selectable'):''} <span class="code-kw">/></span>
+
+<span class="code-cm">@* DsChip.razor — component definition *@</span>
+<span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"@CssClass"</span> <span class="code-attr">style</span>=<span class="code-val">"@VariantStyle"</span> <span class="code-attr">@onclick</span>=<span class="code-val">"ToggleSelected"</span><span class="code-kw">></span>
+  <span class="code-kw">@if</span> (Icon) { @IconContent }
+  <span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"chip__label"</span><span class="code-kw">></span>@Label<span class="code-kw">&#60;/span></span>
+  <span class="code-kw">@if</span> (Removable) {
+    <span class="code-kw">&#60;button</span> <span class="code-cls">class</span>=<span class="code-val">"chip__x"</span> <span class="code-attr">type</span>=<span class="code-val">"button"</span> <span class="code-attr">aria-label</span>=<span class="code-val">"Remove"</span>
+            <span class="code-attr">@onclick</span>=<span class="code-val">"OnRemove"</span> <span class="code-attr">@onclick:stopPropagation</span>=<span class="code-val">"true"</span><span class="code-kw">>×&#60;/button></span>
+  }
+<span class="code-kw">&#60;/span></span>
+
+<span class="code-kw">@code</span> {
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> ChipVariant Variant { get; set; } = ChipVariant.Accent;
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> ChipSize Size { get; set; } = ChipSize.Regular;
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> <span class="code-cls">string</span> Label { get; set; } = <span class="code-val">"Chip"</span>;
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> <span class="code-cls">bool</span> Icon { get; set; }
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> <span class="code-cls">bool</span> Removable { get; set; }
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> <span class="code-cls">bool</span> Selectable { get; set; }
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> RenderFragment IconContent { get; set; }
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> EventCallback OnRemove { get; set; }
+
+  <span class="code-kw">private</span> <span class="code-cls">bool</span> _selected;
+  <span class="code-kw">private void</span> ToggleSelected() { <span class="code-kw">if</span> (Selectable) _selected = !_selected; }
+
+  <span class="code-cm">// chip--sm / chip--reg / chip--lg — mapped explicitly, not ToString()</span>
+  <span class="code-kw">private</span> <span class="code-cls">string</span> SizeClass => Size <span class="code-kw">switch</span> {
+    ChipSize.Small => <span class="code-val">"sm"</span>, ChipSize.Large => <span class="code-val">"lg"</span>, _ => <span class="code-val">"reg"</span>
+  };
+
+  <span class="code-kw">private</span> <span class="code-cls">string</span> CssClass =>
+    $<span class="code-val">"chip chip--{SizeClass}"</span> +
+    (Selectable ? <span class="code-val">" is-selectable"</span> : <span class="code-val">""</span>) +
+    (Selectable &amp;&amp; _selected ? <span class="code-val">" is-selected"</span> : <span class="code-val">""</span>);
+
+  <span class="code-cm">// ${cap(cpg.theme)} theme fills — the only values to re-map per theme</span>
+  <span class="code-kw">private</span> <span class="code-cls">string</span> VariantStyle => Variant <span class="code-kw">switch</span> {
+${swatch}
+  };
+}${chipMutedNote()}`;
+}
+
+function getChipCodeTSX(){
+  const v = CHIP_VARIANTS.find(x=>x.key===cpg.variant)||CHIP_VARIANTS[0];
+  const label = cpgEsc(cpg.label||'Chip');
+  const colorMap = CHIP_VARIANTS.map(x=>{
+    const lc = x[cpg.theme];
+    return `  ${x.key}:${' '.repeat(Math.max(1, 8-x.key.length))}{ bg: <span class="code-val">'${lc.bg}'</span>, text: <span class="code-val">'${lc.text}'</span> },`;
+  }).join('\n');
+  const usageProps = `variant=<span class="code-val">"${cpg.variant}"</span> size=<span class="code-val">"${cpg.size}"</span> label=<span class="code-val">"${label}"</span>`
+    + (cpg.removable?' removable':'') + (cpg.selectable?' selectable':'');
+  return `<span class="code-cm">// DsChip.tsx</span>
+<span class="code-kw">import</span> React, { useState } <span class="code-kw">from</span> <span class="code-val">'react'</span>;
+
+<span class="code-kw">type</span> <span class="code-cls">ChipVariant</span> = <span class="code-val">'accent'</span> | <span class="code-val">'muted'</span> | <span class="code-val">'success'</span> | <span class="code-val">'warning'</span> | <span class="code-val">'error'</span>;
+<span class="code-kw">type</span> <span class="code-cls">ChipSize</span> = <span class="code-val">'sm'</span> | <span class="code-val">'reg'</span> | <span class="code-val">'lg'</span>;
+
+<span class="code-cm">// ${cap(cpg.theme)} theme fills — the only values to re-map per theme</span>
+<span class="code-kw">const</span> CHIP_COLORS: <span class="code-cls">Record</span>&#60;ChipVariant, { bg: <span class="code-cls">string</span>; text: <span class="code-cls">string</span> }> = {
+${colorMap}
+};
+
+<span class="code-kw">interface</span> <span class="code-cls">DsChipProps</span> {
+  label: <span class="code-cls">string</span>;
+  variant?: <span class="code-cls">ChipVariant</span>;
+  size?: <span class="code-cls">ChipSize</span>;
+  icon?: React.ReactNode;
+  removable?: <span class="code-cls">boolean</span>;
+  selectable?: <span class="code-cls">boolean</span>;
+  onRemove?: () => <span class="code-cls">void</span>;
+}
+
+<span class="code-kw">export const</span> <span class="code-cls">DsChip</span>: React.FC&#60;DsChipProps> = ({
+  label,
+  variant = <span class="code-val">'accent'</span>,
+  size = <span class="code-val">'reg'</span>,
+  icon,
+  removable = <span class="code-kw">false</span>,
+  selectable = <span class="code-kw">false</span>,
+  onRemove,
+}) => {
+  <span class="code-kw">const</span> [selected, setSelected] = useState(<span class="code-kw">false</span>);
+  <span class="code-kw">const</span> c = CHIP_COLORS[variant];
+  <span class="code-kw">const</span> classes = [
+    <span class="code-val">'chip'</span>,
+    \`chip--\${size}\`,
+    selectable &amp;&amp; <span class="code-val">'is-selectable'</span>,
+    selectable &amp;&amp; selected &amp;&amp; <span class="code-val">'is-selected'</span>,
+  ].filter(Boolean).join(<span class="code-val">' '</span>);
+
+  <span class="code-kw">return</span> (
+    &#60;span
+      className={classes}
+      style={{ <span class="code-val">'--chip-bg'</span>: c.bg, <span class="code-val">'--chip-text'</span>: c.text } <span class="code-kw">as</span> React.CSSProperties}
+      onClick={selectable ? () => setSelected((s) => !s) : <span class="code-kw">undefined</span>}
+    >
+      {icon}
+      &#60;span className=<span class="code-val">"chip__label"</span>>{label}&#60;/span>
+      {removable &amp;&amp; (
+        &#60;button
+          className=<span class="code-val">"chip__x"</span>
+          type=<span class="code-val">"button"</span>
+          aria-label=<span class="code-val">"Remove"</span>
+          onClick={(e) => { e.stopPropagation(); onRemove?.(); }}
+        >×&#60;/button>
+      )}
+    &#60;/span>
+  );
+};
+
+<span class="code-cm">// Usage</span>
+&#60;DsChip ${usageProps} />${chipMutedNote()}`;
+}
+
+function getChipCode(){
+  return chipLang==='blazor' ? getChipCodeBlazor()
+       : chipLang==='tsx'    ? getChipCodeTSX()
+       : getChipCodeHTML();
+}
+
+function setChipLang(lang){
+  if(!CHIP_LANGS.some(l=>l.key===lang)) return;
+  chipLang = lang;
+  document.querySelectorAll('#chip-code-tab .code-seg__btn').forEach(b=>{
+    const on = b.dataset.lang===lang;
+    b.setAttribute('aria-selected', on ? 'true' : 'false');
+    b.setAttribute('tabindex', on ? '0' : '-1');
+  });
+  const file = document.getElementById('chip-lang-file');
+  const meta = CHIP_LANGS.find(l=>l.key===lang);
+  if(file && meta) file.textContent = meta.file;
+  const block = document.getElementById('cpg-code-block');
+  if(block) block.innerHTML = getChipCode();
+}
+
+/* Arrow-key navigation, per the WAI-ARIA tablist pattern: the segmented control
+   is one tab stop and Left/Right (plus Home/End) move between languages. */
+function chipLangKeydown(e){
+  const i = CHIP_LANGS.findIndex(l=>l.key===chipLang);
+  let n = i;
+  if(e.key==='ArrowLeft')       n = (i - 1 + CHIP_LANGS.length) % CHIP_LANGS.length;
+  else if(e.key==='ArrowRight') n = (i + 1) % CHIP_LANGS.length;
+  else if(e.key==='Home')       n = 0;
+  else if(e.key==='End')        n = CHIP_LANGS.length - 1;
+  else return;
+  e.preventDefault();
+  setChipLang(CHIP_LANGS[n].key);
+  const btn = document.getElementById('chip-lang-' + CHIP_LANGS[n].key);
+  if(btn) btn.focus();
+}
+
 function cpgRefresh(){
   document.querySelectorAll('.cpg-stage-el').forEach(stage=>{
     stage.innerHTML = '';
@@ -9019,7 +9235,7 @@ function cpgRefresh(){
     if(document.activeElement !== inp) inp.value = cpg.label;
   });
   const block = document.getElementById('cpg-code-block');
-  if(block) block.innerHTML = getChipCodeHTML();
+  if(block) block.innerHTML = getChipCode();
 }
 
 /* Chip Playground renders into more than one mount (the main Overview
@@ -9091,12 +9307,15 @@ function renderChipCodeTab(){
     <div class="type-sub__title">Code</div>
     <div class="type-sub__desc">Live snippet matching the current Playground configuration &mdash; switch to Overview to change it.</div>
     <div class="cpg-section-outline">
-      <div class="code-panel open" style="border-top:0">
-        <div class="code-panel__head" style="cursor:default;padding:0 0 12px">
-          <span class="code-panel__label">&#60;/&#62; &nbsp;View code</span>
+      <div class="code-panel code-panel--bare open">
+        <div class="code-panel__head">
+          <div class="code-seg" role="tablist" aria-label="Code language" onkeydown="chipLangKeydown(event)">
+            ${CHIP_LANGS.map(l=>`<button type="button" role="tab" class="code-seg__btn" id="chip-lang-${l.key}" data-lang="${l.key}" aria-selected="${chipLang===l.key?'true':'false'}" aria-controls="cpg-code-block" tabindex="${chipLang===l.key?'0':'-1'}" onclick="setChipLang('${l.key}')"><span class="code-seg__dot" style="--_dot:${l.dot}"></span>${l.label}</button>`).join('')}
+          </div>
+          <span class="code-lang-file" id="chip-lang-file">${(CHIP_LANGS.find(l=>l.key===chipLang)||CHIP_LANGS[0]).file}</span>
           <button class="code-copy-btn" onclick="cpgCopyCode()" id="cpg-copy-btn">Copy</button>
         </div>
-        <div class="code-body" style="padding:0"><div class="code-block" id="cpg-code-block"></div></div>
+        <div class="code-body"><div class="code-block" id="cpg-code-block" role="tabpanel" aria-live="polite"></div></div>
       </div>
     </div>`;
 }
@@ -9626,12 +9845,18 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.41.2';
+const SYSTEM_VERSION = '1.42.0';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.42.0', date:'2026-08-04', author:'Helen', title:'Chips & Pills Code tab gains Blazor and React TSX output behind a new segmented language switcher', changes:[
+        ['added','getChipCodeBlazor() and getChipCodeTSX() — DsChip.razor and DsChip.tsx samples alongside the existing HTML/CSS, both wrapping the same real .chip/.chip--{size}/.chip__label/.chip__x classes and the same --chip-bg/--chip-text custom props, so the variant colour map is the only thing a consumer ports. Both track every Playground control (variant, size, icon, removable, selectable, label) live'],
+        ['added','New .code-seg segmented control for picking a code language — a real WAI-ARIA tablist (single tab stop, Left/Right/Home/End navigation, aria-selected/aria-controls) reusing the filled-active idiom of .btn-pg__pill-row, plus a per-language identity dot and a monospace filename hint (chip.html / DsChip.razor / DsChip.tsx) so the active target is readable at a glance'],
+        ['added','.code-panel--bare modifier — drops .code-panel\'s --chrome-nav fill and top rule so a panel nested inside a bordered .cpg-section-outline card no longer stacks a second grey band on it, replacing the inline border-top:0/padding overrides previously hand-written in renderChipCodeTab()'],
+        ['removed','The "</> View code" label row from the Chips Code tab — redundant beside a tab already called Code and a "Code" heading, and its slot is now the language switcher'],
+      ]},
       {version:'1.41.2', date:'2026-08-04', author:'Jaco', title:'Page content centres in the space beside the sidebar', changes:[
         ['changed','On pages with a sidebar the content column sat hard against the sidebar with all the leftover space falling to its right; .main now takes margin-inline:auto so its 1156px measure centres within the area beside the flush-left sidebar (e.g. at 1800px wide it gets an equal 217px either side). Below ~1366px the content still fills the available space, so nothing changes on smaller screens, and the home page is unaffected since body.home .main resets the margin'],
       ]},
@@ -10627,7 +10852,13 @@ const CHANGELOG = {
         ['added','“Tag or Chip?” guidance clarifying when to use each'],
       ]},
     ]},
-    {secId:'s-chips', name:'Chips & Pills', version:'1.13.1', entries:[
+    {secId:'s-chips', name:'Chips & Pills', version:'1.14.0', entries:[
+      {version:'1.14.0', date:'2026-08-04', author:'Helen', title:'Code tab now offers Blazor and React TSX alongside HTML/CSS', changes:[
+        ['added','Blazor (DsChip.razor) and React TSX (DsChip.tsx) versions of the snippet, matching the three-language set already on Buttons. Both build on the same real .chip classes and --chip-bg/--chip-text custom props as the HTML, and update live as you change variant, size, icon, dismiss, behaviour or label in the Playground'],
+        ['added','A segmented language switcher replaces the old "View code" label row — each language carries a small identity dot and the filename it maps to (chip.html, DsChip.razor, DsChip.tsx), so you can tell at a glance which file you\'re looking at. Fully keyboard operable: one tab stop, then arrow keys (or Home/End) to move between languages'],
+        ['added','The Muted variant now carries a note in the Blazor/TSX samples flagging that it is the one variant whose fill differs between light and dark, rather than silently emitting only the current theme\'s hex'],
+        ['fixed','Removed the grey bar across the top of the code section — the panel was painting its own --chrome-nav fill inside the bordered outline card, which read as a stray band above the snippet'],
+      ]},
       {version:'1.13.1', date:'2026-08-03', author:'Helen', title:'Fixed the header pills using a monospace font', changes:[
         ['fixed','The "v1.13.0" and "AI context" pills in the header were set in \'SF Mono\', monospace instead of the brand typeface — both now render in Satoshi'],
       ]},
