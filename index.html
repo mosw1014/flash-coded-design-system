@@ -2046,7 +2046,6 @@ body.home .main{max-width:none;margin:0;padding:0}
 .sw-specimen{transform:scale(2.1);transform-origin:center}
 .sw-part-track{width:46px;height:26px;border-radius:999px;border:2px dashed var(--chrome-muted);opacity:.7}
 .sw-part-thumb{width:24px;height:24px;border-radius:50%;border:2px dashed var(--chrome-muted);opacity:.7}
-.sw-part-ring{width:44px;height:26px;border-radius:999px;background:var(--color-surface-n3);outline:2px solid var(--color-input-focus);outline-offset:2px}
 
 /* ---- Tooltip ---- */
 .tip{position:relative;display:inline-flex}
@@ -4821,7 +4820,7 @@ body.home .main{max-width:none;margin:0;padding:0}
       <div class="sec__head">
         <h1 class="sec__title">Switch</h1>
         <div class="sec-header-meta">
-          <span class="comp-ver-badge" style="margin-left:0">v1.1.1</span>
+          <span class="comp-ver-badge" style="margin-left:0">v1.1.2</span>
           <details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-switch">
@@ -9840,7 +9839,7 @@ function spgRefresh(){
 /* Like the chip playground, this renders into more than one mount (the big
    Overview demo and a compact copy on the Code tab) off one shared spg state. */
 const SW_PLAYGROUND_MOUNTS = [
-  {rootId:'sw-playground', idSuffix:'', wrap:true, title:'Try the component', desc:'Adjust the controls to test every state — or just click the switch.', headingAbove:'A switch applies a single on/off setting when flipped.'},
+  {rootId:'sw-playground', idSuffix:'', wrap:true, title:'Try the component', desc:'Adjust the filters to test component states.', headingAbove:'A switch applies a single on/off setting when flipped.'},
   {rootId:'sw-code-playground', idSuffix:'-code', style:'code', title:'Playground', desc:'Live demo of the component.'},
 ];
 
@@ -10035,10 +10034,9 @@ function renderSwitchReference(){
   const specimen = `<span class="sw-specimen" style="pointer-events:none">${makeSwitchHTML({on:true, showLabel:false})}</span>`;
 
   const parts = [
-    {num:1, name:'Track',      note:'The pill-shaped background. Carries the on/off colour.',        vis:'<span class="sw-part-track"></span>'},
-    {num:2, name:'Thumb',      note:'White circle that slides to signal state without colour.',     vis:'<span class="sw-part-thumb"></span>'},
-    {num:3, name:'Label',      note:'Optional text. Describes the setting, never the current state.',vis:'<span style="font-weight:500;font-size:13px;color:var(--chrome-txt)">Label</span>'},
-    {num:4, name:'Focus ring', note:'2px ring at 2px offset, shown on keyboard focus only.',         vis:'<span class="sw-part-ring"></span>'},
+    {num:1, name:'Track',  note:'The pill-shaped background. Carries the on/off colour.',        vis:'<span class="sw-part-track"></span>'},
+    {num:2, name:'Thumb',  note:'White circle that slides to signal state without colour.',     vis:'<span class="sw-part-thumb"></span>'},
+    {num:3, name:'Label',  note:'Optional text. Describes the setting, never the current state.',vis:'<span style="font-weight:500;font-size:13px;color:var(--chrome-txt)">Label</span>'},
   ];
   const partCards = parts.map(p=>`
     <div class="spec-part">
@@ -10072,7 +10070,6 @@ function renderSwitchReference(){
     {name:'Track — on',   val:'var(--color-brand)',       tok:'color-brand'},
     {name:'Thumb',        val:'#fff',                     tok:'—'},
     {name:'Label',        val:'var(--chrome-txt)',        tok:'chrome-txt'},
-    {name:'Focus ring',   val:'var(--color-input-focus)', tok:'input-focus'},
   ].map(t=>`
     <tr>
       <td class="dd-table__name">${t.name}</td>
@@ -10379,12 +10376,16 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.43.1';
+const SYSTEM_VERSION = '1.43.2';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.43.2', date:'2026-08-04', author:'Helen', title:'Corrected the Switch playground copy and removed the Style tab\'s Focus ring documentation', changes:[
+        ['fixed','The "Try the component" playground description reads "Adjust the filters to test component states." — verbatim from Chips & Pills, as intended. The prior pass had reworded it to "Adjust the controls to test every state — or just click the switch.", missing that this exact line was meant to carry over unchanged'],
+        ['removed','The Style tab\'s "Focus ring" anatomy part card and its "Focus ring" row in the colour & tokens table — the prior pass removed Focused from the Overview\'s Key states but left these two Style-tab entries in place, still documenting it as though it were a real state to show'],
+      ]},
       {version:'1.43.1', date:'2026-08-04', author:'Helen', title:'Tightened Switch Overview copy, removed the non-existent Focused state', changes:[
         ['changed','The Overview hero line now reads "A switch applies a single on/off setting when flipped." (was a longer, more conversational line ending "— there is no Save step")'],
         ['changed','Key states, In context and Do\'s & don\'ts explainer lines rewritten to lead with the fact rather than a scene-setting sentence, matching the direct tone of the "Adjust the controls…" playground line, which was left unchanged'],
@@ -11088,7 +11089,11 @@ const CHANGELOG = {
         ['added','Scroll-snap slider with prev/next arrows and position dots'],
       ]},
     ]},
-    {secId:'s-switch', name:'Switch', version:'1.1.1', entries:[
+    {secId:'s-switch', name:'Switch', version:'1.1.2', entries:[
+      {version:'1.1.2', date:'2026-08-04', author:'Helen', title:'Corrected the playground copy and finished removing Focus ring documentation', changes:[
+        ['fixed','"Try the component" description reverted to "Adjust the filters to test component states." — the exact Chips & Pills wording, which was supposed to carry over unchanged but had been reworded in the previous pass'],
+        ['removed','Style tab\'s "Focus ring" anatomy part card (was part 4 of 4) and its row in the colour & tokens table. The previous pass removed "Focused" from Overview\'s Key states but missed these two Style-tab entries, which still presented it as a documented state'],
+      ]},
       {version:'1.1.1', date:'2026-08-04', author:'Helen', title:'Tightened Overview copy, removed the non-existent Focused state', changes:[
         ['changed','Hero line shortened to "A switch applies a single on/off setting when flipped."'],
         ['changed','Key states, In context and Do\'s & don\'ts descriptions, plus all three "In context" mock captions, rewritten to lead with the fact rather than scene-setting prose — e.g. "Off, On and Disabled cover every state. Thumb position signals state independent of colour." instead of "Four states carry the whole component…". The "Adjust the controls to test every state…" playground line was left exactly as written'],
