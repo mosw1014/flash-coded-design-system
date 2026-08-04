@@ -1030,13 +1030,16 @@ body.home .main{max-width:none;margin:0;padding:0}
 .fds-band--cards{background:#fff;padding:56px 48px 88px}
 .fds-cards{display:grid;grid-template-columns:1fr 1fr;gap:36px}
 @media(max-width:760px){.fds-cards{grid-template-columns:1fr}}
-.fds-card{position:relative;border-radius:34px;padding:44px;min-height:clamp(360px,37vw,460px);
+.fds-card{position:relative;border-radius:34px;padding:42px;min-height:clamp(360px,37vw,460px);
+  border:2px solid transparent;
   display:flex;flex-direction:column;justify-content:center;text-decoration:none;overflow:hidden;
-  transition:transform .18s,box-shadow .18s}
-.fds-card:hover{transform:translateY(-4px);box-shadow:0 22px 54px rgba(0,0,0,.13)}
+  transition:background .18s,border-color .18s}
+.fds-card:hover{border-color:#10c504}
 .fds-card--brand{background:linear-gradient(48.7deg,#f0f0f0 13%,#1dfa0f 289%)}
+.fds-card--brand:hover{background:linear-gradient(48.7deg,#e8efe7 13%,#1dfa0f 250%)}
 .fds-card--components{background:#f0f0f0}
-.fds-card__arrow{position:absolute;top:40px;right:40px;width:26px;height:26px;transform:rotate(180deg)}
+.fds-card--components:hover{background:#e8e8e8}
+.fds-card__arrow{position:absolute;top:38px;right:38px;width:26px;height:26px;transform:rotate(180deg)}
 .fds-card__icon{display:block;margin-bottom:36px}
 .fds-card__title{font-family:'Satoshi',sans-serif;font-weight:900;color:#000;letter-spacing:-.02em;
   line-height:1;font-size:clamp(34px,4.4vw,56px);margin:0}
@@ -9548,12 +9551,16 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.40.1';
+const SYSTEM_VERSION = '1.40.2';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.40.2', date:'2026-08-04', author:'Jaco', title:'Reworked the hover state on the two home entry cards', changes:[
+        ['removed','The lift-and-shadow hover on the Brand/Components entry cards (.fds-card) — transform:translateY(-4px) plus a 54px-blur drop shadow, which read heavy and sat awkwardly against the flat page'],
+        ['changed','Hover is now a 2px Mid Green (#10C504) stroke plus a slight background deepening — the Components card goes #F0F0F0 → #E8E8E8 and the Brand card\'s gradient pulls its green stop in from 289% to 250%. The 2px border sits on the resting state as transparent (with padding trimmed 44px → 42px and the arrow inset 40px → 38px) so nothing shifts or changes size on hover'],
+      ]},
       {version:'1.40.1', date:'2026-08-04', author:'Jaco', title:'Fixed header logo showing a white box behind "flash"', changes:[
         ['fixed','Header logo (.bar__logo-img) now uses the designer-supplied assets/logos/Logo_new.svg — a fully transparent vector lockup (mark + "flash" + green "Design") — instead of assets/home/logo.png, whose export had baked in an opaque white background behind the wordmark; removed the now-unused logo.png'],
       ]},
