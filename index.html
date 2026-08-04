@@ -213,9 +213,7 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;font-feature-
 /* Sidebar */
 .sidebar{width:210px;flex-shrink:0;background:var(--chrome-nav);border-right:1px solid var(--chrome-border);position:sticky;top:52px;height:calc(100vh - 52px);overflow-y:auto;padding:20px 0;transition:background .25s}
 .sb-cat{display:flex;align-items:center;gap:8px;font-size:12.5px;font-weight:800;letter-spacing:0;color:var(--chrome-txt);padding:0 16px;margin:18px 0 5px}
-.sb-cat__icon{width:14px;height:14px;flex-shrink:0;display:inline-flex}
-.sb-cat__icon svg{width:100%;height:100%;fill:currentColor;display:block}
-.sb-cat:first-child{margin-top:0}
+.sb-cat:first-child,.sb-group:first-child .sb-cat{margin-top:0}
 .sb-link{display:flex;align-items:center;gap:8px;padding:7px 16px;font-size:12.5px;font-weight:500;color:var(--chrome-muted);text-decoration:none;border-left:2px solid transparent;transition:all .15s}
 .sb-link:hover{color:var(--chrome-txt);background:var(--chrome-hover)}
 .sb-link.on{color:var(--chrome-txt);border-left-color:var(--chrome-accent);background:var(--chrome-hover);font-weight:700}
@@ -223,10 +221,16 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;font-feature-
 .sb-link:hover .sb-icon{color:var(--chrome-txt)}
 .sb-link.on .sb-icon{color:var(--chrome-accent-text)}
 
-/* ===== Sidebar category as landing link ===== */
-.sb-cat--link{cursor:pointer;background:none;border:0;font-family:inherit;text-align:left;text-decoration:none;color:var(--chrome-txt);transition:color .15s}
-.sb-cat--link:hover{color:var(--chrome-accent-text)}
-.sb-cat--link.on{color:var(--chrome-accent-text)}
+/* ===== Sidebar category as collapsible group ===== */
+.sb-cat--toggle{width:100%;justify-content:space-between;cursor:pointer;background:none;border:0;font-family:inherit;text-align:left;color:var(--chrome-txt);transition:color .15s}
+.sb-cat--toggle:hover{color:var(--chrome-accent-text)}
+.sb-cat--toggle.on{color:var(--chrome-accent-text)}
+.sb-cat--toggle:focus-visible{outline:2px solid var(--color-input-focus);outline-offset:-2px;border-radius:4px}
+.sb-cat__caret{width:10px;height:10px;flex-shrink:0;color:var(--chrome-muted);transition:transform .2s}
+.sb-cat__caret svg{width:100%;height:100%;display:block;fill:currentColor}
+.sb-cat--toggle[aria-expanded="true"] .sb-cat__caret{transform:rotate(180deg)}
+.sb-group__items{display:none}
+.sb-group.open>.sb-group__items{display:block}
 /* ===== Breadcrumb ===== */
 .crumb{margin-bottom:20px}
 .crumb__link{display:inline-flex;align-items:center;gap:10px;text-decoration:none;cursor:pointer}
@@ -2551,7 +2555,7 @@ body.home .main{max-width:none;margin:0;padding:0}
           <a class="fds-card fds-card--brand" href="javascript:void(0)" onclick="showSection('s-cat-brand')">
             <img class="fds-card__arrow" src="assets/home/icon-arrow.svg" alt="" aria-hidden="true" width="26" height="26">
             <img class="fds-card__icon" src="assets/home/Brand.png" alt="" aria-hidden="true" width="120" height="88">
-            <div class="fds-card__title">Brand</div>
+            <div class="fds-card__title">Foundations</div>
             <div class="fds-card__desc">Colour, typography, iconography and layout foundations that define the Flash visual language.</div>
           </a>
           <a class="fds-card fds-card--components" href="javascript:void(0)" onclick="showSection('s-cat-components')">
@@ -7174,10 +7178,9 @@ function showSection(id, opts) {
     const matches = l.getAttribute('onclick') && l.getAttribute('onclick').includes("'" + id + "'");
     l.classList.toggle('on', matches);
   });
-  document.querySelectorAll('.sb-cat--link').forEach(l => {
-    const oc = l.getAttribute('onclick') || '';
-    l.classList.toggle('on', oc.indexOf("'" + id + "'") > -1);
-  });
+  // Expand the group that holds the section we just opened. Defined further
+  // down the file, so guard the init-time call that runs before it exists.
+  if (typeof syncNavGroups === 'function') syncNavGroups();
   // Scroll to top (or restore a remembered position) — the page itself
   // scrolls (window), .main has no overflow of its own. html has
   // scroll-behavior:smooth, so a restore must opt out of the animation.
@@ -9837,12 +9840,21 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.42.1';
+const SYSTEM_VERSION = '1.43.0';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.43.0', date:'2026-08-04', author:'Jaco', title:'Sidebar categories are now collapsible groups, Brand renamed Foundations, every group gains an Overview link', changes:[
+        ['added','Each landing category in the sidebar is now a collapsible accordion — a .sb-group wrapper, a .sb-cat--toggle button header carrying aria-expanded/aria-controls and a rotating .sb-cat__caret chevron, and a .sb-group__items panel that only renders when the group is open. toggleNavGroup() flips one group; several can be open at once'],
+        ['added','syncNavGroups(), called from showSection(), expands whichever group holds the section being opened and flags that group\'s header .on — so deep links, search results and home-page tiles all land with the right group already expanded, while groups the person opened or closed by hand keep their state'],
+        ['added','An Overview link at the top of every group\'s items, pointing at that group\'s existing landing page (Foundations → s-cat-brand, Components → s-cat-components, Coming soon → s-cat-coming). The category header now toggles instead of navigating, so this is how a landing page is reached from the sidebar'],
+        ['changed','The Brand category is renamed Foundations across the sidebar, its landing page title, its breadcrumbs and the home-page entry card — the section id (s-cat-brand) is unchanged, so existing #/s-cat-brand links still resolve'],
+        ['removed','The icon beside each sidebar category (cow / code / clock) along with the .sb-cat__icon CSS and the NAV manifest\'s icon field — the caret is now the only glyph on a category header'],
+        ['removed','.sb-cat--link and its active/hover rules, replaced by .sb-cat--toggle; showSection() no longer syncs a .sb-cat--link active state'],
+        ['fixed','.sb-cat:first-child{margin-top:0} stopped matching once the first sidebar child became a .sb-group, leaving the top category 18px lower than the sidebar\'s own padding — the rule now also covers .sb-group:first-child .sb-cat'],
+      ]},
       {version:'1.42.1', date:'2026-08-04', author:'Helen', title:'Cleaned up the Chips code language switcher — no dots, correct typeface on the tab labels', changes:[
         ['removed','.code-seg__dot per-language colour dots — read as decorative noise rather than a meaningful cue; the label text already identifies each language'],
         ['fixed','.code-seg__btn (the HTML/CSS · Blazor · React TSX tab labels) was left on font-family:inherit instead of explicitly setting the brand typeface — now sets \'Satoshi Variable\',\'Satoshi\',sans-serif with the ss01/ss03 stylistic-alternate feature settings used sitewide. .code-lang-file (the "chip.html" filename hint) intentionally keeps its monospace stack — a filename reads better as code'],
@@ -12744,7 +12756,7 @@ try {
    alphabetised items, clickable category landings + breadcrumbs)
 ============================================================ */
 const NAV = [
-  { cat:'Brand', landing:'s-cat-brand', icon:'cow',
+  { cat:'Foundations', landing:'s-cat-brand',
     intro:'The visual foundations of Flash — colour, type, spacing, elevation and iconography. These tokens sit beneath every component.',
     items:[
       {id:'s-colours', label:'Colours',        desc:'Primitive and semantic colour tokens for light and dark.'},
@@ -12754,7 +12766,7 @@ const NAV = [
       {id:'s-spacing', label:'Spacing & Grid', desc:'An 8px base scale for spacing, radius and grid.'},
       {id:'s-type',    label:'Typography',     desc:'The Satoshi type scale and weight tokens.'},
     ]},
-  { cat:'Components', landing:'s-cat-components', icon:'code',
+  { cat:'Components', landing:'s-cat-components',
     intro:'Flexible, reusable building blocks for Flash apps and sites. Every component shares the same tokens, spacing and states — pick one to see its playground, specs and code.',
     items:[
       {id:'s-accordion',    label:'Accordion',           desc:'Collapsible stacked sections.'},
@@ -12791,7 +12803,7 @@ const NAV = [
       {id:'s-toggle-group', label:'Toggle Group',        desc:'Segmented single / multi choice.'},
       {id:'s-tooltip',      label:'Tooltip',             desc:'Brief on-hover hints.'},
     ]},
-  { cat:'Coming soon', landing:'s-cat-coming', icon:'clock',
+  { cat:'Coming soon', landing:'s-cat-coming',
     intro:'Components on the roadmap. The patterns are defined — full playgrounds and specs are on the way.',
     items:[
       {id:'s-modals', label:'Modals', tag:'Soon', desc:'Focused dialogs and confirmations.'},
@@ -12854,23 +12866,57 @@ function lpCardHTML(item){
        + '</a>';
 }
 
+var SB_CARET_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.7 9.3a1 1 0 0 1 1.41 0L12 13.19l3.89-3.89a1 1 0 1 1 1.41 1.41l-4.59 4.6a1 1 0 0 1-1.42 0l-4.59-4.6a1 1 0 0 1 0-1.41Z"/></svg>';
+
 function buildSidebar(){
   var aside = document.getElementById('sidebar');
   if(!aside) return;
   var html = '';
-  NAV.forEach(function(g){
+  NAV.forEach(function(g, i){
+    var links = '';
+    // The category header toggles instead of navigating, so its landing page
+    // is reached from an Overview link at the top of the group's own items.
     if(g.landing){
-      var catIcon = g.icon ? '<span class="sb-cat__icon">'+iconSvg(g.icon)+'</span>' : '';
-      html += '<a href="javascript:void(0)" class="sb-cat sb-cat--link" onclick="showSection(\'' + g.landing + '\')">'+catIcon+g.cat+'</a>';
-    } else {
-      html += '<div class="sb-cat">'+g.cat+'</div>';
+      links += '<a href="javascript:void(0)" onclick="showSection(\'' + g.landing + '\')" class="sb-link">Overview</a>';
     }
     g.items.forEach(function(it){
       var tag = it.tag ? '<span class="sb-tag">'+it.tag+'</span>' : '';
-      html += '<a href="javascript:void(0)" onclick="showSection(\'' + it.id + '\')" class="sb-link">'+it.label+tag+'</a>';
+      links += '<a href="javascript:void(0)" onclick="showSection(\'' + it.id + '\')" class="sb-link">'+it.label+tag+'</a>';
     });
+    if(g.landing){
+      var itemsId = 'sb-items-' + i;
+      html += '<div class="sb-group">'
+           +    '<button type="button" class="sb-cat sb-cat--toggle" aria-expanded="false" aria-controls="'+itemsId+'" onclick="toggleNavGroup(this)">'
+           +      '<span>'+g.cat+'</span><span class="sb-cat__caret">'+SB_CARET_SVG+'</span>'
+           +    '</button>'
+           +    '<div class="sb-group__items" id="'+itemsId+'">'+links+'</div>'
+           +  '</div>';
+    } else {
+      // Single-item categories (About) have no landing and stay always-visible.
+      html += '<div class="sb-cat">'+g.cat+'</div>'+links;
+    }
   });
   aside.innerHTML = html;
+}
+
+function toggleNavGroup(btn){
+  var group = btn.closest('.sb-group');
+  if(!group) return;
+  var open = !group.classList.contains('open');
+  group.classList.toggle('open', open);
+  btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+}
+
+// Keep the group holding the open section expanded and flagged active. Other
+// groups keep whatever open/closed state the person left them in.
+function syncNavGroups(){
+  document.querySelectorAll('#sidebar .sb-group').forEach(function(group){
+    var btn = group.querySelector('.sb-cat--toggle');
+    if(!btn) return;
+    var holds = !!group.querySelector('.sb-link.on');
+    if(holds){ group.classList.add('open'); btn.setAttribute('aria-expanded','true'); }
+    btn.classList.toggle('on', holds);
+  });
 }
 
 function buildLandings(){
