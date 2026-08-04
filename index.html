@@ -1556,7 +1556,7 @@ body.home .main{max-width:none;margin:0;padding:0}
 .dd-status{display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:600;white-space:nowrap}
 .dd-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
 
-/* ── LISTS (Key-value list, Activity timeline, Empty state) ── */
+/* ── LISTS (Key-value list, Activity timeline) ── */
 .dd-kv{border:1px solid var(--chrome-border);border-radius:12px;overflow:hidden}
 .dd-kv__row{display:flex;gap:16px;padding:13px 16px;border-bottom:1px solid var(--chrome-border)}
 .dd-kv__row:last-child{border-bottom:none}
@@ -1576,6 +1576,7 @@ body.home .main{max-width:none;margin:0;padding:0}
 .dd-tl__time{font-size:11px;font-weight:600;color:var(--chrome-muted);font-variant-numeric:tabular-nums}
 .dd-tl__desc{font-size:12px;color:var(--chrome-muted);line-height:1.55;margin-top:2px}
 
+/* ── EMPTY STATE ── */
 .dd-empty{border:1.5px dashed var(--chrome-border);border-radius:12px;padding:40px 24px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px}
 .dd-empty__icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:var(--chrome-nav);color:var(--chrome-muted)}
 .dd-empty__title{font-size:14px;font-weight:800;color:var(--chrome-txt)}
@@ -4316,8 +4317,8 @@ body.home .main{max-width:none;margin:0;padding:0}
     <section class="sec" id="s-lists">
       <div class="sec__head">
         <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Lists <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.0</span></h1>
-        <p class="sec__desc">List-shaped patterns for a handful of facts, a chronological feed, or the absence of either — key&ndash;value lists, activity timelines and empty states. All built on chrome and semantic tokens, so they adapt to light &amp; dark automatically.</p>
+        <h1 class="sec__title">Lists <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.1.0</span></h1>
+        <p class="sec__desc">List-shaped patterns for a handful of facts or a chronological feed — key&ndash;value lists and activity timelines. All built on chrome and semantic tokens, so they adapt to light &amp; dark automatically.</p>
       </div>
 
       <div class="type-sub">
@@ -4362,28 +4363,14 @@ body.home .main{max-width:none;margin:0;padding:0}
       </div>
 
       <div class="type-sub">
-        <div class="type-sub__title">Empty state</div>
-        <div class="type-sub__desc">Shown when a table, list or view has no rows to display. Pairs a muted glyph with a plain-language explanation and a single primary action to move the user forward.</div>
-        <div class="dd-empty">
-          <div class="dd-empty__icon">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M4 7h16M4 12h16M4 17h9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-          </div>
-          <div class="dd-empty__title">No transactions match these filters</div>
-          <div class="dd-empty__desc">Nothing was recorded for the selected region and date range. Try widening the range or clearing the region filter.</div>
-          <button class="dd-empty__action" type="button">Clear filters</button>
-        </div>
-      </div>
-
-      <div class="type-sub">
         <div class="type-sub__title">When to use</div>
-        <div class="type-sub__desc">Reach for the pattern that matches the shape of what you have &mdash; a few facts, a sequence of events, or nothing at all.</div>
+        <div class="type-sub__desc">Reach for the pattern that matches the shape of what you have &mdash; a few facts, or a sequence of events.</div>
         <div class="sel-usage">
           <div class="sel-usage__card">
             <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
             <ul class="sel-usage__list">
               <li>Use a key&ndash;value list for a handful of facts about one record &mdash; reach for a table once there are many similar records.</li>
               <li>Use an activity timeline when order and time genuinely matter, not just as a decorative list style.</li>
-              <li>Always give an empty state a plain-language reason and, where there's an obvious next step, a single primary action.</li>
             </ul>
           </div>
           <div class="sel-usage__card">
@@ -4391,7 +4378,6 @@ body.home .main{max-width:none;margin:0;padding:0}
             <ul class="sel-usage__list">
               <li>Don&rsquo;t stretch a key&ndash;value list to a screen&rsquo;s worth of facts &mdash; that&rsquo;s a table.</li>
               <li>Don&rsquo;t use a timeline for unordered or unrelated items.</li>
-              <li>Don&rsquo;t leave an empty state blank or purely decorative &mdash; it should always explain what happened and what to do next.</li>
             </ul>
           </div>
         </div>
@@ -4412,28 +4398,94 @@ body.home .main{max-width:none;margin:0;padding:0}
     ".dd-tl__meta",
     ".dd-tl__title",
     ".dd-tl__time",
-    ".dd-tl__desc",
+    ".dd-tl__desc"
+  ],
+  "css": "/* ── LISTS (Key-value list, Activity timeline) ── */\n.dd-kv { border:1px solid var(--chrome-border);border-radius:12px;overflow:hidden }\n.dd-kv__row { display:flex;gap:16px;padding:13px 16px;border-bottom:1px solid var(--chrome-border) }\n.dd-kv__row:last-child { border-bottom:none }\n.dd-kv__key { flex:0 0 180px;font-size:12px;font-weight:700;color:var(--chrome-muted) }\n.dd-kv__val { font-size:13px;font-weight:600;color:var(--chrome-txt) }\n.dd-timeline { border:1px solid var(--chrome-border);border-radius:12px;padding:22px 24px }\n.dd-tl { position:relative;padding-left:26px }\n.dd-tl__item { position:relative;padding-bottom:20px }\n.dd-tl__item:last-child { padding-bottom:0 }\n.dd-tl__item::before { content:\"\";position:absolute;left:-19px;top:3px;width:9px;height:9px;border-radius:50%;background:var(--dd-tl-dot,var(--chrome-accent));box-shadow:0 0 0 3px var(--chrome-bg) }\n.dd-tl__item::after { content:\"\";position:absolute;left:-15px;top:15px;bottom:-3px;width:1px;background:var(--chrome-border) }\n.dd-tl__item:last-child::after { display:none }\n.dd-tl__meta { display:flex;align-items:baseline;gap:8px;flex-wrap:wrap }\n.dd-tl__title { font-size:13px;font-weight:700;color:var(--chrome-txt) }\n.dd-tl__time { font-size:11px;font-weight:600;color:var(--chrome-muted);font-variant-numeric:tabular-nums }\n.dd-tl__desc { font-size:12px;color:var(--chrome-muted);line-height:1.55;margin-top:2px }",
+  "usage": {
+    "do": [
+      "Use a key–value list for a handful of facts about one record — reach for a table once there are many similar records.",
+      "Use an activity timeline when order and time genuinely matter, not just as a decorative list style."
+    ],
+    "dont": [
+      "Don’t stretch a key–value list to a screen’s worth of facts — that’s a table.",
+      "Don’t use a timeline for unordered or unrelated items."
+    ]
+  },
+  "contentHash": "bfcea3930c26ac8447ed80ef6f1455815f4683776740294c3977cc81c8ea2f83",
+  "note": "Split from the retired Data Display section (2026-08-04). Empty state was originally part of this section too, but moved out to its own s-empty-state section — see that section's own tab. Fully static hand-authored markup. .dd-tl__item::before reads a --dd-tl-dot custom property set inline per item for its semantic node colour."
+}
+  </pre>
+</details>
+    </section>
+    <section class="sec" id="s-empty-state">
+      <div class="sec__head">
+        <div class="sec__eye">Components</div>
+        <h1 class="sec__title">Empty State <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.0</span></h1>
+        <p class="sec__desc">Shown when a table, list or view has no rows to display. Pairs a muted glyph with a plain-language explanation and a single primary action to move the user forward.</p>
+      </div>
+
+      <div class="type-sub">
+        <div class="type-sub__title">Empty state</div>
+        <div class="type-sub__desc">A dashed-border card centring a muted glyph, a title, a short explanation and one primary action.</div>
+        <div class="dd-empty">
+          <div class="dd-empty__icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M4 7h16M4 12h16M4 17h9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </div>
+          <div class="dd-empty__title">No transactions match these filters</div>
+          <div class="dd-empty__desc">Nothing was recorded for the selected region and date range. Try widening the range or clearing the region filter.</div>
+          <button class="dd-empty__action" type="button">Clear filters</button>
+        </div>
+      </div>
+
+      <div class="type-sub">
+        <div class="type-sub__title">When to use</div>
+        <div class="type-sub__desc">An empty state replaces a table, list or grid only when it has zero items &mdash; it&rsquo;s a moment, not a decoration.</div>
+        <div class="sel-usage">
+          <div class="sel-usage__card">
+            <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
+            <ul class="sel-usage__list">
+              <li>Always give an empty state a plain-language reason for why there&rsquo;s nothing to show.</li>
+              <li>Include a single primary action when there&rsquo;s an obvious next step &mdash; clear a filter, create the first record.</li>
+              <li>Keep the glyph muted and simple; it should support the message, not compete with it.</li>
+            </ul>
+          </div>
+          <div class="sel-usage__card">
+            <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don&rsquo;t</div>
+            <ul class="sel-usage__list">
+              <li>Don&rsquo;t leave an empty state blank or purely decorative &mdash; it should always explain what happened and what to do next.</li>
+              <li>Don&rsquo;t use an empty state for a loading moment &mdash; that&rsquo;s a skeleton loader.</li>
+              <li>Don&rsquo;t stack more than one primary action &mdash; move secondary options into a link or menu.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <details class="ai-ctx">
+  <summary>AI context</summary>
+  <pre data-ai-context="s-empty-state">
+{
+  "status": "static",
+  "realClasses": [
     ".dd-empty",
     ".dd-empty__icon",
     ".dd-empty__title",
     ".dd-empty__desc",
     ".dd-empty__action"
   ],
-  "css": "/* ── LISTS (Key-value list, Activity timeline, Empty state) ── */\n.dd-kv { border:1px solid var(--chrome-border);border-radius:12px;overflow:hidden }\n.dd-kv__row { display:flex;gap:16px;padding:13px 16px;border-bottom:1px solid var(--chrome-border) }\n.dd-kv__row:last-child { border-bottom:none }\n.dd-kv__key { flex:0 0 180px;font-size:12px;font-weight:700;color:var(--chrome-muted) }\n.dd-kv__val { font-size:13px;font-weight:600;color:var(--chrome-txt) }\n.dd-timeline { border:1px solid var(--chrome-border);border-radius:12px;padding:22px 24px }\n.dd-tl { position:relative;padding-left:26px }\n.dd-tl__item { position:relative;padding-bottom:20px }\n.dd-tl__item:last-child { padding-bottom:0 }\n.dd-tl__item::before { content:\"\";position:absolute;left:-19px;top:3px;width:9px;height:9px;border-radius:50%;background:var(--dd-tl-dot,var(--chrome-accent));box-shadow:0 0 0 3px var(--chrome-bg) }\n.dd-tl__item::after { content:\"\";position:absolute;left:-15px;top:15px;bottom:-3px;width:1px;background:var(--chrome-border) }\n.dd-tl__item:last-child::after { display:none }\n.dd-tl__meta { display:flex;align-items:baseline;gap:8px;flex-wrap:wrap }\n.dd-tl__title { font-size:13px;font-weight:700;color:var(--chrome-txt) }\n.dd-tl__time { font-size:11px;font-weight:600;color:var(--chrome-muted);font-variant-numeric:tabular-nums }\n.dd-tl__desc { font-size:12px;color:var(--chrome-muted);line-height:1.55;margin-top:2px }\n.dd-empty { border:1.5px dashed var(--chrome-border);border-radius:12px;padding:40px 24px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px }\n.dd-empty__icon { width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:var(--chrome-nav);color:var(--chrome-muted) }\n.dd-empty__title { font-size:14px;font-weight:800;color:var(--chrome-txt) }\n.dd-empty__desc { font-size:12.5px;color:var(--chrome-muted);max-width:340px;line-height:1.55 }\n.dd-empty__action { margin-top:6px;font-family:inherit;font-size:12.5px;font-weight:700;color:#fff;background:#000;border:none;border-radius:8px;padding:9px 16px;cursor:pointer;transition:background .15s }\n.dd-empty__action:hover { background:#252525 }\n[data-theme=\"dark\"] .dd-empty__action { background:#fff;color:#000 }\n[data-theme=\"dark\"] .dd-empty__action:hover { background:#f0f0f0 }",
+  "css": "/* ── EMPTY STATE ── */\n.dd-empty { border:1.5px dashed var(--chrome-border);border-radius:12px;padding:40px 24px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px }\n.dd-empty__icon { width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:var(--chrome-nav);color:var(--chrome-muted) }\n.dd-empty__title { font-size:14px;font-weight:800;color:var(--chrome-txt) }\n.dd-empty__desc { font-size:12.5px;color:var(--chrome-muted);max-width:340px;line-height:1.55 }\n.dd-empty__action { margin-top:6px;font-family:inherit;font-size:12.5px;font-weight:700;color:#fff;background:#000;border:none;border-radius:8px;padding:9px 16px;cursor:pointer;transition:background .15s }\n.dd-empty__action:hover { background:#252525 }\n[data-theme=\"dark\"] .dd-empty__action { background:#fff;color:#000 }\n[data-theme=\"dark\"] .dd-empty__action:hover { background:#f0f0f0 }",
   "usage": {
     "do": [
-      "Use a key–value list for a handful of facts about one record — reach for a table once there are many similar records.",
-      "Use an activity timeline when order and time genuinely matter, not just as a decorative list style.",
-      "Always give an empty state a plain-language reason and, where there's an obvious next step, a single primary action."
+      "Always give an empty state a plain-language reason for why there’s nothing to show.",
+      "Include a single primary action when there’s an obvious next step — clear a filter, create the first record.",
+      "Keep the glyph muted and simple; it should support the message, not compete with it."
     ],
     "dont": [
-      "Don’t stretch a key–value list to a screen’s worth of facts — that’s a table.",
-      "Don’t use a timeline for unordered or unrelated items.",
-      "Don’t leave an empty state blank or purely decorative — it should always explain what happened and what to do next."
+      "Don’t leave an empty state blank or purely decorative — it should always explain what happened and what to do next.",
+      "Don’t use an empty state for a loading moment — that’s a skeleton loader.",
+      "Don’t stack more than one primary action — move secondary options into a link or menu."
     ]
   },
-  "contentHash": "e129ff57f8ace52f33a4abc89d57ba729c5aa072b823c728754c37490209d0ec",
-  "note": "New section (2026-08-04) created by splitting the retired Data Display section: Key-value list, Activity timeline and Empty state had no better-fitting existing home (Stat tiles went to Cards, Data table to Tables, Progress meters/Distribution bars to Charts, Filter chips to Chips &amp; Pills). Fully static hand-authored markup. .dd-tl__item::before reads a --dd-tl-dot custom property set inline per item for its semantic node colour."
+  "contentHash": "cb8c2d800416cb326cdb2f4fbdf21565c7de4dd32491e240f24615fc294d7ee9",
+  "note": "Split out of the Lists section (2026-08-04), which itself was split from the retired Data Display section — now its own top-level component. Fully static hand-authored markup; the icon is an inline SVG, not from the Icons library."
 }
   </pre>
 </details>
@@ -9929,12 +9981,16 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.43.0';
+const SYSTEM_VERSION = '1.44.0';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.44.0', date:'2026-08-04', author:'Mo', title:'Empty state split out of Lists into its own section', changes:[
+        ['added','New Empty State section (s-empty-state) — a dashed-border card with a muted glyph, title, explanation and one primary action, plus its own When to use guidance'],
+        ['removed','Empty state removed from the Lists section; Lists now covers only Key–value list and Activity timeline'],
+      ]},
       {version:'1.43.0', date:'2026-08-04', author:'Mo', title:'Data Display retired — its patterns moved into the sections they actually belong to', changes:[
         ['removed','Data Display section (s-data) removed entirely; every pattern it held moved into the component section it best fits, so nothing about the content itself was lost'],
         ['changed','Stat tiles moved into Cards as a new "Stat tiles" variant'],
@@ -11249,12 +11305,21 @@ const CHANGELOG = {
         ['added','Interactive playground with real open/select/close, click-outside and Escape-to-dismiss behaviour'],
       ]},
     ]},
-    {secId:'s-lists', name:'Lists', version:'1.0.0', entries:[
+    {secId:'s-lists', name:'Lists', version:'1.1.0', entries:[
+      {version:'1.1.0', date:'2026-08-04', author:'Mo', title:'Empty state moved out into its own section', changes:[
+        ['removed','Empty state — moved out to a new, dedicated Empty State section (s-empty-state); it wasn\'t really list-shaped and reads clearer as its own component'],
+        ['changed','Section description and When to use guidance updated to cover only Key–value list and Activity timeline'],
+      ]},
       {version:'1.0.0', date:'2026-08-04', author:'Mo', title:'Initial release — split out of the retired Data Display section', changes:[
         ['added','Lists section (s-lists) created to hold the patterns from Data Display that had no better-fitting existing home: Key–value list, Activity timeline and Empty state, plus When to use guidance'],
         ['added','Key–value list — definition rows for detail panels and record summaries, stacking on mobile'],
         ['added','Activity timeline — chronological event feed with semantic-coloured nodes'],
         ['added','Empty state — muted glyph, plain-language explanation and a single primary action'],
+      ]},
+    ]},
+    {secId:'s-empty-state', name:'Empty State', version:'1.0.0', entries:[
+      {version:'1.0.0', date:'2026-08-04', author:'Mo', title:'Initial release — split out of Lists into its own section', changes:[
+        ['added','Empty State section (s-empty-state) — a dashed-border card with a muted glyph, title, short explanation and one primary action, plus When to use guidance'],
       ]},
     ]},
     {secId:'s-tables', name:'Tables', version:'1.2.0', entries:[
@@ -12867,6 +12932,7 @@ const NAV = [
       {id:'s-command',      label:'Command',             desc:'Searchable command palette.'},
       {id:'s-context-menu', label:'Context Menu',        desc:'Right-click and overflow action menus.'},
       {id:'s-dropdown',     label:'Dropdown',            desc:'Single- and multi-select menus.'},
+      {id:'s-empty-state',  label:'Empty State',         desc:'Muted glyph, explanation and a primary action.'},
       {id:'s-hover-card',   label:'Hover Card',          desc:'Rich preview shown on hover.'},
       {id:'s-input-otp',    label:'Input OTP',           desc:'One-time passcode entry fields.'},
       {id:'s-kbd',          label:'Keyboard Shortcuts',  desc:'Keycaps and shortcut hints.'},
@@ -12917,6 +12983,7 @@ const MOCKS = {
   's-command': '<div class="mk-card" style="width:80%;padding:11px 13px;display:flex;align-items:center;gap:9px"><span class="mk-glyph" style="width:16px;height:16px;color:var(--chrome-muted)">'+iconSvg('search')+'</span><span class="mk-bar" style="flex:1"></span><span class="mk-key">⌘K</span></div>',
   's-context-menu': '<div class="mk-card" style="width:60%;padding:7px"><div style="display:flex;flex-direction:column;gap:3px">'+['70%','90%','55%'].map(function(w,i){return '<span style="display:flex;align-items:center;gap:8px;padding:7px 9px;border-radius:6px;'+(i===1?'background:var(--chrome-hover)':'')+'"><span class="mk-bar" style="width:'+w+'"></span></span>';}).join('')+'</div></div>',
   's-dropdown': '<div class="mk mk-col" style="gap:7px"><div class="mk-card" style="width:70%;padding:9px 12px;display:flex;justify-content:space-between;align-items:center"><span class="mk-bar" style="width:55px"></span><span style="color:var(--chrome-muted)">▾</span></div><div class="mk-card" style="width:70%;padding:6px"><div style="display:flex;flex-direction:column;gap:4px"><span style="padding:6px 8px;border-radius:5px;background:var(--chrome-hover)"><span class="mk-bar" style="width:70%"></span></span><span style="padding:6px 8px;display:block"><span class="mk-bar" style="width:50%"></span></span></div></div></div>',
+  's-empty-state': '<div class="mk-card" style="width:56%;padding:18px 12px;display:flex;flex-direction:column;align-items:center;gap:8px;border-style:dashed"><span class="mk-circle" style="width:26px;height:26px;background:var(--chrome-border)"></span><span class="mk-bar mk-bar--txt" style="width:70%"></span><span class="mk-bar" style="width:50%"></span></div>',
   's-hover-card': '<div class="mk-card" style="width:72%;padding:12px;display:flex;gap:10px"><span class="mk-circle" style="width:38px;height:38px;background:var(--color-brand)"></span><div style="flex:1;display:flex;flex-direction:column;gap:6px"><span class="mk-bar mk-bar--txt" style="width:55%"></span><span class="mk-bar" style="width:90%"></span><span class="mk-bar" style="width:75%"></span></div></div>',
   's-input-otp': '<div class="mk-otp"><span class="on">4</span><span class="on">2</span><span></span><span></span></div>',
   's-kbd': '<div class="mk"><span class="mk-key">⌘</span><span style="color:var(--chrome-muted);font-weight:800">+</span><span class="mk-key">K</span></div>',
