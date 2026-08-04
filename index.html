@@ -165,7 +165,10 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;font-feature-
    TOP BAR
 ================================================================ */
 .bar{position:sticky;top:0;z-index:200;height:52px;background:var(--chrome-bar);color:var(--chrome-bar-txt);border-bottom:1px solid rgba(255,255,255,0.07);transition:background .25s}
-.bar__inner{max-width:1366px;margin:0 auto;height:100%;display:flex;align-items:center;gap:12px;padding:0 20px}
+/* Full width so the logo lines up with the flush-left sidebar; on the home page
+   (no sidebar) it caps to 1366 so the logo aligns with the centred hero content */
+.bar__inner{height:100%;display:flex;align-items:center;gap:12px;padding:0 20px}
+body.home .bar__inner{max-width:1366px;margin:0 auto}
 .bar__logo{font-weight:900;font-size:15px;letter-spacing:-.4px;color:var(--chrome-bar-txt);text-decoration:none;display:flex;align-items:center;gap:8px;white-space:nowrap}
 .bar__logo-img{height:28px;width:auto;display:block;flex-shrink:0}
 .bar__changelog{background:#1dfa0f;color:#000;font-family:'Satoshi',sans-serif;font-weight:900;font-size:13px;line-height:1;letter-spacing:-.2px;padding:9px 16px;border-radius:56px;text-decoration:none;white-space:nowrap;transition:filter .15s}
@@ -206,7 +209,9 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;font-feature-
 /* ================================================================
    LAYOUT
 ================================================================ */
-.layout{display:flex;min-height:calc(100vh - 52px);max-width:1366px;margin:0 auto}
+/* Full width so the sidebar always sits flush against the left edge — the 1366
+   content measure is capped on .main instead (1366 - 210px sidebar = 1156px) */
+.layout{display:flex;min-height:calc(100vh - 52px)}
 
 /* Sidebar */
 .sidebar{width:210px;flex-shrink:0;background:var(--chrome-nav);border-right:1px solid var(--chrome-border);position:sticky;top:52px;height:calc(100vh - 52px);overflow-y:auto;padding:20px 0;transition:background .25s}
@@ -291,7 +296,7 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;font-feature-
 .sb-tag{margin-left:auto;font-size:9.5px;padding:1px 6px;border-radius:10px;background:var(--chrome-border);color:var(--chrome-muted);white-space:nowrap}
 
 /* Main */
-.main{flex:1;padding:40px 48px;min-width:0}
+.main{flex:1;padding:40px 48px;min-width:0;max-width:1156px}
 
 /* ================================================================
    SECTION SHELL
@@ -1003,10 +1008,12 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;font-feature-
    HOME — Flash Design System landing (fixed light design)
 ============================================================ */
 body.home .sidebar{display:none}
+/* Home bands run full-bleed at every screen size — the 1366 cap applies to the
+   content inside each band (see .fds-*__inner below), not the coloured band itself */
 body.home .main{max-width:none;margin:0;padding:0}
 #s-brand{margin:0}
 #s-brand .sec-chlog{display:none}
-.fds-hero__inner,.fds-statement,.fds-cards,.fds-essence__title,.fds-essence__grid{max-width:1200px;margin-left:auto;margin-right:auto}
+.fds-hero__inner,.fds-statement,.fds-cards,.fds-essence__title,.fds-essence__grid{max-width:1366px;margin-left:auto;margin-right:auto}
 
 /* Hero */
 .fds-hero{background:#000;color:#fff;overflow:hidden;padding:72px 48px 104px;
@@ -1030,13 +1037,16 @@ body.home .main{max-width:none;margin:0;padding:0}
 .fds-band--cards{background:#fff;padding:56px 48px 88px}
 .fds-cards{display:grid;grid-template-columns:1fr 1fr;gap:36px}
 @media(max-width:760px){.fds-cards{grid-template-columns:1fr}}
-.fds-card{position:relative;border-radius:34px;padding:44px;min-height:clamp(360px,37vw,460px);
+.fds-card{position:relative;border-radius:34px;padding:42px;min-height:clamp(360px,37vw,460px);
+  border:2px solid transparent;
   display:flex;flex-direction:column;justify-content:center;text-decoration:none;overflow:hidden;
-  transition:transform .18s,box-shadow .18s}
-.fds-card:hover{transform:translateY(-4px);box-shadow:0 22px 54px rgba(0,0,0,.13)}
+  transition:background .18s,border-color .18s}
+.fds-card:hover{border-color:#10c504}
 .fds-card--brand{background:linear-gradient(48.7deg,#f0f0f0 13%,#1dfa0f 289%)}
+.fds-card--brand:hover{background:linear-gradient(48.7deg,#e8efe7 13%,#1dfa0f 250%)}
 .fds-card--components{background:#f0f0f0}
-.fds-card__arrow{position:absolute;top:40px;right:40px;width:26px;height:26px;transform:rotate(180deg)}
+.fds-card--components:hover{background:#e8e8e8}
+.fds-card__arrow{position:absolute;top:38px;right:38px;width:26px;height:26px;transform:rotate(180deg)}
 .fds-card__icon{display:block;margin-bottom:36px}
 .fds-card__title{font-family:'Satoshi',sans-serif;font-weight:900;color:#000;letter-spacing:-.02em;
   line-height:1;font-size:clamp(34px,4.4vw,56px);margin:0}
@@ -9700,6 +9710,19 @@ const CHANGELOG = {
         ['changed','Progress meters and both distribution-bar patterns (segmented "Distribution bar" and ranked "Distribution bars") moved into Charts, alongside Bar/Line/Donut'],
         ['changed','Filter chips moved into Chips & Pills\' Overview tab, next to the existing In-context examples'],
         ['added','New Lists section (s-lists) created to hold Key–value list, Activity timeline and Empty state — patterns with no other existing home'],
+      ]},
+      {version:'1.40.5', date:'2026-08-04', author:'Jaco', title:'Sidebar is now flush left instead of centred with the content', changes:[
+        ['fixed','On screens wider than 1366px the whole content column (sidebar + main) was centred, so the sidebar floated inward with a gap to its left instead of being docked against the window edge. .layout is now full width, so the sidebar always sits flush left at every screen size'],
+        ['changed','The 1366px measure is now capped on .main instead (max-width:1156px — 1366 minus the 210px sidebar), so the content column keeps exactly the width it had before, just left-aligned beside the sidebar rather than centred in the viewport'],
+        ['changed','Header content follows the same logic: .bar__inner is full width on component/foundation pages so the logo lines up with the flush-left sidebar, and caps to 1366 centred on the home page (which has no sidebar) so the logo stays aligned with the centred hero content'],
+      ]},
+      {version:'1.40.4', date:'2026-08-04', author:'Jaco', title:'Home page bands now run full-bleed at every screen size', changes:[
+        ['fixed','The black hero on the home page was capped at 1366px along with everything else, so on screens wider than that it sat as a centred island with white gutters either side instead of reading as a full-width header. body.home now clears the .layout max-width, so the hero (and the statement, cards and Brand essence bands) span 100% of the viewport at every screen size'],
+        ['changed','The 1366px cap now applies to the content inside each band rather than the coloured band itself — .fds-hero__inner / .fds-statement / .fds-cards / .fds-essence__title / .fds-essence__grid raised from 1200px to 1366px so the hero copy, cards and essence grid line up on exactly the same column as the top navigation content'],
+      ]},
+      {version:'1.40.3', date:'2026-08-04', author:'Jaco', title:'Reworked the hover state on the two home entry cards', changes:[
+        ['removed','The lift-and-shadow hover on the Brand/Components entry cards (.fds-card) — transform:translateY(-4px) plus a 54px-blur drop shadow, which read heavy and sat awkwardly against the flat page'],
+        ['changed','Hover is now a 2px Mid Green (#10C504) stroke plus a slight background deepening — the Components card goes #F0F0F0 → #E8E8E8 and the Brand card\'s gradient pulls its green stop in from 289% to 250%. The 2px border sits on the resting state as transparent (with padding trimmed 44px → 42px and the arrow inset 40px → 38px) so nothing shifts or changes size on hover'],
       ]},
       {version:'1.40.2', date:'2026-08-04', author:'Mo', title:'Refreshing the page no longer forces you back to the landing screen', changes:[
         ['added','The open section is now reflected in the URL as a \'#/<section-id>\' route (history.replaceState on every showSection()), so a refresh lands on the same section and any section can be linked or bookmarked directly'],

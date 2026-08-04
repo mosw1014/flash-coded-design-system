@@ -330,6 +330,30 @@ Read the relevant live component page before implementing any component below.
 
 If a component is not listed here, inspect its live page and `AI context` before choosing it.
 
+### Icon sourcing
+
+Flash's icon set (`s-icons`) is **Font Awesome Solid** — filled shapes, not outlines. A resolver's
+own printed summary of this foundation may deliberately exclude the actual path/viewBox data (it can
+be large) and list only icon *names*. Names alone are not enough to implement icons correctly — you
+must fetch the real path data before drawing a single icon.
+
+- **Before touching any icon, fetch the live `s-icons` section's own `ai-ctx` tab in full** (not a
+  resolver summary of it) and read its `js` field — the actual `ICONS` data object, keyed by name,
+  each with a real `vb` (viewBox) and `d` (SVG path markup). This is the one component where the
+  path data itself, not just the class list, is the thing you need.
+- **For every icon the target needs, check whether that exact name exists in the real `ICONS` data
+  first.** If it does, use its real `vb`/`d` verbatim, rendered filled (`fill="currentColor"`,
+  `stroke="none"`) — never redraw a Flash-covered icon as an outline/stroke glyph, and never
+  substitute a different real Flash icon just because it's "real" if it doesn't semantically match
+  (e.g. don't reuse the `link` chain icon for a generic "open externally" arrow just to claim a real
+  asset — semantic correctness comes first, real-asset-or-not second).
+- **Only for names genuinely outside Flash's icon set**, draw a custom solid glyph — filled shapes,
+  simple geometry, no thin outline strokes — visually consistent with Flash's solid style. State
+  plainly in the report which icons are real Flash assets and which are custom-matched, so nobody
+  mistakes a custom glyph for a verified one.
+- A generic icon library (Feather/Lucide-style outline icons, or any other pre-built set) is never an
+  acceptable substitute for Flash's own icons, even as a placeholder — see Restraint, below.
+
 ### Size judgement
 
 - Use Regular component sizes by default.
@@ -434,7 +458,10 @@ Before finishing, confirm:
 - [ ] Every icon SVG renders `display:block` and sits visibly centred in its box at the smallest
       size it's actually used at, not just at the default size.
 - [ ] No placeholder component was fabricated.
-- [ ] Font Awesome Solid remains the only icon style.
+- [ ] Font Awesome Solid remains the only icon style — every icon the real `s-icons` `ICONS` data
+      covers uses its actual `vb`/`d` verbatim (fetched from the live `ai-ctx` tab, not guessed from
+      the name), rendered filled; only genuinely uncovered names are custom-drawn, and the report
+      says which is which.
 - [ ] Responsive layouts were inspected at the required widths.
 - [ ] Keyboard focus, touch targets, contrast and zoom remain usable.
 - [ ] Loading, empty, error and disabled states remain coherent.
