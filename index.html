@@ -1334,6 +1334,7 @@ body.home .main{max-width:none;margin:0;padding:0}
 #s-chips #chip-reference .type-sub:last-child{margin-bottom:0}
 #s-chips .tabs-panel{padding-top:36px}
 #s-chips .cpg-section-block{border:1px solid var(--chrome-border);border-radius:16px;background:var(--chrome-nav);padding:32px;transition:background .25s,border-color .25s}
+#s-chips .cpg-section-heading{margin-bottom:24px}
 #s-chips .cpg-section-block .cpg-layout__intro{padding-left:20px;padding-right:20px}
 #s-chips .cpg-section-block .btn-pg__ctrls{background:var(--chrome-bg)}
 [data-theme="dark"] #s-chips .cpg-section-block .btn-pg__ctrls{background:var(--prim-gb-425)}
@@ -3477,7 +3478,7 @@ body.home .main{max-width:none;margin:0;padding:0}
       <div class="sec__head">
         <h1 class="sec__title">Chips and pills</h1>
         <div class="chip-header-meta">
-          <span class="comp-ver-badge" style="margin-left:0">v1.11.0</span>
+          <span class="comp-ver-badge" style="margin-left:0">v1.11.1</span>
           <details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-chips">
@@ -3533,41 +3534,37 @@ body.home .main{max-width:none;margin:0;padding:0}
         <div id="chip-variants" class="type-sub"></div>
         <div id="chip-insitu" class="type-sub"></div>
         <div class="type-sub cpg-variants" id="chip-usage">
+          <div class="cpg-section-heading">
+            <div class="cpg-layout__title">Do's &amp; don'ts</div>
+            <div class="cpg-layout__desc">A few simple rules that keep chips readable and predictable.</div>
+          </div>
           <div class="cpg-section-block">
-          <div class="cpg-layout">
-            <div class="cpg-layout__intro">
-              <div class="cpg-layout__title">Do's &amp; don'ts</div>
-              <div class="cpg-layout__desc">A few simple rules that keep chips readable and predictable.</div>
-            </div>
-            <div class="cpg-layout__demo">
-              <div class="sel-usage">
-                <div class="sel-usage__card">
-                  <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
-                  <ul class="sel-usage__list">
-                    <li>Keep labels to a word or two so they stay easy to scan.</li>
-                    <li>Match the colour to the meaning &mdash; green for done, red for a problem.</li>
-                    <li>Group related chips together, like a row of filters.</li>
-                  </ul>
-                  <div class="chip-usage-demo">
-                    <span class="chip chip--reg" style="--chip-bg:#16A220;--chip-text:#ffffff;font-size:12.5px;padding:0 11px"><span class="chip__label">Paid</span></span>
-                    <span class="chip chip--reg" style="--chip-bg:#FF8900;--chip-text:#ffffff;font-size:12.5px;padding:0 11px"><span class="chip__label">Pending</span></span>
-                    <span class="chip chip--reg" style="--chip-bg:#EB0029;--chip-text:#ffffff;font-size:12.5px;padding:0 11px"><span class="chip__label">Overdue</span></span>
-                  </div>
+            <div class="sel-usage">
+              <div class="sel-usage__card">
+                <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
+                <ul class="sel-usage__list">
+                  <li>Keep labels to a word or two so they stay easy to scan.</li>
+                  <li>Match the colour to the meaning &mdash; green for done, red for a problem.</li>
+                  <li>Group related chips together, like a row of filters.</li>
+                </ul>
+                <div class="chip-usage-demo">
+                  <span class="chip chip--reg" style="--chip-bg:#16A220;--chip-text:#ffffff;font-size:12.5px;padding:0 11px"><span class="chip__label">Paid</span></span>
+                  <span class="chip chip--reg" style="--chip-bg:#FF8900;--chip-text:#ffffff;font-size:12.5px;padding:0 11px"><span class="chip__label">Pending</span></span>
+                  <span class="chip chip--reg" style="--chip-bg:#EB0029;--chip-text:#ffffff;font-size:12.5px;padding:0 11px"><span class="chip__label">Overdue</span></span>
                 </div>
-                <div class="sel-usage__card">
-                  <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don't</div>
-                  <ul class="sel-usage__list">
-                    <li>Don't write a full sentence inside a chip &mdash; shorten it or use plain text.</li>
-                    <li>Don't use a chip as a main button; buttons are for actions.</li>
-                    <li>Don't colour chips just for decoration &mdash; colour should carry meaning.</li>
-                  </ul>
-                  <div class="chip-usage-demo">
-                    <span class="chip chip--reg" style="--chip-bg:#0062EB;--chip-text:#ffffff;font-size:12.5px;padding:0 11px"><span class="chip__label">This invoice is now overdue</span></span>
-                  </div>
+              </div>
+              <div class="sel-usage__card">
+                <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don't</div>
+                <ul class="sel-usage__list">
+                  <li>Don't write a full sentence inside a chip &mdash; shorten it or use plain text.</li>
+                  <li>Don't use a chip as a main button; buttons are for actions.</li>
+                  <li>Don't colour chips just for decoration &mdash; colour should carry meaning.</li>
+                </ul>
+                <div class="chip-usage-demo">
+                  <span class="chip chip--reg" style="--chip-bg:#0062EB;--chip-text:#ffffff;font-size:12.5px;padding:0 11px"><span class="chip__label">This invoice is now overdue</span></span>
                 </div>
               </div>
             </div>
-          </div>
           </div>
         </div>
       </div>
@@ -9062,16 +9059,12 @@ function renderChipVariants(){
     </div>`).join('');
 
   root.innerHTML = `
-    <div class="cpg-section-block">
-    <div class="cpg-layout cpg-variants">
-      <div class="cpg-layout__intro">
-        <div class="cpg-layout__title">Key variants</div>
-        <div class="cpg-layout__desc">Five semantic colours, each with a job. Match the colour to the meaning &mdash; not the decoration.</div>
-      </div>
-      <div class="cpg-layout__demo">
-        <div class="chip-variants-grid">${cells}</div>
-      </div>
+    <div class="cpg-section-heading">
+      <div class="cpg-layout__title">Key variants</div>
+      <div class="cpg-layout__desc">Five semantic colours, each with a job. Match the colour to the meaning &mdash; not the decoration.</div>
     </div>
+    <div class="cpg-section-block">
+      <div class="chip-variants-grid">${cells}</div>
     </div>`;
 }
 
@@ -9121,20 +9114,16 @@ function renderChipInSitu(){
     <div class="chip-mock__cap"><b>Tags in a field</b>Removable chips collect several choices in one input.</div>`;
 
   root.innerHTML = `
-    <div class="cpg-section-block">
-    <div class="cpg-layout cpg-variants">
-      <div class="cpg-layout__intro">
-        <div class="cpg-layout__title">In context</div>
-        <div class="cpg-layout__desc">The same chip does three everyday jobs &mdash; showing status, filtering a list, and collecting tags.</div>
-      </div>
-      <div class="cpg-layout__demo">
-        <div class="chip-insitu-grid">
-          <div class="chip-mock">${listMock}</div>
-          <div class="chip-mock">${filterMock}</div>
-          <div class="chip-mock">${fieldMock}</div>
-        </div>
-      </div>
+    <div class="cpg-section-heading">
+      <div class="cpg-layout__title">In context</div>
+      <div class="cpg-layout__desc">The same chip does three everyday jobs &mdash; showing status, filtering a list, and collecting tags.</div>
     </div>
+    <div class="cpg-section-block">
+      <div class="chip-insitu-grid">
+        <div class="chip-mock">${listMock}</div>
+        <div class="chip-mock">${filterMock}</div>
+        <div class="chip-mock">${fieldMock}</div>
+      </div>
     </div>`;
 }
 
@@ -9545,12 +9534,16 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.39.0';
+const SYSTEM_VERSION = '1.39.1';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.39.1', date:'2026-08-03', author:'Helen', title:'Fixed v1.39.0: only the visual content should sit in the card, not the heading', changes:[
+        ['fixed','v1.39.0 wrapped the whole .cpg-layout (heading + description together with the demo) inside .cpg-section-block for "Key variants", "In context" and "Do\'s & don\'ts" — matching the reference more closely, the heading/description now sit above the card as a plain, full-width block (.cpg-section-heading), and only the visual demo content (the variant cards / mockups / sel-usage grid) is inside .cpg-section-block'],
+        ['changed','"Try the component" is unaffected — its heading legitimately sits inside its own .cpg-section-block, side-by-side with the playground, per the same reference'],
+      ]},
       {version:'1.39.0', date:'2026-08-03', author:'Helen', title:'Wrapped Key variants, In context and Do\'s & don\'ts in the same card treatment as Try the component', changes:[
         ['changed','"Key variants" (renderChipVariants), "In context" (renderChipInSitu) and "Do\'s & don\'ts" (the #chip-usage block) now each sit inside a #s-chips .cpg-section-block — the same bordered, tinted card already used for "Try the component" — instead of sitting directly on the page background'],
         ['added','#s-chips .cpg-section-block .sel-usage__card now gets a chrome-bg (light) / prim-gb-425 (dark) background override, matching the existing .btn-pg__ctrls override, so the Do/Don\'t cards read as white cards against the section-block\'s tinted background instead of blending into it'],
@@ -10483,7 +10476,10 @@ const CHANGELOG = {
         ['added','“Tag or Chip?” guidance clarifying when to use each'],
       ]},
     ]},
-    {secId:'s-chips', name:'Chips & Pills', version:'1.11.0', entries:[
+    {secId:'s-chips', name:'Chips & Pills', version:'1.11.1', entries:[
+      {version:'1.11.1', date:'2026-08-03', author:'Helen', title:'Fixed the section cards: heading stays outside, only the demo content is contained', changes:[
+        ['fixed','"Key variants", "In context" and "Do\'s & don\'ts" previously put the heading + description inside .cpg-section-block alongside the demo (matching "Try the component"\'s layout, which was wrong for these three) — now the heading sits above the card as a plain, full-width block, and only the cards/mockups/sel-usage grid are inside it'],
+      ]},
       {version:'1.11.0', date:'2026-08-03', author:'Helen', title:'Key variants, In context and Do\'s & don\'ts now share the Try the component card treatment', changes:[
         ['changed','All four Overview sections now sit inside the same bordered, tinted card (.cpg-section-block) — previously only "Try the component" had it, so "Key variants", "In context" and "Do\'s & don\'ts" looked visually disconnected from it'],
       ]},
