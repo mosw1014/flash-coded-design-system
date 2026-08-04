@@ -3817,15 +3817,15 @@ body.home .main{max-width:none;margin:0;padding:0}
       </div>
       <div class="tabs-panel" data-pill-panel="changelog" id="pill-changelog-panel"></div>
     </section>
-    <section class="sec" id="s-cards">
+    <section class="sec" id="s-cards-basic">
       <div class="sec__head">
         <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Cards <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.1.0</span></h1>
-        <p class="sec__desc">A surface that groups related content and actions into a single unit. Composed from an optional media band, a body (title, description, content) and an optional footer for actions. Built on Flash surface and border tokens, so it adapts to light &amp; dark.</p>
+        <h1 class="sec__title">Basic Cards <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.2.0</span></h1>
+        <p class="sec__desc">A surface that groups related content and actions into a single unit — a body (title, description, content) and an optional footer for actions. Built on Flash surface and border tokens, so it adapts to light &amp; dark.</p>
       </div>
       <div class="type-sub">
         <div class="type-sub__title">Anatomy</div>
-        <div class="type-sub__desc">A basic card is a body with a title and description. Add a footer for actions, and a media band for imagery &mdash; use only what each card needs.</div>
+        <div class="type-sub__desc">A basic card is a body with a title and description. Add a footer for actions &mdash; use only what each card needs.</div>
         <div class="sg-stage"><div class="card-grid">
           <div class="card">
             <div class="card__body">
@@ -3846,8 +3846,85 @@ body.home .main{max-width:none;margin:0;padding:0}
         </div></div>
       </div>
       <div class="type-sub">
-        <div class="type-sub__title">Media &amp; interactive</div>
-        <div class="type-sub__desc">A media band sits flush at the top. An interactive card lifts on hover and makes the whole surface a single target &mdash; use it when the entire card links somewhere.</div>
+        <div class="type-sub__title">Specs</div>
+        <div class="type-sub__desc">Shared measurements and the tokens behind the surface &mdash; the same base applies to every card variant in this group (Media, Interactive, Stat, Hover).</div>
+        <div class="dd-table-wrap"><table class="dd-table">
+          <thead><tr><th>Property</th><th>Value</th><th>Token</th></tr></thead>
+          <tbody>
+            <tr><td class="dd-table__name">Corner radius</td><td>14px</td><td>&mdash;</td></tr>
+            <tr><td class="dd-table__name">Border</td><td>1px</td><td><code>chrome-border</code></td></tr>
+            <tr><td class="dd-table__name">Surface</td><td>Base background</td><td><code>chrome-bg</code></td></tr>
+            <tr><td class="dd-table__name">Body padding</td><td>18px</td><td>spacing-225</td></tr>
+            <tr><td class="dd-table__name">Footer action</td><td colspan="2">Primary (black) button</td></tr>
+          </tbody>
+        </table></div>
+      </div>
+      <div class="type-sub">
+        <div class="type-sub__title">When to use</div>
+        <div class="type-sub__desc">A card groups one coherent thing. If content isn&rsquo;t related, don&rsquo;t box it together.</div>
+        <div class="sel-usage">
+          <div class="sel-usage__card">
+            <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
+            <ul class="sel-usage__list">
+              <li>Group a single, self-contained subject &mdash; one product, one summary, one record.</li>
+              <li>Keep one clear primary action per card, in the footer.</li>
+              <li>Reach for Media, Interactive, Stat or Hover Cards for those specific jobs &mdash; this basic shape is the default for everything else.</li>
+            </ul>
+          </div>
+          <div class="sel-usage__card">
+            <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don&rsquo;t</div>
+            <ul class="sel-usage__list">
+              <li>Don&rsquo;t cram unrelated content into one card to save space.</li>
+              <li>Don&rsquo;t nest cards inside cards &mdash; flatten the hierarchy.</li>
+              <li>Don&rsquo;t put several competing primary actions in one footer.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <details class="ai-ctx">
+  <summary>AI context</summary>
+  <pre data-ai-context="s-cards-basic">
+{
+  "status": "static",
+  "realClasses": [
+    ".card",
+    ".card__body",
+    ".card__title",
+    ".card__desc",
+    ".card__foot",
+    ".card__foot--end",
+    ".card-btn",
+    ".card-btn--ghost"
+  ],
+  "css": ".card { background:var(--chrome-bg);border:1px solid var(--chrome-border);border-radius:14px;overflow:hidden;width:300px;max-width:100%;transition:background .25s,border-color .15s,box-shadow .15s,transform .15s;display:flex;flex-direction:column }\n.card__body { padding:18px;flex:1 }\n.card__title { font-size:15px;font-weight:800;color:var(--chrome-txt);margin-bottom:5px }\n.card__desc { font-size:13px;line-height:1.55;color:var(--chrome-muted) }\n.card__body p { font-size:13px;line-height:1.6;color:var(--chrome-txt);margin-top:12px }\n.card__foot { display:flex;gap:10px;align-items:center;padding:14px 18px;border-top:1px solid var(--chrome-border) }\n.card__foot--end { justify-content:flex-end }\n.card-btn { background:var(--color-btn-s-bg);color:var(--color-btn-s-txt);border:0;border-radius:8px;padding:8px 16px;font-size:13px;font-weight:700;font-family:inherit;cursor:pointer;transition:opacity .15s }\n.card-btn:hover { opacity:.85 }\n.card-btn--ghost { background:transparent;color:var(--chrome-txt);border:1px solid var(--chrome-border) }\n.card-btn--ghost:hover { opacity:1;background:var(--chrome-hover) }",
+  "usage": {
+    "do": [
+      "Group a single, self-contained subject — one product, one summary, one record.",
+      "Keep one clear primary action per card, in the footer.",
+      "Reach for Media, Interactive, Stat or Hover Cards for those specific jobs — this basic shape is the default for everything else."
+    ],
+    "dont": [
+      "Don’t cram unrelated content into one card to save space.",
+      "Don’t nest cards inside cards — flatten the hierarchy.",
+      "Don’t put several competing primary actions in one footer."
+    ]
+  },
+  "contentHash": "a20999f39b47041d7169c305d677a96552bf1e5ffe38e4b149e07907573b23d0",
+  "note": "Split out of the former combined Cards page (v1.1.0), which also covered Media/Interactive/Stat variants (now s-cards-media/s-cards-interactive/s-cards-stat)."
+}
+  </pre>
+</details>
+    </section>
+
+    <section class="sec" id="s-cards-media">
+      <div class="sec__head">
+        <div class="sec__eye">Components</div>
+        <h1 class="sec__title">Media Cards <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.0</span></h1>
+        <p class="sec__desc">A card with an image or thumbnail band flush at the top, above the body &mdash; for products, articles and previews.</p>
+      </div>
+      <div class="type-sub">
+        <div class="type-sub__title">Media band</div>
+        <div class="type-sub__desc">The media band sits flush at the top with no padding; the body below keeps the standard card padding.</div>
         <div class="sg-stage"><div class="card-grid">
           <div class="card">
             <div class="card__media"></div>
@@ -3856,6 +3933,72 @@ body.home .main{max-width:none;margin:0;padding:0}
               <div class="card__desc">An image or thumbnail band above the body, useful for products, articles and previews.</div>
             </div>
           </div>
+        </div></div>
+      </div>
+      <div class="type-sub">
+        <div class="type-sub__title">When to use</div>
+        <div class="type-sub__desc">Use a media band when the card genuinely has imagery to show &mdash; not as decoration.</div>
+        <div class="sel-usage">
+          <div class="sel-usage__card">
+            <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
+            <ul class="sel-usage__list">
+              <li>Use the media band for a real product shot, thumbnail or preview image.</li>
+              <li>Keep the aspect ratio consistent across a grid of media cards.</li>
+              <li>Pair with a short title and description &mdash; let the image carry the visual weight.</li>
+            </ul>
+          </div>
+          <div class="sel-usage__card">
+            <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don&rsquo;t</div>
+            <ul class="sel-usage__list">
+              <li>Don&rsquo;t add a media band with no real image just to make a card feel richer.</li>
+              <li>Don&rsquo;t mix media and non-media cards in the same grid row.</li>
+              <li>Don&rsquo;t crop the image so tightly the subject is unclear.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <details class="ai-ctx">
+  <summary>AI context</summary>
+  <pre data-ai-context="s-cards-media">
+{
+  "status": "static",
+  "realClasses": [
+    ".card",
+    ".card__media",
+    ".card__body",
+    ".card__title",
+    ".card__desc"
+  ],
+  "css": ".card { background:var(--chrome-bg);border:1px solid var(--chrome-border);border-radius:14px;overflow:hidden;width:300px;max-width:100%;transition:background .25s,border-color .15s,box-shadow .15s,transform .15s;display:flex;flex-direction:column }\n.card__media { height:132px;background:linear-gradient(135deg,var(--prim-grey-700),var(--prim-grey-1000));flex-shrink:0 }\n.card__body { padding:18px;flex:1 }\n.card__title { font-size:15px;font-weight:800;color:var(--chrome-txt);margin-bottom:5px }\n.card__desc { font-size:13px;line-height:1.55;color:var(--chrome-muted) }\n.card__body p { font-size:13px;line-height:1.6;color:var(--chrome-txt);margin-top:12px }",
+  "usage": {
+    "do": [
+      "Use the media band for a real product shot, thumbnail or preview image.",
+      "Keep the aspect ratio consistent across a grid of media cards.",
+      "Pair with a short title and description — let the image carry the visual weight."
+    ],
+    "dont": [
+      "Don’t add a media band with no real image just to make a card feel richer.",
+      "Don’t mix media and non-media cards in the same grid row.",
+      "Don’t crop the image so tightly the subject is unclear."
+    ]
+  },
+  "contentHash": "85436120c1ecd05df930853c2a97d73689df94f3c47f18a721d667d59673bded",
+  "note": "Split out of the former combined Cards page (v1.1.0). .card__media is a plain gradient placeholder in this demo — a real integration substitutes an actual image."
+}
+  </pre>
+</details>
+    </section>
+
+    <section class="sec" id="s-cards-interactive">
+      <div class="sec__head">
+        <div class="sec__eye">Components</div>
+        <h1 class="sec__title">Interactive Cards <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.0</span></h1>
+        <p class="sec__desc">A card that lifts on hover and makes the whole surface a single clickable target &mdash; use it when the entire card links somewhere.</p>
+      </div>
+      <div class="type-sub">
+        <div class="type-sub__title">Interactive</div>
+        <div class="type-sub__desc">Hover me. The whole card is one clickable target with a subtle lift and shadow.</div>
+        <div class="sg-stage"><div class="card-grid">
           <div class="card card--interactive" tabindex="0" role="button">
             <div class="card__body">
               <div class="card__title">Interactive card &rarr;</div>
@@ -3865,8 +4008,68 @@ body.home .main{max-width:none;margin:0;padding:0}
         </div></div>
       </div>
       <div class="type-sub">
+        <div class="type-sub__title">When to use</div>
+        <div class="type-sub__desc">Only make the whole card clickable when it has exactly one destination.</div>
+        <div class="sel-usage">
+          <div class="sel-usage__card">
+            <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
+            <ul class="sel-usage__list">
+              <li>Use it when tapping anywhere on the card should go to one place.</li>
+              <li>Give it <code>role="button"</code> and <code>tabindex="0"</code> so it&rsquo;s keyboard-reachable, as in this demo.</li>
+              <li>Keep the hover lift subtle &mdash; it&rsquo;s a hint, not the headline.</li>
+            </ul>
+          </div>
+          <div class="sel-usage__card">
+            <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don&rsquo;t</div>
+            <ul class="sel-usage__list">
+              <li>Don&rsquo;t make a card interactive if it also contains its own buttons or links &mdash; that&rsquo;s a click-target conflict.</li>
+              <li>Don&rsquo;t use it for a card that&rsquo;s purely informational.</li>
+              <li>Don&rsquo;t rely on hover alone &mdash; make sure focus and touch both work.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <details class="ai-ctx">
+  <summary>AI context</summary>
+  <pre data-ai-context="s-cards-interactive">
+{
+  "status": "static",
+  "realClasses": [
+    ".card",
+    ".card--interactive",
+    ".card__body",
+    ".card__title",
+    ".card__desc"
+  ],
+  "css": ".card { background:var(--chrome-bg);border:1px solid var(--chrome-border);border-radius:14px;overflow:hidden;width:300px;max-width:100%;transition:background .25s,border-color .15s,box-shadow .15s,transform .15s;display:flex;flex-direction:column }\n.card__body { padding:18px;flex:1 }\n.card__title { font-size:15px;font-weight:800;color:var(--chrome-txt);margin-bottom:5px }\n.card__desc { font-size:13px;line-height:1.55;color:var(--chrome-muted) }\n.card__body p { font-size:13px;line-height:1.6;color:var(--chrome-txt);margin-top:12px }\n.card--interactive { cursor:pointer }\n.card--interactive:hover { border-color:var(--color-text-s);box-shadow:0 8px 24px rgba(0,0,0,.10);transform:translateY(-2px) }",
+  "usage": {
+    "do": [
+      "Use it when tapping anywhere on the card should go to one place.",
+      "Give it role=\"button\" and tabindex=\"0\" so it’s keyboard-reachable, as in this demo.",
+      "Keep the hover lift subtle — it’s a hint, not the headline."
+    ],
+    "dont": [
+      "Don’t make a card interactive if it also contains its own buttons or links — that’s a click-target conflict.",
+      "Don’t use it for a card that’s purely informational.",
+      "Don’t rely on hover alone — make sure focus and touch both work."
+    ]
+  },
+  "contentHash": "60df90c00cde16f0b98e6e6df94ae917b4be440978344c03b23547984c6542fb",
+  "note": "Split out of the former combined Cards page (v1.1.0). No JS involved — role/tabindex are static attributes and the hover lift is pure CSS."
+}
+  </pre>
+</details>
+    </section>
+
+    <section class="sec" id="s-cards-stat">
+      <div class="sec__head">
+        <div class="sec__eye">Components</div>
+        <h1 class="sec__title">Stat Cards <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.0</span></h1>
+        <p class="sec__desc">A card variant for headline KPIs &mdash; label, value and trend delta. Deltas use the Success / Critical semantic tokens so direction reads at a glance.</p>
+      </div>
+      <div class="type-sub">
         <div class="type-sub__title">Stat tiles</div>
-        <div class="type-sub__desc">A card variant for headline KPIs — label, value and trend delta. Deltas use the Success / Critical semantic tokens so direction reads at a glance.</div>
+        <div class="type-sub__desc">Each tile pairs a label with a large value and an optional trend delta.</div>
         <div class="dd-stats">
           <div class="dd-stat">
             <div class="dd-stat__label">Transactions</div>
@@ -3891,57 +4094,33 @@ body.home .main{max-width:none;margin:0;padding:0}
         </div>
       </div>
       <div class="type-sub">
-        <div class="type-sub__title">Specs</div>
-        <div class="type-sub__desc">Shared measurements and the tokens behind the surface.</div>
-        <div class="dd-table-wrap"><table class="dd-table">
-          <thead><tr><th>Property</th><th>Value</th><th>Token</th></tr></thead>
-          <tbody>
-            <tr><td class="dd-table__name">Corner radius</td><td>14px</td><td>&mdash;</td></tr>
-            <tr><td class="dd-table__name">Border</td><td>1px</td><td><code>chrome-border</code></td></tr>
-            <tr><td class="dd-table__name">Surface</td><td>Base background</td><td><code>chrome-bg</code></td></tr>
-            <tr><td class="dd-table__name">Body padding</td><td>18px</td><td>spacing-225</td></tr>
-            <tr><td class="dd-table__name">Footer action</td><td colspan="2">Primary (black) button</td></tr>
-          </tbody>
-        </table></div>
-      </div>
-      <div class="type-sub">
         <div class="type-sub__title">When to use</div>
-        <div class="type-sub__desc">A card groups one coherent thing. If content isn&rsquo;t related, don&rsquo;t box it together.</div>
+        <div class="type-sub__desc">Stat cards headline a dashboard&rsquo;s key numbers &mdash; keep them to the metrics that matter most.</div>
         <div class="sel-usage">
           <div class="sel-usage__card">
             <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
             <ul class="sel-usage__list">
-              <li>Group a single, self-contained subject &mdash; one product, one summary, one record.</li>
-              <li>Keep one clear primary action per card, in the footer.</li>
-              <li>Make the whole card clickable only when it links to one destination.</li>
+              <li>Lead with the number &mdash; label above, value large, delta below.</li>
+              <li>Use the Success / Critical delta tokens so direction reads without reading the number.</li>
+              <li>Group 3&ndash;4 related stats in a row; more than that, use a table.</li>
             </ul>
           </div>
           <div class="sel-usage__card">
             <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don&rsquo;t</div>
             <ul class="sel-usage__list">
-              <li>Don&rsquo;t cram unrelated content into one card to save space.</li>
-              <li>Don&rsquo;t nest cards inside cards &mdash; flatten the hierarchy.</li>
-              <li>Don&rsquo;t put several competing primary actions in one footer.</li>
+              <li>Don&rsquo;t add a delta with no real comparison period behind it.</li>
+              <li>Don&rsquo;t mix currencies or units in the same row without labelling them.</li>
+              <li>Don&rsquo;t use a stat card for a value that changes on every render &mdash; it invites misreading.</li>
             </ul>
           </div>
         </div>
       </div>
           <details class="ai-ctx">
   <summary>AI context</summary>
-  <pre data-ai-context="s-cards">
+  <pre data-ai-context="s-cards-stat">
 {
   "status": "static",
   "realClasses": [
-    ".card",
-    ".card__body",
-    ".card__title",
-    ".card__desc",
-    ".card__foot",
-    ".card__foot--end",
-    ".card__media",
-    ".card--interactive",
-    ".card-btn",
-    ".card-btn--ghost",
     ".dd-stats",
     ".dd-stat",
     ".dd-stat__label",
@@ -3952,21 +4131,21 @@ body.home .main{max-width:none;margin:0;padding:0}
     ".dd-delta--up",
     ".dd-delta--down"
   ],
-  "css": ".card { background:var(--chrome-bg);border:1px solid var(--chrome-border);border-radius:14px;overflow:hidden;width:300px;max-width:100%;transition:background .25s,border-color .15s,box-shadow .15s,transform .15s;display:flex;flex-direction:column }\n.card__media { height:132px;background:linear-gradient(135deg,var(--prim-grey-700),var(--prim-grey-1000));flex-shrink:0 }\n.card__body { padding:18px;flex:1 }\n.card__title { font-size:15px;font-weight:800;color:var(--chrome-txt);margin-bottom:5px }\n.card__desc { font-size:13px;line-height:1.55;color:var(--chrome-muted) }\n.card__body p { font-size:13px;line-height:1.6;color:var(--chrome-txt);margin-top:12px }\n.card__foot { display:flex;gap:10px;align-items:center;padding:14px 18px;border-top:1px solid var(--chrome-border) }\n.card__foot--end { justify-content:flex-end }\n.card--interactive { cursor:pointer }\n.card--interactive:hover { border-color:var(--color-text-s);box-shadow:0 8px 24px rgba(0,0,0,.10);transform:translateY(-2px) }\n.card-btn { background:var(--color-btn-s-bg);color:var(--color-btn-s-txt);border:0;border-radius:8px;padding:8px 16px;font-size:13px;font-weight:700;font-family:inherit;cursor:pointer;transition:opacity .15s }\n.card-btn:hover { opacity:.85 }\n.card-btn--ghost { background:transparent;color:var(--chrome-txt);border:1px solid var(--chrome-border) }\n.card-btn--ghost:hover { opacity:1;background:var(--chrome-hover) }\n/* ---- Stat tile (Cards variant) ---- */\n.dd-stats { display:grid;grid-template-columns:repeat(4,1fr);gap:14px }\n.dd-stats { grid-template-columns:1fr 1fr }\n.dd-stat { border:1px solid var(--chrome-border);border-radius:14px;padding:18px 18px 16px;background:var(--chrome-bg);transition:border-color .2s,transform .2s }\n.dd-stat:hover { border-color:var(--chrome-accent);transform:translateY(-2px) }\n.dd-stat__label { font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--chrome-muted);margin-bottom:10px }\n.dd-stat__value { font-size:30px;font-weight:800;line-height:1;color:var(--chrome-txt);letter-spacing:-1px;font-variant-numeric:tabular-nums }\n.dd-stat__foot { display:flex;align-items:center;gap:8px;margin-top:11px;font-size:12px }\n.dd-stat__sub { color:var(--chrome-muted);font-weight:500 }\n.dd-delta { display:inline-flex;align-items:center;gap:3px;padding:2px 7px;border-radius:999px;font-size:11px;font-weight:700;white-space:nowrap }\n.dd-delta--up { color:var(--color-success-h);background:var(--color-success-l) }\n.dd-delta--down { color:var(--color-crit-h);background:var(--color-crit-l) }",
+  "css": "/* ---- Stat tile (Cards variant) ---- */\n.dd-stats { display:grid;grid-template-columns:repeat(4,1fr);gap:14px }\n.dd-stats { grid-template-columns:1fr 1fr }\n.dd-stat { border:1px solid var(--chrome-border);border-radius:14px;padding:18px 18px 16px;background:var(--chrome-bg);transition:border-color .2s,transform .2s }\n.dd-stat:hover { border-color:var(--chrome-accent);transform:translateY(-2px) }\n.dd-stat__label { font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--chrome-muted);margin-bottom:10px }\n.dd-stat__value { font-size:30px;font-weight:800;line-height:1;color:var(--chrome-txt);letter-spacing:-1px;font-variant-numeric:tabular-nums }\n.dd-stat__foot { display:flex;align-items:center;gap:8px;margin-top:11px;font-size:12px }\n.dd-stat__sub { color:var(--chrome-muted);font-weight:500 }\n.dd-delta { display:inline-flex;align-items:center;gap:3px;padding:2px 7px;border-radius:999px;font-size:11px;font-weight:700;white-space:nowrap }\n.dd-delta--up { color:var(--color-success-h);background:var(--color-success-l) }\n.dd-delta--down { color:var(--color-crit-h);background:var(--color-crit-l) }",
   "usage": {
     "do": [
-      "Group a single, self-contained subject — one product, one summary, one record.",
-      "Keep one clear primary action per card, in the footer.",
-      "Make the whole card clickable only when it links to one destination."
+      "Lead with the number — label above, value large, delta below.",
+      "Use the Success / Critical delta tokens so direction reads without reading the number.",
+      "Group 3–4 related stats in a row; more than that, use a table."
     ],
     "dont": [
-      "Don’t cram unrelated content into one card to save space.",
-      "Don’t nest cards inside cards — flatten the hierarchy.",
-      "Don’t put several competing primary actions in one footer."
+      "Don’t add a delta with no real comparison period behind it.",
+      "Don’t mix currencies or units in the same row without labelling them.",
+      "Don’t use a stat card for a value that changes on every render — it invites misreading."
     ]
   },
-  "contentHash": "ae12717d01651e7126d7c78ba2399acb5d3eed79a27fb0b4b90aa69d4a3878bf",
-  "note": "Stat tiles is a Cards variant migrated from the retired Data Display section; .dd-* classes are shared with the Tables Reporting variant / Charts meters+distribution / Lists / Pills filter-pills demos, each documented in that section's own tab."
+  "contentHash": "7dd96cca82a0c4b83f516bedc905c7d8b286c68465bb16536f18fcf989c3570c",
+  "note": "Split out of the former combined Cards page (v1.1.0). .dd-stat* classes are shared with the Tables Reporting variant / Charts meters+distribution / Lists / Pills filter-pills demos, each documented in that section's own tab."
 }
   </pre>
 </details>
@@ -6196,33 +6375,243 @@ body.home .main{max-width:none;margin:0;padding:0}
     <!-- ============================================================
          CHARTS
     ============================================================ -->
-    <section class="sec" id="s-charts">
+    <section class="sec" id="s-charts-bar">
       <div class="sec__head">
         <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Charts <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.1.0</span></h1>
-        <p class="sec__desc">Lightweight, interactive data visualisations rendered as inline SVG &mdash; no charting library. Four core types cover most needs. Hover any bar, point or segment for its value; the donut pops the hovered slice and shows its share in the centre. Series and categories use the Flash colour palette (brand green, blue, purple, orange); single-series charts lead with the brand green.</p>
+        <h1 class="sec__title">Bar Charts <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.2.0</span></h1>
+        <p class="sec__desc">Compare discrete values across categories. Rendered as inline SVG &mdash; no charting library. Hover a bar to emphasise it and read its value; the rest dim back.</p>
       </div>
       <div class="type-sub">
         <div class="type-sub__title">Bar</div>
-        <div class="type-sub__desc">Compare discrete values across categories. Hover a bar to emphasise it and read its value; the rest dim back.</div>
+        <div class="type-sub__desc">Hover a bar to emphasise it and read its value; the rest dim back.</div>
         <div class="sg-stage"><div class="cht"><div class="cht__cap">Monthly volume</div><div class="cht__sub">Transactions per month &middot; 2026</div><div id="cht-bar"></div></div></div>
       </div>
       <div class="type-sub">
+        <div class="type-sub__title">When to use</div>
+        <div class="type-sub__desc">Pick the chart type that matches the question: comparison (bar), trend (line/area) or composition (donut). Series and categories use the Flash colour palette (brand green, blue, purple, orange); single-series charts lead with the brand green.</div>
+        <div class="sel-usage">
+          <div class="sel-usage__card">
+            <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
+            <ul class="sel-usage__list">
+              <li>Use bars for comparison, lines for trends, donuts for a few parts of a whole.</li>
+              <li>Label axes; give each category or series its own palette colour, and keep single-series charts to one.</li>
+              <li>Start bar and area value axes at zero.</li>
+            </ul>
+          </div>
+          <div class="sel-usage__card">
+            <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don&rsquo;t</div>
+            <ul class="sel-usage__list">
+              <li>Don&rsquo;t use a donut for more than ~5 segments &mdash; a bar reads better.</li>
+              <li>Don&rsquo;t colour series just for decoration &mdash; it implies meaning that isn&rsquo;t there.</li>
+              <li>Don&rsquo;t truncate a value axis in a way that exaggerates differences.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <details class="ai-ctx">
+  <summary>AI context</summary>
+  <pre data-ai-context="s-charts-bar">
+{
+  "status": "js-rendered",
+  "builderFunctions": [
+    "fmt",
+    "mkTip",
+    "moveTip"
+  ],
+  "realClasses": [
+    ".cht",
+    ".cht__cap",
+    ".cht__sub",
+    ".cht__bar",
+    ".cht__hit",
+    ".cht__axis",
+    ".cht__tip"
+  ],
+  "css": "/* ---- Chart (Flash palette + interactive) ---- */\n.cht { position:relative;border:1px solid var(--chrome-border);border-radius:14px;padding:20px 22px;background:var(--chrome-bg);width:380px;max-width:100%;\n  --c1:var(--prim-green-500);--c2:var(--prim-sup-blue-1);--c3:var(--prim-sup-purple-4);--c4:var(--prim-sup-orange-1);--c5:var(--prim-sup-pink-1) }\n.cht__cap { font-size:13px;font-weight:700;color:var(--chrome-txt);margin-bottom:2px }\n.cht__sub { font-size:11.5px;color:var(--chrome-muted);margin-bottom:16px }\n.cht svg { display:block;width:100%;height:auto;overflow:visible }\n.cht__bar { fill:var(--chrome-muted);opacity:.45;transition:fill .15s,opacity .15s;cursor:pointer }\n.cht__bar.on { fill:var(--c1);opacity:1 }\n.cht__hit { fill:transparent;cursor:pointer }\n.cht__axis { fill:var(--chrome-muted);font-size:10px;font-family:inherit }\n.cht svg.is-hot .cht__seg { opacity:.32 }\n.cht svg.is-hot .cht__seg.on { opacity:1 }\n.cht__tip { position:absolute;z-index:5;pointer-events:none;background:var(--color-surface-inverse);color:var(--color-text-inv);font-size:11.5px;font-weight:600;padding:5px 9px;border-radius:7px;white-space:nowrap;opacity:0;transform:translate(-50%,-100%);transition:opacity .12s;box-shadow:0 4px 14px rgba(0,0,0,.22) }\n.cht__tip.show { opacity:1 }\n.cht__tip b { font-weight:800 }",
+  "js": "function fmt(n){ return n&gt;=1000 ? (n/1000).toFixed(1).replace(/\\.0$/,'')+'k' : ''+n; }\n\nfunction mkTip(card){ var t=document.createElement('div'); t.className='cht__tip'; card.appendChild(t); return t; }\n\nfunction moveTip(t,card,el,html){ var r=el.getBoundingClientRect(), cr=card.getBoundingClientRect(); t.innerHTML=html; t.style.left=(r.left-cr.left+r.width/2)+'px'; t.style.top=(r.top-cr.top-8)+'px'; t.classList.add('show'); }",
+  "usage": {
+    "do": [
+      "Use bars for comparison, lines for trends, donuts for a few parts of a whole.",
+      "Label axes; give each category or series its own palette colour, and keep single-series charts to one.",
+      "Start bar and area value axes at zero."
+    ],
+    "dont": [
+      "Don’t use a donut for more than ~5 segments — a bar reads better.",
+      "Don’t colour series just for decoration — it implies meaning that isn’t there.",
+      "Don’t truncate a value axis in a way that exaggerates differences."
+    ]
+  },
+  "contentHash": "bfda6e1f811dbddad7ed32e4372fc320735b4b323e37701c349eaee19ec82c91",
+  "note": "Split out of the former combined Charts page (v1.1.0). The bar renderer itself is inline logic inside an anonymous IIFE (keyed off document.getElementById('cht-bar')) rather than a separately named function, so only the shared fmt/mkTip/moveTip helpers are individually extractable by identifier. All series colours ride --c1..--c5 (Flash palette), not hardcoded hex."
+}
+  </pre>
+</details>
+    </section>
+
+    <section class="sec" id="s-charts-line">
+      <div class="sec__head">
+        <div class="sec__eye">Components</div>
+        <h1 class="sec__title">Line &amp; Area Charts <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.0</span></h1>
+        <p class="sec__desc">Show a trend over a continuous range. The area variant fills beneath the line to emphasise volume.</p>
+      </div>
+      <div class="type-sub">
         <div class="type-sub__title">Line &amp; area</div>
-        <div class="type-sub__desc">Show a trend over a continuous range. The area variant fills beneath the line to emphasise volume.</div>
+        <div class="type-sub__desc">Hover a point for its value and label.</div>
         <div class="sg-stage"><div class="sg-row sg-row--top" style="gap:22px">
           <div class="cht" style="width:340px"><div class="cht__cap">Active users</div><div class="cht__sub">Line &middot; last 7 weeks</div><div id="cht-line"></div></div>
           <div class="cht" style="width:340px"><div class="cht__cap">Settled value</div><div class="cht__sub">Area &middot; last 7 weeks</div><div id="cht-area"></div></div>
         </div></div>
       </div>
       <div class="type-sub">
+        <div class="type-sub__title">When to use</div>
+        <div class="type-sub__desc">Reach for a line or area chart when the story is change over time, not a one-off comparison.</div>
+        <div class="sel-usage">
+          <div class="sel-usage__card">
+            <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
+            <ul class="sel-usage__list">
+              <li>Use a line for a trend across a continuous range &mdash; time, distance, sequence.</li>
+              <li>Use the area fill when the volume beneath the line matters, not just its direction.</li>
+              <li>Start the value axis at zero, same as bar charts.</li>
+            </ul>
+          </div>
+          <div class="sel-usage__card">
+            <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don&rsquo;t</div>
+            <ul class="sel-usage__list">
+              <li>Don&rsquo;t plot more than 2&ndash;3 lines on one chart &mdash; it turns into a tangle.</li>
+              <li>Don&rsquo;t use a line chart for discrete, unordered categories &mdash; that&rsquo;s a bar chart.</li>
+              <li>Don&rsquo;t fill the area under more than one series &mdash; overlapping fills obscure each other.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <details class="ai-ctx">
+  <summary>AI context</summary>
+  <pre data-ai-context="s-charts-line">
+{
+  "status": "js-rendered",
+  "builderFunctions": [
+    "fmt",
+    "mkTip",
+    "moveTip",
+    "lineChart"
+  ],
+  "realClasses": [
+    ".cht",
+    ".cht__cap",
+    ".cht__sub",
+    ".cht__line",
+    ".cht__area",
+    ".cht__dot",
+    ".cht__hit",
+    ".cht__axis",
+    ".cht__tip"
+  ],
+  "css": "/* ---- Chart (Flash palette + interactive) ---- */\n.cht { position:relative;border:1px solid var(--chrome-border);border-radius:14px;padding:20px 22px;background:var(--chrome-bg);width:380px;max-width:100%;\n  --c1:var(--prim-green-500);--c2:var(--prim-sup-blue-1);--c3:var(--prim-sup-purple-4);--c4:var(--prim-sup-orange-1);--c5:var(--prim-sup-pink-1) }\n.cht__cap { font-size:13px;font-weight:700;color:var(--chrome-txt);margin-bottom:2px }\n.cht__sub { font-size:11.5px;color:var(--chrome-muted);margin-bottom:16px }\n.cht svg { display:block;width:100%;height:auto;overflow:visible }\n.cht__line { fill:none;stroke:var(--c1);stroke-width:2.5;stroke-linejoin:round;stroke-linecap:round }\n.cht__area { fill:url(#chtAreaGrad) }\n.cht__dot { fill:var(--chrome-bg);stroke:var(--c1);stroke-width:2.5;transition:fill .12s }\n.cht__dot.on { fill:var(--c1) }\n.cht__hit { fill:transparent;cursor:pointer }\n.cht__axis { fill:var(--chrome-muted);font-size:10px;font-family:inherit }\n.cht svg.is-hot .cht__seg { opacity:.32 }\n.cht svg.is-hot .cht__seg.on { opacity:1 }\n.cht__tip { position:absolute;z-index:5;pointer-events:none;background:var(--color-surface-inverse);color:var(--color-text-inv);font-size:11.5px;font-weight:600;padding:5px 9px;border-radius:7px;white-space:nowrap;opacity:0;transform:translate(-50%,-100%);transition:opacity .12s;box-shadow:0 4px 14px rgba(0,0,0,.22) }\n.cht__tip.show { opacity:1 }\n.cht__tip b { font-weight:800 }",
+  "js": "function fmt(n){ return n&gt;=1000 ? (n/1000).toFixed(1).replace(/\\.0$/,'')+'k' : ''+n; }\n\nfunction mkTip(card){ var t=document.createElement('div'); t.className='cht__tip'; card.appendChild(t); return t; }\n\nfunction moveTip(t,card,el,html){ var r=el.getBoundingClientRect(), cr=card.getBoundingClientRect(); t.innerHTML=html; t.style.left=(r.left-cr.left+r.width/2)+'px'; t.style.top=(r.top-cr.top-8)+'px'; t.classList.add('show'); }\n\nfunction lineChart(el, data, filled){\n    var card=el.closest('.cht'), tip=mkTip(card);\n    var W=340,H=168,padT=12,padB=22,padX=10, cw=W-padX*2, ch=H-padT-padB;\n    var max=Math.max.apply(null,data.map(function(d){return d.v;})), n=data.length;\n    var xs=function(i){return padX+(n&lt;=1?0:i/(n-1)*cw);}, ys=function(v){return padT+ch-(max?v/max*ch:0);};\n    var defs='', area='';\n    if(filled){\n      defs='&lt;defs&gt;&lt;linearGradient id=\"chtAreaGrad\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"&gt;&lt;stop offset=\"0\" stop-color=\"var(--c1)\" stop-opacity=\"0.32\"/&gt;&lt;stop offset=\"1\" stop-color=\"var(--c1)\" stop-opacity=\"0\"/&gt;&lt;/linearGradient&gt;&lt;/defs&gt;';\n      var d='M '+xs(0).toFixed(1)+','+(padT+ch).toFixed(1);\n      data.forEach(function(dd,i){ d+=' L '+xs(i).toFixed(1)+','+ys(dd.v).toFixed(1); });\n      d+=' L '+xs(n-1).toFixed(1)+','+(padT+ch).toFixed(1)+' Z'; area='&lt;path class=\"cht__area\" d=\"'+d+'\"/&gt;';\n    }\n    var pts=data.map(function(dd,i){return xs(i).toFixed(1)+','+ys(dd.v).toFixed(1);}).join(' ');\n    var dots=data.map(function(dd,i){return '&lt;circle class=\"cht__dot\" data-i=\"'+i+'\" cx=\"'+xs(i).toFixed(1)+'\" cy=\"'+ys(dd.v).toFixed(1)+'\" r=\"3.5\"/&gt;';}).join('');\n    var hits=data.map(function(dd,i){ var x0=i===0?0:(xs(i-1)+xs(i))/2, x1=i===n-1?W:(xs(i)+xs(i+1))/2;\n      return '&lt;rect class=\"cht__hit\" data-i=\"'+i+'\" x=\"'+x0.toFixed(1)+'\" y=\"0\" width=\"'+(x1-x0).toFixed(1)+'\" height=\"'+(padT+ch).toFixed(1)+'\"/&gt;'; }).join('');\n    var labs=data.map(function(dd,i){return '&lt;text class=\"cht__axis\" x=\"'+xs(i).toFixed(1)+'\" y=\"'+(H-7)+'\" text-anchor=\"middle\"&gt;'+dd.label+'&lt;/text&gt;';}).join('');\n    el.innerHTML='&lt;svg viewBox=\"0 0 '+W+' '+H+'\" role=\"img\" aria-label=\"Line chart\"&gt;'+defs+area+'&lt;polyline class=\"cht__line\" points=\"'+pts+'\"/&gt;'+dots+labs+hits+'&lt;/svg&gt;';\n    var dotEls=el.querySelectorAll('.cht__dot');\n    Array.prototype.forEach.call(el.querySelectorAll('.cht__hit'),function(h){ var i=+h.getAttribute('data-i'), dot=dotEls[i];\n      h.addEventListener('mouseenter',function(){ dot.classList.add('on'); dot.setAttribute('r','5.5'); moveTip(tip,card,dot,'&lt;b&gt;'+data[i].v+'&lt;/b&gt; &amp;middot; '+data[i].label); });\n      h.addEventListener('mouseleave',function(){ dot.classList.remove('on'); dot.setAttribute('r','3.5'); tip.classList.remove('show'); });\n    });\n  }",
+  "usage": {
+    "do": [
+      "Use a line for a trend across a continuous range — time, distance, sequence.",
+      "Use the area fill when the volume beneath the line matters, not just its direction.",
+      "Start the value axis at zero, same as bar charts."
+    ],
+    "dont": [
+      "Don’t plot more than 2–3 lines on one chart — it turns into a tangle.",
+      "Don’t use a line chart for discrete, unordered categories — that’s a bar chart.",
+      "Don’t fill the area under more than one series — overlapping fills obscure each other."
+    ]
+  },
+  "contentHash": "c18ffd15335967d4e3c2870cd503a7010678302b357369d12f57e03bee399823",
+  "note": "Split out of the former combined Charts page (v1.1.0). fmt/mkTip/moveTip/lineChart are the named builder functions this demo actually calls."
+}
+  </pre>
+</details>
+    </section>
+
+    <section class="sec" id="s-charts-donut">
+      <div class="sec__head">
+        <div class="sec__eye">Components</div>
+        <h1 class="sec__title">Donut Charts <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.0</span></h1>
+        <p class="sec__desc">Show parts of a whole. Each slice takes a colour from the Flash palette; hover a slice or its legend entry to pop it out and read its share in the centre.</p>
+      </div>
+      <div class="type-sub">
         <div class="type-sub__title">Donut</div>
-        <div class="type-sub__desc">Show parts of a whole. Each slice takes a colour from the Flash palette; hover a slice or its legend entry to pop it out and read its share in the centre.</div>
+        <div class="type-sub__desc">Hover a slice or its legend entry to pop it out and read its share in the centre.</div>
         <div class="sg-stage"><div class="cht" style="width:340px"><div class="cht__cap">Payment mix</div><div class="cht__sub">Share of volume by method</div><div id="cht-donut"></div><div class="cht-legend" id="cht-donut-legend"></div></div></div>
       </div>
       <div class="type-sub">
+        <div class="type-sub__title">When to use</div>
+        <div class="type-sub__desc">A donut works best for a small number of parts making up a whole.</div>
+        <div class="sel-usage">
+          <div class="sel-usage__card">
+            <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
+            <ul class="sel-usage__list">
+              <li>Use it for composition &mdash; a handful of parts adding up to one total.</li>
+              <li>Sort slices largest to smallest, clockwise from 12 o&rsquo;clock.</li>
+              <li>Show the total or the hovered share in the centre, as in this demo.</li>
+            </ul>
+          </div>
+          <div class="sel-usage__card">
+            <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don&rsquo;t</div>
+            <ul class="sel-usage__list">
+              <li>Don&rsquo;t use a donut for more than ~5 segments &mdash; a bar reads better past that.</li>
+              <li>Don&rsquo;t use it to compare two totals side by side &mdash; use bars instead.</li>
+              <li>Don&rsquo;t rely on slice angle alone for precision &mdash; pair it with a legend that carries the figures.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <details class="ai-ctx">
+  <summary>AI context</summary>
+  <pre data-ai-context="s-charts-donut">
+{
+  "status": "js-rendered",
+  "builderFunctions": [
+    "fmt",
+    "mkTip",
+    "moveTip"
+  ],
+  "realClasses": [
+    ".cht",
+    ".cht__cap",
+    ".cht__sub",
+    ".cht__seg",
+    ".cht-legend",
+    ".cht-legend__item",
+    ".cht-legend__dot",
+    ".cht-donut-val",
+    ".cht-donut-lab",
+    ".cht__tip"
+  ],
+  "css": "/* ---- Chart (Flash palette + interactive) ---- */\n.cht { position:relative;border:1px solid var(--chrome-border);border-radius:14px;padding:20px 22px;background:var(--chrome-bg);width:380px;max-width:100%;\n  --c1:var(--prim-green-500);--c2:var(--prim-sup-blue-1);--c3:var(--prim-sup-purple-4);--c4:var(--prim-sup-orange-1);--c5:var(--prim-sup-pink-1) }\n.cht__cap { font-size:13px;font-weight:700;color:var(--chrome-txt);margin-bottom:2px }\n.cht__sub { font-size:11.5px;color:var(--chrome-muted);margin-bottom:16px }\n.cht svg { display:block;width:100%;height:auto;overflow:visible }\n.cht__seg { transition:opacity .18s,stroke-width .18s;cursor:pointer }\n.cht svg.is-hot .cht__seg { opacity:.32 }\n.cht svg.is-hot .cht__seg.on { opacity:1 }\n.cht-legend { display:flex;flex-wrap:wrap;gap:8px 14px;margin-top:16px }\n.cht-legend__item { display:inline-flex;align-items:center;gap:7px;font-size:12px;color:var(--chrome-txt);cursor:pointer;padding:2px 5px;border-radius:6px;transition:background .12s }\n.cht-legend__item:hover { background:var(--chrome-hover) }\n.cht-legend__dot { width:10px;height:10px;border-radius:3px;flex-shrink:0 }\n.cht-donut-val { fill:var(--chrome-txt);font-weight:800 }\n.cht-donut-lab { fill:var(--chrome-muted) }\n.cht__tip { position:absolute;z-index:5;pointer-events:none;background:var(--color-surface-inverse);color:var(--color-text-inv);font-size:11.5px;font-weight:600;padding:5px 9px;border-radius:7px;white-space:nowrap;opacity:0;transform:translate(-50%,-100%);transition:opacity .12s;box-shadow:0 4px 14px rgba(0,0,0,.22) }\n.cht__tip.show { opacity:1 }\n.cht__tip b { font-weight:800 }",
+  "js": "function fmt(n){ return n&gt;=1000 ? (n/1000).toFixed(1).replace(/\\.0$/,'')+'k' : ''+n; }\n\nfunction mkTip(card){ var t=document.createElement('div'); t.className='cht__tip'; card.appendChild(t); return t; }\n\nfunction moveTip(t,card,el,html){ var r=el.getBoundingClientRect(), cr=card.getBoundingClientRect(); t.innerHTML=html; t.style.left=(r.left-cr.left+r.width/2)+'px'; t.style.top=(r.top-cr.top-8)+'px'; t.classList.add('show'); }",
+  "usage": {
+    "do": [
+      "Use it for composition — a handful of parts adding up to one total.",
+      "Sort slices largest to smallest, clockwise from 12 o’clock.",
+      "Show the total or the hovered share in the centre, as in this demo."
+    ],
+    "dont": [
+      "Don’t use a donut for more than ~5 segments — a bar reads better past that.",
+      "Don’t use it to compare two totals side by side — use bars instead.",
+      "Don’t rely on slice angle alone for precision — pair it with a legend that carries the figures."
+    ]
+  },
+  "contentHash": "d1af57897c8b8e7cb9771ef04c438cfdf62e42c1a6e38d2b6d2038a916a6e755",
+  "note": "Split out of the former combined Charts page (v1.1.0). The donut renderer itself is inline logic inside an anonymous IIFE (keyed off document.getElementById('cht-donut')) rather than a separately named function, so only the shared fmt/mkTip/moveTip helpers are individually extractable by identifier."
+}
+  </pre>
+</details>
+    </section>
+
+    <section class="sec" id="s-charts-meters">
+      <div class="sec__head">
+        <div class="sec__eye">Components</div>
+        <h1 class="sec__title">Progress Meters <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.0</span></h1>
+        <p class="sec__desc">Labelled bars for quotas, targets and health. The fill uses the brand token by default and switches to Warning / Critical semantics as a value approaches its limit.</p>
+      </div>
+      <div class="type-sub">
         <div class="type-sub__title">Progress meters</div>
-        <div class="type-sub__desc">Labelled bars for quotas, targets and health. The fill uses the brand token by default and switches to Warning / Critical semantics as a value approaches its limit.</div>
+        <div class="type-sub__desc">Each meter pairs a label and value with a single filled track.</div>
         <div class="dd-meters">
           <div class="dd-meter">
             <div class="dd-meter__top"><span class="dd-meter__label">Monthly GMV target</span><span class="dd-meter__val">R48.2M / R60M · 80%</span></div>
@@ -6241,6 +6630,68 @@ body.home .main{max-width:none;margin:0;padding:0}
             <div class="dd-meter__track"><div class="dd-meter__fill" style="width:96%;background:var(--color-crit-h)"></div></div>
           </div>
         </div>
+      </div>
+      <div class="type-sub">
+        <div class="type-sub__title">When to use</div>
+        <div class="type-sub__desc">A meter is for one value against one limit &mdash; a quota, a target, a health score.</div>
+        <div class="sel-usage">
+          <div class="sel-usage__card">
+            <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
+            <ul class="sel-usage__list">
+              <li>Use it for a single value tracked against a target or ceiling.</li>
+              <li>Switch the fill to Warning / Critical tokens as the value nears its limit.</li>
+              <li>Label both the raw figures and the percentage, as in this demo.</li>
+            </ul>
+          </div>
+          <div class="sel-usage__card">
+            <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don&rsquo;t</div>
+            <ul class="sel-usage__list">
+              <li>Don&rsquo;t use a meter to compare unrelated metrics &mdash; that&rsquo;s a stat card row.</li>
+              <li>Don&rsquo;t stack more than 4&ndash;5 meters together &mdash; group or paginate instead.</li>
+              <li>Don&rsquo;t use the Critical colour for a value that isn&rsquo;t actually critical.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <details class="ai-ctx">
+  <summary>AI context</summary>
+  <pre data-ai-context="s-charts-meters">
+{
+  "status": "static",
+  "realClasses": [
+    ".dd-meters",
+    ".dd-meter",
+    ".dd-meter__top",
+    ".dd-meter__label",
+    ".dd-meter__val",
+    ".dd-meter__track",
+    ".dd-meter__fill"
+  ],
+  "css": "/* ---- Progress meter / Distribution bars (Charts) ---- */\n.dd-meters { border:1px solid var(--chrome-border);border-radius:12px;padding:22px }\n.dd-meter { margin-bottom:18px }\n.dd-meter:last-child { margin-bottom:0 }\n.dd-meter__top { display:flex;justify-content:space-between;align-items:baseline;margin-bottom:7px }\n.dd-meter__label { font-size:12.5px;font-weight:700;color:var(--chrome-txt) }\n.dd-meter__val { font-size:12px;font-weight:700;color:var(--chrome-muted);font-variant-numeric:tabular-nums }\n.dd-meter__track { height:8px;border-radius:999px;background:var(--chrome-nav);overflow:hidden }\n.dd-meter__fill { height:100%;border-radius:999px }",
+  "usage": {
+    "do": [
+      "Use it for a single value tracked against a target or ceiling.",
+      "Switch the fill to Warning / Critical tokens as the value nears its limit.",
+      "Label both the raw figures and the percentage, as in this demo."
+    ],
+    "dont": [
+      "Don’t use a meter to compare unrelated metrics — that’s a stat card row.",
+      "Don’t stack more than 4–5 meters together — group or paginate instead.",
+      "Don’t use the Critical colour for a value that isn’t actually critical."
+    ]
+  },
+  "contentHash": "baa2002b2f0c532249c49ba4b255a4b804be77a92e2eaa1e21572e9d2900793e",
+  "note": "Split out of the former combined Charts page (v1.1.0). Static hand-authored markup, migrated from the retired Data Display section."
+}
+  </pre>
+</details>
+    </section>
+
+    <section class="sec" id="s-charts-distribution">
+      <div class="sec__head">
+        <div class="sec__eye">Components</div>
+        <h1 class="sec__title">Distribution Charts <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.0</span></h1>
+        <p class="sec__desc">Two ways to split a total across categories: a single segmented bar for a compact overview, or a ranked, one-row-per-category breakdown when each share needs its own line.</p>
       </div>
       <div class="type-sub">
         <div class="type-sub__title">Distribution bar</div>
@@ -6289,61 +6740,32 @@ body.home .main{max-width:none;margin:0;padding:0}
       </div>
       <div class="type-sub">
         <div class="type-sub__title">When to use</div>
-        <div class="type-sub__desc">Pick the type that matches the question: comparison (bar), trend (line/area) or composition (donut).</div>
+        <div class="type-sub__desc">Pick the distribution bar for a compact single-line overview; pick distribution bars when each category needs its own labelled row.</div>
         <div class="sel-usage">
           <div class="sel-usage__card">
             <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
             <ul class="sel-usage__list">
-              <li>Use bars for comparison, lines for trends, donuts for a few parts of a whole.</li>
-              <li>Label axes; give each category or series its own palette colour, and keep single-series charts to one.</li>
-              <li>Start bar and area value axes at zero.</li>
+              <li>Use the single segmented bar when the overview matters more than reading each figure at a glance.</li>
+              <li>Use ranked bars when every category needs its own precise, legible row.</li>
+              <li>Sort by share, largest first, in both patterns.</li>
             </ul>
           </div>
           <div class="sel-usage__card">
             <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don&rsquo;t</div>
             <ul class="sel-usage__list">
-              <li>Don&rsquo;t use a donut for more than ~5 segments &mdash; a bar reads better.</li>
-              <li>Don&rsquo;t colour series just for decoration &mdash; it implies meaning that isn&rsquo;t there.</li>
-              <li>Don&rsquo;t truncate a value axis in a way that exaggerates differences.</li>
+              <li>Don&rsquo;t use either pattern for more than ~6 categories &mdash; group the tail into &ldquo;Other&rdquo;.</li>
+              <li>Don&rsquo;t reuse a colour across two unrelated categories in the same chart.</li>
+              <li>Don&rsquo;t drop the legend from the segmented bar &mdash; segment width alone isn&rsquo;t precise enough.</li>
             </ul>
           </div>
         </div>
       </div>
       <details class="ai-ctx">
   <summary>AI context</summary>
-  <pre data-ai-context="s-charts">
+  <pre data-ai-context="s-charts-distribution">
 {
-  "status": "js-rendered",
-  "builderFunctions": [
-    "fmt",
-    "mkTip",
-    "moveTip",
-    "lineChart"
-  ],
+  "status": "static",
   "realClasses": [
-    ".cht",
-    ".cht__cap",
-    ".cht__sub",
-    ".cht__bar",
-    ".cht__line",
-    ".cht__area",
-    ".cht__dot",
-    ".cht__hit",
-    ".cht__axis",
-    ".cht__seg",
-    ".cht-legend",
-    ".cht-legend__item",
-    ".cht-legend__dot",
-    ".cht__tip",
-    ".cht-donut-val",
-    ".cht-donut-lab",
-    ".dd-meters",
-    ".dd-meter",
-    ".dd-meter__top",
-    ".dd-meter__label",
-    ".dd-meter__val",
-    ".dd-meter__track",
-    ".dd-meter__fill",
     ".dd-dist",
     ".dd-dist__row",
     ".dd-dist__top",
@@ -6364,22 +6786,21 @@ body.home .main{max-width:none;margin:0;padding:0}
     ".dd-break__k",
     ".dd-break__v"
   ],
-  "css": "/* ---- Chart (Flash palette + interactive) ---- */\n.cht { position:relative;border:1px solid var(--chrome-border);border-radius:14px;padding:20px 22px;background:var(--chrome-bg);width:380px;max-width:100%;\n  --c1:var(--prim-green-500);--c2:var(--prim-sup-blue-1);--c3:var(--prim-sup-purple-4);--c4:var(--prim-sup-orange-1);--c5:var(--prim-sup-pink-1) }\n.cht__cap { font-size:13px;font-weight:700;color:var(--chrome-txt);margin-bottom:2px }\n.cht__sub { font-size:11.5px;color:var(--chrome-muted);margin-bottom:16px }\n.cht svg { display:block;width:100%;height:auto;overflow:visible }\n.cht__bar { fill:var(--chrome-muted);opacity:.45;transition:fill .15s,opacity .15s;cursor:pointer }\n.cht__bar.on { fill:var(--c1);opacity:1 }\n.cht__line { fill:none;stroke:var(--c1);stroke-width:2.5;stroke-linejoin:round;stroke-linecap:round }\n.cht__area { fill:url(#chtAreaGrad) }\n.cht__dot { fill:var(--chrome-bg);stroke:var(--c1);stroke-width:2.5;transition:fill .12s }\n.cht__dot.on { fill:var(--c1) }\n.cht__hit { fill:transparent;cursor:pointer }\n.cht__axis { fill:var(--chrome-muted);font-size:10px;font-family:inherit }\n.cht__seg { transition:opacity .18s,stroke-width .18s;cursor:pointer }\n.cht svg.is-hot .cht__seg { opacity:.32 }\n.cht svg.is-hot .cht__seg.on { opacity:1 }\n.cht-legend { display:flex;flex-wrap:wrap;gap:8px 14px;margin-top:16px }\n.cht-legend__item { display:inline-flex;align-items:center;gap:7px;font-size:12px;color:var(--chrome-txt);cursor:pointer;padding:2px 5px;border-radius:6px;transition:background .12s }\n.cht-legend__item:hover { background:var(--chrome-hover) }\n.cht-legend__dot { width:10px;height:10px;border-radius:3px;flex-shrink:0 }\n.cht-donut-val { fill:var(--chrome-txt);font-weight:800 }\n.cht-donut-lab { fill:var(--chrome-muted) }\n.cht__tip { position:absolute;z-index:5;pointer-events:none;background:var(--color-surface-inverse);color:var(--color-text-inv);font-size:11.5px;font-weight:600;padding:5px 9px;border-radius:7px;white-space:nowrap;opacity:0;transform:translate(-50%,-100%);transition:opacity .12s;box-shadow:0 4px 14px rgba(0,0,0,.22) }\n.cht__tip.show { opacity:1 }\n.cht__tip b { font-weight:800 }\n/* ---- Progress meter / Distribution bars (Charts) ---- */\n.dd-meters { border:1px solid var(--chrome-border);border-radius:12px;padding:22px }\n.dd-meter { margin-bottom:18px }\n.dd-meter:last-child { margin-bottom:0 }\n.dd-meter__top { display:flex;justify-content:space-between;align-items:baseline;margin-bottom:7px }\n.dd-meter__label { font-size:12.5px;font-weight:700;color:var(--chrome-txt) }\n.dd-meter__val { font-size:12px;font-weight:700;color:var(--chrome-muted);font-variant-numeric:tabular-nums }\n.dd-meter__track { height:8px;border-radius:999px;background:var(--chrome-nav);overflow:hidden }\n.dd-meter__fill { height:100%;border-radius:999px }\n.dd-dist { border:1px solid var(--chrome-border);border-radius:12px;padding:22px }\n.dd-dist__row { margin-bottom:16px }\n.dd-dist__row:last-child { margin-bottom:0 }\n.dd-dist__top { display:flex;justify-content:space-between;align-items:baseline;margin-bottom:7px;gap:12px }\n.dd-dist__label { display:inline-flex;align-items:center;gap:8px;font-size:12.5px;font-weight:700;color:var(--chrome-txt) }\n.dd-dist__swatch { width:9px;height:9px;border-radius:3px;flex-shrink:0 }\n.dd-dist__val { font-size:12px;font-weight:700;color:var(--chrome-muted);font-variant-numeric:tabular-nums;white-space:nowrap }\n.dd-dist__track { height:10px;border-radius:999px;background:var(--chrome-nav);overflow:hidden }\n.dd-dist__fill { height:100%;border-radius:999px;transition:width .3s }\n.dd-break { border:1px solid var(--chrome-border);border-radius:12px;padding:22px }\n.dd-break__top { display:flex;justify-content:space-between;align-items:baseline;margin-bottom:11px }\n.dd-break__label { font-size:12.5px;font-weight:700;color:var(--chrome-txt) }\n.dd-break__total { font-size:12px;font-weight:700;color:var(--chrome-muted);font-variant-numeric:tabular-nums }\n.dd-break__bar { display:flex;gap:2px;height:14px;border-radius:999px;overflow:hidden;background:var(--chrome-nav) }\n.dd-break__seg { height:100%;transition:filter .15s }\n.dd-break__seg:hover { filter:brightness(1.08) }\n.dd-break__legend { display:flex;flex-wrap:wrap;gap:12px 22px;margin-top:16px }\n.dd-break__item { display:flex;align-items:center;gap:8px }\n.dd-break__swatch { width:10px;height:10px;border-radius:3px;flex-shrink:0 }\n.dd-break__k { font-size:12.5px;font-weight:700;color:var(--chrome-txt) }\n.dd-break__v { font-size:12px;font-weight:700;color:var(--chrome-muted);font-variant-numeric:tabular-nums }",
-  "js": "function fmt(n){ return n&gt;=1000 ? (n/1000).toFixed(1).replace(/\\.0$/,'')+'k' : ''+n; }\n\nfunction mkTip(card){ var t=document.createElement('div'); t.className='cht__tip'; card.appendChild(t); return t; }\n\nfunction moveTip(t,card,el,html){ var r=el.getBoundingClientRect(), cr=card.getBoundingClientRect(); t.innerHTML=html; t.style.left=(r.left-cr.left+r.width/2)+'px'; t.style.top=(r.top-cr.top-8)+'px'; t.classList.add('show'); }\n\nfunction lineChart(el, data, filled){\n    var card=el.closest('.cht'), tip=mkTip(card);\n    var W=340,H=168,padT=12,padB=22,padX=10, cw=W-padX*2, ch=H-padT-padB;\n    var max=Math.max.apply(null,data.map(function(d){return d.v;})), n=data.length;\n    var xs=function(i){return padX+(n&lt;=1?0:i/(n-1)*cw);}, ys=function(v){return padT+ch-(max?v/max*ch:0);};\n    var defs='', area='';\n    if(filled){\n      defs='&lt;defs&gt;&lt;linearGradient id=\"chtAreaGrad\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"&gt;&lt;stop offset=\"0\" stop-color=\"var(--c1)\" stop-opacity=\"0.32\"/&gt;&lt;stop offset=\"1\" stop-color=\"var(--c1)\" stop-opacity=\"0\"/&gt;&lt;/linearGradient&gt;&lt;/defs&gt;';\n      var d='M '+xs(0).toFixed(1)+','+(padT+ch).toFixed(1);\n      data.forEach(function(dd,i){ d+=' L '+xs(i).toFixed(1)+','+ys(dd.v).toFixed(1); });\n      d+=' L '+xs(n-1).toFixed(1)+','+(padT+ch).toFixed(1)+' Z'; area='&lt;path class=\"cht__area\" d=\"'+d+'\"/&gt;';\n    }\n    var pts=data.map(function(dd,i){return xs(i).toFixed(1)+','+ys(dd.v).toFixed(1);}).join(' ');\n    var dots=data.map(function(dd,i){return '&lt;circle class=\"cht__dot\" data-i=\"'+i+'\" cx=\"'+xs(i).toFixed(1)+'\" cy=\"'+ys(dd.v).toFixed(1)+'\" r=\"3.5\"/&gt;';}).join('');\n    var hits=data.map(function(dd,i){ var x0=i===0?0:(xs(i-1)+xs(i))/2, x1=i===n-1?W:(xs(i)+xs(i+1))/2;\n      return '&lt;rect class=\"cht__hit\" data-i=\"'+i+'\" x=\"'+x0.toFixed(1)+'\" y=\"0\" width=\"'+(x1-x0).toFixed(1)+'\" height=\"'+(padT+ch).toFixed(1)+'\"/&gt;'; }).join('');\n    var labs=data.map(function(dd,i){return '&lt;text class=\"cht__axis\" x=\"'+xs(i).toFixed(1)+'\" y=\"'+(H-7)+'\" text-anchor=\"middle\"&gt;'+dd.label+'&lt;/text&gt;';}).join('');\n    el.innerHTML='&lt;svg viewBox=\"0 0 '+W+' '+H+'\" role=\"img\" aria-label=\"Line chart\"&gt;'+defs+area+'&lt;polyline class=\"cht__line\" points=\"'+pts+'\"/&gt;'+dots+labs+hits+'&lt;/svg&gt;';\n    var dotEls=el.querySelectorAll('.cht__dot');\n    Array.prototype.forEach.call(el.querySelectorAll('.cht__hit'),function(h){ var i=+h.getAttribute('data-i'), dot=dotEls[i];\n      h.addEventListener('mouseenter',function(){ dot.classList.add('on'); dot.setAttribute('r','5.5'); moveTip(tip,card,dot,'&lt;b&gt;'+data[i].v+'&lt;/b&gt; &amp;middot; '+data[i].label); });\n      h.addEventListener('mouseleave',function(){ dot.classList.remove('on'); dot.setAttribute('r','3.5'); tip.classList.remove('show'); });\n    });\n  }",
+  "css": ".dd-dist { border:1px solid var(--chrome-border);border-radius:12px;padding:22px }\n.dd-dist__row { margin-bottom:16px }\n.dd-dist__row:last-child { margin-bottom:0 }\n.dd-dist__top { display:flex;justify-content:space-between;align-items:baseline;margin-bottom:7px;gap:12px }\n.dd-dist__label { display:inline-flex;align-items:center;gap:8px;font-size:12.5px;font-weight:700;color:var(--chrome-txt) }\n.dd-dist__swatch { width:9px;height:9px;border-radius:3px;flex-shrink:0 }\n.dd-dist__val { font-size:12px;font-weight:700;color:var(--chrome-muted);font-variant-numeric:tabular-nums;white-space:nowrap }\n.dd-dist__track { height:10px;border-radius:999px;background:var(--chrome-nav);overflow:hidden }\n.dd-dist__fill { height:100%;border-radius:999px;transition:width .3s }\n.dd-break { border:1px solid var(--chrome-border);border-radius:12px;padding:22px }\n.dd-break__top { display:flex;justify-content:space-between;align-items:baseline;margin-bottom:11px }\n.dd-break__label { font-size:12.5px;font-weight:700;color:var(--chrome-txt) }\n.dd-break__total { font-size:12px;font-weight:700;color:var(--chrome-muted);font-variant-numeric:tabular-nums }\n.dd-break__bar { display:flex;gap:2px;height:14px;border-radius:999px;overflow:hidden;background:var(--chrome-nav) }\n.dd-break__seg { height:100%;transition:filter .15s }\n.dd-break__seg:hover { filter:brightness(1.08) }\n.dd-break__legend { display:flex;flex-wrap:wrap;gap:12px 22px;margin-top:16px }\n.dd-break__item { display:flex;align-items:center;gap:8px }\n.dd-break__swatch { width:10px;height:10px;border-radius:3px;flex-shrink:0 }\n.dd-break__k { font-size:12.5px;font-weight:700;color:var(--chrome-txt) }\n.dd-break__v { font-size:12px;font-weight:700;color:var(--chrome-muted);font-variant-numeric:tabular-nums }",
   "usage": {
     "do": [
-      "Use bars for comparison, lines for trends, donuts for a few parts of a whole.",
-      "Label axes; give each category or series its own palette colour, and keep single-series charts to one.",
-      "Start bar and area value axes at zero."
+      "Use the single segmented bar when the overview matters more than reading each figure at a glance.",
+      "Use ranked bars when every category needs its own precise, legible row.",
+      "Sort by share, largest first, in both patterns."
     ],
     "dont": [
-      "Don’t use a donut for more than ~5 segments — a bar reads better.",
-      "Don’t colour series just for decoration — it implies meaning that isn’t there.",
-      "Don’t truncate a value axis in a way that exaggerates differences."
+      "Don’t use either pattern for more than ~6 categories — group the tail into “Other”.",
+      "Don’t reuse a colour across two unrelated categories in the same chart.",
+      "Don’t drop the legend from the segmented bar — segment width alone isn’t precise enough."
     ]
   },
-  "contentHash": "b387d27450af5c82c5ca0d5a14b7fbe64d174475271ccd291066f52ab6249516",
-  "note": "fmt/mkTip/moveTip/lineChart are the only named builder functions; the Bar and Donut renderers are inline logic directly inside the same anonymous IIFE (keyed off document.getElementById('cht-bar')/('cht-donut') guards) rather than separately named functions, so they aren't individually extractable by identifier. Progress meters and both distribution-bar patterns (.dd-meter*/.dd-dist*/.dd-break*) were migrated from the retired Data Display section and are static hand-authored markup, unlike Bar/Line/Donut which are JS-rendered SVG. All series colours ride --c1..--c5 (Flash palette), not hardcoded hex."
+  "contentHash": "3376df126e98d95d18a11bb644242fcfc2ec540f0f72dd7a6474b2e9ebe73f6d",
+  "note": "Split out of the former combined Charts page (v1.1.0), which also covered Bar/Line/Donut (now s-charts-bar/s-charts-line/s-charts-donut) and Progress meters (now s-charts-meters). Both distribution-bar patterns (.dd-dist*/.dd-break*) are static hand-authored markup, migrated from the retired Data Display section."
 }
   </pre>
 </details>
@@ -6637,10 +7058,10 @@ body.home .main{max-width:none;margin:0;padding:0}
     <!-- ============================================================
          HOVER CARD
     ============================================================ -->
-    <section class="sec" id="s-hover-card">
+    <section class="sec" id="s-cards-hover">
       <div class="sec__head">
         <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Hover Card <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.1</span></h1>
+        <h1 class="sec__title">Hover Cards <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.2</span></h1>
         <p class="sec__desc">A rich preview that appears when a user hovers or focuses a reference &mdash; a person, entity or link &mdash; without navigating away. Like a tooltip, but for structured content rather than a one-line hint.</p>
       </div>
       <div class="type-sub">
@@ -6685,7 +7106,7 @@ body.home .main{max-width:none;margin:0;padding:0}
       </div>
       <details class="ai-ctx">
   <summary>AI context</summary>
-  <pre data-ai-context="s-hover-card">
+  <pre data-ai-context="s-cards-hover">
 {
   "status": "static",
   "realClasses": [
@@ -6713,7 +7134,7 @@ body.home .main{max-width:none;margin:0;padding:0}
     ]
   },
   "contentHash": "0aeee7f04096159279b15f2956f154d827ca53fd505ad63ec7f06cfa452dcc7a",
-  "note": "Reveal is pure CSS (:hover/:focus-within with a transition-delay for the short open delay) — no JS at all involved."
+  "note": "Reveal is pure CSS (:hover/:focus-within with a transition-delay for the short open delay) — no JS at all involved. Moved under the new Cards sub-group as its Hover Cards child; id renamed from s-hover-card to s-cards-hover."
 }
   </pre>
 </details>
@@ -11497,12 +11918,18 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.58.0';
+const SYSTEM_VERSION = '1.59.0';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.59.0', date:'2026-08-04', author:'Mo', title:'Cards and Charts each split into their own nav sub-group, with one child section per card/chart type', changes:[
+        ['changed','The single "Cards & Charts" sidebar sub-group (2 children, each a big combined page) is replaced by two standalone sub-groups — "Cards" and "Charts" — each expanding into its own set of children'],
+        ['added','Cards now has 5 children: Basic, Media, Interactive, Stat Cards and Hover Cards. The former standalone "Hover Card" nav entry moves in as Hover Cards (id renamed s-hover-card → s-cards-hover); Basic keeps the shared Specs table and general "When to use" guidance as the group\'s entry point'],
+        ['added','Charts now has 5 children: Bar, Line & Area, Donut, Progress Meters and Distribution — each carved out of the former combined Charts page (id s-charts) into its own id (s-charts-bar/-line/-donut/-meters/-distribution), heading, demo and tailored "When to use"'],
+        ['changed','NAV, MOCKS and CHANGELOG.components updated for every new/renamed id; navLeaves() already flattens sub-groups for landing grids, breadcrumbs and search, so no separate index needed updating'],
+      ]},
       {version:'1.58.0', date:'2026-08-04', author:'Mo', title:'Primary colours hero swatches move their name/hex label underneath the swatch', changes:[
         ['changed','Replaced renderPrimaryHero()\'s .brand-sw/.brand-swatches markup (name/hex overlaid inside the coloured square) with a new .hero-card/.hero-grid pair — each card is a pure-colour square (.hero-card__swatch) with the name/hex in a separate footer below (.hero-card__info), matching the Secondary colours .cat-card layout'],
         ['removed','PRIMARY_HERO entries no longer need a per-swatch `text` colour, since labels sit on the neutral --chrome-nav footer background instead of on top of the swatch colour itself'],
@@ -12248,7 +12675,11 @@ const CHANGELOG = {
     ]
   },
   components: [
-    {secId:'s-charts', name:'Charts', version:'1.1.0', entries:[
+    {secId:'s-charts-bar', name:'Bar Charts', version:'1.2.0', entries:[
+      {version:'1.2.0', date:'2026-08-04', author:'Mo', title:'Charts split into one section per chart type, each with its own nav sub-group entry', changes:[
+        ['changed','The single combined Charts page is now 5 sections — Bar (this one), Line & Area, Donut, Progress Meters and Distribution — each with its own id, heading, demo and "When to use". The sidebar\'s "Cards & Charts" sub-group is replaced by a standalone "Charts" sub-group listing all 5'],
+        ['changed','Bar keeps the original Charts page\'s general "which chart type" decision guidance, since it\'s the entry point into the new sub-group'],
+      ]},
       {version:'1.1.0', date:'2026-08-04', author:'Mo', title:'Progress meters and distribution bars added, migrated from Data Display', changes:[
         ['added','Progress meters — labelled bars for quotas/targets/health, brand fill switching to Warning/Critical semantics near a limit'],
         ['added','Distribution bar — a single segmented bar with a figure-carrying legend, for splitting a total across categories'],
@@ -12262,6 +12693,26 @@ const CHANGELOG = {
       ]},
       {version:'1.0.0', date:'2026-07-09', author:'Mo', title:'Initial release', changes:[
         ['added','Interactive inline-SVG bar, line, area and donut charts rendered from data, Flash colour palette, with hover tooltips, dim-the-rest emphasis, donut pop-out and an interactive legend'],
+      ]},
+    ]},
+    {secId:'s-charts-line', name:'Line & Area Charts', version:'1.0.0', entries:[
+      {version:'1.0.0', date:'2026-08-04', author:'Mo', title:'Split out of Charts as its own section', changes:[
+        ['added','Line & Area Charts — carved out of the former combined Charts page into its own section, with a "When to use" tailored to trend charts specifically'],
+      ]},
+    ]},
+    {secId:'s-charts-donut', name:'Donut Charts', version:'1.0.0', entries:[
+      {version:'1.0.0', date:'2026-08-04', author:'Mo', title:'Split out of Charts as its own section', changes:[
+        ['added','Donut Charts — carved out of the former combined Charts page into its own section, with a "When to use" tailored to composition charts specifically'],
+      ]},
+    ]},
+    {secId:'s-charts-meters', name:'Progress Meters', version:'1.0.0', entries:[
+      {version:'1.0.0', date:'2026-08-04', author:'Mo', title:'Split out of Charts as its own section', changes:[
+        ['added','Progress Meters — carved out of the former combined Charts page into its own section, with a "When to use" tailored to single-value-against-a-limit meters specifically'],
+      ]},
+    ]},
+    {secId:'s-charts-distribution', name:'Distribution Charts', version:'1.0.0', entries:[
+      {version:'1.0.0', date:'2026-08-04', author:'Mo', title:'Split out of Charts as its own section', changes:[
+        ['added','Distribution Charts — carved out of the former combined Charts page into its own section, covering both the single segmented bar and the ranked distribution-bars pattern, with a "When to use" comparing the two'],
       ]},
     ]},
     {secId:'s-calendar', name:'Calendar & Date Picker', version:'1.0.1', entries:[
@@ -12288,7 +12739,10 @@ const CHANGELOG = {
         ['added','Right-click menu positioned at the pointer, with a destructive item, dismissing on outside-click, scroll or Escape'],
       ]},
     ]},
-    {secId:'s-hover-card', name:'Hover Card', version:'1.0.1', entries:[
+    {secId:'s-cards-hover', name:'Hover Cards', version:'1.0.2', entries:[
+      {version:'1.0.2', date:'2026-08-04', author:'Mo', title:'Moved under the new Cards sub-group as its Hover Cards child', changes:[
+        ['changed','Was a standalone top-level "Hover Card" nav entry; now lives as the "Hover Cards" child inside the new Cards sub-group, alongside Basic/Media/Interactive/Stat. Section id renamed from s-hover-card to s-cards-hover'],
+      ]},
       {version:'1.0.1', date:'2026-07-29', author:'Mo', title:'AI context tab added', changes:[
         ['added','AI context tab documenting the real, fully static .hc/.hc__*/.avt markup, plus its existing "When to use" Do/Dont guidance (3 do / 3 dont); notes the reveal is pure CSS with no JS involved'],
       ]},
@@ -12898,7 +13352,10 @@ const CHANGELOG = {
         ['added','Light & dark mode reference grid, shown side by side'],
       ]},
     ]},
-    {secId:'s-cards', name:'Cards', version:'1.1.0', entries:[
+    {secId:'s-cards-basic', name:'Basic Cards', version:'1.2.0', entries:[
+      {version:'1.2.0', date:'2026-08-04', author:'Mo', title:'Cards split into one section per card type, each with its own nav sub-group entry', changes:[
+        ['changed','The single combined Cards page is now 5 sections — Basic (this one), Media, Interactive, Stat and Hover — each with its own id, heading, demo and "When to use". Basic keeps the shared Specs table and the general Cards "When to use" guidance, since it\'s the entry point into the new sub-group'],
+      ]},
       {version:'1.1.0', date:'2026-08-04', author:'Mo', title:'Stat tiles added, migrated from Data Display', changes:[
         ['added','Stat tiles — headline KPI card variant with a label, value and trend delta (Success / Critical semantics)'],
       ]},
@@ -12907,6 +13364,21 @@ const CHANGELOG = {
       ]},
       {version:'1.0.0', date:'2026-07-09', author:'Mo', title:'Initial release', changes:[
         ['added','Card surface — basic, with footer actions (primary black), media band and interactive/hoverable variants, plus specs and usage guidance'],
+      ]},
+    ]},
+    {secId:'s-cards-media', name:'Media Cards', version:'1.0.0', entries:[
+      {version:'1.0.0', date:'2026-08-04', author:'Mo', title:'Split out of Cards as its own section', changes:[
+        ['added','Media Cards — carved out of the former combined Cards page into its own section, with a "When to use" tailored to the media band specifically'],
+      ]},
+    ]},
+    {secId:'s-cards-interactive', name:'Interactive Cards', version:'1.0.0', entries:[
+      {version:'1.0.0', date:'2026-08-04', author:'Mo', title:'Split out of Cards as its own section', changes:[
+        ['added','Interactive Cards — carved out of the former combined Cards page into its own section, with a "When to use" tailored to whole-card click targets specifically'],
+      ]},
+    ]},
+    {secId:'s-cards-stat', name:'Stat Cards', version:'1.0.0', entries:[
+      {version:'1.0.0', date:'2026-08-04', author:'Mo', title:'Split out of Cards as its own section', changes:[
+        ['added','Stat Cards — carved out of the former combined Cards page into its own section, with a "When to use" tailored to headline KPI tiles specifically'],
       ]},
     ]},
     {secId:'s-modals', name:'Modals & Dialogs', version:'0.0.0', entries:[
@@ -14696,18 +15168,27 @@ const NAV = [
       {id:'s-breadcrumb',   label:'Breadcrumb',          desc:'Shows the path back through a hierarchy.'},
       {id:'s-buttons',      label:'Buttons',             desc:'Primary, secondary, accent, simple and link.'},
       {id:'s-calendar',     label:'Calendar',            desc:'Date pickers and month grids.'},
-      {label:'Cards & Charts', items:[
-        {id:'s-cards',      label:'Cards',               desc:'Flexible containers for grouped content.'},
-        {id:'s-charts',     label:'Charts',              desc:'Data visualisation with brand-styled charts.'},
+      {label:'Cards', items:[
+        {id:'s-cards-basic',       label:'Basic',        desc:'Body, title, description and an optional footer.'},
+        {id:'s-cards-media',       label:'Media',        desc:'A card with an image or thumbnail band.'},
+        {id:'s-cards-interactive', label:'Interactive',  desc:'The whole card is one clickable target.'},
+        {id:'s-cards-stat',        label:'Stat Cards',   desc:'Headline KPI tiles with a trend delta.'},
+        {id:'s-cards-hover',       label:'Hover Cards',  desc:'Rich preview shown on hover.'},
       ]},
       {id:'s-carousel',     label:'Carousel',            desc:'Swipeable slides with pagination.'},
+      {label:'Charts', items:[
+        {id:'s-charts-bar',          label:'Bar',              desc:'Compare discrete values across categories.'},
+        {id:'s-charts-line',        label:'Line & Area',      desc:'Show a trend over a continuous range.'},
+        {id:'s-charts-donut',       label:'Donut',            desc:'Show parts of a whole.'},
+        {id:'s-charts-meters',      label:'Progress Meters',  desc:'Labelled bars for quotas, targets and health.'},
+        {id:'s-charts-distribution', label:'Distribution',    desc:'Split a total across categories.'},
+      ]},
       {id:'s-selection',    label:'Checkboxes & Radios', desc:'Multi- and single-select controls.'},
       {id:'s-chips',        label:'Pills',               desc:'Compact selectable and filter tokens.'},
       {id:'s-command',      label:'Command',             desc:'Searchable command palette.'},
       {id:'s-context-menu', label:'Context Menu',        desc:'Right-click and overflow action menus.'},
       {id:'s-dropdown',     label:'Dropdown',            desc:'Single- and multi-select menus.'},
       {id:'s-empty-state',  label:'Empty State',         desc:'Muted glyph, explanation and a primary action.'},
-      {id:'s-hover-card',   label:'Hover Card',          desc:'Rich preview shown on hover.'},
       {id:'s-input-otp',    label:'Input OTP',           desc:'One-time passcode entry fields.'},
       {id:'s-kbd',          label:'Keyboard Shortcuts',  desc:'Keycaps and shortcut hints.'},
       {id:'s-lists',        label:'Lists',               desc:'Key-value lists and activity timelines.'},
@@ -14746,16 +15227,23 @@ const MOCKS = {
   's-breadcrumb': '<div class="mk"><span class="mk-chip">Home</span><span style="color:var(--chrome-muted)">/</span><span class="mk-chip">Library</span><span style="color:var(--chrome-muted)">/</span><span class="mk-chip" style="border-color:var(--chrome-txt);font-weight:800">Item</span></div>',
   's-buttons': '<div class="mk"><span class="mk-pill mk-pill--dark">Button</span><span class="mk-pill mk-pill--brand">Button</span></div>',
   's-calendar': '<div class="mk-card" style="width:64%;padding:12px"><div style="display:flex;justify-content:space-between;margin-bottom:9px"><span class="mk-bar" style="width:50px"></span><span class="mk-bar" style="width:20px"></span></div><div style="display:grid;grid-template-columns:repeat(7,1fr);gap:5px">'+Array.from({length:21}).map(function(_,i){return '<span class="mk-sq" style="width:100%;aspect-ratio:1;'+(i===9?'background:var(--color-brand)':'')+'"></span>';}).join('')+'</div></div>',
-  's-cards': '<div class="mk-card" style="width:60%;overflow:hidden"><div style="height:46px;background:var(--chrome-border)"></div><div style="padding:11px;display:flex;flex-direction:column;gap:7px"><span class="mk-bar mk-bar--txt" style="width:70%"></span><span class="mk-bar" style="width:95%"></span><span class="mk-bar" style="width:50%"></span></div></div>',
+  's-cards-basic': '<div class="mk-card" style="width:60%;overflow:hidden"><div style="padding:11px;display:flex;flex-direction:column;gap:7px"><span class="mk-bar mk-bar--txt" style="width:70%"></span><span class="mk-bar" style="width:95%"></span><span class="mk-bar" style="width:50%"></span></div></div>',
+  's-cards-media': '<div class="mk-card" style="width:60%;overflow:hidden"><div style="height:46px;background:var(--chrome-border)"></div><div style="padding:11px;display:flex;flex-direction:column;gap:7px"><span class="mk-bar mk-bar--txt" style="width:70%"></span><span class="mk-bar" style="width:95%"></span></div></div>',
+  's-cards-interactive': '<div class="mk-card" style="width:60%;overflow:hidden;box-shadow:0 8px 20px rgba(0,0,0,.10)"><div style="padding:11px;display:flex;flex-direction:column;gap:7px"><span class="mk-bar mk-bar--txt" style="width:70%"></span><span class="mk-bar" style="width:95%"></span></div></div>',
+  's-cards-stat': '<div class="mk-card" style="width:60%;padding:12px;display:flex;flex-direction:column;gap:8px"><span class="mk-bar" style="width:44%;height:7px"></span><span style="font-size:22px;font-weight:800;color:var(--chrome-txt)">2.4M</span></div>',
+  's-cards-hover': '<div class="mk-card" style="width:72%;padding:12px;display:flex;gap:10px"><span class="mk-circle" style="width:38px;height:38px;background:var(--color-brand)"></span><div style="flex:1;display:flex;flex-direction:column;gap:6px"><span class="mk-bar mk-bar--txt" style="width:55%"></span><span class="mk-bar" style="width:90%"></span><span class="mk-bar" style="width:75%"></span></div></div>',
   's-carousel': '<div style="display:flex;flex-direction:column;align-items:center;gap:10px"><div style="display:flex;gap:8px;align-items:center"><span class="mk-sq" style="width:32px;height:52px;opacity:.4"></span><span class="mk-sq" style="width:64px;height:60px;background:var(--color-brand)"></span><span class="mk-sq" style="width:32px;height:52px;opacity:.4"></span></div><div style="display:flex;gap:5px"><span class="mk-dot"></span><span class="mk-dot" style="background:var(--chrome-border)"></span><span class="mk-dot" style="background:var(--chrome-border)"></span></div></div>',
-  's-charts': '<div style="display:flex;align-items:flex-end;gap:9px;height:82px"><span class="mk-sq" style="width:18px;height:40%"></span><span class="mk-sq" style="width:18px;height:70%"></span><span class="mk-sq" style="width:18px;height:55%;background:var(--color-brand)"></span><span class="mk-sq" style="width:18px;height:90%"></span><span class="mk-sq" style="width:18px;height:35%"></span></div>',
+  's-charts-bar': '<div style="display:flex;align-items:flex-end;gap:9px;height:82px"><span class="mk-sq" style="width:18px;height:40%"></span><span class="mk-sq" style="width:18px;height:70%"></span><span class="mk-sq" style="width:18px;height:55%;background:var(--color-brand)"></span><span class="mk-sq" style="width:18px;height:90%"></span><span class="mk-sq" style="width:18px;height:35%"></span></div>',
+  's-charts-line': '<svg viewBox="0 0 100 50" style="width:78%"><polyline points="2,40 22,28 42,32 62,14 82,20 98,6" fill="none" stroke="var(--color-brand)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  's-charts-donut': '<div style="width:72px;height:72px;border-radius:50%;background:conic-gradient(var(--color-brand) 0 40%,var(--chrome-border) 40% 65%,var(--chrome-muted) 65% 100%)"></div>',
+  's-charts-meters': '<div style="display:flex;flex-direction:column;gap:9px;width:74%"><span style="height:8px;border-radius:999px;background:var(--chrome-nav);position:relative"><span style="position:absolute;inset:0;width:80%;border-radius:999px;background:var(--color-brand)"></span></span><span style="height:8px;border-radius:999px;background:var(--chrome-nav);position:relative"><span style="position:absolute;inset:0;width:55%;border-radius:999px;background:var(--color-brand)"></span></span></div>',
+  's-charts-distribution': '<div style="display:flex;gap:2px;height:14px;width:74%;border-radius:999px;overflow:hidden"><span style="width:38%;background:var(--color-brand)"></span><span style="width:24%;background:var(--chrome-txt)"></span><span style="width:21%;background:var(--chrome-border)"></span><span style="width:17%;background:var(--chrome-muted)"></span></div>',
   's-selection': '<div class="mk"><span class="mk-check"><svg viewBox="0 0 24 24"><path d="M4 12.5l5.5 5.5L20 6.5"/></svg></span><span class="mk-radio"></span></div>',
   's-chips': '<div class="mk"><span class="mk-chip"><span class="mk-dot"></span>Active</span><span class="mk-chip">Label</span><span class="mk-chip">Filter</span></div>',
   's-command': '<div class="mk-card" style="width:80%;padding:11px 13px;display:flex;align-items:center;gap:9px"><span class="mk-glyph" style="width:16px;height:16px;color:var(--chrome-muted)">'+iconSvg('search')+'</span><span class="mk-bar" style="flex:1"></span><span class="mk-key">⌘K</span></div>',
   's-context-menu': '<div class="mk-card" style="width:60%;padding:7px"><div style="display:flex;flex-direction:column;gap:3px">'+['70%','90%','55%'].map(function(w,i){return '<span style="display:flex;align-items:center;gap:8px;padding:7px 9px;border-radius:6px;'+(i===1?'background:var(--chrome-hover)':'')+'"><span class="mk-bar" style="width:'+w+'"></span></span>';}).join('')+'</div></div>',
   's-dropdown': '<div class="mk mk-col" style="gap:7px"><div class="mk-card" style="width:70%;padding:9px 12px;display:flex;justify-content:space-between;align-items:center"><span class="mk-bar" style="width:55px"></span><span style="color:var(--chrome-muted)">▾</span></div><div class="mk-card" style="width:70%;padding:6px"><div style="display:flex;flex-direction:column;gap:4px"><span style="padding:6px 8px;border-radius:5px;background:var(--chrome-hover)"><span class="mk-bar" style="width:70%"></span></span><span style="padding:6px 8px;display:block"><span class="mk-bar" style="width:50%"></span></span></div></div></div>',
   's-empty-state': '<div class="mk-card" style="width:56%;padding:18px 12px;display:flex;flex-direction:column;align-items:center;gap:8px;border-style:dashed"><span class="mk-circle" style="width:26px;height:26px;background:var(--chrome-border)"></span><span class="mk-bar mk-bar--txt" style="width:70%"></span><span class="mk-bar" style="width:50%"></span></div>',
-  's-hover-card': '<div class="mk-card" style="width:72%;padding:12px;display:flex;gap:10px"><span class="mk-circle" style="width:38px;height:38px;background:var(--color-brand)"></span><div style="flex:1;display:flex;flex-direction:column;gap:6px"><span class="mk-bar mk-bar--txt" style="width:55%"></span><span class="mk-bar" style="width:90%"></span><span class="mk-bar" style="width:75%"></span></div></div>',
   's-input-otp': '<div class="mk-otp"><span class="on">4</span><span class="on">2</span><span></span><span></span></div>',
   's-kbd': '<div class="mk"><span class="mk-key">⌘</span><span style="color:var(--chrome-muted);font-weight:800">+</span><span class="mk-key">K</span></div>',
   's-lists': '<div class="mk-card" style="width:62%;padding:11px;display:flex;flex-direction:column;gap:8px">'+['48%','62%','40%'].map(function(w){return '<div style="display:flex;justify-content:space-between;gap:10px"><span class="mk-bar" style="width:34%"></span><span class="mk-bar mk-bar--txt" style="width:'+w+'"></span></div>';}).join('')+'</div>',
