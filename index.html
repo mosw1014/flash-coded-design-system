@@ -6985,6 +6985,73 @@ CATS.forEach(([name, hex]) => {
   catGrid.appendChild(c);
 });
 
+// Chart colours — same identity set as Category Colours, kept as its own
+// named family since chart/data-viz series pick from it independently of
+// category UI.
+function hexToRgb(hex) {
+  const n = parseInt(hex.slice(1), 16);
+  return [n >> 16 & 255, n >> 8 & 255, n & 255];
+}
+function hexToRgba(hex, alpha) {
+  const [r, g, b] = hexToRgb(hex);
+  return `rgba(${r},${g},${b},${alpha})`;
+}
+
+const CHART_COLORS = CATS;
+// Desaturated set is the same hue at reduced opacity — the same "dim the
+// rest" treatment .cht__seg uses on donut/bar hover (opacity:.32) — rather
+// than a greyed-out HSL desaturation, so it reads as "faded", not "muddy".
+const CHART_DESAT_OPACITY = 0.45;
+const CHART_COLORS_DESAT = CATS;
+
+function renderColorGrid(gridId, pairs, opacity) {
+  const grid = document.getElementById(gridId);
+  pairs.forEach(([name, hex]) => {
+    const c = document.createElement('div');
+    const displayVal = opacity != null ? fmtColor(hexToRgba(hex, opacity)) : hex;
+    const copyVal = opacity != null ? hexToRgba(hex, opacity) : hex;
+    c.className = 'cat-card'; c.onclick = () => copy(copyVal, name);
+    const swatchStyle = opacity != null ? `background:${hex};opacity:${opacity}` : `background:${hex}`;
+    c.innerHTML = `
+      <div class="cat-card__swatch" style="${swatchStyle}"></div>
+      <div class="cat-card__info">
+        <div class="cat-card__name">${name}</div>
+        <div class="cat-card__hex">${displayVal}</div>
+      </div>`;
+    grid.appendChild(c);
+  });
+}
+
+// Chart colours family block
+const chartFam = document.createElement('div');
+chartFam.className = 'fam'; chartFam.id = 'fam-chart';
+chartFam.innerHTML = `
+  <div class="fam__head">
+    <div class="fam__info">
+      <div class="fam__name">Chart Colours</div>
+      <div class="fam__desc">The category colour identity set, used as the default series palette for charts and data visualisation.</div>
+    </div>
+    <div class="fam__badge fam__badge--cat">${CHART_COLORS.length} Colours</div>
+  </div>
+  <div class="cat-grid" id="chart-grid"></div>`;
+famRoot.appendChild(chartFam);
+renderColorGrid('chart-grid', CHART_COLORS);
+
+// Chart colours (desaturated) family block
+const chartFamDesat = document.createElement('div');
+chartFamDesat.className = 'fam'; chartFamDesat.id = 'fam-chart-desat';
+chartFamDesat.innerHTML = `
+  <div class="fam__head">
+    <div class="fam__info">
+      <div class="fam__name">Chart Colours — Desaturated</div>
+      <div class="fam__desc">The same series colours at reduced opacity — the "dim the rest" treatment used on chart hover — for secondary series, inactive/background states, or dense charts where the full-strength set would compete for attention.</div>
+    </div>
+    <div class="fam__badge fam__badge--cat">${CHART_COLORS_DESAT.length} Colours</div>
+  </div>
+  <div class="cat-grid" id="chart-grid-desat"></div>`;
+famRoot.appendChild(chartFamDesat);
+renderColorGrid('chart-grid-desat', CHART_COLORS_DESAT, CHART_DESAT_OPACITY);
+
 /* ============================================================
    RENDER SEMANTIC TABLES
 ============================================================ */
@@ -9837,12 +9904,16 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.42.1';
+const SYSTEM_VERSION = '1.43.0';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.43.0', date:'2026-08-04', author:'Mo', title:'Added Chart Colours and a reduced-opacity companion set to the Colours page', changes:[
+        ['added','"Chart Colours" primitive family — the same 15-colour Category Colours identity set, presented as its own named palette for chart/data-viz series so consumers don\'t have to reach into category-specific naming for a chart default'],
+        ['added','"Chart Colours — Desaturated" secondary family — each Chart Colours swatch rendered at 45% opacity (new CHART_DESAT_OPACITY, via a hexToRgba() helper) rather than a greyed-out HSL desaturation, matching the existing "dim the rest" treatment .cht__seg already uses on chart hover (opacity:.32) instead of inventing a second visual language for the same idea'],
+      ]},
       {version:'1.42.1', date:'2026-08-04', author:'Helen', title:'Cleaned up the Chips code language switcher — no dots, correct typeface on the tab labels', changes:[
         ['removed','.code-seg__dot per-language colour dots — read as decorative noise rather than a meaningful cue; the label text already identifies each language'],
         ['fixed','.code-seg__btn (the HTML/CSS · Blazor · React TSX tab labels) was left on font-family:inherit instead of explicitly setting the brand typeface — now sets \'Satoshi Variable\',\'Satoshi\',sans-serif with the ss01/ss03 stylistic-alternate feature settings used sitewide. .code-lang-file (the "chip.html" filename hint) intentionally keeps its monospace stack — a filename reads better as code'],
@@ -10685,7 +10756,11 @@ const CHANGELOG = {
         ['added','New "Logos" page under the Brand category listing all 8 Flash logo variations (Primary, White, Monochrome Black, Monochrome White — each horizontal and stacked), each downloadable as a transparent SVG or PNG from assets/logos/'],
       ]},
     ]},
-    {secId:'s-colours', name:'Colours', version:'1.5.0', entries:[
+    {secId:'s-colours', name:'Colours', version:'1.6.0', entries:[
+      {version:'1.6.0', date:'2026-08-04', author:'Mo', title:'Added Chart Colours and a reduced-opacity companion set', changes:[
+        ['added','New "Chart Colours" primitive family block (#fam-chart, .cat-grid#chart-grid) duplicating the Category Colours 15-colour set under its own name, for use as a default chart/data-viz series palette'],
+        ['added','New "Chart Colours — Desaturated" family block (#fam-chart-desat, .cat-grid#chart-grid-desat) — CHART_COLORS_DESAT reuses the same hexes as CHART_COLORS, rendered via a new hexToRgba(hex, alpha) helper at 45% opacity (CHART_DESAT_OPACITY) instead of a desaturated/greyed hex, so the effect reads as "faded", matching the opacity:.32 dim-the-rest treatment .cht__seg already uses on chart hover'],
+      ]},
       {version:'1.5.0', date:'2026-08-03', author:'Mo', title:'Semantic colour table (SEM) now generated from the CSS; phantom placeholder token made real', changes:[
         ['changed','The SEM semantic-token table\'s light/dark hex values are now generated from the real [data-brand="flash"][data-theme] CSS by scripts/sync-token-tables.mjs (run in the pre-commit hook) instead of being hand-typed — the CSS is the single source of truth and the table can no longer drift from it. Token names and usage notes remain hand-authored'],
         ['fixed','--color-input-placeholder appeared in the Inputs token group but was never declared in the CSS — now declared in both themes (light #a1a3a8, dark #8a8a8a, via --prim-gb-100 / --prim-grey-800) to match the documented values'],
