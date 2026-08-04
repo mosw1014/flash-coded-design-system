@@ -3449,43 +3449,13 @@ body.home .main{max-width:none;margin:0;padding:0}
   </pre>
 </details>
     </section>
-    <section class="sec" id="s-tags">
+    <section class="sec sec--tabbed" id="s-tags">
+      <div class="sec-hero">
       <div class="sec__head">
-        <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Tags &amp; Badges <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.1.2</span></h1>
-        <p class="sec__desc">Static labelling: tags for categorising, count badges for notifications, avatar badges for identity, and status dots for state &middot; 5 tag variants &middot; light &amp; dark mode &middot; interactive tag playground.</p>
-      </div>
-      <div id="tag-playground"    class="type-sub"></div>
-      <div id="tag-reference"     class="type-sub"></div>
-      <div id="badge-count-ref"   class="type-sub"></div>
-      <div id="badge-avatar-ref"  class="type-sub"></div>
-      <div id="badge-status-ref"  class="type-sub"></div>
-
-      <div class="type-sub">
-        <div class="type-sub__title">Tag or Chip?</div>
-        <div class="type-sub__desc">Both are small pills of text &mdash; the difference is emphasis and interactivity. Reach for a <strong>tag</strong> to quietly categorise; reach for a <a href="javascript:void(0)" onclick="showSection('s-chips')" style="color:var(--color-link);font-weight:700">Chip</a> when the element is selectable, removable, or needs to shout.</div>
-        <div class="sel-usage">
-          <div class="sel-usage__card">
-            <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
-            <ul class="sel-usage__list">
-              <li>Use a <strong>tag</strong> for read-only metadata &mdash; a transaction type, an API version, a category like &ldquo;Betting&rdquo;.</li>
-              <li>Use a <strong>count badge</strong> for unread or pending totals, and its dot-only form when the exact number doesn&rsquo;t matter.</li>
-              <li>Use a <strong>status dot</strong> inline with a label to show live state &mdash; Active, Degraded, Offline.</li>
-              <li>Keep tag colour meaningful &mdash; lean on Neutral unless a semantic colour genuinely adds signal.</li>
-            </ul>
-          </div>
-          <div class="sel-usage__card">
-            <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don&rsquo;t</div>
-            <ul class="sel-usage__list">
-              <li>Don&rsquo;t make a tag clickable or removable &mdash; that&rsquo;s a chip&rsquo;s job.</li>
-              <li>Don&rsquo;t stack more than a couple of tags on one row &mdash; they stop reading as metadata and start looking like filters.</li>
-              <li>Don&rsquo;t show a count badge with &ldquo;0&rdquo; &mdash; hide it, or drop to a dot.</li>
-              <li>Don&rsquo;t rely on dot colour alone for critical status &mdash; pair it with a text label.</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <details class="ai-ctx">
+        <h1 class="sec__title">Tags</h1>
+        <div class="sec-header-meta">
+          <span class="comp-ver-badge" style="margin-left:0">v2.0.0</span>
+          <details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-tags">
 {
@@ -3493,11 +3463,7 @@ body.home .main{max-width:none;margin:0;padding:0}
   "builderFunctions": [
     "TAG_VARIANTS",
     "TAG_SIZES",
-    "tagHTML",
-    "STATUS_BADGES",
-    "renderBadgeCountRef",
-    "renderBadgeAvatarRef",
-    "renderBadgeStatusRef"
+    "tagHTML"
   ],
   "realClasses": [
     ".tag",
@@ -3509,7 +3475,99 @@ body.home .main{max-width:none;margin:0;padding:0}
     ".tag--warning",
     ".tag--error",
     ".tag__dot",
-    ".tag__label",
+    ".tag__label"
+  ],
+  "css": "/* ================================================================\n   TAGS &amp; BADGES\n   Tags = subtle, static category labels (tinted, softly-rounded —\n   deliberately NOT the saturated pill of a Chip). Badges = count,\n   avatar and status-dot markers. All colours ride the semantic\n   --color-*-h / --color-*-l token pairs, so they flip with theme.\n================================================================ */\n/* Tag */\n.tag { display:inline-flex;align-items:center;gap:5px;border-radius:6px;font-family:inherit;font-weight:700;line-height:1;white-space:nowrap;background:var(--tag-bg);color:var(--tag-fg) }\n.tag--sm { height:20px;padding:0 7px;font-size:11px }\n.tag--reg { height:24px;padding:0 9px;font-size:12px }\n.tag__dot { width:6px;height:6px;border-radius:50%;background:currentColor;flex-shrink:0 }\n.tag--neutral { --tag-bg:var(--chrome-nav);--tag-fg:var(--chrome-muted) }\n.tag--info { --tag-bg:var(--color-info-l);--tag-fg:var(--color-info-h) }\n.tag--success { --tag-bg:var(--color-success-l);--tag-fg:var(--color-success-h) }\n.tag--warning { --tag-bg:var(--color-warn-l);--tag-fg:var(--color-warn-h) }\n.tag--error { --tag-bg:var(--color-crit-l);--tag-fg:var(--color-crit-h) }\n/* --color-info-l stays pale in dark mode (unlike its success/warning/error siblings,\n   which darken their -l token) — give the info tag the same deep-navy dark override\n   already used for .alrt--info so it actually shifts with the theme toggle. */\n[data-theme=\"dark\"] .tag--info { --tag-bg:var(--prim-sup-blue-3) }",
+  "js": "const TAG_VARIANTS = [\n  {key:'neutral', label:'Neutral'},\n  {key:'info',    label:'Info'},\n  {key:'success', label:'Success'},\n  {key:'warning', label:'Warning'},\n  {key:'error',   label:'Error'},\n];\n\nconst TAG_SIZES = [ {key:'sm', label:'Small'}, {key:'reg', label:'Regular'} ];\n\nfunction tagHTML(variant, size, label, dot){\n  const d = dot ? `&lt;span class=\"tag__dot\"&gt;&lt;/span&gt;` : '';\n  return `&lt;span class=\"tag tag--${variant} tag--${size}\"&gt;${d}&lt;span class=\"tag__label\"&gt;${tbEsc(label)}&lt;/span&gt;&lt;/span&gt;`;\n}",
+  "usage": {
+    "do": [
+      "Use a tag for read-only metadata — a transaction type, an API version, a category like “Betting”.",
+      "Keep tag colour meaningful — lean on Neutral unless a semantic colour genuinely adds signal."
+    ],
+    "dont": [
+      "Don't make a tag clickable or removable — that's a chip's job.",
+      "Don't stack more than a couple of tags on one row — they stop reading as metadata and start looking like filters."
+    ]
+  },
+  "contentHash": "ffb32bb7dbe10e89c97ad94ccafbed40d12bd5647b8bddeea914b6e7828b26c2",
+  "note": "A tag is read-only metadata — no click handler, no dismiss button; that's what separates it from a Chip (see s-chips). tagHTML is the canonical builder (variant/size/label/dot -&gt; tag HTML string). tpg (playground state)/getTagCode*/renderTag*/TAG_KEY_VARIANTS/TAG_TOKENS are doc-site-only plumbing, excluded. Badges (count/avatar/status markers) were split out to their own s-badges section — they no longer live on this page."
+}
+  </pre>
+</details>
+        </div>
+      </div>
+      <div class="sec-hero__preview"><div class="mk"><span class="tag tag--success tag--reg"><span class="tag__dot"></span><span class="tag__label">Live</span></span><span class="tag tag--neutral tag--reg"><span class="tag__label">Betting</span></span><span class="tag tag--info tag--reg"><span class="tag__label">v2.1</span></span></div></div>
+      </div>
+      <div class="tabs-list sec-tabs" id="tag-tabs-list">
+        <button type="button" class="tab-item on" data-tag-tab="overview" onclick="tagTabSwitch('overview')"><span class="tab-item__inner"><span class="tab-item__label">Overview</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-tag-tab="style" onclick="tagTabSwitch('style')"><span class="tab-item__inner"><span class="tab-item__label">Style</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-tag-tab="code" onclick="tagTabSwitch('code')"><span class="tab-item__inner"><span class="tab-item__label">Code</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-tag-tab="changelog" onclick="tagTabSwitch('changelog')"><span class="tab-item__inner"><span class="tab-item__label">Changelog</span></span><span class="tab-item__line"></span></button>
+      </div>
+      <div class="tabs-panel on" data-tag-panel="overview">
+        <div id="tag-playground" class="type-sub"></div>
+        <div id="tag-variants" class="type-sub"></div>
+        <div id="tag-insitu" class="type-sub"></div>
+        <div class="type-sub cpg-variants" id="tag-usage">
+          <div class="cpg-section-heading">
+            <div class="cpg-layout__title">Do's &amp; don'ts</div>
+            <div class="cpg-layout__desc">Both a tag and a <a href="javascript:void(0)" onclick="showSection('s-chips')" style="color:var(--color-link);font-weight:700">Chip</a> are small pills of text &mdash; the difference is emphasis and interactivity. Reach for a tag to quietly categorise; reach for a Chip when the element is selectable, removable, or needs to shout.</div>
+          </div>
+          <div class="cpg-section-block">
+            <div class="sel-usage">
+              <div class="sel-usage__card">
+                <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
+                <ul class="sel-usage__list">
+                  <li>Use a tag for read-only metadata &mdash; a transaction type, an API version, a category like &ldquo;Betting&rdquo;.</li>
+                  <li>Keep tag colour meaningful &mdash; lean on Neutral unless a semantic colour genuinely adds signal.</li>
+                </ul>
+                <div class="spec-usage-demo">
+                  <span class="tag tag--neutral tag--reg"><span class="tag__label">Betting</span></span>
+                  <span class="tag tag--info tag--reg"><span class="tag__label">v2.1</span></span>
+                </div>
+              </div>
+              <div class="sel-usage__card">
+                <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don't</div>
+                <ul class="sel-usage__list">
+                  <li>Don't make a tag clickable or removable &mdash; that's a chip's job.</li>
+                  <li>Don't stack more than a couple of tags on one row &mdash; they stop reading as metadata and start looking like filters.</li>
+                </ul>
+                <div class="spec-usage-demo">
+                  <span class="tag tag--neutral tag--reg"><span class="tag__label">Betting &middot; Airtime &middot; Data &middot; Bill Pay &middot; Rewards</span></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tabs-panel" data-tag-panel="style">
+        <div id="tag-reference" class="type-sub spec-panel spec-stack"></div>
+      </div>
+      <div class="tabs-panel" data-tag-panel="code">
+        <div id="tag-code-playground" class="type-sub spec-panel spec-code-playground"></div>
+        <div id="tag-code-tab" class="type-sub spec-panel"></div>
+      </div>
+      <div class="tabs-panel" data-tag-panel="changelog" id="tag-changelog-panel"></div>
+    </section>
+    <section class="sec sec--tabbed" id="s-badges">
+      <div class="sec-hero">
+      <div class="sec__head">
+        <h1 class="sec__title">Badges</h1>
+        <div class="sec-header-meta">
+          <span class="comp-ver-badge" style="margin-left:0">v1.0.0</span>
+          <details class="ai-ctx">
+  <summary>AI context</summary>
+  <pre data-ai-context="s-badges">
+{
+  "status": "static",
+  "builderFunctions": [
+    "STATUS_BADGES",
+    "bellSVG",
+    "badgeCountHTML",
+    "badgeAvatarHTML",
+    "badgeStatusHTML"
+  ],
+  "realClasses": [
     ".badge-ct",
     ".badge-ct--dot",
     ".badge-ct--sm",
@@ -3535,27 +3593,85 @@ body.home .main{max-width:none;margin:0;padding:0}
     ".badge-st--info",
     ".badge-st--neutral"
   ],
-  "css": "/* ================================================================\n   TAGS &amp; BADGES\n   Tags = subtle, static category labels (tinted, softly-rounded —\n   deliberately NOT the saturated pill of a Chip). Badges = count,\n   avatar and status-dot markers. All colours ride the semantic\n   --color-*-h / --color-*-l token pairs, so they flip with theme.\n================================================================ */\n/* Tag */\n.tag { display:inline-flex;align-items:center;gap:5px;border-radius:6px;font-family:inherit;font-weight:700;line-height:1;white-space:nowrap;background:var(--tag-bg);color:var(--tag-fg) }\n.tag--sm { height:20px;padding:0 7px;font-size:11px }\n.tag--reg { height:24px;padding:0 9px;font-size:12px }\n.tag__dot { width:6px;height:6px;border-radius:50%;background:currentColor;flex-shrink:0 }\n.tag--neutral { --tag-bg:var(--chrome-nav);--tag-fg:var(--chrome-muted) }\n.tag--info { --tag-bg:var(--color-info-l);--tag-fg:var(--color-info-h) }\n.tag--success { --tag-bg:var(--color-success-l);--tag-fg:var(--color-success-h) }\n.tag--warning { --tag-bg:var(--color-warn-l);--tag-fg:var(--color-warn-h) }\n.tag--error { --tag-bg:var(--color-crit-l);--tag-fg:var(--color-crit-h) }\n/* --color-info-l stays pale in dark mode (unlike its success/warning/error siblings,\n   which darken their -l token) — give the info tag the same deep-navy dark override\n   already used for .alrt--info so it actually shifts with the theme toggle. */\n[data-theme=\"dark\"] .tag--info { --tag-bg:var(--prim-sup-blue-3) }\n/* Count / notification badge */\n.badge-ct { display:inline-flex;align-items:center;justify-content:center;box-sizing:border-box;border-radius:999px;font-family:inherit;font-weight:800;line-height:1;color:#fff;background:var(--bc-bg,#EB0029);font-variant-numeric:tabular-nums }\n.badge-ct--dot { width:9px;height:9px;padding:0 }\n.badge-ct--sm { min-width:16px;height:16px;padding:0 4px;font-size:10px }\n.badge-ct--md { min-width:20px;height:20px;padding:0 6px;font-size:11px }\n.badge-ct--accent { --bc-bg:#0062EB }\n.badge-ct--error { --bc-bg:#EB0029 }\n.badge-ct--neutral { --bc-bg:var(--chrome-muted) }\n/* Host wrapper — anchors a badge to the corner of an icon/avatar */\n.badge-host { position:relative;display:inline-flex }\n.badge-host__mark { display:inline-flex;align-items:center;justify-content:center;color:var(--chrome-muted) }\n.badge-host__badge { position:absolute;top:-4px;right:-6px }\n/* Avatar / image badge */\n.badge-av { position:relative;display:inline-flex;align-items:center;justify-content:center;border-radius:50%;background:var(--av-bg,var(--chrome-nav));color:var(--av-fg,var(--chrome-muted));font-family:inherit;font-weight:800;flex-shrink:0 }\n.badge-av__img { width:100%;height:100%;border-radius:50%;object-fit:cover;display:block }\n.badge-av--sm { width:24px;height:24px;font-size:10px }\n.badge-av--md { width:32px;height:32px;font-size:12px }\n.badge-av--lg { width:48px;height:48px;font-size:17px }\n.badge-av--brand { --av-bg:var(--chrome-accent);--av-fg:#0a2a12 }\n.badge-av__status { position:absolute;bottom:0;right:0;border-radius:50%;border:2px solid var(--chrome-bg);background:var(--st-c,var(--chrome-muted)) }\n/* Status-dot badge */\n.badge-st { display:inline-flex;align-items:center;gap:7px;font-family:inherit;font-size:12px;font-weight:600;color:var(--chrome-txt);white-space:nowrap }\n.badge-st__dot { width:8px;height:8px;border-radius:50%;flex-shrink:0;background:var(--st-c,var(--chrome-muted)) }\n.badge-st--success { --st-c:var(--color-success-h) }\n.badge-st--warning { --st-c:var(--color-warn-h) }\n.badge-st--error { --st-c:var(--color-crit-h) }\n.badge-st--info { --st-c:var(--color-info-h) }\n.badge-st--neutral { --st-c:var(--chrome-muted) }",
-  "js": "const TAG_VARIANTS = [\n  {key:'neutral', label:'Neutral'},\n  {key:'info',    label:'Info'},\n  {key:'success', label:'Success'},\n  {key:'warning', label:'Warning'},\n  {key:'error',   label:'Error'},\n];\n\nconst TAG_SIZES = [ {key:'sm', label:'Small'}, {key:'reg', label:'Regular'} ];\n\nfunction tagHTML(variant, size, label, dot){\n  const d = dot ? `&lt;span class=\"tag__dot\"&gt;&lt;/span&gt;` : '';\n  return `&lt;span class=\"tag tag--${variant} tag--${size}\"&gt;${d}&lt;span class=\"tag__label\"&gt;${tbEsc(label)}&lt;/span&gt;&lt;/span&gt;`;\n}\n\nconst STATUS_BADGES = [\n  {key:'success', label:'Active'},\n  {key:'info',    label:'Processing'},\n  {key:'warning', label:'Degraded'},\n  {key:'error',   label:'Offline'},\n  {key:'neutral', label:'Unknown'},\n];\n\nfunction renderBadgeCountRef(){\n  const root = document.getElementById('badge-count-ref');\n  if(!root) return;\n  const sbg = stageBg(tbTheme());\n  const cell = (inner, cap)=&gt;`&lt;div class=\"tb-ref__cell\"&gt;${inner}&lt;span class=\"tb-ref__cell-cap\"&gt;${cap}&lt;/span&gt;&lt;/div&gt;`;\n  const variantsRow = ['error','accent','neutral'].map(v=&gt;cell(`&lt;span class=\"badge-ct badge-ct--md badge-ct--${v}\"&gt;3&lt;/span&gt;`, cap(v==='accent'?'accent':v))).join('');\n  const sizesRow = cell(`&lt;span class=\"badge-ct badge-ct--dot badge-ct--error\"&gt;&lt;/span&gt;`,'Dot')\n    + cell(`&lt;span class=\"badge-ct badge-ct--sm badge-ct--error\"&gt;5&lt;/span&gt;`,'Small')\n    + cell(`&lt;span class=\"badge-ct badge-ct--md badge-ct--error\"&gt;5&lt;/span&gt;`,'Medium')\n    + cell(`&lt;span class=\"badge-ct badge-ct--md badge-ct--error\"&gt;99+&lt;/span&gt;`,'Overflow');\n  const anchoredRow = cell(`&lt;span class=\"badge-host\"&gt;&lt;span class=\"badge-host__mark\"&gt;${bellSVG()}&lt;/span&gt;&lt;span class=\"badge-host__badge\"&gt;&lt;span class=\"badge-ct badge-ct--sm badge-ct--error\"&gt;4&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;`,'Count')\n    + cell(`&lt;span class=\"badge-host\"&gt;&lt;span class=\"badge-host__mark\"&gt;${bellSVG()}&lt;/span&gt;&lt;span class=\"badge-host__badge\"&gt;&lt;span class=\"badge-ct badge-ct--dot badge-ct--error\"&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;`,'Dot');\n  root.innerHTML = `\n    &lt;div class=\"type-sub__title\"&gt;Count &amp;amp; notification badges&lt;/div&gt;\n    &lt;div class=\"type-sub__desc\"&gt;A small solid marker for unread or pending totals. Use the dot form when the exact number doesn&amp;rsquo;t matter, and &amp;ldquo;99+&amp;rdquo; past two digits. Hide it entirely at zero.&lt;/div&gt;\n    &lt;div class=\"tb-ref\" style=\"background:${sbg}\"&gt;\n      &lt;div class=\"tb-ref__row\"&gt;&lt;div class=\"tb-ref__label\"&gt;Variant&lt;/div&gt;&lt;div class=\"tb-ref__cells\"&gt;${variantsRow}&lt;/div&gt;&lt;/div&gt;\n      &lt;div class=\"tb-ref__row\"&gt;&lt;div class=\"tb-ref__label\"&gt;Size &amp;amp; form&lt;/div&gt;&lt;div class=\"tb-ref__cells\"&gt;${sizesRow}&lt;/div&gt;&lt;/div&gt;\n      &lt;div class=\"tb-ref__row\"&gt;&lt;div class=\"tb-ref__label\"&gt;Anchored&lt;/div&gt;&lt;div class=\"tb-ref__cells\"&gt;${anchoredRow}&lt;/div&gt;&lt;/div&gt;\n    &lt;/div&gt;`;\n}\n\nfunction renderBadgeAvatarRef(){\n  const root = document.getElementById('badge-avatar-ref');\n  if(!root) return;\n  const sbg = stageBg(tbTheme());\n  const cell = (inner, cap)=&gt;`&lt;div class=\"tb-ref__cell\"&gt;${inner}&lt;span class=\"tb-ref__cell-cap\"&gt;${cap}&lt;/span&gt;&lt;/div&gt;`;\n  const sizesRow = cell(`&lt;span class=\"badge-av badge-av--sm\"&gt;RB&lt;/span&gt;`,'Small 24')\n    + cell(`&lt;span class=\"badge-av badge-av--md\"&gt;RB&lt;/span&gt;`,'Medium 32')\n    + cell(`&lt;span class=\"badge-av badge-av--lg\"&gt;RB&lt;/span&gt;`,'Large 48');\n  const variantsRow = cell(`&lt;span class=\"badge-av badge-av--md\"&gt;RB&lt;/span&gt;`,'Neutral')\n    + cell(`&lt;span class=\"badge-av badge-av--md badge-av--brand\"&gt;RB&lt;/span&gt;`,'Brand');\n  const overlayRow = cell(`&lt;span class=\"badge-av badge-av--md\"&gt;RB&lt;span class=\"badge-av__status badge-st--success\" style=\"width:10px;height:10px\"&gt;&lt;/span&gt;&lt;/span&gt;`,'+ status')\n    + cell(`&lt;span class=\"badge-host\"&gt;&lt;span class=\"badge-av badge-av--md\"&gt;RB&lt;/span&gt;&lt;span class=\"badge-host__badge\"&gt;&lt;span class=\"badge-ct badge-ct--sm badge-ct--error\"&gt;2&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;`,'+ count');\n  root.innerHTML = `\n    &lt;div class=\"type-sub__title\"&gt;Avatar &amp;amp; image badges&lt;/div&gt;\n    &lt;div class=\"type-sub__desc\"&gt;A circular identity mark &amp;mdash; initials, a photo, or a product/brand logo. Pair with a status dot to show presence, or a count badge for pending items.&lt;/div&gt;\n    &lt;div class=\"tb-ref\" style=\"background:${sbg}\"&gt;\n      &lt;div class=\"tb-ref__row\"&gt;&lt;div class=\"tb-ref__label\"&gt;Size&lt;/div&gt;&lt;div class=\"tb-ref__cells\"&gt;${sizesRow}&lt;/div&gt;&lt;/div&gt;\n      &lt;div class=\"tb-ref__row\"&gt;&lt;div class=\"tb-ref__label\"&gt;Fill&lt;/div&gt;&lt;div class=\"tb-ref__cells\"&gt;${variantsRow}&lt;/div&gt;&lt;/div&gt;\n      &lt;div class=\"tb-ref__row\"&gt;&lt;div class=\"tb-ref__label\"&gt;Overlay&lt;/div&gt;&lt;div class=\"tb-ref__cells\"&gt;${overlayRow}&lt;/div&gt;&lt;/div&gt;\n    &lt;/div&gt;`;\n}\n\nfunction renderBadgeStatusRef(){\n  const root = document.getElementById('badge-status-ref');\n  if(!root) return;\n  const sbg = stageBg(tbTheme());\n  const cell = (inner, cap)=&gt;`&lt;div class=\"tb-ref__cell\"&gt;${inner}&lt;span class=\"tb-ref__cell-cap\"&gt;${cap}&lt;/span&gt;&lt;/div&gt;`;\n  const labelled = STATUS_BADGES.map(s=&gt;cell(`&lt;span class=\"badge-st badge-st--${s.key}\"&gt;&lt;span class=\"badge-st__dot\"&gt;&lt;/span&gt;${s.label}&lt;/span&gt;`, cap(s.key))).join('');\n  const dotsOnly = STATUS_BADGES.map(s=&gt;cell(`&lt;span class=\"badge-st badge-st--${s.key}\"&gt;&lt;span class=\"badge-st__dot\"&gt;&lt;/span&gt;&lt;/span&gt;`, cap(s.key))).join('');\n  root.innerHTML = `\n    &lt;div class=\"type-sub__title\"&gt;Status dots&lt;/div&gt;\n    &lt;div class=\"type-sub__desc\"&gt;A tiny coloured dot for live state. Always pair the dot with a text label for anything critical &amp;mdash; colour alone isn&amp;rsquo;t accessible.&lt;/div&gt;\n    &lt;div class=\"tb-ref\" style=\"background:${sbg}\"&gt;\n      &lt;div class=\"tb-ref__row\"&gt;&lt;div class=\"tb-ref__label\"&gt;With label&lt;/div&gt;&lt;div class=\"tb-ref__cells\"&gt;${labelled}&lt;/div&gt;&lt;/div&gt;\n      &lt;div class=\"tb-ref__row\"&gt;&lt;div class=\"tb-ref__label\"&gt;Dot only&lt;/div&gt;&lt;div class=\"tb-ref__cells\"&gt;${dotsOnly}&lt;/div&gt;&lt;/div&gt;\n    &lt;/div&gt;`;\n}",
+  "css": "/* Count / notification badge */\n.badge-ct { display:inline-flex;align-items:center;justify-content:center;box-sizing:border-box;border-radius:999px;font-family:inherit;font-weight:800;line-height:1;color:#fff;background:var(--bc-bg,#EB0029);font-variant-numeric:tabular-nums }\n.badge-ct--dot { width:9px;height:9px;padding:0 }\n.badge-ct--sm { min-width:16px;height:16px;padding:0 4px;font-size:10px }\n.badge-ct--md { min-width:20px;height:20px;padding:0 6px;font-size:11px }\n.badge-ct--accent { --bc-bg:#0062EB }\n.badge-ct--error { --bc-bg:#EB0029 }\n.badge-ct--neutral { --bc-bg:var(--chrome-muted) }\n/* Host wrapper — anchors a badge to the corner of an icon/avatar */\n.badge-host { position:relative;display:inline-flex }\n.badge-host__mark { display:inline-flex;align-items:center;justify-content:center;color:var(--chrome-muted) }\n.badge-host__badge { position:absolute;top:-4px;right:-6px }\n/* Avatar / image badge */\n.badge-av { position:relative;display:inline-flex;align-items:center;justify-content:center;border-radius:50%;background:var(--av-bg,var(--chrome-nav));color:var(--av-fg,var(--chrome-muted));font-family:inherit;font-weight:800;flex-shrink:0 }\n.badge-av__img { width:100%;height:100%;border-radius:50%;object-fit:cover;display:block }\n.badge-av--sm { width:24px;height:24px;font-size:10px }\n.badge-av--md { width:32px;height:32px;font-size:12px }\n.badge-av--lg { width:48px;height:48px;font-size:17px }\n.badge-av--brand { --av-bg:var(--chrome-accent);--av-fg:#0a2a12 }\n.badge-av__status { position:absolute;bottom:0;right:0;border-radius:50%;border:2px solid var(--chrome-bg);background:var(--st-c,var(--chrome-muted)) }\n/* Status-dot badge */\n.badge-st { display:inline-flex;align-items:center;gap:7px;font-family:inherit;font-size:12px;font-weight:600;color:var(--chrome-txt);white-space:nowrap }\n.badge-st__dot { width:8px;height:8px;border-radius:50%;flex-shrink:0;background:var(--st-c,var(--chrome-muted)) }\n.badge-st--success { --st-c:var(--color-success-h) }\n.badge-st--warning { --st-c:var(--color-warn-h) }\n.badge-st--error { --st-c:var(--color-crit-h) }\n.badge-st--info { --st-c:var(--color-info-h) }\n.badge-st--neutral { --st-c:var(--chrome-muted) }",
+  "js": "const STATUS_BADGES = [\n  {key:'success', label:'Active'},\n  {key:'info',    label:'Processing'},\n  {key:'warning', label:'Degraded'},\n  {key:'error',   label:'Offline'},\n  {key:'neutral', label:'Unknown'},\n];\n\nfunction bellSVG(){ return `&lt;svg width=\"22\" height=\"22\" viewBox=\"0 0 24 24\" fill=\"none\"&gt;&lt;path d=\"M12 3a6 6 0 0 0-6 6c0 3.5-1 5-2 6h16c-1-1-2-2.5-2-6a6 6 0 0 0-6-6Z\" fill=\"currentColor\"/&gt;&lt;path d=\"M10 20a2 2 0 0 0 4 0\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\"/&gt;&lt;/svg&gt;`; }\n\nfunction badgeCountHTML(variant, form, anchored, value){\n  const v = value !== undefined ? value : (form==='dot' ? '' : '5');\n  const cls = `badge-ct badge-ct--${form} badge-ct--${variant}`;\n  const badge = `&lt;span class=\"${cls}\"&gt;${form==='dot'?'':v}&lt;/span&gt;`;\n  if(!anchored) return badge;\n  return `&lt;span class=\"badge-host\"&gt;&lt;span class=\"badge-host__mark\"&gt;${bellSVG()}&lt;/span&gt;&lt;span class=\"badge-host__badge\"&gt;${badge}&lt;/span&gt;&lt;/span&gt;`;\n}\n\nfunction badgeAvatarHTML(size, fill, overlay, initials, statusVariant){\n  const cls = `badge-av badge-av--${size}${fill==='brand'?' badge-av--brand':''}`;\n  const label = initials || 'RB';\n  if(overlay==='count'){\n    return `&lt;span class=\"badge-host\"&gt;&lt;span class=\"${cls}\"&gt;${label}&lt;/span&gt;&lt;span class=\"badge-host__badge\"&gt;&lt;span class=\"badge-ct badge-ct--sm badge-ct--error\"&gt;2&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;`;\n  }\n  const overlayHtml = overlay==='status' ? `&lt;span class=\"badge-av__status badge-st--${statusVariant||'success'}\" style=\"width:10px;height:10px\"&gt;&lt;/span&gt;` : '';\n  return `&lt;span class=\"${cls}\"&gt;${label}${overlayHtml}&lt;/span&gt;`;\n}\n\nfunction badgeStatusHTML(variant, withLabel, label){\n  return `&lt;span class=\"badge-st badge-st--${variant}\"&gt;&lt;span class=\"badge-st__dot\"&gt;&lt;/span&gt;${withLabel?tbEsc(label||cap(variant)):''}&lt;/span&gt;`;\n}",
   "usage": {
     "do": [
-      "Use a tag for read-only metadata — a transaction type, an API version, a category like “Betting”.",
-      "Use a count badge for unread or pending totals, and its dot-only form when the exact number doesn’t matter.",
-      "Use a status dot inline with a label to show live state — Active, Degraded, Offline.",
-      "Keep tag colour meaningful — lean on Neutral unless a semantic colour genuinely adds signal."
+      "Use a count badge for unread or pending totals, and its dot-only form once the exact number doesn't matter.",
+      "Use a status dot inline with a label — colour plus text, never colour alone.",
+      "Use an avatar badge for identity, with at most one overlay — a status dot or a count."
     ],
     "dont": [
-      "Don’t make a tag clickable or removable — that’s a chip’s job.",
-      "Don’t stack more than a couple of tags on one row — they stop reading as metadata and start looking like filters.",
-      "Don’t show a count badge with “0” — hide it, or drop to a dot.",
-      "Don’t rely on dot colour alone for critical status — pair it with a text label."
+      "Don't show a count badge at “0” — hide it, or drop to a dot instead.",
+      "Don't rely on a status dot's colour alone for anything critical.",
+      "Don't use a badge as a button — badges only display information."
     ]
   },
-  "contentHash": "c1aff64a0c0a4cad26f50c2218540553d723f0941b9df7fe8d0228ccfd85d69c",
-  "note": "Covers Tags, Count badges, Avatar/image badges, and Status dots — the full Tags &amp; Badges section."
+  "contentHash": "1111b4f62ddfa19f0808e5e11b90628e28b39ddb968a46ba7e518a56fbdad680",
+  "note": "Three independent sub-types under one page — count (.badge-ct), avatar (.badge-av), status dot (.badge-st) — plus .badge-host, which anchors any badge to the corner of an icon or avatar. badgeCountHTML/badgeAvatarHTML/badgeStatusHTML are the canonical builders; bpg (playground state)/getBadgeCode*/render*/BADGE_* option lists are doc-site-only plumbing, excluded. Split out of the former combined Tags &amp; Badges page — Tags (read-only category labels) now live at s-tags."
 }
   </pre>
 </details>
+        </div>
+      </div>
+      <div class="sec-hero__preview"><div class="mk" style="gap:18px">
+        <span class="badge-host"><span class="badge-host__mark" style="width:22px;height:22px;color:var(--chrome-muted)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 3a6 6 0 0 0-6 6c0 3.5-1 5-2 6h16c-1-1-2-2.5-2-6a6 6 0 0 0-6-6Z" fill="currentColor"/><path d="M10 20a2 2 0 0 0 4 0" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></span><span class="badge-host__badge"><span class="badge-ct badge-ct--sm badge-ct--error">4</span></span></span>
+        <span class="badge-av badge-av--md">RB<span class="badge-av__status badge-st--success" style="width:10px;height:10px"></span></span>
+        <span class="badge-st badge-st--warning"><span class="badge-st__dot"></span>Degraded</span>
+      </div></div>
+      </div>
+      <div class="tabs-list sec-tabs" id="badge-tabs-list">
+        <button type="button" class="tab-item on" data-badge-tab="overview" onclick="badgeTabSwitch('overview')"><span class="tab-item__inner"><span class="tab-item__label">Overview</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-badge-tab="style" onclick="badgeTabSwitch('style')"><span class="tab-item__inner"><span class="tab-item__label">Style</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-badge-tab="code" onclick="badgeTabSwitch('code')"><span class="tab-item__inner"><span class="tab-item__label">Code</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-badge-tab="changelog" onclick="badgeTabSwitch('changelog')"><span class="tab-item__inner"><span class="tab-item__label">Changelog</span></span><span class="tab-item__line"></span></button>
+      </div>
+      <div class="tabs-panel on" data-badge-panel="overview">
+        <div id="badge-playground" class="type-sub"></div>
+        <div id="badge-insitu" class="type-sub"></div>
+        <div class="type-sub cpg-variants" id="badge-usage">
+          <div class="cpg-section-heading">
+            <div class="cpg-layout__title">Do's &amp; don'ts</div>
+            <div class="cpg-layout__desc">Three markers, one job each &mdash; a count, an identity, or a live state. None of them are clickable.</div>
+          </div>
+          <div class="cpg-section-block">
+            <div class="sel-usage">
+              <div class="sel-usage__card">
+                <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
+                <ul class="sel-usage__list">
+                  <li>Use a count badge for unread or pending totals, and its dot-only form once the exact number doesn't matter.</li>
+                  <li>Use a status dot inline with a label &mdash; colour plus text, never colour alone.</li>
+                  <li>Use an avatar badge for identity, with at most one overlay &mdash; a status dot or a count.</li>
+                </ul>
+                <div class="spec-usage-demo">
+                  <span class="badge-ct badge-ct--sm badge-ct--error">3</span>
+                  <span class="badge-st badge-st--success"><span class="badge-st__dot"></span>Active</span>
+                </div>
+              </div>
+              <div class="sel-usage__card">
+                <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don't</div>
+                <ul class="sel-usage__list">
+                  <li>Don't show a count badge at &ldquo;0&rdquo; &mdash; hide it, or drop to a dot instead.</li>
+                  <li>Don't rely on a status dot's colour alone for anything critical.</li>
+                  <li>Don't use a badge as a button &mdash; badges only display information.</li>
+                </ul>
+                <div class="spec-usage-demo">
+                  <span class="badge-ct badge-ct--sm badge-ct--error">0</span>
+                  <span class="badge-st badge-st--success"><span class="badge-st__dot"></span></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tabs-panel" data-badge-panel="style">
+        <div id="badge-reference" class="type-sub spec-panel spec-stack"></div>
+      </div>
+      <div class="tabs-panel" data-badge-panel="code">
+        <div id="badge-code-playground" class="type-sub spec-panel spec-code-playground"></div>
+        <div id="badge-code-tab" class="type-sub spec-panel"></div>
+      </div>
+      <div class="tabs-panel" data-badge-panel="changelog" id="badge-changelog-panel"></div>
     </section>
     <section class="sec sec--tabbed" id="s-chips">
       <div class="sec-hero">
@@ -7353,7 +7469,13 @@ function toggleTheme() {
   try { if(typeof renderChipPlayground==='function' && document.getElementById('chip-playground')) renderChipPlayground(); } catch(e){}
   try { if(typeof renderChipVariants==='function' && document.getElementById('chip-variants')) renderChipVariants(); } catch(e){}
   try { if(typeof renderChipInSitu==='function' && document.getElementById('chip-insitu')) renderChipInSitu(); } catch(e){}
-  try { if(typeof renderTagsBadges==='function' && document.getElementById('tag-playground')) renderTagsBadges(); } catch(e){}
+  try { if(typeof renderTagPlayground==='function' && document.getElementById('tag-playground')) renderTagPlayground(); } catch(e){}
+  try { if(typeof renderTagVariants==='function' && document.getElementById('tag-variants')) renderTagVariants(); } catch(e){}
+  try { if(typeof renderTagInSitu==='function' && document.getElementById('tag-insitu')) renderTagInSitu(); } catch(e){}
+  try { if(typeof renderTagReference==='function' && document.getElementById('tag-reference')) renderTagReference(); } catch(e){}
+  try { if(typeof renderBadgePlayground==='function' && document.getElementById('badge-playground')) renderBadgePlayground(); } catch(e){}
+  try { if(typeof renderBadgeInSitu==='function' && document.getElementById('badge-insitu')) renderBadgeInSitu(); } catch(e){}
+  try { if(typeof renderBadgeReference==='function' && document.getElementById('badge-reference')) renderBadgeReference(); } catch(e){}
   try { if(typeof renderChipReference==='function' && document.getElementById('chip-reference')) renderChipReference(); } catch(e){}
   try { if(typeof renderSwitchPlayground==='function' && document.getElementById('sw-playground')) renderSwitchPlayground(); } catch(e){}
   try { if(typeof renderSwitchStates==='function' && document.getElementById('sw-states')) renderSwitchStates(); } catch(e){}
@@ -10347,12 +10469,17 @@ function swTabSwitch(tab){
 }
 
 /* ============================================================
-   TAGS & BADGES
+   TAGS
+   Same tabbed-page treatment as Chips & Pills (.sec--tabbed):
+   Overview / Style / Code / Changelog, a shared-state playground
+   rendered into two mounts, and a three-language code panel.
+   Badges (count / avatar / status) split out to their own page —
+   see the BADGES block below — since they don't share a single
+   "hero" component with Tags the way Chips' one chip does.
 ============================================================ */
 function tbTheme(){ return document.documentElement.getAttribute('data-theme')==='dark' ? 'dark' : 'light'; }
 function tbEsc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&#60;').replace(/>/g,'&#62;').replace(/"/g,'&quot;'); }
 
-/* ── TAGS ── */
 const TAG_VARIANTS = [
   {key:'neutral', label:'Neutral'},
   {key:'info',    label:'Info'},
@@ -10368,134 +10495,450 @@ function tagHTML(variant, size, label, dot){
 }
 
 /* ── TAG PLAYGROUND ── */
-let tpg = { variant:'neutral', size:'reg', dot:false, label:'Betting', codeOpen:false };
+let tpg = { variant:'neutral', size:'reg', dot:false, label:'Betting' };
 
-function tpgCodeHTML(){
+function tpgRefresh(){
+  document.querySelectorAll('.tpg-stage-el').forEach(stage=>{
+    stage.innerHTML = tagHTML(tpg.variant, tpg.size, tpg.label||'Tag', tpg.dot);
+  });
+  document.querySelectorAll('.tpg-label-input-el').forEach(inp=>{
+    if(document.activeElement !== inp) inp.value = tpg.label;
+  });
+  const block = document.getElementById('tpg-code-block');
+  if(block) block.innerHTML = getTagCode();
+}
+
+/* ── CODE PANEL LANGUAGES ──
+   HTML/CSS is the source of truth (real .tag markup). Blazor and React TSX
+   wrap that same markup and the same .tag/.tag--{variant}/.tag--{size}
+   classes — no invented modifiers — so the class map is the only thing a
+   consumer ports. */
+const TAG_LANGS = [
+  {key:'html',   label:'HTML / CSS', file:'tag.html'},
+  {key:'blazor', label:'Blazor',     file:'DsTag.razor'},
+  {key:'tsx',    label:'React TSX',  file:'DsTag.tsx'},
+];
+let tagLang = 'html';
+
+function getTagCodeHTML(){
   const dotLine = tpg.dot ? `\n  <span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"tag__dot"</span><span class="code-kw">>&#60;/span></span>` : '';
   return `<span class="code-cm">/* Flash · ${cap(tpg.variant)} tag · ${tpg.size==='sm'?'Small':'Regular'} */</span>
 <span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"tag tag--${tpg.variant} tag--${tpg.size}"</span><span class="code-kw">></span>${dotLine}
   <span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"tag__label"</span><span class="code-kw">></span>${tbEsc(tpg.label||'Tag')}<span class="code-kw">&#60;/span></span>
 <span class="code-kw">&#60;/span></span>`;
 }
-function tpgRefresh(){
-  const stage = document.getElementById('tpg-stage');
-  if(stage) stage.innerHTML = tagHTML(tpg.variant, tpg.size, tpg.label||'Tag', tpg.dot);
-  const block = document.getElementById('tpg-code-block');
-  if(block) block.innerHTML = tpgCodeHTML();
+
+function getTagCodeBlazor(){
+  const variantPascal = cap(tpg.variant);
+  const sizePascal = tpg.size==='sm' ? 'Small' : 'Regular';
+  const label = tbEsc(tpg.label||'Tag');
+  return `<span class="code-cm">@* DsTag.razor — usage *@</span>
+<span class="code-kw">&#60;DsTag</span> <span class="code-attr">Variant</span>=<span class="code-val">"TagVariant.${variantPascal}"</span>
+       <span class="code-attr">Size</span>=<span class="code-val">"TagSize.${sizePascal}"</span>
+       <span class="code-attr">Label</span>=<span class="code-val">"${label}"</span>${tpg.dot?`\n       <span class="code-attr">Dot</span>=<span class="code-val">"true"</span>`:''} <span class="code-kw">/></span>
+
+<span class="code-cm">@* DsTag.razor — component definition *@</span>
+<span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"@CssClass"</span><span class="code-kw">></span>
+  <span class="code-kw">@if</span> (Dot) {
+    <span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"tag__dot"</span><span class="code-kw">>&#60;/span></span>
+  }
+  <span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"tag__label"</span><span class="code-kw">></span>@Label<span class="code-kw">&#60;/span></span>
+<span class="code-kw">&#60;/span></span>
+
+<span class="code-kw">@code</span> {
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> TagVariant Variant { get; set; } = TagVariant.Neutral;
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> TagSize Size { get; set; } = TagSize.Regular;
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> <span class="code-cls">string</span> Label { get; set; } = <span class="code-val">""</span>;
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> <span class="code-cls">bool</span> Dot { get; set; }
+
+  <span class="code-cm">// tag--sm / tag--reg — mapped explicitly, not ToString()</span>
+  <span class="code-kw">private</span> <span class="code-cls">string</span> SizeClass => Size == TagSize.Small ? <span class="code-val">"sm"</span> : <span class="code-val">"reg"</span>;
+  <span class="code-kw">private</span> <span class="code-cls">string</span> VariantClass => $<span class="code-val">"tag--{Variant.ToString().ToLower()}"</span>;
+  <span class="code-kw">private</span> <span class="code-cls">string</span> CssClass => $<span class="code-val">"tag {VariantClass} tag--{SizeClass}"</span>;
+}`;
 }
+
+function getTagCodeTSX(){
+  const label = tbEsc(tpg.label||'Tag');
+  const usageProps = `variant=<span class="code-val">"${tpg.variant}"</span> size=<span class="code-val">"${tpg.size}"</span> label=<span class="code-val">"${label}"</span>` + (tpg.dot?' dot':'');
+  return `<span class="code-cm">// DsTag.tsx</span>
+<span class="code-kw">import</span> React <span class="code-kw">from</span> <span class="code-val">'react'</span>;
+
+<span class="code-kw">type</span> <span class="code-cls">TagVariant</span> = <span class="code-val">'neutral'</span> | <span class="code-val">'info'</span> | <span class="code-val">'success'</span> | <span class="code-val">'warning'</span> | <span class="code-val">'error'</span>;
+<span class="code-kw">type</span> <span class="code-cls">TagSize</span> = <span class="code-val">'sm'</span> | <span class="code-val">'reg'</span>;
+
+<span class="code-kw">interface</span> <span class="code-cls">DsTagProps</span> {
+  label: <span class="code-cls">string</span>;
+  variant?: <span class="code-cls">TagVariant</span>;
+  size?: <span class="code-cls">TagSize</span>;
+  dot?: <span class="code-cls">boolean</span>;
+}
+
+<span class="code-kw">export const</span> <span class="code-cls">DsTag</span>: React.FC&#60;DsTagProps> = ({
+  label,
+  variant = <span class="code-val">'neutral'</span>,
+  size = <span class="code-val">'reg'</span>,
+  dot = <span class="code-kw">false</span>,
+}) => (
+  &#60;span className={\`tag tag--\${variant} tag--\${size}\`}>
+    {dot &amp;&amp; &#60;span className=<span class="code-val">"tag__dot"</span> />}
+    &#60;span className=<span class="code-val">"tag__label"</span>>{label}&#60;/span>
+  &#60;/span>
+);
+
+<span class="code-cm">// Usage</span>
+&#60;DsTag ${usageProps} /></span>`;
+}
+
+function getTagCode(){
+  return tagLang==='blazor' ? getTagCodeBlazor()
+       : tagLang==='tsx'    ? getTagCodeTSX()
+       : getTagCodeHTML();
+}
+
+function setTagLang(lang){
+  if(!TAG_LANGS.some(l=>l.key===lang)) return;
+  tagLang = lang;
+  document.querySelectorAll('#tag-code-tab .code-seg__btn').forEach(b=>{
+    const on = b.dataset.lang===lang;
+    b.setAttribute('aria-selected', on ? 'true' : 'false');
+    b.setAttribute('tabindex', on ? '0' : '-1');
+  });
+  const file = document.getElementById('tag-lang-file');
+  const meta = TAG_LANGS.find(l=>l.key===lang);
+  if(file && meta) file.textContent = meta.file;
+  const block = document.getElementById('tpg-code-block');
+  if(block) block.innerHTML = getTagCode();
+}
+
+function tagLangKeydown(e){
+  const i = TAG_LANGS.findIndex(l=>l.key===tagLang);
+  let n = i;
+  if(e.key==='ArrowLeft')       n = (i - 1 + TAG_LANGS.length) % TAG_LANGS.length;
+  else if(e.key==='ArrowRight') n = (i + 1) % TAG_LANGS.length;
+  else if(e.key==='Home')       n = 0;
+  else if(e.key==='End')        n = TAG_LANGS.length - 1;
+  else return;
+  e.preventDefault();
+  setTagLang(TAG_LANGS[n].key);
+  const btn = document.getElementById('tag-lang-' + TAG_LANGS[n].key);
+  if(btn) btn.focus();
+}
+
+/* Tags & Badges' shared mount pattern for a playground rendered into both
+   the Overview demo and a compact copy on the Code tab. */
+const TAG_PLAYGROUND_MOUNTS = [
+  {rootId:'tag-playground', idSuffix:'', wrap:true, title:'Try the component', desc:'Adjust the filters to test component states.', headingAbove:'A tag is a static label for read-only metadata &mdash; a category, a type, or a version.'},
+  {rootId:'tag-code-playground', idSuffix:'-code', style:'code', title:'Playground', desc:'Live demo of the component.'},
+];
+
 function renderTagPlayground(){
-  const root = document.getElementById('tag-playground');
-  if(!root) return;
-  const sbg = stageBg(tbTheme());
+  const theme = tbTheme();
+  const sbg = stageBg(theme);
   const varBtns = TAG_VARIANTS.map(v=>`<button class="btn-pg__pill${tpg.variant===v.key?' on':''}" onclick="tpgSet('variant','${v.key}')">${v.label}</button>`).join('');
   const szBtns  = TAG_SIZES.map(s=>`<button class="btn-pg__pill${tpg.size===s.key?' on':''}" onclick="tpgSet('size','${s.key}')">${s.label}</button>`).join('');
   const dotBtns = ['off','on'].map(x=>`<button class="btn-pg__pill${(tpg.dot?(x==='on'):(x==='off'))?' on':''}" onclick="tpgSet('dot','${x}')">${x==='on'?'With dot':'No dot'}</button>`).join('');
-  root.innerHTML = `
-    <div class="type-sub__title">Playground</div>
-    <div class="type-sub__desc">Configure a tag live. Tags are static &mdash; there&rsquo;s no dismiss or selected state (that&rsquo;s a chip). The stage follows the site-wide theme toggle.</div>
-    <div class="btn-pg">
-      <div class="btn-pg__stage" id="tpg-stage" style="background:${sbg}"></div>
-      <div class="btn-pg__ctrls">
-        <div class="btn-pg__group"><span class="btn-pg__clabel">Variant</span><div class="btn-pg__pill-row">${varBtns}</div></div>
-        <div class="btn-pg__group"><span class="btn-pg__clabel">Size</span><div class="btn-pg__pill-row">${szBtns}</div></div>
-        <div class="btn-pg__group"><span class="btn-pg__clabel">Leading dot</span><div class="btn-pg__pill-row">${dotBtns}</div></div>
-        <div class="btn-pg__group"><span class="btn-pg__clabel">Label</span><input class="cpg-label-input" id="tpg-label-input" value="${tbEsc(tpg.label)}" maxlength="24" oninput="tpgSetLabel(this.value)" placeholder="Tag"></div>
-      </div>
-      <div class="code-panel${tpg.codeOpen?' open':''}" id="tpg-code-panel">
-        <div class="code-panel__head" onclick="tpgToggleCode()">
-          <span class="code-panel__label">&#60;/&#62; &nbsp;View code</span>
-          <button class="code-copy-btn" onclick="event.stopPropagation();tpgCopyCode()" id="tpg-copy-btn">Copy</button>
+
+  TAG_PLAYGROUND_MOUNTS.forEach(mount=>{
+    const root = document.getElementById(mount.rootId);
+    if(!root) return;
+    const s = mount.idSuffix;
+    const demo = `
+      <div class="btn-pg">
+        <div class="btn-pg__stage tpg-stage-el" id="tpg-stage${s}" style="background:${sbg}"></div>
+        <div class="btn-pg__ctrls">
+          <div class="btn-pg__group"><span class="btn-pg__clabel">Variant</span><div class="btn-pg__pill-row">${varBtns}</div></div>
+          <div class="btn-pg__group"><span class="btn-pg__clabel">Size</span><div class="btn-pg__pill-row">${szBtns}</div></div>
+          <div class="btn-pg__group"><span class="btn-pg__clabel">Leading dot</span><div class="btn-pg__pill-row">${dotBtns}</div></div>
+          <div class="btn-pg__group"><span class="btn-pg__clabel">Label</span><input class="cpg-label-input tpg-label-input-el" id="tpg-label-input${s}" value="${tbEsc(tpg.label)}" maxlength="24" oninput="tpgSetLabel(this.value)" placeholder="Tag"></div>
         </div>
-        <div class="code-body"><div class="code-block" id="tpg-code-block"></div></div>
-      </div>
-    </div>`;
+      </div>`;
+
+    if(mount.style==='code'){
+      root.innerHTML = `
+        <div class="type-sub__title">${mount.title}</div>
+        <div class="type-sub__desc">${mount.desc}</div>
+        <div class="cpg-section-outline">${demo}</div>`;
+      return;
+    }
+
+    const inner = `
+      <div class="cpg-layout">
+        <div class="cpg-layout__intro">
+          ${mount.wrap ? `<span class="cpg-cursor-icon">${CPG_CURSOR_ICON_SVG}</span>` : ''}
+          <div class="cpg-layout__title">${mount.title}</div>
+          <div class="cpg-layout__desc">${mount.desc}</div>
+        </div>
+        <div class="cpg-layout__demo">${demo}</div>
+      </div>`;
+    const wrapped = mount.wrap ? `<div class="cpg-section-block">${inner}</div>` : inner;
+    root.innerHTML = (mount.headingAbove ? `<div class="cpg-overview-heading"><span class="cpg-overview-heading__icon">${CPG_INFO_ICON_SVG}</span><span>${mount.headingAbove}</span></div>` : '') + wrapped;
+  });
+
   tpgRefresh();
 }
+
 function tpgSet(key, val){
   if(key==='dot') tpg.dot = (val==='on');
   else tpg[key] = val;
   renderTagPlayground();
 }
 function tpgSetLabel(val){ tpg.label = val; tpgRefresh(); }
-function tpgToggleCode(){ const p = document.getElementById('tpg-code-panel'); if(p){ p.classList.toggle('open'); tpg.codeOpen = p.classList.contains('open'); } }
 function tpgCopyCode(){
-  const b = document.getElementById('tpg-code-block'); if(!b) return;
+  const b = document.getElementById('tpg-code-block');
+  if(!b) return;
   navigator.clipboard.writeText(b.innerText||b.textContent).catch(()=>{});
   const btn = document.getElementById('tpg-copy-btn');
   if(btn){ btn.textContent = 'Copied!'; setTimeout(()=>btn.textContent='Copy', 2000); }
 }
 
-/* ── TAG REFERENCE GRID (variants × sizes, + dot column) ── */
+function renderTagCodeTab(){
+  const root = document.getElementById('tag-code-tab');
+  if(!root) return;
+  root.innerHTML = `
+    <div class="type-sub__title">Code</div>
+    <div class="type-sub__desc">Live snippet matching the current Playground configuration &mdash; switch to Overview to change it.</div>
+    <div class="cpg-section-outline">
+      <div class="code-panel code-panel--bare open">
+        <div class="code-panel__head">
+          <div class="code-seg" role="tablist" aria-label="Code language" onkeydown="tagLangKeydown(event)">
+            ${TAG_LANGS.map(l=>`<button type="button" role="tab" class="code-seg__btn" id="tag-lang-${l.key}" data-lang="${l.key}" aria-selected="${tagLang===l.key?'true':'false'}" aria-controls="tpg-code-block" tabindex="${tagLang===l.key?'0':'-1'}" onclick="setTagLang('${l.key}')">${l.label}</button>`).join('')}
+          </div>
+          <span class="code-lang-file" id="tag-lang-file">${(TAG_LANGS.find(l=>l.key===tagLang)||TAG_LANGS[0]).file}</span>
+          <button class="code-copy-btn" onclick="tpgCopyCode()" id="tpg-copy-btn">Copy</button>
+        </div>
+        <div class="code-body"><div class="code-block" id="tpg-code-block" role="tabpanel" aria-live="polite"></div></div>
+      </div>
+    </div>`;
+}
+
+const TAG_KEY_VARIANTS = [
+  {key:'neutral', label:'Betting',    use:'The default — quiet categorisation with no implied meaning'},
+  {key:'info',    label:'v2.1',       use:'Reference or version metadata'},
+  {key:'success', label:'Live',       use:'A positive, active state'},
+  {key:'warning', label:'Draft',      use:'Something incomplete or pending review'},
+  {key:'error',   label:'Deprecated', use:'A blocking or retired state'},
+];
+
+function renderTagVariants(){
+  const root = document.getElementById('tag-variants');
+  if(!root) return;
+  const theme = tbTheme();
+  const sbg = stageBg(theme);
+
+  const cells = TAG_KEY_VARIANTS.map(v=>`
+    <div class="spec-cell">
+      <div class="spec-cell__stage" style="background:${sbg}">${tagHTML(v.key,'reg',v.label,false)}</div>
+      <div class="spec-cell__name">${cap(v.key)}</div>
+      <div class="spec-cell__desc">${v.use}</div>
+    </div>`).join('');
+
+  root.innerHTML = `
+    <div class="cpg-section-heading">
+      <div class="cpg-layout__title">Key variants</div>
+      <div class="cpg-layout__desc">Five semantic colours, each with a job. Match the colour to the meaning &mdash; not the decoration.</div>
+    </div>
+    <div class="cpg-section-block">
+      <div class="spec-grid">${cells}</div>
+    </div>`;
+}
+
+function renderTagInSitu(){
+  const root = document.getElementById('tag-insitu');
+  if(!root) return;
+  const theme = tbTheme();
+  const sbg = stageBg(theme);
+  const bar = w => `<span class="spec-mock__bar" style="width:${w}"></span>`;
+
+  // 1. Category per row — read-only, not a filter
+  const listRows = [
+    {w:'70px', label:'Airtime'},
+    {w:'52px', label:'Data'},
+    {w:'62px', label:'Betting'},
+  ].map(r=>`<div class="spec-mock__row">${bar(r.w)}<span class="spec-mock__spacer"></span>${tagHTML('neutral','sm',r.label,false)}</div>`).join('');
+  const listMock = `
+    <div class="spec-mock__stage" style="background:${sbg}">${listRows}</div>
+    <div class="spec-mock__cap"><b>Category per row</b>A tag quietly categorises each row without inviting a click.</div>`;
+
+  // 2. Metadata under a heading — version + plan tags
+  const metaMock = `
+    <div class="spec-mock__stage" style="background:${sbg}">
+      <div class="spec-mock__row">${bar('90px')}</div>
+      <div class="spec-mock__filterrow">
+        ${tagHTML('info','sm','v2.1',false)}
+        ${tagHTML('neutral','sm','Pro plan',false)}
+      </div>
+      <div class="spec-mock__row">${bar('70%')}</div>
+      <div class="spec-mock__row">${bar('55%')}</div>
+    </div>
+    <div class="spec-mock__cap"><b>Metadata under a title</b>Reference facts &mdash; a version, a plan &mdash; sit beside the heading they describe.</div>`;
+
+  // 3. Read-only status column — colour signals meaning, nothing is clickable
+  const statusMock = `
+    <div class="spec-mock__stage" style="background:${sbg}">
+      <div class="spec-mock__row">${bar('60px')}<span class="spec-mock__spacer"></span>${tagHTML('success','sm','Paid',false)}</div>
+      <div class="spec-mock__row">${bar('48px')}<span class="spec-mock__spacer"></span>${tagHTML('warning','sm','Pending',false)}</div>
+      <div class="spec-mock__row">${bar('58px')}<span class="spec-mock__spacer"></span>${tagHTML('error','sm','Failed',false)}</div>
+    </div>
+    <div class="spec-mock__cap"><b>Status column</b>Colour signals meaning; unlike a chip, nothing here is clickable or removable.</div>`;
+
+  root.innerHTML = `
+    <div class="cpg-section-heading">
+      <div class="cpg-layout__title">In context</div>
+      <div class="cpg-layout__desc">The same tag does three everyday jobs &mdash; categorising a list, labelling metadata, and marking a read-only status.</div>
+    </div>
+    <div class="cpg-section-block">
+      <div class="spec-insitu-grid">
+        <div class="spec-mock">${listMock}</div>
+        <div class="spec-mock">${metaMock}</div>
+        <div class="spec-mock">${statusMock}</div>
+      </div>
+    </div>`;
+}
+
+const TAG_TOKENS = {
+  neutral:{bgVar:'--chrome-nav',    fgVar:'--chrome-muted'},
+  info:   {bgVar:'--color-info-l',   fgVar:'--color-info-h'},
+  success:{bgVar:'--color-success-l',fgVar:'--color-success-h'},
+  warning:{bgVar:'--color-warn-l',   fgVar:'--color-warn-h'},
+  error:  {bgVar:'--color-crit-l',   fgVar:'--color-crit-h'},
+};
+
 function renderTagReference(){
   const root = document.getElementById('tag-reference');
   if(!root) return;
   const theme = tbTheme();
-  const stageBgCol = stageBg(theme);
+  const sbg = stageBg(theme);
+  const stageBgCol = sbg;
   const headCol = theme==='dark' ? ';color:#A1A3A8' : '';
+
+  /* ---- Anatomy ---- */
+  const heroTag = `<span class="tag tag--info tag--reg" style="font-size:15px;height:30px;padding:0 12px;gap:7px"><span class="tag__dot"></span><span class="tag__label">Label</span></span>`;
+  const parts = [
+    {num:1, name:'Leading dot', note:'Optional. A small solid dot before the label to add a colour cue.', vis:'<span style="width:10px;height:10px;border-radius:50%;background:var(--color-info-h)"></span>'},
+    {num:2, name:'Label',       note:'The tag text — one or two words, never a sentence.',                 vis:'<span style="font-weight:700;font-size:14px;color:var(--chrome-txt)">Label</span>'},
+    {num:3, name:'Container',   note:'Softly-rounded surface, 6px radius, tinted by variant.',              vis:'<span class="spec-part__pill" style="border-radius:6px;width:56px;height:20px"></span>'},
+  ];
+  const partCards = parts.map(p=>`
+    <div class="spec-part">
+      <div class="spec-part__stage" style="background:${sbg}">${p.vis}</div>
+      <div class="spec-part__body">
+        <div class="spec-part__name"><span class="spec-part__num">${p.num}</span>${p.name}</div>
+        <div class="spec-part__note">${p.note}</div>
+      </div>
+    </div>`).join('');
+
+  /* ---- Size & dimensions ---- */
+  const sizeSpecs = { sm:{h:20,fs:11,pad:'0 / 7'}, reg:{h:24,fs:12,pad:'0 / 9'} };
+  const sizeDemo = TAG_SIZES.map(sz=>`
+    <div class="spec-size-item">
+      ${tagHTML('neutral', sz.key, sz.label, false)}
+      <span class="spec-size-item__lbl">${sizeSpecs[sz.key].h}px</span>
+    </div>`).join('');
+  const sizeRows = TAG_SIZES.map(sz=>{
+    const s = sizeSpecs[sz.key];
+    return `<tr><td class="dd-table__name">${sz.label}</td><td>${s.h}px</td><td>${s.fs}px</td><td>${s.pad}px</td><td><code>tag--${sz.key}</code></td></tr>`;
+  }).join('');
+
+  /* ---- Colour variants + tokens ---- */
   const cols = [ {label:'Small', size:'sm', dot:false}, {label:'Regular', size:'reg', dot:false}, {label:'With dot', size:'reg', dot:true} ];
-  let cells = '';
-  cells += `<div style="grid-column:2/5;grid-row:1/${2+TAG_VARIANTS.length};background:${stageBgCol}"></div>`;
-  cells += `<div style="grid-column:1;grid-row:1"></div>`;
-  cols.forEach((c,i)=>{ cells += `<div class="chip-ref__sizehead" style="grid-column:${2+i};grid-row:1${headCol}">${c.label}</div>`; });
+  let grid = '';
+  grid += `<div style="grid-column:2/5;grid-row:1/${2+TAG_VARIANTS.length};background:${stageBgCol}"></div>`;
+  grid += `<div style="grid-column:1;grid-row:1"></div>`;
+  cols.forEach((c,i)=>{ grid += `<div class="chip-ref__sizehead" style="grid-column:${2+i};grid-row:1${headCol}">${c.label}</div>`; });
   TAG_VARIANTS.forEach((v, ri)=>{
     const row = 2+ri;
-    cells += `<div class="chip-ref__rowlabel" style="grid-column:1;grid-row:${row}">${v.label}</div>`;
-    cols.forEach((c,i)=>{ cells += `<div class="chip-ref__cell" style="grid-column:${2+i};grid-row:${row}">${tagHTML(v.key, c.size, v.label, c.dot)}</div>`; });
+    grid += `<div class="chip-ref__rowlabel" style="grid-column:1;grid-row:${row}">${v.label}</div>`;
+    cols.forEach((c,i)=>{ grid += `<div class="chip-ref__cell" style="grid-column:${2+i};grid-row:${row}">${tagHTML(v.key, c.size, v.label, c.dot)}</div>`; });
   });
+
+  const tokRows = TAG_VARIANTS.map(v=>{
+    const t = TAG_TOKENS[v.key];
+    return `<tr><td class="dd-table__name">${v.label}</td><td><code>var(${t.bgVar})</code></td><td><code>var(${t.fgVar})</code></td></tr>`;
+  }).join('');
+
   root.innerHTML = `
-    <div class="type-sub__title">Tag reference</div>
-    <div class="type-sub__desc">5 semantic variants across 2 sizes, shown in the current theme. Neutral is the default &mdash; reach for a colour only when it adds meaning.</div>
-    <div class="chip-ref"><div class="chip-ref__grid">${cells}</div></div>`;
+    <div class="type-sub">
+      <div class="type-sub__title">Anatomy</div>
+      <div class="type-sub__desc">A tag is a softly-rounded label with a text caption, plus an optional leading colour dot. No dismiss button, no click handler &mdash; that distinction is what separates it from a chip.</div>
+      <div class="cpg-section-outline">
+        <div class="spec-hero" style="background:${sbg}">${heroTag}</div>
+        <div class="spec-parts">${partCards}</div>
+      </div>
+    </div>
+
+    <div class="type-sub">
+      <div class="type-sub__title">Size &amp; dimensions</div>
+      <div class="type-sub__desc">Two sizes share one shape and weight. Both use a 6px radius and 700 weight; regular is the default, small suits dense rows.</div>
+      <div class="cpg-section-outline">
+        <div class="spec-size-demo" style="background:${sbg}">${sizeDemo}</div>
+        <div class="dd-table-wrap"><table class="dd-table">
+          <thead><tr><th>Size</th><th>Height</th><th>Text</th><th>Padding&nbsp;(L&nbsp;/&nbsp;R)</th><th>Class</th></tr></thead>
+          <tbody>${sizeRows}</tbody>
+        </table></div>
+      </div>
+    </div>
+
+    <div class="type-sub" style="margin-bottom:0">
+      <div class="type-sub__title">Colour variants</div>
+      <div class="type-sub__desc">Five semantic variants across two sizes, in the current theme. Every fill rides a semantic token pair, so colour follows light and dark automatically &mdash; Info is the one variant with a dedicated dark-mode override, matching the same fix already applied to the Info alert.</div>
+      <div class="cpg-section-outline">
+        <div class="chip-ref" style="margin-bottom:16px"><div class="chip-ref__grid">${grid}</div></div>
+        <div class="dd-table-wrap"><table class="dd-table" style="min-width:420px">
+          <thead><tr><th>Variant</th><th>Background</th><th>Label text</th></tr></thead>
+          <tbody>${tokRows}</tbody>
+        </table></div>
+      </div>
+    </div>`;
 }
 
-/* ── COUNT / NOTIFICATION BADGE REFERENCE ── */
+try { renderTagCodeTab(); } catch(e){ console.error('tag-code-tab',e); }
+try { renderTagPlayground(); } catch(e){ console.error('tag-playground',e); }
+try { renderTagVariants(); } catch(e){ console.error('tag-variants',e); }
+try { renderTagInSitu(); } catch(e){ console.error('tag-insitu',e); }
+try { renderTagReference(); } catch(e){ console.error('tag-reference',e); }
+
+function tagTabSwitch(tab){
+  const nav = document.getElementById('tag-tabs-list');
+  if(!nav) return;
+  nav.querySelectorAll('.tab-item').forEach(btn=>btn.classList.toggle('on', btn.getAttribute('data-tag-tab')===tab));
+  document.querySelectorAll('#s-tags .tabs-panel[data-tag-panel]').forEach(p=>p.classList.toggle('on', p.getAttribute('data-tag-panel')===tab));
+}
+
+/* ============================================================
+   BADGES
+   Split out from the former combined Tags & Badges page — count,
+   avatar and status-dot markers, on the same .sec--tabbed layout.
+   Unlike Tags (one component) this page covers three distinct
+   sub-types with no single "hero", so its playground carries an
+   explicit Type switch on top of each type's own controls.
+============================================================ */
 function bellSVG(){ return `<svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 3a6 6 0 0 0-6 6c0 3.5-1 5-2 6h16c-1-1-2-2.5-2-6a6 6 0 0 0-6-6Z" fill="currentColor"/><path d="M10 20a2 2 0 0 0 4 0" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>`; }
-function renderBadgeCountRef(){
-  const root = document.getElementById('badge-count-ref');
-  if(!root) return;
-  const sbg = stageBg(tbTheme());
-  const cell = (inner, cap)=>`<div class="tb-ref__cell">${inner}<span class="tb-ref__cell-cap">${cap}</span></div>`;
-  const variantsRow = ['error','accent','neutral'].map(v=>cell(`<span class="badge-ct badge-ct--md badge-ct--${v}">3</span>`, cap(v==='accent'?'accent':v))).join('');
-  const sizesRow = cell(`<span class="badge-ct badge-ct--dot badge-ct--error"></span>`,'Dot')
-    + cell(`<span class="badge-ct badge-ct--sm badge-ct--error">5</span>`,'Small')
-    + cell(`<span class="badge-ct badge-ct--md badge-ct--error">5</span>`,'Medium')
-    + cell(`<span class="badge-ct badge-ct--md badge-ct--error">99+</span>`,'Overflow');
-  const anchoredRow = cell(`<span class="badge-host"><span class="badge-host__mark">${bellSVG()}</span><span class="badge-host__badge"><span class="badge-ct badge-ct--sm badge-ct--error">4</span></span></span>`,'Count')
-    + cell(`<span class="badge-host"><span class="badge-host__mark">${bellSVG()}</span><span class="badge-host__badge"><span class="badge-ct badge-ct--dot badge-ct--error"></span></span></span>`,'Dot');
-  root.innerHTML = `
-    <div class="type-sub__title">Count &amp; notification badges</div>
-    <div class="type-sub__desc">A small solid marker for unread or pending totals. Use the dot form when the exact number doesn&rsquo;t matter, and &ldquo;99+&rdquo; past two digits. Hide it entirely at zero.</div>
-    <div class="tb-ref" style="background:${sbg}">
-      <div class="tb-ref__row"><div class="tb-ref__label">Variant</div><div class="tb-ref__cells">${variantsRow}</div></div>
-      <div class="tb-ref__row"><div class="tb-ref__label">Size &amp; form</div><div class="tb-ref__cells">${sizesRow}</div></div>
-      <div class="tb-ref__row"><div class="tb-ref__label">Anchored</div><div class="tb-ref__cells">${anchoredRow}</div></div>
-    </div>`;
+
+/* Canonical real-markup builders — one per badge sub-type. Doc-site render
+   functions (reference grids, In-context mocks, the playground stage) all
+   go through these rather than hand-assembling spans, so every visual on
+   the page is built from the same source as the Code tab's HTML output. */
+function badgeCountHTML(variant, form, anchored, value){
+  const v = value !== undefined ? value : (form==='dot' ? '' : '5');
+  const cls = `badge-ct badge-ct--${form} badge-ct--${variant}`;
+  const badge = `<span class="${cls}">${form==='dot'?'':v}</span>`;
+  if(!anchored) return badge;
+  return `<span class="badge-host"><span class="badge-host__mark">${bellSVG()}</span><span class="badge-host__badge">${badge}</span></span>`;
+}
+function badgeAvatarHTML(size, fill, overlay, initials, statusVariant){
+  const cls = `badge-av badge-av--${size}${fill==='brand'?' badge-av--brand':''}`;
+  const label = initials || 'RB';
+  if(overlay==='count'){
+    return `<span class="badge-host"><span class="${cls}">${label}</span><span class="badge-host__badge"><span class="badge-ct badge-ct--sm badge-ct--error">2</span></span></span>`;
+  }
+  const overlayHtml = overlay==='status' ? `<span class="badge-av__status badge-st--${statusVariant||'success'}" style="width:10px;height:10px"></span>` : '';
+  return `<span class="${cls}">${label}${overlayHtml}</span>`;
+}
+function badgeStatusHTML(variant, withLabel, label){
+  return `<span class="badge-st badge-st--${variant}"><span class="badge-st__dot"></span>${withLabel?tbEsc(label||cap(variant)):''}</span>`;
 }
 
-/* ── AVATAR / IMAGE BADGE REFERENCE ── */
-function renderBadgeAvatarRef(){
-  const root = document.getElementById('badge-avatar-ref');
-  if(!root) return;
-  const sbg = stageBg(tbTheme());
-  const cell = (inner, cap)=>`<div class="tb-ref__cell">${inner}<span class="tb-ref__cell-cap">${cap}</span></div>`;
-  const sizesRow = cell(`<span class="badge-av badge-av--sm">RB</span>`,'Small 24')
-    + cell(`<span class="badge-av badge-av--md">RB</span>`,'Medium 32')
-    + cell(`<span class="badge-av badge-av--lg">RB</span>`,'Large 48');
-  const variantsRow = cell(`<span class="badge-av badge-av--md">RB</span>`,'Neutral')
-    + cell(`<span class="badge-av badge-av--md badge-av--brand">RB</span>`,'Brand');
-  const overlayRow = cell(`<span class="badge-av badge-av--md">RB<span class="badge-av__status badge-st--success" style="width:10px;height:10px"></span></span>`,'+ status')
-    + cell(`<span class="badge-host"><span class="badge-av badge-av--md">RB</span><span class="badge-host__badge"><span class="badge-ct badge-ct--sm badge-ct--error">2</span></span></span>`,'+ count');
-  root.innerHTML = `
-    <div class="type-sub__title">Avatar &amp; image badges</div>
-    <div class="type-sub__desc">A circular identity mark &mdash; initials, a photo, or a product/brand logo. Pair with a status dot to show presence, or a count badge for pending items.</div>
-    <div class="tb-ref" style="background:${sbg}">
-      <div class="tb-ref__row"><div class="tb-ref__label">Size</div><div class="tb-ref__cells">${sizesRow}</div></div>
-      <div class="tb-ref__row"><div class="tb-ref__label">Fill</div><div class="tb-ref__cells">${variantsRow}</div></div>
-      <div class="tb-ref__row"><div class="tb-ref__label">Overlay</div><div class="tb-ref__cells">${overlayRow}</div></div>
-    </div>`;
-}
-
-/* ── STATUS-DOT BADGE REFERENCE ── */
 const STATUS_BADGES = [
   {key:'success', label:'Active'},
   {key:'info',    label:'Processing'},
@@ -10503,31 +10946,492 @@ const STATUS_BADGES = [
   {key:'error',   label:'Offline'},
   {key:'neutral', label:'Unknown'},
 ];
-function renderBadgeStatusRef(){
-  const root = document.getElementById('badge-status-ref');
+
+/* ── BADGE PLAYGROUND ── */
+let bpg = {
+  type: 'count',
+  count:  { variant:'error', form:'md', anchored:false },
+  avatar: { size:'md', fill:'neutral', overlay:'none' },
+  status: { variant:'success', withLabel:true, label:'Active' },
+};
+
+const BADGE_TYPES          = [ {key:'count',label:'Count'}, {key:'avatar',label:'Avatar'}, {key:'status',label:'Status'} ];
+const BADGE_COUNT_VARIANTS = [ {key:'accent',label:'Accent'}, {key:'error',label:'Error'}, {key:'neutral',label:'Neutral'} ];
+const BADGE_COUNT_FORMS    = [ {key:'dot',label:'Dot'}, {key:'sm',label:'Small'}, {key:'md',label:'Medium'} ];
+const BADGE_AVATAR_SIZES   = [ {key:'sm',label:'Small'}, {key:'md',label:'Medium'}, {key:'lg',label:'Large'} ];
+const BADGE_AVATAR_FILLS   = [ {key:'neutral',label:'Neutral'}, {key:'brand',label:'Brand'} ];
+const BADGE_AVATAR_OVERLAYS= [ {key:'none',label:'None'}, {key:'status',label:'Status'}, {key:'count',label:'Count'} ];
+const BADGE_STATUS_VARIANTS= [ {key:'success',label:'Success'}, {key:'info',label:'Info'}, {key:'warning',label:'Warning'}, {key:'error',label:'Error'}, {key:'neutral',label:'Neutral'} ];
+
+function bpgStageHTML(){
+  if(bpg.type==='count')  return badgeCountHTML(bpg.count.variant, bpg.count.form, bpg.count.anchored);
+  if(bpg.type==='avatar') return badgeAvatarHTML(bpg.avatar.size, bpg.avatar.fill, bpg.avatar.overlay);
+  return badgeStatusHTML(bpg.status.variant, bpg.status.withLabel, bpg.status.label);
+}
+
+function bpgRefresh(){
+  document.querySelectorAll('.bpg-stage-el').forEach(stage=>{ stage.innerHTML = bpgStageHTML(); });
+  const block = document.getElementById('bpg-code-block');
+  if(block) block.innerHTML = getBadgeCode();
+}
+
+const BADGE_LANGS = [
+  {key:'html',   label:'HTML / CSS', file:'badge.html'},
+  {key:'blazor', label:'Blazor',     file:'DsBadge.razor'},
+  {key:'tsx',    label:'React TSX',  file:'DsBadge.tsx'},
+];
+let badgeLang = 'html';
+
+function getBadgeCodeHTML(){
+  if(bpg.type==='count'){
+    const {variant,form,anchored} = bpg.count;
+    const cls = `badge-ct badge-ct--${form} badge-ct--${variant}`;
+    const num = form==='dot' ? '' : '5';
+    const badgeMarkup = `<span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"${cls}"</span><span class="code-kw">></span>${num}<span class="code-kw">&#60;/span></span>`;
+    if(!anchored){
+      return `<span class="code-cm">/* Flash · ${cap(variant)} count badge · ${form==='dot'?'Dot':cap(form)} */</span>\n${badgeMarkup}`;
+    }
+    return `<span class="code-cm">/* Flash · ${cap(variant)} count badge · anchored */</span>
+<span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"badge-host"</span><span class="code-kw">></span>
+  <span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"badge-host__mark"</span><span class="code-kw">></span><span class="code-cm">&#60;!-- icon --></span><span class="code-kw">&#60;/span></span>
+  <span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"badge-host__badge"</span><span class="code-kw">></span>${badgeMarkup}<span class="code-kw">&#60;/span></span>
+<span class="code-kw">&#60;/span></span>`;
+  }
+  if(bpg.type==='avatar'){
+    const {size,fill,overlay} = bpg.avatar;
+    const cls = `badge-av badge-av--${size}${fill==='brand'?' badge-av--brand':''}`;
+    if(overlay==='count'){
+      return `<span class="code-cm">/* Flash · Avatar badge · ${cap(size)} · + count */</span>
+<span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"badge-host"</span><span class="code-kw">></span>
+  <span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"${cls}"</span><span class="code-kw">></span>RB<span class="code-kw">&#60;/span></span>
+  <span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"badge-host__badge"</span><span class="code-kw">></span><span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"badge-ct badge-ct--sm badge-ct--error"</span><span class="code-kw">></span>2<span class="code-kw">&#60;/span></span><span class="code-kw">&#60;/span></span>
+<span class="code-kw">&#60;/span></span>`;
+    }
+    const overlayLine = overlay==='status' ? `\n  <span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"badge-av__status badge-st--success"</span><span class="code-kw">>&#60;/span></span>` : '';
+    return `<span class="code-cm">/* Flash · Avatar badge · ${cap(size)}${fill==='brand'?' · Brand':''} */</span>
+<span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"${cls}"</span><span class="code-kw">></span>RB${overlayLine}
+<span class="code-kw">&#60;/span></span>`;
+  }
+  const {variant,withLabel,label} = bpg.status;
+  const labelSpan = withLabel ? tbEsc(label||cap(variant)) : '';
+  return `<span class="code-cm">/* Flash · ${cap(variant)} status dot${withLabel?'':' · dot only'} */</span>
+<span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"badge-st badge-st--${variant}"</span><span class="code-kw">></span>
+  <span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"badge-st__dot"</span><span class="code-kw">>&#60;/span></span>${labelSpan}
+<span class="code-kw">&#60;/span></span>`;
+}
+
+function getBadgeCodeBlazor(){
+  if(bpg.type==='count'){
+    const {variant,form,anchored} = bpg.count;
+    return `<span class="code-cm">@* DsCountBadge.razor — usage *@</span>
+<span class="code-kw">&#60;DsCountBadge</span> <span class="code-attr">Variant</span>=<span class="code-val">"BadgeVariant.${cap(variant)}"</span>
+               <span class="code-attr">Form</span>=<span class="code-val">"BadgeForm.${form==='dot'?'Dot':cap(form)}"</span>${anchored?`\n               <span class="code-attr">Value</span>=<span class="code-val">"5"</span>`:''} <span class="code-kw">/></span>
+
+<span class="code-cm">@* DsCountBadge.razor — component definition *@</span>
+<span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"@CssClass"</span><span class="code-kw">></span>@(Form == BadgeForm.Dot ? <span class="code-val">""</span> : Value)<span class="code-kw">&#60;/span></span>
+
+<span class="code-kw">@code</span> {
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> BadgeVariant Variant { get; set; } = BadgeVariant.Error;
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> BadgeForm Form { get; set; } = BadgeForm.Medium;
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> <span class="code-cls">string</span> Value { get; set; } = <span class="code-val">""</span>;
+
+  <span class="code-kw">private</span> <span class="code-cls">string</span> FormClass => Form <span class="code-kw">switch</span> { BadgeForm.Dot => <span class="code-val">"dot"</span>, BadgeForm.Small => <span class="code-val">"sm"</span>, _ => <span class="code-val">"md"</span> };
+  <span class="code-kw">private</span> <span class="code-cls">string</span> CssClass => $<span class="code-val">"badge-ct badge-ct--{FormClass} badge-ct--{Variant.ToString().ToLower()}"</span>;
+}`;
+  }
+  if(bpg.type==='avatar'){
+    const {size,fill,overlay} = bpg.avatar;
+    return `<span class="code-cm">@* DsAvatarBadge.razor — usage *@</span>
+<span class="code-kw">&#60;DsAvatarBadge</span> <span class="code-attr">Size</span>=<span class="code-val">"AvatarSize.${cap(size)}"</span>${fill==='brand'?`\n                <span class="code-attr">Brand</span>=<span class="code-val">"true"</span>`:''}${overlay!=='none'?`\n                <span class="code-attr">Overlay</span>=<span class="code-val">"AvatarOverlay.${cap(overlay)}"</span>`:''}
+                <span class="code-attr">Initials</span>=<span class="code-val">"RB"</span> <span class="code-kw">/></span>
+
+<span class="code-cm">@* DsAvatarBadge.razor — component definition *@</span>
+<span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"@CssClass"</span><span class="code-kw">></span>
+  @Initials
+  <span class="code-kw">@if</span> (Overlay == AvatarOverlay.Status) { <span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"badge-av__status badge-st--success"</span><span class="code-kw">>&#60;/span></span> }
+<span class="code-kw">&#60;/span></span>
+
+<span class="code-kw">@code</span> {
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> AvatarSize Size { get; set; } = AvatarSize.Medium;
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> <span class="code-cls">bool</span> Brand { get; set; }
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> AvatarOverlay Overlay { get; set; } = AvatarOverlay.None;
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> <span class="code-cls">string</span> Initials { get; set; } = <span class="code-val">""</span>;
+
+  <span class="code-kw">private</span> <span class="code-cls">string</span> CssClass =>
+    $<span class="code-val">"badge-av badge-av--{Size.ToString().ToLower()}"</span> + (Brand ? <span class="code-val">" badge-av--brand"</span> : <span class="code-val">""</span>);
+}`;
+  }
+  const {variant,withLabel,label} = bpg.status;
+  return `<span class="code-cm">@* DsStatusBadge.razor — usage *@</span>
+<span class="code-kw">&#60;DsStatusBadge</span> <span class="code-attr">Variant</span>=<span class="code-val">"StatusVariant.${cap(variant)}"</span>${withLabel?`\n                <span class="code-attr">Label</span>=<span class="code-val">"${tbEsc(label||cap(variant))}"</span>`:''} <span class="code-kw">/></span>
+
+<span class="code-cm">@* DsStatusBadge.razor — component definition *@</span>
+<span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"badge-st badge-st--@(Variant.ToString().ToLower())"</span><span class="code-kw">></span>
+  <span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"badge-st__dot"</span><span class="code-kw">>&#60;/span></span>@Label
+<span class="code-kw">&#60;/span></span>
+
+<span class="code-kw">@code</span> {
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> StatusVariant Variant { get; set; } = StatusVariant.Neutral;
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> <span class="code-cls">string</span> Label { get; set; } = <span class="code-val">""</span>;
+}`;
+}
+
+function getBadgeCodeTSX(){
+  if(bpg.type==='count'){
+    const {variant,form,anchored} = bpg.count;
+    return `<span class="code-cm">// DsCountBadge.tsx</span>
+<span class="code-kw">import</span> React <span class="code-kw">from</span> <span class="code-val">'react'</span>;
+
+<span class="code-kw">type</span> <span class="code-cls">BadgeVariant</span> = <span class="code-val">'accent'</span> | <span class="code-val">'error'</span> | <span class="code-val">'neutral'</span>;
+<span class="code-kw">type</span> <span class="code-cls">BadgeForm</span> = <span class="code-val">'dot'</span> | <span class="code-val">'sm'</span> | <span class="code-val">'md'</span>;
+
+<span class="code-kw">interface</span> <span class="code-cls">DsCountBadgeProps</span> {
+  variant?: <span class="code-cls">BadgeVariant</span>;
+  form?: <span class="code-cls">BadgeForm</span>;
+  value?: <span class="code-cls">string</span> | <span class="code-cls">number</span>;
+}
+
+<span class="code-kw">export const</span> <span class="code-cls">DsCountBadge</span>: React.FC&#60;DsCountBadgeProps> = ({ variant = <span class="code-val">'error'</span>, form = <span class="code-val">'md'</span>, value }) => (
+  &#60;span className={\`badge-ct badge-ct--\${form} badge-ct--\${variant}\`}>{form === <span class="code-val">'dot'</span> ? <span class="code-kw">null</span> : value}&#60;/span>
+);
+
+<span class="code-cm">// Usage</span>
+&#60;DsCountBadge variant=<span class="code-val">"${variant}"</span> form=<span class="code-val">"${form}"</span>${form!=='dot'?' value={5}':''} />${anchored?`
+<span class="code-cm">// Anchored to an icon — wrap in .badge-host / .badge-host__badge</span>`:''}</span>`;
+  }
+  if(bpg.type==='avatar'){
+    const {size,fill,overlay} = bpg.avatar;
+    return `<span class="code-cm">// DsAvatarBadge.tsx</span>
+<span class="code-kw">import</span> React <span class="code-kw">from</span> <span class="code-val">'react'</span>;
+
+<span class="code-kw">type</span> <span class="code-cls">AvatarSize</span> = <span class="code-val">'sm'</span> | <span class="code-val">'md'</span> | <span class="code-val">'lg'</span>;
+
+<span class="code-kw">interface</span> <span class="code-cls">DsAvatarBadgeProps</span> {
+  initials: <span class="code-cls">string</span>;
+  size?: <span class="code-cls">AvatarSize</span>;
+  brand?: <span class="code-cls">boolean</span>;
+  status?: <span class="code-val">'success'</span> | <span class="code-val">'warning'</span> | <span class="code-val">'error'</span> | <span class="code-val">'info'</span> | <span class="code-val">'neutral'</span>;
+}
+
+<span class="code-kw">export const</span> <span class="code-cls">DsAvatarBadge</span>: React.FC&#60;DsAvatarBadgeProps> = ({ initials, size = <span class="code-val">'md'</span>, brand, status }) => (
+  &#60;span className={[<span class="code-val">'badge-av'</span>, \`badge-av--\${size}\`, brand &amp;&amp; <span class="code-val">'badge-av--brand'</span>].filter(Boolean).join(<span class="code-val">' '</span>)}>
+    {initials}
+    {status &amp;&amp; &#60;span className={\`badge-av__status badge-st--\${status}\`} />}
+  &#60;/span>
+);
+
+<span class="code-cm">// Usage</span>
+&#60;DsAvatarBadge initials=<span class="code-val">"RB"</span> size=<span class="code-val">"${size}"</span>${fill==='brand'?' brand':''}${overlay==='status'?' status="success"':''} />${overlay==='count'?`
+<span class="code-cm">// + count — wrap in .badge-host / .badge-host__badge, same as an anchored count badge</span>`:''}</span>`;
+  }
+  const {variant,withLabel,label} = bpg.status;
+  return `<span class="code-cm">// DsStatusBadge.tsx</span>
+<span class="code-kw">import</span> React <span class="code-kw">from</span> <span class="code-val">'react'</span>;
+
+<span class="code-kw">type</span> <span class="code-cls">StatusVariant</span> = <span class="code-val">'success'</span> | <span class="code-val">'info'</span> | <span class="code-val">'warning'</span> | <span class="code-val">'error'</span> | <span class="code-val">'neutral'</span>;
+
+<span class="code-kw">interface</span> <span class="code-cls">DsStatusBadgeProps</span> {
+  variant?: <span class="code-cls">StatusVariant</span>;
+  label?: <span class="code-cls">string</span>;
+}
+
+<span class="code-kw">export const</span> <span class="code-cls">DsStatusBadge</span>: React.FC&#60;DsStatusBadgeProps> = ({ variant = <span class="code-val">'neutral'</span>, label }) => (
+  &#60;span className={\`badge-st badge-st--\${variant}\`}>
+    &#60;span className=<span class="code-val">"badge-st__dot"</span> />
+    {label}
+  &#60;/span>
+);
+
+<span class="code-cm">// Usage</span>
+&#60;DsStatusBadge variant=<span class="code-val">"${variant}"</span>${withLabel?` label="${tbEsc(label||cap(variant))}"`:''} /></span>`;
+}
+
+function getBadgeCode(){
+  return badgeLang==='blazor' ? getBadgeCodeBlazor()
+       : badgeLang==='tsx'    ? getBadgeCodeTSX()
+       : getBadgeCodeHTML();
+}
+
+function setBadgeLang(lang){
+  if(!BADGE_LANGS.some(l=>l.key===lang)) return;
+  badgeLang = lang;
+  document.querySelectorAll('#badge-code-tab .code-seg__btn').forEach(b=>{
+    const on = b.dataset.lang===lang;
+    b.setAttribute('aria-selected', on ? 'true' : 'false');
+    b.setAttribute('tabindex', on ? '0' : '-1');
+  });
+  const file = document.getElementById('badge-lang-file');
+  const meta = BADGE_LANGS.find(l=>l.key===lang);
+  if(file && meta) file.textContent = meta.file;
+  const block = document.getElementById('bpg-code-block');
+  if(block) block.innerHTML = getBadgeCode();
+}
+
+function badgeLangKeydown(e){
+  const i = BADGE_LANGS.findIndex(l=>l.key===badgeLang);
+  let n = i;
+  if(e.key==='ArrowLeft')       n = (i - 1 + BADGE_LANGS.length) % BADGE_LANGS.length;
+  else if(e.key==='ArrowRight') n = (i + 1) % BADGE_LANGS.length;
+  else if(e.key==='Home')       n = 0;
+  else if(e.key==='End')        n = BADGE_LANGS.length - 1;
+  else return;
+  e.preventDefault();
+  setBadgeLang(BADGE_LANGS[n].key);
+  const btn = document.getElementById('badge-lang-' + BADGE_LANGS[n].key);
+  if(btn) btn.focus();
+}
+
+const BADGE_PLAYGROUND_MOUNTS = [
+  {rootId:'badge-playground', idSuffix:'', wrap:true, title:'Try the component', desc:'Adjust the filters to test component states.', headingAbove:'A badge marks a count, an identity, or a live state &mdash; never an action.'},
+  {rootId:'badge-code-playground', idSuffix:'-code', style:'code', title:'Playground', desc:'Live demo of the component.'},
+];
+
+function renderBadgePlayground(){
+  const theme = tbTheme();
+  const sbg = stageBg(theme);
+  const typeBtns = BADGE_TYPES.map(t=>`<button class="btn-pg__pill${bpg.type===t.key?' on':''}" onclick="bpgSetType('${t.key}')">${t.label}</button>`).join('');
+
+  let ctrls = '';
+  if(bpg.type==='count'){
+    const varBtns  = BADGE_COUNT_VARIANTS.map(v=>`<button class="btn-pg__pill${bpg.count.variant===v.key?' on':''}" onclick="bpgSet('count','variant','${v.key}')">${v.label}</button>`).join('');
+    const formBtns = BADGE_COUNT_FORMS.map(f=>`<button class="btn-pg__pill${bpg.count.form===f.key?' on':''}" onclick="bpgSet('count','form','${f.key}')">${f.label}</button>`).join('');
+    const anchBtns = ['off','on'].map(x=>`<button class="btn-pg__pill${(bpg.count.anchored?(x==='on'):(x==='off'))?' on':''}" onclick="bpgSet('count','anchored','${x}')">${x==='on'?'Anchored':'Standalone'}</button>`).join('');
+    ctrls = `
+      <div class="btn-pg__group"><span class="btn-pg__clabel">Variant</span><div class="btn-pg__pill-row">${varBtns}</div></div>
+      <div class="btn-pg__group"><span class="btn-pg__clabel">Form</span><div class="btn-pg__pill-row">${formBtns}</div></div>
+      <div class="btn-pg__group"><span class="btn-pg__clabel">Placement</span><div class="btn-pg__pill-row">${anchBtns}</div></div>`;
+  } else if(bpg.type==='avatar'){
+    const szBtns   = BADGE_AVATAR_SIZES.map(s=>`<button class="btn-pg__pill${bpg.avatar.size===s.key?' on':''}" onclick="bpgSet('avatar','size','${s.key}')">${s.label}</button>`).join('');
+    const fillBtns = BADGE_AVATAR_FILLS.map(f=>`<button class="btn-pg__pill${bpg.avatar.fill===f.key?' on':''}" onclick="bpgSet('avatar','fill','${f.key}')">${f.label}</button>`).join('');
+    const ovBtns   = BADGE_AVATAR_OVERLAYS.map(o=>`<button class="btn-pg__pill${bpg.avatar.overlay===o.key?' on':''}" onclick="bpgSet('avatar','overlay','${o.key}')">${o.label}</button>`).join('');
+    ctrls = `
+      <div class="btn-pg__group"><span class="btn-pg__clabel">Size</span><div class="btn-pg__pill-row">${szBtns}</div></div>
+      <div class="btn-pg__group"><span class="btn-pg__clabel">Fill</span><div class="btn-pg__pill-row">${fillBtns}</div></div>
+      <div class="btn-pg__group"><span class="btn-pg__clabel">Overlay</span><div class="btn-pg__pill-row">${ovBtns}</div></div>`;
+  } else {
+    const varBtns = BADGE_STATUS_VARIANTS.map(v=>`<button class="btn-pg__pill${bpg.status.variant===v.key?' on':''}" onclick="bpgSet('status','variant','${v.key}')">${v.label}</button>`).join('');
+    const lblBtns = ['on','off'].map(x=>`<button class="btn-pg__pill${(bpg.status.withLabel?(x==='on'):(x==='off'))?' on':''}" onclick="bpgSet('status','withLabel','${x}')">${x==='on'?'With label':'Dot only'}</button>`).join('');
+    ctrls = `
+      <div class="btn-pg__group"><span class="btn-pg__clabel">Variant</span><div class="btn-pg__pill-row">${varBtns}</div></div>
+      <div class="btn-pg__group"><span class="btn-pg__clabel">Label</span><div class="btn-pg__pill-row">${lblBtns}</div></div>`;
+  }
+
+  BADGE_PLAYGROUND_MOUNTS.forEach(mount=>{
+    const root = document.getElementById(mount.rootId);
+    if(!root) return;
+    const s = mount.idSuffix;
+    const demo = `
+      <div class="btn-pg">
+        <div class="btn-pg__stage bpg-stage-el" id="bpg-stage${s}" style="background:${sbg}"></div>
+        <div class="btn-pg__ctrls">
+          <div class="btn-pg__group"><span class="btn-pg__clabel">Type</span><div class="btn-pg__pill-row">${typeBtns}</div></div>
+          ${ctrls}
+        </div>
+      </div>`;
+
+    if(mount.style==='code'){
+      root.innerHTML = `
+        <div class="type-sub__title">${mount.title}</div>
+        <div class="type-sub__desc">${mount.desc}</div>
+        <div class="cpg-section-outline">${demo}</div>`;
+      return;
+    }
+
+    const inner = `
+      <div class="cpg-layout">
+        <div class="cpg-layout__intro">
+          ${mount.wrap ? `<span class="cpg-cursor-icon">${CPG_CURSOR_ICON_SVG}</span>` : ''}
+          <div class="cpg-layout__title">${mount.title}</div>
+          <div class="cpg-layout__desc">${mount.desc}</div>
+        </div>
+        <div class="cpg-layout__demo">${demo}</div>
+      </div>`;
+    const wrapped = mount.wrap ? `<div class="cpg-section-block">${inner}</div>` : inner;
+    root.innerHTML = (mount.headingAbove ? `<div class="cpg-overview-heading"><span class="cpg-overview-heading__icon">${CPG_INFO_ICON_SVG}</span><span>${mount.headingAbove}</span></div>` : '') + wrapped;
+  });
+
+  bpgRefresh();
+}
+
+function bpgSetType(type){ bpg.type = type; renderBadgePlayground(); }
+function bpgSet(group, key, val){
+  if(key==='anchored' || key==='withLabel') bpg[group][key] = (val==='on');
+  else bpg[group][key] = val;
+  renderBadgePlayground();
+}
+function bpgCopyCode(){
+  const b = document.getElementById('bpg-code-block');
+  if(!b) return;
+  navigator.clipboard.writeText(b.innerText||b.textContent).catch(()=>{});
+  const btn = document.getElementById('bpg-copy-btn');
+  if(btn){ btn.textContent = 'Copied!'; setTimeout(()=>btn.textContent='Copy', 2000); }
+}
+
+function renderBadgeCodeTab(){
+  const root = document.getElementById('badge-code-tab');
   if(!root) return;
-  const sbg = stageBg(tbTheme());
-  const cell = (inner, cap)=>`<div class="tb-ref__cell">${inner}<span class="tb-ref__cell-cap">${cap}</span></div>`;
-  const labelled = STATUS_BADGES.map(s=>cell(`<span class="badge-st badge-st--${s.key}"><span class="badge-st__dot"></span>${s.label}</span>`, cap(s.key))).join('');
-  const dotsOnly = STATUS_BADGES.map(s=>cell(`<span class="badge-st badge-st--${s.key}"><span class="badge-st__dot"></span></span>`, cap(s.key))).join('');
   root.innerHTML = `
-    <div class="type-sub__title">Status dots</div>
-    <div class="type-sub__desc">A tiny coloured dot for live state. Always pair the dot with a text label for anything critical &mdash; colour alone isn&rsquo;t accessible.</div>
-    <div class="tb-ref" style="background:${sbg}">
-      <div class="tb-ref__row"><div class="tb-ref__label">With label</div><div class="tb-ref__cells">${labelled}</div></div>
-      <div class="tb-ref__row"><div class="tb-ref__label">Dot only</div><div class="tb-ref__cells">${dotsOnly}</div></div>
+    <div class="type-sub__title">Code</div>
+    <div class="type-sub__desc">Live snippet matching the current Playground configuration &mdash; switch to Overview to change it.</div>
+    <div class="cpg-section-outline">
+      <div class="code-panel code-panel--bare open">
+        <div class="code-panel__head">
+          <div class="code-seg" role="tablist" aria-label="Code language" onkeydown="badgeLangKeydown(event)">
+            ${BADGE_LANGS.map(l=>`<button type="button" role="tab" class="code-seg__btn" id="badge-lang-${l.key}" data-lang="${l.key}" aria-selected="${badgeLang===l.key?'true':'false'}" aria-controls="bpg-code-block" tabindex="${badgeLang===l.key?'0':'-1'}" onclick="setBadgeLang('${l.key}')">${l.label}</button>`).join('')}
+          </div>
+          <span class="code-lang-file" id="badge-lang-file">${(BADGE_LANGS.find(l=>l.key===badgeLang)||BADGE_LANGS[0]).file}</span>
+          <button class="code-copy-btn" onclick="bpgCopyCode()" id="bpg-copy-btn">Copy</button>
+        </div>
+        <div class="code-body"><div class="code-block" id="bpg-code-block" role="tabpanel" aria-live="polite"></div></div>
+      </div>
     </div>`;
 }
 
-/* Render-all entry point (load + theme toggle) */
-function renderTagsBadges(){
-  try { renderTagPlayground(); } catch(e){ console.error('tag-playground',e); }
-  try { renderTagReference(); } catch(e){ console.error('tag-reference',e); }
-  try { renderBadgeCountRef(); } catch(e){ console.error('badge-count',e); }
-  try { renderBadgeAvatarRef(); } catch(e){ console.error('badge-avatar',e); }
-  try { renderBadgeStatusRef(); } catch(e){ console.error('badge-status',e); }
+function renderBadgeInSitu(){
+  const root = document.getElementById('badge-insitu');
+  if(!root) return;
+  const theme = tbTheme();
+  const sbg = stageBg(theme);
+
+  // 1. Count badge anchored to a nav icon
+  const navMock = `
+    <div class="spec-mock__stage" style="background:${sbg};align-items:center;justify-content:center">${badgeCountHTML('error','sm',true,'4')}</div>
+    <div class="spec-mock__cap"><b>Unread count on an icon</b>A small badge anchored to the corner of a nav icon signals pending items.</div>`;
+
+  // 2. Avatar + status — team presence
+  const teamRows = [
+    {initials:'RB', status:'success'},
+    {initials:'MJ', status:'warning'},
+    {initials:'TK', status:'neutral'},
+  ].map(p=>`<div class="spec-mock__row">${badgeAvatarHTML('sm','neutral','status',p.initials,p.status)}<span class="spec-mock__bar" style="width:70px"></span></div>`).join('');
+  const teamMock = `
+    <div class="spec-mock__stage" style="background:${sbg}">${teamRows}</div>
+    <div class="spec-mock__cap"><b>Team presence</b>A status dot overlaid on an avatar shows who&rsquo;s online at a glance.</div>`;
+
+  // 3. Status list — system health
+  const statusRows = [
+    {variant:'success', label:'API'},
+    {variant:'warning', label:'Webhooks'},
+    {variant:'error',   label:'Payments'},
+  ].map(s=>`<div class="spec-mock__row">${badgeStatusHTML(s.variant,true,s.label)}<span class="spec-mock__spacer"></span></div>`).join('');
+  const statusMock = `
+    <div class="spec-mock__stage" style="background:${sbg}">${statusRows}</div>
+    <div class="spec-mock__cap"><b>System health</b>Each service line pairs a status dot with a label &mdash; never colour alone.</div>`;
+
+  root.innerHTML = `
+    <div class="cpg-section-heading">
+      <div class="cpg-layout__title">In context</div>
+      <div class="cpg-layout__desc">Three everyday jobs, one per badge type &mdash; an unread count on an icon, presence on an avatar, and a system health list.</div>
+    </div>
+    <div class="cpg-section-block">
+      <div class="spec-insitu-grid">
+        <div class="spec-mock">${navMock}</div>
+        <div class="spec-mock">${teamMock}</div>
+        <div class="spec-mock">${statusMock}</div>
+      </div>
+    </div>`;
 }
-try { renderTagsBadges(); } catch(e){ console.error('tags-badges',e); }
+
+const BADGE_TOKEN_ROWS = [
+  {name:'Count — accent',       val:'#0062EB',                  tok:'—'},
+  {name:'Count — error',        val:'#EB0029',                  tok:'—'},
+  {name:'Count — neutral',      val:'var(--chrome-muted)',      tok:'chrome-muted'},
+  {name:'Avatar — neutral fill',val:'var(--chrome-nav)',        tok:'chrome-nav'},
+  {name:'Avatar — brand fill',  val:'var(--chrome-accent)',     tok:'chrome-accent'},
+  {name:'Status — success',     val:'var(--color-success-h)',   tok:'color-success-h'},
+  {name:'Status — warning',     val:'var(--color-warn-h)',      tok:'color-warn-h'},
+  {name:'Status — error',       val:'var(--color-crit-h)',      tok:'color-crit-h'},
+  {name:'Status — info',        val:'var(--color-info-h)',      tok:'color-info-h'},
+];
+
+function renderBadgeReference(){
+  const root = document.getElementById('badge-reference');
+  if(!root) return;
+  const theme = tbTheme();
+  const sbg = stageBg(theme);
+  const cell = (inner, capLbl)=>`<div class="tb-ref__cell">${inner}<span class="tb-ref__cell-cap">${capLbl}</span></div>`;
+
+  const countVariantsRow = ['error','accent','neutral'].map(v=>cell(badgeCountHTML(v,'md',false,'3'), cap(v))).join('');
+  const countFormsRow = cell(badgeCountHTML('error','dot',false),'Dot')
+    + cell(badgeCountHTML('error','sm',false,'5'),'Small')
+    + cell(badgeCountHTML('error','md',false,'5'),'Medium')
+    + cell(badgeCountHTML('error','md',false,'99+'),'Overflow');
+  const countAnchoredRow = cell(badgeCountHTML('error','sm',true,'4'),'Count')
+    + cell(badgeCountHTML('error','dot',true),'Dot');
+
+  const avatarSizesRow = BADGE_AVATAR_SIZES.map(s=>cell(badgeAvatarHTML(s.key,'neutral','none'), s.label)).join('');
+  const avatarFillRow = cell(badgeAvatarHTML('md','neutral','none'),'Neutral') + cell(badgeAvatarHTML('md','brand','none'),'Brand');
+  const avatarOverlayRow = cell(badgeAvatarHTML('md','neutral','status'),'+ status') + cell(badgeAvatarHTML('md','neutral','count'),'+ count');
+
+  const statusLabelled = STATUS_BADGES.map(s=>cell(badgeStatusHTML(s.key,true,s.label), cap(s.key))).join('');
+  const statusDots = STATUS_BADGES.map(s=>cell(badgeStatusHTML(s.key,false,''), cap(s.key))).join('');
+
+  const tokRows = BADGE_TOKEN_ROWS.map(t=>`
+    <tr>
+      <td class="dd-table__name">${t.name}</td>
+      <td><div class="spec-tok-cell"><span class="spec-tok-sw" style="background:${t.val}"></span><code>${t.val}</code></div></td>
+      <td><code>${t.tok}</code></td>
+    </tr>`).join('');
+
+  root.innerHTML = `
+    <div class="type-sub">
+      <div class="type-sub__title">Count &amp; notification badges</div>
+      <div class="type-sub__desc">A small solid marker for unread or pending totals. Use the dot form when the exact number doesn&rsquo;t matter, and &ldquo;99+&rdquo; past two digits. Hide it entirely at zero.</div>
+      <div class="cpg-section-outline">
+        <div class="tb-ref" style="background:${sbg}">
+          <div class="tb-ref__row"><div class="tb-ref__label">Variant</div><div class="tb-ref__cells">${countVariantsRow}</div></div>
+          <div class="tb-ref__row"><div class="tb-ref__label">Size &amp; form</div><div class="tb-ref__cells">${countFormsRow}</div></div>
+          <div class="tb-ref__row"><div class="tb-ref__label">Anchored</div><div class="tb-ref__cells">${countAnchoredRow}</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="type-sub">
+      <div class="type-sub__title">Avatar &amp; image badges</div>
+      <div class="type-sub__desc">A circular identity mark &mdash; initials, a photo, or a product/brand logo. Pair with a status dot to show presence, or a count badge for pending items.</div>
+      <div class="cpg-section-outline">
+        <div class="tb-ref" style="background:${sbg}">
+          <div class="tb-ref__row"><div class="tb-ref__label">Size</div><div class="tb-ref__cells">${avatarSizesRow}</div></div>
+          <div class="tb-ref__row"><div class="tb-ref__label">Fill</div><div class="tb-ref__cells">${avatarFillRow}</div></div>
+          <div class="tb-ref__row"><div class="tb-ref__label">Overlay</div><div class="tb-ref__cells">${avatarOverlayRow}</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="type-sub">
+      <div class="type-sub__title">Status dots</div>
+      <div class="type-sub__desc">A tiny coloured dot for live state. Always pair the dot with a text label for anything critical &mdash; colour alone isn&rsquo;t accessible.</div>
+      <div class="cpg-section-outline">
+        <div class="tb-ref" style="background:${sbg}">
+          <div class="tb-ref__row"><div class="tb-ref__label">With label</div><div class="tb-ref__cells">${statusLabelled}</div></div>
+          <div class="tb-ref__row"><div class="tb-ref__label">Dot only</div><div class="tb-ref__cells">${statusDots}</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="type-sub" style="margin-bottom:0">
+      <div class="type-sub__title">Tokens</div>
+      <div class="type-sub__desc">Status dots ride real semantic tokens, so they follow light and dark automatically. Count and avatar fills are literal brand hex values, not yet tokenised.</div>
+      <div class="cpg-section-outline">
+        <div class="dd-table-wrap"><table class="dd-table" style="min-width:420px">
+          <thead><tr><th>Part</th><th>Value</th><th>Token</th></tr></thead>
+          <tbody>${tokRows}</tbody>
+        </table></div>
+      </div>
+    </div>`;
+}
+
+try { renderBadgeCodeTab(); } catch(e){ console.error('badge-code-tab',e); }
+try { renderBadgePlayground(); } catch(e){ console.error('badge-playground',e); }
+try { renderBadgeInSitu(); } catch(e){ console.error('badge-insitu',e); }
+try { renderBadgeReference(); } catch(e){ console.error('badge-reference',e); }
+
+function badgeTabSwitch(tab){
+  const nav = document.getElementById('badge-tabs-list');
+  if(!nav) return;
+  nav.querySelectorAll('.tab-item').forEach(btn=>btn.classList.toggle('on', btn.getAttribute('data-badge-tab')===tab));
+  document.querySelectorAll('#s-badges .tabs-panel[data-badge-panel]').forEach(p=>p.classList.toggle('on', p.getAttribute('data-badge-panel')===tab));
+}
 
 /* ============================================================
    CHECKBOXES & RADIOS — reference grid
@@ -10598,12 +11502,20 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.47.0';
+const SYSTEM_VERSION = '1.48.0';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.48.0', date:'2026-08-04', author:'Helen', title:'Tags & Badges split into two pages, each rebuilt on the Chips & Pills tabbed treatment', changes:[
+        ['changed','The combined Tags & Badges page is now two: Tags (s-tags, one component) and Badges (s-badges, three — count, avatar, status dot). Neither shared a single "hero" the way Chips has one chip, so they were split rather than forced into one playground'],
+        ['added','Both pages get the full .sec--tabbed treatment already shared by Chips & Pills and Switch: Overview / Style / Code / Changelog tabs, a hero with a live preview card, a Key-facts section, In-context mockups, and a three-language (HTML/CSS · Blazor · React TSX) Code tab behind the segmented language switcher — no new shared CSS was needed for either page'],
+        ['added','Tags gets an interactive playground (Variant/Size/Leading dot/Label — its existing controls, now in the two-mount pattern), a "Key variants" grid, and three In-context mockups (category-per-row, metadata under a title, a read-only status column) distinct from Chips\' own three'],
+        ['added','Badges gets a single playground with an explicit Type switch (Count / Avatar / Status) on top of each type\'s own controls, since the three sub-types don\'t share one control set. Three In-context mockups, one per type (unread count on an icon, avatar + status presence, a status-dot health list), plus a consolidated Tokens table across all three'],
+        ['changed','Sidebar\'s Data display group gains a Badges entry alongside the renamed Tags entry — both alphabetised in place, so the group goes from 8 items to 9'],
+        ['added','badgeCountHTML() / badgeAvatarHTML() / badgeStatusHTML() — canonical real-markup builders for the three badge sub-types, replacing hand-assembled spans in the old static reference tables. tagHTML() (unchanged) remains the canonical Tag builder'],
+      ]},
       {version:'1.47.0', date:'2026-08-04', author:'Mo', title:'Empty state split out of Lists into its own section', changes:[
         ['added','New Empty State section (s-empty-state) — a dashed-border card with a muted glyph, title, explanation and one primary action, plus its own When to use guidance'],
         ['removed','Empty state removed from the Lists section; Lists now covers only Key–value list and Activity timeline'],
@@ -11679,7 +12591,16 @@ const CHANGELOG = {
         ['added','Light & dark reference grid, quick-copy card, tap-target guidance and usage do/don\'t'],
       ]},
     ]},
-    {secId:'s-tags', name:'Tags & Badges', version:'1.1.2', entries:[
+    {secId:'s-tags', name:'Tags', version:'2.0.0', entries:[
+      {version:'2.0.0', date:'2026-08-04', author:'Helen', title:'Facelift — rebuilt on the Chips & Pills tabbed treatment; Badges split to its own page', changes:[
+        ['changed','Badges (count, avatar and status-dot markers) moved off this page entirely, to a new standalone Badges page (s-badges). This page now covers Tag only — the "Tag or Chip?" guidance stays here since it\'s about this component\'s boundary with Chips'],
+        ['changed','Page rebuilt as four tabs (Overview / Style / Code / Changelog) on the shared .sec--tabbed layout, replacing the single long scroll: a 64px title with a live preview card in the hero, matching Chips & Pills and Switch'],
+        ['changed','The existing playground (Variant / Size / Leading dot / Label) now renders into two mounts sharing one state, with a compact copy on the Code tab, same pattern as Chips\' playground'],
+        ['added','"Key variants" — the five semantic colours as labelled cells with a one-line job description each, e.g. Info for "reference or version metadata," Error for "a blocking or retired state"'],
+        ['added','"In context" — three mockups showing where a tag actually goes: a category per row, metadata under a heading, and a read-only status column'],
+        ['added','A Code tab with HTML/CSS, Blazor (DsTag.razor) and React TSX (DsTag.tsx) behind the segmented language switcher, tracking the live playground state'],
+        ['added','Style tab: an anatomy specimen with 3 numbered parts (leading dot, label, container — no dismiss button, since a tag has none), a size table, and a colour-variant grid with a token table'],
+      ]},
       {version:'1.1.2', date:'2026-08-03', author:'Mo', title:'Fixed .tag--info not changing in dark mode', changes:[
         ['fixed','.tag--info background (--color-info-l) stayed pale blue in dark mode, unlike the success/warning/error tag variants which all darken their -l token — added [data-theme="dark"] .tag--info{--tag-bg:var(--prim-sup-blue-3)}, the same deep-navy fix already used for .alrt--info'],
       ]},
@@ -11696,6 +12617,17 @@ const CHANGELOG = {
         ['added','Avatar / image badge — 3 sizes, neutral & brand fills, with status-dot and count overlays'],
         ['added','Status-dot badge — 5 state colours, with-label and dot-only forms'],
         ['added','“Tag or Chip?” guidance clarifying when to use each'],
+      ]},
+    ]},
+    {secId:'s-badges', name:'Badges', version:'1.0.0', entries:[
+      {version:'1.0.0', date:'2026-08-04', author:'Helen', title:'New page — split out of the former combined Tags & Badges page', changes:[
+        ['added','Count / notification badge, Avatar / image badge, and Status-dot badge — the three sub-types previously documented on the Tags & Badges page, now with their own page on the Chips & Pills tabbed treatment (Overview / Style / Code / Changelog, hero with live preview)'],
+        ['added','A single interactive playground with an explicit Type switch (Count / Avatar / Status) on top of each type\'s own controls — Count: Variant/Form/Placement; Avatar: Size/Fill/Overlay; Status: Variant/Label — since the three sub-types share no single control set'],
+        ['added','"In context" — three mockups, one per type: an unread count anchored to a nav icon, a status dot overlaid on an avatar for team presence, and a status-dot list for system health'],
+        ['added','A Code tab with HTML/CSS, Blazor and React TSX behind the segmented language switcher. Each language branches on the playground\'s current type — DsCountBadge / DsAvatarBadge / DsStatusBadge — rather than forcing all three into one component'],
+        ['added','Style tab: the three existing reference grids (Count variants/forms/anchoring, Avatar sizes/fill/overlay, Status labelled/dot-only), plus a new consolidated Tokens table listing every custom prop and semantic token across all three types'],
+        ['added','badgeCountHTML() / badgeAvatarHTML() / badgeStatusHTML() — canonical real-markup builders shared by the playground, the reference grids and the In-context mockups, so every visual on the page is built from the same source as the Code tab\'s HTML output'],
+        ['added','Do\'s & don\'ts written specifically for badges as a group — count-at-zero, colour-alone status, and badges-aren\'t-buttons'],
       ]},
     ]},
     {secId:'s-chips', name:'Chips & Pills', version:'1.16.0', entries:[
@@ -13574,6 +14506,8 @@ try { renderSectionChangelogs(); } catch(e){ console.error('section-changelog',e
 [
   {secId:'s-chips',  panelId:'chip-changelog-panel'},
   {secId:'s-switch', panelId:'sw-changelog-panel'},
+  {secId:'s-tags',   panelId:'tag-changelog-panel'},
+  {secId:'s-badges', panelId:'badge-changelog-panel'},
 ].forEach(({secId, panelId})=>{
   try {
     const chlog = document.querySelector(`#${secId} > .sec-chlog`);
@@ -13631,13 +14565,14 @@ const NAV = [
     intro:'Components that present information rather than collect it — from a single stat or badge through to a full table or chart.',
     items:[
       {id:'s-avatar',       label:'Avatar',              desc:'User and brand identity marks.'},
+      {id:'s-badges',       label:'Badges',              desc:'Counts, avatars and status markers.'},
       {id:'s-cards',        label:'Cards',               desc:'Flexible containers for grouped content.'},
       {id:'s-charts',       label:'Charts',              desc:'Data visualisation with brand-styled charts.'},
       {id:'s-empty-state',  label:'Empty State',         desc:'Muted glyph, explanation and a primary action.'},
       {id:'s-lists',        label:'Lists',               desc:'Key-value lists and activity timelines.'},
       {id:'s-separator',    label:'Separator',           desc:'Dividers between content groups.'},
       {id:'s-tables',       label:'Tables',              desc:'Structured, selectable data tables.'},
-      {id:'s-tags',         label:'Tags & Badges',       desc:'Labels, counts and status markers.'},
+      {id:'s-tags',         label:'Tags',                desc:'Read-only category and metadata labels.'},
     ]},
   { cat:'Feedback & status', landing:'s-cat-feedback', component:true,
     intro:'How the interface tells someone what is happening — that something loaded, worked, failed, or is still on its way.',
@@ -13709,7 +14644,8 @@ const MOCKS = {
   's-switch': '<div class="mk-switch"></div>',
   's-tables': '<div class="mk-card" style="width:80%;overflow:hidden"><div style="display:grid;grid-template-columns:1fr 1fr 1fr;background:var(--chrome-nav);padding:8px 10px;gap:8px">'+('<span class="mk-bar" style="width:80%"></span>').repeat(3)+'</div>'+[0,1,2].map(function(){return '<div style="display:grid;grid-template-columns:1fr 1fr 1fr;padding:8px 10px;gap:8px;border-top:1px solid var(--chrome-border)">'+('<span class="mk-bar" style="width:70%"></span>').repeat(3)+'</div>';}).join('')+'</div>',
   's-tabs': '<div style="width:74%"><div style="display:flex;gap:18px;border-bottom:2px solid var(--chrome-border)"><span style="padding-bottom:9px;border-bottom:2px solid var(--chrome-txt);margin-bottom:-2px"><span class="mk-bar mk-bar--txt" style="width:44px"></span></span><span style="padding-bottom:9px"><span class="mk-bar" style="width:44px"></span></span><span style="padding-bottom:9px"><span class="mk-bar" style="width:44px"></span></span></div></div>',
-  's-tags': '<div class="mk"><span class="mk-chip" style="background:rgba(16,197,4,.14);border-color:transparent;color:var(--color-brand)">Success</span><span class="mk-chip">Neutral</span><span class="mk-chip" style="border:0;background:var(--chrome-txt);color:var(--chrome-bg)">3</span></div>',
+  's-tags': '<div class="mk"><span class="mk-chip" style="background:rgba(16,197,4,.14);border-color:transparent;color:var(--color-brand)">Success</span><span class="mk-chip">Neutral</span><span class="mk-chip">v2.1</span></div>',
+  's-badges': '<div class="mk" style="gap:14px"><span style="position:relative;display:inline-flex"><span class="mk-circle" style="width:40px;height:40px;background:var(--chrome-border)"></span><span style="position:absolute;top:-4px;right:-6px;min-width:18px;height:18px;border-radius:999px;background:var(--chrome-txt);color:var(--chrome-bg);font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center;padding:0 4px">3</span></span><span style="position:relative;display:inline-flex"><span class="mk-circle" style="width:40px;height:40px;background:var(--color-brand)"></span><span style="position:absolute;bottom:0;right:0;width:12px;height:12px;border-radius:50%;background:#16A220;border:2px solid var(--chrome-bg)"></span></span></div>',
   's-inputs': '<div class="mk-card" style="width:80%;padding:10px 13px;display:flex;flex-direction:column;gap:8px"><span class="mk-bar" style="width:35px;height:7px"></span><div style="display:flex;align-items:center;gap:2px"><span class="mk-bar mk-bar--txt" style="width:64%"></span><span style="width:2px;height:16px;background:var(--color-brand)"></span></div></div>',
   's-toggle-group': '<div class="mk-seg"><span>Day</span><span class="on">Week</span><span>Month</span></div>',
   's-tooltip': '<div class="mk-tip">Tooltip</div>',
