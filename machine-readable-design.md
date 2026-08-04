@@ -1,6 +1,6 @@
 ---
 document: Flash UI Reskin Guide
-version: 2.1.0
+version: 2.2.0
 design_system: https://mosw1014.github.io/flash-coded-design-system/
 purpose: Guide design judgement while the live design system supplies tokens, components and implementation.
 scope: Existing interfaces created with Claude, Replit, Lovable or similar tools.
@@ -352,6 +352,15 @@ Read the relevant live component page before implementing any component below.
 
 If a component is not listed here, inspect its live page and `AI context` before choosing it.
 
+### Form field consistency
+
+A form, filter row or panel that mixes Text Inputs, Dropdowns, Search fields and similar field-shaped controls uses **one consistent field style throughout** — not a different label position or size per field just because each happens to be a different component.
+
+- **Pick one label position and use it for every field in the group.** If one field uses a Caption label placed outside/above the field, every other field in that group does too — do not mix outside-label fields with inline-label fields, or a labelled field with an unlabelled one, in the same form or row.
+- **Match field heights and sizes across the group**, the same way button clusters share one size (see Size judgement, below) — a Dropdown next to a Text Input in the same row should be the same height, not a visually different control shape.
+- **This produces one shared alignment line**: labels line up with labels, and fields line up with fields, down the group — not a ragged mix of taller/shorter or differently-labelled controls.
+- Different field *types* (Text Input vs. Dropdown vs. Search) are fine to combine — it is the label position and sizing convention that must stay one choice per group, not the component itself.
+
 ### Icon sourcing
 
 Flash's icon set (`s-icons`) is **Font Awesome Solid** — filled shapes, not outlines. A resolver's
@@ -485,6 +494,8 @@ Before finishing, confirm:
       sharing that row is sized to match too.
 - [ ] Every avatar-plus-name/label cell uses a flex layout (avatar `flex-shrink:0` beside a text
       column) — checked by actually wrapping a long name, not just eyeballing the short ones.
+- [ ] Every Text Input, Dropdown and Search field in the same form or row shares one label
+      position and one field height — not a mix of outside/inline labels or inconsistent sizes.
 - [ ] Every icon SVG renders `display:block` and sits visibly centred in its box at the smallest
       size it's actually used at, not just at the default size.
 - [ ] No placeholder component was fabricated.
