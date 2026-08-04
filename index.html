@@ -165,14 +165,11 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;font-feature-
    TOP BAR
 ================================================================ */
 .bar{position:sticky;top:0;z-index:200;height:52px;background:var(--chrome-bar);color:var(--chrome-bar-txt);border-bottom:1px solid rgba(255,255,255,0.07);transition:background .25s}
-/* Full width so the logo lines up with the flush-left sidebar; on the home page
-   (no sidebar) it caps to 1366 so the logo aligns with the centred hero content */
+/* Full width on every page — including home — so the logo always lines up
+   with the flush-left sidebar / hero content at the same left edge */
 .bar__inner{height:100%;display:flex;align-items:center;gap:12px;padding:0 20px}
-body.home .bar__inner{max-width:1366px;margin:0 auto}
 .bar__logo{font-weight:900;font-size:15px;letter-spacing:-.4px;color:var(--chrome-bar-txt);text-decoration:none;display:flex;align-items:center;gap:8px;white-space:nowrap}
 .bar__logo-img{height:28px;width:auto;display:block;flex-shrink:0}
-.bar__changelog{background:#1dfa0f;color:#000;font-family:'Satoshi',sans-serif;font-weight:900;font-size:13px;line-height:1;letter-spacing:-.2px;padding:9px 16px;border-radius:56px;text-decoration:none;white-space:nowrap;transition:filter .15s}
-.bar__changelog:hover{filter:brightness(.92)}
 .bar__div{width:1px;height:22px;background:rgba(255,255,255,.15);flex-shrink:0}
 
 /* Reuses the Text Inputs "Search" field (.ti-search, see #s-inputs) for shape/
@@ -2487,7 +2484,6 @@ body.home .main{max-width:none;margin:0;padding:0}
     <div class="bar__search-results" id="nav-search-results" hidden></div>
   </div>
   <div class="bar__sp"></div>
-  <a href="javascript:void(0)" class="bar__changelog" onclick="showSection('s-changelog')">Changelog</a>
   <button class="bar__toggle" onclick="toggleTheme()">
     <div class="tk"><div class="tk__k"></div></div>
     <span id="theme-lbl">&#9728; Light</span>
@@ -9626,12 +9622,16 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.41.2';
+const SYSTEM_VERSION = '1.41.3';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.41.3', date:'2026-08-04', author:'Jaco', title:'Removed the header Changelog button; home top nav now full width like every other page', changes:[
+        ['removed','The green "Changelog" pill in the top header (.bar__changelog) and its CSS — the Changelog page is still reachable from the sidebar (About → Changelog)'],
+        ['fixed','The home page\'s top nav was capped at 1366px and centred while every other page\'s nav ran full width — dropped the body.home .bar__inner override so .bar__inner is full width everywhere, keeping the logo at the same left edge on every page. The page content below the header is unaffected: it still centres/caps exactly as before'],
+      ]},
       {version:'1.41.2', date:'2026-08-04', author:'Jaco', title:'Page content centres in the space beside the sidebar', changes:[
         ['changed','On pages with a sidebar the content column sat hard against the sidebar with all the leftover space falling to its right; .main now takes margin-inline:auto so its 1156px measure centres within the area beside the flush-left sidebar (e.g. at 1800px wide it gets an equal 217px either side). Below ~1366px the content still fills the available space, so nothing changes on smaller screens, and the home page is unaffected since body.home .main resets the margin'],
       ]},
