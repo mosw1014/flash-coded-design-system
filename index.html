@@ -9840,12 +9840,18 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.43.0';
+const SYSTEM_VERSION = '1.44.0';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.44.0', date:'2026-08-04', author:'Jaco', title:'Components split from one 33-item list into six purpose-based groups, Uber Base style', changes:[
+        ['changed','The single Components category is replaced by six groups in the NAV manifest — Actions, Inputs & controls, Data display, Feedback & status, Surfaces & overlays and Navigation — each with its own landing page (s-cat-actions, s-cat-inputs, s-cat-data, s-cat-feedback, s-cat-surfaces, s-cat-navigation), intro copy and breadcrumb. With Foundations and About that is eight sidebar entries instead of four, and the whole nav now fits on screen with a group open'],
+        ['removed','The Coming soon category — Modals now sits in Surfaces & overlays and Toasts in Feedback & status, both keeping their Soon tag, so a roadmap component is filed with the components it belongs beside rather than in a separate holding pen'],
+        ['added','A component:true flag on the six component groups, and buildAllComponentsLanding() which builds the s-cat-components landing from every flagged group\'s items, alphabetised. The home page\'s Components entry card points at a single page rather than at any one group, so that page is kept as an umbrella listing all 35 components; it has no sidebar entry of its own'],
+        ['changed','Component section ids are all unchanged, so every existing deep link (#/s-buttons, #/s-modals, …) still resolves — only the grouping around them moved'],
+      ]},
       {version:'1.43.0', date:'2026-08-04', author:'Jaco', title:'Sidebar categories are now collapsible groups, Brand renamed Foundations, every group gains an Overview link', changes:[
         ['added','Each landing category in the sidebar is now a collapsible accordion — a .sb-group wrapper, a .sb-cat--toggle button header carrying aria-expanded/aria-controls and a rotating .sb-cat__caret chevron, and a .sb-group__items panel that only renders when the group is open. toggleNavGroup() flips one group; several can be open at once'],
         ['added','syncNavGroups(), called from showSection(), expands whichever group holds the section being opened and flags that group\'s header .on — so deep links, search results and home-page tiles all land with the right group already expanded, while groups the person opened or closed by hand keep their state'],
@@ -12766,48 +12772,64 @@ const NAV = [
       {id:'s-spacing', label:'Spacing & Grid', desc:'An 8px base scale for spacing, radius and grid.'},
       {id:'s-type',    label:'Typography',     desc:'The Satoshi type scale and weight tokens.'},
     ]},
-  { cat:'Components', landing:'s-cat-components',
-    intro:'Flexible, reusable building blocks for Flash apps and sites. Every component shares the same tokens, spacing and states — pick one to see its playground, specs and code.',
+  { cat:'Actions', landing:'s-cat-actions', component:true,
+    intro:'The controls someone reaches for to make something happen — commit to an action, filter a set, or drive the interface from the keyboard.',
     items:[
-      {id:'s-accordion',    label:'Accordion',           desc:'Collapsible stacked sections.'},
-      {id:'s-alert',        label:'Alert',               desc:'Inline messages for status and feedback.'},
-      {id:'s-avatar',       label:'Avatar',              desc:'User and brand identity marks.'},
-      {id:'s-drawers',      label:'Bottom Sheets',       desc:'Panels that slide up from the bottom edge.'},
-      {id:'s-breadcrumb',   label:'Breadcrumb',          desc:'Shows the path back through a hierarchy.'},
       {id:'s-buttons',      label:'Buttons',             desc:'Primary, secondary, accent, simple and link.'},
-      {id:'s-calendar',     label:'Calendar',            desc:'Date pickers and month grids.'},
-      {id:'s-cards',        label:'Cards',               desc:'Flexible containers for grouped content.'},
-      {id:'s-carousel',     label:'Carousel',            desc:'Swipeable slides with pagination.'},
-      {id:'s-charts',       label:'Charts',              desc:'Data visualisation with brand-styled charts.'},
-      {id:'s-selection',    label:'Checkboxes & Radios', desc:'Multi- and single-select controls.'},
       {id:'s-chips',        label:'Chips & Pills',       desc:'Compact selectable and filter tokens.'},
-      {id:'s-command',      label:'Command',             desc:'Searchable command palette.'},
-      {id:'s-context-menu', label:'Context Menu',        desc:'Right-click and overflow action menus.'},
-      {id:'s-data',         label:'Data Display',        desc:'Stat tiles and key-value lists.'},
-      {id:'s-dropdown',     label:'Dropdown',            desc:'Single- and multi-select menus.'},
-      {id:'s-hover-card',   label:'Hover Card',          desc:'Rich preview shown on hover.'},
-      {id:'s-input-otp',    label:'Input OTP',           desc:'One-time passcode entry fields.'},
       {id:'s-kbd',          label:'Keyboard Shortcuts',  desc:'Keycaps and shortcut hints.'},
-      {id:'s-nav',          label:'Navigation',          desc:'Side navigation and menu systems.'},
-      {id:'s-pagination',   label:'Pagination',          desc:'Page-by-page navigation controls.'},
-      {id:'s-popover',      label:'Popover',             desc:'Anchored floating content.'},
-      {id:'s-separator',    label:'Separator',           desc:'Dividers between content groups.'},
-      {id:'s-skeleton',     label:'Skeleton loader',     desc:'Loading placeholders.'},
+    ]},
+  { cat:'Inputs & controls', landing:'s-cat-inputs', component:true,
+    intro:'Everything someone types into, picks from or toggles. Shared focus, error and disabled states keep a form coherent however it is assembled.',
+    items:[
+      {id:'s-calendar',     label:'Calendar',            desc:'Date pickers and month grids.'},
+      {id:'s-selection',    label:'Checkboxes & Radios', desc:'Multi- and single-select controls.'},
+      {id:'s-dropdown',     label:'Dropdown',            desc:'Single- and multi-select menus.'},
+      {id:'s-input-otp',    label:'Input OTP',           desc:'One-time passcode entry fields.'},
       {id:'s-slider',       label:'Slider',              desc:'Range and value selection.'},
-      {id:'s-spinner',      label:'Spinner',             desc:'Indeterminate loading indicators.'},
       {id:'s-switch',       label:'Switch',              desc:'On / off toggles.'},
-      {id:'s-tables',       label:'Tables',              desc:'Structured, selectable data tables.'},
-      {id:'s-tabs',         label:'Tabs',                desc:'Switch between related views.'},
-      {id:'s-tags',         label:'Tags & Badges',       desc:'Labels, counts and status markers.'},
       {id:'s-inputs',       label:'Text Inputs',         desc:'Text, search and password fields.'},
       {id:'s-toggle-group', label:'Toggle Group',        desc:'Segmented single / multi choice.'},
+    ]},
+  { cat:'Data display', landing:'s-cat-data', component:true,
+    intro:'Components that present information rather than collect it — from a single stat or badge through to a full table or chart.',
+    items:[
+      {id:'s-avatar',       label:'Avatar',              desc:'User and brand identity marks.'},
+      {id:'s-cards',        label:'Cards',               desc:'Flexible containers for grouped content.'},
+      {id:'s-charts',       label:'Charts',              desc:'Data visualisation with brand-styled charts.'},
+      {id:'s-data',         label:'Data Display',        desc:'Stat tiles and key-value lists.'},
+      {id:'s-separator',    label:'Separator',           desc:'Dividers between content groups.'},
+      {id:'s-tables',       label:'Tables',              desc:'Structured, selectable data tables.'},
+      {id:'s-tags',         label:'Tags & Badges',       desc:'Labels, counts and status markers.'},
+    ]},
+  { cat:'Feedback & status', landing:'s-cat-feedback', component:true,
+    intro:'How the interface tells someone what is happening — that something loaded, worked, failed, or is still on its way.',
+    items:[
+      {id:'s-alert',        label:'Alert',               desc:'Inline messages for status and feedback.'},
+      {id:'s-skeleton',     label:'Skeleton loader',     desc:'Loading placeholders.'},
+      {id:'s-spinner',      label:'Spinner',             desc:'Indeterminate loading indicators.'},
+      {id:'s-toasts',       label:'Toasts', tag:'Soon',  desc:'Transient status notifications.'},
+    ]},
+  { cat:'Surfaces & overlays', landing:'s-cat-surfaces', component:true,
+    intro:'Containers that layer content above or alongside the page — expanding in place, floating on hover, or taking focus outright.',
+    items:[
+      {id:'s-accordion',    label:'Accordion',           desc:'Collapsible stacked sections.'},
+      {id:'s-drawers',      label:'Bottom Sheets',       desc:'Panels that slide up from the bottom edge.'},
+      {id:'s-command',      label:'Command',             desc:'Searchable command palette.'},
+      {id:'s-context-menu', label:'Context Menu',        desc:'Right-click and overflow action menus.'},
+      {id:'s-hover-card',   label:'Hover Card',          desc:'Rich preview shown on hover.'},
+      {id:'s-modals',       label:'Modals', tag:'Soon',  desc:'Focused dialogs and confirmations.'},
+      {id:'s-popover',      label:'Popover',             desc:'Anchored floating content.'},
       {id:'s-tooltip',      label:'Tooltip',             desc:'Brief on-hover hints.'},
     ]},
-  { cat:'Coming soon', landing:'s-cat-coming',
-    intro:'Components on the roadmap. The patterns are defined — full playgrounds and specs are on the way.',
+  { cat:'Navigation', landing:'s-cat-navigation', component:true,
+    intro:'Getting around — moving between sections, stepping through pages, and showing where in the product someone currently is.',
     items:[
-      {id:'s-modals', label:'Modals', tag:'Soon', desc:'Focused dialogs and confirmations.'},
-      {id:'s-toasts', label:'Toasts', tag:'Soon', desc:'Transient status notifications.'},
+      {id:'s-breadcrumb',   label:'Breadcrumb',          desc:'Shows the path back through a hierarchy.'},
+      {id:'s-carousel',     label:'Carousel',            desc:'Swipeable slides with pagination.'},
+      {id:'s-nav',          label:'Navigation',          desc:'Side navigation and menu systems.'},
+      {id:'s-pagination',   label:'Pagination',          desc:'Page-by-page navigation controls.'},
+      {id:'s-tabs',         label:'Tabs',                desc:'Switch between related views.'},
     ]},
   { cat:'About', items:[ {id:'s-changelog', label:'Changelog'} ] },
 ];
@@ -12933,6 +12955,25 @@ function buildLandings(){
       + '<div class="lp-grid">'+g.items.map(lpCardHTML).join('')+'</div>';
     main.appendChild(sec);
   });
+  buildAllComponentsLanding(main);
+}
+
+// The home page's Components entry card points at one umbrella landing rather
+// than at any single group, so build it from every component group's items.
+// It has no sidebar entry of its own — the groups are the way in from there.
+function buildAllComponentsLanding(main){
+  if(document.getElementById('s-cat-components')) return;
+  var items = NAV.filter(function(g){ return g.component; })
+                 .reduce(function(all, g){ return all.concat(g.items); }, [])
+                 .sort(function(a, b){ return a.label.localeCompare(b.label); });
+  var sec = document.createElement('section');
+  sec.className = 'sec';
+  sec.id = 's-cat-components';
+  sec.innerHTML = '<div class="sec__head">'
+    + '<h1 class="sec__title">Components</h1>'
+    + '<p class="sec__desc">Flexible, reusable building blocks for Flash apps and sites. Every component shares the same tokens, spacing and states — pick one to see its playground, specs and code.</p></div>'
+    + '<div class="lp-grid">'+items.map(lpCardHTML).join('')+'</div>';
+  main.appendChild(sec);
 }
 
 var CRUMB_BACK_SVG = '<svg viewBox="0 0 26 26" fill="currentColor" aria-hidden="true"><path d="M11.413 7.08193C11.8029 6.62704 12.4883 6.57392 12.9432 6.96376C13.3982 7.35369 13.4504 8.03911 13.0604 8.49403L10.2557 11.7655H18.0223C18.6214 11.7655 19.1072 12.2514 19.1073 12.8505C19.1073 13.4496 18.6215 13.9354 18.0223 13.9354H10.2557L13.0604 17.2079C13.4502 17.6628 13.398 18.3473 12.9432 18.7372C12.4883 19.1271 11.8029 19.0748 11.413 18.62L7.47741 14.0272C6.89702 13.3501 6.89701 12.3509 7.47741 11.6737L11.413 7.08193Z"/></svg>';
