@@ -1346,22 +1346,30 @@ body.home .main{max-width:none;margin:0;padding:0}
 #s-chips .chip-tabs{margin-top:32px;gap:28px}
 #s-chips #chip-reference .type-sub{margin-bottom:72px}
 #s-chips #chip-reference .type-sub:last-child{margin-bottom:0}
+#s-chips #chip-reference .type-sub__title,
+#s-chips #chip-code-playground .type-sub__title,
+#s-chips #chip-code-tab .type-sub__title{font-size:22px;margin-bottom:8px}
+#s-chips #chip-reference .type-sub__desc,
+#s-chips #chip-code-playground .type-sub__desc,
+#s-chips #chip-code-tab .type-sub__desc{font-size:14px;margin-bottom:24px}
+#s-chips .cpg-section-outline{border:1px solid var(--chrome-border);border-radius:16px;padding:32px;transition:border-color .25s}
 #s-chips .tabs-panel{padding-top:36px}
 #s-chips .cpg-section-block{border:1px solid var(--chrome-border);border-radius:16px;background:var(--chrome-nav);padding:32px;transition:background .25s,border-color .25s}
+#s-chips .cpg-section-heading{margin-bottom:24px}
 #s-chips .cpg-section-block .cpg-layout__intro{padding-left:20px;padding-right:20px}
 #s-chips .cpg-section-block .btn-pg__ctrls{background:var(--chrome-bg)}
 [data-theme="dark"] #s-chips .cpg-section-block .btn-pg__ctrls{background:var(--prim-gb-425)}
+#s-chips .cpg-section-block .sel-usage__card{background:var(--chrome-bg)}
+[data-theme="dark"] #s-chips .cpg-section-block .sel-usage__card{background:var(--prim-gb-425)}
 #s-chips .cpg-layout{display:flex;gap:40px;align-items:stretch}
 #s-chips .cpg-layout__intro{flex:1 1 0%;display:flex;flex-direction:column;justify-content:center}
 #s-chips .cpg-layout__demo{flex:2 1 0%;min-width:0}
 #s-chips .cpg-layout__title{font-size:44px;font-weight:900;line-height:1.1;color:var(--chrome-txt);margin-bottom:18px}
 #s-chips .cpg-layout__desc{font-size:16px;line-height:1.5;color:var(--chrome-muted)}
-#s-chips .cpg-layout__title--sm{font-size:20px;margin-bottom:8px}
-#s-chips .cpg-layout__desc--sm{font-size:13px}
 #s-chips .cpg-overview-heading{display:flex;align-items:center;gap:14px;background:var(--chrome-nav);border:1px solid var(--chrome-border);border-radius:14px;padding:20px 24px;font-size:19px;font-weight:800;line-height:1.4;color:var(--chrome-txt);margin-bottom:24px;transition:background .25s,border-color .25s}
 #s-chips .cpg-overview-heading__icon{flex-shrink:0;width:22px;height:22px;color:var(--chrome-txt)}
 #s-chips .cpg-cursor-icon{display:block;width:26px;height:26px;color:var(--chrome-txt);margin-bottom:16px}
-#s-chips #chip-code-playground{margin-bottom:32px}
+#s-chips #chip-code-playground{margin-bottom:72px}
 #s-chips .cpg-anatomy{margin-top:96px}
 #s-chips .cpg-variants{margin-top:96px}
 #s-chips .chip-variants-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:16px}
@@ -1383,8 +1391,9 @@ body.home .main{max-width:none;margin:0;padding:0}
 #s-chips .chip-variant-cell__name{padding:10px 12px 0;font-size:13px;font-weight:700;color:var(--chrome-txt);border-top:1px solid var(--chrome-border)}
 #s-chips .chip-variant-cell__desc{padding:2px 12px 12px;font-size:11.5px;color:var(--chrome-muted)}
 #s-chips .chip-header-meta{display:flex;align-items:center;gap:8px;position:relative}
+#s-chips .chip-header-meta .comp-ver-badge{font-family:'Satoshi',sans-serif}
 #s-chips .chip-header-meta .ai-ctx{margin-top:0}
-#s-chips .chip-header-meta .ai-ctx summary{font-size:10px;font-weight:700;font-family:'SF Mono',monospace;letter-spacing:0;color:var(--chrome-muted);background:var(--chrome-nav);padding:2px 7px;border-radius:4px}
+#s-chips .chip-header-meta .ai-ctx summary{font-size:10px;font-weight:700;font-family:'Satoshi',sans-serif;letter-spacing:0;color:var(--chrome-muted);background:var(--chrome-nav);padding:2px 7px;border-radius:4px}
 #s-chips .chip-header-meta .ai-ctx summary::before{font-size:8px}
 #s-chips .chip-header-meta .ai-ctx pre{position:absolute;z-index:5;max-width:560px}
 @media (max-width:900px){
@@ -3490,7 +3499,7 @@ body.home .main{max-width:none;margin:0;padding:0}
       <div class="sec__head">
         <h1 class="sec__title">Chips and pills</h1>
         <div class="chip-header-meta">
-          <span class="comp-ver-badge" style="margin-left:0">v1.10.0</span>
+          <span class="comp-ver-badge" style="margin-left:0">v1.13.1</span>
           <details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-chips">
@@ -3546,36 +3555,34 @@ body.home .main{max-width:none;margin:0;padding:0}
         <div id="chip-variants" class="type-sub"></div>
         <div id="chip-insitu" class="type-sub"></div>
         <div class="type-sub cpg-variants" id="chip-usage">
-          <div class="cpg-layout">
-            <div class="cpg-layout__intro">
-              <div class="cpg-layout__title">Do's &amp; don'ts</div>
-              <div class="cpg-layout__desc">A few simple rules that keep chips readable and predictable.</div>
-            </div>
-            <div class="cpg-layout__demo">
-              <div class="sel-usage">
-                <div class="sel-usage__card">
-                  <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
-                  <ul class="sel-usage__list">
-                    <li>Keep labels to a word or two so they stay easy to scan.</li>
-                    <li>Match the colour to the meaning &mdash; green for done, red for a problem.</li>
-                    <li>Group related chips together, like a row of filters.</li>
-                  </ul>
-                  <div class="chip-usage-demo">
-                    <span class="chip chip--reg" style="--chip-bg:#16A220;--chip-text:#ffffff;font-size:12.5px;padding:0 11px"><span class="chip__label">Paid</span></span>
-                    <span class="chip chip--reg" style="--chip-bg:#FF8900;--chip-text:#ffffff;font-size:12.5px;padding:0 11px"><span class="chip__label">Pending</span></span>
-                    <span class="chip chip--reg" style="--chip-bg:#EB0029;--chip-text:#ffffff;font-size:12.5px;padding:0 11px"><span class="chip__label">Overdue</span></span>
-                  </div>
+          <div class="cpg-section-heading">
+            <div class="cpg-layout__title">Do's &amp; don'ts</div>
+            <div class="cpg-layout__desc">A few simple rules that keep chips readable and predictable.</div>
+          </div>
+          <div class="cpg-section-block">
+            <div class="sel-usage">
+              <div class="sel-usage__card">
+                <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
+                <ul class="sel-usage__list">
+                  <li>Keep labels to a word or two so they stay easy to scan.</li>
+                  <li>Match the colour to the meaning &mdash; green for done, red for a problem.</li>
+                  <li>Group related chips together, like a row of filters.</li>
+                </ul>
+                <div class="chip-usage-demo">
+                  <span class="chip chip--reg" style="--chip-bg:#16A220;--chip-text:#ffffff;font-size:12.5px;padding:0 11px"><span class="chip__label">Paid</span></span>
+                  <span class="chip chip--reg" style="--chip-bg:#FF8900;--chip-text:#ffffff;font-size:12.5px;padding:0 11px"><span class="chip__label">Pending</span></span>
+                  <span class="chip chip--reg" style="--chip-bg:#EB0029;--chip-text:#ffffff;font-size:12.5px;padding:0 11px"><span class="chip__label">Overdue</span></span>
                 </div>
-                <div class="sel-usage__card">
-                  <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don't</div>
-                  <ul class="sel-usage__list">
-                    <li>Don't write a full sentence inside a chip &mdash; shorten it or use plain text.</li>
-                    <li>Don't use a chip as a main button; buttons are for actions.</li>
-                    <li>Don't colour chips just for decoration &mdash; colour should carry meaning.</li>
-                  </ul>
-                  <div class="chip-usage-demo">
-                    <span class="chip chip--reg" style="--chip-bg:#0062EB;--chip-text:#ffffff;font-size:12.5px;padding:0 11px"><span class="chip__label">This invoice is now overdue</span></span>
-                  </div>
+              </div>
+              <div class="sel-usage__card">
+                <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don't</div>
+                <ul class="sel-usage__list">
+                  <li>Don't write a full sentence inside a chip &mdash; shorten it or use plain text.</li>
+                  <li>Don't use a chip as a main button; buttons are for actions.</li>
+                  <li>Don't colour chips just for decoration &mdash; colour should carry meaning.</li>
+                </ul>
+                <div class="chip-usage-demo">
+                  <span class="chip chip--reg" style="--chip-bg:#0062EB;--chip-text:#ffffff;font-size:12.5px;padding:0 11px"><span class="chip__label">This invoice is now overdue</span></span>
                 </div>
               </div>
             </div>
@@ -9019,7 +9026,7 @@ function cpgRefresh(){
    the same shared cpg state. */
 const CHIP_PLAYGROUND_MOUNTS = [
   {rootId:'chip-playground', idSuffix:'', wrap:true, size:'lg', title:'Try the component', desc:'Adjust the filters to test component states.', headingAbove:'Use chips to show a status, mark a category, or let people pick a filter at a glance.'},
-  {rootId:'chip-code-playground', idSuffix:'-code', wrap:false, size:'sm', title:'Playground', desc:'Live demo of the component.'},
+  {rootId:'chip-code-playground', idSuffix:'-code', style:'code', title:'Playground', desc:'Live demo of the component.'},
 ];
 
 const CPG_INFO_ICON_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="3" width="6" height="5" rx="1"/><rect x="2" y="16" width="6" height="5" rx="1"/><rect x="16" y="16" width="6" height="5" rx="1"/><path d="M12 8v4M5 16v-2a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v2"/></svg>';
@@ -9039,28 +9046,35 @@ function renderChipPlayground(){
     const root = document.getElementById(mount.rootId);
     if(!root) return;
     const s = mount.idSuffix;
-    const titleClass = mount.size==='sm' ? 'cpg-layout__title cpg-layout__title--sm' : 'cpg-layout__title';
-    const descClass = mount.size==='sm' ? 'cpg-layout__desc cpg-layout__desc--sm' : 'cpg-layout__desc';
+    const demo = `
+      <div class="btn-pg">
+        <div class="btn-pg__stage cpg-stage-el" id="cpg-stage${s}" style="background:${sbg}"></div>
+        <div class="btn-pg__ctrls">
+          <div class="btn-pg__group"><span class="btn-pg__clabel">Variant</span><div class="btn-pg__pill-row">${varBtns}</div></div>
+          <div class="btn-pg__group"><span class="btn-pg__clabel">Size</span><div class="btn-pg__pill-row">${szBtns}</div></div>
+          <div class="btn-pg__group"><span class="btn-pg__clabel">Icon</span><div class="btn-pg__pill-row">${iconBtns}</div></div>
+          <div class="btn-pg__group"><span class="btn-pg__clabel">Dismiss</span><div class="btn-pg__pill-row">${rmBtns}</div></div>
+          <div class="btn-pg__group"><span class="btn-pg__clabel">Behaviour</span><div class="btn-pg__pill-row">${selBtns}</div></div>
+          <div class="btn-pg__group"><span class="btn-pg__clabel">Label</span><input class="cpg-label-input cpg-label-input-el" id="cpg-label-input${s}" value="${cpgEsc(cpg.label)}" maxlength="24" oninput="cpgSetLabel(this.value)" placeholder="Chip"></div>
+        </div>
+      </div>`;
+
+    if(mount.style==='code'){
+      root.innerHTML = `
+        <div class="type-sub__title">${mount.title}</div>
+        <div class="type-sub__desc">${mount.desc}</div>
+        <div class="cpg-section-outline">${demo}</div>`;
+      return;
+    }
+
     const inner = `
       <div class="cpg-layout">
         <div class="cpg-layout__intro">
           ${mount.wrap ? `<span class="cpg-cursor-icon">${CPG_CURSOR_ICON_SVG}</span>` : ''}
-          <div class="${titleClass}">${mount.title}</div>
-          <div class="${descClass}">${mount.desc}</div>
+          <div class="cpg-layout__title">${mount.title}</div>
+          <div class="cpg-layout__desc">${mount.desc}</div>
         </div>
-        <div class="cpg-layout__demo">
-          <div class="btn-pg">
-            <div class="btn-pg__stage cpg-stage-el" id="cpg-stage${s}" style="background:${sbg}"></div>
-            <div class="btn-pg__ctrls">
-              <div class="btn-pg__group"><span class="btn-pg__clabel">Variant</span><div class="btn-pg__pill-row">${varBtns}</div></div>
-              <div class="btn-pg__group"><span class="btn-pg__clabel">Size</span><div class="btn-pg__pill-row">${szBtns}</div></div>
-              <div class="btn-pg__group"><span class="btn-pg__clabel">Icon</span><div class="btn-pg__pill-row">${iconBtns}</div></div>
-              <div class="btn-pg__group"><span class="btn-pg__clabel">Dismiss</span><div class="btn-pg__pill-row">${rmBtns}</div></div>
-              <div class="btn-pg__group"><span class="btn-pg__clabel">Behaviour</span><div class="btn-pg__pill-row">${selBtns}</div></div>
-              <div class="btn-pg__group"><span class="btn-pg__clabel">Label</span><input class="cpg-label-input cpg-label-input-el" id="cpg-label-input${s}" value="${cpgEsc(cpg.label)}" maxlength="24" oninput="cpgSetLabel(this.value)" placeholder="Chip"></div>
-            </div>
-          </div>
-        </div>
+        <div class="cpg-layout__demo">${demo}</div>
       </div>`;
     const wrapped = mount.wrap ? `<div class="cpg-section-block">${inner}</div>` : inner;
     root.innerHTML = (mount.headingAbove ? `<div class="cpg-overview-heading"><span class="cpg-overview-heading__icon">${CPG_INFO_ICON_SVG}</span><span>${mount.headingAbove}</span></div>` : '') + wrapped;
@@ -9075,12 +9089,14 @@ function renderChipCodeTab(){
   root.innerHTML = `
     <div class="type-sub__title">Code</div>
     <div class="type-sub__desc">Live snippet matching the current Playground configuration &mdash; switch to Overview to change it.</div>
-    <div class="code-panel open">
-      <div class="code-panel__head" style="cursor:default">
-        <span class="code-panel__label">&#60;/&#62; &nbsp;View code</span>
-        <button class="code-copy-btn" onclick="cpgCopyCode()" id="cpg-copy-btn">Copy</button>
+    <div class="cpg-section-outline">
+      <div class="code-panel open" style="border-top:0">
+        <div class="code-panel__head" style="cursor:default;padding:0 0 12px">
+          <span class="code-panel__label">&#60;/&#62; &nbsp;View code</span>
+          <button class="code-copy-btn" onclick="cpgCopyCode()" id="cpg-copy-btn">Copy</button>
+        </div>
+        <div class="code-body" style="padding:0"><div class="code-block" id="cpg-code-block"></div></div>
       </div>
-      <div class="code-body"><div class="code-block" id="cpg-code-block"></div></div>
     </div>`;
 }
 
@@ -9126,14 +9142,12 @@ function renderChipVariants(){
     </div>`).join('');
 
   root.innerHTML = `
-    <div class="cpg-layout cpg-variants">
-      <div class="cpg-layout__intro">
-        <div class="cpg-layout__title">Key variants</div>
-        <div class="cpg-layout__desc">Five semantic colours, each with a job. Match the colour to the meaning &mdash; not the decoration.</div>
-      </div>
-      <div class="cpg-layout__demo">
-        <div class="chip-variants-grid">${cells}</div>
-      </div>
+    <div class="cpg-section-heading">
+      <div class="cpg-layout__title">Key variants</div>
+      <div class="cpg-layout__desc">Five semantic colours, each with a job. Match the colour to the meaning &mdash; not the decoration.</div>
+    </div>
+    <div class="cpg-section-block">
+      <div class="chip-variants-grid">${cells}</div>
     </div>`;
 }
 
@@ -9183,17 +9197,15 @@ function renderChipInSitu(){
     <div class="chip-mock__cap"><b>Tags in a field</b>Removable chips collect several choices in one input.</div>`;
 
   root.innerHTML = `
-    <div class="cpg-layout cpg-variants">
-      <div class="cpg-layout__intro">
-        <div class="cpg-layout__title">In context</div>
-        <div class="cpg-layout__desc">The same chip does three everyday jobs &mdash; showing status, filtering a list, and collecting tags.</div>
-      </div>
-      <div class="cpg-layout__demo">
-        <div class="chip-insitu-grid">
-          <div class="chip-mock">${listMock}</div>
-          <div class="chip-mock">${filterMock}</div>
-          <div class="chip-mock">${fieldMock}</div>
-        </div>
+    <div class="cpg-section-heading">
+      <div class="cpg-layout__title">In context</div>
+      <div class="cpg-layout__desc">The same chip does three everyday jobs &mdash; showing status, filtering a list, and collecting tags.</div>
+    </div>
+    <div class="cpg-section-block">
+      <div class="chip-insitu-grid">
+        <div class="chip-mock">${listMock}</div>
+        <div class="chip-mock">${filterMock}</div>
+        <div class="chip-mock">${fieldMock}</div>
       </div>
     </div>`;
 }
@@ -9309,34 +9321,42 @@ function renderChipReference(){
     <div class="type-sub">
       <div class="type-sub__title">Anatomy</div>
       <div class="type-sub__desc">A chip is a pill-shaped container with a text label, plus an optional leading icon and trailing dismiss button.</div>
-      <div class="chip-spec-hero" style="background:${sbg}">${heroChip}</div>
-      <div class="chip-parts">${partCards}</div>
+      <div class="cpg-section-outline">
+        <div class="chip-spec-hero" style="background:${sbg}">${heroChip}</div>
+        <div class="chip-parts">${partCards}</div>
+      </div>
     </div>
 
     <div class="type-sub">
       <div class="type-sub__title">Size &amp; dimensions</div>
       <div class="type-sub__desc">Three sizes share one shape and weight; height, text, padding and icon scale together. All sizes use a 999px (pill) radius, 700 weight and line-height 1.</div>
-      <div class="chip-size-demo" style="background:${sbg}">${sizeDemo}</div>
-      <div class="dd-table-wrap"><table class="dd-table">
-        <thead><tr><th>Size</th><th>Height</th><th>Text</th><th>Padding&nbsp;(L&nbsp;/&nbsp;R)</th><th>Icon</th><th>Gap</th></tr></thead>
-        <tbody>${sizeRows}</tbody>
-      </table></div>
+      <div class="cpg-section-outline">
+        <div class="chip-size-demo" style="background:${sbg}">${sizeDemo}</div>
+        <div class="dd-table-wrap"><table class="dd-table">
+          <thead><tr><th>Size</th><th>Height</th><th>Text</th><th>Padding&nbsp;(L&nbsp;/&nbsp;R)</th><th>Icon</th><th>Gap</th></tr></thead>
+          <tbody>${sizeRows}</tbody>
+        </table></div>
+      </div>
     </div>
 
     <div class="type-sub">
       <div class="type-sub__title">Colour variants</div>
       <div class="type-sub__desc">Five semantic variants across three sizes, in the current theme. The token table below lists each fill and label colour — muted is the only variant that changes between light and dark.</div>
-      <div class="chip-ref" style="margin-bottom:16px"><div class="chip-ref__grid">${grid}</div></div>
-      <div class="dd-table-wrap"><table class="dd-table" style="min-width:420px">
-        <thead><tr><th>Variant</th><th>Background</th><th>Label text</th></tr></thead>
-        <tbody>${tokRows}</tbody>
-      </table></div>
+      <div class="cpg-section-outline">
+        <div class="chip-ref" style="margin-bottom:16px"><div class="chip-ref__grid">${grid}</div></div>
+        <div class="dd-table-wrap"><table class="dd-table" style="min-width:420px">
+          <thead><tr><th>Variant</th><th>Background</th><th>Label text</th></tr></thead>
+          <tbody>${tokRows}</tbody>
+        </table></div>
+      </div>
     </div>
 
     <div class="type-sub" style="margin-bottom:0">
       <div class="type-sub__title">States</div>
       <div class="type-sub__desc">Beyond the static display chip, chips can be selectable, show a selected ring, or carry a dismiss button.</div>
-      <div class="chip-variants-grid">${stateCells}</div>
+      <div class="cpg-section-outline">
+        <div class="chip-variants-grid">${stateCells}</div>
+      </div>
     </div>`;
 }
 
@@ -9605,12 +9625,34 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.40.5';
+const SYSTEM_VERSION = '1.41.1';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.41.1', date:'2026-08-03', author:'Helen', title:'Fixed the version and AI context pills using a monospace font instead of Satoshi', changes:[
+        ['fixed','#s-chips .chip-header-meta .comp-ver-badge and .ai-ctx summary (the "v1.13.0" and "AI context" pills on the Chips & Pills header) were hardcoded to \'SF Mono\',monospace — off-brand for a UI label. Both now use \'Satoshi\',sans-serif, matching the rest of the page'],
+      ]},
+      {version:'1.41.0', date:'2026-08-03', author:'Helen', title:'Rolled the Style tab\'s heading/outline treatment out to the Code tab', changes:[
+        ['changed','"Playground" and "Code" headings on the Code tab now use the same enlarged sizing as the Style tab (22px/14px, up from 20px/13px and 15px/12px respectively) via a shared #s-chips #chip-code-playground/#chip-code-tab .type-sub__title/__desc scope'],
+        ['changed','CHIP_PLAYGROUND_MOUNTS\' Code-tab entry gets a new style:\'code\' render path in renderChipPlayground(): the two-column heading-beside-demo layout is replaced with a full-width stacked layout (heading above, demo below), matching the pattern already used for Key variants/In context/Do\'s & don\'ts — the Overview tab\'s "Try the component" mount is untouched and keeps its original two-column .cpg-section-block layout'],
+        ['added','The Code tab\'s live snippet viewer is now wrapped in the same #s-chips .cpg-section-outline block used on the Style tab (bordered, no background fill), instead of a bare .code-panel with only a top border'],
+        ['removed','#s-chips .cpg-layout__title--sm / .cpg-layout__desc--sm — no longer referenced now that the Code-tab Playground uses .type-sub__title/__desc instead'],
+        ['changed','Gap between "Playground" and "Code" on the Code tab increased from 32px to 72px (#s-chips #chip-code-playground), matching the Style tab\'s section spacing'],
+      ]},
+      {version:'1.40.0', date:'2026-08-03', author:'Helen', title:'Enlarged Style tab headers and contained their content in outline-only cards', changes:[
+        ['changed','#chip-reference .type-sub__title (Anatomy, Size & dimensions, Colour variants, States) increased from 15px to 22px, and .type-sub__desc from 12px to 14px — a step up from the previous caption-like size, but still well short of the Overview tab\'s 44px/16px headings'],
+        ['added','Each Style tab section\'s visual content is now wrapped in a new #s-chips .cpg-section-outline block — a bordered card with no background fill (unlike the tinted .cpg-section-block used on the Overview tab), so it reads as an outline only, not a grey block'],
+      ]},
+      {version:'1.39.1', date:'2026-08-03', author:'Helen', title:'Fixed v1.39.0: only the visual content should sit in the card, not the heading', changes:[
+        ['fixed','v1.39.0 wrapped the whole .cpg-layout (heading + description together with the demo) inside .cpg-section-block for "Key variants", "In context" and "Do\'s & don\'ts" — matching the reference more closely, the heading/description now sit above the card as a plain, full-width block (.cpg-section-heading), and only the visual demo content (the variant cards / mockups / sel-usage grid) is inside .cpg-section-block'],
+        ['changed','"Try the component" is unaffected — its heading legitimately sits inside its own .cpg-section-block, side-by-side with the playground, per the same reference'],
+      ]},
+      {version:'1.39.0', date:'2026-08-03', author:'Helen', title:'Wrapped Key variants, In context and Do\'s & don\'ts in the same card treatment as Try the component', changes:[
+        ['changed','"Key variants" (renderChipVariants), "In context" (renderChipInSitu) and "Do\'s & don\'ts" (the #chip-usage block) now each sit inside a #s-chips .cpg-section-block — the same bordered, tinted card already used for "Try the component" — instead of sitting directly on the page background'],
+        ['added','#s-chips .cpg-section-block .sel-usage__card now gets a chrome-bg (light) / prim-gb-425 (dark) background override, matching the existing .btn-pg__ctrls override, so the Do/Don\'t cards read as white cards against the section-block\'s tinted background instead of blending into it'],
+      ]},
       {version:'1.40.5', date:'2026-08-04', author:'Jaco', title:'Sidebar is now flush left instead of centred with the content', changes:[
         ['fixed','On screens wider than 1366px the whole content column (sidebar + main) was centred, so the sidebar floated inward with a gap to its left instead of being docked against the window edge. .layout is now full width, so the sidebar always sits flush left at every screen size'],
         ['changed','The 1366px measure is now capped on .main instead (max-width:1156px — 1366 minus the 210px sidebar), so the content column keeps exactly the width it had before, just left-aligned beside the sidebar rather than centred in the viewport'],
@@ -10581,7 +10623,24 @@ const CHANGELOG = {
         ['added','“Tag or Chip?” guidance clarifying when to use each'],
       ]},
     ]},
-    {secId:'s-chips', name:'Chips & Pills', version:'1.10.0', entries:[
+    {secId:'s-chips', name:'Chips & Pills', version:'1.13.1', entries:[
+      {version:'1.13.1', date:'2026-08-03', author:'Helen', title:'Fixed the header pills using a monospace font', changes:[
+        ['fixed','The "v1.13.0" and "AI context" pills in the header were set in \'SF Mono\', monospace instead of the brand typeface — both now render in Satoshi'],
+      ]},
+      {version:'1.13.0', date:'2026-08-03', author:'Helen', title:'Code tab now matches the Style tab\'s heading/outline treatment', changes:[
+        ['changed','"Playground" and "Code" headings on the Code tab enlarged to match the Style tab (22px/14px); the Playground demo switched from a two-column heading-beside-stage layout to a full-width stacked layout (heading above, an outline-only card below) — "Try the component" on Overview is unchanged'],
+        ['added','The live code snippet viewer is now contained in the same bordered, no-fill outline card used elsewhere on the Style tab'],
+      ]},
+      {version:'1.12.0', date:'2026-08-03', author:'Helen', title:'Enlarged Style tab headers, contained content in outline-only cards', changes:[
+        ['changed','Style tab section headers (Anatomy, Size & dimensions, Colour variants, States) increased from 15px/12px to 22px/14px — bigger than before, still smaller than the Overview tab\'s 44px/16px'],
+        ['added','Each section\'s visual content now sits in a bordered, no-fill outline card (.cpg-section-outline) — same containment idea as the Overview tab\'s sections, but outline-only instead of a tinted background'],
+      ]},
+      {version:'1.11.1', date:'2026-08-03', author:'Helen', title:'Fixed the section cards: heading stays outside, only the demo content is contained', changes:[
+        ['fixed','"Key variants", "In context" and "Do\'s & don\'ts" previously put the heading + description inside .cpg-section-block alongside the demo (matching "Try the component"\'s layout, which was wrong for these three) — now the heading sits above the card as a plain, full-width block, and only the cards/mockups/sel-usage grid are inside it'],
+      ]},
+      {version:'1.11.0', date:'2026-08-03', author:'Helen', title:'Key variants, In context and Do\'s & don\'ts now share the Try the component card treatment', changes:[
+        ['changed','All four Overview sections now sit inside the same bordered, tinted card (.cpg-section-block) — previously only "Try the component" had it, so "Key variants", "In context" and "Do\'s & don\'ts" looked visually disconnected from it'],
+      ]},
       {version:'1.10.0', date:'2026-08-03', author:'Helen', title:'Rebalanced description size and Style tab spacing', changes:[
         ['changed','Reverted the 12px shrink from v1.9.2 (too small) — all four playground-style descriptions ("Try the component", "Key variants", "In context", "Do\'s & don\'ts") now consistently render at 16px, a balanced middle ground between the original 20px and the too-small 12px'],
         ['changed','Style tab sections (Anatomy, Size & dimensions, Colour variants, States) now have 72px between them instead of 52px'],
