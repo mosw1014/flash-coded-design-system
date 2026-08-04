@@ -109,7 +109,7 @@
   --chrome-accent-text:var(--prim-green-800);
   --chrome-txt:var(--prim-black); --chrome-muted:var(--prim-grey-900);
   --chrome-border:var(--prim-grey-400); --chrome-hover:rgba(0,0,0,0.04);
-  --chrome-active:rgba(0,0,0,0.08);
+  --chrome-pill:var(--prim-white);
 }
 /* ================================================================
    FLASH · DARK
@@ -144,7 +144,7 @@
   --chrome-accent-text:var(--prim-green-500);
   --chrome-txt:var(--prim-white); --chrome-muted:var(--prim-grey-400);
   --chrome-border:var(--prim-gb-425); --chrome-hover:rgba(255,255,255,0.05);
-  --chrome-active:rgba(255,255,255,0.10);
+  --chrome-pill:rgba(255,255,255,0.10);
 }
 /* ================================================================
    FLASH DARK (reserved)
@@ -213,32 +213,31 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;font-feature-
 .layout{display:flex;min-height:calc(100vh - 52px)}
 
 /* Sidebar */
-.sidebar{width:252px;flex-shrink:0;background:var(--chrome-nav);border-right:1px solid var(--chrome-border);position:sticky;top:52px;height:calc(100vh - 52px);overflow-y:auto;padding:26px 0 40px;transition:background .25s}
-.sb-cat{display:flex;align-items:center;gap:8px;font-size:15px;font-weight:800;letter-spacing:-.01em;color:var(--chrome-txt);padding:0 20px;margin:26px 0 6px}
-.sb-cat:first-child,.sb-group:first-child .sb-cat{margin-top:0}
-.sb-link{display:flex;align-items:center;gap:8px;padding:10px 16px 10px 34px;font-size:14px;font-weight:600;color:var(--chrome-muted);text-decoration:none;border-left:3px solid transparent;transition:background .15s,color .15s,border-color .15s}
-.sb-link:hover{color:var(--chrome-txt);background:var(--chrome-hover)}
-.sb-link.on{color:var(--chrome-txt);border-left-color:var(--chrome-accent);background:var(--chrome-active);font-weight:800}
-/* Trailing chevron — signals the row drills into a section (muted until hover/active) */
-.sb-link__chev{margin-left:auto;width:11px;height:11px;flex-shrink:0;color:var(--chrome-muted);opacity:.5;transition:opacity .15s,color .15s}
-.sb-link__chev svg{width:100%;height:100%;display:block;fill:currentColor}
-.sb-link:hover .sb-link__chev,.sb-link.on .sb-link__chev{opacity:1;color:var(--chrome-txt)}
+.sidebar{width:252px;flex-shrink:0;background:var(--chrome-nav);border-right:1px solid var(--chrome-border);position:sticky;top:52px;height:calc(100vh - 52px);overflow-y:auto;padding:24px 16px 40px;transition:background .25s}
+.sb-cat{display:flex;align-items:center;gap:8px;font-size:16px;font-weight:800;letter-spacing:-.01em;color:var(--chrome-txt);padding:0;margin:24px 0 6px}
+.sb-cat:first-child{margin-top:0}
+/* Rows sit flush left; the hover/active pill is what indents the label by 8px. */
+.sb-link{display:flex;align-items:center;gap:8px;min-height:40px;padding:8px 8px 8px 0;border-radius:8px;font-size:13px;font-weight:500;line-height:1.3;color:var(--chrome-muted);text-decoration:none;transition:background .15s,color .15s,padding .15s}
+.sb-link:hover{padding-left:8px;background:var(--chrome-pill);color:var(--chrome-txt);font-weight:600}
+.sb-link.on{padding-left:8px;background:var(--chrome-txt);color:var(--chrome-bg);font-weight:700}
 /* A top-level destination with no category of its own (Changelog) */
-.sb-link--top{padding-left:20px;margin-top:26px;font-size:15px;font-weight:800;color:var(--chrome-txt)}
+.sb-link--top{margin-top:24px;font-weight:800;color:var(--chrome-txt)}
 .sb-icon{width:15px;height:15px;flex-shrink:0;color:var(--chrome-muted);transition:color .15s}
 .sb-link:hover .sb-icon{color:var(--chrome-txt)}
 .sb-link.on .sb-icon{color:var(--chrome-accent-text)}
 
-/* ===== Sidebar category as collapsible group ===== */
-.sb-cat--toggle{width:100%;justify-content:space-between;cursor:pointer;background:none;border:0;font-family:inherit;text-align:left;color:var(--chrome-txt);transition:color .15s}
-.sb-cat--toggle:hover{color:var(--chrome-accent-text)}
-.sb-cat--toggle.on{color:var(--chrome-accent-text)}
-.sb-cat--toggle:focus-visible{outline:2px solid var(--color-input-focus);outline-offset:-2px;border-radius:4px}
-.sb-cat__caret{width:12px;height:12px;flex-shrink:0;color:var(--chrome-muted);transition:transform .2s}
-.sb-cat__caret svg{width:100%;height:100%;display:block;fill:currentColor}
-.sb-cat--toggle[aria-expanded="true"] .sb-cat__caret{transform:rotate(180deg)}
-.sb-group__items{display:none}
-.sb-group.open>.sb-group__items{display:block}
+/* ===== Sidebar sub-group (a row that expands into related items) ===== */
+.sb-sub__toggle{width:100%;cursor:pointer;background:none;border:0;font-family:inherit;text-align:left}
+.sb-sub__toggle:focus-visible{outline:2px solid var(--color-input-focus);outline-offset:-2px}
+.sb-sub__caret{margin-left:auto;width:12px;height:12px;flex-shrink:0;transition:transform .2s}
+.sb-sub__caret svg{width:100%;height:100%;display:block;fill:currentColor}
+/* An open sub-group keeps the pill treatment so its children read as nested */
+.sb-sub__toggle[aria-expanded="true"]{padding-left:8px;background:var(--chrome-pill);color:var(--chrome-txt);font-weight:600}
+.sb-sub__toggle[aria-expanded="true"] .sb-sub__caret{transform:rotate(180deg)}
+.sb-sub__items{display:none}
+.sb-sub.open>.sb-sub__items{display:block}
+.sb-sub__items .sb-link{padding-left:12px}
+.sb-sub__items .sb-link:hover,.sb-sub__items .sb-link.on{padding-left:20px}
 /* ===== Breadcrumb ===== */
 .crumb{margin-bottom:20px}
 .crumb__link{display:inline-flex;align-items:center;gap:10px;text-decoration:none;cursor:pointer}
@@ -391,6 +390,11 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;font-feature-
 /* ================================================================
    COLOUR FAMILY BLOCKS
 ================================================================ */
+.fam-group-head{
+  font-size:15px;font-weight:700;color:var(--chrome-txt);
+  margin:0 0 16px;
+}
+.fam-group-head:not(:first-child){margin-top:8px}
 .fam{
   margin-bottom:40px;
   padding-bottom:40px;
@@ -1258,6 +1262,21 @@ body.home .main{max-width:none;margin:0;padding:0}
 .ti-shell.ti-inline.ti-has-value .ti-label{opacity:0}
 .ti-shell.ti-inline .ti-value-row{opacity:1!important;top:0;bottom:0;height:auto!important}
 
+/* Outside label mode: label sits above the shell entirely, like Dropdown's
+   field label, instead of floating inside it. Nothing competes with the
+   value row for space, so it's simply always visible/centred; the inside
+   label is hidden outright and can be swapped for a real, optional
+   placeholder via .ti-show-placeholder. */
+.ti-outer{display:flex;flex-direction:column;gap:6px;width:100%}
+/* Unlike the inside label, this sits directly on the page background rather
+   than always-light field fill, so it needs a real theme-aware token
+   (matching Dropdown's own outside label) instead of the fixed --ti-label-* hex. */
+.ti-outer-label{font-size:14px;font-weight:650;color:var(--color-text-1);font-feature-settings:"ss01" 1,"ss03" 1}
+.ti-outer--sm .ti-outer-label{font-size:13px}
+.ti-shell--label-outside .ti-label{display:none}
+.ti-shell--label-outside .ti-value-row{top:50%;bottom:auto;transform:translateY(-50%);height:auto;opacity:1}
+.ti-shell--label-outside.ti-show-placeholder .ti-input::placeholder{color:var(--ti-label-rest)}
+
 .ti-input{border:none;outline:none;background:transparent;font-family:inherit;font-weight:650;color:var(--ti-text-primary);width:100%;padding:0;caret-color:transparent;font-feature-settings:"ss01" 1,"ss03" 1}
 .ti-field[data-size="default"] .ti-input{font-size:16px;line-height:1.25}
 .ti-field[data-size="small"] .ti-input{font-size:13px;line-height:1.3}
@@ -1816,6 +1835,14 @@ body.home .main{max-width:none;margin:0;padding:0}
 /* Showcase surface + swatch grid, matching the Tabs conventions under a dropdown-specific name */
 .dpd-demo{border:1px solid var(--chrome-border);border-radius:12px;padding:28px 20px;background:var(--chrome-bg)}
 .dpd-demo--play{display:flex;justify-content:center}
+/* Interactive-playground control row — Label position (Outside/Inside), same
+   pill-toggle visual language as other playgrounds' controls (e.g. Text
+   Inputs' .ti-pg__pr), namespaced separately since it's dropdown-specific. */
+.dpd-pg-toggle{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.dpd-pg-toggle__label{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--chrome-muted)}
+.dpd-pg-toggle__pr{display:flex;gap:2px;background:var(--chrome-nav);border:1px solid var(--chrome-border);border-radius:8px;padding:2px}
+.dpd-pg-toggle__p{border:none;background:transparent;padding:6px 12px;border-radius:6px;font-family:inherit;font-size:12px;font-weight:600;color:var(--chrome-muted);cursor:pointer;white-space:nowrap;transition:background .15s,color .15s}
+.dpd-pg-toggle__p.on{background:var(--chrome-txt);color:var(--chrome-bg)}
 .dpd-swatchgrid{display:flex;flex-wrap:wrap;gap:32px;justify-content:center;align-items:flex-start}
 .dpd-swatch{display:flex;flex-direction:column;align-items:center;gap:12px}
 .dpd-swatch__cap{font-size:10.5px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--chrome-muted)}
@@ -2636,45 +2663,12 @@ body.home .main{max-width:none;margin:0;padding:0}
         <h1 class="sec__title">Colour Tokens</h1>
         <p class="sec__desc">Primitives define the raw scale — semantics map them to named roles. Hover any swatch to inspect; click to copy.</p>
       </div>
-      <!-- Brand intro block (moved from Introduction) -->
-      <div class="type-sub">
-        <div class="type-sub__title">Core colours</div>
-        <div class="type-sub__desc">The Flash palette is built on three colours. Green is the brand, but it's emphasis — not a default. Black and white do most of the work; green marks the single most important thing.</div>
-        <div class="brand-swatches">
-          <div class="brand-sw" style="background:#1DFA0F;color:#000">
-            <div class="brand-sw__name">Flash Green</div>
-            <div class="brand-sw__hex">#1DFA0F</div>
-            <div class="brand-sw__role">Primary — emphasis, CTAs, the spark</div>
-          </div>
-          <div class="brand-sw" style="background:#000;color:#fff">
-            <div class="brand-sw__name">Black</div>
-            <div class="brand-sw__hex">#000000</div>
-            <div class="brand-sw__role">Primary text, dark surfaces</div>
-          </div>
-          <div class="brand-sw" style="background:#fff;color:#000;border:1px solid #e2e2e2">
-            <div class="brand-sw__name">White</div>
-            <div class="brand-sw__hex">#FFFFFF</div>
-            <div class="brand-sw__role">Text on dark, light surfaces</div>
-          </div>
-        </div>
-        <div class="brand-swatches" style="margin-top:10px">
-          <div class="brand-sw brand-sw--sm" style="background:#10C504;color:#fff"><div class="brand-sw__name">Mid Green</div><div class="brand-sw__hex">#10C504</div></div>
-          <div class="brand-sw brand-sw--sm" style="background:#003F1E;color:#fff"><div class="brand-sw__name">Forest Green</div><div class="brand-sw__hex">#003F1E</div></div>
-          <div class="brand-sw brand-sw--sm" style="background:#3FB549;color:#fff"><div class="brand-sw__name">Medium Green</div><div class="brand-sw__hex">#3FB549</div></div>
-          <div class="brand-sw brand-sw--sm" style="background:#F0F0F0;color:#000;border:1px solid #e2e2e2"><div class="brand-sw__name">Light Grey</div><div class="brand-sw__hex">#F0F0F0</div></div>
-        </div>
-        <div class="brand-note">
-          <strong>Green is emphasis, not decoration.</strong> Aim for one green moment per screen. On light surfaces, use Mid Green <code>#10C504</code> for accents — never Flash Green as text on white.
-        </div>
-      </div>
-
-
       <!-- ── STICKY SUB-NAV ── -->
       <div class="c-subnav" id="c-subnav">
         <div class="c-subnav__row1">
           <button class="c-subnav__view on" onclick="cSwitch('prim',this)">
             Primitives
-            <span class="c-subnav__count" id="prim-count">13 families</span>
+            <span class="c-subnav__count" id="prim-count">12 families</span>
           </button>
           <button class="c-subnav__view" onclick="cSwitch('sem',this)">
             Semantics
@@ -2706,7 +2700,6 @@ body.home .main{max-width:none;margin:0;padding:0}
   "status": "js-rendered",
   "builderFunctions": [
     "FAMILIES",
-    "YELLOW_FAM",
     "CATS",
     "SEM",
     "HEX_PRIM",
@@ -2717,8 +2710,8 @@ body.home .main{max-width:none;margin:0;padding:0}
     "refreshSem"
   ],
   "noReusableClass": true,
-  "js": "const FAMILIES = [\n  {\n    id:'base', name:'Base', badge:'Foundation', badgeCls:'grey',\n    desc:'Pure white and black. All other tokens ultimately reference one of these at the extremes.',\n    swatches:[{s:'White',h:'#ffffff'},{s:'Black',h:'#000000'}]\n  },\n  {\n    id:'green', name:'Green', badge:'Flash Primary', badgeCls:'green',\n    desc:'Flash brand primary. Used for primary button fills, success states, active indicators, and interactive highlights.',\n    swatches:[\n      {s:'Green-50',h:'#eaf9eb'},{s:'Green-75',h:'#ddf2de'},{s:'Green-100',h:'#cef1d0'},\n      {s:'Green-125',h:'#c8e1ca'},{s:'Green-150',h:'#bfecc2'},{s:'Green-200',h:'#9fe3a4'},\n      {s:'Green-300',h:'#74d67b'},{s:'Green-400',h:'#59ce61'},\n      {s:'Green-500-base',h:'#10c504',b:true},{s:'Green-600',h:'#2bb135'},{s:'Green-700',h:'#16a220'},\n      {s:'Green-800',h:'#218a29'},{s:'Green-900',h:'#1a6b20'},{s:'Green-1000',h:'#145118'}\n    ]\n  },\n  {\n    id:'bg', name:'Bright green', badge:'Flash Accent', badgeCls:'green',\n    desc:'High-luminosity accent. Used for Flash logo highlights, accent icons, and bright interactive moments.',\n    swatches:[\n      {s:'Bright-green-50',h:'#e3ffdd'},{s:'Bright-green-100',h:'#c2ffbe'},\n      {s:'Bright-green-150',h:'#a7ffa1'},{s:'Bright-green-200',h:'#92ff8b'},\n      {s:'Bright-green-300',h:'#7bff73'},{s:'Bright-green-400',h:'#61fc57'},\n      {s:'Bright-green-500-base',h:'#1dfa0f',b:true},{s:'Bright-green-600',h:'#1ae10e'},\n      {s:'Bright-green-700',h:'#17ca0d'},{s:'Bright-green-800',h:'#12a00a'},\n      {s:'Bright-green-900',h:'#0e7b08'},{s:'Bright-green-1000',h:'#0a5a05'}\n    ]\n  },\n  {\n    id:'yg', name:'Yellow green', badge:'Flash Logo', badgeCls:'lime',\n    desc:'The Flash logo colour. Used as brand tertiary accent, icon fills, and logo-specific applications.',\n    swatches:[\n      {s:'Yellow-green-50',h:'#f9fdd5'},{s:'Yellow-green-100',h:'#f2fdbc'},\n      {s:'Yellow-green-150',h:'#edfda6'},{s:'Yellow-green-200',h:'#e4fd8b'},\n      {s:'Yellow-green-300',h:'#d6fd6b'},{s:'Yellow-green-400',h:'#c7fd42'},\n      {s:'Yellow-green-500-base',h:'#b2fa00',b:true},{s:'Yellow-green-600',h:'#a0e100'},\n      {s:'Yellow-green-700',h:'#8ec800'},{s:'Yellow-green-800',h:'#7daf00'},\n      {s:'Yellow-green-900',h:'#6b9600'},{s:'Yellow-green-1000',h:'#597d00'}\n    ]\n  },\n  {\n    id:'dg', name:'Dark green', badge:'Flash Brand Dark', badgeCls:'green',\n    desc:'Deep forest greens. Used for brand dark backgrounds, tinted surface overlays, and high-contrast brand contexts.',\n    swatches:[\n      {s:'Dark-green-50',h:'#84a895'},{s:'Dark-green-100',h:'#69927d'},\n      {s:'Dark-green-150',h:'#507e66'},{s:'Dark-green-200',h:'#3b6d53'},\n      {s:'Dark-green-300',h:'#285f42'},{s:'Dark-green-400',h:'#144e30'},\n      {s:'Dark-green-500-base',h:'#003f1e',b:true},{s:'Dark-green-600',h:'#003517'},\n      {s:'Dark-green-700',h:'#032d11'},{s:'Dark-green-750',h:'#203426'},{s:'Dark-green-800',h:'#00240a'}\n    ]\n  },\n  {\n    id:'grey', name:'Grey', badge:'Neutral Scale', badgeCls:'grey',\n    desc:'Neutral scale used for text hierarchy, borders, surfaces, disabled states, and all brand-agnostic tones.',\n    swatches:[\n      {s:'Grey-50',h:'#f8f8f8'},{s:'Grey-100',h:'#f0f0f0'},{s:'Grey-150',h:'#ededed'},\n      {s:'Grey-200',h:'#e6e6e6'},{s:'Grey-300',h:'#e2e2e2'},{s:'Grey-400',h:'#dddddd'},\n      {s:'Grey-500',h:'#d1d1d1'},{s:'Grey-600',h:'#bdbdbd'},{s:'Grey-700',h:'#a4a4a4'},\n      {s:'Grey-800',h:'#8a8a8a'},{s:'Grey-850',h:'#797b7e'},{s:'Grey-900',h:'#646464'},\n      {s:'Grey-950',h:'#5f6261'},{s:'Grey-1000',h:'#414141'},{s:'Grey-1100',h:'#252525'},{s:'Grey-1200',h:'#161616'}\n    ]\n  },\n  {\n    id:'gb', name:'Grey blue', badge:'Dark Mode Surfaces', badgeCls:'dark',\n    desc:'Cool blue-grey used for dark mode surfaces and borders. Darkest steps are page backgrounds; lighter steps are borders and muted text.',\n    swatches:[\n      {s:'Grey-blue-50',h:'#cbcbd0'},{s:'Grey-blue-100',h:'#a1a3a8'},{s:'Grey-blue-150',h:'#87898e'},\n      {s:'Grey-blue-200',h:'#797b7e'},{s:'Grey-blue-300',h:'#666875'},{s:'Grey-blue-400',h:'#60636d'},\n      {s:'Grey-blue-425',h:'#33343a'},{s:'Grey-blue-450',h:'#2d2e34'},\n      {s:'Grey-blue-500',h:'#25262c'},{s:'Grey-blue-600',h:'#161616'},{s:'Grey-blue-700',h:'#12131a',b:true}\n    ]\n  },\n  {\n    id:'gg', name:'Grey green', badge:'Tinted Surfaces', badgeCls:'green',\n    desc:'Warm green-tinted greys for brand-aware light mode surfaces, nav backgrounds, and subtle tinted cards.',\n    swatches:[\n      {s:'Grey-green-100',h:'#fbfcfb'},{s:'Grey-green-200',h:'#f7f9f8'},{s:'Grey-green-300',h:'#f4f7f6'},\n      {s:'Grey-green-400',h:'#ebf0ef'},{s:'Grey-green-500',h:'#e1eae8'},{s:'Grey-green-600',h:'#c8d6d3'},\n      {s:'Grey-green-700',h:'#7d8180'}\n    ]\n  },\n  {\n    id:'bb', name:'Bright blue', badge:'Links', badgeCls:'blue',\n    desc:'Used for hyperlinks and interactive link states. 700 is the default link colour; 800 is hover. 400/500 are dark mode equivalents.',\n    swatches:[\n      {s:'Bright-blue-400',h:'#6fc2ff'},{s:'Bright-blue-500',h:'#389aff'},\n      {s:'Bright-blue-600',h:'#196af5'},{s:'Bright-blue-700',h:'#0062eb',b:true},{s:'Bright-blue-800',h:'#0049d2'}\n    ]\n  },\n  {\n    id:'pb', name:'Pale blue', badge:'Info / Alerts', badgeCls:'blue',\n    desc:'Used exclusively for informational alert states. High-contrast steps for icons; low-contrast steps for backgrounds.',\n    swatches:[\n      {s:'Pale-blue-100',h:'#ebf7fe'},{s:'Pale-blue-200',h:'#e4f5ff'},{s:'Pale-blue-300',h:'#daeefd'},\n      {s:'Pale-blue-500',h:'#21a4fc',b:true},{s:'Pale-blue-600',h:'#0097f7'},{s:'Pale-blue-700',h:'#0079c6'}\n    ]\n  },\n  {\n    id:'red', name:'Red', badge:'Critical / Error', badgeCls:'red',\n    desc:'Critical and error states. Light steps for backgrounds; 600–700 for icons and text; darkest steps for dark mode error surfaces.',\n    swatches:[\n      {s:'Red-100',h:'#fff4f0'},{s:'Red-200',h:'#ffe9e9'},{s:'Red-300',h:'#fddbdb'},\n      {s:'Red-400',h:'#ff777a'},{s:'Red-500',h:'#d84551'},\n      {s:'Red-600',h:'#eb0029',b:true},{s:'Red-700',h:'#c10021'},\n      {s:'Red-900',h:'#302222'},{s:'Red-1000',h:'#260505'}\n    ]\n  },\n  {\n    id:'org', name:'Orange', badge:'Warning', badgeCls:'orange',\n    desc:'Warning and cautionary states. Light steps for alert backgrounds; 600 for warning icons and text; 800 for hover/secondary warning.',\n    swatches:[\n      {s:'Orange-100',h:'#fff3e5'},{s:'Orange-200',h:'#ffefdc'},{s:'Orange-300',h:'#ffe8cc'},\n      {s:'Orange-600',h:'#ff8900',b:true},{s:'Orange-800',h:'#cc6e00'},{s:'Orange-900',h:'#a63f00'}\n    ]\n  },\n\n  {\n    id:'support', name:'Support', badge:'Categories &amp; Special', badgeCls:'orange',\n    desc:'Support colours used for category icons, product identifiers, and special UI moments not covered by the main scales.',\n    swatches:[\n      {s:'Support-pink-1',h:'#e43e79'},{s:'Support-pink-2',h:'#d7285a'},{s:'Support-pink-3',h:'#f6267d'},\n      {s:'Support-orange-1',h:'#faa225'},{s:'Support-orange-2',h:'#ff9900'},\n      {s:'Support-red-1',h:'#ed0c40'},{s:'Support-red-2',h:'#c43a3a'}\n    ]\n  },\n  {\n    id:'opb', name:'Opacity black', badge:'Dark overlays', badgeCls:'dark',\n    desc:'Black at increasing opacity levels. Used for surface overlays, scrim layers, and shadow tints.',\n    swatches:[\n      {s:'opacity-black-0',h:'rgba(0,0,0,0)',bg:'#ffffff'},{s:'opacity-black-5',h:'rgba(0,0,0,0.05)',bg:'#ffffff'},\n      {s:'opacity-black-10',h:'rgba(0,0,0,0.10)',bg:'#ffffff'},{s:'opacity-black-20',h:'rgba(0,0,0,0.20)',bg:'#ffffff'},\n      {s:'opacity-black-30',h:'rgba(0,0,0,0.30)',bg:'#ffffff'},{s:'opacity-black-40',h:'rgba(0,0,0,0.40)',bg:'#ffffff'},\n      {s:'opacity-black-50',h:'rgba(0,0,0,0.50)',bg:'#ffffff'},{s:'opacity-black-60',h:'rgba(0,0,0,0.60)',bg:'#ffffff'},\n      {s:'opacity-black-70',h:'rgba(0,0,0,0.70)',bg:'#ffffff'},{s:'opacity-black-80',h:'rgba(0,0,0,0.80)',bg:'#ffffff'},\n      {s:'opacity-black-90',h:'rgba(0,0,0,0.90)',bg:'#ffffff'}\n    ]\n  },\n  {\n    id:'opw', name:'Opacity white', badge:'Light overlays', badgeCls:'grey',\n    desc:'White at increasing opacity levels. Used for dark mode overlays, frosted glass effects, and light scrim layers.',\n    swatches:[\n      {s:'opacity-white-0',h:'rgba(255,255,255,0)',bg:'#1a1a1a'},{s:'opacity-white-5',h:'rgba(255,255,255,0.05)',bg:'#1a1a1a'},\n      {s:'opacity-white-10',h:'rgba(255,255,255,0.10)',bg:'#1a1a1a'},{s:'opacity-white-20',h:'rgba(255,255,255,0.20)',bg:'#1a1a1a'},\n      {s:'opacity-white-30',h:'rgba(255,255,255,0.30)',bg:'#1a1a1a'},{s:'opacity-white-40',h:'rgba(255,255,255,0.40)',bg:'#1a1a1a'},\n      {s:'opacity-white-50',h:'rgba(255,255,255,0.50)',bg:'#1a1a1a'},{s:'opacity-white-60',h:'rgba(255,255,255,0.60)',bg:'#1a1a1a'},\n      {s:'opacity-white-70',h:'rgba(255,255,255,0.70)',bg:'#1a1a1a'},{s:'opacity-white-80',h:'rgba(255,255,255,0.80)',bg:'#1a1a1a'},\n      {s:'opacity-white-90',h:'rgba(255,255,255,0.90)',bg:'#1a1a1a'}\n    ]\n  },\n  {\n    id:'opg', name:'Opacity grey', badge:'Translucent surfaces', badgeCls:'grey',\n    desc:'Grey base colours at fixed opacity steps. Used for tinted surface overlays on light and dark backgrounds.',\n    swatches:[\n      {s:'Opacity-light-grey-0',h:'rgba(240,240,240,0)',bg:'#555555'},{s:'Opacity-light-grey-50',h:'rgba(240,240,240,0.50)',bg:'#555555'},\n      {s:'Opacity-blue-grey-0',h:'rgba(37,38,44,0)',bg:'#ffffff'},{s:'Opacity-blue-grey-50',h:'rgba(37,38,44,0.50)',bg:'#ffffff'}\n    ]\n  },\n];\n\nconst YELLOW_FAM = {\n  id:'yel', name:'Yellow', badge:'Warning Secondary', badgeCls:'orange',\n  desc:'Secondary warning tones. Used alongside Orange for dual-severity warning systems and lotto category colours.',\n  swatches:[\n    {s:'400',h:'#ffc861'},{s:'500',h:'#f6bc2f',b:true},{s:'900',h:'#5d4b2b'},{s:'1000',h:'#965000'}\n  ]\n};\n\nconst CATS = [\n  ['Airtime','#2dcc57'],['Data','#9840f7'],['Lotto','#fdd333'],\n  ['Electricity','#ff9900'],['Transfers','#e43e79'],['Payments','#ed0c40'],\n  ['Global','#3d98ed'],['Lifestyle','#25cdb9'],\n  ['RICA','#008a8c'],['Entertainment','#d7285a'],['Gaming','#115da5'],\n  ['Shop2Shop','#001e31'],['Tap2Pay','#faa225'],['Voice OFA','#5756e9'],['Voice NFA','#c43a3a'],\n];\n\nconst SEM = {\n  surface: {\n    title:'Surface', desc:'Controls how layers, cards, and page backgrounds are coloured across themes.',\n    rows:[\n      ['--color-surface-base','#ffffff','#12131a','#ffffff','#12131a','Page / screen background'],\n      ['--color-surface-inverse','#000000','#ffffff','#000000','#ffffff','Inverted fill'],\n      ['--color-surface-n1','#f0f0f0','#25262c','#f8f8f8','#25262c','Cards, panels — level 1'],\n      ['--color-surface-n2','#e6e6e6','#2d2e34','#f0f0f0','#2d2e34','Nested surfaces — level 2'],\n      ['--color-surface-n3','#dddddd','#33343a','#e6e6e6','#33343a','Dividers, tertiary'],\n      ['--color-surface-subtle','#f8f8f8','#12131a','#ffffff','#12131a','Lightest tinted base'],\n      ['--color-surface-t1','#fbfcfb','#00240a','#f8f8f8','#25262c','Brand-hued tinted surface (primary)'],\n      ['--color-surface-t2','#f7f9f8','#203426','#f0f0f0','#2d2e34','Brand-hued tinted surface (secondary)'],\n      ['--color-surface-brand-h','#10c504','#10c504','#ff5f00','#ff5f00','High-contrast brand fill'],\n      ['--color-surface-brand-l','#eaf9eb','#1a6b20','#ffdfcc','#33343a','Low-contrast brand background'],\n    ]\n  },\n  text: {\n    title:'Text &amp; Links', desc:'All text hierarchy tokens and hyperlink colours.',\n    rows:[\n      ['--color-text-1','#000000','#ffffff','#000000','#ffffff','Body copy, headings — primary'],\n      ['--color-text-2','#252525','#f0f0f0','#252525','#f0f0f0','Supporting text'],\n      ['--color-text-3','#414141','#e6e6e6','#414141','#e6e6e6','Captions, metadata'],\n      ['--color-text-s','#8a8a8a','#dddddd','#5f6261','#d1d1d1','Placeholder, inactive'],\n      ['--color-text-m','#a4a4a4','#d1d1d1','#87898e','#8a8a8a','Least prominent text'],\n      ['--color-text-inv','#ffffff','#000000','#ffffff','#000000','Text on brand / inverse backgrounds'],\n      ['--color-link','#0062eb','#6fc2ff','#0062eb','#6fc2ff','Hyperlinks — default'],\n      ['--color-link-h','#0049d2','#389aff','#0049d2','#389aff','Hyperlinks — hover'],\n    ]\n  },\n  icon: {\n    title:'Iconography', desc:'Fill colours for icons across hierarchy and context.',\n    rows:[\n      ['--color-icon-1','#000000','#ffffff','#000000','#ffffff','Default icons'],\n      ['--color-icon-2','#10c504','#10c504','#666875','#a1a3a8','Brand-accented icons'],\n      ['--color-icon-3','#b2fa00','#b2fa00','#ff5f00','#ff5f00','Logo / accent icons'],\n      ['--color-icon-s','#a4a4a4','#d1d1d1','#666875','#8a8a8a','Low-emphasis icons'],\n      ['--color-icon-inv','#ffffff','#000000','#ffffff','#000000','Icons on dark fills'],\n    ]\n  },\n  btns: {\n    title:'Buttons', desc:'Component-level tokens used directly in button variants.',\n    rows:[\n      ['--color-btn-a-bg','#1ae10e','#1ae10e','#000000','#ffffff','Accent button — background'],\n      ['--color-btn-a-bg-h','#17ca0d','#17ca0d','#252525','#f0f0f0','Accent button — hover bg'],\n      ['--color-btn-a-txt','#000000','#000000','#ffffff','#000000','Accent button — label'],\n      ['--color-btn-a-dis','#dddddd','rgba(255,255,255,0.15)','#dddddd','#414141','Accent button — disabled bg'],\n      ['--color-btn-s-bg','#000000','#ffffff','#f0f0f0','#2d2e34','Secondary button — background'],\n      ['--color-btn-s-txt','#ffffff','#000000','#000000','#ffffff','Secondary button — label'],\n      ['--color-btn-o-border','#000000','#ffffff','#000000','#2d2e34','Outlined button — border'],\n      ['--color-btn-o-txt','#000000','#ffffff','#000000','#ffffff','Outlined button — label'],\n    ]\n  },\n  ind: {\n    title:'Indicators', desc:'Status colours for info, success, warning, and critical feedback.',\n    rows:[\n      ['--color-info-h','#21a4fc','#21a4fc','#21a4fc','#21a4fc','Info — icon / text (high contrast)'],\n      ['--color-info-l','#e4f5ff','#daeefd','#e4f5ff','#daeefd','Info — background'],\n      ['--color-success-h','#218a29','#59ce61','#10c504','#10c504','Success — icon / text'],\n      ['--color-success-l','#eaf9eb','#145118','#eaf9eb','#84a895','Success — background'],\n      ['--color-warn-h','#ff8900','#ff8900','#f6bc2f','#f6bc2f','Warning — icon / text'],\n      ['--color-warn-l','#fff3e5','#33343a','#fff3e5','#33343a','Warning — background'],\n      ['--color-crit-h','#eb0029','#eb0029','#c10021','#c10021','Critical — icon / text'],\n      ['--color-crit-l','#fff4f0','#260505','#fff4f0','#260505','Critical — background'],\n    ]\n  },\n  inp: {\n    title:'Inputs', desc:'Form input field colours for backgrounds, borders, text, and interactive states.',\n    rows:[\n      ['--color-input-bg','#f6f6f6','#25262c','#f8f8f8','#414141','Input field background'],\n      ['--color-input-border','#cbcbd0','#60636d','#cbcbd0','#60636d','Input border — default'],\n      ['--color-input-focus','#000000','#ffffff','#000000','#ffffff','Input border — focused'],\n      ['--color-input-cur','#10c504','#10c504','#ff5f00','#ff5f00','Text cursor / caret'],\n      ['--color-input-placeholder','#a1a3a8','#8a8a8a','#87898e','#8a8a8a','Placeholder text'],\n    ]\n  },\n};\n\nconst HEX_PRIM = {\n  '#ffffff':'White', '#000000':'Black',\n  '#ff5f00':'1V Orange', '#ffdfcc':'1V Orange 200',\n  '#ffc861':'Yellow 400', '#f6bc2f':'Yellow 500',\n  '#5d4b2b':'Yellow 900', '#965000':'Yellow 1000',\n  '#f6f6f6':'Custom — Input bg',\n  'rgba(255,255,255,0.2)':'Opacity White 20%',\n};\n\nfunction fmtColor(h) {\n  if (!h.startsWith('rgba')) return h;\n  const m = h.match(/rgba\\((\\d+),\\s*(\\d+),\\s*(\\d+),\\s*([\\d.]+)\\)/);\n  if (!m) return h;\n  const hex = '#' + [m[1],m[2],m[3]].map(x=&gt;parseInt(x).toString(16).padStart(2,'0')).join('');\n  const pct = Math.round(parseFloat(m[4])*100);\n  return hex + ' ' + pct + '%';\n}\n\nfunction renderFamily(fam) {\n  const el = document.createElement('div');\n  el.className = 'fam'; el.id = 'fam-' + fam.id;\n  const hasBase = fam.swatches.some(sw =&gt; sw.b);\n  const strip = fam.swatches.map(sw =&gt; {\n    const baseClass = sw.b ? ' fam__col--base' : '';\n    const isOpacity = sw.h.startsWith('rgba');\n    const blockStyle = isOpacity\n      ? `background:${sw.bg||'#ffffff'}`\n      : `background:${sw.h}`;\n    const overlay = isOpacity\n      ? `&lt;div style=\"position:absolute;inset:0;background:${sw.h}\"&gt;&lt;/div&gt;`\n      : '';\n    const displayVal = fmtColor(sw.h);\n    return `&lt;div class=\"fam__col${baseClass}\" onclick=\"copy('${sw.h}','${fam.name} ${sw.s}')\"&gt;\n      &lt;div class=\"fam__block\" style=\"${blockStyle}\"&gt;\n        ${overlay}\n        &lt;div class=\"fam__tip\"&gt;${fam.name} ${sw.s}&lt;br&gt;${displayVal}&lt;/div&gt;\n      &lt;/div&gt;\n      &lt;div class=\"fam__meta\"&gt;\n        &lt;div class=\"fam__step\"&gt;${sw.s}&lt;/div&gt;\n        &lt;div class=\"fam__hex\"&gt;${displayVal}&lt;/div&gt;\n      &lt;/div&gt;\n    &lt;/div&gt;`;\n  }).join('');\n\n  el.innerHTML = `\n    &lt;div class=\"fam__head\"&gt;\n      &lt;div class=\"fam__info\"&gt;\n        &lt;div class=\"fam__name\"&gt;${fam.name}&lt;/div&gt;\n        &lt;div class=\"fam__desc\"&gt;${fam.desc}&lt;/div&gt;\n      &lt;/div&gt;\n      &lt;div class=\"fam__badge fam__badge--${fam.badgeCls}\"&gt;${fam.badge}&lt;/div&gt;\n    &lt;/div&gt;\n    ${hasBase ? '&lt;div class=\"fam__legend\"&gt;&lt;span class=\"fam__legend-dot\"&gt;&lt;/span&gt; = base step&lt;/div&gt;' : ''}\n    &lt;div class=\"fam__strip\"&gt;${strip}&lt;/div&gt;`;\n  return el;\n}\n\nfunction getSemHex(fl,fd,vl,vd) {\n  // Flash brand only; light/dark follows the global theme.\n  return currentTheme()==='dark' ? fd : fl;\n}\n\nfunction renderSemGroup(key) {\n  const group = SEM[key];\n  const panel = document.getElementById('sem-'+key);\n  if (!panel) return;\n\n  const rows = group.rows.map(([v,fl,fd,vl,vd,note]) =&gt; {\n    const hex = getSemHex(fl,fd,vl,vd);\n    const prim = HEX_PRIM[hex] || '';\n    const name = v.replace(/^--/,'');\n    return `&lt;tr&gt;\n      &lt;td&gt;&lt;span class=\"sem-var\" onclick=\"copy('var(${v})','CSS var')\"&gt;${name}&lt;/span&gt;&lt;/td&gt;\n      &lt;td&gt;\n        &lt;div class=\"sem-color-cell\"&gt;\n          &lt;div class=\"sem-swatch\" style=\"background:${hex}\"&gt;&lt;/div&gt;\n          &lt;div class=\"sem-color-meta\"&gt;\n            &lt;span class=\"sem-hex\"&gt;${hex}&lt;/span&gt;\n            ${prim ? `&lt;span class=\"sem-prim\"&gt;${prim}&lt;/span&gt;` : ''}\n          &lt;/div&gt;\n        &lt;/div&gt;\n      &lt;/td&gt;\n      &lt;td class=\"sem-note\"&gt;${note}&lt;/td&gt;\n    &lt;/tr&gt;`;\n  }).join('');\n\n  panel.innerHTML = `\n    &lt;div class=\"sem-group-block\"&gt;\n      &lt;div class=\"sem-group-title\"&gt;${group.title}&lt;/div&gt;\n      &lt;table class=\"sem-table\"&gt;\n        &lt;thead&gt;&lt;tr&gt;\n          &lt;th&gt;Token&lt;/th&gt;\n          &lt;th&gt;Colour · Primitive&lt;/th&gt;\n          &lt;th&gt;Usage&lt;/th&gt;\n        &lt;/tr&gt;&lt;/thead&gt;\n        &lt;tbody&gt;${rows}&lt;/tbody&gt;\n      &lt;/table&gt;\n    &lt;/div&gt;`;\n}\n\nfunction refreshSem() {\n  Object.keys(SEM).forEach(renderSemGroup);\n}",
-  "contentHash": "5fe021a54c03b40055460654172a2681663dddf74b86b86b52c80905058b6f1d",
+  "js": "const FAMILIES = [\n  {\n    id:'base', name:'Base', badge:'Foundation', badgeCls:'grey', group:'primary',\n    desc:'Pure white and black. All other tokens ultimately reference one of these at the extremes.',\n    swatches:[{s:'White',h:'#ffffff'},{s:'Black',h:'#000000'}]\n  },\n  {\n    id:'green', name:'Green', badge:'Flash Primary', badgeCls:'green', group:'primary',\n    desc:'Flash brand primary. Used for primary button fills, success states, active indicators, and interactive highlights.',\n    swatches:[\n      {s:'Green-50',h:'#eaf9eb'},{s:'Green-400',h:'#59ce61'},\n      {s:'Green-500-base',h:'#10c504',b:true},\n      {s:'Green-800',h:'#218a29'},{s:'Green-900',h:'#1a6b20'},{s:'Green-1000',h:'#145118'}\n    ]\n  },\n  {\n    id:'bg', name:'Bright green', badge:'Flash Accent', badgeCls:'green', group:'primary',\n    desc:'High-luminosity accent. Used for Flash logo highlights, accent icons, and bright interactive moments.',\n    swatches:[\n      {s:'Bright-green-600',h:'#1ae10e'},{s:'Bright-green-700',h:'#17ca0d'}\n    ]\n  },\n  {\n    id:'grey', name:'Grey', badge:'Neutral Scale', badgeCls:'grey', group:'primary',\n    desc:'Neutral scale used for text hierarchy, borders, surfaces, disabled states, and all brand-agnostic tones.',\n    swatches:[\n      {s:'Grey-50',h:'#f8f8f8'},{s:'Grey-100',h:'#f0f0f0'},\n      {s:'Grey-200',h:'#e6e6e6'},{s:'Grey-400',h:'#dddddd'},\n      {s:'Grey-500',h:'#d1d1d1'},{s:'Grey-700',h:'#a4a4a4'},\n      {s:'Grey-800',h:'#8a8a8a'},{s:'Grey-1000',h:'#414141'},{s:'Grey-1100',h:'#252525'}\n    ]\n  },\n  {\n    id:'yg', name:'Yellow green', badge:'Flash Logo', badgeCls:'lime', group:'secondary',\n    desc:'The Flash logo colour. Used as brand tertiary accent, icon fills, and logo-specific applications.',\n    swatches:[\n      {s:'Yellow-green-500-base',h:'#b2fa00',b:true}\n    ]\n  },\n  {\n    id:'dg', name:'Dark green', badge:'Flash Brand Dark', badgeCls:'green', group:'secondary',\n    desc:'Deep forest greens. Used for brand dark backgrounds, tinted surface overlays, and high-contrast brand contexts.',\n    swatches:[\n      {s:'Dark-green-750',h:'#203426'},{s:'Dark-green-800',h:'#00240a'}\n    ]\n  },\n  {\n    id:'gb', name:'Grey blue', badge:'Dark Mode Surfaces', badgeCls:'dark', group:'secondary',\n    desc:'Cool blue-grey used for dark mode surfaces and borders. Darkest steps are page backgrounds; lighter steps are borders and muted text.',\n    swatches:[\n      {s:'Grey-blue-50',h:'#cbcbd0'},{s:'Grey-blue-100',h:'#a1a3a8'},\n      {s:'Grey-blue-400',h:'#60636d'},\n      {s:'Grey-blue-425',h:'#33343a'},{s:'Grey-blue-450',h:'#2d2e34'},\n      {s:'Grey-blue-500',h:'#25262c'},{s:'Grey-blue-700',h:'#12131a',b:true}\n    ]\n  },\n  {\n    id:'gg', name:'Grey green', badge:'Tinted Surfaces', badgeCls:'green', group:'secondary',\n    desc:'Warm green-tinted greys for brand-aware light mode surfaces, nav backgrounds, and subtle tinted cards.',\n    swatches:[\n      {s:'Grey-green-100',h:'#fbfcfb'},{s:'Grey-green-200',h:'#f7f9f8'}\n    ]\n  },\n  {\n    id:'bb', name:'Bright blue', badge:'Links', badgeCls:'blue', group:'secondary',\n    desc:'Used for hyperlinks and interactive link states. 700 is the default link colour; 800 is hover. 400/500 are dark mode equivalents.',\n    swatches:[\n      {s:'Bright-blue-400',h:'#6fc2ff'},{s:'Bright-blue-500',h:'#389aff'},\n      {s:'Bright-blue-700',h:'#0062eb',b:true},{s:'Bright-blue-800',h:'#0049d2'}\n    ]\n  },\n  {\n    id:'pb', name:'Pale blue', badge:'Info / Alerts', badgeCls:'blue', group:'secondary',\n    desc:'Used exclusively for informational alert states. High-contrast steps for icons; low-contrast steps for backgrounds.',\n    swatches:[\n      {s:'Pale-blue-200',h:'#e4f5ff'},{s:'Pale-blue-300',h:'#daeefd'},\n      {s:'Pale-blue-500',h:'#21a4fc',b:true}\n    ]\n  },\n  {\n    id:'red', name:'Red', badge:'Critical / Error', badgeCls:'red', group:'secondary',\n    desc:'Critical and error states. Light steps for backgrounds; 600–700 for icons and text; darkest steps for dark mode error surfaces.',\n    swatches:[\n      {s:'Red-100',h:'#fff4f0'},\n      {s:'Red-600',h:'#eb0029',b:true},\n      {s:'Red-1000',h:'#260505'}\n    ]\n  },\n  {\n    id:'org', name:'Orange', badge:'Warning', badgeCls:'orange', group:'secondary',\n    desc:'Warning and cautionary states. Light steps for alert backgrounds; 600 for warning icons and text; 800 for hover/secondary warning.',\n    swatches:[\n      {s:'Orange-100',h:'#fff3e5'},\n      {s:'Orange-600',h:'#ff8900',b:true}\n    ]\n  },\n];\n\nconst CATS = [\n  ['Airtime','#2dcc57'],['Data','#9840f7'],['Lotto','#fdd333'],\n  ['Electricity','#ff9900'],['Transfers','#e43e79'],['Payments','#ed0c40'],\n  ['Global','#3d98ed'],['Lifestyle','#25cdb9'],\n  ['RICA','#008a8c'],['Entertainment','#d7285a'],['Gaming','#115da5'],\n  ['Shop2Shop','#001e31'],['Tap2Pay','#faa225'],['Voice OFA','#5756e9'],['Voice NFA','#c43a3a'],\n];\n\nconst SEM = {\n  surface: {\n    title:'Surface', desc:'Controls how layers, cards, and page backgrounds are coloured across themes.',\n    rows:[\n      ['--color-surface-base','#ffffff','#12131a','#ffffff','#12131a','Page / screen background'],\n      ['--color-surface-inverse','#000000','#ffffff','#000000','#ffffff','Inverted fill'],\n      ['--color-surface-n1','#f0f0f0','#25262c','#f8f8f8','#25262c','Cards, panels — level 1'],\n      ['--color-surface-n2','#e6e6e6','#2d2e34','#f0f0f0','#2d2e34','Nested surfaces — level 2'],\n      ['--color-surface-n3','#dddddd','#33343a','#e6e6e6','#33343a','Dividers, tertiary'],\n      ['--color-surface-subtle','#f8f8f8','#12131a','#ffffff','#12131a','Lightest tinted base'],\n      ['--color-surface-t1','#fbfcfb','#00240a','#f8f8f8','#25262c','Brand-hued tinted surface (primary)'],\n      ['--color-surface-t2','#f7f9f8','#203426','#f0f0f0','#2d2e34','Brand-hued tinted surface (secondary)'],\n      ['--color-surface-brand-h','#10c504','#10c504','#ff5f00','#ff5f00','High-contrast brand fill'],\n      ['--color-surface-brand-l','#eaf9eb','#1a6b20','#ffdfcc','#33343a','Low-contrast brand background'],\n    ]\n  },\n  text: {\n    title:'Text &amp; Links', desc:'All text hierarchy tokens and hyperlink colours.',\n    rows:[\n      ['--color-text-1','#000000','#ffffff','#000000','#ffffff','Body copy, headings — primary'],\n      ['--color-text-2','#252525','#f0f0f0','#252525','#f0f0f0','Supporting text'],\n      ['--color-text-3','#414141','#e6e6e6','#414141','#e6e6e6','Captions, metadata'],\n      ['--color-text-s','#8a8a8a','#dddddd','#5f6261','#d1d1d1','Placeholder, inactive'],\n      ['--color-text-m','#a4a4a4','#d1d1d1','#87898e','#8a8a8a','Least prominent text'],\n      ['--color-text-inv','#ffffff','#000000','#ffffff','#000000','Text on brand / inverse backgrounds'],\n      ['--color-link','#0062eb','#6fc2ff','#0062eb','#6fc2ff','Hyperlinks — default'],\n      ['--color-link-h','#0049d2','#389aff','#0049d2','#389aff','Hyperlinks — hover'],\n    ]\n  },\n  icon: {\n    title:'Iconography', desc:'Fill colours for icons across hierarchy and context.',\n    rows:[\n      ['--color-icon-1','#000000','#ffffff','#000000','#ffffff','Default icons'],\n      ['--color-icon-2','#10c504','#10c504','#666875','#a1a3a8','Brand-accented icons'],\n      ['--color-icon-3','#b2fa00','#b2fa00','#ff5f00','#ff5f00','Logo / accent icons'],\n      ['--color-icon-s','#a4a4a4','#d1d1d1','#666875','#8a8a8a','Low-emphasis icons'],\n      ['--color-icon-inv','#ffffff','#000000','#ffffff','#000000','Icons on dark fills'],\n    ]\n  },\n  btns: {\n    title:'Buttons', desc:'Component-level tokens used directly in button variants.',\n    rows:[\n      ['--color-btn-a-bg','#1ae10e','#1ae10e','#000000','#ffffff','Accent button — background'],\n      ['--color-btn-a-bg-h','#17ca0d','#17ca0d','#252525','#f0f0f0','Accent button — hover bg'],\n      ['--color-btn-a-txt','#000000','#000000','#ffffff','#000000','Accent button — label'],\n      ['--color-btn-a-dis','#dddddd','rgba(255,255,255,0.15)','#dddddd','#414141','Accent button — disabled bg'],\n      ['--color-btn-s-bg','#000000','#ffffff','#f0f0f0','#2d2e34','Secondary button — background'],\n      ['--color-btn-s-txt','#ffffff','#000000','#000000','#ffffff','Secondary button — label'],\n      ['--color-btn-o-border','#000000','#ffffff','#000000','#2d2e34','Outlined button — border'],\n      ['--color-btn-o-txt','#000000','#ffffff','#000000','#ffffff','Outlined button — label'],\n    ]\n  },\n  ind: {\n    title:'Indicators', desc:'Status colours for info, success, warning, and critical feedback.',\n    rows:[\n      ['--color-info-h','#21a4fc','#21a4fc','#21a4fc','#21a4fc','Info — icon / text (high contrast)'],\n      ['--color-info-l','#e4f5ff','#daeefd','#e4f5ff','#daeefd','Info — background'],\n      ['--color-success-h','#218a29','#59ce61','#10c504','#10c504','Success — icon / text'],\n      ['--color-success-l','#eaf9eb','#145118','#eaf9eb','#84a895','Success — background'],\n      ['--color-warn-h','#ff8900','#ff8900','#f6bc2f','#f6bc2f','Warning — icon / text'],\n      ['--color-warn-l','#fff3e5','#33343a','#fff3e5','#33343a','Warning — background'],\n      ['--color-crit-h','#eb0029','#eb0029','#c10021','#c10021','Critical — icon / text'],\n      ['--color-crit-l','#fff4f0','#260505','#fff4f0','#260505','Critical — background'],\n    ]\n  },\n  inp: {\n    title:'Inputs', desc:'Form input field colours for backgrounds, borders, text, and interactive states.',\n    rows:[\n      ['--color-input-bg','#f6f6f6','#25262c','#f8f8f8','#414141','Input field background'],\n      ['--color-input-border','#cbcbd0','#60636d','#cbcbd0','#60636d','Input border — default'],\n      ['--color-input-focus','#000000','#ffffff','#000000','#ffffff','Input border — focused'],\n      ['--color-input-cur','#10c504','#10c504','#ff5f00','#ff5f00','Text cursor / caret'],\n      ['--color-input-placeholder','#a1a3a8','#8a8a8a','#87898e','#8a8a8a','Placeholder text'],\n    ]\n  },\n};\n\nconst HEX_PRIM = {\n  '#ffffff':'White', '#000000':'Black',\n  '#ff5f00':'1V Orange', '#ffdfcc':'1V Orange 200',\n  '#ffc861':'Yellow 400', '#f6bc2f':'Yellow 500',\n  '#5d4b2b':'Yellow 900', '#965000':'Yellow 1000',\n  '#f6f6f6':'Custom — Input bg',\n  'rgba(255,255,255,0.2)':'Opacity White 20%',\n};\n\nfunction fmtColor(h) {\n  if (!h.startsWith('rgba')) return h;\n  const m = h.match(/rgba\\((\\d+),\\s*(\\d+),\\s*(\\d+),\\s*([\\d.]+)\\)/);\n  if (!m) return h;\n  const hex = '#' + [m[1],m[2],m[3]].map(x=&gt;parseInt(x).toString(16).padStart(2,'0')).join('');\n  const pct = Math.round(parseFloat(m[4])*100);\n  return hex + ' ' + pct + '%';\n}\n\nfunction renderFamily(fam) {\n  const el = document.createElement('div');\n  el.className = 'fam'; el.id = 'fam-' + fam.id;\n  const hasBase = fam.swatches.some(sw =&gt; sw.b);\n  const strip = fam.swatches.map(sw =&gt; {\n    const baseClass = sw.b ? ' fam__col--base' : '';\n    const isOpacity = sw.h.startsWith('rgba');\n    const blockStyle = isOpacity\n      ? `background:${sw.bg||'#ffffff'}`\n      : `background:${sw.h}`;\n    const overlay = isOpacity\n      ? `&lt;div style=\"position:absolute;inset:0;background:${sw.h}\"&gt;&lt;/div&gt;`\n      : '';\n    const displayVal = fmtColor(sw.h);\n    return `&lt;div class=\"fam__col${baseClass}\" onclick=\"copy('${sw.h}','${fam.name} ${sw.s}')\"&gt;\n      &lt;div class=\"fam__block\" style=\"${blockStyle}\"&gt;\n        ${overlay}\n        &lt;div class=\"fam__tip\"&gt;${fam.name} ${sw.s}&lt;br&gt;${displayVal}&lt;/div&gt;\n      &lt;/div&gt;\n      &lt;div class=\"fam__meta\"&gt;\n        &lt;div class=\"fam__step\"&gt;${sw.s}&lt;/div&gt;\n        &lt;div class=\"fam__hex\"&gt;${displayVal}&lt;/div&gt;\n      &lt;/div&gt;\n    &lt;/div&gt;`;\n  }).join('');\n\n  el.innerHTML = `\n    &lt;div class=\"fam__head\"&gt;\n      &lt;div class=\"fam__info\"&gt;\n        &lt;div class=\"fam__name\"&gt;${fam.name}&lt;/div&gt;\n        &lt;div class=\"fam__desc\"&gt;${fam.desc}&lt;/div&gt;\n      &lt;/div&gt;\n      &lt;div class=\"fam__badge fam__badge--${fam.badgeCls}\"&gt;${fam.badge}&lt;/div&gt;\n    &lt;/div&gt;\n    ${hasBase ? '&lt;div class=\"fam__legend\"&gt;&lt;span class=\"fam__legend-dot\"&gt;&lt;/span&gt; = base step&lt;/div&gt;' : ''}\n    &lt;div class=\"fam__strip\"&gt;${strip}&lt;/div&gt;`;\n  return el;\n}\n\nfunction getSemHex(fl,fd,vl,vd) {\n  // Flash brand only; light/dark follows the global theme.\n  return currentTheme()==='dark' ? fd : fl;\n}\n\nfunction renderSemGroup(key) {\n  const group = SEM[key];\n  const panel = document.getElementById('sem-'+key);\n  if (!panel) return;\n\n  const rows = group.rows.map(([v,fl,fd,vl,vd,note]) =&gt; {\n    const hex = getSemHex(fl,fd,vl,vd);\n    const prim = HEX_PRIM[hex] || '';\n    const name = v.replace(/^--/,'');\n    return `&lt;tr&gt;\n      &lt;td&gt;&lt;span class=\"sem-var\" onclick=\"copy('var(${v})','CSS var')\"&gt;${name}&lt;/span&gt;&lt;/td&gt;\n      &lt;td&gt;\n        &lt;div class=\"sem-color-cell\"&gt;\n          &lt;div class=\"sem-swatch\" style=\"background:${hex}\"&gt;&lt;/div&gt;\n          &lt;div class=\"sem-color-meta\"&gt;\n            &lt;span class=\"sem-hex\"&gt;${hex}&lt;/span&gt;\n            ${prim ? `&lt;span class=\"sem-prim\"&gt;${prim}&lt;/span&gt;` : ''}\n          &lt;/div&gt;\n        &lt;/div&gt;\n      &lt;/td&gt;\n      &lt;td class=\"sem-note\"&gt;${note}&lt;/td&gt;\n    &lt;/tr&gt;`;\n  }).join('');\n\n  panel.innerHTML = `\n    &lt;div class=\"sem-group-block\"&gt;\n      &lt;div class=\"sem-group-title\"&gt;${group.title}&lt;/div&gt;\n      &lt;table class=\"sem-table\"&gt;\n        &lt;thead&gt;&lt;tr&gt;\n          &lt;th&gt;Token&lt;/th&gt;\n          &lt;th&gt;Colour · Primitive&lt;/th&gt;\n          &lt;th&gt;Usage&lt;/th&gt;\n        &lt;/tr&gt;&lt;/thead&gt;\n        &lt;tbody&gt;${rows}&lt;/tbody&gt;\n      &lt;/table&gt;\n    &lt;/div&gt;`;\n}\n\nfunction refreshSem() {\n  Object.keys(SEM).forEach(renderSemGroup);\n}",
+  "contentHash": "77296dca86fdeaa00bdb3a25b4d907036840b16554803e789a8154386657ec34",
   "note": "Documents the doc site's primitive/category/semantic color DATA (this section has no reusable component class of its own). These are primitives only — the actual consumable CSS custom properties (--color-surface-n1, --color-btn-p-bg, etc.) are declared in the [data-brand=\"flash\"][data-theme=\"light\"]/[data-theme=\"dark\"] blocks elsewhere in the file (see AI-CONTEXT.md's file-structure notes); SEM here mirrors those tokens for display, it doesn't own them."
 }
   </pre>
@@ -2771,8 +2764,8 @@ body.home .main{max-width:none;margin:0;padding:0}
     "TYPE_TOKEN_GROUPS"
   ],
   "noReusableClass": true,
-  "js": "const WEIGHTS = [\n  { name:'Medium',   wt:500, desc:'Body copy, UI labels, captions' },\n  { name:'Semibold', wt:650, desc:'Subheadings, emphasized labels' },\n  { name:'Bold',     wt:800, desc:'Strong emphasis, call-outs' },\n  { name:'Black',    wt:900, desc:'Display headings, hero type' },\n];\n\nconst HEADS = {\n  desktop:[\n    { tag:'4XL', size:'80px', wt:900, wLabel:'Black', lh:'100%', ls:'-2px',  text:'The future of payments' },\n    { tag:'3XL', size:'55px', wt:900, wLabel:'Black', lh:'110%', ls:'0',     text:'Pay smarter, every day' },\n    { tag:'2XL', size:'42px', wt:900, wLabel:'Black', lh:'120%', ls:'-1px',  text:'Welcome back to Flash' },\n    { tag:'XL',  size:'30px', wt:900, wLabel:'Black', lh:'100%', ls:'0',     text:'Transaction history' },\n    { tag:'L',   size:'26px', wt:900, wLabel:'Black', lh:'110%', ls:'0',     text:'Payment successful' },\n    { tag:'L',   size:'26px', wt:500, wLabel:'Medium', lh:'110%', ls:'0',    text:'Payment successful' },\n    { tag:'M',   size:'22px', wt:900, wLabel:'Black', lh:'115%', ls:'0',     text:'Recent activity' },\n    { tag:'M',   size:'22px', wt:500, wLabel:'Medium', lh:'115%', ls:'0',    text:'Recent activity' },\n    { tag:'S',   size:'20px', wt:900, wLabel:'Black', lh:'115%', ls:'0',     text:'Available balance' },\n    { tag:'S',   size:'20px', wt:500, wLabel:'Medium', lh:'115%', ls:'0',    text:'Available balance' },\n  ],\n  mobile:[\n    { tag:'4XL', size:'58px', wt:900, wLabel:'Black',    lh:'100%', ls:'-1px', text:'The future of payments' },\n    { tag:'3XL', size:'48px', wt:900, wLabel:'Black',    lh:'100%', ls:'-1px', text:'Pay smarter, every day' },\n    { tag:'2XL', size:'35px', wt:900, wLabel:'Black',    lh:'110%', ls:'0',    text:'Welcome back to Flash' },\n    { tag:'XL',  size:'30px', wt:900, wLabel:'Black',    lh:'110%', ls:'0',    text:'Transaction history' },\n    { tag:'L',   size:'24px', wt:900, wLabel:'Black',    lh:'110%', ls:'0',    text:'Payment successful' },\n    { tag:'L',   size:'24px', wt:500, wLabel:'Medium',   lh:'110%', ls:'0',    text:'Payment successful' },\n    { tag:'M',   size:'22px', wt:900, wLabel:'Black',    lh:'110%', ls:'0',    text:'Recent activity' },\n    { tag:'M',   size:'22px', wt:500, wLabel:'Medium',   lh:'110%', ls:'0',    text:'Recent activity' },\n    { tag:'S',   size:'18px', wt:900, wLabel:'Black',    lh:'110%', ls:'0',    text:'Available balance' },\n    { tag:'S',   size:'18px', wt:500, wLabel:'Medium',   lh:'110%', ls:'0',    text:'Available balance' },\n    { tag:'S',   size:'18px', wt:650, wLabel:'Semibold', lh:'110%', ls:'0',    text:'Available balance' },\n  ]\n};\n\nconst BODY = [\n  { group:'L', px:'16px', lh:'125%', ls:'0', styles:[\n    { wLabel:'Black',    wt:900 },\n    { wLabel:'Bold',     wt:800 },\n    { wLabel:'Semibold', wt:650 },\n    { wLabel:'Medium',   wt:500 },\n  ]},\n  { group:'M', px:'14px', lh:'120%', ls:'0', styles:[\n    { wLabel:'Semibold', wt:650 },\n    { wLabel:'Medium',   wt:500 },\n  ]},\n  { group:'S', px:'13px', lh:'130%', ls:'0', styles:[\n    { wLabel:'Bold',     wt:800 },\n    { wLabel:'Semibold', wt:650 },\n    { wLabel:'Medium',   wt:500 },\n  ]},\n  { group:'XS', px:'12px', lh:'130%', ls:'0', styles:[\n    { wLabel:'Bold',     wt:800 },\n    { wLabel:'Semibold', wt:650 },\n    { wLabel:'Medium',   wt:500 },\n  ]},\n  { group:'XXS', px:'11px', lh:'130%', ls:'0', styles:[\n    { wLabel:'Bold',     wt:800 },\n    { wLabel:'Semibold', wt:650 },\n    { wLabel:'Medium',   wt:500 },\n  ]},\n];\n\nconst INPUT_STYLES = [\n  { label:'Label',   px:'14px', wt:500, wLabel:'Medium',   lh:'120%', ls:'0', specimen:'Card number', token:'--type-input-label' },\n  { label:'Text S',  px:'14px', wt:650, wLabel:'Semibold', lh:'120%', ls:'0', specimen:'4242 4242 4242 4242', token:'--type-input-text' },\n];\n\nfunction renderHeadRows(scale) {\n  return scale.map(h =&gt; `\n    &lt;div class=\"h-row\"&gt;\n      &lt;div class=\"h-row__tag\"&gt;${h.tag}&lt;/div&gt;\n      &lt;div class=\"h-row__divider\"&gt;&lt;/div&gt;\n      &lt;div class=\"h-row__text\" style=\"font-size:${h.size};font-weight:${h.wt};letter-spacing:${h.ls};line-height:${h.lh}\"&gt;${h.text}&lt;/div&gt;\n      &lt;div class=\"h-row__specs\"&gt;\n        &lt;span class=\"h-spec h-spec--size\"&gt;${h.size}&lt;/span&gt;\n        &lt;span class=\"h-spec h-spec--wt\"&gt;${h.wLabel} · ${h.wt}&lt;/span&gt;\n        &lt;span class=\"h-spec\"&gt;lh ${h.lh}&lt;/span&gt;\n        ${h.ls !== '0' ? `&lt;span class=\"h-spec\"&gt;ls ${h.ls}&lt;/span&gt;` : ''}\n      &lt;/div&gt;\n    &lt;/div&gt;`).join('');\n}\n\nconst TYPE_TOKEN_GROUPS = [\n  {\n    title: 'Font Family',\n    rows: [\n      ['--font-family-base',    \"'Satoshi Variable', sans-serif\", 'All UI text — headings, body, labels, inputs'],\n      ['--font-family-mono',    \"'SF Mono', 'Fira Code', monospace\", 'Code snippets, token names, hex values'],\n    ]\n  },\n  {\n    title: 'Font Weights',\n    rows: [\n      ['--font-weight-medium',   '500', 'Body copy, secondary labels, captions'],\n      ['--font-weight-semibold', '650', 'Input labels, UI labels, button text'],\n      ['--font-weight-bold',     '800', 'Headings, emphasis, key data'],\n      ['--font-weight-black',    '900', 'Display headings, hero text'],\n    ]\n  },\n  {\n    title: 'Body Sizes',\n    rows: [\n      ['--font-size-body-l',  '16px', 'Large body — intro paragraphs, featured content'],\n      ['--font-size-body-m',  '14px', 'Default body text, list items, descriptions'],\n      ['--font-size-body-s',  '13px', 'Secondary body, form helper text'],\n      ['--font-size-body-xs', '12px', 'Captions, metadata, badge labels'],\n      ['--font-size-body-xxs','11px', 'Legal text, timestamps, micro labels'],\n    ]\n  },\n  {\n    title: 'Heading Sizes — Desktop',\n    rows: [\n      ['--font-size-heading-4xl', '80px', 'Hero display — marketing, splash screens'],\n      ['--font-size-heading-3xl', '64px', 'Section heroes'],\n      ['--font-size-heading-2xl', '48px', 'Page titles'],\n      ['--font-size-heading-xl',  '40px', 'Section titles'],\n      ['--font-size-heading-l',   '32px', 'Card headlines, modal titles'],\n      ['--font-size-heading-m',   '28px', 'Sub-section headings'],\n      ['--font-size-heading-s',   '24px', 'Component headings'],\n      ['--font-size-heading-xs',  '20px', 'Small headings, list group titles'],\n    ]\n  },\n  {\n    title: 'Heading Sizes — Mobile',\n    rows: [\n      ['--font-size-heading-4xl-mobile', '58px', 'Mobile hero display'],\n      ['--font-size-heading-3xl-mobile', '46px', 'Mobile section heroes'],\n      ['--font-size-heading-2xl-mobile', '36px', 'Mobile page titles'],\n      ['--font-size-heading-xl-mobile',  '32px', 'Mobile section titles'],\n      ['--font-size-heading-l-mobile',   '28px', 'Mobile card headlines'],\n      ['--font-size-heading-m-mobile',   '24px', 'Mobile sub-sections'],\n      ['--font-size-heading-s-mobile',   '22px', 'Mobile component headings'],\n      ['--font-size-heading-xs-mobile',  '20px', 'Mobile small headings'],\n    ]\n  },\n];",
-  "contentHash": "b15b08d4de169f949206e41965780f3a9ac721ac7ad145e02a17b839d11aa222",
+  "js": "const WEIGHTS = [\n  { name:'Medium',   wt:500, desc:'Body copy, UI labels, captions' },\n  { name:'Semibold', wt:650, desc:'Subheadings, emphasized labels' },\n  { name:'Bold',     wt:800, desc:'Strong emphasis, call-outs' },\n  { name:'Black',    wt:900, desc:'Display headings, hero type' },\n];\n\nconst HEADS = {\n  desktop:[\n    { tag:'4XL', size:'80px', wt:900, wLabel:'Black', lh:'100%', ls:'-2px',  text:'The future of payments' },\n    { tag:'3XL', size:'55px', wt:900, wLabel:'Black', lh:'110%', ls:'0',     text:'Pay smarter, every day' },\n    { tag:'2XL', size:'42px', wt:900, wLabel:'Black', lh:'120%', ls:'-1px',  text:'Welcome back to Flash' },\n    { tag:'XL',  size:'30px', wt:900, wLabel:'Black', lh:'100%', ls:'0',     text:'Transaction history' },\n    { tag:'L',   size:'26px', wt:900, wLabel:'Black', lh:'110%', ls:'0',     text:'Payment successful' },\n    { tag:'L - Medium',   size:'26px', wt:500, wLabel:'Medium', lh:'110%', ls:'0',    text:'Payment successful' },\n    { tag:'M',   size:'22px', wt:900, wLabel:'Black', lh:'115%', ls:'0',     text:'Recent activity' },\n    { tag:'M - Medium',   size:'22px', wt:500, wLabel:'Medium', lh:'115%', ls:'0',    text:'Recent activity' },\n    { tag:'S',   size:'20px', wt:900, wLabel:'Black', lh:'115%', ls:'0',     text:'Available balance' },\n    { tag:'S - Medium',   size:'20px', wt:500, wLabel:'Medium', lh:'115%', ls:'0',    text:'Available balance' },\n  ],\n  mobile:[\n    { tag:'4XL', size:'58px', wt:900, wLabel:'Black',    lh:'100%', ls:'-1px', text:'The future of payments' },\n    { tag:'3XL', size:'48px', wt:900, wLabel:'Black',    lh:'100%', ls:'-1px', text:'Pay smarter, every day' },\n    { tag:'2XL', size:'35px', wt:900, wLabel:'Black',    lh:'110%', ls:'0',    text:'Welcome back to Flash' },\n    { tag:'XL',  size:'30px', wt:900, wLabel:'Black',    lh:'110%', ls:'0',    text:'Transaction history' },\n    { tag:'L',   size:'24px', wt:900, wLabel:'Black',    lh:'110%', ls:'0',    text:'Payment successful' },\n    { tag:'L - Medium',   size:'24px', wt:500, wLabel:'Medium',   lh:'110%', ls:'0',    text:'Payment successful' },\n    { tag:'M',   size:'22px', wt:900, wLabel:'Black',    lh:'110%', ls:'0',    text:'Recent activity' },\n    { tag:'M - Medium',   size:'22px', wt:500, wLabel:'Medium',   lh:'110%', ls:'0',    text:'Recent activity' },\n    { tag:'S',   size:'18px', wt:900, wLabel:'Black',    lh:'110%', ls:'0',    text:'Available balance' },\n    { tag:'S - Medium',   size:'18px', wt:500, wLabel:'Medium',   lh:'110%', ls:'0',    text:'Available balance' },\n    { tag:'S',   size:'18px', wt:650, wLabel:'Semibold', lh:'110%', ls:'0',    text:'Available balance' },\n  ]\n};\n\nconst BODY = [\n  { group:'L', px:'16px', lh:'125%', ls:'0', styles:[\n    { wLabel:'Black',    wt:900 },\n    { wLabel:'Bold',     wt:800 },\n    { wLabel:'Semibold', wt:650 },\n    { wLabel:'Medium',   wt:500 },\n  ]},\n  { group:'M', px:'14px', lh:'120%', ls:'0', styles:[\n    { wLabel:'Semibold', wt:650 },\n    { wLabel:'Medium',   wt:500 },\n  ]},\n  { group:'S', px:'13px', lh:'130%', ls:'0', styles:[\n    { wLabel:'Bold',     wt:800 },\n    { wLabel:'Semibold', wt:650 },\n    { wLabel:'Medium',   wt:500 },\n  ]},\n  { group:'XS', px:'12px', lh:'130%', ls:'0', styles:[\n    { wLabel:'Bold',     wt:800 },\n    { wLabel:'Semibold', wt:650 },\n    { wLabel:'Medium',   wt:500 },\n  ]},\n  { group:'XXS', px:'11px', lh:'130%', ls:'0', styles:[\n    { wLabel:'Bold',     wt:800 },\n    { wLabel:'Semibold', wt:650 },\n    { wLabel:'Medium',   wt:500 },\n  ]},\n];\n\nconst INPUT_STYLES = [\n  { label:'Label',   px:'14px', wt:500, wLabel:'Medium',   lh:'120%', ls:'0', specimen:'Card number', token:'--type-input-label' },\n  { label:'Text S',  px:'14px', wt:650, wLabel:'Semibold', lh:'120%', ls:'0', specimen:'4242 4242 4242 4242', token:'--type-input-text' },\n];\n\nfunction renderHeadRows(scale) {\n  return scale.map(h =&gt; `\n    &lt;div class=\"h-row\"&gt;\n      &lt;div class=\"h-row__tag\"&gt;${h.tag}&lt;/div&gt;\n      &lt;div class=\"h-row__divider\"&gt;&lt;/div&gt;\n      &lt;div class=\"h-row__text\" style=\"font-size:${h.size};font-weight:${h.wt};letter-spacing:${h.ls};line-height:${h.lh}\"&gt;${h.text}&lt;/div&gt;\n      &lt;div class=\"h-row__specs\"&gt;\n        &lt;span class=\"h-spec h-spec--size\"&gt;${h.size}&lt;/span&gt;\n        &lt;span class=\"h-spec h-spec--wt\"&gt;${h.wLabel} · ${h.wt}&lt;/span&gt;\n        &lt;span class=\"h-spec\"&gt;lh ${h.lh}&lt;/span&gt;\n        ${h.ls !== '0' ? `&lt;span class=\"h-spec\"&gt;ls ${h.ls}&lt;/span&gt;` : ''}\n      &lt;/div&gt;\n    &lt;/div&gt;`).join('');\n}\n\nconst TYPE_TOKEN_GROUPS = [\n  {\n    title: 'Font Family',\n    rows: [\n      ['--font-family-base',    \"'Satoshi Variable', sans-serif\", 'All UI text — headings, body, labels, inputs'],\n      ['--font-family-mono',    \"'SF Mono', 'Fira Code', monospace\", 'Code snippets, token names, hex values'],\n    ]\n  },\n  {\n    title: 'Font Weights',\n    rows: [\n      ['--font-weight-medium',   '500', 'Body copy, secondary labels, captions'],\n      ['--font-weight-semibold', '650', 'Input labels, UI labels, button text'],\n      ['--font-weight-bold',     '800', 'Headings, emphasis, key data'],\n      ['--font-weight-black',    '900', 'Display headings, hero text'],\n    ]\n  },\n  {\n    title: 'Body Sizes',\n    rows: [\n      ['--font-size-body-l',  '16px', 'Large body — intro paragraphs, featured content'],\n      ['--font-size-body-m',  '14px', 'Default body text, list items, descriptions'],\n      ['--font-size-body-s',  '13px', 'Secondary body, form helper text'],\n      ['--font-size-body-xs', '12px', 'Captions, metadata, badge labels'],\n      ['--font-size-body-xxs','11px', 'Legal text, timestamps, micro labels'],\n    ]\n  },\n  {\n    title: 'Heading Sizes — Desktop',\n    rows: [\n      ['--font-size-heading-4xl', '80px', 'Hero display — marketing, splash screens'],\n      ['--font-size-heading-3xl', '64px', 'Section heroes'],\n      ['--font-size-heading-2xl', '48px', 'Page titles'],\n      ['--font-size-heading-xl',  '40px', 'Section titles'],\n      ['--font-size-heading-l',   '32px', 'Card headlines, modal titles'],\n      ['--font-size-heading-m',   '28px', 'Sub-section headings'],\n      ['--font-size-heading-s',   '24px', 'Component headings'],\n      ['--font-size-heading-xs',  '20px', 'Small headings, list group titles'],\n    ]\n  },\n  {\n    title: 'Heading Sizes — Mobile',\n    rows: [\n      ['--font-size-heading-4xl-mobile', '58px', 'Mobile hero display'],\n      ['--font-size-heading-3xl-mobile', '46px', 'Mobile section heroes'],\n      ['--font-size-heading-2xl-mobile', '36px', 'Mobile page titles'],\n      ['--font-size-heading-xl-mobile',  '32px', 'Mobile section titles'],\n      ['--font-size-heading-l-mobile',   '28px', 'Mobile card headlines'],\n      ['--font-size-heading-m-mobile',   '24px', 'Mobile sub-sections'],\n      ['--font-size-heading-s-mobile',   '22px', 'Mobile component headings'],\n      ['--font-size-heading-xs-mobile',  '20px', 'Mobile small headings'],\n    ]\n  },\n];",
+  "contentHash": "f1392203634aa02d86fda792bb6ebde51d825f29e60a84c8f1b61678689e9afb",
   "note": "Documents the doc site's typography DATA (font family/weight/size scale, heading/body specs, input-text specs, and the CSS-var token table) — this section has no reusable component class of its own. The actual font-family/weight/size CSS custom properties are declared in :root and per-brand/theme blocks elsewhere in the file; TYPE_TOKEN_GROUPS here mirrors those tokens for display, it doesn't own them."
 }
   </pre>
@@ -3246,7 +3239,7 @@ body.home .main{max-width:none;margin:0;padding:0}
         <section class="sec" id="s-inputs">
       <div class="sec__head">
         <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Text Inputs <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v2.1.0</span></h1>
+        <h1 class="sec__title">Text Inputs <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v2.2.0</span></h1>
         <p class="sec__desc">Unified Trader input system — Standard (floating/inline label) and Search (pill) families &middot; 2 sizes &middot; every state, background context and icon slot &middot; state-journey map and icon reference sheet below.</p>
       </div>
       <div id="ti-playground" class="type-sub"></div>
@@ -3317,10 +3310,15 @@ body.home .main{max-width:none;margin:0;padding:0}
     ".ti-search-trailing",
     ".ti-search-spinner",
     ".ti-search-clear",
-    ".ti-loading"
+    ".ti-loading",
+    ".ti-outer",
+    ".ti-outer-label",
+    ".ti-outer--sm",
+    ".ti-shell--label-outside",
+    ".ti-show-placeholder"
   ],
-  "css": "/* Reuses the Text Inputs \"Search\" field (.ti-search, see #s-inputs) for shape/\n   layout, scoped to override its light-theme colours for this always-dark bar. */\n.bar__search.ti-search { width:300px;max-width:38vw;height:32px!important;margin-left:8px;background:rgba(255,255,255,.07)!important;border-color:transparent!important }\n.bar__search.ti-search.ti-focused { background:rgba(255,255,255,.12)!important;border-color:rgba(255,255,255,.18)!important }\n.bar__search .ti-search-icon { margin-left:12px;color:rgba(255,255,255,.45) }\n.bar__search .ti-search-body { height:32px!important;padding-left:10px }\n.bar__search .ti-search-input { font-size:12.5px;font-weight:500;color:#fff;caret-color:#fff }\n.bar__search .ti-search-input::placeholder { color:rgba(255,255,255,.4) }\n.bar__search .ti-search-trailing { margin-right:10px }\n/* ---- Field (standard) ---- */\n.ti-shell { position:relative;width:100%;border-radius:12px;border:2px solid transparent;overflow:hidden;transition:border-color .12s }\n.ti-shell[data-bg=\"white\"] { border-color:#dddddd }\n.ti-shell[data-bg=\"white\"].ti-focused { border-color:#000000 }\n.ti-shell[data-bg=\"grey\"] { border-color:#dddddd }\n.ti-shell[data-bg=\"grey\"].ti-focused { border-color:#000000 }\n.ti-shell[data-bg=\"colour\"] { border-color:transparent }\n.ti-shell[data-bg=\"colour\"].ti-focused { border-color:#000000 }\n.ti-shell.ti-error { border-color:var(--ti-error)!important }\n.ti-shell.ti-error .ti-field { background:#ffffff!important }\n.ti-field { position:relative;width:100%;padding-left:var(--ti-pad-x);padding-right:var(--ti-pad-x);display:flex;flex-direction:column;justify-content:center;cursor:text;transition:background .12s }\n.ti-field[data-size=\"default\"] { height:60px }\n.ti-field[data-size=\"small\"] { height:44px }\n.ti-field[data-bg=\"white\"] { background:#f8f8f8 }\n.ti-shell.ti-focused[data-bg=\"white\"] .ti-field { background:#ffffff }\n.ti-field[data-bg=\"grey\"] { background:#ffffff }\n.ti-field[data-bg=\"colour\"] { background:#ffffff }\n.ti-leading { position:absolute;left:var(--ti-pad-x);top:50%;transform:translateY(-50%);width:28px;height:28px;pointer-events:none }\n.ti-field[data-size=\"small\"] .ti-leading { width:20px;height:20px }\n.ti-leading svg { width:100%;height:100%;display:block }\n.ti-has-leading .ti-label,.ti-has-leading .ti-value-row { left:68px }\n.ti-field[data-size=\"small\"].ti-has-leading .ti-label,\n.ti-field[data-size=\"small\"].ti-has-leading .ti-value-row { left:56px }\n.ti-eye { border:none;background:transparent;padding:0;cursor:pointer;color:var(--ti-icon-subtle);display:none;align-items:center;justify-content:center }\n.ti-field[data-size=\"default\"] .ti-eye { width:28px;height:28px }\n.ti-field[data-size=\"small\"] .ti-eye { width:20px;height:20px }\n.ti-eye svg { width:100%;height:100% }\n.ti-show-eye .ti-eye { display:flex }\n.ti-trailing-icon { display:flex;align-items:center;justify-content:center;pointer-events:none }\n.ti-field[data-size=\"default\"] .ti-trailing-icon { width:28px;height:28px }\n.ti-field[data-size=\"small\"] .ti-trailing-icon { width:20px;height:20px }\n.ti-trailing-icon svg { width:100%;height:100%;display:block }\n.ti-label { position:absolute;left:var(--ti-pad-x);right:var(--ti-pad-x);top:50%;transform:translateY(-50%);font-weight:650;color:var(--ti-label-rest);line-height:1.25;font-feature-settings:\"ss01\" 1,\"ss03\" 1;pointer-events:none;transform-origin:left top;transition:top .14s ease,transform .14s ease,font-size .14s ease,color .14s ease,font-weight .14s ease;white-space:nowrap;overflow:hidden;text-overflow:ellipsis }\n.ti-field[data-size=\"default\"] .ti-label { font-size:16px }\n.ti-field[data-size=\"small\"] .ti-label { font-size:13px;line-height:1.3 }\n.ti-shell.ti-floated .ti-label { top:14px;transform:translateY(0);font-size:13px;font-weight:500;color:var(--ti-label-focus);line-height:1.3 }\n.ti-shell[data-size=\"small\"].ti-floated .ti-label { top:6px;font-size:12px }\n.ti-value-row { position:absolute;left:var(--ti-pad-x);right:var(--ti-pad-x);bottom:8px;height:20px;display:flex;align-items:center;opacity:0;transition:opacity .1s }\n.ti-field[data-size=\"small\"] .ti-value-row { bottom:5px;height:17px }\n.ti-shell.ti-floated .ti-value-row { opacity:1 }\n/* Inline label mode: label sits where a placeholder would, at rest size always,\n   and just disappears once there's a value — never shifts/shrinks like caption mode. */\n.ti-shell.ti-inline .ti-label { top:50%!important;transform:translateY(-50%)!important;font-size:16px!important;font-weight:650!important;color:var(--ti-label-rest)!important;line-height:1.25!important }\n.ti-shell[data-size=\"small\"].ti-inline .ti-label { font-size:13px!important;line-height:1.3!important }\n.ti-shell.ti-inline.ti-has-value .ti-label { opacity:0 }\n.ti-shell.ti-inline .ti-value-row { opacity:1!important;top:0;bottom:0;height:auto!important }\n.ti-input { border:none;outline:none;background:transparent;font-family:inherit;font-weight:650;color:var(--ti-text-primary);width:100%;padding:0;caret-color:transparent;font-feature-settings:\"ss01\" 1,\"ss03\" 1 }\n.ti-field[data-size=\"default\"] .ti-input { font-size:16px;line-height:1.25 }\n.ti-field[data-size=\"small\"] .ti-input { font-size:13px;line-height:1.3 }\n.ti-input::placeholder { color:transparent }\n.ti-dots { display:flex;align-items:center;gap:2px;pointer-events:none }\n.ti-dots span { width:4px;height:4px;border-radius:50%;background:var(--ti-text-primary) }\n.ti-dots--text { font-family:inherit;font-weight:650;color:var(--ti-text-primary);font-feature-settings:\"ss01\" 1,\"ss03\" 1 }\n.ti-field[data-size=\"default\"] .ti-dots--text { font-size:16px;line-height:1.25 }\n.ti-field[data-size=\"small\"] .ti-dots--text { font-size:13px;line-height:1.3 }\n.ti-caret { position:absolute;top:50%;transform:translateY(-50%);width:2px;height:18px;background:var(--ti-green);pointer-events:none;display:none;animation:ti-caret-blink 1s step-end infinite }\n.ti-caret.on { display:block }\n.ti-mirror { position:absolute;visibility:hidden;white-space:pre;pointer-events:none }\n.ti-clear { border:none;background:transparent;padding:0;cursor:pointer;color:var(--ti-icon-subtle);display:none;align-items:center;justify-content:center }\n.ti-field[data-size=\"default\"] .ti-clear { width:28px;height:28px }\n.ti-field[data-size=\"small\"] .ti-clear { width:20px;height:20px }\n.ti-shell.ti-show-clear .ti-clear { display:flex }\n.ti-clear svg { width:100%;height:100% }\n/* ---- Search variant (pill) ---- */\n.ti-search { position:relative;width:100%;border-radius:80px;border:2px solid transparent;display:flex;align-items:center;height:60px;cursor:text;transition:border-color .12s,background .12s }\n.ti-search[data-bg=\"white\"] { background:#f8f8f8;border-color:#dddddd }\n.ti-search[data-bg=\"grey\"] { background:#ffffff;border-color:#dddddd }\n.ti-search[data-bg=\"colour\"] { background:#ffffff;border-color:transparent }\n.ti-search.ti-focused { border-color:#000000 }\n.ti-search.ti-error { border-color:var(--ti-error)!important;background:#ffffff!important }\n.ti-search[data-size=\"small\"] { height:44px }\n.ti-search-icon { flex:0 0 auto;width:28px;height:28px;margin-left:20px;color:var(--ti-icon-subtle) }\n.ti-search[data-size=\"small\"] .ti-search-icon { width:20px;height:20px }\n.ti-search-icon svg { width:100%;height:100% }\n.ti-search-body { flex:1;min-width:0;position:relative;height:60px;padding-left:20px;display:flex;flex-direction:column;justify-content:center }\n.ti-search[data-size=\"small\"] .ti-search-body { height:44px }\n.ti-search-label { font-size:16px;font-weight:650;color:var(--ti-label-rest);line-height:1.25;position:absolute;left:20px;right:20px;top:50%;transform:translateY(-50%);pointer-events:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:top .14s ease,transform .14s ease,font-size .14s ease,color .14s ease }\n.ti-search[data-size=\"small\"] .ti-search-label { font-size:13px;line-height:1.3 }\n.ti-search.ti-floated .ti-search-label { top:14px;transform:translateY(0);font-size:13px;font-weight:500;color:var(--ti-label-focus) }\n.ti-search[data-size=\"small\"].ti-floated .ti-search-label { top:6px;font-size:12px }\n.ti-search-value-row { position:absolute;left:20px;right:20px;bottom:8px;height:20px;opacity:0;transition:opacity .1s;display:flex;align-items:center }\n.ti-search[data-size=\"small\"] .ti-search-value-row { bottom:5px;height:17px }\n.ti-search.ti-floated .ti-search-value-row { opacity:1 }\n.ti-search.ti-inline .ti-search-label { top:50%!important;transform:translateY(-50%)!important;font-size:16px!important;font-weight:650!important;color:var(--ti-label-rest)!important }\n.ti-search[data-size=\"small\"].ti-inline .ti-search-label { font-size:13px!important }\n.ti-search.ti-inline.ti-has-value .ti-search-label { opacity:0 }\n.ti-search.ti-inline .ti-search-value-row { opacity:1!important;top:0;bottom:0;height:auto }\n.ti-search-input { border:none;outline:none;background:transparent;font-family:inherit;font-weight:650;font-size:16px;color:var(--ti-text-primary);width:100%;caret-color:transparent }\n.ti-search[data-size=\"small\"] .ti-search-input { font-size:13px }\n.ti-search-input::placeholder { color:transparent }\n.ti-search-trailing { display:flex;align-items:center;gap:4px;margin-right:20px }\n.ti-search-spinner { width:28px;height:28px;display:none }\n.ti-search[data-size=\"small\"] .ti-search-spinner { width:20px;height:20px }\n.ti-search.ti-loading .ti-search-spinner { display:block }\n.ti-search-spinner svg { width:100%;height:100%;display:block }\n/* Blades stay put — only their opacity chases around the ring, like a comet trail. */\n.ti-search-spinner svg path { animation:ti-search-spin-fade .8s linear infinite }\n.ti-search-spinner svg path:nth-child(1) { animation-delay:0s }\n.ti-search-spinner svg path:nth-child(8) { animation-delay:-.1s }\n.ti-search-spinner svg path:nth-child(3) { animation-delay:-.2s }\n.ti-search-spinner svg path:nth-child(5) { animation-delay:-.3s }\n.ti-search-spinner svg path:nth-child(2) { animation-delay:-.4s }\n.ti-search-spinner svg path:nth-child(7) { animation-delay:-.5s }\n.ti-search-spinner svg path:nth-child(4) { animation-delay:-.6s }\n.ti-search-spinner svg path:nth-child(6) { animation-delay:-.7s }\n.ti-search-clear { width:28px;height:28px;padding:0;border:none;background:transparent;color:var(--ti-icon-subtle);display:none;align-items:center;justify-content:center;cursor:pointer;flex:0 0 auto }\n.ti-search[data-size=\"small\"] .ti-search-clear { width:20px;height:20px }\n.ti-search-clear svg { width:100%;height:100% }\n.ti-search.ti-show-clear .ti-search-clear { display:flex }",
-  "js": "const tiState = { type:'standard', size:'default', bg:'white', forceError:false, password:false, showHelper:false, leading:'none', trailing:'none', leadingEnabled:false, trailingEnabled:false, searchIcon:'search', labelMode:'caption', loading:false };\n\nfunction tiBuildStandardField(){\n  const leadingSvg = (tiState.leadingEnabled &amp;&amp; tiState.leading!=='none') ? TI_ICONS[tiState.leading][tiState.size] : null;\n  const trailingSvg = (tiState.trailingEnabled &amp;&amp; tiState.trailing!=='none') ? TI_ICONS[tiState.trailing][tiState.size] : null;\n  const wrap = document.createElement('div');\n  wrap.innerHTML = `\n    &lt;div class=\"ti-shell\" data-bg=\"${tiState.bg}\" data-size=\"${tiState.size}\"&gt;\n      &lt;div class=\"ti-field\" data-bg=\"${tiState.bg}\" data-size=\"${tiState.size}\"&gt;\n        ${leadingSvg ? `&lt;span class=\"ti-leading\"&gt;${leadingSvg}&lt;/span&gt;` : ''}\n        &lt;span class=\"ti-label\"&gt;Label&lt;/span&gt;\n        &lt;div class=\"ti-value-row\"&gt;\n          ${tiState.password ? '&lt;div class=\"ti-dots\"&gt;&lt;/div&gt;' : `&lt;input class=\"ti-input\" type=\"text\" autocomplete=\"off\" spellcheck=\"false\"/&gt;`}\n          &lt;span class=\"ti-mirror\"&gt;&lt;/span&gt;\n          &lt;span class=\"ti-caret\"&gt;&lt;/span&gt;\n        &lt;/div&gt;\n        &lt;div class=\"ti-trailing\"&gt;\n          ${trailingSvg ? `&lt;span class=\"ti-trailing-icon\"&gt;${trailingSvg}&lt;/span&gt;` : ''}\n          &lt;button class=\"ti-eye\" type=\"button\" aria-label=\"Toggle password visibility\"&gt;${TI_EYE_SHOW_SVG}&lt;/button&gt;\n          &lt;button class=\"ti-clear\" type=\"button\" aria-label=\"Clear\"&gt;${TI_CLEAR_SVG}&lt;/button&gt;\n        &lt;/div&gt;\n      &lt;/div&gt;\n      &lt;div class=\"ti-helper\"&gt;Helper text&lt;/div&gt;\n    &lt;/div&gt;\n  `;\n  const shell = wrap.querySelector('.ti-shell');\n  const field = wrap.querySelector('.ti-field');\n  const valueRow = field.querySelector('.ti-value-row');\n  const clearBtn = field.querySelector('.ti-clear');\n  const eyeBtn = field.querySelector('.ti-eye');\n  const helper = wrap.querySelector('.ti-helper');\n  const mirror = field.querySelector('.ti-mirror');\n  const caretEl = field.querySelector('.ti-caret');\n  let dotsContainer = field.querySelector('.ti-dots');\n  let realInput = field.querySelector('.ti-input');\n  let hiddenValue = '';\n  let revealed = false;\n\n  field.classList.toggle('ti-has-leading', !!leadingSvg);\n  field.classList.toggle('ti-show-eye', tiState.password);\n  // Standard is always Caption mode — the Caption/Inline toggle only applies to Search.\n\n  mirror.style.fontFamily = 'inherit';\n  mirror.style.fontWeight = '650';\n  mirror.style.fontSize = tiState.size==='small' ? '13px' : '16px';\n  const placeCaret = tiMakeCaretDriver(valueRow, mirror, caretEl);\n\n  function currentText(){ return tiState.password ? hiddenValue : (realInput ? realInput.value : ''); }\n\n  function renderPasswordField(){\n    if(revealed){ dotsContainer.classList.add('ti-dots--text'); dotsContainer.textContent = hiddenValue; }\n    else { dotsContainer.classList.remove('ti-dots--text'); tiRenderPasswordDots(dotsContainer, hiddenValue.length); }\n  }\n\n  function reflect(focused){\n    const text = currentText();\n    const hasText = text.length&gt;0;\n    shell.classList.toggle('ti-focused', focused);\n    shell.classList.toggle('ti-floated', focused || hasText);\n    shell.classList.toggle('ti-has-value', hasText);\n    shell.classList.toggle('ti-show-clear', focused &amp;&amp; hasText);\n    caretEl.classList.toggle('on', focused);\n    if(tiState.password &amp;&amp; !revealed){\n      mirror.textContent='';\n      const dotsWidth = dotsContainer ? dotsContainer.getBoundingClientRect().width : 0;\n      caretEl.style.left = (dotsWidth ? dotsWidth+4 : 0) + 'px';\n    } else {\n      placeCaret(text);\n    }\n    let label='default';\n    if(focused &amp;&amp; hasText) label='typing'; else if(focused) label='in focus'; else if(hasText) label='complete';\n    tiUpdateReadout(label);\n  }\n\n  if(tiState.password){\n    const dotsWrap = document.createElement('div');\n    dotsWrap.className='ti-dots';\n    valueRow.insertBefore(dotsWrap, valueRow.firstChild);\n    dotsContainer = dotsWrap;\n    field.tabIndex = 0;\n    field.addEventListener('focus', ()=&gt;reflect(true));\n    field.addEventListener('blur', ()=&gt;reflect(false));\n    field.addEventListener('keydown', (e)=&gt;{\n      if(e.key==='Backspace'){ hiddenValue = hiddenValue.slice(0,-1); }\n      else if(e.key.length===1){ hiddenValue += e.key; }\n      renderPasswordField();\n      reflect(true);\n    });\n    eyeBtn.addEventListener('mousedown', (e)=&gt;e.preventDefault());\n    eyeBtn.addEventListener('click', ()=&gt;{\n      revealed = !revealed;\n      eyeBtn.innerHTML = revealed ? TI_EYE_HIDE_SVG : TI_EYE_SHOW_SVG;\n      eyeBtn.setAttribute('aria-pressed', String(revealed));\n      renderPasswordField();\n      reflect(document.activeElement===field);\n    });\n  } else {\n    realInput.addEventListener('focus', ()=&gt;reflect(true));\n    realInput.addEventListener('blur', ()=&gt;reflect(false));\n    realInput.addEventListener('input', ()=&gt;reflect(true));\n  }\n\n  clearBtn.addEventListener('mousedown', (e)=&gt;e.preventDefault());\n  clearBtn.addEventListener('click', ()=&gt;{\n    hiddenValue='';\n    if(realInput) realInput.value='';\n    if(dotsContainer) dotsContainer.innerHTML='';\n    if(!tiState.password &amp;&amp; realInput) realInput.focus();\n    reflect(!!(realInput &amp;&amp; document.activeElement===realInput));\n  });\n\n  // Force error / show helper — driven by the sidebar toggles, applied once at build time.\n  const showError = tiState.forceError;\n  shell.classList.toggle('ti-error', showError);\n  const helperVisible = showError || tiState.showHelper;\n  helper.classList.toggle('show', helperVisible);\n  helper.classList.toggle('ti-error-text', showError);\n  helper.textContent = showError ? 'Error text' : 'Helper text';\n\n  reflect(false);\n  return { el: wrap, field: shell };\n}\n\nfunction tiBuildSearchField(){\n  const iconSvg = TI_ICONS[tiState.searchIcon][tiState.size];\n  const wrap = document.createElement('div');\n  wrap.innerHTML = `\n    &lt;div class=\"ti-search\" data-bg=\"${tiState.bg}\" data-size=\"${tiState.size}\"&gt;\n      &lt;div class=\"ti-search-icon\"&gt;${iconSvg}&lt;/div&gt;\n      &lt;div class=\"ti-search-body\"&gt;\n        &lt;span class=\"ti-search-label\"&gt;Label&lt;/span&gt;\n        &lt;div class=\"ti-search-value-row\"&gt;\n          &lt;input class=\"ti-search-input\" type=\"text\" autocomplete=\"off\" spellcheck=\"false\"/&gt;\n          &lt;span class=\"ti-mirror\"&gt;&lt;/span&gt;\n          &lt;span class=\"ti-caret\"&gt;&lt;/span&gt;\n        &lt;/div&gt;\n      &lt;/div&gt;\n      &lt;div class=\"ti-search-trailing\"&gt;\n        &lt;span class=\"ti-search-spinner\"&gt;${TI_SPINNER_SVG}&lt;/span&gt;\n        &lt;button class=\"ti-search-clear\" type=\"button\" aria-label=\"Clear\"&gt;${TI_CLEAR_SVG}&lt;/button&gt;\n      &lt;/div&gt;\n    &lt;/div&gt;\n  `;\n  const field = wrap.querySelector('.ti-search');\n  const valueRow = field.querySelector('.ti-search-value-row');\n  const input = wrap.querySelector('.ti-search-input');\n  const clearBtn = wrap.querySelector('.ti-search-clear');\n  const mirror = field.querySelector('.ti-mirror');\n  const caretEl = field.querySelector('.ti-caret');\n  mirror.style.fontFamily = 'inherit';\n  mirror.style.fontWeight = '650';\n  mirror.style.fontSize = tiState.size==='small' ? '13px' : '16px';\n  const placeCaret = tiMakeCaretDriver(valueRow, mirror, caretEl);\n\n  field.classList.toggle('ti-inline', tiState.labelMode==='inline');\n  field.classList.toggle('ti-loading', tiState.loading);\n\n  // Loading only ever shows against a real query — turns on when the user\n  // submits (Enter) with text present, and off the instant the field is empty.\n  function setLoading(on){\n    tiState.loading = on;\n    field.classList.toggle('ti-loading', on);\n    const toggle = document.getElementById('ti-toggle-loading');\n    if(toggle) toggle.classList.toggle('on', on);\n  }\n\n  function reflect(focused, opts){\n    const hasText = input.value.length&gt;0;\n    field.classList.toggle('ti-focused', focused);\n    field.classList.toggle('ti-floated', focused || hasText);\n    field.classList.toggle('ti-has-value', hasText);\n    field.classList.toggle('ti-show-clear', focused &amp;&amp; hasText);\n    caretEl.classList.toggle('on', focused);\n    placeCaret(input.value);\n    if(!hasText &amp;&amp; tiState.loading &amp;&amp; !(opts &amp;&amp; opts.initial)) setLoading(false);\n    let label='default';\n    if(focused &amp;&amp; hasText) label='typing'; else if(focused) label='in focus'; else if(hasText) label='complete';\n    tiUpdateReadout(label);\n  }\n  input.addEventListener('focus', ()=&gt;reflect(true));\n  input.addEventListener('blur', ()=&gt;reflect(false));\n  input.addEventListener('input', ()=&gt;reflect(true));\n  input.addEventListener('keydown', (e)=&gt;{ if(e.key==='Enter' &amp;&amp; input.value.length&gt;0){ setLoading(true); } });\n  clearBtn.addEventListener('mousedown', e=&gt;e.preventDefault());\n  clearBtn.addEventListener('click', ()=&gt;{ input.value=''; input.focus(); reflect(true); });\n\n  field.classList.toggle('ti-error', tiState.forceError);\n\n  reflect(false, {initial:true});\n  return { el: wrap, field };\n}",
+  "css": "/* Reuses the Text Inputs \"Search\" field (.ti-search, see #s-inputs) for shape/\n   layout, scoped to override its light-theme colours for this always-dark bar. */\n.bar__search.ti-search { width:300px;max-width:38vw;height:32px!important;margin-left:8px;background:rgba(255,255,255,.07)!important;border-color:transparent!important }\n.bar__search.ti-search.ti-focused { background:rgba(255,255,255,.12)!important;border-color:rgba(255,255,255,.18)!important }\n.bar__search .ti-search-icon { margin-left:12px;color:rgba(255,255,255,.45) }\n.bar__search .ti-search-body { height:32px!important;padding-left:10px }\n.bar__search .ti-search-input { font-size:12.5px;font-weight:500;color:#fff;caret-color:#fff }\n.bar__search .ti-search-input::placeholder { color:rgba(255,255,255,.4) }\n.bar__search .ti-search-trailing { margin-right:10px }\n/* ---- Field (standard) ---- */\n.ti-shell { position:relative;width:100%;border-radius:12px;border:2px solid transparent;overflow:hidden;transition:border-color .12s }\n.ti-shell[data-bg=\"white\"] { border-color:#dddddd }\n.ti-shell[data-bg=\"white\"].ti-focused { border-color:#000000 }\n.ti-shell[data-bg=\"grey\"] { border-color:#dddddd }\n.ti-shell[data-bg=\"grey\"].ti-focused { border-color:#000000 }\n.ti-shell[data-bg=\"colour\"] { border-color:transparent }\n.ti-shell[data-bg=\"colour\"].ti-focused { border-color:#000000 }\n.ti-shell.ti-error { border-color:var(--ti-error)!important }\n.ti-shell.ti-error .ti-field { background:#ffffff!important }\n.ti-field { position:relative;width:100%;padding-left:var(--ti-pad-x);padding-right:var(--ti-pad-x);display:flex;flex-direction:column;justify-content:center;cursor:text;transition:background .12s }\n.ti-field[data-size=\"default\"] { height:60px }\n.ti-field[data-size=\"small\"] { height:44px }\n.ti-field[data-bg=\"white\"] { background:#f8f8f8 }\n.ti-shell.ti-focused[data-bg=\"white\"] .ti-field { background:#ffffff }\n.ti-field[data-bg=\"grey\"] { background:#ffffff }\n.ti-field[data-bg=\"colour\"] { background:#ffffff }\n.ti-leading { position:absolute;left:var(--ti-pad-x);top:50%;transform:translateY(-50%);width:28px;height:28px;pointer-events:none }\n.ti-field[data-size=\"small\"] .ti-leading { width:20px;height:20px }\n.ti-leading svg { width:100%;height:100%;display:block }\n.ti-has-leading .ti-label,.ti-has-leading .ti-value-row { left:68px }\n.ti-field[data-size=\"small\"].ti-has-leading .ti-label,\n.ti-field[data-size=\"small\"].ti-has-leading .ti-value-row { left:56px }\n.ti-eye { border:none;background:transparent;padding:0;cursor:pointer;color:var(--ti-icon-subtle);display:none;align-items:center;justify-content:center }\n.ti-field[data-size=\"default\"] .ti-eye { width:28px;height:28px }\n.ti-field[data-size=\"small\"] .ti-eye { width:20px;height:20px }\n.ti-eye svg { width:100%;height:100% }\n.ti-show-eye .ti-eye { display:flex }\n.ti-trailing-icon { display:flex;align-items:center;justify-content:center;pointer-events:none }\n.ti-field[data-size=\"default\"] .ti-trailing-icon { width:28px;height:28px }\n.ti-field[data-size=\"small\"] .ti-trailing-icon { width:20px;height:20px }\n.ti-trailing-icon svg { width:100%;height:100%;display:block }\n.ti-label { position:absolute;left:var(--ti-pad-x);right:var(--ti-pad-x);top:50%;transform:translateY(-50%);font-weight:650;color:var(--ti-label-rest);line-height:1.25;font-feature-settings:\"ss01\" 1,\"ss03\" 1;pointer-events:none;transform-origin:left top;transition:top .14s ease,transform .14s ease,font-size .14s ease,color .14s ease,font-weight .14s ease;white-space:nowrap;overflow:hidden;text-overflow:ellipsis }\n.ti-field[data-size=\"default\"] .ti-label { font-size:16px }\n.ti-field[data-size=\"small\"] .ti-label { font-size:13px;line-height:1.3 }\n.ti-shell.ti-floated .ti-label { top:14px;transform:translateY(0);font-size:13px;font-weight:500;color:var(--ti-label-focus);line-height:1.3 }\n.ti-shell[data-size=\"small\"].ti-floated .ti-label { top:6px;font-size:12px }\n.ti-value-row { position:absolute;left:var(--ti-pad-x);right:var(--ti-pad-x);bottom:8px;height:20px;display:flex;align-items:center;opacity:0;transition:opacity .1s }\n.ti-field[data-size=\"small\"] .ti-value-row { bottom:5px;height:17px }\n.ti-shell.ti-floated .ti-value-row { opacity:1 }\n/* Inline label mode: label sits where a placeholder would, at rest size always,\n   and just disappears once there's a value — never shifts/shrinks like caption mode. */\n.ti-shell.ti-inline .ti-label { top:50%!important;transform:translateY(-50%)!important;font-size:16px!important;font-weight:650!important;color:var(--ti-label-rest)!important;line-height:1.25!important }\n.ti-shell[data-size=\"small\"].ti-inline .ti-label { font-size:13px!important;line-height:1.3!important }\n.ti-shell.ti-inline.ti-has-value .ti-label { opacity:0 }\n.ti-shell.ti-inline .ti-value-row { opacity:1!important;top:0;bottom:0;height:auto!important }\n/* Outside label mode: label sits above the shell entirely, like Dropdown's\n   field label, instead of floating inside it. Nothing competes with the\n   value row for space, so it's simply always visible/centred; the inside\n   label is hidden outright and can be swapped for a real, optional\n   placeholder via .ti-show-placeholder. */\n.ti-outer { display:flex;flex-direction:column;gap:6px;width:100% }\n/* Unlike the inside label, this sits directly on the page background rather\n   than always-light field fill, so it needs a real theme-aware token\n   (matching Dropdown's own outside label) instead of the fixed --ti-label-* hex. */\n.ti-outer-label { font-size:14px;font-weight:650;color:var(--color-text-1);font-feature-settings:\"ss01\" 1,\"ss03\" 1 }\n.ti-outer--sm .ti-outer-label { font-size:13px }\n.ti-shell--label-outside .ti-label { display:none }\n.ti-shell--label-outside .ti-value-row { top:50%;bottom:auto;transform:translateY(-50%);height:auto;opacity:1 }\n.ti-shell--label-outside.ti-show-placeholder .ti-input::placeholder { color:var(--ti-label-rest) }\n.ti-input { border:none;outline:none;background:transparent;font-family:inherit;font-weight:650;color:var(--ti-text-primary);width:100%;padding:0;caret-color:transparent;font-feature-settings:\"ss01\" 1,\"ss03\" 1 }\n.ti-field[data-size=\"default\"] .ti-input { font-size:16px;line-height:1.25 }\n.ti-field[data-size=\"small\"] .ti-input { font-size:13px;line-height:1.3 }\n.ti-input::placeholder { color:transparent }\n.ti-dots { display:flex;align-items:center;gap:2px;pointer-events:none }\n.ti-dots span { width:4px;height:4px;border-radius:50%;background:var(--ti-text-primary) }\n.ti-dots--text { font-family:inherit;font-weight:650;color:var(--ti-text-primary);font-feature-settings:\"ss01\" 1,\"ss03\" 1 }\n.ti-field[data-size=\"default\"] .ti-dots--text { font-size:16px;line-height:1.25 }\n.ti-field[data-size=\"small\"] .ti-dots--text { font-size:13px;line-height:1.3 }\n.ti-caret { position:absolute;top:50%;transform:translateY(-50%);width:2px;height:18px;background:var(--ti-green);pointer-events:none;display:none;animation:ti-caret-blink 1s step-end infinite }\n.ti-caret.on { display:block }\n.ti-mirror { position:absolute;visibility:hidden;white-space:pre;pointer-events:none }\n.ti-clear { border:none;background:transparent;padding:0;cursor:pointer;color:var(--ti-icon-subtle);display:none;align-items:center;justify-content:center }\n.ti-field[data-size=\"default\"] .ti-clear { width:28px;height:28px }\n.ti-field[data-size=\"small\"] .ti-clear { width:20px;height:20px }\n.ti-shell.ti-show-clear .ti-clear { display:flex }\n.ti-clear svg { width:100%;height:100% }\n/* ---- Search variant (pill) ---- */\n.ti-search { position:relative;width:100%;border-radius:80px;border:2px solid transparent;display:flex;align-items:center;height:60px;cursor:text;transition:border-color .12s,background .12s }\n.ti-search[data-bg=\"white\"] { background:#f8f8f8;border-color:#dddddd }\n.ti-search[data-bg=\"grey\"] { background:#ffffff;border-color:#dddddd }\n.ti-search[data-bg=\"colour\"] { background:#ffffff;border-color:transparent }\n.ti-search.ti-focused { border-color:#000000 }\n.ti-search.ti-error { border-color:var(--ti-error)!important;background:#ffffff!important }\n.ti-search[data-size=\"small\"] { height:44px }\n.ti-search-icon { flex:0 0 auto;width:28px;height:28px;margin-left:20px;color:var(--ti-icon-subtle) }\n.ti-search[data-size=\"small\"] .ti-search-icon { width:20px;height:20px }\n.ti-search-icon svg { width:100%;height:100% }\n.ti-search-body { flex:1;min-width:0;position:relative;height:60px;padding-left:20px;display:flex;flex-direction:column;justify-content:center }\n.ti-search[data-size=\"small\"] .ti-search-body { height:44px }\n.ti-search-label { font-size:16px;font-weight:650;color:var(--ti-label-rest);line-height:1.25;position:absolute;left:20px;right:20px;top:50%;transform:translateY(-50%);pointer-events:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:top .14s ease,transform .14s ease,font-size .14s ease,color .14s ease }\n.ti-search[data-size=\"small\"] .ti-search-label { font-size:13px;line-height:1.3 }\n.ti-search.ti-floated .ti-search-label { top:14px;transform:translateY(0);font-size:13px;font-weight:500;color:var(--ti-label-focus) }\n.ti-search[data-size=\"small\"].ti-floated .ti-search-label { top:6px;font-size:12px }\n.ti-search-value-row { position:absolute;left:20px;right:20px;bottom:8px;height:20px;opacity:0;transition:opacity .1s;display:flex;align-items:center }\n.ti-search[data-size=\"small\"] .ti-search-value-row { bottom:5px;height:17px }\n.ti-search.ti-floated .ti-search-value-row { opacity:1 }\n.ti-search.ti-inline .ti-search-label { top:50%!important;transform:translateY(-50%)!important;font-size:16px!important;font-weight:650!important;color:var(--ti-label-rest)!important }\n.ti-search[data-size=\"small\"].ti-inline .ti-search-label { font-size:13px!important }\n.ti-search.ti-inline.ti-has-value .ti-search-label { opacity:0 }\n.ti-search.ti-inline .ti-search-value-row { opacity:1!important;top:0;bottom:0;height:auto }\n.ti-search-input { border:none;outline:none;background:transparent;font-family:inherit;font-weight:650;font-size:16px;color:var(--ti-text-primary);width:100%;caret-color:transparent }\n.ti-search[data-size=\"small\"] .ti-search-input { font-size:13px }\n.ti-search-input::placeholder { color:transparent }\n.ti-search-trailing { display:flex;align-items:center;gap:4px;margin-right:20px }\n.ti-search-spinner { width:28px;height:28px;display:none }\n.ti-search[data-size=\"small\"] .ti-search-spinner { width:20px;height:20px }\n.ti-search.ti-loading .ti-search-spinner { display:block }\n.ti-search-spinner svg { width:100%;height:100%;display:block }\n/* Blades stay put — only their opacity chases around the ring, like a comet trail. */\n.ti-search-spinner svg path { animation:ti-search-spin-fade .8s linear infinite }\n.ti-search-spinner svg path:nth-child(1) { animation-delay:0s }\n.ti-search-spinner svg path:nth-child(8) { animation-delay:-.1s }\n.ti-search-spinner svg path:nth-child(3) { animation-delay:-.2s }\n.ti-search-spinner svg path:nth-child(5) { animation-delay:-.3s }\n.ti-search-spinner svg path:nth-child(2) { animation-delay:-.4s }\n.ti-search-spinner svg path:nth-child(7) { animation-delay:-.5s }\n.ti-search-spinner svg path:nth-child(4) { animation-delay:-.6s }\n.ti-search-spinner svg path:nth-child(6) { animation-delay:-.7s }\n.ti-search-clear { width:28px;height:28px;padding:0;border:none;background:transparent;color:var(--ti-icon-subtle);display:none;align-items:center;justify-content:center;cursor:pointer;flex:0 0 auto }\n.ti-search[data-size=\"small\"] .ti-search-clear { width:20px;height:20px }\n.ti-search-clear svg { width:100%;height:100% }\n.ti-search.ti-show-clear .ti-search-clear { display:flex }",
+  "js": "const tiState = { type:'standard', size:'default', bg:'white', forceError:false, password:false, showHelper:false, leading:'none', trailing:'none', leadingEnabled:false, trailingEnabled:false, searchIcon:'search', labelMode:'caption', loading:false, labelPosition:'inside', showPlaceholder:false };\n\nfunction tiBuildStandardField(){\n  const leadingSvg = (tiState.leadingEnabled &amp;&amp; tiState.leading!=='none') ? TI_ICONS[tiState.leading][tiState.size] : null;\n  const trailingSvg = (tiState.trailingEnabled &amp;&amp; tiState.trailing!=='none') ? TI_ICONS[tiState.trailing][tiState.size] : null;\n  const labelOutside = tiState.labelPosition==='outside';\n  const wrap = document.createElement('div');\n  const shellHtml = `\n    &lt;div class=\"ti-shell${labelOutside ? ' ti-shell--label-outside' + (tiState.showPlaceholder ? ' ti-show-placeholder' : '') : ''}\" data-bg=\"${tiState.bg}\" data-size=\"${tiState.size}\"&gt;\n      &lt;div class=\"ti-field\" data-bg=\"${tiState.bg}\" data-size=\"${tiState.size}\"&gt;\n        ${leadingSvg ? `&lt;span class=\"ti-leading\"&gt;${leadingSvg}&lt;/span&gt;` : ''}\n        &lt;span class=\"ti-label\"&gt;Label&lt;/span&gt;\n        &lt;div class=\"ti-value-row\"&gt;\n          ${tiState.password ? '&lt;div class=\"ti-dots\"&gt;&lt;/div&gt;' : `&lt;input class=\"ti-input\" type=\"text\" autocomplete=\"off\" spellcheck=\"false\"${labelOutside &amp;&amp; tiState.showPlaceholder ? ' placeholder=\"Placeholder text\"' : ''}/&gt;`}\n          &lt;span class=\"ti-mirror\"&gt;&lt;/span&gt;\n          &lt;span class=\"ti-caret\"&gt;&lt;/span&gt;\n        &lt;/div&gt;\n        &lt;div class=\"ti-trailing\"&gt;\n          ${trailingSvg ? `&lt;span class=\"ti-trailing-icon\"&gt;${trailingSvg}&lt;/span&gt;` : ''}\n          &lt;button class=\"ti-eye\" type=\"button\" aria-label=\"Toggle password visibility\"&gt;${TI_EYE_SHOW_SVG}&lt;/button&gt;\n          &lt;button class=\"ti-clear\" type=\"button\" aria-label=\"Clear\"&gt;${TI_CLEAR_SVG}&lt;/button&gt;\n        &lt;/div&gt;\n      &lt;/div&gt;\n      &lt;div class=\"ti-helper\"&gt;Helper text&lt;/div&gt;\n    &lt;/div&gt;\n  `;\n  wrap.innerHTML = labelOutside\n    ? `&lt;div class=\"ti-outer${tiState.size==='small' ? ' ti-outer--sm' : ''}\"&gt;&lt;span class=\"ti-outer-label\"&gt;Label&lt;/span&gt;${shellHtml}&lt;/div&gt;`\n    : shellHtml;\n  const shell = wrap.querySelector('.ti-shell');\n  const field = wrap.querySelector('.ti-field');\n  const valueRow = field.querySelector('.ti-value-row');\n  const clearBtn = field.querySelector('.ti-clear');\n  const eyeBtn = field.querySelector('.ti-eye');\n  const helper = wrap.querySelector('.ti-helper');\n  const mirror = field.querySelector('.ti-mirror');\n  const caretEl = field.querySelector('.ti-caret');\n  let dotsContainer = field.querySelector('.ti-dots');\n  let realInput = field.querySelector('.ti-input');\n  let hiddenValue = '';\n  let revealed = false;\n\n  field.classList.toggle('ti-has-leading', !!leadingSvg);\n  field.classList.toggle('ti-show-eye', tiState.password);\n  // Standard is always Caption mode — the Caption/Inline toggle only applies to Search.\n\n  mirror.style.fontFamily = 'inherit';\n  mirror.style.fontWeight = '650';\n  mirror.style.fontSize = tiState.size==='small' ? '13px' : '16px';\n  const placeCaret = tiMakeCaretDriver(valueRow, mirror, caretEl);\n\n  function currentText(){ return tiState.password ? hiddenValue : (realInput ? realInput.value : ''); }\n\n  function renderPasswordField(){\n    if(revealed){ dotsContainer.classList.add('ti-dots--text'); dotsContainer.textContent = hiddenValue; }\n    else { dotsContainer.classList.remove('ti-dots--text'); tiRenderPasswordDots(dotsContainer, hiddenValue.length); }\n  }\n\n  function reflect(focused){\n    const text = currentText();\n    const hasText = text.length&gt;0;\n    shell.classList.toggle('ti-focused', focused);\n    shell.classList.toggle('ti-floated', focused || hasText);\n    shell.classList.toggle('ti-has-value', hasText);\n    shell.classList.toggle('ti-show-clear', focused &amp;&amp; hasText);\n    caretEl.classList.toggle('on', focused);\n    if(tiState.password &amp;&amp; !revealed){\n      mirror.textContent='';\n      const dotsWidth = dotsContainer ? dotsContainer.getBoundingClientRect().width : 0;\n      caretEl.style.left = (dotsWidth ? dotsWidth+4 : 0) + 'px';\n    } else {\n      placeCaret(text);\n    }\n    let label='default';\n    if(focused &amp;&amp; hasText) label='typing'; else if(focused) label='in focus'; else if(hasText) label='complete';\n    tiUpdateReadout(label);\n  }\n\n  if(tiState.password){\n    const dotsWrap = document.createElement('div');\n    dotsWrap.className='ti-dots';\n    valueRow.insertBefore(dotsWrap, valueRow.firstChild);\n    dotsContainer = dotsWrap;\n    field.tabIndex = 0;\n    field.addEventListener('focus', ()=&gt;reflect(true));\n    field.addEventListener('blur', ()=&gt;reflect(false));\n    field.addEventListener('keydown', (e)=&gt;{\n      if(e.key==='Backspace'){ hiddenValue = hiddenValue.slice(0,-1); }\n      else if(e.key.length===1){ hiddenValue += e.key; }\n      renderPasswordField();\n      reflect(true);\n    });\n    eyeBtn.addEventListener('mousedown', (e)=&gt;e.preventDefault());\n    eyeBtn.addEventListener('click', ()=&gt;{\n      revealed = !revealed;\n      eyeBtn.innerHTML = revealed ? TI_EYE_HIDE_SVG : TI_EYE_SHOW_SVG;\n      eyeBtn.setAttribute('aria-pressed', String(revealed));\n      renderPasswordField();\n      reflect(document.activeElement===field);\n    });\n  } else {\n    realInput.addEventListener('focus', ()=&gt;reflect(true));\n    realInput.addEventListener('blur', ()=&gt;reflect(false));\n    realInput.addEventListener('input', ()=&gt;reflect(true));\n  }\n\n  clearBtn.addEventListener('mousedown', (e)=&gt;e.preventDefault());\n  clearBtn.addEventListener('click', ()=&gt;{\n    hiddenValue='';\n    if(realInput) realInput.value='';\n    if(dotsContainer) dotsContainer.innerHTML='';\n    if(!tiState.password &amp;&amp; realInput) realInput.focus();\n    reflect(!!(realInput &amp;&amp; document.activeElement===realInput));\n  });\n\n  // Force error / show helper — driven by the sidebar toggles, applied once at build time.\n  const showError = tiState.forceError;\n  shell.classList.toggle('ti-error', showError);\n  const helperVisible = showError || tiState.showHelper;\n  helper.classList.toggle('show', helperVisible);\n  helper.classList.toggle('ti-error-text', showError);\n  helper.textContent = showError ? 'Error text' : 'Helper text';\n\n  reflect(false);\n  return { el: wrap, field: shell };\n}\n\nfunction tiBuildSearchField(){\n  const iconSvg = TI_ICONS[tiState.searchIcon][tiState.size];\n  const wrap = document.createElement('div');\n  wrap.innerHTML = `\n    &lt;div class=\"ti-search\" data-bg=\"${tiState.bg}\" data-size=\"${tiState.size}\"&gt;\n      &lt;div class=\"ti-search-icon\"&gt;${iconSvg}&lt;/div&gt;\n      &lt;div class=\"ti-search-body\"&gt;\n        &lt;span class=\"ti-search-label\"&gt;Label&lt;/span&gt;\n        &lt;div class=\"ti-search-value-row\"&gt;\n          &lt;input class=\"ti-search-input\" type=\"text\" autocomplete=\"off\" spellcheck=\"false\"/&gt;\n          &lt;span class=\"ti-mirror\"&gt;&lt;/span&gt;\n          &lt;span class=\"ti-caret\"&gt;&lt;/span&gt;\n        &lt;/div&gt;\n      &lt;/div&gt;\n      &lt;div class=\"ti-search-trailing\"&gt;\n        &lt;span class=\"ti-search-spinner\"&gt;${TI_SPINNER_SVG}&lt;/span&gt;\n        &lt;button class=\"ti-search-clear\" type=\"button\" aria-label=\"Clear\"&gt;${TI_CLEAR_SVG}&lt;/button&gt;\n      &lt;/div&gt;\n    &lt;/div&gt;\n  `;\n  const field = wrap.querySelector('.ti-search');\n  const valueRow = field.querySelector('.ti-search-value-row');\n  const input = wrap.querySelector('.ti-search-input');\n  const clearBtn = wrap.querySelector('.ti-search-clear');\n  const mirror = field.querySelector('.ti-mirror');\n  const caretEl = field.querySelector('.ti-caret');\n  mirror.style.fontFamily = 'inherit';\n  mirror.style.fontWeight = '650';\n  mirror.style.fontSize = tiState.size==='small' ? '13px' : '16px';\n  const placeCaret = tiMakeCaretDriver(valueRow, mirror, caretEl);\n\n  field.classList.toggle('ti-inline', tiState.labelMode==='inline');\n  field.classList.toggle('ti-loading', tiState.loading);\n\n  // Loading only ever shows against a real query — turns on when the user\n  // submits (Enter) with text present, and off the instant the field is empty.\n  function setLoading(on){\n    tiState.loading = on;\n    field.classList.toggle('ti-loading', on);\n    const toggle = document.getElementById('ti-toggle-loading');\n    if(toggle) toggle.classList.toggle('on', on);\n  }\n\n  function reflect(focused, opts){\n    const hasText = input.value.length&gt;0;\n    field.classList.toggle('ti-focused', focused);\n    field.classList.toggle('ti-floated', focused || hasText);\n    field.classList.toggle('ti-has-value', hasText);\n    field.classList.toggle('ti-show-clear', focused &amp;&amp; hasText);\n    caretEl.classList.toggle('on', focused);\n    placeCaret(input.value);\n    if(!hasText &amp;&amp; tiState.loading &amp;&amp; !(opts &amp;&amp; opts.initial)) setLoading(false);\n    let label='default';\n    if(focused &amp;&amp; hasText) label='typing'; else if(focused) label='in focus'; else if(hasText) label='complete';\n    tiUpdateReadout(label);\n  }\n  input.addEventListener('focus', ()=&gt;reflect(true));\n  input.addEventListener('blur', ()=&gt;reflect(false));\n  input.addEventListener('input', ()=&gt;reflect(true));\n  input.addEventListener('keydown', (e)=&gt;{ if(e.key==='Enter' &amp;&amp; input.value.length&gt;0){ setLoading(true); } });\n  clearBtn.addEventListener('mousedown', e=&gt;e.preventDefault());\n  clearBtn.addEventListener('click', ()=&gt;{ input.value=''; input.focus(); reflect(true); });\n\n  field.classList.toggle('ti-error', tiState.forceError);\n\n  reflect(false, {initial:true});\n  return { el: wrap, field };\n}",
   "usage": {
     "do": [
       "Use the Standard field for any value the user types and submits — names, amounts, references, passwords.",
@@ -3335,8 +3333,8 @@ body.home .main{max-width:none;margin:0;padding:0}
       "Don’t add a leading or trailing icon purely for decoration — every icon slot should communicate something (an action, a field type, a state)."
     ]
   },
-  "contentHash": "d7148540eff00cbcc340aadf82d1e478e8c663609276c87bdb688a53ea08f4c0",
-  "note": "Covers the Standard (floating/inline label) and Search (pill) field families. TI_ICONS (the icon SVG set) is intentionally excluded — it's 50KB+ of decorative markup, not structural — see the live source directly for icon glyphs if needed."
+  "contentHash": "d7ec614428f75f273a83ca86af0f79b66df524b9d1a405e6f7ee88f5d3d6a887",
+  "note": "Covers the Standard (floating/inline/outside label) and Search (pill) field families. TI_ICONS (the icon SVG set) is intentionally excluded — it's 50KB+ of decorative markup, not structural — see the live source directly for icon glyphs if needed. Label position 'outside' (added 2026-08-04) renders the label above the shell via .ti-outer/.ti-outer-label, hides the inside .ti-label, and optionally shows a real placeholder via .ti-show-placeholder — Search field is unaffected (always resets to 'inside' on switching type)."
 }
   </pre>
 </details>
@@ -4313,19 +4311,33 @@ body.home .main{max-width:none;margin:0;padding:0}
     <section class="sec" id="s-dropdown">
       <div class="sec__head">
         <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Dropdown <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.2.1</span></h1>
+        <h1 class="sec__title">Dropdown <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.3.0</span></h1>
         <p class="sec__desc">A labelled select trigger that opens a card of options, in <strong>single-select</strong> (one exclusive choice, a plain label with a trailing check) or <strong>multi-select</strong> (several independent checkboxes) form. Built from a <strong>Dropdown field</strong> (label, trigger button, assistive caption) in <strong>Bordered</strong> or <strong>Rounded</strong> style, <strong>Medium</strong> or <strong>Small</strong> size, paired with a <strong>Dropdown list item</strong> inside the options card, plus an optional search input.</p>
       </div>
 
       <div class="type-sub">
         <div class="type-sub__title">Single-select</div>
         <div class="type-sub__desc">A working dropdown &mdash; click the trigger to open the list, click an option to select it and close. Click outside or press <code>Esc</code> to dismiss without changing the selection.</div>
+        <div class="dpd-pg-toggle" id="dpd-pg-toggle-single">
+          <span class="dpd-pg-toggle__label">Label position</span>
+          <div class="dpd-pg-toggle__pr">
+            <button type="button" class="dpd-pg-toggle__p on" data-value="outside" onclick="dpdSetLabelPos('single','outside')">Outside</button>
+            <button type="button" class="dpd-pg-toggle__p" data-value="inside" onclick="dpdSetLabelPos('single','inside')">Inside</button>
+          </div>
+        </div>
         <div class="dpd-demo dpd-demo--play" id="dpd-play"></div>
       </div>
 
       <div class="type-sub">
         <div class="type-sub__title">Multi-select</div>
         <div class="type-sub__desc">Click as many options as needed &mdash; each checkbox toggles independently and the menu stays open. The trigger summarises the pick as a label, or &ldquo;N selected&rdquo; once there&rsquo;s more than one. Use <strong>Clear</strong> to reset, or <strong>Done</strong> to close.</div>
+        <div class="dpd-pg-toggle" id="dpd-pg-toggle-multi">
+          <span class="dpd-pg-toggle__label">Label position</span>
+          <div class="dpd-pg-toggle__pr">
+            <button type="button" class="dpd-pg-toggle__p on" data-value="outside" onclick="dpdSetLabelPos('multi','outside')">Outside</button>
+            <button type="button" class="dpd-pg-toggle__p" data-value="inside" onclick="dpdSetLabelPos('multi','inside')">Inside</button>
+          </div>
+        </div>
         <div class="dpd-demo dpd-demo--play" id="dpd-play-multi"></div>
       </div>
 
@@ -4453,7 +4465,7 @@ body.home .main{max-width:none;margin:0;padding:0}
     ".pop__apply"
   ],
   "css": "/* ================================================================\n   DROPDOWN\n================================================================ */\n.dpd-field { display:flex;flex-direction:column;gap:4px;width:267px;font-family:inherit }\n.dpd-label { font-size:14px;font-weight:600;color:var(--color-text-1);padding-bottom:2px }\n.dpd-wrap { position:relative }\n.dpd-trigger { display:flex;align-items:center;justify-content:space-between;gap:8px;width:100%;height:48px;padding:0 12px;border-radius:6px;border:2px solid var(--color-input-border);background:var(--color-input-bg);cursor:pointer;font-family:inherit;text-align:left;transition:border-color .15s,background-color .15s }\n.dpd-trigger__text { flex:1 1 auto;min-width:0;font-size:16px;font-weight:600;color:var(--color-text-s);overflow:hidden;text-overflow:ellipsis;white-space:nowrap }\n.dpd-trigger.has-value .dpd-trigger__text { color:var(--color-text-1) }\n.dpd-trigger__chevron { flex-shrink:0;width:12px;height:12px;display:flex;align-items:center;justify-content:center;color:var(--color-text-1);transition:transform .18s ease }\n.dpd-trigger__chevron svg { width:100%;height:100% }\n.dpd-caption { font-size:12px;color:var(--color-text-3) }\n/* hover */\n.dpd-trigger:hover,.dpd-trigger--hover { background:var(--color-surface-n1) }\n/* keyboard focus / open — border switches to the inverse (black in light, white in dark) */\n.dpd-trigger:focus-visible,.dpd-trigger--focus,.dpd-trigger--open { outline:none;border-color:var(--color-input-focus);background:var(--color-surface-base) }\n.dpd-wrap.is-open .dpd-trigger__chevron,.dpd-trigger--open .dpd-trigger__chevron { transform:rotate(180deg) }\n/* Rounded style — pill trigger, border hidden until hover/focus/open */\n.dpd-field--rounded .dpd-trigger { border-radius:999px;border-color:var(--color-input-bg) }\n.dpd-field--rounded .dpd-trigger:hover,.dpd-field--rounded .dpd-trigger--hover { border-color:var(--color-surface-n1) }\n.dpd-field--rounded .dpd-trigger:focus-visible,.dpd-field--rounded .dpd-trigger--focus,.dpd-field--rounded .dpd-trigger--open { border-color:var(--color-input-focus) }\n/* Small size */\n.dpd-field--sm .dpd-trigger { height:40px;padding:0 10px;gap:6px }\n.dpd-field--sm .dpd-trigger__text { font-size:14px }\n.dpd-field--sm .dpd-trigger__chevron { width:10px;height:10px }\n.dpd-field--sm .dpd-label { font-size:13px }\n.dpd-field--sm .dpd-caption { font-size:11px }\n/* Menu card — attaches under the trigger, real instances float; static swatches lay out inline */\n.dpd-menu { position:absolute;left:0;right:0;top:calc(100% + 6px);z-index:20;max-height:280px;overflow-y:auto;display:flex;flex-direction:column;gap:2px;padding:4px;border-radius:12px;border:1px solid var(--chrome-border);background:var(--color-surface-base);box-shadow:0 8px 24px rgba(0,0,0,.14) }\n.dpd-menu[hidden] { display:none }\n.dpd-menu--inline { position:static;top:auto;margin-top:6px;box-shadow:0 1px 2px rgba(0,0,0,.1) }\n.dpd-search { display:flex;align-items:center;gap:8px;padding:9px 12px;margin-bottom:2px;border-radius:999px;background:var(--color-surface-n1);color:var(--color-text-3);flex-shrink:0 }\n.dpd-search svg { width:14px;height:14px;flex-shrink:0 }\n.dpd-search input { flex:1;min-width:0;border:none;background:none;outline:none;font-family:inherit;font-size:13px;color:var(--color-text-1) }\n.dpd-item { display:flex;align-items:center;gap:8px;min-height:44px;padding:8px 10px;border-radius:6px;cursor:pointer;border:none;background:none;width:100%;text-align:left;font-family:inherit;flex-shrink:0 }\n.dpd-item:hover,.dpd-item--hover { background:var(--color-surface-n1) }\n.dpd-item__box { flex-shrink:0;width:18px;height:18px;border-radius:5px;border:2px solid var(--chrome-muted);background-color:var(--color-surface-base);background-repeat:no-repeat;background-position:center;background-size:70%;transition:background-color .15s,border-color .15s }\n.dpd-item__label { flex:1 1 auto;min-width:0;font-size:15px;font-weight:500;color:var(--color-text-1);overflow:hidden;text-overflow:ellipsis;white-space:nowrap }\n.dpd-item.is-selected,.dpd-item--selected { background:var(--color-success-l) }\n.dpd-item.is-selected .dpd-item__box,.dpd-item--selected .dpd-item__box { background-color:var(--color-success-h);border-color:var(--color-success-h);background-image:url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='none' stroke='%23fff' stroke-width='2.3' stroke-linecap='round' stroke-linejoin='round' d='M3.5 8.4l3 3 6-6.6'/%3E%3C/svg%3E\") }\n.dpd-item.is-selected .dpd-item__label,.dpd-item--selected .dpd-item__label { font-weight:700 }\n.dpd-item__check { margin-left:auto;flex-shrink:0;width:16px;height:16px;color:var(--color-success-h);opacity:0;transition:opacity .1s }\n.dpd-item__check svg { display:block;width:100%;height:100% }\n.dpd-item.is-selected .dpd-item__check,.dpd-item--selected .dpd-item__check { opacity:1 }\n.dpd-menu__foot { display:flex;gap:8px;padding:8px 6px 4px;margin-top:2px;border-top:1px solid var(--chrome-border);flex-shrink:0 }\n.dpd-menu__clear { flex:1;background:none;border:1px solid var(--chrome-border);color:var(--chrome-txt);border-radius:8px;padding:8px;font-size:12.5px;font-weight:700;font-family:inherit;cursor:pointer }\n.dpd-menu__clear:hover { background:var(--chrome-hover) }\n.pop__apply { flex:1;background:var(--color-btn-s-bg);color:var(--color-btn-s-txt);border:0;border-radius:8px;padding:8px;font-size:12.5px;font-weight:700;font-family:inherit;cursor:pointer }",
-  "js": "function itemHtml(label, selected){\n    return '&lt;button type=\"button\" class=\"dpd-item' + (selected ? ' is-selected' : '') + '\"&gt;' +\n      '&lt;span class=\"dpd-item__label\"&gt;' + label + '&lt;/span&gt;' +\n      '&lt;span class=\"dpd-item__check\"&gt;' + CHECK_ICON + '&lt;/span&gt;' +\n    '&lt;/button&gt;';\n  }\n\nfunction itemHtmlCheckbox(label, selected){\n    return '&lt;button type=\"button\" class=\"dpd-item' + (selected ? ' is-selected' : '') + '\"&gt;' +\n      '&lt;span class=\"dpd-item__box\"&gt;&lt;/span&gt;' +\n      '&lt;span class=\"dpd-item__label\"&gt;' + label + '&lt;/span&gt;' +\n    '&lt;/button&gt;';\n  }\n\nfunction menuHtml(options, selectedIndex, opts){\n    opts = opts || {};\n    var search = opts.showSearch ? ('&lt;div class=\"dpd-search\"&gt;' + SEARCH_ICON + '&lt;input type=\"text\" placeholder=\"Search\" aria-label=\"Search options\"&gt;&lt;/div&gt;') : '';\n    var items = options.map(function(o, i){ return itemHtml(o, i === selectedIndex); }).join('');\n    return '&lt;div class=\"dpd-menu' + (opts.inline ? ' dpd-menu--inline' : '') + '\"' + (opts.inline ? '' : ' hidden') + '&gt;' + search + items + '&lt;/div&gt;';\n  }\n\nfunction triggerHtml(opts){\n    var cls = 'dpd-trigger';\n    if(opts.state === 'hover') cls += ' dpd-trigger--hover';\n    if(opts.state === 'focus') cls += ' dpd-trigger--focus';\n    if(opts.state === 'open')  cls += ' dpd-trigger--open';\n    var hasValue = opts.selectedIndex != null;\n    if(hasValue) cls += ' has-value';\n    var text = hasValue ? opts.options[opts.selectedIndex] : (opts.placeholder || 'Choose an option');\n    return '&lt;button type=\"button\" class=\"' + cls + '\"&gt;&lt;span class=\"dpd-trigger__text\"&gt;' + text + '&lt;/span&gt;&lt;span class=\"dpd-trigger__chevron\"&gt;' + CHEVRON + '&lt;/span&gt;&lt;/button&gt;';\n  }\n\nfunction fieldHtml(opts){\n    opts = opts || {};\n    var options = opts.options || OPTIONS;\n    var cls = 'dpd-field';\n    if(opts.style === 'rounded') cls += ' dpd-field--rounded';\n    if(opts.size === 'sm') cls += ' dpd-field--sm';\n    var label   = opts.showLabel   === false ? '' : '&lt;div class=\"dpd-label\"&gt;' + (opts.label || 'Dropdown label') + '&lt;/div&gt;';\n    var caption = opts.showCaption === false ? '' : '&lt;div class=\"dpd-caption\"&gt;' + (opts.caption || 'Assistive caption') + '&lt;/div&gt;';\n    var menu = opts.state === 'open' ? menuHtml(options, opts.selectedIndex, {showSearch: opts.showSearch, inline: true}) : '';\n    return '&lt;div class=\"' + cls + '\"&gt;' + label +\n      '&lt;div class=\"dpd-wrap' + (opts.state === 'open' ? ' is-open' : '') + '\"&gt;' + triggerHtml(Object.assign({}, opts, {options: options})) + menu + '&lt;/div&gt;' +\n      caption +\n    '&lt;/div&gt;';\n  }\n\nfunction interactiveFieldHtml(opts){\n    var cls = 'dpd-field' + (opts.style === 'rounded' ? ' dpd-field--rounded' : '') + (opts.size === 'sm' ? ' dpd-field--sm' : '');\n    var label = '&lt;div class=\"dpd-label\"&gt;' + (opts.label || 'Dropdown label') + '&lt;/div&gt;';\n    var caption = '&lt;div class=\"dpd-caption\"&gt;' + (opts.caption || 'Assistive caption') + '&lt;/div&gt;';\n    var menu = menuHtml(opts.options, null, {showSearch: opts.showSearch, inline: false});\n    return '&lt;div class=\"' + cls + '\"&gt;' + label +\n      '&lt;div class=\"dpd-wrap\"&gt;' + triggerHtml({options: opts.options, placeholder: opts.placeholder}) + menu + '&lt;/div&gt;' +\n      caption +\n    '&lt;/div&gt;';\n  }\n\nfunction wireInteractive(root){\n    var wrap = root.querySelector('.dpd-wrap');\n    var trigger = wrap.querySelector('.dpd-trigger');\n    var menu = wrap.querySelector('.dpd-menu');\n    var textEl = trigger.querySelector('.dpd-trigger__text');\n    function close(){\n      wrap.classList.remove('is-open');\n      trigger.classList.remove('dpd-trigger--open');\n      menu.setAttribute('hidden', '');\n    }\n    function openMenu(){\n      wrap.classList.add('is-open');\n      trigger.classList.add('dpd-trigger--open');\n      menu.removeAttribute('hidden');\n      var search = menu.querySelector('input');\n      if(search) search.focus();\n    }\n    trigger.addEventListener('click', function(e){\n      e.stopPropagation();\n      if(wrap.classList.contains('is-open')) close(); else openMenu();\n    });\n    menu.querySelectorAll('.dpd-item').forEach(function(btn){\n      btn.addEventListener('click', function(e){\n        e.stopPropagation();\n        menu.querySelectorAll('.dpd-item').forEach(function(b){ b.classList.remove('is-selected'); });\n        btn.classList.add('is-selected');\n        textEl.textContent = btn.querySelector('.dpd-item__label').textContent;\n        trigger.classList.add('has-value');\n        close();\n      });\n    });\n    var search = menu.querySelector('input');\n    if(search){\n      search.addEventListener('click', function(e){ e.stopPropagation(); });\n      search.addEventListener('input', function(){\n        var q = search.value.trim().toLowerCase();\n        menu.querySelectorAll('.dpd-item').forEach(function(btn){\n          var txt = btn.querySelector('.dpd-item__label').textContent.toLowerCase();\n          btn.style.display = txt.indexOf(q) &gt; -1 ? '' : 'none';\n        });\n      });\n    }\n    document.addEventListener('click', function(e){\n      if(!wrap.contains(e.target)) close();\n    });\n    document.addEventListener('keydown', function(e){\n      if(e.key === 'Escape' &amp;&amp; wrap.classList.contains('is-open')) close();\n    });\n  }\n\nfunction interactiveMultiFieldHtml(opts){\n    var cls = 'dpd-field' + (opts.style === 'rounded' ? ' dpd-field--rounded' : '') + (opts.size === 'sm' ? ' dpd-field--sm' : '');\n    var label = '&lt;div class=\"dpd-label\"&gt;' + (opts.label || 'Dropdown label') + '&lt;/div&gt;';\n    var caption = '&lt;div class=\"dpd-caption\"&gt;' + (opts.caption || 'Assistive caption') + '&lt;/div&gt;';\n    var items = opts.options.map(function(o){ return itemHtmlCheckbox(o, false); }).join('');\n    var search = opts.showSearch ? ('&lt;div class=\"dpd-search\"&gt;' + SEARCH_ICON + '&lt;input type=\"text\" placeholder=\"Search\" aria-label=\"Search options\"&gt;&lt;/div&gt;') : '';\n    var foot = '&lt;div class=\"dpd-menu__foot\"&gt;&lt;button type=\"button\" class=\"dpd-menu__clear\"&gt;Clear&lt;/button&gt;&lt;button type=\"button\" class=\"pop__apply\"&gt;Done&lt;/button&gt;&lt;/div&gt;';\n    var menu = '&lt;div class=\"dpd-menu\" hidden&gt;' + search + items + foot + '&lt;/div&gt;';\n    return '&lt;div class=\"' + cls + '\"&gt;' + label +\n      '&lt;div class=\"dpd-wrap\"&gt;' + triggerHtml({options: opts.options, placeholder: opts.placeholder}) + menu + '&lt;/div&gt;' +\n      caption +\n    '&lt;/div&gt;';\n  }\n\nfunction wireInteractiveMulti(root, opts){\n    var wrap = root.querySelector('.dpd-wrap');\n    var trigger = wrap.querySelector('.dpd-trigger');\n    var menu = wrap.querySelector('.dpd-menu');\n    var textEl = trigger.querySelector('.dpd-trigger__text');\n    var options = opts.options;\n    var selected = new Set();\n    function close(){\n      wrap.classList.remove('is-open');\n      trigger.classList.remove('dpd-trigger--open');\n      menu.setAttribute('hidden', '');\n    }\n    function openMenu(){\n      wrap.classList.add('is-open');\n      trigger.classList.add('dpd-trigger--open');\n      menu.removeAttribute('hidden');\n      var search = menu.querySelector('input');\n      if(search) search.focus();\n    }\n    function updateTrigger(){\n      if(selected.size === 0){\n        textEl.textContent = opts.placeholder || 'Choose an option';\n        trigger.classList.remove('has-value');\n      } else if(selected.size === 1){\n        textEl.textContent = options[selected.values().next().value];\n        trigger.classList.add('has-value');\n      } else {\n        textEl.textContent = selected.size + ' selected';\n        trigger.classList.add('has-value');\n      }\n    }\n    trigger.addEventListener('click', function(e){\n      e.stopPropagation();\n      if(wrap.classList.contains('is-open')) close(); else openMenu();\n    });\n    var itemEls = Array.prototype.slice.call(menu.querySelectorAll('.dpd-item'));\n    itemEls.forEach(function(btn, i){\n      btn.addEventListener('click', function(e){\n        e.stopPropagation();\n        if(selected.has(i)){ selected.delete(i); btn.classList.remove('is-selected'); }\n        else { selected.add(i); btn.classList.add('is-selected'); }\n        updateTrigger();\n      });\n    });\n    var clearBtn = menu.querySelector('.dpd-menu__clear');\n    if(clearBtn) clearBtn.addEventListener('click', function(e){\n      e.stopPropagation();\n      selected.clear();\n      itemEls.forEach(function(b){ b.classList.remove('is-selected'); });\n      updateTrigger();\n    });\n    var doneBtn = menu.querySelector('.pop__apply');\n    if(doneBtn) doneBtn.addEventListener('click', function(e){ e.stopPropagation(); close(); });\n    var search = menu.querySelector('.dpd-search input');\n    if(search){\n      search.addEventListener('click', function(e){ e.stopPropagation(); });\n      search.addEventListener('input', function(){\n        var q = search.value.trim().toLowerCase();\n        itemEls.forEach(function(btn){\n          var txt = btn.querySelector('.dpd-item__label').textContent.toLowerCase();\n          btn.style.display = txt.indexOf(q) &gt; -1 ? '' : 'none';\n        });\n      });\n    }\n    document.addEventListener('click', function(e){\n      if(!wrap.contains(e.target)) close();\n    });\n    document.addEventListener('keydown', function(e){\n      if(e.key === 'Escape' &amp;&amp; wrap.classList.contains('is-open')) close();\n    });\n    updateTrigger();\n  }\n\nvar CHEVRON = '&lt;svg viewBox=\"0 0 12 8\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"&gt;&lt;path d=\"M1 1.5L6 6.5L11 1.5\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/&gt;&lt;/svg&gt;';\n\nvar SEARCH_ICON = '&lt;svg viewBox=\"0 0 16 16\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"&gt;&lt;circle cx=\"7\" cy=\"7\" r=\"5\" stroke=\"currentColor\" stroke-width=\"1.6\"/&gt;&lt;path d=\"M11.5 11.5L15 15\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\"/&gt;&lt;/svg&gt;';\n\nvar CHECK_ICON = '&lt;svg viewBox=\"0 0 16 16\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"&gt;&lt;path d=\"M3 8.5L6.5 12L13 4.5\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/&gt;&lt;/svg&gt;';\n\nvar OPTIONS = ['Airtime &amp; Data','Electricity','Bill Payments','Vouchers','Gaming','Insurance','Lottery','Data Bundles'];",
+  "js": "function itemHtml(label, selected){\n    return '&lt;button type=\"button\" class=\"dpd-item' + (selected ? ' is-selected' : '') + '\"&gt;' +\n      '&lt;span class=\"dpd-item__label\"&gt;' + label + '&lt;/span&gt;' +\n      '&lt;span class=\"dpd-item__check\"&gt;' + CHECK_ICON + '&lt;/span&gt;' +\n    '&lt;/button&gt;';\n  }\n\nfunction itemHtmlCheckbox(label, selected){\n    return '&lt;button type=\"button\" class=\"dpd-item' + (selected ? ' is-selected' : '') + '\"&gt;' +\n      '&lt;span class=\"dpd-item__box\"&gt;&lt;/span&gt;' +\n      '&lt;span class=\"dpd-item__label\"&gt;' + label + '&lt;/span&gt;' +\n    '&lt;/button&gt;';\n  }\n\nfunction menuHtml(options, selectedIndex, opts){\n    opts = opts || {};\n    var search = opts.showSearch ? ('&lt;div class=\"dpd-search\"&gt;' + SEARCH_ICON + '&lt;input type=\"text\" placeholder=\"Search\" aria-label=\"Search options\"&gt;&lt;/div&gt;') : '';\n    var items = options.map(function(o, i){ return itemHtml(o, i === selectedIndex); }).join('');\n    return '&lt;div class=\"dpd-menu' + (opts.inline ? ' dpd-menu--inline' : '') + '\"' + (opts.inline ? '' : ' hidden') + '&gt;' + search + items + '&lt;/div&gt;';\n  }\n\nfunction triggerHtml(opts){\n    var cls = 'dpd-trigger';\n    if(opts.state === 'hover') cls += ' dpd-trigger--hover';\n    if(opts.state === 'focus') cls += ' dpd-trigger--focus';\n    if(opts.state === 'open')  cls += ' dpd-trigger--open';\n    var hasValue = opts.selectedIndex != null;\n    if(hasValue) cls += ' has-value';\n    var text = hasValue ? opts.options[opts.selectedIndex] : (opts.placeholder || 'Choose an option');\n    return '&lt;button type=\"button\" class=\"' + cls + '\"&gt;&lt;span class=\"dpd-trigger__text\"&gt;' + text + '&lt;/span&gt;&lt;span class=\"dpd-trigger__chevron\"&gt;' + CHEVRON + '&lt;/span&gt;&lt;/button&gt;';\n  }\n\nfunction fieldHtml(opts){\n    opts = opts || {};\n    var options = opts.options || OPTIONS;\n    var cls = 'dpd-field';\n    if(opts.style === 'rounded') cls += ' dpd-field--rounded';\n    if(opts.size === 'sm') cls += ' dpd-field--sm';\n    var label   = opts.showLabel   === false ? '' : '&lt;div class=\"dpd-label\"&gt;' + (opts.label || 'Dropdown label') + '&lt;/div&gt;';\n    var caption = opts.showCaption === false ? '' : '&lt;div class=\"dpd-caption\"&gt;' + (opts.caption || 'Assistive caption') + '&lt;/div&gt;';\n    var menu = opts.state === 'open' ? menuHtml(options, opts.selectedIndex, {showSearch: opts.showSearch, inline: true}) : '';\n    return '&lt;div class=\"' + cls + '\"&gt;' + label +\n      '&lt;div class=\"dpd-wrap' + (opts.state === 'open' ? ' is-open' : '') + '\"&gt;' + triggerHtml(Object.assign({}, opts, {options: options})) + menu + '&lt;/div&gt;' +\n      caption +\n    '&lt;/div&gt;';\n  }\n\nfunction interactiveFieldHtml(opts){\n    var labelInside = opts.labelPosition === 'inside';\n    var cls = 'dpd-field' + (opts.style === 'rounded' ? ' dpd-field--rounded' : '') + (opts.size === 'sm' ? ' dpd-field--sm' : '');\n    var label = labelInside ? '' : '&lt;div class=\"dpd-label\"&gt;' + (opts.label || 'Dropdown label') + '&lt;/div&gt;';\n    var caption = '&lt;div class=\"dpd-caption\"&gt;' + (opts.caption || 'Assistive caption') + '&lt;/div&gt;';\n    var menu = menuHtml(opts.options, null, {showSearch: opts.showSearch, inline: false});\n    return '&lt;div class=\"' + cls + '\"&gt;' + label +\n      '&lt;div class=\"dpd-wrap\"&gt;' + triggerHtml({options: opts.options, placeholder: opts.placeholder}) + menu + '&lt;/div&gt;' +\n      caption +\n    '&lt;/div&gt;';\n  }\n\nfunction wireInteractive(root){\n    var wrap = root.querySelector('.dpd-wrap');\n    var trigger = wrap.querySelector('.dpd-trigger');\n    var menu = wrap.querySelector('.dpd-menu');\n    var textEl = trigger.querySelector('.dpd-trigger__text');\n    function close(){\n      wrap.classList.remove('is-open');\n      trigger.classList.remove('dpd-trigger--open');\n      menu.setAttribute('hidden', '');\n    }\n    function openMenu(){\n      wrap.classList.add('is-open');\n      trigger.classList.add('dpd-trigger--open');\n      menu.removeAttribute('hidden');\n      var search = menu.querySelector('input');\n      if(search) search.focus();\n    }\n    trigger.addEventListener('click', function(e){\n      e.stopPropagation();\n      if(wrap.classList.contains('is-open')) close(); else openMenu();\n    });\n    menu.querySelectorAll('.dpd-item').forEach(function(btn){\n      btn.addEventListener('click', function(e){\n        e.stopPropagation();\n        menu.querySelectorAll('.dpd-item').forEach(function(b){ b.classList.remove('is-selected'); });\n        btn.classList.add('is-selected');\n        textEl.textContent = btn.querySelector('.dpd-item__label').textContent;\n        trigger.classList.add('has-value');\n        close();\n      });\n    });\n    var search = menu.querySelector('input');\n    if(search){\n      search.addEventListener('click', function(e){ e.stopPropagation(); });\n      search.addEventListener('input', function(){\n        var q = search.value.trim().toLowerCase();\n        menu.querySelectorAll('.dpd-item').forEach(function(btn){\n          var txt = btn.querySelector('.dpd-item__label').textContent.toLowerCase();\n          btn.style.display = txt.indexOf(q) &gt; -1 ? '' : 'none';\n        });\n      });\n    }\n    document.addEventListener('click', function(e){\n      if(!wrap.contains(e.target)) close();\n    });\n    document.addEventListener('keydown', function(e){\n      if(e.key === 'Escape' &amp;&amp; wrap.classList.contains('is-open')) close();\n    });\n  }\n\nfunction interactiveMultiFieldHtml(opts){\n    var labelInside = opts.labelPosition === 'inside';\n    var cls = 'dpd-field' + (opts.style === 'rounded' ? ' dpd-field--rounded' : '') + (opts.size === 'sm' ? ' dpd-field--sm' : '');\n    var label = labelInside ? '' : '&lt;div class=\"dpd-label\"&gt;' + (opts.label || 'Dropdown label') + '&lt;/div&gt;';\n    var caption = '&lt;div class=\"dpd-caption\"&gt;' + (opts.caption || 'Assistive caption') + '&lt;/div&gt;';\n    var items = opts.options.map(function(o){ return itemHtmlCheckbox(o, false); }).join('');\n    var search = opts.showSearch ? ('&lt;div class=\"dpd-search\"&gt;' + SEARCH_ICON + '&lt;input type=\"text\" placeholder=\"Search\" aria-label=\"Search options\"&gt;&lt;/div&gt;') : '';\n    var foot = '&lt;div class=\"dpd-menu__foot\"&gt;&lt;button type=\"button\" class=\"dpd-menu__clear\"&gt;Clear&lt;/button&gt;&lt;button type=\"button\" class=\"pop__apply\"&gt;Done&lt;/button&gt;&lt;/div&gt;';\n    var menu = '&lt;div class=\"dpd-menu\" hidden&gt;' + search + items + foot + '&lt;/div&gt;';\n    return '&lt;div class=\"' + cls + '\"&gt;' + label +\n      '&lt;div class=\"dpd-wrap\"&gt;' + triggerHtml({options: opts.options, placeholder: opts.placeholder}) + menu + '&lt;/div&gt;' +\n      caption +\n    '&lt;/div&gt;';\n  }\n\nfunction wireInteractiveMulti(root, opts){\n    var wrap = root.querySelector('.dpd-wrap');\n    var trigger = wrap.querySelector('.dpd-trigger');\n    var menu = wrap.querySelector('.dpd-menu');\n    var textEl = trigger.querySelector('.dpd-trigger__text');\n    var options = opts.options;\n    var selected = new Set();\n    function close(){\n      wrap.classList.remove('is-open');\n      trigger.classList.remove('dpd-trigger--open');\n      menu.setAttribute('hidden', '');\n    }\n    function openMenu(){\n      wrap.classList.add('is-open');\n      trigger.classList.add('dpd-trigger--open');\n      menu.removeAttribute('hidden');\n      var search = menu.querySelector('input');\n      if(search) search.focus();\n    }\n    function updateTrigger(){\n      if(selected.size === 0){\n        textEl.textContent = opts.placeholder || 'Choose an option';\n        trigger.classList.remove('has-value');\n      } else if(selected.size === 1){\n        textEl.textContent = options[selected.values().next().value];\n        trigger.classList.add('has-value');\n      } else {\n        textEl.textContent = selected.size + ' selected';\n        trigger.classList.add('has-value');\n      }\n    }\n    trigger.addEventListener('click', function(e){\n      e.stopPropagation();\n      if(wrap.classList.contains('is-open')) close(); else openMenu();\n    });\n    var itemEls = Array.prototype.slice.call(menu.querySelectorAll('.dpd-item'));\n    itemEls.forEach(function(btn, i){\n      btn.addEventListener('click', function(e){\n        e.stopPropagation();\n        if(selected.has(i)){ selected.delete(i); btn.classList.remove('is-selected'); }\n        else { selected.add(i); btn.classList.add('is-selected'); }\n        updateTrigger();\n      });\n    });\n    var clearBtn = menu.querySelector('.dpd-menu__clear');\n    if(clearBtn) clearBtn.addEventListener('click', function(e){\n      e.stopPropagation();\n      selected.clear();\n      itemEls.forEach(function(b){ b.classList.remove('is-selected'); });\n      updateTrigger();\n    });\n    var doneBtn = menu.querySelector('.pop__apply');\n    if(doneBtn) doneBtn.addEventListener('click', function(e){ e.stopPropagation(); close(); });\n    var search = menu.querySelector('.dpd-search input');\n    if(search){\n      search.addEventListener('click', function(e){ e.stopPropagation(); });\n      search.addEventListener('input', function(){\n        var q = search.value.trim().toLowerCase();\n        itemEls.forEach(function(btn){\n          var txt = btn.querySelector('.dpd-item__label').textContent.toLowerCase();\n          btn.style.display = txt.indexOf(q) &gt; -1 ? '' : 'none';\n        });\n      });\n    }\n    document.addEventListener('click', function(e){\n      if(!wrap.contains(e.target)) close();\n    });\n    document.addEventListener('keydown', function(e){\n      if(e.key === 'Escape' &amp;&amp; wrap.classList.contains('is-open')) close();\n    });\n    updateTrigger();\n  }\n\nvar CHEVRON = '&lt;svg viewBox=\"0 0 12 8\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"&gt;&lt;path d=\"M1 1.5L6 6.5L11 1.5\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/&gt;&lt;/svg&gt;';\n\nvar SEARCH_ICON = '&lt;svg viewBox=\"0 0 16 16\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"&gt;&lt;circle cx=\"7\" cy=\"7\" r=\"5\" stroke=\"currentColor\" stroke-width=\"1.6\"/&gt;&lt;path d=\"M11.5 11.5L15 15\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\"/&gt;&lt;/svg&gt;';\n\nvar CHECK_ICON = '&lt;svg viewBox=\"0 0 16 16\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"&gt;&lt;path d=\"M3 8.5L6.5 12L13 4.5\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/&gt;&lt;/svg&gt;';\n\nvar OPTIONS = ['Airtime &amp; Data','Electricity','Bill Payments','Vouchers','Gaming','Insurance','Lottery','Data Bundles'];",
   "usage": {
     "do": [
       "Use a dropdown when there are roughly 5–15 known options.",
@@ -4471,7 +4483,8 @@ body.home .main{max-width:none;margin:0;padding:0}
       "Don’t rely on the placeholder colour alone to signal “required” — pair it with real validation."
     ]
   },
-  "contentHash": "ac32722d0dc7678781e2a3c6ddcfc81dabf8dabb5dab83c713c7d777db10b079"
+  "contentHash": "36eec1946bc3166296eba5f4f85aa6aaab176d206f46efb5f75ee549cf02b972",
+  "note": "Covers the Dropdown field builders (single- and multi-select) and list item rows. TI-style playground control chrome (.dpd-pg-toggle*, doc-site-only) is intentionally excluded, matching Text Inputs' own .ti-pg__* exclusion. interactiveFieldHtml/interactiveMultiFieldHtml (added 2026-08-04) accept opts.labelPosition:'inside' — drops the outer .dpd-label and lets the caller-resolved opts.placeholder (set to the label text) stand in for it inside the trigger, disappearing once a value is chosen; 'outside' (default) is unchanged. Only the Single-select/Multi-select interactive playgrounds expose this via a Label position toggle — the static swatch demos (fieldHtml-based: Style, Sizes, Placeholder &amp; selected, States, Options list &amp; search) are untouched and always render the outside label."
 }
   </pre>
 </details>
@@ -6953,174 +6966,110 @@ body.home .main{max-width:none;margin:0;padding:0}
 /* ============================================================
    COLOUR FAMILY DATA
 ============================================================ */
+// Only the primitive steps actually referenced by a semantic token (SEM,
+// below — Flash brand, light + dark) are kept here. Every step that no
+// semantic token points to has been pruned from its family; families left
+// with nothing referenced (Support, Opacity black/white/grey, Yellow) are
+// dropped entirely. `group` sorts each family under the Primary/Secondary
+// colours heading, matching the Flash Brand Guide's own primary/secondary
+// palette split.
 const FAMILIES = [
   {
-    id:'base', name:'Base', badge:'Foundation', badgeCls:'grey',
+    id:'base', name:'Base', badge:'Foundation', badgeCls:'grey', group:'primary',
     desc:'Pure white and black. All other tokens ultimately reference one of these at the extremes.',
     swatches:[{s:'White',h:'#ffffff'},{s:'Black',h:'#000000'}]
   },
   {
-    id:'green', name:'Green', badge:'Flash Primary', badgeCls:'green',
+    id:'green', name:'Green', badge:'Flash Primary', badgeCls:'green', group:'primary',
     desc:'Flash brand primary. Used for primary button fills, success states, active indicators, and interactive highlights.',
     swatches:[
-      {s:'Green-50',h:'#eaf9eb'},{s:'Green-75',h:'#ddf2de'},{s:'Green-100',h:'#cef1d0'},
-      {s:'Green-125',h:'#c8e1ca'},{s:'Green-150',h:'#bfecc2'},{s:'Green-200',h:'#9fe3a4'},
-      {s:'Green-300',h:'#74d67b'},{s:'Green-400',h:'#59ce61'},
-      {s:'Green-500-base',h:'#10c504',b:true},{s:'Green-600',h:'#2bb135'},{s:'Green-700',h:'#16a220'},
+      {s:'Green-50',h:'#eaf9eb'},{s:'Green-400',h:'#59ce61'},
+      {s:'Green-500-base',h:'#10c504',b:true},
       {s:'Green-800',h:'#218a29'},{s:'Green-900',h:'#1a6b20'},{s:'Green-1000',h:'#145118'}
     ]
   },
   {
-    id:'bg', name:'Bright green', badge:'Flash Accent', badgeCls:'green',
+    id:'bg', name:'Bright green', badge:'Flash Accent', badgeCls:'green', group:'primary',
     desc:'High-luminosity accent. Used for Flash logo highlights, accent icons, and bright interactive moments.',
     swatches:[
-      {s:'Bright-green-50',h:'#e3ffdd'},{s:'Bright-green-100',h:'#c2ffbe'},
-      {s:'Bright-green-150',h:'#a7ffa1'},{s:'Bright-green-200',h:'#92ff8b'},
-      {s:'Bright-green-300',h:'#7bff73'},{s:'Bright-green-400',h:'#61fc57'},
-      {s:'Bright-green-500-base',h:'#1dfa0f',b:true},{s:'Bright-green-600',h:'#1ae10e'},
-      {s:'Bright-green-700',h:'#17ca0d'},{s:'Bright-green-800',h:'#12a00a'},
-      {s:'Bright-green-900',h:'#0e7b08'},{s:'Bright-green-1000',h:'#0a5a05'}
+      {s:'Bright-green-600',h:'#1ae10e'},{s:'Bright-green-700',h:'#17ca0d'}
     ]
   },
   {
-    id:'yg', name:'Yellow green', badge:'Flash Logo', badgeCls:'lime',
-    desc:'The Flash logo colour. Used as brand tertiary accent, icon fills, and logo-specific applications.',
-    swatches:[
-      {s:'Yellow-green-50',h:'#f9fdd5'},{s:'Yellow-green-100',h:'#f2fdbc'},
-      {s:'Yellow-green-150',h:'#edfda6'},{s:'Yellow-green-200',h:'#e4fd8b'},
-      {s:'Yellow-green-300',h:'#d6fd6b'},{s:'Yellow-green-400',h:'#c7fd42'},
-      {s:'Yellow-green-500-base',h:'#b2fa00',b:true},{s:'Yellow-green-600',h:'#a0e100'},
-      {s:'Yellow-green-700',h:'#8ec800'},{s:'Yellow-green-800',h:'#7daf00'},
-      {s:'Yellow-green-900',h:'#6b9600'},{s:'Yellow-green-1000',h:'#597d00'}
-    ]
-  },
-  {
-    id:'dg', name:'Dark green', badge:'Flash Brand Dark', badgeCls:'green',
-    desc:'Deep forest greens. Used for brand dark backgrounds, tinted surface overlays, and high-contrast brand contexts.',
-    swatches:[
-      {s:'Dark-green-50',h:'#84a895'},{s:'Dark-green-100',h:'#69927d'},
-      {s:'Dark-green-150',h:'#507e66'},{s:'Dark-green-200',h:'#3b6d53'},
-      {s:'Dark-green-300',h:'#285f42'},{s:'Dark-green-400',h:'#144e30'},
-      {s:'Dark-green-500-base',h:'#003f1e',b:true},{s:'Dark-green-600',h:'#003517'},
-      {s:'Dark-green-700',h:'#032d11'},{s:'Dark-green-750',h:'#203426'},{s:'Dark-green-800',h:'#00240a'}
-    ]
-  },
-  {
-    id:'grey', name:'Grey', badge:'Neutral Scale', badgeCls:'grey',
+    id:'grey', name:'Grey', badge:'Neutral Scale', badgeCls:'grey', group:'primary',
     desc:'Neutral scale used for text hierarchy, borders, surfaces, disabled states, and all brand-agnostic tones.',
     swatches:[
-      {s:'Grey-50',h:'#f8f8f8'},{s:'Grey-100',h:'#f0f0f0'},{s:'Grey-150',h:'#ededed'},
-      {s:'Grey-200',h:'#e6e6e6'},{s:'Grey-300',h:'#e2e2e2'},{s:'Grey-400',h:'#dddddd'},
-      {s:'Grey-500',h:'#d1d1d1'},{s:'Grey-600',h:'#bdbdbd'},{s:'Grey-700',h:'#a4a4a4'},
-      {s:'Grey-800',h:'#8a8a8a'},{s:'Grey-850',h:'#797b7e'},{s:'Grey-900',h:'#646464'},
-      {s:'Grey-950',h:'#5f6261'},{s:'Grey-1000',h:'#414141'},{s:'Grey-1100',h:'#252525'},{s:'Grey-1200',h:'#161616'}
+      {s:'Grey-50',h:'#f8f8f8'},{s:'Grey-100',h:'#f0f0f0'},
+      {s:'Grey-200',h:'#e6e6e6'},{s:'Grey-400',h:'#dddddd'},
+      {s:'Grey-500',h:'#d1d1d1'},{s:'Grey-700',h:'#a4a4a4'},
+      {s:'Grey-800',h:'#8a8a8a'},{s:'Grey-1000',h:'#414141'},{s:'Grey-1100',h:'#252525'}
     ]
   },
   {
-    id:'gb', name:'Grey blue', badge:'Dark Mode Surfaces', badgeCls:'dark',
+    id:'yg', name:'Yellow green', badge:'Flash Logo', badgeCls:'lime', group:'secondary',
+    desc:'The Flash logo colour. Used as brand tertiary accent, icon fills, and logo-specific applications.',
+    swatches:[
+      {s:'Yellow-green-500-base',h:'#b2fa00',b:true}
+    ]
+  },
+  {
+    id:'dg', name:'Dark green', badge:'Flash Brand Dark', badgeCls:'green', group:'secondary',
+    desc:'Deep forest greens. Used for brand dark backgrounds, tinted surface overlays, and high-contrast brand contexts.',
+    swatches:[
+      {s:'Dark-green-750',h:'#203426'},{s:'Dark-green-800',h:'#00240a'}
+    ]
+  },
+  {
+    id:'gb', name:'Grey blue', badge:'Dark Mode Surfaces', badgeCls:'dark', group:'secondary',
     desc:'Cool blue-grey used for dark mode surfaces and borders. Darkest steps are page backgrounds; lighter steps are borders and muted text.',
     swatches:[
-      {s:'Grey-blue-50',h:'#cbcbd0'},{s:'Grey-blue-100',h:'#a1a3a8'},{s:'Grey-blue-150',h:'#87898e'},
-      {s:'Grey-blue-200',h:'#797b7e'},{s:'Grey-blue-300',h:'#666875'},{s:'Grey-blue-400',h:'#60636d'},
+      {s:'Grey-blue-50',h:'#cbcbd0'},{s:'Grey-blue-100',h:'#a1a3a8'},
+      {s:'Grey-blue-400',h:'#60636d'},
       {s:'Grey-blue-425',h:'#33343a'},{s:'Grey-blue-450',h:'#2d2e34'},
-      {s:'Grey-blue-500',h:'#25262c'},{s:'Grey-blue-600',h:'#161616'},{s:'Grey-blue-700',h:'#12131a',b:true}
+      {s:'Grey-blue-500',h:'#25262c'},{s:'Grey-blue-700',h:'#12131a',b:true}
     ]
   },
   {
-    id:'gg', name:'Grey green', badge:'Tinted Surfaces', badgeCls:'green',
+    id:'gg', name:'Grey green', badge:'Tinted Surfaces', badgeCls:'green', group:'secondary',
     desc:'Warm green-tinted greys for brand-aware light mode surfaces, nav backgrounds, and subtle tinted cards.',
     swatches:[
-      {s:'Grey-green-100',h:'#fbfcfb'},{s:'Grey-green-200',h:'#f7f9f8'},{s:'Grey-green-300',h:'#f4f7f6'},
-      {s:'Grey-green-400',h:'#ebf0ef'},{s:'Grey-green-500',h:'#e1eae8'},{s:'Grey-green-600',h:'#c8d6d3'},
-      {s:'Grey-green-700',h:'#7d8180'}
+      {s:'Grey-green-100',h:'#fbfcfb'},{s:'Grey-green-200',h:'#f7f9f8'}
     ]
   },
   {
-    id:'bb', name:'Bright blue', badge:'Links', badgeCls:'blue',
+    id:'bb', name:'Bright blue', badge:'Links', badgeCls:'blue', group:'secondary',
     desc:'Used for hyperlinks and interactive link states. 700 is the default link colour; 800 is hover. 400/500 are dark mode equivalents.',
     swatches:[
       {s:'Bright-blue-400',h:'#6fc2ff'},{s:'Bright-blue-500',h:'#389aff'},
-      {s:'Bright-blue-600',h:'#196af5'},{s:'Bright-blue-700',h:'#0062eb',b:true},{s:'Bright-blue-800',h:'#0049d2'}
+      {s:'Bright-blue-700',h:'#0062eb',b:true},{s:'Bright-blue-800',h:'#0049d2'}
     ]
   },
   {
-    id:'pb', name:'Pale blue', badge:'Info / Alerts', badgeCls:'blue',
+    id:'pb', name:'Pale blue', badge:'Info / Alerts', badgeCls:'blue', group:'secondary',
     desc:'Used exclusively for informational alert states. High-contrast steps for icons; low-contrast steps for backgrounds.',
     swatches:[
-      {s:'Pale-blue-100',h:'#ebf7fe'},{s:'Pale-blue-200',h:'#e4f5ff'},{s:'Pale-blue-300',h:'#daeefd'},
-      {s:'Pale-blue-500',h:'#21a4fc',b:true},{s:'Pale-blue-600',h:'#0097f7'},{s:'Pale-blue-700',h:'#0079c6'}
+      {s:'Pale-blue-200',h:'#e4f5ff'},{s:'Pale-blue-300',h:'#daeefd'},
+      {s:'Pale-blue-500',h:'#21a4fc',b:true}
     ]
   },
   {
-    id:'red', name:'Red', badge:'Critical / Error', badgeCls:'red',
+    id:'red', name:'Red', badge:'Critical / Error', badgeCls:'red', group:'secondary',
     desc:'Critical and error states. Light steps for backgrounds; 600–700 for icons and text; darkest steps for dark mode error surfaces.',
     swatches:[
-      {s:'Red-100',h:'#fff4f0'},{s:'Red-200',h:'#ffe9e9'},{s:'Red-300',h:'#fddbdb'},
-      {s:'Red-400',h:'#ff777a'},{s:'Red-500',h:'#d84551'},
-      {s:'Red-600',h:'#eb0029',b:true},{s:'Red-700',h:'#c10021'},
-      {s:'Red-900',h:'#302222'},{s:'Red-1000',h:'#260505'}
+      {s:'Red-100',h:'#fff4f0'},
+      {s:'Red-600',h:'#eb0029',b:true},
+      {s:'Red-1000',h:'#260505'}
     ]
   },
   {
-    id:'org', name:'Orange', badge:'Warning', badgeCls:'orange',
+    id:'org', name:'Orange', badge:'Warning', badgeCls:'orange', group:'secondary',
     desc:'Warning and cautionary states. Light steps for alert backgrounds; 600 for warning icons and text; 800 for hover/secondary warning.',
     swatches:[
-      {s:'Orange-100',h:'#fff3e5'},{s:'Orange-200',h:'#ffefdc'},{s:'Orange-300',h:'#ffe8cc'},
-      {s:'Orange-600',h:'#ff8900',b:true},{s:'Orange-800',h:'#cc6e00'},{s:'Orange-900',h:'#a63f00'}
-    ]
-  },
-
-  {
-    id:'support', name:'Support', badge:'Categories & Special', badgeCls:'orange',
-    desc:'Support colours used for category icons, product identifiers, and special UI moments not covered by the main scales.',
-    swatches:[
-      {s:'Support-pink-1',h:'#e43e79'},{s:'Support-pink-2',h:'#d7285a'},{s:'Support-pink-3',h:'#f6267d'},
-      {s:'Support-orange-1',h:'#faa225'},{s:'Support-orange-2',h:'#ff9900'},
-      {s:'Support-red-1',h:'#ed0c40'},{s:'Support-red-2',h:'#c43a3a'}
-    ]
-  },
-  {
-    id:'opb', name:'Opacity black', badge:'Dark overlays', badgeCls:'dark',
-    desc:'Black at increasing opacity levels. Used for surface overlays, scrim layers, and shadow tints.',
-    swatches:[
-      {s:'opacity-black-0',h:'rgba(0,0,0,0)',bg:'#ffffff'},{s:'opacity-black-5',h:'rgba(0,0,0,0.05)',bg:'#ffffff'},
-      {s:'opacity-black-10',h:'rgba(0,0,0,0.10)',bg:'#ffffff'},{s:'opacity-black-20',h:'rgba(0,0,0,0.20)',bg:'#ffffff'},
-      {s:'opacity-black-30',h:'rgba(0,0,0,0.30)',bg:'#ffffff'},{s:'opacity-black-40',h:'rgba(0,0,0,0.40)',bg:'#ffffff'},
-      {s:'opacity-black-50',h:'rgba(0,0,0,0.50)',bg:'#ffffff'},{s:'opacity-black-60',h:'rgba(0,0,0,0.60)',bg:'#ffffff'},
-      {s:'opacity-black-70',h:'rgba(0,0,0,0.70)',bg:'#ffffff'},{s:'opacity-black-80',h:'rgba(0,0,0,0.80)',bg:'#ffffff'},
-      {s:'opacity-black-90',h:'rgba(0,0,0,0.90)',bg:'#ffffff'}
-    ]
-  },
-  {
-    id:'opw', name:'Opacity white', badge:'Light overlays', badgeCls:'grey',
-    desc:'White at increasing opacity levels. Used for dark mode overlays, frosted glass effects, and light scrim layers.',
-    swatches:[
-      {s:'opacity-white-0',h:'rgba(255,255,255,0)',bg:'#1a1a1a'},{s:'opacity-white-5',h:'rgba(255,255,255,0.05)',bg:'#1a1a1a'},
-      {s:'opacity-white-10',h:'rgba(255,255,255,0.10)',bg:'#1a1a1a'},{s:'opacity-white-20',h:'rgba(255,255,255,0.20)',bg:'#1a1a1a'},
-      {s:'opacity-white-30',h:'rgba(255,255,255,0.30)',bg:'#1a1a1a'},{s:'opacity-white-40',h:'rgba(255,255,255,0.40)',bg:'#1a1a1a'},
-      {s:'opacity-white-50',h:'rgba(255,255,255,0.50)',bg:'#1a1a1a'},{s:'opacity-white-60',h:'rgba(255,255,255,0.60)',bg:'#1a1a1a'},
-      {s:'opacity-white-70',h:'rgba(255,255,255,0.70)',bg:'#1a1a1a'},{s:'opacity-white-80',h:'rgba(255,255,255,0.80)',bg:'#1a1a1a'},
-      {s:'opacity-white-90',h:'rgba(255,255,255,0.90)',bg:'#1a1a1a'}
-    ]
-  },
-  {
-    id:'opg', name:'Opacity grey', badge:'Translucent surfaces', badgeCls:'grey',
-    desc:'Grey base colours at fixed opacity steps. Used for tinted surface overlays on light and dark backgrounds.',
-    swatches:[
-      {s:'Opacity-light-grey-0',h:'rgba(240,240,240,0)',bg:'#555555'},{s:'Opacity-light-grey-50',h:'rgba(240,240,240,0.50)',bg:'#555555'},
-      {s:'Opacity-blue-grey-0',h:'rgba(37,38,44,0)',bg:'#ffffff'},{s:'Opacity-blue-grey-50',h:'rgba(37,38,44,0.50)',bg:'#ffffff'}
+      {s:'Orange-100',h:'#fff3e5'},
+      {s:'Orange-600',h:'#ff8900',b:true}
     ]
   },
 ];
-
-// Yellow (special — small family, appended inline) — small family, appended inline)
-const YELLOW_FAM = {
-  id:'yel', name:'Yellow', badge:'Warning Secondary', badgeCls:'orange',
-  desc:'Secondary warning tones. Used alongside Orange for dual-severity warning systems and lotto category colours.',
-  swatches:[
-    {s:'400',h:'#ffc861'},{s:'500',h:'#f6bc2f',b:true},{s:'900',h:'#5d4b2b'},{s:'1000',h:'#965000'}
-  ]
-};
 
 // Categories
 const CATS = [
@@ -7263,10 +7212,16 @@ function renderFamily(fam) {
 }
 
 const famRoot = document.getElementById('fam-root');
-FAMILIES.forEach(f => famRoot.appendChild(renderFamily(f)));
-
-// Append Yellow
-famRoot.appendChild(renderFamily(YELLOW_FAM));
+function renderFamGroupHead(title) {
+  const el = document.createElement('div');
+  el.className = 'fam-group-head';
+  el.textContent = title;
+  return el;
+}
+famRoot.appendChild(renderFamGroupHead('Primary colours'));
+FAMILIES.filter(f => f.group === 'primary').forEach(f => famRoot.appendChild(renderFamily(f)));
+famRoot.appendChild(renderFamGroupHead('Secondary colours'));
+FAMILIES.filter(f => f.group === 'secondary').forEach(f => famRoot.appendChild(renderFamily(f)));
 
 // Category grid family block
 const catFam = document.createElement('div');
@@ -7375,7 +7330,7 @@ const HEX_PRIM = {
   '#f6f6f6':'Custom — Input bg',
   'rgba(255,255,255,0.2)':'Opacity White 20%',
 };
-[...FAMILIES, YELLOW_FAM].forEach(fam => {
+FAMILIES.forEach(fam => {
   (fam.swatches || []).forEach(sw => {
     if (!HEX_PRIM[sw.h]) HEX_PRIM[sw.h] = `${fam.name} ${sw.s}`;
   });
@@ -7622,11 +7577,11 @@ const HEADS = {
     { tag:'2XL', size:'42px', wt:900, wLabel:'Black', lh:'120%', ls:'-1px',  text:'Welcome back to Flash' },
     { tag:'XL',  size:'30px', wt:900, wLabel:'Black', lh:'100%', ls:'0',     text:'Transaction history' },
     { tag:'L',   size:'26px', wt:900, wLabel:'Black', lh:'110%', ls:'0',     text:'Payment successful' },
-    { tag:'L',   size:'26px', wt:500, wLabel:'Medium', lh:'110%', ls:'0',    text:'Payment successful' },
+    { tag:'L - Medium',   size:'26px', wt:500, wLabel:'Medium', lh:'110%', ls:'0',    text:'Payment successful' },
     { tag:'M',   size:'22px', wt:900, wLabel:'Black', lh:'115%', ls:'0',     text:'Recent activity' },
-    { tag:'M',   size:'22px', wt:500, wLabel:'Medium', lh:'115%', ls:'0',    text:'Recent activity' },
+    { tag:'M - Medium',   size:'22px', wt:500, wLabel:'Medium', lh:'115%', ls:'0',    text:'Recent activity' },
     { tag:'S',   size:'20px', wt:900, wLabel:'Black', lh:'115%', ls:'0',     text:'Available balance' },
-    { tag:'S',   size:'20px', wt:500, wLabel:'Medium', lh:'115%', ls:'0',    text:'Available balance' },
+    { tag:'S - Medium',   size:'20px', wt:500, wLabel:'Medium', lh:'115%', ls:'0',    text:'Available balance' },
   ],
   mobile:[
     { tag:'4XL', size:'58px', wt:900, wLabel:'Black',    lh:'100%', ls:'-1px', text:'The future of payments' },
@@ -7634,11 +7589,11 @@ const HEADS = {
     { tag:'2XL', size:'35px', wt:900, wLabel:'Black',    lh:'110%', ls:'0',    text:'Welcome back to Flash' },
     { tag:'XL',  size:'30px', wt:900, wLabel:'Black',    lh:'110%', ls:'0',    text:'Transaction history' },
     { tag:'L',   size:'24px', wt:900, wLabel:'Black',    lh:'110%', ls:'0',    text:'Payment successful' },
-    { tag:'L',   size:'24px', wt:500, wLabel:'Medium',   lh:'110%', ls:'0',    text:'Payment successful' },
+    { tag:'L - Medium',   size:'24px', wt:500, wLabel:'Medium',   lh:'110%', ls:'0',    text:'Payment successful' },
     { tag:'M',   size:'22px', wt:900, wLabel:'Black',    lh:'110%', ls:'0',    text:'Recent activity' },
-    { tag:'M',   size:'22px', wt:500, wLabel:'Medium',   lh:'110%', ls:'0',    text:'Recent activity' },
+    { tag:'M - Medium',   size:'22px', wt:500, wLabel:'Medium',   lh:'110%', ls:'0',    text:'Recent activity' },
     { tag:'S',   size:'18px', wt:900, wLabel:'Black',    lh:'110%', ls:'0',    text:'Available balance' },
-    { tag:'S',   size:'18px', wt:500, wLabel:'Medium',   lh:'110%', ls:'0',    text:'Available balance' },
+    { tag:'S - Medium',   size:'18px', wt:500, wLabel:'Medium',   lh:'110%', ls:'0',    text:'Available balance' },
     { tag:'S',   size:'18px', wt:650, wLabel:'Semibold', lh:'110%', ls:'0',    text:'Available balance' },
   ]
 };
@@ -8869,7 +8824,7 @@ const TI_ICONS = {
 </svg>` },
 };
 
-const tiState = { type:'standard', size:'default', bg:'white', forceError:false, password:false, showHelper:false, leading:'none', trailing:'none', leadingEnabled:false, trailingEnabled:false, searchIcon:'search', labelMode:'caption', loading:false };
+const tiState = { type:'standard', size:'default', bg:'white', forceError:false, password:false, showHelper:false, leading:'none', trailing:'none', leadingEnabled:false, trailingEnabled:false, searchIcon:'search', labelMode:'caption', loading:false, labelPosition:'inside', showPlaceholder:false };
 
 function tiRenderPasswordDots(container, count){
   container.innerHTML='';
@@ -8897,14 +8852,15 @@ function tiUpdateReadout(current){
 function tiBuildStandardField(){
   const leadingSvg = (tiState.leadingEnabled && tiState.leading!=='none') ? TI_ICONS[tiState.leading][tiState.size] : null;
   const trailingSvg = (tiState.trailingEnabled && tiState.trailing!=='none') ? TI_ICONS[tiState.trailing][tiState.size] : null;
+  const labelOutside = tiState.labelPosition==='outside';
   const wrap = document.createElement('div');
-  wrap.innerHTML = `
-    <div class="ti-shell" data-bg="${tiState.bg}" data-size="${tiState.size}">
+  const shellHtml = `
+    <div class="ti-shell${labelOutside ? ' ti-shell--label-outside' + (tiState.showPlaceholder ? ' ti-show-placeholder' : '') : ''}" data-bg="${tiState.bg}" data-size="${tiState.size}">
       <div class="ti-field" data-bg="${tiState.bg}" data-size="${tiState.size}">
         ${leadingSvg ? `<span class="ti-leading">${leadingSvg}</span>` : ''}
         <span class="ti-label">Label</span>
         <div class="ti-value-row">
-          ${tiState.password ? '<div class="ti-dots"></div>' : `<input class="ti-input" type="text" autocomplete="off" spellcheck="false"/>`}
+          ${tiState.password ? '<div class="ti-dots"></div>' : `<input class="ti-input" type="text" autocomplete="off" spellcheck="false"${labelOutside && tiState.showPlaceholder ? ' placeholder="Placeholder text"' : ''}/>`}
           <span class="ti-mirror"></span>
           <span class="ti-caret"></span>
         </div>
@@ -8917,6 +8873,9 @@ function tiBuildStandardField(){
       <div class="ti-helper">Helper text</div>
     </div>
   `;
+  wrap.innerHTML = labelOutside
+    ? `<div class="ti-outer${tiState.size==='small' ? ' ti-outer--sm' : ''}"><span class="ti-outer-label">Label</span>${shellHtml}</div>`
+    : shellHtml;
   const shell = wrap.querySelector('.ti-shell');
   const field = wrap.querySelector('.ti-field');
   const valueRow = field.querySelector('.ti-value-row');
@@ -9097,6 +9056,7 @@ function tiRenderStage(){
 function tiSet(key, val){
   tiState[key] = val;
   if(key==='type' && val==='standard') tiState.labelMode='caption';
+  if(key==='type' && val==='search') tiState.labelPosition='inside';
   tiRenderControls();
 }
 function tiToggle(key){
@@ -9151,6 +9111,10 @@ function tiRenderControls(){
     rows.push(tiGroup('Label mode while typing', tiPr([['caption','Caption'],['inline','Inline']], 'labelMode')));
     rows.push(tiSwitchRow('Loading', 'loading'));
   } else {
+    rows.push(tiGroup('Label position', tiPr([['inside','Inside'],['outside','Outside']], 'labelPosition')));
+    if(tiState.labelPosition==='outside'){
+      rows.push(tiSwitchRow('Placeholder text', 'showPlaceholder'));
+    }
     rows.push(tiIconSelectGroup('Leading icon', 'leading', 'leadingEnabled', 'ti-toggle-leading', 'rand'));
     rows.push(tiIconSelectGroup('Trailing icon', 'trailing', 'trailingEnabled', 'ti-toggle-trailing', 'password-visible'));
     rows.push(tiSwitchRow('Show helper text', 'showHelper'));
@@ -11502,19 +11466,45 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.48.0';
+const SYSTEM_VERSION = '1.52.0';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
-      {version:'1.48.0', date:'2026-08-04', author:'Helen', title:'Tags & Badges split into two pages, each rebuilt on the Chips & Pills tabbed treatment', changes:[
+      {version:'1.52.0', date:'2026-08-04', author:'Helen', title:'Tags & Badges split into two pages, each rebuilt on the Chips & Pills tabbed treatment', changes:[
         ['changed','The combined Tags & Badges page is now two: Tags (s-tags, one component) and Badges (s-badges, three — count, avatar, status dot). Neither shared a single "hero" the way Chips has one chip, so they were split rather than forced into one playground'],
         ['added','Both pages get the full .sec--tabbed treatment already shared by Chips & Pills and Switch: Overview / Style / Code / Changelog tabs, a hero with a live preview card, a Key-facts section, In-context mockups, and a three-language (HTML/CSS · Blazor · React TSX) Code tab behind the segmented language switcher — no new shared CSS was needed for either page'],
         ['added','Tags gets an interactive playground (Variant/Size/Leading dot/Label — its existing controls, now in the two-mount pattern), a "Key variants" grid, and three In-context mockups (category-per-row, metadata under a title, a read-only status column) distinct from Chips\' own three'],
         ['added','Badges gets a single playground with an explicit Type switch (Count / Avatar / Status) on top of each type\'s own controls, since the three sub-types don\'t share one control set. Three In-context mockups, one per type (unread count on an icon, avatar + status presence, a status-dot health list), plus a consolidated Tokens table across all three'],
         ['changed','Sidebar\'s Data display group gains a Badges entry alongside the renamed Tags entry — both alphabetised in place, so the group goes from 8 items to 9'],
         ['added','badgeCountHTML() / badgeAvatarHTML() / badgeStatusHTML() — canonical real-markup builders for the three badge sub-types, replacing hand-assembled spans in the old static reference tables. tagHTML() (unchanged) remains the canonical Tag builder'],
+      ]},
+      {version:'1.51.0', date:'2026-08-04', author:'Mo', title:'Text Inputs: Standard field gains an Outside label position', changes:[
+        ['added','Text Inputs\' Standard field playground now has a "Label position" toggle (Inside / Outside) — Outside moves the label above the field, matching how Dropdown already labels its fields, with an optional real placeholder inside the box once the label moves out'],
+      ]},
+      {version:'1.50.0', date:'2026-08-04', author:'Mo', title:'Colour Tokens primitives simplified to Primary/Secondary, pruned to only what semantics reference', changes:[
+        ['removed','The "Core colours" intro block at the top of the Colours page (Flash Green/Black/White + Mid Green/Forest Green/Medium Green/Light Grey swatches) — superseded by the Primary colours group in the Primitives tab below, which now covers the same ground without duplicating it'],
+        ['removed','Every primitive step not pointed to by a semantic token (SEM, light + dark, Flash brand) has been pruned from its family — e.g. Green kept only 50/400/500-base/800/900/1000, dropping 75–300/600/700. The Support, Opacity black, Opacity white, Opacity grey, and Yellow families are removed entirely (nothing in them was referenced)'],
+        ['changed','Primitives tab now groups families under two headings, "Primary colours" (Base, Green, Bright green, Grey) and "Secondary colours" (Yellow green, Dark green, Grey blue, Grey green, Bright blue, Pale blue, Red, Orange), matching the split in the Flash Brand Guide'],
+        ['changed','Primitives family count badge updated from 13 to 12 families to match the pruned set'],
+      ]},
+      {version:'1.49.0', date:'2026-08-04', author:'Mo', title:'Dropdown: interactive playgrounds gain an Inside label position', changes:[
+        ['added','Dropdown\'s Single-select and Multi-select interactive playgrounds now have a "Label position" toggle (Outside / Inside) — Inside moves the label into the trigger itself, standing in for the placeholder until a value is chosen, the mirror image of Text Inputs\' new outside-label variant for its Standard field'],
+      ]},
+      {version:'1.48.0', date:'2026-08-04', author:'Jaco', title:'Sidebar goes back to one alphabetical component list, with sub-groups only for genuinely related pairs, and picks up the Figma pill styling', changes:[
+        ['removed','The six purpose-based component categories (Actions, Inputs & controls, Data display, Feedback & status, Surfaces & overlays, Navigation) and their landing pages. Sorting every component into broad buckets put unrelated things together — Avatar beside Tables beside Charts — and Carbon, Material 3 and Biings all stay alphabetical instead. Components is one A-Z list again, with Modals and Toasts folded in alphabetically keeping their Soon tags'],
+        ['added','Sub-groups in the NAV manifest — an entry with `items` instead of an `id` renders as a row that expands in place into related components, reserved for genuinely coupled pairs rather than broad themes. Cards & Charts is the first (and currently only) one; toggleNavSub() drives it and syncNavGroups() expands whichever sub-group holds the open section, so a deep link never lands on a page whose nav row is hidden'],
+        ['added','navLeaves() flattens sub-groups back to a plain list, so landing grids, breadcrumbs and the header search index keep seeing every component regardless of how the sidebar nests it'],
+        ['changed','Category headings are static labels again rather than accordion toggles — with one list per category there is nothing worth collapsing, and each landing page is still reached from the Overview link at the top of its list'],
+        ['changed','Nav rows now match the Figma spec: 40px tall, 13px Satoshi Medium in --chrome-muted (#646464), flush left with no fill. Hover puts a white pill behind the row, indents the label 8px and goes semibold; the selected row is a solid inverted pill — black on white in light, white on black in dark — at weight 700. Replaces the left accent bar and near-invisible tint fill'],
+        ['changed','The Foundations and Components headings sit at 16px with slightly tighter tracking, a clear step above the 13px rows beneath them, so the two lists read as distinct blocks rather than one continuous run'],
+        ['added','--chrome-pill token (white in light, 10% white in dark) for the hover/expanded pill, replacing --chrome-active which the inverted selected row no longer needs'],
+        ['removed','The trailing chevron on every nav row — a chevron now appears only on a sub-group row, where it actually means something (expand/collapse), matching the Figma where plain rows carry no icon'],
+        ['removed','buildAllComponentsLanding() and the `component:true` group flag — with Components a single group again, its landing page is generated by buildLandings() like every other, so the umbrella-page special case is gone'],
+      ]},
+      {version:'1.47.1', date:'2026-08-04', author:'Mo', title:'Typography — Medium-weight heading rows relabelled to distinguish them from their Black-weight counterparts', changes:[
+        ['changed','Heading Scale row tags for the reduced-emphasis Medium (500) variants at L, M, and S now read "L - Medium", "M - Medium", "S - Medium" instead of a bare "L"/"M"/"S" shared with the Black-weight row, for both desktop and mobile viewports'],
       ]},
       {version:'1.47.0', date:'2026-08-04', author:'Mo', title:'Empty state split out of Lists into its own section', changes:[
         ['added','New Empty State section (s-empty-state) — a dashed-border card with a muted glyph, title, explanation and one primary action, plus its own When to use guidance'],
@@ -12439,7 +12429,13 @@ const CHANGELOG = {
         ['added','New "Logos" page under the Brand category listing all 8 Flash logo variations (Primary, White, Monochrome Black, Monochrome White — each horizontal and stacked), each downloadable as a transparent SVG or PNG from assets/logos/'],
       ]},
     ]},
-    {secId:'s-colours', name:'Colours', version:'1.6.0', entries:[
+    {secId:'s-colours', name:'Colours', version:'1.7.0', entries:[
+      {version:'1.7.0', date:'2026-08-04', author:'Mo', title:'Primitives simplified to Primary/Secondary colours, pruned to only what semantics reference', changes:[
+        ['removed','The top-of-page "Core colours" intro block (Flash Green/Black/White + Mid Green/Forest Green/Medium Green/Light Grey swatches) — the Primary colours group in the Primitives tab now covers the same ground'],
+        ['removed','FAMILIES pruned to only the swatch steps a SEM row actually points to (Flash brand, light + dark theme) — e.g. Green kept 50/400/500-base/800/900/1000 only. Support, Opacity black/white/grey, and Yellow (YELLOW_FAM) dropped entirely as nothing in them was referenced'],
+        ['added','Each FAMILIES entry now carries a `group` field (\'primary\'/\'secondary\'); renderFamily output is split under two new "Primary colours"/"Secondary colours" .fam-group-head headings in #fam-root, matching the Flash Brand Guide\'s own primary/secondary split (Primary: Base, Green, Bright green, Grey — Secondary: Yellow green, Dark green, Grey blue, Grey green, Bright blue, Pale blue, Red, Orange)'],
+        ['changed','Primitives family count badge (#prim-count) updated from "13 families" to "12 families"'],
+      ]},
       {version:'1.6.0', date:'2026-08-04', author:'Mo', title:'Added Chart Colours and a reduced-opacity companion set', changes:[
         ['added','New "Chart Colours" primitive family block (#fam-chart, .cat-grid#chart-grid) duplicating the Category Colours 15-colour set under its own name, for use as a default chart/data-viz series palette'],
         ['added','New "Chart Colours — Desaturated" family block (#fam-chart-desat, .cat-grid#chart-grid-desat) — CHART_COLORS_DESAT reuses the same hexes as CHART_COLORS, rendered via a new hexToRgba(hex, alpha) helper at 45% opacity (CHART_DESAT_OPACITY) instead of a desaturated/greyed hex, so the effect reads as "faded", matching the opacity:.32 dim-the-rest treatment .cht__seg already uses on chart hover'],
@@ -12474,7 +12470,10 @@ const CHANGELOG = {
         ['added','12 primitive colour families with click-to-copy swatches'],
       ]},
     ]},
-    {secId:'s-type', name:'Typography', version:'1.1.2', entries:[
+    {secId:'s-type', name:'Typography', version:'1.1.3', entries:[
+      {version:'1.1.3', date:'2026-08-04', author:'Mo', title:'Heading Scale row tags clarify the Medium-weight variants', changes:[
+        ['changed','HEADS data (desktop and mobile): the L/M/S row tags for the wt:500 "Medium" entries changed from a bare "L"/"M"/"S" to "L - Medium"/"M - Medium"/"S - Medium", so they read distinctly from the adjacent Black-weight row sharing the same size tag'],
+      ]},
       {version:'1.1.2', date:'2026-07-29', author:'Jaco', title:'Typeface brand block added to the top of the page', changes:[
         ['added','"Typography" brand block (Satoshi vs Kilimanjaro Sans role split) relocated here from the Introduction, sitting above the type scale and token tables'],
       ]},
@@ -12554,7 +12553,13 @@ const CHANGELOG = {
         ['added','5 variants × 5 sizes × 5 states, icon-only grid, tappable-area overlays'],
       ]},
     ]},
-    {secId:'s-inputs', name:'Text Inputs', version:'2.1.0', entries:[
+    {secId:'s-inputs', name:'Text Inputs', version:'2.2.0', entries:[
+      {version:'2.2.0', date:'2026-08-04', author:'Mo', title:'Standard field gains an Outside label position, matching Dropdown\'s field label', changes:[
+        ['added','New "Label position" playground toggle (Inside / Outside) for the Standard field. Outside renders the label above the shell via new .ti-outer/.ti-outer-label wrapper, the same convention Dropdown\'s .dpd-label already uses, instead of floating inside the field'],
+        ['added','New "Placeholder text" playground switch, shown only when Label position is Outside — the inside .ti-label is hidden via .ti-shell--label-outside and optionally swapped for a real, native placeholder attribute (.ti-show-placeholder) once nothing inside the field needs to double as a label'],
+        ['changed','.ti-outer-label uses the theme-aware --color-text-1 token rather than the fixed --ti-label-focus hex, since (unlike the inside label) it sits directly on the page background rather than the always-light field fill and needs to stay legible in dark mode'],
+        ['changed','Switching the Component toggle to Search always resets Label position back to Inside — the outside-label variant only applies to the Standard field'],
+      ]},
       {version:'2.1.0', date:'2026-07-29', author:'Mo', title:'Hierarchy & when to use which section added', changes:[
         ['added','New "Hierarchy & when to use which" Do/Don\'t guidance card: Standard vs. Search field usage, Caption vs. Inline label mode, helper/error text guidance, and a decorative-icon guardrail'],
         ['changed','AI context tab regenerated to reflect the new usage guidance (auto-handled by the pre-commit hook, per CLAUDE.md rule 5)'],
@@ -12909,7 +12914,11 @@ const CHANGELOG = {
         ['added','Interactive playground, size/icon comparisons, a full states matrix and an anatomy/spec table'],
       ]},
     ]},
-    {secId:'s-dropdown', name:'Dropdown', version:'1.2.1', entries:[
+    {secId:'s-dropdown', name:'Dropdown', version:'1.3.0', entries:[
+      {version:'1.3.0', date:'2026-08-04', author:'Mo', title:'Interactive playgrounds gain an Inside label position, the opposite of Text Inputs\' new Outside mode', changes:[
+        ['added','New "Label position" toggle (Outside / Inside) on both the Single-select and Multi-select interactive playgrounds. Inside drops the outer .dpd-label and lets the label text stand in for the trigger\'s placeholder, disappearing once a value is chosen — the mirror image of Text Inputs\' new outside-label variant for its Standard field'],
+        ['changed','interactiveFieldHtml/interactiveMultiFieldHtml now accept opts.labelPosition (\'outside\' default, unchanged; \'inside\' skips rendering .dpd-label). fieldHtml (the static Style/Sizes/Placeholder/States/Options-list swatches) is untouched and always renders the outside label'],
+      ]},
       {version:'1.2.1', date:'2026-07-29', author:'Mo', title:'AI context tab added', changes:[
         ['added','AI context tab documenting the real .dpd-field/.dpd-trigger/.dpd-menu/.dpd-item structural classes and the itemHtml/itemHtmlCheckbox/menuHtml/triggerHtml/fieldHtml/interactiveFieldHtml/wireInteractive/interactiveMultiFieldHtml/wireInteractiveMulti builders plus the CHEVRON/SEARCH_ICON/CHECK_ICON/OPTIONS data, and its existing "When to use" Do/Dont guidance (5 do / 6 dont)'],
       ]},
@@ -13680,10 +13689,15 @@ function tblPgToggleChecked(cb){
       caption +
     '</div>';
   }
-  // Live field — real menu always in the DOM (hidden), wired for click/search/keyboard behaviour
+  // Live field — real menu always in the DOM (hidden), wired for click/search/keyboard behaviour.
+  // labelPosition:'inside' drops the outer .dpd-label entirely — the caller
+  // resolves opts.placeholder to the label text in that case, so the label
+  // shows inside the trigger (like a placeholder) and disappears once a
+  // value is chosen, the opposite of the default outside-label field.
   function interactiveFieldHtml(opts){
+    var labelInside = opts.labelPosition === 'inside';
     var cls = 'dpd-field' + (opts.style === 'rounded' ? ' dpd-field--rounded' : '') + (opts.size === 'sm' ? ' dpd-field--sm' : '');
-    var label = '<div class="dpd-label">' + (opts.label || 'Dropdown label') + '</div>';
+    var label = labelInside ? '' : '<div class="dpd-label">' + (opts.label || 'Dropdown label') + '</div>';
     var caption = '<div class="dpd-caption">' + (opts.caption || 'Assistive caption') + '</div>';
     var menu = menuHtml(opts.options, null, {showSearch: opts.showSearch, inline: false});
     return '<div class="' + cls + '">' + label +
@@ -13740,10 +13754,12 @@ function tblPgToggleChecked(cb){
       if(e.key === 'Escape' && wrap.classList.contains('is-open')) close();
     });
   }
-  // Multi-select — every item toggles independently; menu stays open until Done
+  // Multi-select — every item toggles independently; menu stays open until Done.
+  // Same labelPosition:'inside' handling as interactiveFieldHtml above.
   function interactiveMultiFieldHtml(opts){
+    var labelInside = opts.labelPosition === 'inside';
     var cls = 'dpd-field' + (opts.style === 'rounded' ? ' dpd-field--rounded' : '') + (opts.size === 'sm' ? ' dpd-field--sm' : '');
-    var label = '<div class="dpd-label">' + (opts.label || 'Dropdown label') + '</div>';
+    var label = labelInside ? '' : '<div class="dpd-label">' + (opts.label || 'Dropdown label') + '</div>';
     var caption = '<div class="dpd-caption">' + (opts.caption || 'Assistive caption') + '</div>';
     var items = opts.options.map(function(o){ return itemHtmlCheckbox(o, false); }).join('');
     var search = opts.showSearch ? ('<div class="dpd-search">' + SEARCH_ICON + '<input type="text" placeholder="Search" aria-label="Search options"></div>') : '';
@@ -13830,28 +13846,58 @@ function tblPgToggleChecked(cb){
     return '<div class="dpd-swatch"><div class="dpd-swatch__cap">' + cap + '</div>' + inner + '</div>';
   }
 
+  // Label position for each interactive playground — 'outside' (default,
+  // the real .dpd-label above the field) or 'inside' (label lives inside the
+  // trigger, standing in for the placeholder, and disappears once a value
+  // is chosen — the mirror image of the outside-label default).
+  var dpdPgState = { single: 'outside', multi: 'outside' };
+
   // Interactive playground — single-select
-  var play = document.getElementById('dpd-play');
-  if(play){
+  function renderDpdSinglePlay(){
+    var play = document.getElementById('dpd-play');
+    if(!play) return;
+    var labelInside = dpdPgState.single === 'inside';
+    var label = 'Merchant category';
+    var placeholder = labelInside ? label : 'Choose a category';
     play.innerHTML = interactiveFieldHtml({
       options: OPTIONS, showSearch: true,
-      label: 'Merchant category', placeholder: 'Choose a category',
-      caption: 'Used to route your settlement report.'
+      label: label, placeholder: placeholder,
+      caption: 'Used to route your settlement report.',
+      labelPosition: dpdPgState.single
     });
     wireInteractive(play);
   }
+  renderDpdSinglePlay();
 
   // Interactive playground — multi-select
-  var playMulti = document.getElementById('dpd-play-multi');
-  if(playMulti){
-    var multiOpts = {options: OPTIONS, showSearch: true, placeholder: 'Choose categories'};
+  function renderDpdMultiPlay(){
+    var playMulti = document.getElementById('dpd-play-multi');
+    if(!playMulti) return;
+    var labelInside = dpdPgState.multi === 'inside';
+    var label = 'Categories';
+    var placeholder = labelInside ? label : 'Choose categories';
+    var multiOpts = {options: OPTIONS, showSearch: true, placeholder: placeholder};
     playMulti.innerHTML = interactiveMultiFieldHtml({
       options: OPTIONS, showSearch: true,
-      label: 'Categories', placeholder: 'Choose categories',
-      caption: 'Select every category this merchant sells.'
+      label: label, placeholder: placeholder,
+      caption: 'Select every category this merchant sells.',
+      labelPosition: dpdPgState.multi
     });
     wireInteractiveMulti(playMulti, multiOpts);
   }
+  renderDpdMultiPlay();
+
+  // Exposed for the "Label position" toggle's inline onclick handlers.
+  window.dpdSetLabelPos = function(which, val){
+    dpdPgState[which] = val;
+    var toggle = document.getElementById('dpd-pg-toggle-' + which);
+    if(toggle){
+      toggle.querySelectorAll('.dpd-pg-toggle__p').forEach(function(btn){
+        btn.classList.toggle('on', btn.getAttribute('data-value') === val);
+      });
+    }
+    if(which === 'single') renderDpdSinglePlay(); else renderDpdMultiPlay();
+  };
 
   // Style — Bordered vs Rounded
   var styleEl = document.getElementById('dpd-style');
@@ -14542,66 +14588,50 @@ const NAV = [
       {id:'s-spacing', label:'Spacing & Grid', desc:'An 8px base scale for spacing, radius and grid.'},
       {id:'s-type',    label:'Typography',     desc:'The Satoshi type scale and weight tokens.'},
     ]},
-  { cat:'Actions', landing:'s-cat-actions', component:true,
-    intro:'The controls someone reaches for to make something happen — commit to an action, filter a set, or drive the interface from the keyboard.',
-    items:[
-      {id:'s-buttons',      label:'Buttons',             desc:'Primary, secondary, accent, simple and link.'},
-      {id:'s-chips',        label:'Chips & Pills',       desc:'Compact selectable and filter tokens.'},
-      {id:'s-kbd',          label:'Keyboard Shortcuts',  desc:'Keycaps and shortcut hints.'},
-    ]},
-  { cat:'Inputs & controls', landing:'s-cat-inputs', component:true,
-    intro:'Everything someone types into, picks from or toggles. Shared focus, error and disabled states keep a form coherent however it is assembled.',
-    items:[
-      {id:'s-calendar',     label:'Calendar',            desc:'Date pickers and month grids.'},
-      {id:'s-selection',    label:'Checkboxes & Radios', desc:'Multi- and single-select controls.'},
-      {id:'s-dropdown',     label:'Dropdown',            desc:'Single- and multi-select menus.'},
-      {id:'s-input-otp',    label:'Input OTP',           desc:'One-time passcode entry fields.'},
-      {id:'s-slider',       label:'Slider',              desc:'Range and value selection.'},
-      {id:'s-switch',       label:'Switch',              desc:'On / off toggles.'},
-      {id:'s-inputs',       label:'Text Inputs',         desc:'Text, search and password fields.'},
-      {id:'s-toggle-group', label:'Toggle Group',        desc:'Segmented single / multi choice.'},
-    ]},
-  { cat:'Data display', landing:'s-cat-data', component:true,
-    intro:'Components that present information rather than collect it — from a single stat or badge through to a full table or chart.',
-    items:[
-      {id:'s-avatar',       label:'Avatar',              desc:'User and brand identity marks.'},
-      {id:'s-badges',       label:'Badges',              desc:'Counts, avatars and status markers.'},
-      {id:'s-cards',        label:'Cards',               desc:'Flexible containers for grouped content.'},
-      {id:'s-charts',       label:'Charts',              desc:'Data visualisation with brand-styled charts.'},
-      {id:'s-empty-state',  label:'Empty State',         desc:'Muted glyph, explanation and a primary action.'},
-      {id:'s-lists',        label:'Lists',               desc:'Key-value lists and activity timelines.'},
-      {id:'s-separator',    label:'Separator',           desc:'Dividers between content groups.'},
-      {id:'s-tables',       label:'Tables',              desc:'Structured, selectable data tables.'},
-      {id:'s-tags',         label:'Tags',                desc:'Read-only category and metadata labels.'},
-    ]},
-  { cat:'Feedback & status', landing:'s-cat-feedback', component:true,
-    intro:'How the interface tells someone what is happening — that something loaded, worked, failed, or is still on its way.',
-    items:[
-      {id:'s-alert',        label:'Alert',               desc:'Inline messages for status and feedback.'},
-      {id:'s-skeleton',     label:'Skeleton loader',     desc:'Loading placeholders.'},
-      {id:'s-spinner',      label:'Spinner',             desc:'Indeterminate loading indicators.'},
-      {id:'s-toasts',       label:'Toasts', tag:'Soon',  desc:'Transient status notifications.'},
-    ]},
-  { cat:'Surfaces & overlays', landing:'s-cat-surfaces', component:true,
-    intro:'Containers that layer content above or alongside the page — expanding in place, floating on hover, or taking focus outright.',
+  // Alphabetical, like Carbon / Material / Biings. An entry with `items` instead
+  // of `id` is a sub-group: a row that expands into tightly-related components.
+  { cat:'Components', landing:'s-cat-components',
+    intro:'Flexible, reusable building blocks for Flash apps and sites. Every component shares the same tokens, spacing and states — pick one to see its playground, specs and code.',
     items:[
       {id:'s-accordion',    label:'Accordion',           desc:'Collapsible stacked sections.'},
+      {id:'s-alert',        label:'Alert',               desc:'Inline messages for status and feedback.'},
+      {id:'s-avatar',       label:'Avatar',              desc:'User and brand identity marks.'},
+      {id:'s-badges',       label:'Badges',              desc:'Counts, avatars and status markers.'},
       {id:'s-drawers',      label:'Bottom Sheets',       desc:'Panels that slide up from the bottom edge.'},
+      {id:'s-breadcrumb',   label:'Breadcrumb',          desc:'Shows the path back through a hierarchy.'},
+      {id:'s-buttons',      label:'Buttons',             desc:'Primary, secondary, accent, simple and link.'},
+      {id:'s-calendar',     label:'Calendar',            desc:'Date pickers and month grids.'},
+      {label:'Cards & Charts', items:[
+        {id:'s-cards',      label:'Cards',               desc:'Flexible containers for grouped content.'},
+        {id:'s-charts',     label:'Charts',              desc:'Data visualisation with brand-styled charts.'},
+      ]},
+      {id:'s-carousel',     label:'Carousel',            desc:'Swipeable slides with pagination.'},
+      {id:'s-selection',    label:'Checkboxes & Radios', desc:'Multi- and single-select controls.'},
+      {id:'s-chips',        label:'Chips & Pills',       desc:'Compact selectable and filter tokens.'},
       {id:'s-command',      label:'Command',             desc:'Searchable command palette.'},
       {id:'s-context-menu', label:'Context Menu',        desc:'Right-click and overflow action menus.'},
+      {id:'s-dropdown',     label:'Dropdown',            desc:'Single- and multi-select menus.'},
+      {id:'s-empty-state',  label:'Empty State',         desc:'Muted glyph, explanation and a primary action.'},
       {id:'s-hover-card',   label:'Hover Card',          desc:'Rich preview shown on hover.'},
+      {id:'s-input-otp',    label:'Input OTP',           desc:'One-time passcode entry fields.'},
+      {id:'s-kbd',          label:'Keyboard Shortcuts',  desc:'Keycaps and shortcut hints.'},
+      {id:'s-lists',        label:'Lists',               desc:'Key-value lists and activity timelines.'},
       {id:'s-modals',       label:'Modals', tag:'Soon',  desc:'Focused dialogs and confirmations.'},
-      {id:'s-popover',      label:'Popover',             desc:'Anchored floating content.'},
-      {id:'s-tooltip',      label:'Tooltip',             desc:'Brief on-hover hints.'},
-    ]},
-  { cat:'Navigation', landing:'s-cat-navigation', component:true,
-    intro:'Getting around — moving between sections, stepping through pages, and showing where in the product someone currently is.',
-    items:[
-      {id:'s-breadcrumb',   label:'Breadcrumb',          desc:'Shows the path back through a hierarchy.'},
-      {id:'s-carousel',     label:'Carousel',            desc:'Swipeable slides with pagination.'},
       {id:'s-nav',          label:'Navigation',          desc:'Side navigation and menu systems.'},
       {id:'s-pagination',   label:'Pagination',          desc:'Page-by-page navigation controls.'},
+      {id:'s-popover',      label:'Popover',             desc:'Anchored floating content.'},
+      {id:'s-separator',    label:'Separator',           desc:'Dividers between content groups.'},
+      {id:'s-skeleton',     label:'Skeleton loader',     desc:'Loading placeholders.'},
+      {id:'s-slider',       label:'Slider',              desc:'Range and value selection.'},
+      {id:'s-spinner',      label:'Spinner',             desc:'Indeterminate loading indicators.'},
+      {id:'s-switch',       label:'Switch',              desc:'On / off toggles.'},
+      {id:'s-tables',       label:'Tables',              desc:'Structured, selectable data tables.'},
       {id:'s-tabs',         label:'Tabs',                desc:'Switch between related views.'},
+      {id:'s-tags',         label:'Tags',                desc:'Read-only category and metadata labels.'},
+      {id:'s-inputs',       label:'Text Inputs',         desc:'Text, search and password fields.'},
+      {id:'s-toasts',       label:'Toasts', tag:'Soon',  desc:'Transient status notifications.'},
+      {id:'s-toggle-group', label:'Toggle Group',        desc:'Segmented single / multi choice.'},
+      {id:'s-tooltip',      label:'Tooltip',             desc:'Brief on-hover hints.'},
     ]},
   // No cat and no landing — renders as a standalone top-level link at the bottom.
   { items:[ {id:'s-changelog', label:'Changelog'} ] },
@@ -14664,14 +14694,21 @@ function lpCardHTML(item){
 }
 
 var SB_CARET_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.7 9.3a1 1 0 0 1 1.41 0L12 13.19l3.89-3.89a1 1 0 1 1 1.41 1.41l-4.59 4.6a1 1 0 0 1-1.42 0l-4.59-4.6a1 1 0 0 1 0-1.41Z"/></svg>';
-var SB_CHEV_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.29 6.71a1 1 0 0 1 1.42 0l4.58 4.58a1 1 0 0 1 0 1.42l-4.58 4.58a1 1 0 1 1-1.42-1.41L13.17 12 9.29 8.12a1 1 0 0 1 0-1.41Z"/></svg>';
 
 function sbLinkHTML(id, label, tag, extraCls){
   return '<a href="javascript:void(0)" onclick="showSection(\'' + id + '\')" class="sb-link'+(extraCls ? ' '+extraCls : '')+'">'
     + label
     + (tag ? '<span class="sb-tag">'+tag+'</span>' : '')
-    + '<span class="sb-link__chev">'+SB_CHEV_SVG+'</span>'
     + '</a>';
+}
+
+// A NAV item is either a leaf (has an id) or a sub-group (has its own items).
+// Everything except the sidebar itself — landings, breadcrumbs, search — wants
+// the flat list of leaves.
+function navLeaves(items){
+  return items.reduce(function(all, it){
+    return all.concat(it.items ? it.items : [it]);
+  }, []);
 }
 
 function buildSidebar(){
@@ -14680,20 +14717,17 @@ function buildSidebar(){
   var html = '';
   NAV.forEach(function(g, i){
     if(g.landing){
-      // The category header toggles instead of navigating, so its landing page
-      // is reached from an Overview link at the top of the group's own items.
-      var links = sbLinkHTML(g.landing, 'Overview')
-        + g.items.map(function(it){ return sbLinkHTML(it.id, it.label, it.tag); }).join('');
-      var itemsId = 'sb-items-' + i;
-      html += '<div class="sb-group">'
-           +    '<button type="button" class="sb-cat sb-cat--toggle" aria-expanded="false" aria-controls="'+itemsId+'" onclick="toggleNavGroup(this)">'
-           +      '<span>'+g.cat+'</span><span class="sb-cat__caret">'+SB_CARET_SVG+'</span>'
-           +    '</button>'
-           +    '<div class="sb-group__items" id="'+itemsId+'">'+links+'</div>'
-           +  '</div>';
+      // The category label is static — its landing page is reached from the
+      // Overview link at the top of the list.
+      html += '<div class="sb-cat">'+g.cat+'</div>'
+           +  sbLinkHTML(g.landing, 'Overview')
+           +  g.items.map(function(it, j){
+                return it.items ? sbSubGroupHTML(it, 'sb-sub-' + i + '-' + j)
+                                : sbLinkHTML(it.id, it.label, it.tag);
+              }).join('');
     } else {
       // A group with no landing is a plain top-level destination (Changelog) —
-      // rendered at category level rather than indented under a heading.
+      // rendered at category level rather than under a heading.
       html += g.items.map(function(it){
         return sbLinkHTML(it.id, it.label, it.tag, 'sb-link--top');
       }).join('');
@@ -14702,23 +14736,36 @@ function buildSidebar(){
   aside.innerHTML = html;
 }
 
-function toggleNavGroup(btn){
-  var group = btn.closest('.sb-group');
-  if(!group) return;
-  var open = !group.classList.contains('open');
-  group.classList.toggle('open', open);
+// A row that expands in place into its related components.
+function sbSubGroupHTML(item, itemsId){
+  return '<div class="sb-sub">'
+    +   '<button type="button" class="sb-link sb-sub__toggle" aria-expanded="false" aria-controls="'+itemsId+'" onclick="toggleNavSub(this)">'
+    +     item.label + '<span class="sb-sub__caret">'+SB_CARET_SVG+'</span>'
+    +   '</button>'
+    +   '<div class="sb-sub__items" id="'+itemsId+'">'
+    +     item.items.map(function(sub){ return sbLinkHTML(sub.id, sub.label, sub.tag); }).join('')
+    +   '</div>'
+    + '</div>';
+}
+
+function toggleNavSub(btn){
+  var sub = btn.closest('.sb-sub');
+  if(!sub) return;
+  var open = !sub.classList.contains('open');
+  sub.classList.toggle('open', open);
   btn.setAttribute('aria-expanded', open ? 'true' : 'false');
 }
 
-// Keep the group holding the open section expanded and flagged active. Other
-// groups keep whatever open/closed state the person left them in.
+// Keep a sub-group holding the open section expanded, so a deep link or a
+// search result never lands on a page whose nav row is hidden.
 function syncNavGroups(){
-  document.querySelectorAll('#sidebar .sb-group').forEach(function(group){
-    var btn = group.querySelector('.sb-cat--toggle');
+  document.querySelectorAll('#sidebar .sb-sub').forEach(function(sub){
+    var btn = sub.querySelector('.sb-sub__toggle');
     if(!btn) return;
-    var holds = !!group.querySelector('.sb-link.on');
-    if(holds){ group.classList.add('open'); btn.setAttribute('aria-expanded','true'); }
-    btn.classList.toggle('on', holds);
+    if(sub.querySelector('.sb-link.on')){
+      sub.classList.add('open');
+      btn.setAttribute('aria-expanded','true');
+    }
   });
 }
 
@@ -14733,28 +14780,9 @@ function buildLandings(){
     sec.innerHTML = '<div class="sec__head">'
       + '<h1 class="sec__title">'+g.cat+'</h1>'
       + '<p class="sec__desc">'+g.intro+'</p></div>'
-      + '<div class="lp-grid">'+g.items.map(lpCardHTML).join('')+'</div>';
+      + '<div class="lp-grid">'+navLeaves(g.items).map(lpCardHTML).join('')+'</div>';
     main.appendChild(sec);
   });
-  buildAllComponentsLanding(main);
-}
-
-// The home page's Components entry card points at one umbrella landing rather
-// than at any single group, so build it from every component group's items.
-// It has no sidebar entry of its own — the groups are the way in from there.
-function buildAllComponentsLanding(main){
-  if(document.getElementById('s-cat-components')) return;
-  var items = NAV.filter(function(g){ return g.component; })
-                 .reduce(function(all, g){ return all.concat(g.items); }, [])
-                 .sort(function(a, b){ return a.label.localeCompare(b.label); });
-  var sec = document.createElement('section');
-  sec.className = 'sec';
-  sec.id = 's-cat-components';
-  sec.innerHTML = '<div class="sec__head">'
-    + '<h1 class="sec__title">Components</h1>'
-    + '<p class="sec__desc">Flexible, reusable building blocks for Flash apps and sites. Every component shares the same tokens, spacing and states — pick one to see its playground, specs and code.</p></div>'
-    + '<div class="lp-grid">'+items.map(lpCardHTML).join('')+'</div>';
-  main.appendChild(sec);
 }
 
 var CRUMB_BACK_SVG = '<svg viewBox="0 0 26 26" fill="currentColor" aria-hidden="true"><path d="M11.413 7.08193C11.8029 6.62704 12.4883 6.57392 12.9432 6.96376C13.3982 7.35369 13.4504 8.03911 13.0604 8.49403L10.2557 11.7655H18.0223C18.6214 11.7655 19.1072 12.2514 19.1073 12.8505C19.1073 13.4496 18.6215 13.9354 18.0223 13.9354H10.2557L13.0604 17.2079C13.4502 17.6628 13.398 18.3473 12.9432 18.7372C12.4883 19.1271 11.8029 19.0748 11.413 18.62L7.47741 14.0272C6.89702 13.3501 6.89701 12.3509 7.47741 11.6737L11.413 7.08193Z"/></svg>';
@@ -14762,7 +14790,7 @@ var CRUMB_BACK_SVG = '<svg viewBox="0 0 26 26" fill="currentColor" aria-hidden="
 function injectBreadcrumbs(){
   NAV.forEach(function(g){
     if(!g.landing) return;
-    g.items.forEach(function(it){
+    navLeaves(g.items).forEach(function(it){
       var sec = document.getElementById(it.id);
       if(!sec) return;
       var eye = sec.querySelector('.sec__head .sec__eye');
@@ -14814,7 +14842,7 @@ window.addEventListener('hashchange', function(){
 // ============================================================
 var navSearchIndex = [];
 NAV.forEach(function(g){
-  g.items.forEach(function(it){
+  navLeaves(g.items).forEach(function(it){
     navSearchIndex.push({ id: it.id, label: it.label, desc: it.desc || '', cat: g.cat || '' });
   });
 });
