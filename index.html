@@ -1369,74 +1369,106 @@ body.home .main{max-width:none;margin:0;padding:0}
 .ti-icon-tile__glyph svg{width:100%;height:100%;display:block}
 .ti-icon-tile__name{font-size:10.5px;font-weight:600;color:var(--chrome-muted);text-align:center;word-break:break-word;font-family:'SF Mono','Monaco',monospace}
 /* ================================================================
+   TABBED COMPONENT PAGE  (.sec--tabbed)
+================================================================ */
+/* Shared layout for a component page built as Overview / Style / Code /
+   Changelog tabs, rather than one long scroll. First trialled scoped to
+   #s-chips; generalised here so any section can opt in by adding
+   .sec--tabbed. Two vocabularies live below:
+     .sec-* / .cpg-*  — page furniture (hero, tabs, section blocks, the
+                        big heading-beside-demo playground layout)
+     .spec-*          — documentation furniture reused by every component's
+                        Overview/Style tabs (cells, mockups, part cards,
+                        size demos, token swatches)
+   Anything genuinely component-specific keeps its own prefix (.chip-ref*,
+   .sw-mock*) and stays out of here. */
+.sec--tabbed{max-width:1280px;margin-left:auto;margin-right:auto;padding-top:56px}
+.sec--tabbed .sec__title{font-size:64px;font-weight:900;line-height:1.05;letter-spacing:-.02em;margin-bottom:24px}
+.sec--tabbed .sec__head{border-bottom:none;padding-bottom:0;flex:1 1 0%;min-width:0}
+.sec--tabbed .sec-hero{display:flex;align-items:flex-start;justify-content:space-between;gap:32px}
+.sec--tabbed .sec-hero__preview{flex:0 0 320px;height:180px;border-radius:18px;background:var(--chrome-nav);border:1px solid var(--chrome-border);display:flex;align-items:center;justify-content:center;overflow:hidden;transition:background .25s,border-color .25s}
+@media (max-width:900px){.sec--tabbed .sec-hero{flex-direction:column}.sec--tabbed .sec-hero__preview{width:100%;flex:none}}
+.sec--tabbed .sec-tabs{margin-top:32px;gap:28px}
+/* .spec-stack = a column of sibling .type-sub sections (the Style tab).
+   .spec-panel = any panel whose .type-sub headings step down to 22px. */
+.sec--tabbed .spec-stack > .type-sub{margin-bottom:72px}
+.sec--tabbed .spec-stack > .type-sub:last-child{margin-bottom:0}
+.sec--tabbed .spec-panel .type-sub__title{font-size:22px;margin-bottom:8px}
+.sec--tabbed .spec-panel .type-sub__desc{font-size:14px;margin-bottom:24px}
+.sec--tabbed .cpg-section-outline{border:1px solid var(--chrome-border);border-radius:16px;padding:32px;transition:border-color .25s}
+.sec--tabbed .tabs-panel{padding-top:36px}
+.sec--tabbed .cpg-section-block{border:1px solid var(--chrome-border);border-radius:16px;background:var(--chrome-nav);padding:32px;transition:background .25s,border-color .25s}
+.sec--tabbed .cpg-section-heading{margin-bottom:24px}
+.sec--tabbed .cpg-section-block .cpg-layout__intro{padding-left:20px;padding-right:20px}
+.sec--tabbed .cpg-section-block .btn-pg__ctrls{background:var(--chrome-bg)}
+[data-theme="dark"] .sec--tabbed .cpg-section-block .btn-pg__ctrls{background:var(--prim-gb-425)}
+.sec--tabbed .cpg-section-block .sel-usage__card{background:var(--chrome-bg)}
+[data-theme="dark"] .sec--tabbed .cpg-section-block .sel-usage__card{background:var(--prim-gb-425)}
+.sec--tabbed .cpg-layout{display:flex;gap:40px;align-items:stretch}
+.sec--tabbed .cpg-layout__intro{flex:1 1 0%;display:flex;flex-direction:column;justify-content:center}
+.sec--tabbed .cpg-layout__demo{flex:2 1 0%;min-width:0}
+.sec--tabbed .cpg-layout__title{font-size:44px;font-weight:900;line-height:1.1;color:var(--chrome-txt);margin-bottom:18px}
+.sec--tabbed .cpg-layout__desc{font-size:16px;line-height:1.5;color:var(--chrome-muted)}
+.sec--tabbed .cpg-overview-heading{display:flex;align-items:center;gap:14px;background:var(--chrome-nav);border:1px solid var(--chrome-border);border-radius:14px;padding:20px 24px;font-size:19px;font-weight:800;line-height:1.4;color:var(--chrome-txt);margin-bottom:24px;transition:background .25s,border-color .25s}
+.sec--tabbed .cpg-overview-heading__icon{flex-shrink:0;width:22px;height:22px;color:var(--chrome-txt)}
+.sec--tabbed .cpg-cursor-icon{display:block;width:26px;height:26px;color:var(--chrome-txt);margin-bottom:16px}
+.sec--tabbed .spec-code-playground{margin-bottom:72px}
+.sec--tabbed .cpg-anatomy{margin-top:96px}
+.sec--tabbed .cpg-variants{margin-top:96px}
+.sec--tabbed .spec-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:16px}
+.sec--tabbed .spec-insitu-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.sec--tabbed .spec-mock{border:1px solid var(--chrome-border);border-radius:12px;overflow:hidden;background:var(--chrome-bg);display:flex;flex-direction:column;transition:background .25s,border-color .25s}
+.sec--tabbed .spec-mock__stage{flex:1;padding:22px 20px;display:flex;flex-direction:column;justify-content:center;gap:12px;min-height:150px;transition:background .25s}
+.sec--tabbed .spec-mock__cap{padding:12px 16px;border-top:1px solid var(--chrome-border);font-size:12px;line-height:1.5;color:var(--chrome-muted)}
+.sec--tabbed .spec-mock__cap b{display:block;font-size:13px;font-weight:700;color:var(--chrome-txt);margin-bottom:2px}
+.sec--tabbed .spec-mock__row{display:flex;align-items:center;gap:10px}
+.sec--tabbed .spec-mock__bar{height:9px;border-radius:5px;background:var(--color-surface-n2);flex-shrink:0}
+.sec--tabbed .spec-mock__spacer{flex:1}
+.sec--tabbed .spec-mock__filterrow{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:4px}
+.sec--tabbed .spec-mock__label{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--chrome-muted)}
+.sec--tabbed .spec-mock__field{display:flex;flex-wrap:wrap;align-items:center;gap:6px;padding:8px 10px;border:1.5px solid var(--chrome-border);border-radius:10px;background:var(--color-surface-base)}
+.sec--tabbed .spec-mock__caret{width:1.5px;height:18px;background:var(--chrome-txt);opacity:.45}
+.sec--tabbed .spec-usage-demo{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:14px;padding-top:14px;border-top:1px dashed var(--chrome-border)}
+.sec--tabbed .spec-cell{border:1px solid var(--chrome-border);border-radius:12px;overflow:hidden;background:var(--chrome-bg);transition:background .25s,border-color .25s}
+.sec--tabbed .spec-cell__stage{display:flex;align-items:center;justify-content:center;padding:24px 12px;min-height:60px;transition:background .25s}
+.sec--tabbed .spec-cell__name{padding:10px 12px 0;font-size:13px;font-weight:700;color:var(--chrome-txt);border-top:1px solid var(--chrome-border)}
+.sec--tabbed .spec-cell__desc{padding:2px 12px 12px;font-size:11.5px;color:var(--chrome-muted)}
+.sec--tabbed .sec-header-meta{display:flex;align-items:center;gap:8px;position:relative}
+.sec--tabbed .sec-header-meta .comp-ver-badge{font-family:'Satoshi',sans-serif}
+.sec--tabbed .sec-header-meta .ai-ctx{margin-top:0}
+.sec--tabbed .sec-header-meta .ai-ctx summary{font-size:10px;font-weight:700;font-family:'Satoshi',sans-serif;letter-spacing:0;color:var(--chrome-muted);background:var(--chrome-nav);padding:2px 7px;border-radius:4px}
+.sec--tabbed .sec-header-meta .ai-ctx summary::before{font-size:8px}
+.sec--tabbed .sec-header-meta .ai-ctx pre{position:absolute;z-index:5;max-width:560px}
+
+/* Style tab furniture — anatomy specimen, numbered part cards, size demo,
+   token swatches. All component-agnostic: the specimen and part visuals are
+   supplied per component, the chrome around them is shared. */
+.sec--tabbed .spec-hero{border:1px solid var(--chrome-border);border-radius:14px;display:flex;align-items:center;justify-content:center;padding:48px 20px;margin-bottom:16px;transition:background .25s,border-color .25s}
+.sec--tabbed .spec-parts{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.sec--tabbed .spec-part{border:1px solid var(--chrome-border);border-radius:12px;overflow:hidden;background:var(--chrome-bg);transition:background .25s,border-color .25s}
+.sec--tabbed .spec-part__stage{display:flex;align-items:center;justify-content:center;height:66px;transition:background .25s}
+.sec--tabbed .spec-part__body{padding:12px 14px;border-top:1px solid var(--chrome-border)}
+.sec--tabbed .spec-part__name{display:flex;align-items:center;gap:7px;font-size:13px;font-weight:700;color:var(--chrome-txt)}
+.sec--tabbed .spec-part__num{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:50%;background:var(--chrome-accent-text);color:#fff;font-size:10.5px;font-weight:800;flex-shrink:0}
+.sec--tabbed .spec-part__note{margin-top:5px;font-size:11.5px;line-height:1.5;color:var(--chrome-muted)}
+.sec--tabbed .spec-part__pill{width:46px;height:22px;border-radius:999px;border:2px dashed var(--chrome-muted);opacity:.65}
+.sec--tabbed .spec-size-demo{display:flex;align-items:flex-end;gap:30px;flex-wrap:wrap;padding:30px 24px;border:1px solid var(--chrome-border);border-radius:14px;margin-bottom:16px;transition:background .25s,border-color .25s}
+.sec--tabbed .spec-size-item{display:flex;flex-direction:column;align-items:center;gap:10px}
+.sec--tabbed .spec-size-item__lbl{font-size:11px;font-weight:700;color:var(--chrome-muted)}
+.sec--tabbed .spec-tok-cell{display:flex;align-items:center;gap:7px;white-space:nowrap}
+.sec--tabbed .spec-tok-sw{display:inline-block;width:16px;height:16px;border-radius:5px;border:1px solid rgba(128,128,128,.28);flex-shrink:0}
+.sec--tabbed .dd-table code,.sec--tabbed .spec-tok-cell code{font-family:'SF Mono',Consolas,monospace;font-size:12px;color:var(--chrome-txt)}
+
+@media (max-width:900px){
+  .sec--tabbed .cpg-layout{flex-direction:column}
+  .sec--tabbed .cpg-layout__intro{position:static}
+  .sec--tabbed .spec-insitu-grid{grid-template-columns:1fr}
+}
+@media (max-width:720px){.sec--tabbed .spec-parts{grid-template-columns:1fr 1fr}}
+
+/* ================================================================
    CHIPS
 ================================================================ */
-/* Scoped to this section only — Helen is trialling info-hierarchy/layout
-   changes on Chips & Pills before rolling anything out to other pages. */
-#s-chips{max-width:1280px;margin-left:auto;margin-right:auto;padding-top:56px}
-#s-chips .sec__title{font-size:64px;font-weight:900;line-height:1.05;letter-spacing:-.02em;margin-bottom:24px}
-#s-chips .sec__head{border-bottom:none;padding-bottom:0;flex:1 1 0%;min-width:0}
-#s-chips .chip-hero{display:flex;align-items:flex-start;justify-content:space-between;gap:32px}
-#s-chips .chip-hero__preview{flex:0 0 320px;height:180px;border-radius:18px;background:var(--chrome-nav);border:1px solid var(--chrome-border);display:flex;align-items:center;justify-content:center;overflow:hidden;transition:background .25s,border-color .25s}
-@media (max-width:900px){#s-chips .chip-hero{flex-direction:column}#s-chips .chip-hero__preview{width:100%;flex:none}}
-#s-chips .chip-tabs{margin-top:32px;gap:28px}
-#s-chips #chip-reference .type-sub{margin-bottom:72px}
-#s-chips #chip-reference .type-sub:last-child{margin-bottom:0}
-#s-chips #chip-reference .type-sub__title,
-#s-chips #chip-code-playground .type-sub__title,
-#s-chips #chip-code-tab .type-sub__title{font-size:22px;margin-bottom:8px}
-#s-chips #chip-reference .type-sub__desc,
-#s-chips #chip-code-playground .type-sub__desc,
-#s-chips #chip-code-tab .type-sub__desc{font-size:14px;margin-bottom:24px}
-#s-chips .cpg-section-outline{border:1px solid var(--chrome-border);border-radius:16px;padding:32px;transition:border-color .25s}
-#s-chips .tabs-panel{padding-top:36px}
-#s-chips .cpg-section-block{border:1px solid var(--chrome-border);border-radius:16px;background:var(--chrome-nav);padding:32px;transition:background .25s,border-color .25s}
-#s-chips .cpg-section-heading{margin-bottom:24px}
-#s-chips .cpg-section-block .cpg-layout__intro{padding-left:20px;padding-right:20px}
-#s-chips .cpg-section-block .btn-pg__ctrls{background:var(--chrome-bg)}
-[data-theme="dark"] #s-chips .cpg-section-block .btn-pg__ctrls{background:var(--prim-gb-425)}
-#s-chips .cpg-section-block .sel-usage__card{background:var(--chrome-bg)}
-[data-theme="dark"] #s-chips .cpg-section-block .sel-usage__card{background:var(--prim-gb-425)}
-#s-chips .cpg-layout{display:flex;gap:40px;align-items:stretch}
-#s-chips .cpg-layout__intro{flex:1 1 0%;display:flex;flex-direction:column;justify-content:center}
-#s-chips .cpg-layout__demo{flex:2 1 0%;min-width:0}
-#s-chips .cpg-layout__title{font-size:44px;font-weight:900;line-height:1.1;color:var(--chrome-txt);margin-bottom:18px}
-#s-chips .cpg-layout__desc{font-size:16px;line-height:1.5;color:var(--chrome-muted)}
-#s-chips .cpg-overview-heading{display:flex;align-items:center;gap:14px;background:var(--chrome-nav);border:1px solid var(--chrome-border);border-radius:14px;padding:20px 24px;font-size:19px;font-weight:800;line-height:1.4;color:var(--chrome-txt);margin-bottom:24px;transition:background .25s,border-color .25s}
-#s-chips .cpg-overview-heading__icon{flex-shrink:0;width:22px;height:22px;color:var(--chrome-txt)}
-#s-chips .cpg-cursor-icon{display:block;width:26px;height:26px;color:var(--chrome-txt);margin-bottom:16px}
-#s-chips #chip-code-playground{margin-bottom:72px}
-#s-chips .cpg-anatomy{margin-top:96px}
-#s-chips .cpg-variants{margin-top:96px}
-#s-chips .chip-variants-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:16px}
-#s-chips .chip-insitu-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-#s-chips .chip-mock{border:1px solid var(--chrome-border);border-radius:12px;overflow:hidden;background:var(--chrome-bg);display:flex;flex-direction:column;transition:background .25s,border-color .25s}
-#s-chips .chip-mock__stage{flex:1;padding:22px 20px;display:flex;flex-direction:column;justify-content:center;gap:12px;min-height:150px;transition:background .25s}
-#s-chips .chip-mock__cap{padding:12px 16px;border-top:1px solid var(--chrome-border);font-size:12px;line-height:1.5;color:var(--chrome-muted)}
-#s-chips .chip-mock__cap b{display:block;font-size:13px;font-weight:700;color:var(--chrome-txt);margin-bottom:2px}
-#s-chips .chip-mock__row{display:flex;align-items:center;gap:10px}
-#s-chips .chip-mock__bar{height:9px;border-radius:5px;background:var(--color-surface-n2);flex-shrink:0}
-#s-chips .chip-mock__spacer{flex:1}
-#s-chips .chip-mock__filterrow{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:4px}
-#s-chips .chip-mock__label{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--chrome-muted)}
-#s-chips .chip-mock__field{display:flex;flex-wrap:wrap;align-items:center;gap:6px;padding:8px 10px;border:1.5px solid var(--chrome-border);border-radius:10px;background:var(--color-surface-base)}
-#s-chips .chip-mock__caret{width:1.5px;height:18px;background:var(--chrome-txt);opacity:.45}
-#s-chips .chip-usage-demo{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:14px;padding-top:14px;border-top:1px dashed var(--chrome-border)}
-#s-chips .chip-variant-cell{border:1px solid var(--chrome-border);border-radius:12px;overflow:hidden;background:var(--chrome-bg);transition:background .25s,border-color .25s}
-#s-chips .chip-variant-cell__stage{display:flex;align-items:center;justify-content:center;padding:24px 12px;min-height:60px;transition:background .25s}
-#s-chips .chip-variant-cell__name{padding:10px 12px 0;font-size:13px;font-weight:700;color:var(--chrome-txt);border-top:1px solid var(--chrome-border)}
-#s-chips .chip-variant-cell__desc{padding:2px 12px 12px;font-size:11.5px;color:var(--chrome-muted)}
-#s-chips .chip-header-meta{display:flex;align-items:center;gap:8px;position:relative}
-#s-chips .chip-header-meta .comp-ver-badge{font-family:'Satoshi',sans-serif}
-#s-chips .chip-header-meta .ai-ctx{margin-top:0}
-#s-chips .chip-header-meta .ai-ctx summary{font-size:10px;font-weight:700;font-family:'Satoshi',sans-serif;letter-spacing:0;color:var(--chrome-muted);background:var(--chrome-nav);padding:2px 7px;border-radius:4px}
-#s-chips .chip-header-meta .ai-ctx summary::before{font-size:8px}
-#s-chips .chip-header-meta .ai-ctx pre{position:absolute;z-index:5;max-width:560px}
-@media (max-width:900px){
-  #s-chips .cpg-layout{flex-direction:column}
-  #s-chips .cpg-layout__intro{position:static}
-  #s-chips .chip-insitu-grid{grid-template-columns:1fr}
-}
 .chip{display:inline-flex;align-items:center;border-radius:999px;font-family:inherit;font-weight:700;white-space:nowrap;background:var(--chip-bg);color:var(--chip-text);line-height:1}
 .chip__icon{flex-shrink:0}
 .chip--sm{height:24px}
@@ -1448,24 +1480,6 @@ body.home .main{max-width:none;margin:0;padding:0}
 .chip-ref__sizehead{padding:12px 14px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--chrome-muted)}
 .chip-ref__rowlabel{padding:12px 14px;font-size:12px;font-weight:700;color:var(--chrome-txt);display:flex;align-items:center}
 .chip-ref__cell{display:flex;align-items:center;padding:12px 14px}
-
-/* Chip Style / Specs tab */
-#s-chips .chip-spec-hero{border:1px solid var(--chrome-border);border-radius:14px;display:flex;align-items:center;justify-content:center;padding:48px 20px;margin-bottom:16px;transition:background .25s,border-color .25s}
-#s-chips .chip-parts{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-#s-chips .chip-part{border:1px solid var(--chrome-border);border-radius:12px;overflow:hidden;background:var(--chrome-bg);transition:background .25s,border-color .25s}
-#s-chips .chip-part__stage{display:flex;align-items:center;justify-content:center;height:66px;transition:background .25s}
-#s-chips .chip-part__body{padding:12px 14px;border-top:1px solid var(--chrome-border)}
-#s-chips .chip-part__name{display:flex;align-items:center;gap:7px;font-size:13px;font-weight:700;color:var(--chrome-txt)}
-#s-chips .chip-part__num{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:50%;background:var(--chrome-accent-text);color:#fff;font-size:10.5px;font-weight:800;flex-shrink:0}
-#s-chips .chip-part__note{margin-top:5px;font-size:11.5px;line-height:1.5;color:var(--chrome-muted)}
-#s-chips .chip-part__pill{width:46px;height:22px;border-radius:999px;border:2px dashed var(--chrome-muted);opacity:.65}
-#s-chips .chip-size-demo{display:flex;align-items:flex-end;gap:30px;flex-wrap:wrap;padding:30px 24px;border:1px solid var(--chrome-border);border-radius:14px;margin-bottom:16px;transition:background .25s,border-color .25s}
-#s-chips .chip-size-item{display:flex;flex-direction:column;align-items:center;gap:10px}
-#s-chips .chip-size-item__lbl{font-size:11px;font-weight:700;color:var(--chrome-muted)}
-#s-chips .chip-tok-cell{display:flex;align-items:center;gap:7px;white-space:nowrap}
-#s-chips .chip-tok-sw{display:inline-block;width:16px;height:16px;border-radius:5px;border:1px solid rgba(128,128,128,.28);flex-shrink:0}
-#s-chips .dd-table code,#s-chips .chip-tok-cell code{font-family:'SF Mono',Consolas,monospace;font-size:12px;color:var(--chrome-txt)}
-@media(max-width:720px){#s-chips .chip-parts{grid-template-columns:1fr 1fr}}
 
 /* Chip playground */
 .cpg-label-input{background:var(--chrome-bg);border:1px solid var(--chrome-border);border-radius:7px;padding:5px 10px;font-family:inherit;font-size:12px;font-weight:600;color:var(--chrome-txt);width:170px;max-width:100%;transition:border-color .15s}
@@ -2024,6 +2038,26 @@ body.home .main{max-width:none;margin:0;padding:0}
 .sw--sm .sw__input:checked + .sw__track .sw__thumb{transform:translateX(14px)}
 .sw--sm .sw__label{font-size:12px}
 .sw:has(.sw__input:disabled){opacity:.45;cursor:not-allowed}
+
+/* ---- Switch: doc-site furniture only (not part of the component) ----
+   These .sw-* helpers deliberately never name one of the component's own inner
+   element classes in their selectors. scripts/generate-ai-context-tab.mjs collects
+   every rule whose selector mentions one of a section's realClasses, so a doc-only
+   rule reaching into the component's internals would be swept into this section's
+   AI context tab as though it were real component CSS. Same reason this comment
+   spells out no class names and opens no brace: the extractor reads whatever sits
+   between two rules as part of the next selector. The illustrative focus ring is
+   applied inline from JS rather than as a rule here. */
+.sw-hero-mock{display:flex;flex-direction:column;gap:16px}
+.sw-mock-row{display:flex;align-items:center;justify-content:space-between;gap:14px}
+.sw-mock-row__txt{min-width:0}
+.sw-mock-row__title{font-size:12.5px;font-weight:700;color:var(--chrome-txt);line-height:1.3}
+.sw-mock-row__sub{font-size:11px;color:var(--chrome-muted);line-height:1.4;margin-top:2px}
+.sw-mock-rule{height:1px;background:var(--chrome-border);margin:2px 0}
+.sw-mock-group{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--chrome-muted);margin-bottom:2px}
+.sw-specimen{transform:scale(2.1);transform-origin:center}
+.sw-part-track{width:46px;height:26px;border-radius:999px;border:2px dashed var(--chrome-muted);opacity:.7}
+.sw-part-thumb{width:24px;height:24px;border-radius:50%;border:2px dashed var(--chrome-muted);opacity:.7}
 
 /* ---- Tooltip ---- */
 .tip{position:relative;display:inline-flex}
@@ -3529,12 +3563,12 @@ body.home .main{max-width:none;margin:0;padding:0}
   </pre>
 </details>
     </section>
-    <section class="sec" id="s-chips">
-      <div class="chip-hero">
+    <section class="sec sec--tabbed" id="s-chips">
+      <div class="sec-hero">
       <div class="sec__head">
         <h1 class="sec__title">Chips and pills</h1>
-        <div class="chip-header-meta">
-          <span class="comp-ver-badge" style="margin-left:0">v1.14.1</span>
+        <div class="sec-header-meta">
+          <span class="comp-ver-badge" style="margin-left:0">v1.14.2</span>
           <details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-chips">
@@ -3556,7 +3590,7 @@ body.home .main{max-width:none;margin:0;padding:0}
     ".chip__icon",
     ".chip__x"
   ],
-  "css": ".chip { display:inline-flex;align-items:center;border-radius:999px;font-family:inherit;font-weight:700;white-space:nowrap;background:var(--chip-bg);color:var(--chip-text);line-height:1 }\n.chip__icon { flex-shrink:0 }\n.chip--sm { height:24px }\n.chip--reg { height:28px }\n.chip--lg { height:33px }\n.chip__x { display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;margin-left:1px;margin-right:-2px;width:1.15em;height:1.15em;border-radius:999px;border:none;background:transparent;color:inherit;cursor:pointer;padding:0;opacity:.72;transition:opacity .12s,background .12s }\n.chip__x:hover { opacity:1;background:rgba(0,0,0,.2) }\n.chip.is-selectable { cursor:pointer }\n.chip.is-selected { box-shadow:0 0 0 2px var(--cpg-stage-bg,#fff),0 0 0 4px var(--chip-bg) }\n.dd-chips .chip { box-shadow:none;padding:0 14px }",
+  "css": "/* ================================================================\n   CHIPS\n================================================================ */\n.chip { display:inline-flex;align-items:center;border-radius:999px;font-family:inherit;font-weight:700;white-space:nowrap;background:var(--chip-bg);color:var(--chip-text);line-height:1 }\n.chip__icon { flex-shrink:0 }\n.chip--sm { height:24px }\n.chip--reg { height:28px }\n.chip--lg { height:33px }\n.chip__x { display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;margin-left:1px;margin-right:-2px;width:1.15em;height:1.15em;border-radius:999px;border:none;background:transparent;color:inherit;cursor:pointer;padding:0;opacity:.72;transition:opacity .12s,background .12s }\n.chip__x:hover { opacity:1;background:rgba(0,0,0,.2) }\n.chip.is-selectable { cursor:pointer }\n.chip.is-selected { box-shadow:0 0 0 2px var(--cpg-stage-bg,#fff),0 0 0 4px var(--chip-bg) }\n.dd-chips .chip { box-shadow:none;padding:0 14px }",
   "js": "const CHIP_SIZES = [\n  {key:'sm',  label:'Small',   h:24, padY:'0', padX:9,  fs:11,   gap:4, icon:11},\n  {key:'reg', label:'Regular', h:28, padY:'0', padX:11, fs:12.5, gap:5, icon:13},\n  {key:'lg',  label:'Large',   h:33, padY:'0', padX:13, fs:13.5, gap:6, icon:15},\n];\n\nconst CHIP_VARIANTS = [\n  {key:'accent',  label:'Accent',  light:{bg:'#0062EB',text:'#ffffff'}, dark:{bg:'#0062EB',text:'#ffffff'}},\n  {key:'muted',   label:'Muted',   light:{bg:'#E6E6E6',text:'#646464'}, dark:{bg:'#33343A',text:'#A1A3A8'}},\n  {key:'success', label:'Success', light:{bg:'#16A220',text:'#ffffff'}, dark:{bg:'#16A220',text:'#ffffff'}},\n  {key:'warning', label:'Warning', light:{bg:'#FF8900',text:'#ffffff'}, dark:{bg:'#FF8900',text:'#ffffff'}},\n  {key:'error',   label:'Error',   light:{bg:'#EB0029',text:'#ffffff'}, dark:{bg:'#EB0029',text:'#ffffff'}},\n];\n\nfunction chipHeartSVG(size, color){\n  return `&lt;svg class=\"chip__icon\" width=\"${size}\" height=\"${size}\" viewBox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\"&gt;&lt;path fill=\"${color}\" d=\"M12 21.3s-7.6-4.7-10.3-9.4C.1 8.9 1.3 5.1 5 4.2c2.2-.5 4.2.4 5.5 2.2.4.5 1.1.5 1.5 0C13.3 4.6 15.3 3.7 17.5 4.2c3.7.9 4.9 4.7 3.3 7.7-2.7 4.7-8.8 9.4-8.8 9.4z\"/&gt;&lt;/svg&gt;`;\n}\n\nfunction makeChipHTML(variant, sizeKey, theme){\n  const sz = CHIP_SIZES.find(s=&gt;s.key===sizeKey);\n  const c  = variant[theme];\n  const style = `--chip-bg:${c.bg};--chip-text:${c.text};font-size:${sz.fs}px;gap:${sz.gap}px;padding:0 ${sz.padX}px 0 ${sz.padX-2}px`;\n  return `&lt;span class=\"chip chip--${sizeKey}\" style=\"${style}\"&gt;${chipHeartSVG(sz.icon, c.text)}&lt;span class=\"chip__label\"&gt;Chip&lt;/span&gt;&lt;/span&gt;`;\n}\n\nfunction makeChipEl(){\n  const sz = CHIP_SIZES.find(s=&gt;s.key===cpg.size)||CHIP_SIZES[1];\n  const v  = CHIP_VARIANTS.find(x=&gt;x.key===cpg.variant)||CHIP_VARIANTS[0];\n  const c  = v[cpg.theme];\n  const chip = document.createElement('span');\n  chip.className = `chip chip--${cpg.size}${cpg.selectable?' is-selectable':''}${(cpg.selectable&amp;&amp;cpg.selected)?' is-selected':''}`;\n  chip.style.cssText = `--chip-bg:${c.bg};--chip-text:${c.text};font-size:${sz.fs}px;gap:${sz.gap}px;padding:0 ${sz.padX}px 0 ${sz.padX-2}px`;\n  chip.style.setProperty('--cpg-stage-bg', stageBg(cpg.theme));\n  let inner = '';\n  if(cpg.icon) inner += chipHeartSVG(sz.icon, c.text);\n  inner += `&lt;span class=\"chip__label\"&gt;${cpgEsc(cpg.label||'Chip')}&lt;/span&gt;`;\n  chip.innerHTML = inner;\n  if(cpg.removable){\n    const x = document.createElement('button');\n    x.className = 'chip__x'; x.type = 'button'; x.setAttribute('aria-label','Remove');\n    const xs = Math.round(sz.icon*0.82);\n    x.innerHTML = `&lt;svg width=\"${xs}\" height=\"${xs}\" viewBox=\"0 0 24 24\" fill=\"none\"&gt;&lt;path d=\"M6 6l12 12M18 6L6 18\" stroke=\"currentColor\" stroke-width=\"2.6\" stroke-linecap=\"round\"/&gt;&lt;/svg&gt;`;\n    x.onclick = (e)=&gt;{ e.stopPropagation(); cpg.dismissed = true; cpgRefresh(); };\n    chip.appendChild(x);\n  }\n  if(cpg.selectable){\n    chip.onclick = ()=&gt;{ cpg.selected = !cpg.selected; cpgRefresh(); };\n  }\n  return chip;\n}",
   "usage": {
     "do": [
@@ -3570,16 +3604,16 @@ body.home .main{max-width:none;margin:0;padding:0}
       "Don't colour chips just for decoration — colour should carry meaning."
     ]
   },
-  "contentHash": "d6359e7aaabac22c7dfd11847df32fdff7b6b2b58883a03f71412bfdb7124967",
+  "contentHash": "3b456457303d8dc57e2942b53e75477492917815ded6774f334fa6a35e383802",
   "note": "makeChipHTML is the minimal real-markup builder (variant+size+theme -&gt; chip HTML string); makeChipEl is the fuller version also handling removable (.chip__x) and selectable (.is-selectable/.is-selected, captured via the .chip boundary already) states. cpg (playground state)/getChipCodeHTML/renderChipPlayground/renderChipReference are doc-site-only playground plumbing, excluded."
 }
   </pre>
 </details>
         </div>
       </div>
-      <div class="chip-hero__preview"><div class="mk"><span class="mk-chip"><span class="mk-dot"></span>Active</span><span class="mk-chip">Label</span><span class="mk-chip">Filter</span></div></div>
+      <div class="sec-hero__preview"><div class="mk"><span class="mk-chip"><span class="mk-dot"></span>Active</span><span class="mk-chip">Label</span><span class="mk-chip">Filter</span></div></div>
       </div>
-      <div class="tabs-list chip-tabs" id="chip-tabs-list">
+      <div class="tabs-list sec-tabs" id="chip-tabs-list">
         <button type="button" class="tab-item on" data-chip-tab="overview" onclick="chipTabSwitch('overview')"><span class="tab-item__inner"><span class="tab-item__label">Overview</span></span><span class="tab-item__line"></span></button>
         <button type="button" class="tab-item" data-chip-tab="style" onclick="chipTabSwitch('style')"><span class="tab-item__inner"><span class="tab-item__label">Style</span></span><span class="tab-item__line"></span></button>
         <button type="button" class="tab-item" data-chip-tab="code" onclick="chipTabSwitch('code')"><span class="tab-item__inner"><span class="tab-item__label">Code</span></span><span class="tab-item__line"></span></button>
@@ -3603,7 +3637,7 @@ body.home .main{max-width:none;margin:0;padding:0}
                   <li>Match the colour to the meaning &mdash; green for done, red for a problem.</li>
                   <li>Group related chips together, like a row of filters.</li>
                 </ul>
-                <div class="chip-usage-demo">
+                <div class="spec-usage-demo">
                   <span class="chip chip--reg" style="--chip-bg:#16A220;--chip-text:#ffffff;font-size:12.5px;padding:0 11px"><span class="chip__label">Paid</span></span>
                   <span class="chip chip--reg" style="--chip-bg:#FF8900;--chip-text:#ffffff;font-size:12.5px;padding:0 11px"><span class="chip__label">Pending</span></span>
                   <span class="chip chip--reg" style="--chip-bg:#EB0029;--chip-text:#ffffff;font-size:12.5px;padding:0 11px"><span class="chip__label">Overdue</span></span>
@@ -3616,7 +3650,7 @@ body.home .main{max-width:none;margin:0;padding:0}
                   <li>Don't use a chip as a main button; buttons are for actions.</li>
                   <li>Don't colour chips just for decoration &mdash; colour should carry meaning.</li>
                 </ul>
-                <div class="chip-usage-demo">
+                <div class="spec-usage-demo">
                   <span class="chip chip--reg" style="--chip-bg:#0062EB;--chip-text:#ffffff;font-size:12.5px;padding:0 11px"><span class="chip__label">This invoice is now overdue</span></span>
                 </div>
               </div>
@@ -3625,11 +3659,11 @@ body.home .main{max-width:none;margin:0;padding:0}
         </div>
       </div>
       <div class="tabs-panel" data-chip-panel="style">
-        <div id="chip-reference" class="type-sub"></div>
+        <div id="chip-reference" class="type-sub spec-panel spec-stack"></div>
       </div>
       <div class="tabs-panel" data-chip-panel="code">
-        <div id="chip-code-playground" class="type-sub"></div>
-        <div id="chip-code-tab" class="type-sub"></div>
+        <div id="chip-code-playground" class="type-sub spec-panel spec-code-playground"></div>
+        <div id="chip-code-tab" class="type-sub spec-panel"></div>
       </div>
       <div class="tabs-panel" data-chip-panel="changelog" id="chip-changelog-panel"></div>
     </section>
@@ -4793,79 +4827,21 @@ body.home .main{max-width:none;margin:0;padding:0}
     <!-- ============================================================
          SWITCH
     ============================================================ -->
-    <section class="sec" id="s-switch">
+    <section class="sec sec--tabbed" id="s-switch">
+      <div class="sec-hero">
       <div class="sec__head">
-        <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Switch <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.1</span></h1>
-        <p class="sec__desc">A toggle for a single on/off setting that applies immediately &mdash; no save step. Built on a real checkbox input, so it works with the keyboard and screen readers out of the box, and lights up in Flash green when on.</p>
-      </div>
-      <div class="type-sub">
-        <div class="type-sub__title">Interactive</div>
-        <div class="type-sub__desc">Real, clickable switches &mdash; toggle with a click, Space or Enter. State is native, so no JavaScript is involved.</div>
-        <div class="sg-stage"><div class="sg-row">
-          <label class="sw"><input type="checkbox" class="sw__input" checked><span class="sw__track"><span class="sw__thumb"></span></span><span class="sw__label">Email notifications</span></label>
-          <label class="sw"><input type="checkbox" class="sw__input"><span class="sw__track"><span class="sw__thumb"></span></span><span class="sw__label">Two-factor auth</span></label>
-        </div></div>
-      </div>
-      <div class="type-sub">
-        <div class="type-sub__title">Sizes</div>
-        <div class="type-sub__desc"><strong>Regular</strong> (40&times;24) is the default. <strong>Small</strong> (32&times;18) suits dense rows such as table cells or settings lists.</div>
-        <div class="sg-stage"><div class="sg-row">
-          <div class="sg-swatch"><span class="sg-swatch__cap">Regular</span><label class="sw"><input type="checkbox" class="sw__input" checked><span class="sw__track"><span class="sw__thumb"></span></span></label></div>
-          <div class="sg-swatch"><span class="sg-swatch__cap">Small</span><label class="sw sw--sm"><input type="checkbox" class="sw__input" checked><span class="sw__track"><span class="sw__thumb"></span></span></label></div>
-        </div></div>
-      </div>
-      <div class="type-sub">
-        <div class="type-sub__title">States</div>
-        <div class="type-sub__desc">Off uses a neutral track; on uses brand green; disabled dims the whole control and blocks interaction.</div>
-        <div class="sg-stage"><div class="sg-row">
-          <div class="sg-swatch"><span class="sg-swatch__cap">Off</span><label class="sw"><input type="checkbox" class="sw__input"><span class="sw__track"><span class="sw__thumb"></span></span></label></div>
-          <div class="sg-swatch"><span class="sg-swatch__cap">On</span><label class="sw"><input type="checkbox" class="sw__input" checked><span class="sw__track"><span class="sw__thumb"></span></span></label></div>
-          <div class="sg-swatch"><span class="sg-swatch__cap">Disabled off</span><label class="sw"><input type="checkbox" class="sw__input" disabled><span class="sw__track"><span class="sw__thumb"></span></span></label></div>
-          <div class="sg-swatch"><span class="sg-swatch__cap">Disabled on</span><label class="sw"><input type="checkbox" class="sw__input" checked disabled><span class="sw__track"><span class="sw__thumb"></span></span></label></div>
-        </div></div>
-      </div>
-      <div class="type-sub">
-        <div class="type-sub__title">Anatomy &amp; specs</div>
-        <div class="type-sub__desc">Measurements per size, with the tokens that drive each colour.</div>
-        <div class="dd-table-wrap"><table class="dd-table">
-          <thead><tr><th>Property</th><th>Regular</th><th>Small</th><th>Token</th></tr></thead>
-          <tbody>
-            <tr><td class="dd-table__name">Track</td><td>40 &times; 24</td><td>32 &times; 18</td><td>&mdash;</td></tr>
-            <tr><td class="dd-table__name">Thumb</td><td>20px</td><td>14px</td><td>&mdash;</td></tr>
-            <tr><td class="dd-table__name">Track &mdash; off</td><td colspan="2">Neutral surface</td><td><code>surface-neutral-3</code></td></tr>
-            <tr><td class="dd-table__name">Track &mdash; on</td><td colspan="2">Flash green</td><td><code>color-brand</code></td></tr>
-            <tr><td class="dd-table__name">Focus ring</td><td colspan="2">2px, 2px offset</td><td><code>input-focus</code></td></tr>
-          </tbody>
-        </table></div>
-      </div>
-      <div class="type-sub">
-        <div class="type-sub__title">When to use</div>
-        <div class="type-sub__desc">A switch commits instantly. If the choice only takes effect on submit, use a checkbox.</div>
-        <div class="sel-usage">
-          <div class="sel-usage__card">
-            <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
-            <ul class="sel-usage__list">
-              <li>Use for a single setting that takes effect the moment it&rsquo;s toggled.</li>
-              <li>Pair every switch with a clear text label describing the &ldquo;on&rdquo; state.</li>
-              <li>Keep the label static &mdash; don&rsquo;t change its wording between on and off.</li>
-            </ul>
-          </div>
-          <div class="sel-usage__card">
-            <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don&rsquo;t</div>
-            <ul class="sel-usage__list">
-              <li>Don&rsquo;t use a switch inside a form that needs a Save button &mdash; use a checkbox.</li>
-              <li>Don&rsquo;t use switches for multi-select lists &mdash; that&rsquo;s checkboxes.</li>
-              <li>Don&rsquo;t rely on colour alone; the thumb position must read clearly too.</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <details class="ai-ctx">
+        <h1 class="sec__title">Switch</h1>
+        <div class="sec-header-meta">
+          <span class="comp-ver-badge" style="margin-left:0">v1.1.2</span>
+          <details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-switch">
 {
   "status": "static",
+  "builderFunctions": [
+    "SW_SIZES",
+    "makeSwitchHTML"
+  ],
   "realClasses": [
     ".sw",
     ".sw__input",
@@ -4875,6 +4851,7 @@ body.home .main{max-width:none;margin:0;padding:0}
     ".sw--sm"
   ],
   "css": "/* ---- Switch ---- */\n.sw { display:inline-flex;align-items:center;gap:10px;cursor:pointer;user-select:none;vertical-align:middle }\n.sw__input { position:absolute;opacity:0;width:0;height:0;margin:0 }\n.sw__track { position:relative;flex-shrink:0;width:40px;height:24px;border-radius:999px;background:var(--color-surface-n3);transition:background .2s ease }\n.sw__thumb { position:absolute;top:2px;left:2px;width:20px;height:20px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.28);transition:transform .2s ease }\n.sw__input:checked + .sw__track { background:var(--color-brand) }\n.sw__input:checked + .sw__track .sw__thumb { transform:translateX(16px) }\n.sw__input:focus-visible + .sw__track { outline:2px solid var(--color-input-focus);outline-offset:2px }\n.sw__label { font-size:13px;font-weight:500;color:var(--chrome-txt) }\n.sw--sm .sw__track { width:32px;height:18px }\n.sw--sm .sw__thumb { width:14px;height:14px }\n.sw--sm .sw__input:checked + .sw__track .sw__thumb { transform:translateX(14px) }\n.sw--sm .sw__label { font-size:12px }\n.sw:has(.sw__input:disabled) { opacity:.45;cursor:not-allowed }",
+  "js": "const SW_SIZES = [\n  {key:'reg', label:'Regular', w:40, h:24, thumb:20, travel:16, fs:13},\n  {key:'sm',  label:'Small',   w:32, h:18, thumb:14, travel:14, fs:12},\n];\n\nfunction makeSwitchHTML({size='reg', on=false, disabled=false, label='', showLabel=true}={}){\n  const cls = `sw${size==='sm'?' sw--sm':''}`;\n  const attrs = `${on?' checked':''}${disabled?' disabled':''}`;\n  const lbl = (showLabel &amp;&amp; label) ? `&lt;span class=\"sw__label\"&gt;${swEsc(label)}&lt;/span&gt;` : '';\n  return `&lt;label class=\"${cls}\"&gt;&lt;input type=\"checkbox\" class=\"sw__input\"${attrs}&gt;&lt;span class=\"sw__track\"&gt;&lt;span class=\"sw__thumb\"&gt;&lt;/span&gt;&lt;/span&gt;${lbl}&lt;/label&gt;`;\n}",
   "usage": {
     "do": [
       "Use for a single setting that takes effect the moment it’s toggled.",
@@ -4887,10 +4864,71 @@ body.home .main{max-width:none;margin:0;padding:0}
       "Don’t rely on colour alone; the thumb position must read clearly too."
     ]
   },
-  "contentHash": "dcdedd5967489d03ff987719a2aafc2b123cd54e93c592ffbe412d706b76765e"
+  "contentHash": "691e49f7bf96763de6de223e6c2d7c90146166637e3b7cbf8daf996107d80a7a",
+  "note": "Real markup is a &lt;label&gt; wrapping a genuine checkbox input — .sw__input is visually hidden but still focusable, which is what makes the control keyboard- and screen-reader-accessible; don't swap it for a div. makeSwitchHTML is the canonical builder (size/on/disabled/label -&gt; switch HTML string). spg (playground state)/makeSwitchEl/getSwCode*/renderSwitch* and the doc-only .sw-* furniture classes are excluded."
 }
   </pre>
 </details>
+        </div>
+      </div>
+      <div class="sec-hero__preview">
+        <div class="sw-hero-mock">
+          <label class="sw"><input type="checkbox" class="sw__input" checked><span class="sw__track"><span class="sw__thumb"></span></span><span class="sw__label">Notifications</span></label>
+          <label class="sw"><input type="checkbox" class="sw__input"><span class="sw__track"><span class="sw__thumb"></span></span><span class="sw__label">Two-factor auth</span></label>
+        </div>
+      </div>
+      </div>
+      <div class="tabs-list sec-tabs" id="sw-tabs-list">
+        <button type="button" class="tab-item on" data-sw-tab="overview" onclick="swTabSwitch('overview')"><span class="tab-item__inner"><span class="tab-item__label">Overview</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-sw-tab="style" onclick="swTabSwitch('style')"><span class="tab-item__inner"><span class="tab-item__label">Style</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-sw-tab="code" onclick="swTabSwitch('code')"><span class="tab-item__inner"><span class="tab-item__label">Code</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-sw-tab="changelog" onclick="swTabSwitch('changelog')"><span class="tab-item__inner"><span class="tab-item__label">Changelog</span></span><span class="tab-item__line"></span></button>
+      </div>
+      <div class="tabs-panel on" data-sw-panel="overview">
+        <div id="sw-playground" class="type-sub"></div>
+        <div id="sw-states" class="type-sub"></div>
+        <div id="sw-insitu" class="type-sub"></div>
+        <div class="type-sub cpg-variants" id="sw-usage">
+          <div class="cpg-section-heading">
+            <div class="cpg-layout__title">Do's &amp; don'ts</div>
+            <div class="cpg-layout__desc">A switch applies its setting immediately, with no confirmation step. Use a checkbox when a change should wait for a Save action.</div>
+          </div>
+          <div class="cpg-section-block">
+            <div class="sel-usage">
+              <div class="sel-usage__card">
+                <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
+                <ul class="sel-usage__list">
+                  <li>Use for a single setting that takes effect the moment it&rsquo;s toggled.</li>
+                  <li>Pair every switch with a clear text label describing the &ldquo;on&rdquo; state.</li>
+                  <li>Keep the label static &mdash; don&rsquo;t change its wording between on and off.</li>
+                </ul>
+                <div class="spec-usage-demo">
+                  <label class="sw sw--sm"><input type="checkbox" class="sw__input" checked><span class="sw__track"><span class="sw__thumb"></span></span><span class="sw__label">Email notifications</span></label>
+                </div>
+              </div>
+              <div class="sel-usage__card">
+                <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don&rsquo;t</div>
+                <ul class="sel-usage__list">
+                  <li>Don&rsquo;t use a switch inside a form that needs a Save button &mdash; use a checkbox.</li>
+                  <li>Don&rsquo;t use switches for multi-select lists &mdash; that&rsquo;s checkboxes.</li>
+                  <li>Don&rsquo;t rely on colour alone; the thumb position must read clearly too.</li>
+                </ul>
+                <div class="spec-usage-demo">
+                  <label class="sw sw--sm"><input type="checkbox" class="sw__input"><span class="sw__track"><span class="sw__thumb"></span></span><span class="sw__label">Turn off email notifications</span></label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tabs-panel" data-sw-panel="style">
+        <div id="sw-reference" class="type-sub spec-panel spec-stack"></div>
+      </div>
+      <div class="tabs-panel" data-sw-panel="code">
+        <div id="sw-code-playground" class="type-sub spec-panel spec-code-playground"></div>
+        <div id="sw-code-tab" class="type-sub spec-panel"></div>
+      </div>
+      <div class="tabs-panel" data-sw-panel="changelog" id="sw-changelog-panel"></div>
     </section>
 
     <!-- ============================================================
@@ -7106,6 +7144,10 @@ function toggleTheme() {
   try { if(typeof renderChipInSitu==='function' && document.getElementById('chip-insitu')) renderChipInSitu(); } catch(e){}
   try { if(typeof renderTagsBadges==='function' && document.getElementById('tag-playground')) renderTagsBadges(); } catch(e){}
   try { if(typeof renderChipReference==='function' && document.getElementById('chip-reference')) renderChipReference(); } catch(e){}
+  try { if(typeof renderSwitchPlayground==='function' && document.getElementById('sw-playground')) renderSwitchPlayground(); } catch(e){}
+  try { if(typeof renderSwitchStates==='function' && document.getElementById('sw-states')) renderSwitchStates(); } catch(e){}
+  try { if(typeof renderSwitchInSitu==='function' && document.getElementById('sw-insitu')) renderSwitchInSitu(); } catch(e){}
+  try { if(typeof renderSwitchReference==='function' && document.getElementById('sw-reference')) renderSwitchReference(); } catch(e){}
   try { if(typeof renderSelReference==='function' && document.getElementById('sel-reference')) renderSelReference(); } catch(e){}
   try { if(typeof renderBshQuickCopy==='function' && document.getElementById('bsh-quickcopy')) renderBshQuickCopy(); } catch(e){}
   try { if(typeof renderBshHeaderRef==='function' && document.getElementById('bsh-header-ref')) renderBshHeaderRef(); } catch(e){}
@@ -9358,10 +9400,10 @@ function renderChipVariants(){
   const theme = currentTheme();
 
   const cells = KEY_VARIANTS.map(v=>`
-    <div class="chip-variant-cell">
-      <div class="chip-variant-cell__stage" style="background:${stageBg(theme)}">${ovChip({variant:v.key, size:'reg', label:v.label, theme})}</div>
-      <div class="chip-variant-cell__name">${v.name}</div>
-      <div class="chip-variant-cell__desc">${v.use}</div>
+    <div class="spec-cell">
+      <div class="spec-cell__stage" style="background:${stageBg(theme)}">${ovChip({variant:v.key, size:'reg', label:v.label, theme})}</div>
+      <div class="spec-cell__name">${v.name}</div>
+      <div class="spec-cell__desc">${v.use}</div>
     </div>`).join('');
 
   root.innerHTML = `
@@ -9370,7 +9412,7 @@ function renderChipVariants(){
       <div class="cpg-layout__desc">Five semantic colours, each with a job. Match the colour to the meaning &mdash; not the decoration.</div>
     </div>
     <div class="cpg-section-block">
-      <div class="chip-variants-grid">${cells}</div>
+      <div class="spec-grid">${cells}</div>
     </div>`;
 }
 
@@ -9380,44 +9422,44 @@ function renderChipInSitu(){
   const theme = currentTheme();
   const sbg = stageBg(theme);
 
-  const bar = w => `<span class="chip-mock__bar" style="width:${w}"></span>`;
+  const bar = w => `<span class="spec-mock__bar" style="width:${w}"></span>`;
 
   // 1. Status in a list — one status chip per row
   const listRows = [
     {w:'70px', variant:'success', label:'Paid'},
     {w:'52px', variant:'warning', label:'Pending'},
     {w:'62px', variant:'error',   label:'Overdue'},
-  ].map(r=>`<div class="chip-mock__row">${bar(r.w)}<span class="chip-mock__spacer"></span>${ovChip({variant:r.variant, size:'sm', label:r.label, theme})}</div>`).join('');
+  ].map(r=>`<div class="spec-mock__row">${bar(r.w)}<span class="spec-mock__spacer"></span>${ovChip({variant:r.variant, size:'sm', label:r.label, theme})}</div>`).join('');
 
   const listMock = `
-    <div class="chip-mock__stage" style="background:${sbg}">${listRows}</div>
-    <div class="chip-mock__cap"><b>Status at a glance</b>One chip per row shows where each item stands.</div>`;
+    <div class="spec-mock__stage" style="background:${sbg}">${listRows}</div>
+    <div class="spec-mock__cap"><b>Status at a glance</b>One chip per row shows where each item stands.</div>`;
 
   // 2. Filter bar — selected filter in accent, the rest muted
   const filterMock = `
-    <div class="chip-mock__stage" style="background:${sbg}">
-      <div class="chip-mock__filterrow">
+    <div class="spec-mock__stage" style="background:${sbg}">
+      <div class="spec-mock__filterrow">
         ${ovChip({variant:'accent', size:'sm', label:'Unpaid',     theme})}
         ${ovChip({variant:'muted',  size:'sm', label:'All',        theme})}
         ${ovChip({variant:'muted',  size:'sm', label:'This month', theme})}
       </div>
-      <div class="chip-mock__row">${bar('100%')}</div>
-      <div class="chip-mock__row">${bar('72%')}</div>
-      <div class="chip-mock__row">${bar('88%')}</div>
+      <div class="spec-mock__row">${bar('100%')}</div>
+      <div class="spec-mock__row">${bar('72%')}</div>
+      <div class="spec-mock__row">${bar('88%')}</div>
     </div>
-    <div class="chip-mock__cap"><b>Filter a list</b>Pick a chip to narrow what's shown.</div>`;
+    <div class="spec-mock__cap"><b>Filter a list</b>Pick a chip to narrow what's shown.</div>`;
 
   // 3. Tags in a field — removable chips inside an input
   const fieldMock = `
-    <div class="chip-mock__stage" style="background:${sbg}">
-      <div class="chip-mock__label">Team</div>
-      <div class="chip-mock__field">
+    <div class="spec-mock__stage" style="background:${sbg}">
+      <div class="spec-mock__label">Team</div>
+      <div class="spec-mock__field">
         ${ovChip({variant:'muted', size:'sm', label:'Design',  removable:true, theme})}
         ${ovChip({variant:'muted', size:'sm', label:'Finance', removable:true, theme})}
-        <span class="chip-mock__caret"></span>
+        <span class="spec-mock__caret"></span>
       </div>
     </div>
-    <div class="chip-mock__cap"><b>Tags in a field</b>Removable chips collect several choices in one input.</div>`;
+    <div class="spec-mock__cap"><b>Tags in a field</b>Removable chips collect several choices in one input.</div>`;
 
   root.innerHTML = `
     <div class="cpg-section-heading">
@@ -9425,10 +9467,10 @@ function renderChipInSitu(){
       <div class="cpg-layout__desc">The same chip does three everyday jobs &mdash; showing status, filtering a list, and collecting tags.</div>
     </div>
     <div class="cpg-section-block">
-      <div class="chip-insitu-grid">
-        <div class="chip-mock">${listMock}</div>
-        <div class="chip-mock">${filterMock}</div>
-        <div class="chip-mock">${fieldMock}</div>
+      <div class="spec-insitu-grid">
+        <div class="spec-mock">${listMock}</div>
+        <div class="spec-mock">${filterMock}</div>
+        <div class="spec-mock">${fieldMock}</div>
       </div>
     </div>`;
 }
@@ -9468,23 +9510,23 @@ function renderChipReference(){
   const parts = [
     {num:1, name:'Leading icon', note:'Optional. Sits before the label to add meaning at a glance.', vis:chipHeartSVG(24,'#0062EB')},
     {num:2, name:'Label',        note:'The chip text — keep it to one or two words.',                 vis:'<span style="font-weight:700;font-size:15px;color:var(--chrome-txt)">Label</span>'},
-    {num:3, name:'Container',    note:'Pill-shaped surface, 999px radius, coloured by variant.',       vis:'<span class="chip-part__pill"></span>'},
+    {num:3, name:'Container',    note:'Pill-shaped surface, 999px radius, coloured by variant.',       vis:'<span class="spec-part__pill"></span>'},
     {num:4, name:'Dismiss',      note:'Optional close button, shown on removable chips.',              vis:xStroke},
   ];
   const partCards = parts.map(p=>`
-    <div class="chip-part">
-      <div class="chip-part__stage" style="background:${sbg}">${p.vis}</div>
-      <div class="chip-part__body">
-        <div class="chip-part__name"><span class="chip-part__num">${p.num}</span>${p.name}</div>
-        <div class="chip-part__note">${p.note}</div>
+    <div class="spec-part">
+      <div class="spec-part__stage" style="background:${sbg}">${p.vis}</div>
+      <div class="spec-part__body">
+        <div class="spec-part__name"><span class="spec-part__num">${p.num}</span>${p.name}</div>
+        <div class="spec-part__note">${p.note}</div>
       </div>
     </div>`).join('');
 
   /* ---- Size & dimensions ---- */
   const sizeDemo = CHIP_SIZES.map(sz=>`
-    <div class="chip-size-item">
+    <div class="spec-size-item">
       ${ovChip({variant:'accent', size:sz.key, label:sz.label, icon:true, theme})}
-      <span class="chip-size-item__lbl">${sz.h}px</span>
+      <span class="spec-size-item__lbl">${sz.h}px</span>
     </div>`).join('');
 
   const sizeRows = CHIP_SIZES.map(sz=>`
@@ -9513,9 +9555,9 @@ function renderChipReference(){
   });
 
   const tokCell = (lh, dh) => {
-    let html = `<div class="chip-tok-cell"><span class="chip-tok-sw" style="background:${lh}"></span><code>${lh.toUpperCase()}</code></div>`;
+    let html = `<div class="spec-tok-cell"><span class="spec-tok-sw" style="background:${lh}"></span><code>${lh.toUpperCase()}</code></div>`;
     if(dh.toLowerCase() !== lh.toLowerCase()){
-      html += `<div class="chip-tok-cell" style="margin-top:6px"><span class="chip-tok-sw" style="background:${dh}"></span><code>${dh.toUpperCase()}</code><span style="color:var(--chrome-muted);font-size:11px">dark</span></div>`;
+      html += `<div class="spec-tok-cell" style="margin-top:6px"><span class="spec-tok-sw" style="background:${dh}"></span><code>${dh.toUpperCase()}</code><span style="color:var(--chrome-muted);font-size:11px">dark</span></div>`;
     }
     return html;
   };
@@ -9534,10 +9576,10 @@ function renderChipReference(){
     {name:'Removable',  note:'Adds a dismiss button (72% opacity).', chip:ovChip({variant:'accent', size:'reg', label:'Chip', icon:true, removable:true, theme})},
   ];
   const stateCells = states.map(s=>`
-    <div class="chip-variant-cell">
-      <div class="chip-variant-cell__stage" style="background:${sbg}">${s.chip}</div>
-      <div class="chip-variant-cell__name">${s.name}</div>
-      <div class="chip-variant-cell__desc">${s.note}</div>
+    <div class="spec-cell">
+      <div class="spec-cell__stage" style="background:${sbg}">${s.chip}</div>
+      <div class="spec-cell__name">${s.name}</div>
+      <div class="spec-cell__desc">${s.note}</div>
     </div>`).join('');
 
   root.innerHTML = `
@@ -9545,8 +9587,8 @@ function renderChipReference(){
       <div class="type-sub__title">Anatomy</div>
       <div class="type-sub__desc">A chip is a pill-shaped container with a text label, plus an optional leading icon and trailing dismiss button.</div>
       <div class="cpg-section-outline">
-        <div class="chip-spec-hero" style="background:${sbg}">${heroChip}</div>
-        <div class="chip-parts">${partCards}</div>
+        <div class="spec-hero" style="background:${sbg}">${heroChip}</div>
+        <div class="spec-parts">${partCards}</div>
       </div>
     </div>
 
@@ -9554,7 +9596,7 @@ function renderChipReference(){
       <div class="type-sub__title">Size &amp; dimensions</div>
       <div class="type-sub__desc">Three sizes share one shape and weight; height, text, padding and icon scale together. All sizes use a 999px (pill) radius, 700 weight and line-height 1.</div>
       <div class="cpg-section-outline">
-        <div class="chip-size-demo" style="background:${sbg}">${sizeDemo}</div>
+        <div class="spec-size-demo" style="background:${sbg}">${sizeDemo}</div>
         <div class="dd-table-wrap"><table class="dd-table">
           <thead><tr><th>Size</th><th>Height</th><th>Text</th><th>Padding&nbsp;(L&nbsp;/&nbsp;R)</th><th>Icon</th><th>Gap</th></tr></thead>
           <tbody>${sizeRows}</tbody>
@@ -9578,7 +9620,7 @@ function renderChipReference(){
       <div class="type-sub__title">States</div>
       <div class="type-sub__desc">Beyond the static display chip, chips can be selectable, show a selected ring, or carry a dismiss button.</div>
       <div class="cpg-section-outline">
-        <div class="chip-variants-grid">${stateCells}</div>
+        <div class="spec-grid">${stateCells}</div>
       </div>
     </div>`;
 }
@@ -9594,6 +9636,503 @@ function chipTabSwitch(tab){
   if(!nav) return;
   nav.querySelectorAll('.tab-item').forEach(btn=>btn.classList.toggle('on', btn.getAttribute('data-chip-tab')===tab));
   document.querySelectorAll('#s-chips .tabs-panel[data-chip-panel]').forEach(p=>p.classList.toggle('on', p.getAttribute('data-chip-panel')===tab));
+}
+
+/* ============================================================
+   SWITCH
+   Same tabbed-page treatment as Chips & Pills (.sec--tabbed):
+   Overview / Style / Code / Changelog, a shared-state playground
+   rendered into two mounts, and a three-language code panel.
+============================================================ */
+const SW_SIZES = [
+  {key:'reg', label:'Regular', w:40, h:24, thumb:20, travel:16, fs:13},
+  {key:'sm',  label:'Small',   w:32, h:18, thumb:14, travel:14, fs:12},
+];
+
+/* Every switch is a real <label> wrapping a real checkbox — that's the whole
+   point of the component, so the builder emits exactly the markup a consumer
+   should copy, with no doc-site-only classes mixed in. */
+function makeSwitchHTML({size='reg', on=false, disabled=false, label='', showLabel=true}={}){
+  const cls = `sw${size==='sm'?' sw--sm':''}`;
+  const attrs = `${on?' checked':''}${disabled?' disabled':''}`;
+  const lbl = (showLabel && label) ? `<span class="sw__label">${swEsc(label)}</span>` : '';
+  return `<label class="${cls}"><input type="checkbox" class="sw__input"${attrs}><span class="sw__track"><span class="sw__thumb"></span></span>${lbl}</label>`;
+}
+
+/* ── SWITCH PLAYGROUND ── */
+let spg = { size:'reg', on:true, disabled:false, label:'Email notifications', showLabel:true };
+
+function swEsc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&#60;').replace(/>/g,'&#62;').replace(/"/g,'&quot;'); }
+
+/* Live element for the stage: the switch is genuinely interactive here (click,
+   Space, Enter all work natively), and flipping it writes back into spg so the
+   control pills and the code panel stay in step with what you see. */
+function makeSwitchEl(){
+  const wrap = document.createElement('div');
+  wrap.innerHTML = makeSwitchHTML(spg);
+  const el = wrap.firstElementChild;
+  const input = el.querySelector('.sw__input');
+  input.addEventListener('change', ()=>{
+    spg.on = input.checked;
+    spgSyncPills();
+    spgRefreshCode();
+  });
+  return el;
+}
+
+function getSwCodeHTML(){
+  const sz = SW_SIZES.find(s=>s.key===spg.size)||SW_SIZES[0];
+  const cls = `sw${spg.size==='sm'?' sw--sm':''}`;
+  const attrs = `${spg.on?' <span class="code-attr">checked</span>':''}${spg.disabled?' <span class="code-attr">disabled</span>':''}`;
+  const lblLine = (spg.showLabel && spg.label)
+    ? `\n  <span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"sw__label"</span><span class="code-kw">></span>${swEsc(spg.label)}<span class="code-kw">&#60;/span></span>`
+    : `\n  <span class="code-cm">&#60;!-- no visible label: add aria-label on the input --></span>`;
+  return `<span class="code-cm">/* Flash · Switch · ${sz.label} (${sz.w}×${sz.h}) */</span>
+<span class="code-kw">&#60;label</span> <span class="code-cls">class</span>=<span class="code-val">"${cls}"</span><span class="code-kw">></span>
+  <span class="code-kw">&#60;input</span> <span class="code-attr">type</span>=<span class="code-val">"checkbox"</span> <span class="code-cls">class</span>=<span class="code-val">"sw__input"</span>${attrs}<span class="code-kw">></span>
+  <span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"sw__track"</span><span class="code-kw">></span><span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"sw__thumb"</span><span class="code-kw">>&#60;/span></span><span class="code-kw">&#60;/span></span>${lblLine}
+<span class="code-kw">&#60;/label></span>`;
+}
+
+/* ── CODE PANEL LANGUAGES ──
+   HTML/CSS is the source of truth (the real .sw markup). Blazor and React TSX
+   wrap that same markup and the same .sw/.sw--sm classes — no invented
+   modifiers — so the only thing a consumer ports is the wrapper, not the CSS. */
+const SW_LANGS = [
+  {key:'html',   label:'HTML / CSS', file:'switch.html'},
+  {key:'blazor', label:'Blazor',     file:'DsSwitch.razor'},
+  {key:'tsx',    label:'React TSX',  file:'DsSwitch.tsx'},
+];
+let swLang = 'html';
+
+const SW_SIZE_PASCAL = {reg:'Regular', sm:'Small'};
+
+function getSwCodeBlazor(){
+  const sizePascal = SW_SIZE_PASCAL[spg.size]||'Regular';
+  const label = swEsc(spg.label||'Setting');
+  const opt = (name)=>`\n          <span class="code-attr">${name}</span>=<span class="code-val">"true"</span>`;
+  return `<span class="code-cm">@* DsSwitch.razor — usage *@</span>
+<span class="code-kw">&#60;DsSwitch</span> <span class="code-attr">@bind-Value</span>=<span class="code-val">"_enabled"</span>
+          <span class="code-attr">Size</span>=<span class="code-val">"SwitchSize.${sizePascal}"</span>
+          <span class="code-attr">Label</span>=<span class="code-val">"${label}"</span>${spg.disabled?opt('Disabled'):''}${!spg.showLabel?opt('HideLabel'):''} <span class="code-kw">/></span>
+
+<span class="code-cm">@* DsSwitch.razor — component definition *@</span>
+<span class="code-kw">&#60;label</span> <span class="code-cls">class</span>=<span class="code-val">"@CssClass"</span><span class="code-kw">></span>
+  <span class="code-kw">&#60;input</span> <span class="code-attr">type</span>=<span class="code-val">"checkbox"</span> <span class="code-cls">class</span>=<span class="code-val">"sw__input"</span>
+         <span class="code-attr">checked</span>=<span class="code-val">"@Value"</span> <span class="code-attr">disabled</span>=<span class="code-val">"@Disabled"</span>
+         <span class="code-attr">aria-label</span>=<span class="code-val">"@(HideLabel ? Label : null)"</span>
+         <span class="code-attr">@onchange</span>=<span class="code-val">"OnToggle"</span><span class="code-kw">></span>
+  <span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"sw__track"</span><span class="code-kw">>&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"sw__thumb"</span><span class="code-kw">>&#60;/span>&#60;/span></span>
+  <span class="code-kw">@if</span> (!HideLabel) {
+    <span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"sw__label"</span><span class="code-kw">></span>@Label<span class="code-kw">&#60;/span></span>
+  }
+<span class="code-kw">&#60;/label></span>
+
+<span class="code-kw">@code</span> {
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> <span class="code-cls">bool</span> Value { get; set; }
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> EventCallback&#60;bool> ValueChanged { get; set; }
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> SwitchSize Size { get; set; } = SwitchSize.Regular;
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> <span class="code-cls">string</span> Label { get; set; } = <span class="code-val">""</span>;
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> <span class="code-cls">bool</span> Disabled { get; set; }
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> <span class="code-cls">bool</span> HideLabel { get; set; }
+
+  <span class="code-cm">// Only Small carries a modifier — Regular is the bare .sw base class</span>
+  <span class="code-kw">private</span> <span class="code-cls">string</span> CssClass =>
+    <span class="code-val">"sw"</span> + (Size == SwitchSize.Small ? <span class="code-val">" sw--sm"</span> : <span class="code-val">""</span>);
+
+  <span class="code-kw">private</span> Task OnToggle(ChangeEventArgs e) =>
+    ValueChanged.InvokeAsync((<span class="code-cls">bool</span>)e.Value);
+}`;
+}
+
+function getSwCodeTSX(){
+  const usage = `size=<span class="code-val">"${spg.size}"</span> label=<span class="code-val">"${swEsc(spg.label||'Setting')}"</span>`
+    + (spg.disabled?' disabled':'') + (!spg.showLabel?' hideLabel':'');
+  return `<span class="code-cm">// DsSwitch.tsx</span>
+<span class="code-kw">import</span> React <span class="code-kw">from</span> <span class="code-val">'react'</span>;
+
+<span class="code-kw">type</span> <span class="code-cls">SwitchSize</span> = <span class="code-val">'reg'</span> | <span class="code-val">'sm'</span>;
+
+<span class="code-kw">interface</span> <span class="code-cls">DsSwitchProps</span> <span class="code-kw">extends</span> Omit&#60;React.InputHTMLAttributes&#60;HTMLInputElement>, <span class="code-val">'size'</span>> {
+  label: <span class="code-cls">string</span>;
+  size?: <span class="code-cls">SwitchSize</span>;
+  <span class="code-cm">/** Visually hides the label but keeps it for screen readers. */</span>
+  hideLabel?: <span class="code-cls">boolean</span>;
+}
+
+<span class="code-kw">export const</span> <span class="code-cls">DsSwitch</span>: React.FC&#60;DsSwitchProps> = ({
+  label,
+  size = <span class="code-val">'reg'</span>,
+  hideLabel = <span class="code-kw">false</span>,
+  className = <span class="code-val">''</span>,
+  ...props
+}) => {
+  <span class="code-cm">// Only Small carries a modifier — Regular is the bare .sw base class</span>
+  <span class="code-kw">const</span> classes = [<span class="code-val">'sw'</span>, size === <span class="code-val">'sm'</span> &amp;&amp; <span class="code-val">'sw--sm'</span>, className]
+    .filter(Boolean).join(<span class="code-val">' '</span>);
+
+  <span class="code-kw">return</span> (
+    &#60;label className={classes}>
+      &#60;input
+        type=<span class="code-val">"checkbox"</span>
+        className=<span class="code-val">"sw__input"</span>
+        aria-label={hideLabel ? label : <span class="code-kw">undefined</span>}
+        {...props}
+      />
+      &#60;span className=<span class="code-val">"sw__track"</span>>&#60;span className=<span class="code-val">"sw__thumb"</span> />&#60;/span>
+      {!hideLabel &amp;&amp; &#60;span className=<span class="code-val">"sw__label"</span>>{label}&#60;/span>}
+    &#60;/label>
+  );
+};
+
+<span class="code-cm">// Usage — controlled, like any checkbox</span>
+&#60;DsSwitch ${usage} checked={enabled} onChange={(e) => setEnabled(e.target.checked)} /></span>`;
+}
+
+function getSwCode(){
+  return swLang==='blazor' ? getSwCodeBlazor()
+       : swLang==='tsx'    ? getSwCodeTSX()
+       : getSwCodeHTML();
+}
+
+function setSwLang(lang){
+  if(!SW_LANGS.some(l=>l.key===lang)) return;
+  swLang = lang;
+  document.querySelectorAll('#sw-code-tab .code-seg__btn').forEach(b=>{
+    const on = b.dataset.lang===lang;
+    b.setAttribute('aria-selected', on ? 'true' : 'false');
+    b.setAttribute('tabindex', on ? '0' : '-1');
+  });
+  const file = document.getElementById('sw-lang-file');
+  const meta = SW_LANGS.find(l=>l.key===lang);
+  if(file && meta) file.textContent = meta.file;
+  spgRefreshCode();
+}
+
+function swLangKeydown(e){
+  const i = SW_LANGS.findIndex(l=>l.key===swLang);
+  let n = i;
+  if(e.key==='ArrowLeft')       n = (i - 1 + SW_LANGS.length) % SW_LANGS.length;
+  else if(e.key==='ArrowRight') n = (i + 1) % SW_LANGS.length;
+  else if(e.key==='Home')       n = 0;
+  else if(e.key==='End')        n = SW_LANGS.length - 1;
+  else return;
+  e.preventDefault();
+  setSwLang(SW_LANGS[n].key);
+  const btn = document.getElementById('sw-lang-' + SW_LANGS[n].key);
+  if(btn) btn.focus();
+}
+
+function spgRefreshCode(){
+  const block = document.getElementById('spg-code-block');
+  if(block) block.innerHTML = getSwCode();
+}
+
+/* Keep the control pills in sync without a full re-render — needed when the
+   switch itself is toggled on the stage rather than via the State pills. */
+function spgSyncPills(){
+  document.querySelectorAll('.spg-state-pill').forEach(b=>{
+    b.classList.toggle('on', (b.dataset.val==='on') === spg.on);
+  });
+}
+
+function spgRefresh(){
+  document.querySelectorAll('.spg-stage-el').forEach(stage=>{
+    stage.innerHTML = '';
+    stage.appendChild(makeSwitchEl());
+  });
+  document.querySelectorAll('.spg-label-input-el').forEach(inp=>{
+    if(document.activeElement !== inp) inp.value = spg.label;
+  });
+  spgRefreshCode();
+}
+
+/* Like the chip playground, this renders into more than one mount (the big
+   Overview demo and a compact copy on the Code tab) off one shared spg state. */
+const SW_PLAYGROUND_MOUNTS = [
+  {rootId:'sw-playground', idSuffix:'', wrap:true, title:'Try the component', desc:'Adjust the filters to test component states.', headingAbove:'A switch applies a single on/off setting when flipped.'},
+  {rootId:'sw-code-playground', idSuffix:'-code', style:'code', title:'Playground', desc:'Live demo of the component.'},
+];
+
+function renderSwitchPlayground(){
+  const theme = currentTheme();
+  const sbg = stageBg(theme);
+
+  const szBtns   = SW_SIZES.map(s=>`<button class="btn-pg__pill${spg.size===s.key?' on':''}" onclick="spgSet('size','${s.key}')">${s.label}</button>`).join('');
+  const stBtns   = ['off','on'].map(x=>`<button class="btn-pg__pill spg-state-pill${(spg.on?(x==='on'):(x==='off'))?' on':''}" data-val="${x}" onclick="spgSet('on','${x}')">${x==='on'?'On':'Off'}</button>`).join('');
+  const disBtns  = ['off','on'].map(x=>`<button class="btn-pg__pill${(spg.disabled?(x==='on'):(x==='off'))?' on':''}" onclick="spgSet('disabled','${x}')">${x==='on'?'Disabled':'Enabled'}</button>`).join('');
+  const lblBtns  = ['on','off'].map(x=>`<button class="btn-pg__pill${(spg.showLabel?(x==='on'):(x==='off'))?' on':''}" onclick="spgSet('showLabel','${x}')">${x==='on'?'With label':'No label'}</button>`).join('');
+
+  SW_PLAYGROUND_MOUNTS.forEach(mount=>{
+    const root = document.getElementById(mount.rootId);
+    if(!root) return;
+    const s = mount.idSuffix;
+    const demo = `
+      <div class="btn-pg">
+        <div class="btn-pg__stage spg-stage-el" id="spg-stage${s}" style="background:${sbg}"></div>
+        <div class="btn-pg__ctrls">
+          <div class="btn-pg__group"><span class="btn-pg__clabel">Size</span><div class="btn-pg__pill-row">${szBtns}</div></div>
+          <div class="btn-pg__group"><span class="btn-pg__clabel">State</span><div class="btn-pg__pill-row">${stBtns}</div></div>
+          <div class="btn-pg__group"><span class="btn-pg__clabel">Enabled</span><div class="btn-pg__pill-row">${disBtns}</div></div>
+          <div class="btn-pg__group"><span class="btn-pg__clabel">Label</span><div class="btn-pg__pill-row">${lblBtns}</div></div>
+          <div class="btn-pg__group"><span class="btn-pg__clabel">Text</span><input class="cpg-label-input spg-label-input-el" id="spg-label-input${s}" value="${swEsc(spg.label)}" maxlength="32" oninput="spgSetLabel(this.value)" placeholder="Email notifications"></div>
+        </div>
+      </div>`;
+
+    if(mount.style==='code'){
+      root.innerHTML = `
+        <div class="type-sub__title">${mount.title}</div>
+        <div class="type-sub__desc">${mount.desc}</div>
+        <div class="cpg-section-outline">${demo}</div>`;
+      return;
+    }
+
+    const inner = `
+      <div class="cpg-layout">
+        <div class="cpg-layout__intro">
+          ${mount.wrap ? `<span class="cpg-cursor-icon">${CPG_CURSOR_ICON_SVG}</span>` : ''}
+          <div class="cpg-layout__title">${mount.title}</div>
+          <div class="cpg-layout__desc">${mount.desc}</div>
+        </div>
+        <div class="cpg-layout__demo">${demo}</div>
+      </div>`;
+    const wrapped = mount.wrap ? `<div class="cpg-section-block">${inner}</div>` : inner;
+    root.innerHTML = (mount.headingAbove ? `<div class="cpg-overview-heading"><span class="cpg-overview-heading__icon">${CPG_INFO_ICON_SVG}</span><span>${mount.headingAbove}</span></div>` : '') + wrapped;
+  });
+
+  spgRefresh();
+}
+
+function spgSet(key, val){
+  if(key==='on')            spg.on = (val==='on');
+  else if(key==='disabled') spg.disabled = (val==='on');
+  else if(key==='showLabel')spg.showLabel = (val==='on');
+  else spg[key] = val;
+  renderSwitchPlayground();
+}
+function spgSetLabel(val){ spg.label = val; spgRefresh(); }
+
+function spgCopyCode(){
+  const b = document.getElementById('spg-code-block');
+  if(!b) return;
+  navigator.clipboard.writeText(b.innerText||b.textContent).catch(()=>{});
+  const btn = document.getElementById('spg-copy-btn');
+  if(btn){ btn.textContent = 'Copied!'; setTimeout(()=>btn.textContent='Copy', 2000); }
+}
+
+function renderSwitchCodeTab(){
+  const root = document.getElementById('sw-code-tab');
+  if(!root) return;
+  root.innerHTML = `
+    <div class="type-sub__title">Code</div>
+    <div class="type-sub__desc">Live snippet matching the current Playground configuration &mdash; switch to Overview to change it.</div>
+    <div class="cpg-section-outline">
+      <div class="code-panel code-panel--bare open">
+        <div class="code-panel__head">
+          <div class="code-seg" role="tablist" aria-label="Code language" onkeydown="swLangKeydown(event)">
+            ${SW_LANGS.map(l=>`<button type="button" role="tab" class="code-seg__btn" id="sw-lang-${l.key}" data-lang="${l.key}" aria-selected="${swLang===l.key?'true':'false'}" aria-controls="spg-code-block" tabindex="${swLang===l.key?'0':'-1'}" onclick="setSwLang('${l.key}')">${l.label}</button>`).join('')}
+          </div>
+          <span class="code-lang-file" id="sw-lang-file">${(SW_LANGS.find(l=>l.key===swLang)||SW_LANGS[0]).file}</span>
+          <button class="code-copy-btn" onclick="spgCopyCode()" id="spg-copy-btn">Copy</button>
+        </div>
+        <div class="code-body"><div class="code-block" id="spg-code-block" role="tabpanel" aria-live="polite"></div></div>
+      </div>
+    </div>`;
+}
+
+/* Static (non-interactive) switch for illustration cells — pointer-events off
+   so the surrounding documentation reads as a specimen, not a control. */
+function swStatic(opts){
+  return `<span style="pointer-events:none">${makeSwitchHTML(opts)}</span>`;
+}
+
+function renderSwitchStates(){
+  const root = document.getElementById('sw-states');
+  if(!root) return;
+  const sbg = stageBg(currentTheme());
+
+  const states = [
+    {name:'Off',      note:'Neutral track, thumb left. Default for an inactive setting.', vis:swStatic({on:false, showLabel:false})},
+    {name:'On',       note:'Brand green track, thumb travels 16px right.',                vis:swStatic({on:true,  showLabel:false})},
+    {name:'Disabled', note:'Opacity drops to 45%; the control stops responding to input.',vis:swStatic({on:true,  disabled:true, showLabel:false})},
+  ];
+
+  const cells = states.map(s=>`
+    <div class="spec-cell">
+      <div class="spec-cell__stage" style="background:${sbg}">${s.vis}</div>
+      <div class="spec-cell__name">${s.name}</div>
+      <div class="spec-cell__desc">${s.note}</div>
+    </div>`).join('');
+
+  root.innerHTML = `
+    <div class="cpg-section-heading">
+      <div class="cpg-layout__title">Key states</div>
+      <div class="cpg-layout__desc">Off, On and Disabled cover every state. Thumb position signals state independent of colour.</div>
+    </div>
+    <div class="cpg-section-block">
+      <div class="spec-grid">${cells}</div>
+    </div>`;
+}
+
+function renderSwitchInSitu(){
+  const root = document.getElementById('sw-insitu');
+  if(!root) return;
+  const sbg = stageBg(currentTheme());
+
+  const row = (title, sub, opts) => `
+    <div class="sw-mock-row">
+      <div class="sw-mock-row__txt">
+        <div class="sw-mock-row__title">${title}</div>
+        ${sub?`<div class="sw-mock-row__sub">${sub}</div>`:''}
+      </div>
+      ${swStatic(opts)}
+    </div>`;
+
+  // 1. Settings list — the canonical home for a switch
+  const settingsMock = `
+    <div class="spec-mock__stage" style="background:${sbg}">
+      ${row('Email notifications','Updates about your account',{on:true, showLabel:false})}
+      <div class="sw-mock-rule"></div>
+      ${row('Push notifications','On this device only',{on:false, showLabel:false})}
+      <div class="sw-mock-rule"></div>
+      ${row('Weekly summary','',{on:true, showLabel:false})}
+    </div>
+    <div class="spec-mock__cap"><b>A settings list</b>One switch per setting; each change applies immediately.</div>`;
+
+  // 2. Table row — Small size earns its keep in dense rows
+  const bar = w => `<span class="spec-mock__bar" style="width:${w}"></span>`;
+  const tableRows = [
+    {w:'64px', on:true},
+    {w:'48px', on:false},
+    {w:'58px', on:true},
+  ].map(r=>`<div class="spec-mock__row">${bar(r.w)}<span class="spec-mock__spacer"></span>${swStatic({size:'sm', on:r.on, showLabel:false})}</div>`).join('');
+
+  const tableMock = `
+    <div class="spec-mock__stage" style="background:${sbg}">${tableRows}</div>
+    <div class="spec-mock__cap"><b>In a table row</b>Small (32&times;18) reduces row height in dense layouts.</div>`;
+
+  // 3. Permissions panel — a grouped set under one heading
+  const permsMock = `
+    <div class="spec-mock__stage" style="background:${sbg}">
+      <div class="sw-mock-group">Permissions</div>
+      ${row('Can view reports','',{size:'sm', on:true,  showLabel:false})}
+      ${row('Can edit reports','',{size:'sm', on:true,  showLabel:false})}
+      ${row('Can delete reports','',{size:'sm', on:false, showLabel:false})}
+      ${row('Can invite members','',{size:'sm', on:false, disabled:true, showLabel:false})}
+    </div>
+    <div class="spec-mock__cap"><b>A permissions panel</b>Grouped switches; unavailable options remain visible but disabled.</div>`;
+
+  root.innerHTML = `
+    <div class="cpg-section-heading">
+      <div class="cpg-layout__title">In context</div>
+      <div class="cpg-layout__desc">Three common placements: a settings list, a dense table row, and a grouped permissions panel.</div>
+    </div>
+    <div class="cpg-section-block">
+      <div class="spec-insitu-grid">
+        <div class="spec-mock">${settingsMock}</div>
+        <div class="spec-mock">${tableMock}</div>
+        <div class="spec-mock">${permsMock}</div>
+      </div>
+    </div>`;
+}
+
+function renderSwitchReference(){
+  const root = document.getElementById('sw-reference');
+  if(!root) return;
+  const sbg = stageBg(currentTheme());
+
+  /* ---- Anatomy ---- */
+  const specimen = `<span class="sw-specimen" style="pointer-events:none">${makeSwitchHTML({on:true, showLabel:false})}</span>`;
+
+  const parts = [
+    {num:1, name:'Track',  note:'The pill-shaped background. Carries the on/off colour.',        vis:'<span class="sw-part-track"></span>'},
+    {num:2, name:'Thumb',  note:'White circle that slides to signal state without colour.',     vis:'<span class="sw-part-thumb"></span>'},
+    {num:3, name:'Label',  note:'Optional text. Describes the setting, never the current state.',vis:'<span style="font-weight:500;font-size:13px;color:var(--chrome-txt)">Label</span>'},
+  ];
+  const partCards = parts.map(p=>`
+    <div class="spec-part">
+      <div class="spec-part__stage" style="background:${sbg}">${p.vis}</div>
+      <div class="spec-part__body">
+        <div class="spec-part__name"><span class="spec-part__num">${p.num}</span>${p.name}</div>
+        <div class="spec-part__note">${p.note}</div>
+      </div>
+    </div>`).join('');
+
+  /* ---- Size & dimensions ---- */
+  const sizeDemo = SW_SIZES.map(sz=>`
+    <div class="spec-size-item">
+      ${swStatic({size:sz.key, on:true, showLabel:false})}
+      <span class="spec-size-item__lbl">${sz.w} &times; ${sz.h}</span>
+    </div>`).join('');
+
+  const sizeRows = SW_SIZES.map(sz=>`
+    <tr>
+      <td class="dd-table__name">${sz.label}</td>
+      <td>${sz.w} &times; ${sz.h}</td>
+      <td>${sz.thumb}px</td>
+      <td>${sz.travel}px</td>
+      <td>${sz.fs}px</td>
+      <td><code>${sz.key==='sm'?'.sw.sw--sm':'.sw'}</code></td>
+    </tr>`).join('');
+
+  /* ---- Tokens ---- */
+  const tokRows = [
+    {name:'Track — off',  val:'var(--color-surface-n3)',  tok:'surface-neutral-3'},
+    {name:'Track — on',   val:'var(--color-brand)',       tok:'color-brand'},
+    {name:'Thumb',        val:'#fff',                     tok:'—'},
+    {name:'Label',        val:'var(--chrome-txt)',        tok:'chrome-txt'},
+  ].map(t=>`
+    <tr>
+      <td class="dd-table__name">${t.name}</td>
+      <td><div class="spec-tok-cell"><span class="spec-tok-sw" style="background:${t.val}"></span><code>${t.val}</code></div></td>
+      <td><code>${t.tok}</code></td>
+    </tr>`).join('');
+
+  root.innerHTML = `
+    <div class="type-sub">
+      <div class="type-sub__title">Anatomy</div>
+      <div class="type-sub__desc">A switch is a real checkbox wrapped in a label: a pill track, a sliding thumb, and an optional text label. The input itself is visually hidden but still focusable, which is what keeps it keyboard- and screen-reader-accessible.</div>
+      <div class="cpg-section-outline">
+        <div class="spec-hero" style="background:${sbg}">${specimen}</div>
+        <div class="spec-parts">${partCards}</div>
+      </div>
+    </div>
+
+    <div class="type-sub">
+      <div class="type-sub__title">Size &amp; dimensions</div>
+      <div class="type-sub__desc">Two sizes share one shape. Regular is the default; Small suits dense rows such as table cells. Both use a 999px (pill) radius and a 2px inset thumb.</div>
+      <div class="cpg-section-outline">
+        <div class="spec-size-demo" style="background:${sbg}">${sizeDemo}</div>
+        <div class="dd-table-wrap"><table class="dd-table">
+          <thead><tr><th>Size</th><th>Track</th><th>Thumb</th><th>Travel</th><th>Label</th><th>Class</th></tr></thead>
+          <tbody>${sizeRows}</tbody>
+        </table></div>
+      </div>
+    </div>
+
+    <div class="type-sub" style="margin-bottom:0">
+      <div class="type-sub__title">Colour &amp; tokens</div>
+      <div class="type-sub__desc">Every colour rides a semantic token, so the switch follows light and dark automatically. Only the track colour changes between states &mdash; the thumb stays white in both.</div>
+      <div class="cpg-section-outline">
+        <div class="dd-table-wrap"><table class="dd-table" style="min-width:420px">
+          <thead><tr><th>Part</th><th>Value</th><th>Token</th></tr></thead>
+          <tbody>${tokRows}</tbody>
+        </table></div>
+      </div>
+    </div>`;
+}
+
+try { renderSwitchCodeTab(); } catch(e){ console.error('sw-code-tab',e); }
+try { renderSwitchPlayground(); } catch(e){ console.error('sw-playground',e); }
+try { renderSwitchStates(); } catch(e){ console.error('sw-states',e); }
+try { renderSwitchInSitu(); } catch(e){ console.error('sw-insitu',e); }
+try { renderSwitchReference(); } catch(e){ console.error('sw-reference',e); }
+
+function swTabSwitch(tab){
+  const nav = document.getElementById('sw-tabs-list');
+  if(!nav) return;
+  nav.querySelectorAll('.tab-item').forEach(btn=>btn.classList.toggle('on', btn.getAttribute('data-sw-tab')===tab));
+  document.querySelectorAll('#s-switch .tabs-panel[data-sw-panel]').forEach(p=>p.classList.toggle('on', p.getAttribute('data-sw-panel')===tab));
 }
 
 /* ============================================================
@@ -9848,12 +10387,28 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.45.0';
+const SYSTEM_VERSION = '1.45.3';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.45.3', date:'2026-08-04', author:'Helen', title:'Corrected the Switch playground copy and removed the Style tab\'s Focus ring documentation', changes:[
+        ['fixed','The "Try the component" playground description reads "Adjust the filters to test component states." — verbatim from Chips & Pills, as intended. The prior pass had reworded it to "Adjust the controls to test every state — or just click the switch.", missing that this exact line was meant to carry over unchanged'],
+        ['removed','The Style tab\'s "Focus ring" anatomy part card and its "Focus ring" row in the colour & tokens table — the prior pass removed Focused from the Overview\'s Key states but left these two Style-tab entries in place, still documenting it as though it were a real state to show'],
+      ]},
+      {version:'1.45.2', date:'2026-08-04', author:'Helen', title:'Tightened Switch Overview copy, removed the non-existent Focused state', changes:[
+        ['changed','The Overview hero line now reads "A switch applies a single on/off setting when flipped." (was a longer, more conversational line ending "— there is no Save step")'],
+        ['changed','Key states, In context and Do\'s & don\'ts explainer lines rewritten to lead with the fact rather than a scene-setting sentence, matching the direct tone of the "Adjust the controls…" playground line, which was left unchanged'],
+        ['removed','The "Focused" cell from Key states — a focus ring is a real, working part of the component (see the Style tab\'s Anatomy card and token table, both untouched), but it is not one of the component\'s named states alongside Off/On/Disabled and was miscategorised by treating it as a fourth state'],
+      ]},
+      {version:'1.45.1', date:'2026-08-04', author:'Helen', title:'Switch rebuilt on the tabbed component-page layout, which is now a shared .sec--tabbed pattern', changes:[
+        ['added','New .sec--tabbed opt-in class carrying the whole tabbed component-page treatment (1280px measure, 64px title, two-column hero with preview card, tab strip, tinted .cpg-section-block vs outline-only .cpg-section-outline, the 44px heading-beside-demo .cpg-layout, and the .spec-* documentation furniture). Previously this was ~100 rules hard-scoped to #s-chips with a comment saying it was a trial "before rolling anything out to other pages" — this is that rollout'],
+        ['changed','Chips & Pills now opts in via .sec--tabbed instead of owning the CSS. Its component-specific rules (.chip, .chip-ref*) stay chip-scoped; every rule that was really page furniture moved to the shared block. Verified pixel-identical: measure, title size, block/outline padding and fills, .cpg-layout__title size, cell and mock chrome, tab gap and Style-tab 72px section rhythm all unchanged in light and dark'],
+        ['changed','Renamed the chip-prefixed documentation furniture to a neutral .spec-* / .sec-* vocabulary now that two pages share it (.chip-variant-cell→.spec-cell, .chip-mock*→.spec-mock*, .chip-part*→.spec-part*, .chip-size-*→.spec-size-*, .chip-tok-*→.spec-tok-*, .chip-variants-grid→.spec-grid, .chip-spec-hero→.spec-hero, .chip-hero→.sec-hero, .chip-header-meta→.sec-header-meta, .chip-tabs→.sec-tabs). Historical changelog entries deliberately keep the old names, since they describe what was true at the time'],
+        ['added','Two page-agnostic hooks replace ID-specific rules: .spec-panel (steps .type-sub headings down to 22px/14px) and .spec-stack (72px rhythm between sibling .type-sub sections), so a new tabbed page needs no new CSS for either'],
+        ['changed','The changelog-relocation step that moves an auto-injected .sec-chlog into a page\'s Changelog tab now iterates a list of {secId, panelId} pairs instead of being hard-coded to Chips'],
+      ]},
       {version:'1.45.0', date:'2026-08-04', author:'Jaco', title:'Sidebar restyled with more breathing room, larger type and a clearer active row; About heading dropped', changes:[
         ['removed','The About category heading — Changelog is now a standalone top-level link at the bottom of the sidebar (new .sb-link--top: category-level size and weight, no indent, 26px above it). A NAV group with neither cat nor landing renders this way'],
         ['changed','Sidebar sizing opened up to match the density of references like Uber Base — sidebar 210px → 252px wide, category headings 12.5px → 15px, nav links 12.5px → 14px at weight 600, row padding 7px → 10px with a 34px indent under each heading, and 26px between groups (was 18px)'],
@@ -10570,7 +11125,26 @@ const CHANGELOG = {
         ['added','Scroll-snap slider with prev/next arrows and position dots'],
       ]},
     ]},
-    {secId:'s-switch', name:'Switch', version:'1.0.1', entries:[
+    {secId:'s-switch', name:'Switch', version:'1.1.2', entries:[
+      {version:'1.1.2', date:'2026-08-04', author:'Helen', title:'Corrected the playground copy and finished removing Focus ring documentation', changes:[
+        ['fixed','"Try the component" description reverted to "Adjust the filters to test component states." — the exact Chips & Pills wording, which was supposed to carry over unchanged but had been reworded in the previous pass'],
+        ['removed','Style tab\'s "Focus ring" anatomy part card (was part 4 of 4) and its row in the colour & tokens table. The previous pass removed "Focused" from Overview\'s Key states but missed these two Style-tab entries, which still presented it as a documented state'],
+      ]},
+      {version:'1.1.1', date:'2026-08-04', author:'Helen', title:'Tightened Overview copy, removed the non-existent Focused state', changes:[
+        ['changed','Hero line shortened to "A switch applies a single on/off setting when flipped."'],
+        ['changed','Key states, In context and Do\'s & don\'ts descriptions, plus all three "In context" mock captions, rewritten to lead with the fact rather than scene-setting prose — e.g. "Off, On and Disabled cover every state. Thumb position signals state independent of colour." instead of "Four states carry the whole component…". The "Adjust the controls to test every state…" playground line was left exactly as written'],
+        ['removed','"Focused" from Key states (was framed as a fourth state alongside Off/On/Disabled). The focus ring itself is untouched and still real — it remains documented as anatomy part 4 and in the token table on the Style tab — it just isn\'t one of the component\'s states'],
+      ]},
+      {version:'1.1.0', date:'2026-08-04', author:'Helen', title:'Facelift — same tabbed page, playground and multi-language code panel as Chips & Pills', changes:[
+        ['changed','The page is now four tabs (Overview / Style / Code / Changelog) instead of one long scroll, on the shared .sec--tabbed layout: a 64px title with the version and AI-context pills beside it, and a live preview card in the hero'],
+        ['added','An interactive playground with Size, State, Enabled and Label controls plus editable label text. The switch on the stage is genuinely clickable — flipping it updates the State control and the code snippet, so the demo and the code never disagree'],
+        ['added','"Key states" — Off, On, Disabled and Focused as labelled cells, each with a note on when it applies. Replaces the old flat row of unexplained swatches'],
+        ['added','"In context" — three realistic mockups showing where a switch actually goes: a settings list, a dense table row using Small, and a grouped permissions panel with one option disabled'],
+        ['added','A Code tab with HTML/CSS, Blazor (DsSwitch.razor) and React TSX (DsSwitch.tsx) behind the segmented language switcher, each tracking the live playground state. The Blazor and TSX wrappers use the real .sw/.sw--sm classes rather than invented modifiers, and both hide the label via aria-label instead of dropping it'],
+        ['added','A Style tab pulling the reference material together: a scaled anatomy specimen with four numbered part cards (track, thumb, label, focus ring), a size demo with a per-size spec table naming the exact class, and a colour table with live swatches for every token'],
+        ['changed','AI context tab regenerated — status stays "static" (the markup is still a real checkbox in a label, and still copyable straight out of the page), now also carrying SW_SIZES and makeSwitchHTML as the canonical builder, and a note that the visually-hidden input is load-bearing for accessibility'],
+        ['fixed','Doc-only .sw-* furniture is written so it never names one of the component\'s inner element classes in a selector — otherwise the AI-context generator would sweep those rules into the tab as if they were real component CSS. The illustrative focus ring is applied inline from JS for the same reason'],
+      ]},
       {version:'1.0.1', date:'2026-07-29', author:'Mo', title:'AI context tab added', changes:[
         ['added','AI context tab documenting the real, fully static .sw/.sw__*/.sw--sm markup, plus its existing "When to use" Do/Dont guidance (3 do / 3 dont)'],
       ]},
@@ -10888,7 +11462,12 @@ const CHANGELOG = {
         ['added','“Tag or Chip?” guidance clarifying when to use each'],
       ]},
     ]},
-    {secId:'s-chips', name:'Chips & Pills', version:'1.14.1', entries:[
+    {secId:'s-chips', name:'Chips & Pills', version:'1.14.2', entries:[
+      {version:'1.14.2', date:'2026-08-04', author:'Helen', title:'Page layout promoted to a shared pattern so Switch could reuse it — no visual change here', changes:[
+        ['changed','This page\'s layout CSS is no longer scoped to #s-chips; it now opts into the shared .sec--tabbed pattern, which Switch also uses. Purely a refactor — measure, title size, hero, tab strip, section blocks, playground layout and Style-tab rhythm were all verified unchanged in light and dark'],
+        ['changed','The documentation furniture this page introduced was renamed to a neutral vocabulary now that it is shared (.chip-variant-cell→.spec-cell, .chip-mock*→.spec-mock*, .chip-part*→.spec-part*, .chip-size-*→.spec-size-*, .chip-tok-*→.spec-tok-*, .chip-variants-grid→.spec-grid, .chip-spec-hero→.spec-hero, .chip-hero→.sec-hero, .chip-header-meta→.sec-header-meta, .chip-tabs→.sec-tabs). Genuinely chip-specific rules (.chip, .chip-ref*) keep their names'],
+        ['changed','The Style tab and Code tab panels now get their heading sizing and 72px section rhythm from the reusable .spec-panel / .spec-stack hooks instead of rules keyed to this page\'s element IDs'],
+      ]},
       {version:'1.14.1', date:'2026-08-04', author:'Helen', title:'Removed the language dots from the Code tab switcher, fixed its typeface', changes:[
         ['removed','The colour dot next to each language tab (HTML/CSS · Blazor · React TSX) — the label text alone is enough to identify each, and the dot read as decorative noise'],
         ['fixed','The language tab labels were left on font-family:inherit instead of the brand typeface — now explicitly \'Satoshi Variable\'/\'Satoshi\' with the sitewide ss01/ss03 stylistic alternates. The "chip.html"-style filename hint keeps its monospace font, unchanged'],
@@ -12754,26 +13333,30 @@ try { renderTablesPlayground(); } catch(e){ console.error('tbl-playground',e); }
 try { renderChangelog(); } catch(e){ console.error('changelog',e); }
 try { renderSectionChangelogs(); } catch(e){ console.error('section-changelog',e); }
 
-/* Chips & Pills has its own tabbed layout — relocate its auto-injected
-   changelog block (normally placed right after .sec__head) into the
-   dedicated Changelog tab panel instead of leaving it inline. */
-try {
-  const chipsChlog = document.querySelector('#s-chips > .sec-chlog');
-  const chipsChlogPanel = document.getElementById('chip-changelog-panel');
-  if(chipsChlog && chipsChlogPanel){
-    chipsChlogPanel.appendChild(chipsChlog);
+/* .sec--tabbed pages have their own Changelog tab — relocate the auto-injected
+   changelog block (normally placed right after .sec__head) into that panel
+   instead of leaving it inline above the tabs. */
+[
+  {secId:'s-chips',  panelId:'chip-changelog-panel'},
+  {secId:'s-switch', panelId:'sw-changelog-panel'},
+].forEach(({secId, panelId})=>{
+  try {
+    const chlog = document.querySelector(`#${secId} > .sec-chlog`);
+    const panel = document.getElementById(panelId);
+    if(!chlog || !panel) return;
+    panel.appendChild(chlog);
     // It's the only thing on the Changelog tab, so it doesn't need to
     // collapse — force it open and drop the click-to-toggle affordance.
-    chipsChlog.classList.add('open');
-    const toggle = chipsChlog.querySelector('.sec-chlog-toggle');
+    chlog.classList.add('open');
+    const toggle = chlog.querySelector('.sec-chlog-toggle');
     if(toggle){
       toggle.removeAttribute('onclick');
       toggle.style.cursor = 'default';
       const chev = toggle.querySelector('.sec-chlog-chev');
       if(chev) chev.remove();
     }
-  }
-} catch(e){ console.error('chip-changelog-relocate',e); }
+  } catch(e){ console.error('changelog-relocate',secId,e); }
+});
 
 /* ============================================================
    NAV MANIFEST + CATEGORY LANDING PAGES  (icon-free sidebar,
