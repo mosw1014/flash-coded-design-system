@@ -395,10 +395,11 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;font-feature-
    COLOUR FAMILY BLOCKS
 ================================================================ */
 .fam-group-head{
-  font-size:15px;font-weight:700;color:var(--chrome-txt);
-  margin:0 0 16px;
+  font-weight:800;color:var(--chrome-txt);
+  margin:0 0 18px;
 }
-.fam-group-head:not(:first-child){margin-top:8px}
+.fam-group-head--primary{font-size:26px;margin-bottom:20px}
+.fam-group-head--secondary{font-size:17px;margin-top:12px}
 .fam{
   margin-bottom:40px;
   padding-bottom:40px;
@@ -1024,6 +1025,10 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;font-feature-
 .brand-swatches{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
 @media(max-width:720px){.brand-swatches{grid-template-columns:1fr 1fr}}
 .brand-sw{border-radius:14px;padding:20px;min-height:110px;display:flex;flex-direction:column;justify-content:flex-end;gap:2px}
+/* Primary colours hero grid — square swatches, all 5 on one row */
+#fam-root .brand-swatches{grid-template-columns:repeat(5,1fr)}
+@media(max-width:720px){#fam-root .brand-swatches{grid-template-columns:repeat(2,1fr)}}
+#fam-root .brand-sw{aspect-ratio:1;min-height:0}
 .brand-sw--sm{min-height:80px;padding:14px}
 .brand-sw__name{font-weight:800;font-size:14px}
 .brand-sw__hex{font-family:'SF Mono',monospace;font-size:11px;opacity:.8}
@@ -6977,15 +6982,18 @@ body.home .main{max-width:none;margin:0;padding:0}
 // dropped entirely. `group` sorts each family under the Primary/Secondary
 // colours heading, matching the Flash Brand Guide's own primary/secondary
 // palette split.
-// The four Primary hero swatches (Flash Green, Green, Black, White) are
-// brand-identity colours, not a semantic-token-driven scale — shown as big
-// standalone cards, not pulled from FAMILIES. White/Black's primitive-name
-// lookups stay hardcoded in HEX_PRIM below; Green's HEX_PRIM entry is added
-// there explicitly since its FAMILIES swatch (Green-500-base) is gone.
+// The five Primary hero swatches (Flash Green, Green, Black, Light Grey,
+// White) are brand-identity colours, not a semantic-token-driven scale —
+// shown as big standalone cards, not pulled from FAMILIES. White/Black's
+// primitive-name lookups stay hardcoded in HEX_PRIM below; Green's HEX_PRIM
+// entry is added there explicitly since its FAMILIES swatch (Green-500-base)
+// is gone. Light Grey (#F0F0F0) is the same hex as Grey-100 in the Grey
+// family — shown again here as a hero swatch, per the Flash Brand Guide.
 const PRIMARY_HERO = [
   {name:'Flash Green', hex:'#1dfa0f', text:'#000'},
   {name:'Green', hex:'#10c504', text:'#fff'},
   {name:'Black', hex:'#000000', text:'#fff'},
+  {name:'Light Grey', hex:'#f0f0f0', text:'#000', border:true},
   {name:'White', hex:'#ffffff', text:'#000', border:true},
 ];
 
@@ -7222,15 +7230,15 @@ function renderPrimaryHero() {
 }
 
 const famRoot = document.getElementById('fam-root');
-function renderFamGroupHead(title) {
+function renderFamGroupHead(title, modifier) {
   const el = document.createElement('div');
-  el.className = 'fam-group-head';
+  el.className = 'fam-group-head fam-group-head--' + modifier;
   el.textContent = title;
   return el;
 }
-famRoot.appendChild(renderFamGroupHead('Primary colours'));
+famRoot.appendChild(renderFamGroupHead('Primary colours', 'primary'));
 famRoot.appendChild(renderPrimaryHero());
-famRoot.appendChild(renderFamGroupHead('Secondary colours'));
+famRoot.appendChild(renderFamGroupHead('Secondary colours', 'secondary'));
 FAMILIES.forEach(f => famRoot.appendChild(renderFamily(f)));
 
 // Category grid family block
@@ -11477,12 +11485,17 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.55.0';
+const SYSTEM_VERSION = '1.56.0';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.56.0', date:'2026-08-04', author:'Mo', title:'Primary colours hero grid gains Light Grey, goes square, and its heading gets more visual weight than Secondary', changes:[
+        ['added','Light Grey (#F0F0F0, same hex as Grey-100) added to PRIMARY_HERO as a 5th hero swatch, between Black and White, matching the Flash Brand Guide\'s primary palette'],
+        ['changed','#fam-root .brand-swatches now lays out 5 columns (2 on narrow viewports) and #fam-root .brand-sw is aspect-ratio:1 — all 5 hero swatches are square and fit on one row instead of wrapping'],
+        ['changed','"Primary colours"/"Secondary colours" headings split into .fam-group-head--primary (26px/800) and .fam-group-head--secondary (17px/800) so Primary reads with clearly more hierarchy than Secondary, replacing the single 15px style both shared'],
+      ]},
       {version:'1.55.0', date:'2026-08-04', author:'Mo', title:'Primary colours restyled as hero swatches; Secondary swatches un-banded into standalone cards', changes:[
         ['changed','Primary colours is no longer family-driven — it now renders 4 large standalone hero cards (Flash Green #1DFA0F, Green #10C504, Black, White) with the name and hex set inside the swatch itself, reusing the existing .brand-sw/.brand-swatches styling'],
         ['removed','Base, and the Green-500-base / Bright-green-500-base steps, dropped from FAMILIES — those two hero greens plus Black/White now live only in the new PRIMARY_HERO array, not the scale families'],
@@ -12463,7 +12476,12 @@ const CHANGELOG = {
         ['added','New "Logos" page under the Brand category listing all 8 Flash logo variations (Primary, White, Monochrome Black, Monochrome White — each horizontal and stacked), each downloadable as a transparent SVG or PNG from assets/logos/'],
       ]},
     ]},
-    {secId:'s-colours', name:'Colours', version:'1.8.0', entries:[
+    {secId:'s-colours', name:'Colours', version:'1.9.0', entries:[
+      {version:'1.9.0', date:'2026-08-04', author:'Mo', title:'Primary hero grid gains Light Grey, goes square, gets a bigger heading than Secondary', changes:[
+        ['added','Light Grey (#F0F0F0) added to PRIMARY_HERO as a 5th hero swatch (Flash Green, Green, Black, Light Grey, White), per the Flash Brand Guide'],
+        ['changed','#fam-root .brand-swatches set to grid-template-columns:repeat(5,1fr) (2 on narrow viewports) and #fam-root .brand-sw to aspect-ratio:1, so all 5 hero swatches are square and sit on one row'],
+        ['changed','New .fam-group-head--primary (26px/800) and .fam-group-head--secondary (17px/800) modifier classes give "Primary colours" clearly more weight than "Secondary colours" — renderFamGroupHead(title, modifier) now takes the modifier as a param'],
+      ]},
       {version:'1.8.0', date:'2026-08-04', author:'Mo', title:'Primary colours restyled as hero swatches; Secondary swatches un-banded into standalone cards', changes:[
         ['changed','New PRIMARY_HERO array (Flash Green #1DFA0F, Green #10C504, Black, White) replaces the family-driven Primary render — 4 big standalone cards via renderPrimaryHero(), reusing .brand-sw/.brand-swatches with the name/hex set inside the coloured area'],
         ['removed','Base family and the Green-500-base / Bright-green-500-base swatch entries removed from FAMILIES — those hexes now live only in PRIMARY_HERO'],
