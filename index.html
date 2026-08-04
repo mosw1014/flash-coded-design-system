@@ -1377,8 +1377,9 @@ body.home .main{max-width:none;margin:0;padding:0}
 #s-chips .chip-variant-cell__name{padding:10px 12px 0;font-size:13px;font-weight:700;color:var(--chrome-txt);border-top:1px solid var(--chrome-border)}
 #s-chips .chip-variant-cell__desc{padding:2px 12px 12px;font-size:11.5px;color:var(--chrome-muted)}
 #s-chips .chip-header-meta{display:flex;align-items:center;gap:8px;position:relative}
+#s-chips .chip-header-meta .comp-ver-badge{font-family:'Satoshi',sans-serif}
 #s-chips .chip-header-meta .ai-ctx{margin-top:0}
-#s-chips .chip-header-meta .ai-ctx summary{font-size:10px;font-weight:700;font-family:'SF Mono',monospace;letter-spacing:0;color:var(--chrome-muted);background:var(--chrome-nav);padding:2px 7px;border-radius:4px}
+#s-chips .chip-header-meta .ai-ctx summary{font-size:10px;font-weight:700;font-family:'Satoshi',sans-serif;letter-spacing:0;color:var(--chrome-muted);background:var(--chrome-nav);padding:2px 7px;border-radius:4px}
 #s-chips .chip-header-meta .ai-ctx summary::before{font-size:8px}
 #s-chips .chip-header-meta .ai-ctx pre{position:absolute;z-index:5;max-width:560px}
 @media (max-width:900px){
@@ -3483,7 +3484,7 @@ body.home .main{max-width:none;margin:0;padding:0}
       <div class="sec__head">
         <h1 class="sec__title">Chips and pills</h1>
         <div class="chip-header-meta">
-          <span class="comp-ver-badge" style="margin-left:0">v1.13.0</span>
+          <span class="comp-ver-badge" style="margin-left:0">v1.13.1</span>
           <details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-chips">
@@ -9556,12 +9557,15 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.41.0';
+const SYSTEM_VERSION = '1.41.1';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.41.1', date:'2026-08-03', author:'Helen', title:'Fixed the version and AI context pills using a monospace font instead of Satoshi', changes:[
+        ['fixed','#s-chips .chip-header-meta .comp-ver-badge and .ai-ctx summary (the "v1.13.0" and "AI context" pills on the Chips & Pills header) were hardcoded to \'SF Mono\',monospace — off-brand for a UI label. Both now use \'Satoshi\',sans-serif, matching the rest of the page'],
+      ]},
       {version:'1.41.0', date:'2026-08-03', author:'Helen', title:'Rolled the Style tab\'s heading/outline treatment out to the Code tab', changes:[
         ['changed','"Playground" and "Code" headings on the Code tab now use the same enlarged sizing as the Style tab (22px/14px, up from 20px/13px and 15px/12px respectively) via a shared #s-chips #chip-code-playground/#chip-code-tab .type-sub__title/__desc scope'],
         ['changed','CHIP_PLAYGROUND_MOUNTS\' Code-tab entry gets a new style:\'code\' render path in renderChipPlayground(): the two-column heading-beside-demo layout is replaced with a full-width stacked layout (heading above, demo below), matching the pattern already used for Key variants/In context/Do\'s & don\'ts — the Overview tab\'s "Try the component" mount is untouched and keeps its original two-column .cpg-section-block layout'],
@@ -10509,7 +10513,10 @@ const CHANGELOG = {
         ['added','“Tag or Chip?” guidance clarifying when to use each'],
       ]},
     ]},
-    {secId:'s-chips', name:'Chips & Pills', version:'1.13.0', entries:[
+    {secId:'s-chips', name:'Chips & Pills', version:'1.13.1', entries:[
+      {version:'1.13.1', date:'2026-08-03', author:'Helen', title:'Fixed the header pills using a monospace font', changes:[
+        ['fixed','The "v1.13.0" and "AI context" pills in the header were set in \'SF Mono\', monospace instead of the brand typeface — both now render in Satoshi'],
+      ]},
       {version:'1.13.0', date:'2026-08-03', author:'Helen', title:'Code tab now matches the Style tab\'s heading/outline treatment', changes:[
         ['changed','"Playground" and "Code" headings on the Code tab enlarged to match the Style tab (22px/14px); the Playground demo switched from a two-column heading-beside-stage layout to a full-width stacked layout (heading above, an outline-only card below) — "Try the component" on Overview is unchanged'],
         ['added','The live code snippet viewer is now contained in the same bordered, no-fill outline card used elsewhere on the Style tab'],
