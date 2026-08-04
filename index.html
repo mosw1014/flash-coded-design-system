@@ -1488,6 +1488,10 @@ body.home .main{max-width:none;margin:0;padding:0}
 .chip__x:hover{opacity:1;background:rgba(0,0,0,.2)}
 .chip.is-selectable{cursor:pointer}
 .chip.is-selected{box-shadow:0 0 0 2px var(--cpg-stage-bg,#fff),0 0 0 4px var(--chip-bg)}
+.dd-chips{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+.dd-chips .chip{box-shadow:none;padding:0 14px}
+.dd-chips__clear{font-family:inherit;font-size:12px;font-weight:700;color:var(--chrome-muted);background:none;border:none;cursor:pointer;padding:4px 2px;transition:color .15s}
+.dd-chips__clear:hover{color:var(--chrome-txt)}
 .cpg-reset{font-family:inherit;font-size:12px;font-weight:600;color:var(--chrome-muted);background:none;border:1px solid var(--chrome-border);border-radius:20px;padding:7px 15px;cursor:pointer;transition:all .15s}
 .cpg-reset:hover{color:var(--chrome-txt);border-color:var(--chrome-txt)}
 
@@ -1564,21 +1568,7 @@ body.home .main{max-width:none;margin:0;padding:0}
 .tb-ref__cell{display:flex;flex-direction:column;align-items:center;gap:8px}
 .tb-ref__cell-cap{font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--chrome-muted)}
 
-/* ── DATA DISPLAY ── */
-.dd-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
-@media(max-width:820px){.dd-stats{grid-template-columns:1fr 1fr}}
-@media(max-width:480px){.dd-stats{grid-template-columns:1fr}}
-.dd-stat{border:1px solid var(--chrome-border);border-radius:14px;padding:18px 18px 16px;background:var(--chrome-bg);transition:border-color .2s,transform .2s}
-.dd-stat:hover{border-color:var(--chrome-accent);transform:translateY(-2px)}
-.dd-stat__label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--chrome-muted);margin-bottom:10px}
-.dd-stat__value{font-size:30px;font-weight:800;line-height:1;color:var(--chrome-txt);letter-spacing:-1px;font-variant-numeric:tabular-nums}
-.dd-stat__foot{display:flex;align-items:center;gap:8px;margin-top:11px;font-size:12px}
-.dd-stat__sub{color:var(--chrome-muted);font-weight:500}
-.dd-delta{display:inline-flex;align-items:center;gap:3px;padding:2px 7px;border-radius:999px;font-size:11px;font-weight:700;white-space:nowrap}
-.dd-delta--up{color:var(--color-success-h);background:var(--color-success-l)}
-.dd-delta--down{color:var(--color-crit-h);background:var(--color-crit-l)}
-
-/* Table */
+/* ── SPEC TABLE (shared utility — used by Cards, Tables, Navigation, Tabs, Dropdown, Switch, Icons specs, plus the Tables "Reporting variant" demo) ── */
 .dd-table-wrap{border:1px solid var(--chrome-border);border-radius:12px;overflow:hidden;overflow-x:auto}
 .dd-table{width:100%;border-collapse:collapse;font-size:13px;min-width:540px}
 .dd-table thead th{text-align:left;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--chrome-muted);padding:13px 16px;background:var(--chrome-nav);border-bottom:1px solid var(--chrome-border);white-space:nowrap}
@@ -1586,12 +1576,13 @@ body.home .main{max-width:none;margin:0;padding:0}
 .dd-table tbody tr:last-child td{border-bottom:none}
 .dd-table tbody tr{transition:background .12s}
 .dd-table tbody tr:hover{background:var(--chrome-hover)}
-.dd-num{text-align:left;font-variant-numeric:tabular-nums;font-weight:700}
 .dd-table__name{font-weight:700;color:var(--chrome-txt)}
+/* dd-num/dd-status/dd-dot are exclusive to the Tables "Reporting variant" demo */
+.dd-num{text-align:left;font-variant-numeric:tabular-nums;font-weight:700}
 .dd-status{display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:600;white-space:nowrap}
 .dd-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
 
-/* Key-value list */
+/* ── LISTS (Key-value list, Activity timeline) ── */
 .dd-kv{border:1px solid var(--chrome-border);border-radius:12px;overflow:hidden}
 .dd-kv__row{display:flex;gap:16px;padding:13px 16px;border-bottom:1px solid var(--chrome-border)}
 .dd-kv__row:last-child{border-bottom:none}
@@ -1599,17 +1590,6 @@ body.home .main{max-width:none;margin:0;padding:0}
 .dd-kv__val{font-size:13px;font-weight:600;color:var(--chrome-txt)}
 @media(max-width:520px){.dd-kv__row{flex-direction:column;gap:3px}.dd-kv__key{flex:none}}
 
-/* Progress meters */
-.dd-meters{border:1px solid var(--chrome-border);border-radius:12px;padding:22px}
-.dd-meter{margin-bottom:18px}
-.dd-meter:last-child{margin-bottom:0}
-.dd-meter__top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:7px}
-.dd-meter__label{font-size:12.5px;font-weight:700;color:var(--chrome-txt)}
-.dd-meter__val{font-size:12px;font-weight:700;color:var(--chrome-muted);font-variant-numeric:tabular-nums}
-.dd-meter__track{height:8px;border-radius:999px;background:var(--chrome-nav);overflow:hidden}
-.dd-meter__fill{height:100%;border-radius:999px}
-
-/* Activity timeline */
 .dd-timeline{border:1px solid var(--chrome-border);border-radius:12px;padding:22px 24px}
 .dd-tl{position:relative;padding-left:26px}
 .dd-tl__item{position:relative;padding-bottom:20px}
@@ -1622,7 +1602,7 @@ body.home .main{max-width:none;margin:0;padding:0}
 .dd-tl__time{font-size:11px;font-weight:600;color:var(--chrome-muted);font-variant-numeric:tabular-nums}
 .dd-tl__desc{font-size:12px;color:var(--chrome-muted);line-height:1.55;margin-top:2px}
 
-/* Empty state */
+/* ── EMPTY STATE ── */
 .dd-empty{border:1.5px dashed var(--chrome-border);border-radius:12px;padding:40px 24px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px}
 .dd-empty__icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:var(--chrome-nav);color:var(--chrome-muted)}
 .dd-empty__title{font-size:14px;font-weight:800;color:var(--chrome-txt)}
@@ -1631,36 +1611,6 @@ body.home .main{max-width:none;margin:0;padding:0}
 .dd-empty__action:hover{background:#252525}
 [data-theme="dark"] .dd-empty__action{background:#fff;color:#000}
 [data-theme="dark"] .dd-empty__action:hover{background:#f0f0f0}
-/* Distribution bars */
-.dd-dist{border:1px solid var(--chrome-border);border-radius:12px;padding:22px}
-.dd-dist__row{margin-bottom:16px}
-.dd-dist__row:last-child{margin-bottom:0}
-.dd-dist__top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:7px;gap:12px}
-.dd-dist__label{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;font-weight:700;color:var(--chrome-txt)}
-.dd-dist__swatch{width:9px;height:9px;border-radius:3px;flex-shrink:0}
-.dd-dist__val{font-size:12px;font-weight:700;color:var(--chrome-muted);font-variant-numeric:tabular-nums;white-space:nowrap}
-.dd-dist__track{height:10px;border-radius:999px;background:var(--chrome-nav);overflow:hidden}
-.dd-dist__fill{height:100%;border-radius:999px;transition:width .3s}
-
-/* Distribution bar */
-.dd-break{border:1px solid var(--chrome-border);border-radius:12px;padding:22px}
-.dd-break__top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:11px}
-.dd-break__label{font-size:12.5px;font-weight:700;color:var(--chrome-txt)}
-.dd-break__total{font-size:12px;font-weight:700;color:var(--chrome-muted);font-variant-numeric:tabular-nums}
-.dd-break__bar{display:flex;gap:2px;height:14px;border-radius:999px;overflow:hidden;background:var(--chrome-nav)}
-.dd-break__seg{height:100%;transition:filter .15s}
-.dd-break__seg:hover{filter:brightness(1.08)}
-.dd-break__legend{display:flex;flex-wrap:wrap;gap:12px 22px;margin-top:16px}
-.dd-break__item{display:flex;align-items:center;gap:8px}
-.dd-break__swatch{width:10px;height:10px;border-radius:3px;flex-shrink:0}
-.dd-break__k{font-size:12.5px;font-weight:700;color:var(--chrome-txt)}
-.dd-break__v{font-size:12px;font-weight:700;color:var(--chrome-muted);font-variant-numeric:tabular-nums}
-
-/* Filter chips */
-.dd-chips{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
-.dd-chips .chip{box-shadow:none;padding:0 14px}
-.dd-chips__clear{font-family:inherit;font-size:12px;font-weight:700;color:var(--chrome-muted);background:none;border:none;cursor:pointer;padding:4px 2px;transition:color .15s}
-.dd-chips__clear:hover{color:var(--chrome-txt)}
 
 /* ================================================================
    TABLES
@@ -2238,6 +2188,19 @@ body.home .main{max-width:none;margin:0;padding:0}
 .card-btn:hover{opacity:.85}
 .card-btn--ghost{background:transparent;color:var(--chrome-txt);border:1px solid var(--chrome-border)}
 .card-btn--ghost:hover{opacity:1;background:var(--chrome-hover)}
+/* ---- Stat tile (Cards variant) ---- */
+.dd-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+@media(max-width:820px){.dd-stats{grid-template-columns:1fr 1fr}}
+@media(max-width:480px){.dd-stats{grid-template-columns:1fr}}
+.dd-stat{border:1px solid var(--chrome-border);border-radius:14px;padding:18px 18px 16px;background:var(--chrome-bg);transition:border-color .2s,transform .2s}
+.dd-stat:hover{border-color:var(--chrome-accent);transform:translateY(-2px)}
+.dd-stat__label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--chrome-muted);margin-bottom:10px}
+.dd-stat__value{font-size:30px;font-weight:800;line-height:1;color:var(--chrome-txt);letter-spacing:-1px;font-variant-numeric:tabular-nums}
+.dd-stat__foot{display:flex;align-items:center;gap:8px;margin-top:11px;font-size:12px}
+.dd-stat__sub{color:var(--chrome-muted);font-weight:500}
+.dd-delta{display:inline-flex;align-items:center;gap:3px;padding:2px 7px;border-radius:999px;font-size:11px;font-weight:700;white-space:nowrap}
+.dd-delta--up{color:var(--color-success-h);background:var(--color-success-l)}
+.dd-delta--down{color:var(--color-crit-h);background:var(--color-crit-l)}
 
 /* ---- Chart (Flash palette + interactive) ---- */
 .cht{position:relative;border:1px solid var(--chrome-border);border-radius:14px;padding:20px 22px;background:var(--chrome-bg);width:380px;max-width:100%;
@@ -2265,6 +2228,37 @@ body.home .main{max-width:none;margin:0;padding:0}
 .cht__tip{position:absolute;z-index:5;pointer-events:none;background:var(--color-surface-inverse);color:var(--color-text-inv);font-size:11.5px;font-weight:600;padding:5px 9px;border-radius:7px;white-space:nowrap;opacity:0;transform:translate(-50%,-100%);transition:opacity .12s;box-shadow:0 4px 14px rgba(0,0,0,.22)}
 .cht__tip.show{opacity:1}
 .cht__tip b{font-weight:800}
+/* ---- Progress meter / Distribution bars (Charts) ---- */
+.dd-meters{border:1px solid var(--chrome-border);border-radius:12px;padding:22px}
+.dd-meter{margin-bottom:18px}
+.dd-meter:last-child{margin-bottom:0}
+.dd-meter__top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:7px}
+.dd-meter__label{font-size:12.5px;font-weight:700;color:var(--chrome-txt)}
+.dd-meter__val{font-size:12px;font-weight:700;color:var(--chrome-muted);font-variant-numeric:tabular-nums}
+.dd-meter__track{height:8px;border-radius:999px;background:var(--chrome-nav);overflow:hidden}
+.dd-meter__fill{height:100%;border-radius:999px}
+.dd-dist{border:1px solid var(--chrome-border);border-radius:12px;padding:22px}
+.dd-dist__row{margin-bottom:16px}
+.dd-dist__row:last-child{margin-bottom:0}
+.dd-dist__top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:7px;gap:12px}
+.dd-dist__label{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;font-weight:700;color:var(--chrome-txt)}
+.dd-dist__swatch{width:9px;height:9px;border-radius:3px;flex-shrink:0}
+.dd-dist__val{font-size:12px;font-weight:700;color:var(--chrome-muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+.dd-dist__track{height:10px;border-radius:999px;background:var(--chrome-nav);overflow:hidden}
+.dd-dist__fill{height:100%;border-radius:999px;transition:width .3s}
+.dd-break{border:1px solid var(--chrome-border);border-radius:12px;padding:22px}
+.dd-break__top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:11px}
+.dd-break__label{font-size:12.5px;font-weight:700;color:var(--chrome-txt)}
+.dd-break__total{font-size:12px;font-weight:700;color:var(--chrome-muted);font-variant-numeric:tabular-nums}
+.dd-break__bar{display:flex;gap:2px;height:14px;border-radius:999px;overflow:hidden;background:var(--chrome-nav)}
+.dd-break__seg{height:100%;transition:filter .15s}
+.dd-break__seg:hover{filter:brightness(1.08)}
+.dd-break__legend{display:flex;flex-wrap:wrap;gap:12px 22px;margin-top:16px}
+.dd-break__item{display:flex;align-items:center;gap:8px}
+.dd-break__swatch{width:10px;height:10px;border-radius:3px;flex-shrink:0}
+.dd-break__k{font-size:12.5px;font-weight:700;color:var(--chrome-txt)}
+.dd-break__v{font-size:12px;font-weight:700;color:var(--chrome-muted);font-variant-numeric:tabular-nums}
+
 /* ---- Kbd (shared: used by Command & Context Menu too) ---- */
 .kbd{display:inline-flex;align-items:center;justify-content:center;min-width:20px;height:20px;padding:0 6px;font-family:'SF Mono',ui-monospace,monospace;font-size:11px;font-weight:600;color:var(--chrome-txt);background:var(--color-surface-n1);border:1px solid var(--chrome-border);border-bottom-width:2px;border-radius:6px;line-height:1}
 .kbd-combo{display:inline-flex;align-items:center;gap:4px}
@@ -3568,7 +3562,7 @@ body.home .main{max-width:none;margin:0;padding:0}
       <div class="sec__head">
         <h1 class="sec__title">Chips and pills</h1>
         <div class="sec-header-meta">
-          <span class="comp-ver-badge" style="margin-left:0">v1.14.2</span>
+          <span class="comp-ver-badge" style="margin-left:0">v1.16.0</span>
           <details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-chips">
@@ -3588,9 +3582,11 @@ body.home .main{max-width:none;margin:0;padding:0}
     ".chip--lg",
     ".chip__label",
     ".chip__icon",
-    ".chip__x"
+    ".chip__x",
+    ".dd-chips",
+    ".dd-chips__clear"
   ],
-  "css": "/* ================================================================\n   CHIPS\n================================================================ */\n.chip { display:inline-flex;align-items:center;border-radius:999px;font-family:inherit;font-weight:700;white-space:nowrap;background:var(--chip-bg);color:var(--chip-text);line-height:1 }\n.chip__icon { flex-shrink:0 }\n.chip--sm { height:24px }\n.chip--reg { height:28px }\n.chip--lg { height:33px }\n.chip__x { display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;margin-left:1px;margin-right:-2px;width:1.15em;height:1.15em;border-radius:999px;border:none;background:transparent;color:inherit;cursor:pointer;padding:0;opacity:.72;transition:opacity .12s,background .12s }\n.chip__x:hover { opacity:1;background:rgba(0,0,0,.2) }\n.chip.is-selectable { cursor:pointer }\n.chip.is-selected { box-shadow:0 0 0 2px var(--cpg-stage-bg,#fff),0 0 0 4px var(--chip-bg) }\n.dd-chips .chip { box-shadow:none;padding:0 14px }",
+  "css": "/* ================================================================\n   CHIPS\n================================================================ */\n.chip { display:inline-flex;align-items:center;border-radius:999px;font-family:inherit;font-weight:700;white-space:nowrap;background:var(--chip-bg);color:var(--chip-text);line-height:1 }\n.chip__icon { flex-shrink:0 }\n.chip--sm { height:24px }\n.chip--reg { height:28px }\n.chip--lg { height:33px }\n.chip__x { display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;margin-left:1px;margin-right:-2px;width:1.15em;height:1.15em;border-radius:999px;border:none;background:transparent;color:inherit;cursor:pointer;padding:0;opacity:.72;transition:opacity .12s,background .12s }\n.chip__x:hover { opacity:1;background:rgba(0,0,0,.2) }\n.chip.is-selectable { cursor:pointer }\n.chip.is-selected { box-shadow:0 0 0 2px var(--cpg-stage-bg,#fff),0 0 0 4px var(--chip-bg) }\n.dd-chips { display:flex;flex-wrap:wrap;align-items:center;gap:10px }\n.dd-chips .chip { box-shadow:none;padding:0 14px }\n.dd-chips__clear { font-family:inherit;font-size:12px;font-weight:700;color:var(--chrome-muted);background:none;border:none;cursor:pointer;padding:4px 2px;transition:color .15s }\n.dd-chips__clear:hover { color:var(--chrome-txt) }",
   "js": "const CHIP_SIZES = [\n  {key:'sm',  label:'Small',   h:24, padY:'0', padX:9,  fs:11,   gap:4, icon:11},\n  {key:'reg', label:'Regular', h:28, padY:'0', padX:11, fs:12.5, gap:5, icon:13},\n  {key:'lg',  label:'Large',   h:33, padY:'0', padX:13, fs:13.5, gap:6, icon:15},\n];\n\nconst CHIP_VARIANTS = [\n  {key:'accent',  label:'Accent',  light:{bg:'#0062EB',text:'#ffffff'}, dark:{bg:'#0062EB',text:'#ffffff'}},\n  {key:'muted',   label:'Muted',   light:{bg:'#E6E6E6',text:'#646464'}, dark:{bg:'#33343A',text:'#A1A3A8'}},\n  {key:'success', label:'Success', light:{bg:'#16A220',text:'#ffffff'}, dark:{bg:'#16A220',text:'#ffffff'}},\n  {key:'warning', label:'Warning', light:{bg:'#FF8900',text:'#ffffff'}, dark:{bg:'#FF8900',text:'#ffffff'}},\n  {key:'error',   label:'Error',   light:{bg:'#EB0029',text:'#ffffff'}, dark:{bg:'#EB0029',text:'#ffffff'}},\n];\n\nfunction chipHeartSVG(size, color){\n  return `&lt;svg class=\"chip__icon\" width=\"${size}\" height=\"${size}\" viewBox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\"&gt;&lt;path fill=\"${color}\" d=\"M12 21.3s-7.6-4.7-10.3-9.4C.1 8.9 1.3 5.1 5 4.2c2.2-.5 4.2.4 5.5 2.2.4.5 1.1.5 1.5 0C13.3 4.6 15.3 3.7 17.5 4.2c3.7.9 4.9 4.7 3.3 7.7-2.7 4.7-8.8 9.4-8.8 9.4z\"/&gt;&lt;/svg&gt;`;\n}\n\nfunction makeChipHTML(variant, sizeKey, theme){\n  const sz = CHIP_SIZES.find(s=&gt;s.key===sizeKey);\n  const c  = variant[theme];\n  const style = `--chip-bg:${c.bg};--chip-text:${c.text};font-size:${sz.fs}px;gap:${sz.gap}px;padding:0 ${sz.padX}px 0 ${sz.padX-2}px`;\n  return `&lt;span class=\"chip chip--${sizeKey}\" style=\"${style}\"&gt;${chipHeartSVG(sz.icon, c.text)}&lt;span class=\"chip__label\"&gt;Chip&lt;/span&gt;&lt;/span&gt;`;\n}\n\nfunction makeChipEl(){\n  const sz = CHIP_SIZES.find(s=&gt;s.key===cpg.size)||CHIP_SIZES[1];\n  const v  = CHIP_VARIANTS.find(x=&gt;x.key===cpg.variant)||CHIP_VARIANTS[0];\n  const c  = v[cpg.theme];\n  const chip = document.createElement('span');\n  chip.className = `chip chip--${cpg.size}${cpg.selectable?' is-selectable':''}${(cpg.selectable&amp;&amp;cpg.selected)?' is-selected':''}`;\n  chip.style.cssText = `--chip-bg:${c.bg};--chip-text:${c.text};font-size:${sz.fs}px;gap:${sz.gap}px;padding:0 ${sz.padX}px 0 ${sz.padX-2}px`;\n  chip.style.setProperty('--cpg-stage-bg', stageBg(cpg.theme));\n  let inner = '';\n  if(cpg.icon) inner += chipHeartSVG(sz.icon, c.text);\n  inner += `&lt;span class=\"chip__label\"&gt;${cpgEsc(cpg.label||'Chip')}&lt;/span&gt;`;\n  chip.innerHTML = inner;\n  if(cpg.removable){\n    const x = document.createElement('button');\n    x.className = 'chip__x'; x.type = 'button'; x.setAttribute('aria-label','Remove');\n    const xs = Math.round(sz.icon*0.82);\n    x.innerHTML = `&lt;svg width=\"${xs}\" height=\"${xs}\" viewBox=\"0 0 24 24\" fill=\"none\"&gt;&lt;path d=\"M6 6l12 12M18 6L6 18\" stroke=\"currentColor\" stroke-width=\"2.6\" stroke-linecap=\"round\"/&gt;&lt;/svg&gt;`;\n    x.onclick = (e)=&gt;{ e.stopPropagation(); cpg.dismissed = true; cpgRefresh(); };\n    chip.appendChild(x);\n  }\n  if(cpg.selectable){\n    chip.onclick = ()=&gt;{ cpg.selected = !cpg.selected; cpgRefresh(); };\n  }\n  return chip;\n}",
   "usage": {
     "do": [
@@ -3604,8 +3600,8 @@ body.home .main{max-width:none;margin:0;padding:0}
       "Don't colour chips just for decoration — colour should carry meaning."
     ]
   },
-  "contentHash": "3b456457303d8dc57e2942b53e75477492917815ded6774f334fa6a35e383802",
-  "note": "makeChipHTML is the minimal real-markup builder (variant+size+theme -&gt; chip HTML string); makeChipEl is the fuller version also handling removable (.chip__x) and selectable (.is-selectable/.is-selected, captured via the .chip boundary already) states. cpg (playground state)/getChipCodeHTML/renderChipPlayground/renderChipReference are doc-site-only playground plumbing, excluded."
+  "contentHash": "22b65299586e59be3e7f07a08f14782f445e222cb936179375c5e112c438e8ac",
+  "note": "makeChipHTML is the minimal real-markup builder (variant+size+theme -&gt; chip HTML string); makeChipEl is the fuller version also handling removable (.chip__x) and selectable (.is-selectable/.is-selected, captured via the .chip boundary already) states. Filter chips (.dd-chips/.dd-chips__clear) is static hand-authored markup migrated from the retired Data Display section, added to the Overview tab. cpg (playground state)/getChipCodeHTML/renderChipPlayground/renderChipReference/renderChipInSitu are doc-site-only playground plumbing, excluded."
 }
   </pre>
 </details>
@@ -3623,6 +3619,28 @@ body.home .main{max-width:none;margin:0;padding:0}
         <div id="chip-playground" class="type-sub"></div>
         <div id="chip-variants" class="type-sub"></div>
         <div id="chip-insitu" class="type-sub"></div>
+        <div class="type-sub">
+          <div class="type-sub__title">Filter chips</div>
+          <div class="type-sub__desc">Removable chips that summarise the filters currently applied to a table or list, paired with a "Clear all" action.</div>
+          <div class="dd-chips">
+            <span class="chip chip--sm is-selectable is-selected" style="--chip-bg:#0062EB;--chip-text:#ffffff">
+              <span class="chip__label">Region: Gauteng</span>
+              <button class="chip__x" type="button" aria-label="Remove filter">&times;</button>
+            </span>
+            <span class="chip chip--sm is-selectable is-selected" style="--chip-bg:#16A220;--chip-text:#ffffff">
+              <span class="chip__label">Status: Live</span>
+              <button class="chip__x" type="button" aria-label="Remove filter">&times;</button>
+            </span>
+            <span class="chip chip--sm is-selectable is-selected" style="--chip-bg:#FF8900;--chip-text:#ffffff">
+              <span class="chip__label">Last 30 days</span>
+              <button class="chip__x" type="button" aria-label="Remove filter">&times;</button>
+            </span>
+            <span class="chip chip--sm" style="--chip-bg:#E6E6E6;--chip-text:#646464">
+              <span class="chip__label">+2 more</span>
+            </span>
+            <button class="dd-chips__clear" type="button">Clear all</button>
+          </div>
+        </div>
         <div class="type-sub cpg-variants" id="chip-usage">
           <div class="cpg-section-heading">
             <div class="cpg-layout__title">Do's &amp; don'ts</div>
@@ -3670,7 +3688,7 @@ body.home .main{max-width:none;margin:0;padding:0}
     <section class="sec" id="s-cards">
       <div class="sec__head">
         <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Cards <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.1</span></h1>
+        <h1 class="sec__title">Cards <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.1.0</span></h1>
         <p class="sec__desc">A surface that groups related content and actions into a single unit. Composed from an optional media band, a body (title, description, content) and an optional footer for actions. Built on Flash surface and border tokens, so it adapts to light &amp; dark.</p>
       </div>
       <div class="type-sub">
@@ -3713,6 +3731,32 @@ body.home .main{max-width:none;margin:0;padding:0}
             </div>
           </div>
         </div></div>
+      </div>
+      <div class="type-sub">
+        <div class="type-sub__title">Stat tiles</div>
+        <div class="type-sub__desc">A card variant for headline KPIs — label, value and trend delta. Deltas use the Success / Critical semantic tokens so direction reads at a glance.</div>
+        <div class="dd-stats">
+          <div class="dd-stat">
+            <div class="dd-stat__label">Transactions</div>
+            <div class="dd-stat__value">2.4M</div>
+            <div class="dd-stat__foot"><span class="dd-delta dd-delta--up">▲ 12.8%</span><span class="dd-stat__sub">vs last week</span></div>
+          </div>
+          <div class="dd-stat">
+            <div class="dd-stat__label">Gross value</div>
+            <div class="dd-stat__value">R48.2M</div>
+            <div class="dd-stat__foot"><span class="dd-delta dd-delta--up">▲ 6.1%</span><span class="dd-stat__sub">vs last week</span></div>
+          </div>
+          <div class="dd-stat">
+            <div class="dd-stat__label">Active traders</div>
+            <div class="dd-stat__value">18,930</div>
+            <div class="dd-stat__foot"><span class="dd-delta dd-delta--down">▼ 2.3%</span><span class="dd-stat__sub">vs last week</span></div>
+          </div>
+          <div class="dd-stat">
+            <div class="dd-stat__label">Platform uptime</div>
+            <div class="dd-stat__value">99.98%</div>
+            <div class="dd-stat__foot"><span class="dd-stat__sub">Last 30 days</span></div>
+          </div>
+        </div>
       </div>
       <div class="type-sub">
         <div class="type-sub__title">Specs</div>
@@ -3765,9 +3809,18 @@ body.home .main{max-width:none;margin:0;padding:0}
     ".card__media",
     ".card--interactive",
     ".card-btn",
-    ".card-btn--ghost"
+    ".card-btn--ghost",
+    ".dd-stats",
+    ".dd-stat",
+    ".dd-stat__label",
+    ".dd-stat__value",
+    ".dd-stat__foot",
+    ".dd-stat__sub",
+    ".dd-delta",
+    ".dd-delta--up",
+    ".dd-delta--down"
   ],
-  "css": ".card { background:var(--chrome-bg);border:1px solid var(--chrome-border);border-radius:14px;overflow:hidden;width:300px;max-width:100%;transition:background .25s,border-color .15s,box-shadow .15s,transform .15s;display:flex;flex-direction:column }\n.card__media { height:132px;background:linear-gradient(135deg,var(--prim-grey-700),var(--prim-grey-1000));flex-shrink:0 }\n.card__body { padding:18px;flex:1 }\n.card__title { font-size:15px;font-weight:800;color:var(--chrome-txt);margin-bottom:5px }\n.card__desc { font-size:13px;line-height:1.55;color:var(--chrome-muted) }\n.card__body p { font-size:13px;line-height:1.6;color:var(--chrome-txt);margin-top:12px }\n.card__foot { display:flex;gap:10px;align-items:center;padding:14px 18px;border-top:1px solid var(--chrome-border) }\n.card__foot--end { justify-content:flex-end }\n.card--interactive { cursor:pointer }\n.card--interactive:hover { border-color:var(--color-text-s);box-shadow:0 8px 24px rgba(0,0,0,.10);transform:translateY(-2px) }\n.card-btn { background:var(--color-btn-s-bg);color:var(--color-btn-s-txt);border:0;border-radius:8px;padding:8px 16px;font-size:13px;font-weight:700;font-family:inherit;cursor:pointer;transition:opacity .15s }\n.card-btn:hover { opacity:.85 }\n.card-btn--ghost { background:transparent;color:var(--chrome-txt);border:1px solid var(--chrome-border) }\n.card-btn--ghost:hover { opacity:1;background:var(--chrome-hover) }",
+  "css": ".card { background:var(--chrome-bg);border:1px solid var(--chrome-border);border-radius:14px;overflow:hidden;width:300px;max-width:100%;transition:background .25s,border-color .15s,box-shadow .15s,transform .15s;display:flex;flex-direction:column }\n.card__media { height:132px;background:linear-gradient(135deg,var(--prim-grey-700),var(--prim-grey-1000));flex-shrink:0 }\n.card__body { padding:18px;flex:1 }\n.card__title { font-size:15px;font-weight:800;color:var(--chrome-txt);margin-bottom:5px }\n.card__desc { font-size:13px;line-height:1.55;color:var(--chrome-muted) }\n.card__body p { font-size:13px;line-height:1.6;color:var(--chrome-txt);margin-top:12px }\n.card__foot { display:flex;gap:10px;align-items:center;padding:14px 18px;border-top:1px solid var(--chrome-border) }\n.card__foot--end { justify-content:flex-end }\n.card--interactive { cursor:pointer }\n.card--interactive:hover { border-color:var(--color-text-s);box-shadow:0 8px 24px rgba(0,0,0,.10);transform:translateY(-2px) }\n.card-btn { background:var(--color-btn-s-bg);color:var(--color-btn-s-txt);border:0;border-radius:8px;padding:8px 16px;font-size:13px;font-weight:700;font-family:inherit;cursor:pointer;transition:opacity .15s }\n.card-btn:hover { opacity:.85 }\n.card-btn--ghost { background:transparent;color:var(--chrome-txt);border:1px solid var(--chrome-border) }\n.card-btn--ghost:hover { opacity:1;background:var(--chrome-hover) }\n/* ---- Stat tile (Cards variant) ---- */\n.dd-stats { display:grid;grid-template-columns:repeat(4,1fr);gap:14px }\n.dd-stats { grid-template-columns:1fr 1fr }\n.dd-stat { border:1px solid var(--chrome-border);border-radius:14px;padding:18px 18px 16px;background:var(--chrome-bg);transition:border-color .2s,transform .2s }\n.dd-stat:hover { border-color:var(--chrome-accent);transform:translateY(-2px) }\n.dd-stat__label { font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--chrome-muted);margin-bottom:10px }\n.dd-stat__value { font-size:30px;font-weight:800;line-height:1;color:var(--chrome-txt);letter-spacing:-1px;font-variant-numeric:tabular-nums }\n.dd-stat__foot { display:flex;align-items:center;gap:8px;margin-top:11px;font-size:12px }\n.dd-stat__sub { color:var(--chrome-muted);font-weight:500 }\n.dd-delta { display:inline-flex;align-items:center;gap:3px;padding:2px 7px;border-radius:999px;font-size:11px;font-weight:700;white-space:nowrap }\n.dd-delta--up { color:var(--color-success-h);background:var(--color-success-l) }\n.dd-delta--down { color:var(--color-crit-h);background:var(--color-crit-l) }",
   "usage": {
     "do": [
       "Group a single, self-contained subject — one product, one summary, one record.",
@@ -3780,8 +3833,8 @@ body.home .main{max-width:none;margin:0;padding:0}
       "Don’t put several competing primary actions in one footer."
     ]
   },
-  "contentHash": "a45a6b60bcf21340d64307a312f3927c5ad1a677b5ca83e51d23e3156bb93bd1",
-  "note": "Fully static, hand-authored markup — see the Anatomy and Media &amp; interactive reference grids in the section itself for the exact real markup of every variant (basic, with footer, media band, interactive)."
+  "contentHash": "ae12717d01651e7126d7c78ba2399acb5d3eed79a27fb0b4b90aa69d4a3878bf",
+  "note": "Stat tiles is a Cards variant migrated from the retired Data Display section; .dd-* classes are shared with the Tables Reporting variant / Charts meters+distribution / Lists / Chips filter-chips demos, each documented in that section's own tab."
 }
   </pre>
 </details>
@@ -4307,93 +4360,11 @@ body.home .main{max-width:none;margin:0;padding:0}
   </pre>
 </details>
     </section>
-    <section class="sec" id="s-data">
+    <section class="sec" id="s-lists">
       <div class="sec__head">
         <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Data Display <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.3.3</span></h1>
-        <p class="sec__desc">Patterns for surfacing numbers and records — stat tiles, tables, key&ndash;value lists, progress meters and filter chips. All built on chrome and semantic tokens, so they adapt to light &amp; dark automatically.</p>
-      </div>
-
-      <div class="type-sub">
-        <div class="type-sub__title">Stat tiles</div>
-        <div class="type-sub__desc">Headline KPI cards with a label, value and trend delta. Deltas use the Success / Critical semantic tokens so direction reads at a glance.</div>
-        <div class="dd-stats">
-          <div class="dd-stat">
-            <div class="dd-stat__label">Transactions</div>
-            <div class="dd-stat__value">2.4M</div>
-            <div class="dd-stat__foot"><span class="dd-delta dd-delta--up">▲ 12.8%</span><span class="dd-stat__sub">vs last week</span></div>
-          </div>
-          <div class="dd-stat">
-            <div class="dd-stat__label">Gross value</div>
-            <div class="dd-stat__value">R48.2M</div>
-            <div class="dd-stat__foot"><span class="dd-delta dd-delta--up">▲ 6.1%</span><span class="dd-stat__sub">vs last week</span></div>
-          </div>
-          <div class="dd-stat">
-            <div class="dd-stat__label">Active traders</div>
-            <div class="dd-stat__value">18,930</div>
-            <div class="dd-stat__foot"><span class="dd-delta dd-delta--down">▼ 2.3%</span><span class="dd-stat__sub">vs last week</span></div>
-          </div>
-          <div class="dd-stat">
-            <div class="dd-stat__label">Platform uptime</div>
-            <div class="dd-stat__value">99.98%</div>
-            <div class="dd-stat__foot"><span class="dd-stat__sub">Last 30 days</span></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="type-sub">
-        <div class="type-sub__title">Data table</div>
-        <div class="type-sub__desc">Row-based records with an uppercase header, tabular-aligned numerics, hover states and a status indicator. Wraps horizontally on narrow screens.</div>
-        <div class="dd-table-wrap">
-          <table class="dd-table">
-            <thead>
-              <tr>
-                <th>Product</th>
-                <th>Category</th>
-                <th class="dd-num">Volume</th>
-                <th class="dd-num">Value</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td class="dd-table__name">Airtime &amp; Data</td>
-                <td>Prepaid</td>
-                <td class="dd-num">842,190</td>
-                <td class="dd-num">R14.8M</td>
-                <td><span class="dd-status"><span class="dd-dot" style="background:var(--color-success-h)"></span>Live</span></td>
-              </tr>
-              <tr>
-                <td class="dd-table__name">Electricity</td>
-                <td>Utilities</td>
-                <td class="dd-num">613,455</td>
-                <td class="dd-num">R11.2M</td>
-                <td><span class="dd-status"><span class="dd-dot" style="background:var(--color-success-h)"></span>Live</span></td>
-              </tr>
-              <tr>
-                <td class="dd-table__name">1Voucher</td>
-                <td>Vouchers</td>
-                <td class="dd-num">508,720</td>
-                <td class="dd-num">R9.6M</td>
-                <td><span class="dd-status"><span class="dd-dot" style="background:var(--color-warn-h)"></span>Degraded</span></td>
-              </tr>
-              <tr>
-                <td class="dd-table__name">Bill Payments</td>
-                <td>Utilities</td>
-                <td class="dd-num">231,004</td>
-                <td class="dd-num">R7.1M</td>
-                <td><span class="dd-status"><span class="dd-dot" style="background:var(--color-success-h)"></span>Live</span></td>
-              </tr>
-              <tr>
-                <td class="dd-table__name">Gaming Vouchers</td>
-                <td>Vouchers</td>
-                <td class="dd-num">96,338</td>
-                <td class="dd-num">R5.5M</td>
-                <td><span class="dd-status"><span class="dd-dot" style="background:var(--chrome-muted)"></span>Paused</span></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+        <h1 class="sec__title">Lists <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.1.0</span></h1>
+        <p class="sec__desc">List-shaped patterns for a handful of facts or a chronological feed — key&ndash;value lists and activity timelines. All built on chrome and semantic tokens, so they adapt to light &amp; dark automatically.</p>
       </div>
 
       <div class="type-sub">
@@ -4405,49 +4376,6 @@ body.home .main{max-width:none;margin:0;padding:0}
           <div class="dd-kv__row"><div class="dd-kv__key">Region</div><div class="dd-kv__val">Gauteng · Soweto</div></div>
           <div class="dd-kv__row"><div class="dd-kv__key">Onboarded</div><div class="dd-kv__val">14 March 2026</div></div>
           <div class="dd-kv__row"><div class="dd-kv__key">Settlement</div><div class="dd-kv__val">Daily · 18:00 SAST</div></div>
-        </div>
-      </div>
-
-      <div class="type-sub">
-        <div class="type-sub__title">Progress meters</div>
-        <div class="type-sub__desc">Labelled bars for quotas, targets and health. The fill uses the brand token by default and switches to Warning / Critical semantics as a value approaches its limit.</div>
-        <div class="dd-meters">
-          <div class="dd-meter">
-            <div class="dd-meter__top"><span class="dd-meter__label">Monthly GMV target</span><span class="dd-meter__val">R48.2M / R60M · 80%</span></div>
-            <div class="dd-meter__track"><div class="dd-meter__fill" style="width:80%;background:var(--chrome-accent)"></div></div>
-          </div>
-          <div class="dd-meter">
-            <div class="dd-meter__top"><span class="dd-meter__label">Trader onboarding</span><span class="dd-meter__val">18,930 / 25,000 · 76%</span></div>
-            <div class="dd-meter__track"><div class="dd-meter__fill" style="width:76%;background:var(--chrome-accent)"></div></div>
-          </div>
-          <div class="dd-meter">
-            <div class="dd-meter__top"><span class="dd-meter__label">Float utilisation</span><span class="dd-meter__val">88%</span></div>
-            <div class="dd-meter__track"><div class="dd-meter__fill" style="width:88%;background:var(--color-warn-h)"></div></div>
-          </div>
-          <div class="dd-meter">
-            <div class="dd-meter__top"><span class="dd-meter__label">API error budget spent</span><span class="dd-meter__val">96%</span></div>
-            <div class="dd-meter__track"><div class="dd-meter__fill" style="width:96%;background:var(--color-crit-h)"></div></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="type-sub">
-        <div class="type-sub__title">Distribution bar</div>
-        <div class="type-sub__desc">A single segmented bar for showing how a total splits across categories &mdash; product mix, spend by region, storage used. Segments map to semantic tokens and are paired with a legend that carries the exact figures.</div>
-        <div class="dd-break">
-          <div class="dd-break__top"><span class="dd-break__label">GMV by region</span><span class="dd-break__total">R48.2M total</span></div>
-          <div class="dd-break__bar">
-            <div class="dd-break__seg" style="width:38%;background:var(--chrome-accent)" title="Gauteng · 38%"></div>
-            <div class="dd-break__seg" style="width:24%;background:var(--color-success-h)" title="Western Cape · 24%"></div>
-            <div class="dd-break__seg" style="width:21%;background:var(--color-warn-h)" title="KwaZulu-Natal · 21%"></div>
-            <div class="dd-break__seg" style="width:17%;background:var(--chrome-muted)" title="Other regions · 17%"></div>
-          </div>
-          <div class="dd-break__legend">
-            <div class="dd-break__item"><span class="dd-break__swatch" style="background:var(--chrome-accent)"></span><span class="dd-break__k">Gauteng</span><span class="dd-break__v">38% · R18.3M</span></div>
-            <div class="dd-break__item"><span class="dd-break__swatch" style="background:var(--color-success-h)"></span><span class="dd-break__k">Western Cape</span><span class="dd-break__v">24% · R11.6M</span></div>
-            <div class="dd-break__item"><span class="dd-break__swatch" style="background:var(--color-warn-h)"></span><span class="dd-break__k">KwaZulu-Natal</span><span class="dd-break__v">21% · R10.1M</span></div>
-            <div class="dd-break__item"><span class="dd-break__swatch" style="background:var(--chrome-muted)"></span><span class="dd-break__k">Other regions</span><span class="dd-break__v">17% · R8.2M</span></div>
-          </div>
         </div>
       </div>
 
@@ -4481,8 +4409,70 @@ body.home .main{max-width:none;margin:0;padding:0}
       </div>
 
       <div class="type-sub">
+        <div class="type-sub__title">When to use</div>
+        <div class="type-sub__desc">Reach for the pattern that matches the shape of what you have &mdash; a few facts, or a sequence of events.</div>
+        <div class="sel-usage">
+          <div class="sel-usage__card">
+            <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
+            <ul class="sel-usage__list">
+              <li>Use a key&ndash;value list for a handful of facts about one record &mdash; reach for a table once there are many similar records.</li>
+              <li>Use an activity timeline when order and time genuinely matter, not just as a decorative list style.</li>
+            </ul>
+          </div>
+          <div class="sel-usage__card">
+            <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don&rsquo;t</div>
+            <ul class="sel-usage__list">
+              <li>Don&rsquo;t stretch a key&ndash;value list to a screen&rsquo;s worth of facts &mdash; that&rsquo;s a table.</li>
+              <li>Don&rsquo;t use a timeline for unordered or unrelated items.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <details class="ai-ctx">
+  <summary>AI context</summary>
+  <pre data-ai-context="s-lists">
+{
+  "status": "static",
+  "realClasses": [
+    ".dd-kv",
+    ".dd-kv__row",
+    ".dd-kv__key",
+    ".dd-kv__val",
+    ".dd-timeline",
+    ".dd-tl",
+    ".dd-tl__item",
+    ".dd-tl__meta",
+    ".dd-tl__title",
+    ".dd-tl__time",
+    ".dd-tl__desc"
+  ],
+  "css": "/* ── LISTS (Key-value list, Activity timeline) ── */\n.dd-kv { border:1px solid var(--chrome-border);border-radius:12px;overflow:hidden }\n.dd-kv__row { display:flex;gap:16px;padding:13px 16px;border-bottom:1px solid var(--chrome-border) }\n.dd-kv__row:last-child { border-bottom:none }\n.dd-kv__key { flex:0 0 180px;font-size:12px;font-weight:700;color:var(--chrome-muted) }\n.dd-kv__val { font-size:13px;font-weight:600;color:var(--chrome-txt) }\n.dd-timeline { border:1px solid var(--chrome-border);border-radius:12px;padding:22px 24px }\n.dd-tl { position:relative;padding-left:26px }\n.dd-tl__item { position:relative;padding-bottom:20px }\n.dd-tl__item:last-child { padding-bottom:0 }\n.dd-tl__item::before { content:\"\";position:absolute;left:-19px;top:3px;width:9px;height:9px;border-radius:50%;background:var(--dd-tl-dot,var(--chrome-accent));box-shadow:0 0 0 3px var(--chrome-bg) }\n.dd-tl__item::after { content:\"\";position:absolute;left:-15px;top:15px;bottom:-3px;width:1px;background:var(--chrome-border) }\n.dd-tl__item:last-child::after { display:none }\n.dd-tl__meta { display:flex;align-items:baseline;gap:8px;flex-wrap:wrap }\n.dd-tl__title { font-size:13px;font-weight:700;color:var(--chrome-txt) }\n.dd-tl__time { font-size:11px;font-weight:600;color:var(--chrome-muted);font-variant-numeric:tabular-nums }\n.dd-tl__desc { font-size:12px;color:var(--chrome-muted);line-height:1.55;margin-top:2px }",
+  "usage": {
+    "do": [
+      "Use a key–value list for a handful of facts about one record — reach for a table once there are many similar records.",
+      "Use an activity timeline when order and time genuinely matter, not just as a decorative list style."
+    ],
+    "dont": [
+      "Don’t stretch a key–value list to a screen’s worth of facts — that’s a table.",
+      "Don’t use a timeline for unordered or unrelated items."
+    ]
+  },
+  "contentHash": "bfcea3930c26ac8447ed80ef6f1455815f4683776740294c3977cc81c8ea2f83",
+  "note": "Split from the retired Data Display section (2026-08-04). Empty state was originally part of this section too, but moved out to its own s-empty-state section — see that section's own tab. Fully static hand-authored markup. .dd-tl__item::before reads a --dd-tl-dot custom property set inline per item for its semantic node colour."
+}
+  </pre>
+</details>
+    </section>
+    <section class="sec" id="s-empty-state">
+      <div class="sec__head">
+        <div class="sec__eye">Components</div>
+        <h1 class="sec__title">Empty State <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.0</span></h1>
+        <p class="sec__desc">Shown when a table, list or view has no rows to display. Pairs a muted glyph with a plain-language explanation and a single primary action to move the user forward.</p>
+      </div>
+
+      <div class="type-sub">
         <div class="type-sub__title">Empty state</div>
-        <div class="type-sub__desc">Shown when a table, list or view has no rows to display. Pairs a muted glyph with a plain-language explanation and a single primary action to move the user forward.</div>
+        <div class="type-sub__desc">A dashed-border card centring a muted glyph, a title, a short explanation and one primary action.</div>
         <div class="dd-empty">
           <div class="dd-empty__icon">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M4 7h16M4 12h16M4 17h9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
@@ -4494,59 +4484,62 @@ body.home .main{max-width:none;margin:0;padding:0}
       </div>
 
       <div class="type-sub">
-        <div class="type-sub__title">Distribution bars</div>
-        <div class="type-sub__desc">A ranked share-of-total breakdown for splitting a single metric across categories. Each row carries its own semantic colour, so a legend swatch, bar and percentage stay visually linked. Use it where a full chart would be overkill but a single meter can&rsquo;t show the mix.</div>
-        <div class="dd-dist">
-          <div class="dd-dist__row">
-            <div class="dd-dist__top"><span class="dd-dist__label"><span class="dd-dist__swatch" style="background:var(--chrome-accent)"></span>Airtime &amp; Data</span><span class="dd-dist__val">R14.8M · 42%</span></div>
-            <div class="dd-dist__track"><div class="dd-dist__fill" style="width:42%;background:var(--chrome-accent)"></div></div>
+        <div class="type-sub__title">When to use</div>
+        <div class="type-sub__desc">An empty state replaces a table, list or grid only when it has zero items &mdash; it&rsquo;s a moment, not a decoration.</div>
+        <div class="sel-usage">
+          <div class="sel-usage__card">
+            <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
+            <ul class="sel-usage__list">
+              <li>Always give an empty state a plain-language reason for why there&rsquo;s nothing to show.</li>
+              <li>Include a single primary action when there&rsquo;s an obvious next step &mdash; clear a filter, create the first record.</li>
+              <li>Keep the glyph muted and simple; it should support the message, not compete with it.</li>
+            </ul>
           </div>
-          <div class="dd-dist__row">
-            <div class="dd-dist__top"><span class="dd-dist__label"><span class="dd-dist__swatch" style="background:var(--color-success-h)"></span>Electricity</span><span class="dd-dist__val">R11.2M · 32%</span></div>
-            <div class="dd-dist__track"><div class="dd-dist__fill" style="width:32%;background:var(--color-success-h)"></div></div>
-          </div>
-          <div class="dd-dist__row">
-            <div class="dd-dist__top"><span class="dd-dist__label"><span class="dd-dist__swatch" style="background:var(--color-warn-h)"></span>1Voucher</span><span class="dd-dist__val">R9.6M · 27%</span></div>
-            <div class="dd-dist__track"><div class="dd-dist__fill" style="width:27%;background:var(--color-warn-h)"></div></div>
-          </div>
-          <div class="dd-dist__row">
-            <div class="dd-dist__top"><span class="dd-dist__label"><span class="dd-dist__swatch" style="background:var(--color-crit-h)"></span>Gaming Vouchers</span><span class="dd-dist__val">R5.5M · 16%</span></div>
-            <div class="dd-dist__track"><div class="dd-dist__fill" style="width:16%;background:var(--color-crit-h)"></div></div>
-          </div>
-          <div class="dd-dist__row">
-            <div class="dd-dist__top"><span class="dd-dist__label"><span class="dd-dist__swatch" style="background:var(--chrome-muted)"></span>Other</span><span class="dd-dist__val">R2.9M · 8%</span></div>
-            <div class="dd-dist__track"><div class="dd-dist__fill" style="width:8%;background:var(--chrome-muted)"></div></div>
+          <div class="sel-usage__card">
+            <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don&rsquo;t</div>
+            <ul class="sel-usage__list">
+              <li>Don&rsquo;t leave an empty state blank or purely decorative &mdash; it should always explain what happened and what to do next.</li>
+              <li>Don&rsquo;t use an empty state for a loading moment &mdash; that&rsquo;s a skeleton loader.</li>
+              <li>Don&rsquo;t stack more than one primary action &mdash; move secondary options into a link or menu.</li>
+            </ul>
           </div>
         </div>
       </div>
-
-      <div class="type-sub">
-        <div class="type-sub__title">Filter chips</div>
-        <div class="type-sub__desc">Removable chips that summarise the filters currently applied to a table or list. Built on the same <code>.chip</code> tokens as Chips &amp; Pills, so colour and sizing stay in sync with the rest of the system.</div>
-        <div class="dd-chips">
-          <span class="chip chip--sm is-selectable is-selected" style="--chip-bg:#0062EB;--chip-text:#ffffff">
-            <span class="chip__label">Region: Gauteng</span>
-            <button class="chip__x" type="button" aria-label="Remove filter">&times;</button>
-          </span>
-          <span class="chip chip--sm is-selectable is-selected" style="--chip-bg:#16A220;--chip-text:#ffffff">
-            <span class="chip__label">Status: Live</span>
-            <button class="chip__x" type="button" aria-label="Remove filter">&times;</button>
-          </span>
-          <span class="chip chip--sm is-selectable is-selected" style="--chip-bg:#FF8900;--chip-text:#ffffff">
-            <span class="chip__label">Last 30 days</span>
-            <button class="chip__x" type="button" aria-label="Remove filter">&times;</button>
-          </span>
-          <span class="chip chip--sm" style="--chip-bg:#E6E6E6;--chip-text:#646464">
-            <span class="chip__label">+2 more</span>
-          </span>
-          <button class="dd-chips__clear" type="button">Clear all</button>
-        </div>
-      </div>
+      <details class="ai-ctx">
+  <summary>AI context</summary>
+  <pre data-ai-context="s-empty-state">
+{
+  "status": "static",
+  "realClasses": [
+    ".dd-empty",
+    ".dd-empty__icon",
+    ".dd-empty__title",
+    ".dd-empty__desc",
+    ".dd-empty__action"
+  ],
+  "css": "/* ── EMPTY STATE ── */\n.dd-empty { border:1.5px dashed var(--chrome-border);border-radius:12px;padding:40px 24px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px }\n.dd-empty__icon { width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:var(--chrome-nav);color:var(--chrome-muted) }\n.dd-empty__title { font-size:14px;font-weight:800;color:var(--chrome-txt) }\n.dd-empty__desc { font-size:12.5px;color:var(--chrome-muted);max-width:340px;line-height:1.55 }\n.dd-empty__action { margin-top:6px;font-family:inherit;font-size:12.5px;font-weight:700;color:#fff;background:#000;border:none;border-radius:8px;padding:9px 16px;cursor:pointer;transition:background .15s }\n.dd-empty__action:hover { background:#252525 }\n[data-theme=\"dark\"] .dd-empty__action { background:#fff;color:#000 }\n[data-theme=\"dark\"] .dd-empty__action:hover { background:#f0f0f0 }",
+  "usage": {
+    "do": [
+      "Always give an empty state a plain-language reason for why there’s nothing to show.",
+      "Include a single primary action when there’s an obvious next step — clear a filter, create the first record.",
+      "Keep the glyph muted and simple; it should support the message, not compete with it."
+    ],
+    "dont": [
+      "Don’t leave an empty state blank or purely decorative — it should always explain what happened and what to do next.",
+      "Don’t use an empty state for a loading moment — that’s a skeleton loader.",
+      "Don’t stack more than one primary action — move secondary options into a link or menu."
+    ]
+  },
+  "contentHash": "cb8c2d800416cb326cdb2f4fbdf21565c7de4dd32491e240f24615fc294d7ee9",
+  "note": "Split out of the Lists section (2026-08-04), which itself was split from the retired Data Display section — now its own top-level component. Fully static hand-authored markup; the icon is an inline SVG, not from the Icons library."
+}
+  </pre>
+</details>
     </section>
     <section class="sec" id="s-tables">
       <div class="sec__head">
         <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Tables <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.1.3</span></h1>
+        <h1 class="sec__title">Tables <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.2.0</span></h1>
         <p class="sec__desc">A selectable, row-based <strong>Table Row</strong> for records and transactions. Each row is assembled from cells &mdash; the <strong>List building block</strong> &mdash; starting with a leading checkbox, a product icon and a bold primary label, then any number of data cells, a status tag and optional trailing links. Rows resolve to five states and stack under a select-all header to form a full table. Adapts to light &amp; dark via semantic tokens.</p>
       </div>
 
@@ -4634,6 +4627,61 @@ body.home .main{max-width:none;margin:0;padding:0}
               </div>
             </div>
           </div>
+        </div>
+      </div>
+
+      <div class="type-sub">
+        <div class="type-sub__title">Reporting variant</div>
+        <div class="type-sub__desc">A denser, plain-table style for reporting grids and dashboards — an uppercase header, tabular-aligned numerics, hover rows and a status dot, instead of the flex-row Table Row above.</div>
+        <div class="dd-table-wrap">
+          <table class="dd-table">
+            <thead>
+              <tr>
+                <th>Product</th>
+                <th>Category</th>
+                <th class="dd-num">Volume</th>
+                <th class="dd-num">Value</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="dd-table__name">Airtime &amp; Data</td>
+                <td>Prepaid</td>
+                <td class="dd-num">842,190</td>
+                <td class="dd-num">R14.8M</td>
+                <td><span class="dd-status"><span class="dd-dot" style="background:var(--color-success-h)"></span>Live</span></td>
+              </tr>
+              <tr>
+                <td class="dd-table__name">Electricity</td>
+                <td>Utilities</td>
+                <td class="dd-num">613,455</td>
+                <td class="dd-num">R11.2M</td>
+                <td><span class="dd-status"><span class="dd-dot" style="background:var(--color-success-h)"></span>Live</span></td>
+              </tr>
+              <tr>
+                <td class="dd-table__name">1Voucher</td>
+                <td>Vouchers</td>
+                <td class="dd-num">508,720</td>
+                <td class="dd-num">R9.6M</td>
+                <td><span class="dd-status"><span class="dd-dot" style="background:var(--color-warn-h)"></span>Degraded</span></td>
+              </tr>
+              <tr>
+                <td class="dd-table__name">Bill Payments</td>
+                <td>Utilities</td>
+                <td class="dd-num">231,004</td>
+                <td class="dd-num">R7.1M</td>
+                <td><span class="dd-status"><span class="dd-dot" style="background:var(--color-success-h)"></span>Live</span></td>
+              </tr>
+              <tr>
+                <td class="dd-table__name">Gaming Vouchers</td>
+                <td>Vouchers</td>
+                <td class="dd-num">96,338</td>
+                <td class="dd-num">R5.5M</td>
+                <td><span class="dd-status"><span class="dd-dot" style="background:var(--chrome-muted)"></span>Paused</span></td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
 
@@ -4801,9 +4849,12 @@ body.home .main{max-width:none;margin:0;padding:0}
     ".is-hover",
     ".is-focus",
     ".is-checked",
-    ".is-disabled"
+    ".is-disabled",
+    ".dd-num",
+    ".dd-status",
+    ".dd-dot"
   ],
-  "css": "/* ================================================================\n   TABLES\n================================================================ */\n/* Table row — a selectable record row assembled from cells */\n.tbl-row { --tbl-hover:#f4f4f4; --tbl-checked:#e9f9ea;\n  display:flex;align-items:center;gap:20px;\n  min-height:50px;padding:0 14px;border-radius:8px;\n  background:transparent;color:var(--chrome-txt);\n  transition:background .12s,box-shadow .12s; }\n[data-theme=\"dark\"] .tbl-row { --tbl-hover:rgba(255,255,255,.05);--tbl-checked:rgba(16,197,4,.13) }\n.tbl-row.is-hover,.tbl-row:not(.is-disabled):not(.is-checked):hover { background:var(--tbl-hover) }\n.tbl-row.is-focus { background:var(--chrome-bg);box-shadow:inset 0 0 0 2px var(--chrome-txt) }\n.tbl-row.is-checked { background:var(--tbl-checked) }\n.tbl-row.is-disabled { pointer-events:none }\n/* cells */\n.tbl-cell { font-size:14px;font-weight:500;color:var(--chrome-txt);white-space:nowrap;overflow:hidden;text-overflow:ellipsis }\n.tbl-cell--check { flex:0 0 20px }\n.tbl-cell--name { flex:0 0 92px;font-weight:700 }\n.tbl-cell--col { flex:0 0 116px }\n.tbl-cell--links { margin-left:auto;display:flex;gap:22px }\n.tbl-link { color:var(--color-link);font-weight:700;font-size:14px;text-decoration:none;cursor:pointer;white-space:nowrap }\n.tbl-link:hover { text-decoration:underline }\n/* disabled dims the content */\n.tbl-row.is-disabled .tbl-cell,.tbl-row.is-disabled .tbl-link { color:var(--chrome-muted);opacity:.85 }\n.tbl-row.is-disabled .tbl-pic { filter:grayscale(1);opacity:.5 }\n/* product icon */\n.tbl-pic { width:30px;height:30px;border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#fff;font-weight:900;font-size:15px }\n.tbl-pic svg { width:17px;height:17px;display:block }\n.tbl-pic--1v { background:var(--prim-1v-500) }\n.tbl-pic--gift { background:var(--prim-sup-pink-1) }\n/* status tag */\n.tbl-tag { display:inline-flex;align-items:center;height:22px;padding:0 9px;border-radius:6px;font-size:12px;font-weight:700;white-space:nowrap;line-height:1 }\n.tbl-tag--pending { background:#e6e6e6;color:#414141 }\n.tbl-tag--success { background:#16a220;color:#fff }\n.tbl-tag--failed { background:#eb0029;color:#fff }\n[data-theme=\"dark\"] .tbl-tag--pending { background:rgba(255,255,255,.14);color:#e6e6e6 }\n.tbl-pg__stage .tbl-row { flex:1 1 auto;min-width:640px }\n.tbl-staterow&gt;.tbl-row { flex:1 1 auto }\n/* full table — header + rows */\n.tbl-wrap { border:1px solid var(--chrome-border);border-radius:14px;overflow:hidden;overflow-x:auto }\n.tbl-inner { min-width:900px }\n.tbl-head { display:flex;align-items:center;gap:20px;padding:0 14px;height:44px;background:var(--chrome-nav);border-bottom:1px solid var(--chrome-border) }\n.tbl-head__cell { font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--chrome-muted);white-space:nowrap }\n.tbl-body .tbl-row { border-radius:0;border-bottom:1px solid var(--chrome-border) }\n.tbl-body .tbl-row:last-child { border-bottom:none }\n/* shared column widths — keep header labels aligned with row cells */\n.tcol-check { flex:0 0 20px }\n.tcol-product { flex:2 1 0;min-width:0;display:flex;align-items:center;gap:12px }\n.tbl-head__cell.tcol-product { gap:0 }\n.tcol-ref { flex:1.3 1 0;min-width:0 }\n.tcol-date { flex:1.4 1 0;min-width:0 }\n.tcol-type { flex:1.2 1 0;min-width:0 }\n.tcol-status { flex:0 0 88px }\n.tcol-amt { flex:0 0 96px;text-align:right;font-variant-numeric:tabular-nums;font-weight:700 }\n/* trailing row actions — hidden until the row is hovered or keyboard-focused.\n   :has(:focus-visible), not :focus-within — a plain mouse click leaves the\n   checkbox holding focus, which would keep the row \"stuck\" showing actions. */\n.tcol-actions { flex:0 0 132px;display:flex;justify-content:flex-end;gap:18px;opacity:0;transition:opacity .12s }\n.tbl-body .tbl-row:hover .tcol-actions,.tbl-body .tbl-row.is-hover .tcol-actions,.tbl-body .tbl-row:has(:focus-visible) .tcol-actions { opacity:1 }\n.tbl-head__cell.tcol-actions { opacity:1 }\n/* hover (real + forced .is-hover) */\n.fsel:hover&gt;.fsel__input:not(:disabled),.fsel__input.is-hover:not(:disabled) { border-color:#9a9ea6 }\n.fsel:hover&gt;.fsel__input:checked:not(:disabled),.fsel__input.is-hover:checked:not(:disabled) { border-color:var(--fs-green);filter:brightness(.93) }\n/* focus (real + forced .is-focus) */\n.fsel__input:focus-visible,.fsel__input.is-focus { outline:none;box-shadow:0 0 0 4px var(--fs-ring) }\n.fsel__input:checked:focus-visible,.fsel__input.is-focus:checked { box-shadow:0 0 0 4px rgba(16,197,4,.24) }\n.selref__stage--dark .fsel:hover&gt;.fsel__input:not(:disabled),.selref__stage--dark .fsel__input.is-hover:not(:disabled),[data-theme=\"dark\"] .fsel:hover&gt;.fsel__input:not(:disabled) { border-color:#8b8e97 }",
+  "css": "/* dd-num/dd-status/dd-dot are exclusive to the Tables \"Reporting variant\" demo */\n.dd-num { text-align:left;font-variant-numeric:tabular-nums;font-weight:700 }\n.dd-status { display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:600;white-space:nowrap }\n.dd-dot { width:7px;height:7px;border-radius:50%;flex-shrink:0 }\n/* ================================================================\n   TABLES\n================================================================ */\n/* Table row — a selectable record row assembled from cells */\n.tbl-row { --tbl-hover:#f4f4f4; --tbl-checked:#e9f9ea;\n  display:flex;align-items:center;gap:20px;\n  min-height:50px;padding:0 14px;border-radius:8px;\n  background:transparent;color:var(--chrome-txt);\n  transition:background .12s,box-shadow .12s; }\n[data-theme=\"dark\"] .tbl-row { --tbl-hover:rgba(255,255,255,.05);--tbl-checked:rgba(16,197,4,.13) }\n.tbl-row.is-hover,.tbl-row:not(.is-disabled):not(.is-checked):hover { background:var(--tbl-hover) }\n.tbl-row.is-focus { background:var(--chrome-bg);box-shadow:inset 0 0 0 2px var(--chrome-txt) }\n.tbl-row.is-checked { background:var(--tbl-checked) }\n.tbl-row.is-disabled { pointer-events:none }\n/* cells */\n.tbl-cell { font-size:14px;font-weight:500;color:var(--chrome-txt);white-space:nowrap;overflow:hidden;text-overflow:ellipsis }\n.tbl-cell--check { flex:0 0 20px }\n.tbl-cell--name { flex:0 0 92px;font-weight:700 }\n.tbl-cell--col { flex:0 0 116px }\n.tbl-cell--links { margin-left:auto;display:flex;gap:22px }\n.tbl-link { color:var(--color-link);font-weight:700;font-size:14px;text-decoration:none;cursor:pointer;white-space:nowrap }\n.tbl-link:hover { text-decoration:underline }\n/* disabled dims the content */\n.tbl-row.is-disabled .tbl-cell,.tbl-row.is-disabled .tbl-link { color:var(--chrome-muted);opacity:.85 }\n.tbl-row.is-disabled .tbl-pic { filter:grayscale(1);opacity:.5 }\n/* product icon */\n.tbl-pic { width:30px;height:30px;border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#fff;font-weight:900;font-size:15px }\n.tbl-pic svg { width:17px;height:17px;display:block }\n.tbl-pic--1v { background:var(--prim-1v-500) }\n.tbl-pic--gift { background:var(--prim-sup-pink-1) }\n/* status tag */\n.tbl-tag { display:inline-flex;align-items:center;height:22px;padding:0 9px;border-radius:6px;font-size:12px;font-weight:700;white-space:nowrap;line-height:1 }\n.tbl-tag--pending { background:#e6e6e6;color:#414141 }\n.tbl-tag--success { background:#16a220;color:#fff }\n.tbl-tag--failed { background:#eb0029;color:#fff }\n[data-theme=\"dark\"] .tbl-tag--pending { background:rgba(255,255,255,.14);color:#e6e6e6 }\n.tbl-pg__stage .tbl-row { flex:1 1 auto;min-width:640px }\n.tbl-staterow&gt;.tbl-row { flex:1 1 auto }\n/* full table — header + rows */\n.tbl-wrap { border:1px solid var(--chrome-border);border-radius:14px;overflow:hidden;overflow-x:auto }\n.tbl-inner { min-width:900px }\n.tbl-head { display:flex;align-items:center;gap:20px;padding:0 14px;height:44px;background:var(--chrome-nav);border-bottom:1px solid var(--chrome-border) }\n.tbl-head__cell { font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--chrome-muted);white-space:nowrap }\n.tbl-body .tbl-row { border-radius:0;border-bottom:1px solid var(--chrome-border) }\n.tbl-body .tbl-row:last-child { border-bottom:none }\n/* shared column widths — keep header labels aligned with row cells */\n.tcol-check { flex:0 0 20px }\n.tcol-product { flex:2 1 0;min-width:0;display:flex;align-items:center;gap:12px }\n.tbl-head__cell.tcol-product { gap:0 }\n.tcol-ref { flex:1.3 1 0;min-width:0 }\n.tcol-date { flex:1.4 1 0;min-width:0 }\n.tcol-type { flex:1.2 1 0;min-width:0 }\n.tcol-status { flex:0 0 88px }\n.tcol-amt { flex:0 0 96px;text-align:right;font-variant-numeric:tabular-nums;font-weight:700 }\n/* trailing row actions — hidden until the row is hovered or keyboard-focused.\n   :has(:focus-visible), not :focus-within — a plain mouse click leaves the\n   checkbox holding focus, which would keep the row \"stuck\" showing actions. */\n.tcol-actions { flex:0 0 132px;display:flex;justify-content:flex-end;gap:18px;opacity:0;transition:opacity .12s }\n.tbl-body .tbl-row:hover .tcol-actions,.tbl-body .tbl-row.is-hover .tcol-actions,.tbl-body .tbl-row:has(:focus-visible) .tcol-actions { opacity:1 }\n.tbl-head__cell.tcol-actions { opacity:1 }\n/* hover (real + forced .is-hover) */\n.fsel:hover&gt;.fsel__input:not(:disabled),.fsel__input.is-hover:not(:disabled) { border-color:#9a9ea6 }\n.fsel:hover&gt;.fsel__input:checked:not(:disabled),.fsel__input.is-hover:checked:not(:disabled) { border-color:var(--fs-green);filter:brightness(.93) }\n/* focus (real + forced .is-focus) */\n.fsel__input:focus-visible,.fsel__input.is-focus { outline:none;box-shadow:0 0 0 4px var(--fs-ring) }\n.fsel__input:checked:focus-visible,.fsel__input.is-focus:checked { box-shadow:0 0 0 4px rgba(16,197,4,.24) }\n.selref__stage--dark .fsel:hover&gt;.fsel__input:not(:disabled),.selref__stage--dark .fsel__input.is-hover:not(:disabled),[data-theme=\"dark\"] .fsel:hover&gt;.fsel__input:not(:disabled) { border-color:#8b8e97 }",
   "usage": {
     "do": [
       "Use a table for lists of like records — transactions, stores, tickets — that users scan and compare.",
@@ -4818,8 +4869,8 @@ body.home .main{max-width:none;margin:0;padding:0}
       "Don’t mix left- and right-alignment for the same column across rows."
     ]
   },
-  "contentHash": "24ebc13c0e01c6747ad5661c0b6bd2118337308120d8654616863a2b263e78bb",
-  "note": "Static hand-authored markup — the reference table's HTML is written directly in the section, not built by JS (a separate #tbl-playground exists only for a single-row live demo). Five row states: default, hover, focused, checked, disabled."
+  "contentHash": "78d2e9b321e64d5d74b4b3531b2f0a624da44605b70dc039a711752a3f5b4304",
+  "note": "Static hand-authored markup — the reference table's HTML is written directly in the section, not built by JS (a separate #tbl-playground exists only for a single-row live demo). Five row states: default, hover, focused, checked, disabled. The Reporting variant demo (.dd-num/.dd-status/.dd-dot) was migrated from the retired Data Display section; the .dd-table-wrap/.dd-table/.dd-table__name markup it sits in is a shared spec-table utility reused across many sections and is intentionally excluded from this tab's realClasses."
 }
   </pre>
 </details>
@@ -6001,7 +6052,7 @@ body.home .main{max-width:none;margin:0;padding:0}
     <section class="sec" id="s-charts">
       <div class="sec__head">
         <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Charts <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.2</span></h1>
+        <h1 class="sec__title">Charts <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.1.0</span></h1>
         <p class="sec__desc">Lightweight, interactive data visualisations rendered as inline SVG &mdash; no charting library. Four core types cover most needs. Hover any bar, point or segment for its value; the donut pops the hovered slice and shows its share in the centre. Series and categories use the Flash colour palette (brand green, blue, purple, orange); single-series charts lead with the brand green.</p>
       </div>
       <div class="type-sub">
@@ -6021,6 +6072,73 @@ body.home .main{max-width:none;margin:0;padding:0}
         <div class="type-sub__title">Donut</div>
         <div class="type-sub__desc">Show parts of a whole. Each slice takes a colour from the Flash palette; hover a slice or its legend entry to pop it out and read its share in the centre.</div>
         <div class="sg-stage"><div class="cht" style="width:340px"><div class="cht__cap">Payment mix</div><div class="cht__sub">Share of volume by method</div><div id="cht-donut"></div><div class="cht-legend" id="cht-donut-legend"></div></div></div>
+      </div>
+      <div class="type-sub">
+        <div class="type-sub__title">Progress meters</div>
+        <div class="type-sub__desc">Labelled bars for quotas, targets and health. The fill uses the brand token by default and switches to Warning / Critical semantics as a value approaches its limit.</div>
+        <div class="dd-meters">
+          <div class="dd-meter">
+            <div class="dd-meter__top"><span class="dd-meter__label">Monthly GMV target</span><span class="dd-meter__val">R48.2M / R60M · 80%</span></div>
+            <div class="dd-meter__track"><div class="dd-meter__fill" style="width:80%;background:var(--chrome-accent)"></div></div>
+          </div>
+          <div class="dd-meter">
+            <div class="dd-meter__top"><span class="dd-meter__label">Trader onboarding</span><span class="dd-meter__val">18,930 / 25,000 · 76%</span></div>
+            <div class="dd-meter__track"><div class="dd-meter__fill" style="width:76%;background:var(--chrome-accent)"></div></div>
+          </div>
+          <div class="dd-meter">
+            <div class="dd-meter__top"><span class="dd-meter__label">Float utilisation</span><span class="dd-meter__val">88%</span></div>
+            <div class="dd-meter__track"><div class="dd-meter__fill" style="width:88%;background:var(--color-warn-h)"></div></div>
+          </div>
+          <div class="dd-meter">
+            <div class="dd-meter__top"><span class="dd-meter__label">API error budget spent</span><span class="dd-meter__val">96%</span></div>
+            <div class="dd-meter__track"><div class="dd-meter__fill" style="width:96%;background:var(--color-crit-h)"></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="type-sub">
+        <div class="type-sub__title">Distribution bar</div>
+        <div class="type-sub__desc">A single segmented bar for showing how a total splits across categories &mdash; product mix, spend by region, storage used. Segments map to semantic tokens and are paired with a legend that carries the exact figures.</div>
+        <div class="dd-break">
+          <div class="dd-break__top"><span class="dd-break__label">GMV by region</span><span class="dd-break__total">R48.2M total</span></div>
+          <div class="dd-break__bar">
+            <div class="dd-break__seg" style="width:38%;background:var(--chrome-accent)" title="Gauteng · 38%"></div>
+            <div class="dd-break__seg" style="width:24%;background:var(--color-success-h)" title="Western Cape · 24%"></div>
+            <div class="dd-break__seg" style="width:21%;background:var(--color-warn-h)" title="KwaZulu-Natal · 21%"></div>
+            <div class="dd-break__seg" style="width:17%;background:var(--chrome-muted)" title="Other regions · 17%"></div>
+          </div>
+          <div class="dd-break__legend">
+            <div class="dd-break__item"><span class="dd-break__swatch" style="background:var(--chrome-accent)"></span><span class="dd-break__k">Gauteng</span><span class="dd-break__v">38% · R18.3M</span></div>
+            <div class="dd-break__item"><span class="dd-break__swatch" style="background:var(--color-success-h)"></span><span class="dd-break__k">Western Cape</span><span class="dd-break__v">24% · R11.6M</span></div>
+            <div class="dd-break__item"><span class="dd-break__swatch" style="background:var(--color-warn-h)"></span><span class="dd-break__k">KwaZulu-Natal</span><span class="dd-break__v">21% · R10.1M</span></div>
+            <div class="dd-break__item"><span class="dd-break__swatch" style="background:var(--chrome-muted)"></span><span class="dd-break__k">Other regions</span><span class="dd-break__v">17% · R8.2M</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="type-sub">
+        <div class="type-sub__title">Distribution bars</div>
+        <div class="type-sub__desc">A ranked share-of-total breakdown for splitting a single metric across categories. Each row carries its own semantic colour, so a legend swatch, bar and percentage stay visually linked. Use it where a full chart would be overkill but a single meter can&rsquo;t show the mix.</div>
+        <div class="dd-dist">
+          <div class="dd-dist__row">
+            <div class="dd-dist__top"><span class="dd-dist__label"><span class="dd-dist__swatch" style="background:var(--chrome-accent)"></span>Airtime &amp; Data</span><span class="dd-dist__val">R14.8M · 42%</span></div>
+            <div class="dd-dist__track"><div class="dd-dist__fill" style="width:42%;background:var(--chrome-accent)"></div></div>
+          </div>
+          <div class="dd-dist__row">
+            <div class="dd-dist__top"><span class="dd-dist__label"><span class="dd-dist__swatch" style="background:var(--color-success-h)"></span>Electricity</span><span class="dd-dist__val">R11.2M · 32%</span></div>
+            <div class="dd-dist__track"><div class="dd-dist__fill" style="width:32%;background:var(--color-success-h)"></div></div>
+          </div>
+          <div class="dd-dist__row">
+            <div class="dd-dist__top"><span class="dd-dist__label"><span class="dd-dist__swatch" style="background:var(--color-warn-h)"></span>1Voucher</span><span class="dd-dist__val">R9.6M · 27%</span></div>
+            <div class="dd-dist__track"><div class="dd-dist__fill" style="width:27%;background:var(--color-warn-h)"></div></div>
+          </div>
+          <div class="dd-dist__row">
+            <div class="dd-dist__top"><span class="dd-dist__label"><span class="dd-dist__swatch" style="background:var(--color-crit-h)"></span>Gaming Vouchers</span><span class="dd-dist__val">R5.5M · 16%</span></div>
+            <div class="dd-dist__track"><div class="dd-dist__fill" style="width:16%;background:var(--color-crit-h)"></div></div>
+          </div>
+          <div class="dd-dist__row">
+            <div class="dd-dist__top"><span class="dd-dist__label"><span class="dd-dist__swatch" style="background:var(--chrome-muted)"></span>Other</span><span class="dd-dist__val">R2.9M · 8%</span></div>
+            <div class="dd-dist__track"><div class="dd-dist__fill" style="width:8%;background:var(--chrome-muted)"></div></div>
+          </div>
+        </div>
       </div>
       <div class="type-sub">
         <div class="type-sub__title">When to use</div>
@@ -6071,9 +6189,35 @@ body.home .main{max-width:none;margin:0;padding:0}
     ".cht-legend__dot",
     ".cht__tip",
     ".cht-donut-val",
-    ".cht-donut-lab"
+    ".cht-donut-lab",
+    ".dd-meters",
+    ".dd-meter",
+    ".dd-meter__top",
+    ".dd-meter__label",
+    ".dd-meter__val",
+    ".dd-meter__track",
+    ".dd-meter__fill",
+    ".dd-dist",
+    ".dd-dist__row",
+    ".dd-dist__top",
+    ".dd-dist__label",
+    ".dd-dist__swatch",
+    ".dd-dist__val",
+    ".dd-dist__track",
+    ".dd-dist__fill",
+    ".dd-break",
+    ".dd-break__top",
+    ".dd-break__label",
+    ".dd-break__total",
+    ".dd-break__bar",
+    ".dd-break__seg",
+    ".dd-break__legend",
+    ".dd-break__item",
+    ".dd-break__swatch",
+    ".dd-break__k",
+    ".dd-break__v"
   ],
-  "css": "/* ---- Chart (Flash palette + interactive) ---- */\n.cht { position:relative;border:1px solid var(--chrome-border);border-radius:14px;padding:20px 22px;background:var(--chrome-bg);width:380px;max-width:100%;\n  --c1:var(--prim-green-500);--c2:var(--prim-sup-blue-1);--c3:var(--prim-sup-purple-4);--c4:var(--prim-sup-orange-1);--c5:var(--prim-sup-pink-1) }\n.cht__cap { font-size:13px;font-weight:700;color:var(--chrome-txt);margin-bottom:2px }\n.cht__sub { font-size:11.5px;color:var(--chrome-muted);margin-bottom:16px }\n.cht svg { display:block;width:100%;height:auto;overflow:visible }\n.cht__bar { fill:var(--chrome-muted);opacity:.45;transition:fill .15s,opacity .15s;cursor:pointer }\n.cht__bar.on { fill:var(--c1);opacity:1 }\n.cht__line { fill:none;stroke:var(--c1);stroke-width:2.5;stroke-linejoin:round;stroke-linecap:round }\n.cht__area { fill:url(#chtAreaGrad) }\n.cht__dot { fill:var(--chrome-bg);stroke:var(--c1);stroke-width:2.5;transition:fill .12s }\n.cht__dot.on { fill:var(--c1) }\n.cht__hit { fill:transparent;cursor:pointer }\n.cht__axis { fill:var(--chrome-muted);font-size:10px;font-family:inherit }\n.cht__seg { transition:opacity .18s,stroke-width .18s;cursor:pointer }\n.cht svg.is-hot .cht__seg { opacity:.32 }\n.cht svg.is-hot .cht__seg.on { opacity:1 }\n.cht-legend { display:flex;flex-wrap:wrap;gap:8px 14px;margin-top:16px }\n.cht-legend__item { display:inline-flex;align-items:center;gap:7px;font-size:12px;color:var(--chrome-txt);cursor:pointer;padding:2px 5px;border-radius:6px;transition:background .12s }\n.cht-legend__item:hover { background:var(--chrome-hover) }\n.cht-legend__dot { width:10px;height:10px;border-radius:3px;flex-shrink:0 }\n.cht-donut-val { fill:var(--chrome-txt);font-weight:800 }\n.cht-donut-lab { fill:var(--chrome-muted) }\n.cht__tip { position:absolute;z-index:5;pointer-events:none;background:var(--color-surface-inverse);color:var(--color-text-inv);font-size:11.5px;font-weight:600;padding:5px 9px;border-radius:7px;white-space:nowrap;opacity:0;transform:translate(-50%,-100%);transition:opacity .12s;box-shadow:0 4px 14px rgba(0,0,0,.22) }\n.cht__tip.show { opacity:1 }\n.cht__tip b { font-weight:800 }",
+  "css": "/* ---- Chart (Flash palette + interactive) ---- */\n.cht { position:relative;border:1px solid var(--chrome-border);border-radius:14px;padding:20px 22px;background:var(--chrome-bg);width:380px;max-width:100%;\n  --c1:var(--prim-green-500);--c2:var(--prim-sup-blue-1);--c3:var(--prim-sup-purple-4);--c4:var(--prim-sup-orange-1);--c5:var(--prim-sup-pink-1) }\n.cht__cap { font-size:13px;font-weight:700;color:var(--chrome-txt);margin-bottom:2px }\n.cht__sub { font-size:11.5px;color:var(--chrome-muted);margin-bottom:16px }\n.cht svg { display:block;width:100%;height:auto;overflow:visible }\n.cht__bar { fill:var(--chrome-muted);opacity:.45;transition:fill .15s,opacity .15s;cursor:pointer }\n.cht__bar.on { fill:var(--c1);opacity:1 }\n.cht__line { fill:none;stroke:var(--c1);stroke-width:2.5;stroke-linejoin:round;stroke-linecap:round }\n.cht__area { fill:url(#chtAreaGrad) }\n.cht__dot { fill:var(--chrome-bg);stroke:var(--c1);stroke-width:2.5;transition:fill .12s }\n.cht__dot.on { fill:var(--c1) }\n.cht__hit { fill:transparent;cursor:pointer }\n.cht__axis { fill:var(--chrome-muted);font-size:10px;font-family:inherit }\n.cht__seg { transition:opacity .18s,stroke-width .18s;cursor:pointer }\n.cht svg.is-hot .cht__seg { opacity:.32 }\n.cht svg.is-hot .cht__seg.on { opacity:1 }\n.cht-legend { display:flex;flex-wrap:wrap;gap:8px 14px;margin-top:16px }\n.cht-legend__item { display:inline-flex;align-items:center;gap:7px;font-size:12px;color:var(--chrome-txt);cursor:pointer;padding:2px 5px;border-radius:6px;transition:background .12s }\n.cht-legend__item:hover { background:var(--chrome-hover) }\n.cht-legend__dot { width:10px;height:10px;border-radius:3px;flex-shrink:0 }\n.cht-donut-val { fill:var(--chrome-txt);font-weight:800 }\n.cht-donut-lab { fill:var(--chrome-muted) }\n.cht__tip { position:absolute;z-index:5;pointer-events:none;background:var(--color-surface-inverse);color:var(--color-text-inv);font-size:11.5px;font-weight:600;padding:5px 9px;border-radius:7px;white-space:nowrap;opacity:0;transform:translate(-50%,-100%);transition:opacity .12s;box-shadow:0 4px 14px rgba(0,0,0,.22) }\n.cht__tip.show { opacity:1 }\n.cht__tip b { font-weight:800 }\n/* ---- Progress meter / Distribution bars (Charts) ---- */\n.dd-meters { border:1px solid var(--chrome-border);border-radius:12px;padding:22px }\n.dd-meter { margin-bottom:18px }\n.dd-meter:last-child { margin-bottom:0 }\n.dd-meter__top { display:flex;justify-content:space-between;align-items:baseline;margin-bottom:7px }\n.dd-meter__label { font-size:12.5px;font-weight:700;color:var(--chrome-txt) }\n.dd-meter__val { font-size:12px;font-weight:700;color:var(--chrome-muted);font-variant-numeric:tabular-nums }\n.dd-meter__track { height:8px;border-radius:999px;background:var(--chrome-nav);overflow:hidden }\n.dd-meter__fill { height:100%;border-radius:999px }\n.dd-dist { border:1px solid var(--chrome-border);border-radius:12px;padding:22px }\n.dd-dist__row { margin-bottom:16px }\n.dd-dist__row:last-child { margin-bottom:0 }\n.dd-dist__top { display:flex;justify-content:space-between;align-items:baseline;margin-bottom:7px;gap:12px }\n.dd-dist__label { display:inline-flex;align-items:center;gap:8px;font-size:12.5px;font-weight:700;color:var(--chrome-txt) }\n.dd-dist__swatch { width:9px;height:9px;border-radius:3px;flex-shrink:0 }\n.dd-dist__val { font-size:12px;font-weight:700;color:var(--chrome-muted);font-variant-numeric:tabular-nums;white-space:nowrap }\n.dd-dist__track { height:10px;border-radius:999px;background:var(--chrome-nav);overflow:hidden }\n.dd-dist__fill { height:100%;border-radius:999px;transition:width .3s }\n.dd-break { border:1px solid var(--chrome-border);border-radius:12px;padding:22px }\n.dd-break__top { display:flex;justify-content:space-between;align-items:baseline;margin-bottom:11px }\n.dd-break__label { font-size:12.5px;font-weight:700;color:var(--chrome-txt) }\n.dd-break__total { font-size:12px;font-weight:700;color:var(--chrome-muted);font-variant-numeric:tabular-nums }\n.dd-break__bar { display:flex;gap:2px;height:14px;border-radius:999px;overflow:hidden;background:var(--chrome-nav) }\n.dd-break__seg { height:100%;transition:filter .15s }\n.dd-break__seg:hover { filter:brightness(1.08) }\n.dd-break__legend { display:flex;flex-wrap:wrap;gap:12px 22px;margin-top:16px }\n.dd-break__item { display:flex;align-items:center;gap:8px }\n.dd-break__swatch { width:10px;height:10px;border-radius:3px;flex-shrink:0 }\n.dd-break__k { font-size:12.5px;font-weight:700;color:var(--chrome-txt) }\n.dd-break__v { font-size:12px;font-weight:700;color:var(--chrome-muted);font-variant-numeric:tabular-nums }",
   "js": "function fmt(n){ return n&gt;=1000 ? (n/1000).toFixed(1).replace(/\\.0$/,'')+'k' : ''+n; }\n\nfunction mkTip(card){ var t=document.createElement('div'); t.className='cht__tip'; card.appendChild(t); return t; }\n\nfunction moveTip(t,card,el,html){ var r=el.getBoundingClientRect(), cr=card.getBoundingClientRect(); t.innerHTML=html; t.style.left=(r.left-cr.left+r.width/2)+'px'; t.style.top=(r.top-cr.top-8)+'px'; t.classList.add('show'); }\n\nfunction lineChart(el, data, filled){\n    var card=el.closest('.cht'), tip=mkTip(card);\n    var W=340,H=168,padT=12,padB=22,padX=10, cw=W-padX*2, ch=H-padT-padB;\n    var max=Math.max.apply(null,data.map(function(d){return d.v;})), n=data.length;\n    var xs=function(i){return padX+(n&lt;=1?0:i/(n-1)*cw);}, ys=function(v){return padT+ch-(max?v/max*ch:0);};\n    var defs='', area='';\n    if(filled){\n      defs='&lt;defs&gt;&lt;linearGradient id=\"chtAreaGrad\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"&gt;&lt;stop offset=\"0\" stop-color=\"var(--c1)\" stop-opacity=\"0.32\"/&gt;&lt;stop offset=\"1\" stop-color=\"var(--c1)\" stop-opacity=\"0\"/&gt;&lt;/linearGradient&gt;&lt;/defs&gt;';\n      var d='M '+xs(0).toFixed(1)+','+(padT+ch).toFixed(1);\n      data.forEach(function(dd,i){ d+=' L '+xs(i).toFixed(1)+','+ys(dd.v).toFixed(1); });\n      d+=' L '+xs(n-1).toFixed(1)+','+(padT+ch).toFixed(1)+' Z'; area='&lt;path class=\"cht__area\" d=\"'+d+'\"/&gt;';\n    }\n    var pts=data.map(function(dd,i){return xs(i).toFixed(1)+','+ys(dd.v).toFixed(1);}).join(' ');\n    var dots=data.map(function(dd,i){return '&lt;circle class=\"cht__dot\" data-i=\"'+i+'\" cx=\"'+xs(i).toFixed(1)+'\" cy=\"'+ys(dd.v).toFixed(1)+'\" r=\"3.5\"/&gt;';}).join('');\n    var hits=data.map(function(dd,i){ var x0=i===0?0:(xs(i-1)+xs(i))/2, x1=i===n-1?W:(xs(i)+xs(i+1))/2;\n      return '&lt;rect class=\"cht__hit\" data-i=\"'+i+'\" x=\"'+x0.toFixed(1)+'\" y=\"0\" width=\"'+(x1-x0).toFixed(1)+'\" height=\"'+(padT+ch).toFixed(1)+'\"/&gt;'; }).join('');\n    var labs=data.map(function(dd,i){return '&lt;text class=\"cht__axis\" x=\"'+xs(i).toFixed(1)+'\" y=\"'+(H-7)+'\" text-anchor=\"middle\"&gt;'+dd.label+'&lt;/text&gt;';}).join('');\n    el.innerHTML='&lt;svg viewBox=\"0 0 '+W+' '+H+'\" role=\"img\" aria-label=\"Line chart\"&gt;'+defs+area+'&lt;polyline class=\"cht__line\" points=\"'+pts+'\"/&gt;'+dots+labs+hits+'&lt;/svg&gt;';\n    var dotEls=el.querySelectorAll('.cht__dot');\n    Array.prototype.forEach.call(el.querySelectorAll('.cht__hit'),function(h){ var i=+h.getAttribute('data-i'), dot=dotEls[i];\n      h.addEventListener('mouseenter',function(){ dot.classList.add('on'); dot.setAttribute('r','5.5'); moveTip(tip,card,dot,'&lt;b&gt;'+data[i].v+'&lt;/b&gt; &amp;middot; '+data[i].label); });\n      h.addEventListener('mouseleave',function(){ dot.classList.remove('on'); dot.setAttribute('r','3.5'); tip.classList.remove('show'); });\n    });\n  }",
   "usage": {
     "do": [
@@ -6087,8 +6231,8 @@ body.home .main{max-width:none;margin:0;padding:0}
       "Don’t truncate a value axis in a way that exaggerates differences."
     ]
   },
-  "contentHash": "0daa6ad7e5880e4d08371f295b6f68bdc0d5587bf45cb5da3dd327bf15aaddbe",
-  "note": "fmt/mkTip/moveTip/lineChart are the only named builder functions; the Bar and Donut renderers are inline logic directly inside the same anonymous IIFE (keyed off document.getElementById('cht-bar')/('cht-donut') guards) rather than separately named functions, so they aren't individually extractable by identifier — reconstruct them from this file's live JS if reskinning bar/donut specifically. All series colours ride --c1..--c5 (Flash palette), not hardcoded hex."
+  "contentHash": "b387d27450af5c82c5ca0d5a14b7fbe64d174475271ccd291066f52ab6249516",
+  "note": "fmt/mkTip/moveTip/lineChart are the only named builder functions; the Bar and Donut renderers are inline logic directly inside the same anonymous IIFE (keyed off document.getElementById('cht-bar')/('cht-donut') guards) rather than separately named functions, so they aren't individually extractable by identifier. Progress meters and both distribution-bar patterns (.dd-meter*/.dd-dist*/.dd-break*) were migrated from the retired Data Display section and are static hand-authored markup, unlike Bar/Line/Donut which are JS-rendered SVG. All series colours ride --c1..--c5 (Flash palette), not hardcoded hex."
 }
   </pre>
 </details>
@@ -10454,12 +10598,24 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.46.0';
+const SYSTEM_VERSION = '1.47.0';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.47.0', date:'2026-08-04', author:'Mo', title:'Empty state split out of Lists into its own section', changes:[
+        ['added','New Empty State section (s-empty-state) — a dashed-border card with a muted glyph, title, explanation and one primary action, plus its own When to use guidance'],
+        ['removed','Empty state removed from the Lists section; Lists now covers only Key–value list and Activity timeline'],
+      ]},
+      {version:'1.45.5', date:'2026-08-04', author:'Mo', title:'Data Display retired — its patterns moved into the sections they actually belong to', changes:[
+        ['removed','Data Display section (s-data) removed entirely; every pattern it held moved into the component section it best fits, so nothing about the content itself was lost'],
+        ['changed','Stat tiles moved into Cards as a new "Stat tiles" variant'],
+        ['changed','Data table moved into Tables as a new "Reporting variant" (a denser, plain-table style alongside the flex-row Table Row)'],
+        ['changed','Progress meters and both distribution-bar patterns (segmented "Distribution bar" and ranked "Distribution bars") moved into Charts, alongside Bar/Line/Donut'],
+        ['changed','Filter chips moved into Chips & Pills\' Overview tab, next to the existing In-context examples'],
+        ['added','New Lists section (s-lists) created to hold Key–value list and Activity timeline — patterns with no other existing home'],
+      ]},
       {version:'1.46.0', date:'2026-08-04', author:'Mo', title:'Added Chart Colours and a reduced-opacity companion set to the Colours page', changes:[
         ['added','"Chart Colours" primitive family — the same 15-colour Category Colours identity set, presented as its own named palette for chart/data-viz series so consumers don\'t have to reach into category-specific naming for a chart default'],
         ['added','"Chart Colours — Desaturated" secondary family — each Chart Colours swatch rendered at 45% opacity (new CHART_DESAT_OPACITY, via a hexToRgba() helper) rather than a greyed-out HSL desaturation, matching the existing "dim the rest" treatment .cht__seg already uses on chart hover (opacity:.32) instead of inventing a second visual language for the same idea'],
@@ -11126,7 +11282,12 @@ const CHANGELOG = {
     ]
   },
   components: [
-    {secId:'s-charts', name:'Charts', version:'1.0.2', entries:[
+    {secId:'s-charts', name:'Charts', version:'1.1.0', entries:[
+      {version:'1.1.0', date:'2026-08-04', author:'Mo', title:'Progress meters and distribution bars added, migrated from Data Display', changes:[
+        ['added','Progress meters — labelled bars for quotas/targets/health, brand fill switching to Warning/Critical semantics near a limit'],
+        ['added','Distribution bar — a single segmented bar with a figure-carrying legend, for splitting a total across categories'],
+        ['added','Distribution bars — a ranked, share-of-total breakdown, one bar per category with its own semantic colour'],
+      ]},
       {version:'1.0.2', date:'2026-08-03', author:'Mo', title:'AI context tab added', changes:[
         ['added','AI context tab documenting the real .cht/.cht__*/.cht-legend*/.cht__tip structural classes and the fmt/mkTip/moveTip/lineChart builders, plus its existing "When to use" Do/Dont guidance (3 do / 3 dont); notes the Bar and Donut renderers are inline in the IIFE with no separately named builder to extract'],
       ]},
@@ -11537,7 +11698,10 @@ const CHANGELOG = {
         ['added','“Tag or Chip?” guidance clarifying when to use each'],
       ]},
     ]},
-    {secId:'s-chips', name:'Chips & Pills', version:'1.14.2', entries:[
+    {secId:'s-chips', name:'Chips & Pills', version:'1.16.0', entries:[
+      {version:'1.16.0', date:'2026-08-04', author:'Mo', title:'Filter chips added, migrated from Data Display', changes:[
+        ['added','Filter chips — removable chips summarising active table/list filters plus a "Clear all" action — added to the Overview tab, next to the existing In-context examples'],
+      ]},
       {version:'1.14.2', date:'2026-08-04', author:'Helen', title:'Page layout promoted to a shared pattern so Switch could reuse it — no visual change here', changes:[
         ['changed','This page\'s layout CSS is no longer scoped to #s-chips; it now opts into the shared .sec--tabbed pattern, which Switch also uses. Purely a refactor — measure, title size, hero, tab strip, section blocks, playground layout and Style-tab rhythm were all verified unchanged in light and dark'],
         ['changed','The documentation furniture this page introduced was renamed to a neutral vocabulary now that it is shared (.chip-variant-cell→.spec-cell, .chip-mock*→.spec-mock*, .chip-part*→.spec-part*, .chip-size-*→.spec-size-*, .chip-tok-*→.spec-tok-*, .chip-variants-grid→.spec-grid, .chip-spec-hero→.spec-hero, .chip-hero→.sec-hero, .chip-header-meta→.sec-header-meta, .chip-tabs→.sec-tabs). Genuinely chip-specific rules (.chip, .chip-ref*) keep their names'],
@@ -11702,7 +11866,10 @@ const CHANGELOG = {
         ['added','Light & dark mode reference grid, shown side by side'],
       ]},
     ]},
-    {secId:'s-cards', name:'Cards', version:'1.0.1', entries:[
+    {secId:'s-cards', name:'Cards', version:'1.1.0', entries:[
+      {version:'1.1.0', date:'2026-08-04', author:'Mo', title:'Stat tiles added, migrated from Data Display', changes:[
+        ['added','Stat tiles — headline KPI card variant with a label, value and trend delta (Success / Critical semantics)'],
+      ]},
       {version:'1.0.1', date:'2026-07-29', author:'Mo', title:'Added an AI context tab', changes:[
         ['added','Collapsed "AI context" disclosure documenting the real, fully static .card/.card__*/.card-btn markup'],
       ]},
@@ -11828,34 +11995,27 @@ const CHANGELOG = {
         ['added','Interactive playground with real open/select/close, click-outside and Escape-to-dismiss behaviour'],
       ]},
     ]},
-    {secId:'s-data', name:'Data Display', version:'1.3.3', entries:[
-      {version:'1.3.3', date:'2026-07-22', author:'Mo', title:'Data table — all columns left-aligned', changes:[
-        ['changed','Volume and Value columns are now left-aligned like the rest of the table, instead of right-aligned'],
+    {secId:'s-lists', name:'Lists', version:'1.1.0', entries:[
+      {version:'1.1.0', date:'2026-08-04', author:'Mo', title:'Empty state moved out into its own section', changes:[
+        ['removed','Empty state — moved out to a new, dedicated Empty State section (s-empty-state); it wasn\'t really list-shaped and reads clearer as its own component'],
+        ['changed','Section description and When to use guidance updated to cover only Key–value list and Activity timeline'],
       ]},
-      {version:'1.3.2', date:'2026-07-22', author:'Mo', title:'Data table — header alignment fix', changes:[
-        ['fixed','"Volume" and "Value" header cells were left-aligned while their numeric columns were right-aligned; headers now right-align to match'],
-      ]},
-      {version:'1.3.1', date:'2026-07-22', author:'Mo', title:'Empty state — "Clear filters" now uses the Primary button style', changes:[
-        ['fixed','"Clear filters" button in the empty state was hardcoded to brand green (bypassing the Buttons variant system entirely); it now matches the Primary variant — black/white in light mode, white/black in dark mode'],
-      ]},
-      {version:'1.3.0', date:'2026-07-06', author:'Helen', title:'Filter chips', changes:[
-        ['added','Filter chips — removable chips summarising active filters, sharing tokens with Chips & Pills'],
-      ]},
-      {version:'1.2.0', date:'2026-07-06', author:'Person A', title:'Distribution bar', changes:[
-        ['added','Distribution bar — segmented bar with semantic-token segments and a figure-carrying legend'],
-      ]},
-      {version:'1.1.0', date:'2026-07-03', author:'Mo', title:'Timeline & empty state', changes:[
+      {version:'1.0.0', date:'2026-08-04', author:'Mo', title:'Initial release — split out of the retired Data Display section', changes:[
+        ['added','Lists section (s-lists) created to hold the patterns from Data Display that had no better-fitting existing home: Key–value list, Activity timeline and Empty state, plus When to use guidance'],
+        ['added','Key–value list — definition rows for detail panels and record summaries, stacking on mobile'],
         ['added','Activity timeline — chronological event feed with semantic-coloured nodes'],
         ['added','Empty state — muted glyph, plain-language explanation and a single primary action'],
       ]},
-      {version:'1.0.0', date:'2026-07-03', author:'Mo', title:'Initial release', changes:[
-        ['added','Stat tiles with trend deltas (Success / Critical semantics)'],
-        ['added','Data table with uppercase header, tabular numerics, hover rows and status dots'],
-        ['added','Key–value list for detail panels, stacking on mobile'],
-        ['added','Progress meters with brand / Warning / Critical fills'],
+    ]},
+    {secId:'s-empty-state', name:'Empty State', version:'1.0.0', entries:[
+      {version:'1.0.0', date:'2026-08-04', author:'Mo', title:'Initial release — split out of Lists into its own section', changes:[
+        ['added','Empty State section (s-empty-state) — a dashed-border card with a muted glyph, title, short explanation and one primary action, plus When to use guidance'],
       ]},
     ]},
-    {secId:'s-tables', name:'Tables', version:'1.1.3', entries:[
+    {secId:'s-tables', name:'Tables', version:'1.2.0', entries:[
+      {version:'1.2.0', date:'2026-08-04', author:'Mo', title:'Reporting variant added, migrated from Data Display', changes:[
+        ['added','Reporting variant — a denser, plain-table style with an uppercase header, tabular numerics, hover rows and a status dot, alongside the flex-row Table Row'],
+      ]},
       {version:'1.1.3', date:'2026-07-29', author:'Mo', title:'AI context tab regenerated with usage guidance', changes:[
         ['added','AI context tab now includes blob.usage {do,dont} auto-extracted from the section\'s own Hierarchy/Do-Dont guidance cards (4 do / 4 dont)'],
       ]},
@@ -13473,7 +13633,8 @@ const NAV = [
       {id:'s-avatar',       label:'Avatar',              desc:'User and brand identity marks.'},
       {id:'s-cards',        label:'Cards',               desc:'Flexible containers for grouped content.'},
       {id:'s-charts',       label:'Charts',              desc:'Data visualisation with brand-styled charts.'},
-      {id:'s-data',         label:'Data Display',        desc:'Stat tiles and key-value lists.'},
+      {id:'s-empty-state',  label:'Empty State',         desc:'Muted glyph, explanation and a primary action.'},
+      {id:'s-lists',        label:'Lists',               desc:'Key-value lists and activity timelines.'},
       {id:'s-separator',    label:'Separator',           desc:'Dividers between content groups.'},
       {id:'s-tables',       label:'Tables',              desc:'Structured, selectable data tables.'},
       {id:'s-tags',         label:'Tags & Badges',       desc:'Labels, counts and status markers.'},
@@ -13532,11 +13693,12 @@ const MOCKS = {
   's-chips': '<div class="mk"><span class="mk-chip"><span class="mk-dot"></span>Active</span><span class="mk-chip">Label</span><span class="mk-chip">Filter</span></div>',
   's-command': '<div class="mk-card" style="width:80%;padding:11px 13px;display:flex;align-items:center;gap:9px"><span class="mk-glyph" style="width:16px;height:16px;color:var(--chrome-muted)">'+iconSvg('search')+'</span><span class="mk-bar" style="flex:1"></span><span class="mk-key">⌘K</span></div>',
   's-context-menu': '<div class="mk-card" style="width:60%;padding:7px"><div style="display:flex;flex-direction:column;gap:3px">'+['70%','90%','55%'].map(function(w,i){return '<span style="display:flex;align-items:center;gap:8px;padding:7px 9px;border-radius:6px;'+(i===1?'background:var(--chrome-hover)':'')+'"><span class="mk-bar" style="width:'+w+'"></span></span>';}).join('')+'</div></div>',
-  's-data': '<div class="mk"><div class="mk-card" style="width:40%;padding:11px;display:flex;flex-direction:column;gap:7px"><span class="mk-bar" style="width:60%"></span><span class="mk-bar mk-bar--txt" style="width:45%;height:14px"></span></div><div class="mk-card" style="width:40%;padding:11px;display:flex;flex-direction:column;gap:7px"><span class="mk-bar" style="width:60%"></span><span class="mk-bar mk-bar--brand" style="width:45%;height:14px"></span></div></div>',
   's-dropdown': '<div class="mk mk-col" style="gap:7px"><div class="mk-card" style="width:70%;padding:9px 12px;display:flex;justify-content:space-between;align-items:center"><span class="mk-bar" style="width:55px"></span><span style="color:var(--chrome-muted)">▾</span></div><div class="mk-card" style="width:70%;padding:6px"><div style="display:flex;flex-direction:column;gap:4px"><span style="padding:6px 8px;border-radius:5px;background:var(--chrome-hover)"><span class="mk-bar" style="width:70%"></span></span><span style="padding:6px 8px;display:block"><span class="mk-bar" style="width:50%"></span></span></div></div></div>',
+  's-empty-state': '<div class="mk-card" style="width:56%;padding:18px 12px;display:flex;flex-direction:column;align-items:center;gap:8px;border-style:dashed"><span class="mk-circle" style="width:26px;height:26px;background:var(--chrome-border)"></span><span class="mk-bar mk-bar--txt" style="width:70%"></span><span class="mk-bar" style="width:50%"></span></div>',
   's-hover-card': '<div class="mk-card" style="width:72%;padding:12px;display:flex;gap:10px"><span class="mk-circle" style="width:38px;height:38px;background:var(--color-brand)"></span><div style="flex:1;display:flex;flex-direction:column;gap:6px"><span class="mk-bar mk-bar--txt" style="width:55%"></span><span class="mk-bar" style="width:90%"></span><span class="mk-bar" style="width:75%"></span></div></div>',
   's-input-otp': '<div class="mk-otp"><span class="on">4</span><span class="on">2</span><span></span><span></span></div>',
   's-kbd': '<div class="mk"><span class="mk-key">⌘</span><span style="color:var(--chrome-muted);font-weight:800">+</span><span class="mk-key">K</span></div>',
+  's-lists': '<div class="mk-card" style="width:62%;padding:11px;display:flex;flex-direction:column;gap:8px">'+['48%','62%','40%'].map(function(w){return '<div style="display:flex;justify-content:space-between;gap:10px"><span class="mk-bar" style="width:34%"></span><span class="mk-bar mk-bar--txt" style="width:'+w+'"></span></div>';}).join('')+'</div>',
   's-nav': '<div class="mk-card" style="width:58%;padding:9px"><div style="display:flex;flex-direction:column;gap:4px">'+[0,1,2,3].map(function(i){return '<span style="display:flex;align-items:center;gap:9px;padding:7px 8px;border-radius:6px;'+(i===1?'background:var(--chrome-hover)':'')+'"><span class="mk-sq" style="width:14px;height:14px;'+(i===1?'background:var(--color-brand)':'')+'"></span><span class="mk-bar" style="flex:1"></span></span>';}).join('')+'</div></div>',
   's-pagination': '<div class="mk"><span class="mk-key" style="border-bottom-width:1px">‹</span><span class="mk-key" style="border-bottom-width:1px;background:var(--chrome-txt);color:var(--chrome-bg);border-color:var(--chrome-txt)">1</span><span class="mk-key" style="border-bottom-width:1px">2</span><span class="mk-key" style="border-bottom-width:1px">3</span><span class="mk-key" style="border-bottom-width:1px">›</span></div>',
   's-popover': '<div class="mk-card" style="width:66%;padding:12px;position:relative;display:flex;flex-direction:column;gap:7px"><span class="mk-bar mk-bar--txt" style="width:50%"></span><span class="mk-bar" style="width:95%"></span><span class="mk-bar" style="width:80%"></span><span style="position:absolute;left:50%;bottom:-7px;transform:translateX(-50%);width:0;height:0;border:7px solid transparent;border-top-color:var(--chrome-bg);border-bottom:0"></span></div>',
