@@ -989,18 +989,15 @@ body.home .bar__inner{max-width:1366px;margin:0 auto}
    tablist (arrow-key navigable) rather than a row of unlabelled buttons. */
 .code-seg{display:flex;gap:2px;background:var(--chrome-bg);border:1px solid var(--chrome-border);border-radius:8px;padding:3px;transition:background .25s,border-color .25s}
 .code-seg__btn{
-  display:inline-flex;align-items:center;gap:6px;
+  display:inline-flex;align-items:center;
   padding:5px 12px;border-radius:6px;border:none;cursor:pointer;
-  font-family:inherit;font-size:11.5px;font-weight:600;white-space:nowrap;
+  font-family:'Satoshi Variable','Satoshi',sans-serif;font-feature-settings:'ss01' 1,'ss03' 1;
+  font-size:11.5px;font-weight:600;white-space:nowrap;
   color:var(--chrome-muted);background:transparent;transition:all .15s;
 }
 .code-seg__btn:hover{color:var(--chrome-txt)}
 .code-seg__btn[aria-selected="true"]{background:var(--chrome-txt);color:var(--chrome-bg)}
 .code-seg__btn:focus-visible{outline:2px solid var(--color-input-focus);outline-offset:2px}
-/* Language dot — a quiet colour cue so each tab is identifiable at a glance,
-   not just by reading the label. Inherits the active tab's inverted text colour. */
-.code-seg__dot{width:6px;height:6px;border-radius:999px;background:var(--_dot);flex-shrink:0;transition:background .15s}
-.code-seg__btn[aria-selected="true"] .code-seg__dot{background:currentColor}
 .code-lang-file{
   margin-left:auto;font-family:'SF Mono','Fira Code',Consolas,monospace;
   font-size:11px;color:var(--chrome-muted);white-space:nowrap;
@@ -3529,7 +3526,7 @@ body.home .main{max-width:none;margin:0;padding:0}
       <div class="sec__head">
         <h1 class="sec__title">Chips and pills</h1>
         <div class="chip-header-meta">
-          <span class="comp-ver-badge" style="margin-left:0">v1.14.0</span>
+          <span class="comp-ver-badge" style="margin-left:0">v1.14.1</span>
           <details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-chips">
@@ -9038,12 +9035,11 @@ function getChipCodeHTML(){
 /* ── CODE PANEL LANGUAGES ──
    HTML/CSS is the source of truth (real .chip markup). Blazor and React TSX are
    illustrative wrappers over the same classes and the same --chip-bg/--chip-text
-   custom props, so the variant colour map stays the single thing a consumer ports.
-   dot = the language's own identity colour, used only as a scanning cue. */
+   custom props, so the variant colour map stays the single thing a consumer ports. */
 const CHIP_LANGS = [
-  {key:'html',   label:'HTML / CSS', file:'chip.html',    dot:'#E34F26'},
-  {key:'blazor', label:'Blazor',     file:'DsChip.razor', dot:'#512BD4'},
-  {key:'tsx',    label:'React TSX',  file:'DsChip.tsx',   dot:'#3178C6'},
+  {key:'html',   label:'HTML / CSS', file:'chip.html'},
+  {key:'blazor', label:'Blazor',     file:'DsChip.razor'},
+  {key:'tsx',    label:'React TSX',  file:'DsChip.tsx'},
 ];
 let chipLang = 'html';
 
@@ -9310,7 +9306,7 @@ function renderChipCodeTab(){
       <div class="code-panel code-panel--bare open">
         <div class="code-panel__head">
           <div class="code-seg" role="tablist" aria-label="Code language" onkeydown="chipLangKeydown(event)">
-            ${CHIP_LANGS.map(l=>`<button type="button" role="tab" class="code-seg__btn" id="chip-lang-${l.key}" data-lang="${l.key}" aria-selected="${chipLang===l.key?'true':'false'}" aria-controls="cpg-code-block" tabindex="${chipLang===l.key?'0':'-1'}" onclick="setChipLang('${l.key}')"><span class="code-seg__dot" style="--_dot:${l.dot}"></span>${l.label}</button>`).join('')}
+            ${CHIP_LANGS.map(l=>`<button type="button" role="tab" class="code-seg__btn" id="chip-lang-${l.key}" data-lang="${l.key}" aria-selected="${chipLang===l.key?'true':'false'}" aria-controls="cpg-code-block" tabindex="${chipLang===l.key?'0':'-1'}" onclick="setChipLang('${l.key}')">${l.label}</button>`).join('')}
           </div>
           <span class="code-lang-file" id="chip-lang-file">${(CHIP_LANGS.find(l=>l.key===chipLang)||CHIP_LANGS[0]).file}</span>
           <button class="code-copy-btn" onclick="cpgCopyCode()" id="cpg-copy-btn">Copy</button>
@@ -9845,12 +9841,16 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.42.0';
+const SYSTEM_VERSION = '1.42.1';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.42.1', date:'2026-08-04', author:'Helen', title:'Cleaned up the Chips code language switcher — no dots, correct typeface on the tab labels', changes:[
+        ['removed','.code-seg__dot per-language colour dots — read as decorative noise rather than a meaningful cue; the label text already identifies each language'],
+        ['fixed','.code-seg__btn (the HTML/CSS · Blazor · React TSX tab labels) was left on font-family:inherit instead of explicitly setting the brand typeface — now sets \'Satoshi Variable\',\'Satoshi\',sans-serif with the ss01/ss03 stylistic-alternate feature settings used sitewide. .code-lang-file (the "chip.html" filename hint) intentionally keeps its monospace stack — a filename reads better as code'],
+      ]},
       {version:'1.42.0', date:'2026-08-04', author:'Helen', title:'Chips & Pills Code tab gains Blazor and React TSX output behind a new segmented language switcher', changes:[
         ['added','getChipCodeBlazor() and getChipCodeTSX() — DsChip.razor and DsChip.tsx samples alongside the existing HTML/CSS, both wrapping the same real .chip/.chip--{size}/.chip__label/.chip__x classes and the same --chip-bg/--chip-text custom props, so the variant colour map is the only thing a consumer ports. Both track every Playground control (variant, size, icon, removable, selectable, label) live'],
         ['added','New .code-seg segmented control for picking a code language — a real WAI-ARIA tablist (single tab stop, Left/Right/Home/End navigation, aria-selected/aria-controls) reusing the filled-active idiom of .btn-pg__pill-row, plus a per-language identity dot and a monospace filename hint (chip.html / DsChip.razor / DsChip.tsx) so the active target is readable at a glance'],
@@ -10852,10 +10852,14 @@ const CHANGELOG = {
         ['added','“Tag or Chip?” guidance clarifying when to use each'],
       ]},
     ]},
-    {secId:'s-chips', name:'Chips & Pills', version:'1.14.0', entries:[
+    {secId:'s-chips', name:'Chips & Pills', version:'1.14.1', entries:[
+      {version:'1.14.1', date:'2026-08-04', author:'Helen', title:'Removed the language dots from the Code tab switcher, fixed its typeface', changes:[
+        ['removed','The colour dot next to each language tab (HTML/CSS · Blazor · React TSX) — the label text alone is enough to identify each, and the dot read as decorative noise'],
+        ['fixed','The language tab labels were left on font-family:inherit instead of the brand typeface — now explicitly \'Satoshi Variable\'/\'Satoshi\' with the sitewide ss01/ss03 stylistic alternates. The "chip.html"-style filename hint keeps its monospace font, unchanged'],
+      ]},
       {version:'1.14.0', date:'2026-08-04', author:'Helen', title:'Code tab now offers Blazor and React TSX alongside HTML/CSS', changes:[
         ['added','Blazor (DsChip.razor) and React TSX (DsChip.tsx) versions of the snippet, matching the three-language set already on Buttons. Both build on the same real .chip classes and --chip-bg/--chip-text custom props as the HTML, and update live as you change variant, size, icon, dismiss, behaviour or label in the Playground'],
-        ['added','A segmented language switcher replaces the old "View code" label row — each language carries a small identity dot and the filename it maps to (chip.html, DsChip.razor, DsChip.tsx), so you can tell at a glance which file you\'re looking at. Fully keyboard operable: one tab stop, then arrow keys (or Home/End) to move between languages'],
+        ['added','A segmented language switcher replaces the old "View code" label row — each language shows the filename it maps to (chip.html, DsChip.razor, DsChip.tsx), so you can tell at a glance which file you\'re looking at. Fully keyboard operable: one tab stop, then arrow keys (or Home/End) to move between languages'],
         ['added','The Muted variant now carries a note in the Blazor/TSX samples flagging that it is the one variant whose fill differs between light and dark, rather than silently emitting only the current theme\'s hex'],
         ['fixed','Removed the grey bar across the top of the code section — the panel was painting its own --chrome-nav fill inside the bordered outline card, which read as a stray band above the snippet'],
       ]},
