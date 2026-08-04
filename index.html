@@ -109,6 +109,7 @@
   --chrome-accent-text:var(--prim-green-800);
   --chrome-txt:var(--prim-black); --chrome-muted:var(--prim-grey-900);
   --chrome-border:var(--prim-grey-400); --chrome-hover:rgba(0,0,0,0.04);
+  --chrome-active:rgba(0,0,0,0.08);
 }
 /* ================================================================
    FLASH · DARK
@@ -143,6 +144,7 @@
   --chrome-accent-text:var(--prim-green-500);
   --chrome-txt:var(--prim-white); --chrome-muted:var(--prim-grey-400);
   --chrome-border:var(--prim-gb-425); --chrome-hover:rgba(255,255,255,0.05);
+  --chrome-active:rgba(255,255,255,0.10);
 }
 /* ================================================================
    FLASH DARK (reserved)
@@ -211,12 +213,18 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;font-feature-
 .layout{display:flex;min-height:calc(100vh - 52px)}
 
 /* Sidebar */
-.sidebar{width:210px;flex-shrink:0;background:var(--chrome-nav);border-right:1px solid var(--chrome-border);position:sticky;top:52px;height:calc(100vh - 52px);overflow-y:auto;padding:20px 0;transition:background .25s}
-.sb-cat{display:flex;align-items:center;gap:8px;font-size:12.5px;font-weight:800;letter-spacing:0;color:var(--chrome-txt);padding:0 16px;margin:18px 0 5px}
+.sidebar{width:252px;flex-shrink:0;background:var(--chrome-nav);border-right:1px solid var(--chrome-border);position:sticky;top:52px;height:calc(100vh - 52px);overflow-y:auto;padding:26px 0 40px;transition:background .25s}
+.sb-cat{display:flex;align-items:center;gap:8px;font-size:15px;font-weight:800;letter-spacing:-.01em;color:var(--chrome-txt);padding:0 20px;margin:26px 0 6px}
 .sb-cat:first-child,.sb-group:first-child .sb-cat{margin-top:0}
-.sb-link{display:flex;align-items:center;gap:8px;padding:7px 16px;font-size:12.5px;font-weight:500;color:var(--chrome-muted);text-decoration:none;border-left:2px solid transparent;transition:all .15s}
+.sb-link{display:flex;align-items:center;gap:8px;padding:10px 16px 10px 34px;font-size:14px;font-weight:600;color:var(--chrome-muted);text-decoration:none;border-left:3px solid transparent;transition:background .15s,color .15s,border-color .15s}
 .sb-link:hover{color:var(--chrome-txt);background:var(--chrome-hover)}
-.sb-link.on{color:var(--chrome-txt);border-left-color:var(--chrome-accent);background:var(--chrome-hover);font-weight:700}
+.sb-link.on{color:var(--chrome-txt);border-left-color:var(--chrome-accent);background:var(--chrome-active);font-weight:800}
+/* Trailing chevron — signals the row drills into a section (muted until hover/active) */
+.sb-link__chev{margin-left:auto;width:11px;height:11px;flex-shrink:0;color:var(--chrome-muted);opacity:.5;transition:opacity .15s,color .15s}
+.sb-link__chev svg{width:100%;height:100%;display:block;fill:currentColor}
+.sb-link:hover .sb-link__chev,.sb-link.on .sb-link__chev{opacity:1;color:var(--chrome-txt)}
+/* A top-level destination with no category of its own (Changelog) */
+.sb-link--top{padding-left:20px;margin-top:26px;font-size:15px;font-weight:800;color:var(--chrome-txt)}
 .sb-icon{width:15px;height:15px;flex-shrink:0;color:var(--chrome-muted);transition:color .15s}
 .sb-link:hover .sb-icon{color:var(--chrome-txt)}
 .sb-link.on .sb-icon{color:var(--chrome-accent-text)}
@@ -226,7 +234,7 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;font-feature-
 .sb-cat--toggle:hover{color:var(--chrome-accent-text)}
 .sb-cat--toggle.on{color:var(--chrome-accent-text)}
 .sb-cat--toggle:focus-visible{outline:2px solid var(--color-input-focus);outline-offset:-2px;border-radius:4px}
-.sb-cat__caret{width:10px;height:10px;flex-shrink:0;color:var(--chrome-muted);transition:transform .2s}
+.sb-cat__caret{width:12px;height:12px;flex-shrink:0;color:var(--chrome-muted);transition:transform .2s}
 .sb-cat__caret svg{width:100%;height:100%;display:block;fill:currentColor}
 .sb-cat--toggle[aria-expanded="true"] .sb-cat__caret{transform:rotate(180deg)}
 .sb-group__items{display:none}
@@ -294,7 +302,7 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;font-feature-
 .mk-key{min-width:30px;height:30px;padding:0 8px;border-radius:7px;border:1px solid var(--chrome-border);border-bottom-width:3px;background:var(--chrome-bg);font:800 13px 'Satoshi',sans-serif;color:var(--chrome-txt);display:inline-flex;align-items:center;justify-content:center}
 .mk-tip{position:relative;background:var(--chrome-txt);color:var(--chrome-bg);font:700 11px 'Satoshi',sans-serif;padding:7px 11px;border-radius:8px}
 .mk-tip::after{content:'';position:absolute;left:50%;bottom:-5px;transform:translateX(-50%);border:5px solid transparent;border-top-color:var(--chrome-txt);border-bottom:0}
-.sb-tag{margin-left:auto;font-size:9.5px;padding:1px 6px;border-radius:10px;background:var(--chrome-border);color:var(--chrome-muted);white-space:nowrap}
+.sb-tag{font-size:10px;padding:2px 7px;border-radius:10px;background:var(--chrome-border);color:var(--chrome-muted);white-space:nowrap}
 
 /* Main */
 /* auto side margins centre the content in the space beside the flush-left sidebar */
@@ -9840,12 +9848,22 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.44.0';
+const SYSTEM_VERSION = '1.45.0';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.45.0', date:'2026-08-04', author:'Jaco', title:'Sidebar restyled with more breathing room, larger type and a clearer active row; About heading dropped', changes:[
+        ['removed','The About category heading — Changelog is now a standalone top-level link at the bottom of the sidebar (new .sb-link--top: category-level size and weight, no indent, 26px above it). A NAV group with neither cat nor landing renders this way'],
+        ['changed','Sidebar sizing opened up to match the density of references like Uber Base — sidebar 210px → 252px wide, category headings 12.5px → 15px, nav links 12.5px → 14px at weight 600, row padding 7px → 10px with a 34px indent under each heading, and 26px between groups (was 18px)'],
+        ['changed','The active nav row is much clearer: fill moved from --chrome-hover (4% / 5% alpha, near-invisible) to a new --chrome-active token (8% black in light, 10% white in dark), the left accent bar went 2px → 3px, and the label now sits at weight 800'],
+        ['added','--chrome-active semantic token in both the light and dark chrome blocks, for a selected row that needs to read as distinct from a hover'],
+        ['added','A trailing chevron on every sidebar row (.sb-link__chev), muted at 50% opacity and brightening to full on hover or when active, signalling that the row drills into a section'],
+        ['added','sbLinkHTML() — one helper building every sidebar row (label, optional Soon tag, chevron, optional modifier class), replacing the three places that hand-assembled .sb-link markup'],
+        ['changed','.sb-tag no longer uses margin-left:auto — the trailing chevron now takes that role, so a Soon tag sits directly beside its label instead of splitting the free space with the chevron'],
+        ['fixed','navSearchIndex fell over on a NAV group with no cat (navSearchMatch() calls .toLowerCase() on it) — now falls back to an empty string, which the Changelog entry needs since it no longer sits under About'],
+      ]},
       {version:'1.44.0', date:'2026-08-04', author:'Jaco', title:'Components split from one 33-item list into six purpose-based groups, Uber Base style', changes:[
         ['changed','The single Components category is replaced by six groups in the NAV manifest — Actions, Inputs & controls, Data display, Feedback & status, Surfaces & overlays and Navigation — each with its own landing page (s-cat-actions, s-cat-inputs, s-cat-data, s-cat-feedback, s-cat-surfaces, s-cat-navigation), intro copy and breadcrumb. With Foundations and About that is eight sidebar entries instead of four, and the whole nav now fits on screen with a group open'],
         ['removed','The Coming soon category — Modals now sits in Surfaces & overlays and Toasts in Feedback & status, both keeping their Soon tag, so a roadmap component is filed with the components it belongs beside rather than in a separate holding pen'],
@@ -12831,7 +12849,8 @@ const NAV = [
       {id:'s-pagination',   label:'Pagination',          desc:'Page-by-page navigation controls.'},
       {id:'s-tabs',         label:'Tabs',                desc:'Switch between related views.'},
     ]},
-  { cat:'About', items:[ {id:'s-changelog', label:'Changelog'} ] },
+  // No cat and no landing — renders as a standalone top-level link at the bottom.
+  { items:[ {id:'s-changelog', label:'Changelog'} ] },
 ];
 
 const MOCKS = {
@@ -12889,23 +12908,26 @@ function lpCardHTML(item){
 }
 
 var SB_CARET_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.7 9.3a1 1 0 0 1 1.41 0L12 13.19l3.89-3.89a1 1 0 1 1 1.41 1.41l-4.59 4.6a1 1 0 0 1-1.42 0l-4.59-4.6a1 1 0 0 1 0-1.41Z"/></svg>';
+var SB_CHEV_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.29 6.71a1 1 0 0 1 1.42 0l4.58 4.58a1 1 0 0 1 0 1.42l-4.58 4.58a1 1 0 1 1-1.42-1.41L13.17 12 9.29 8.12a1 1 0 0 1 0-1.41Z"/></svg>';
+
+function sbLinkHTML(id, label, tag, extraCls){
+  return '<a href="javascript:void(0)" onclick="showSection(\'' + id + '\')" class="sb-link'+(extraCls ? ' '+extraCls : '')+'">'
+    + label
+    + (tag ? '<span class="sb-tag">'+tag+'</span>' : '')
+    + '<span class="sb-link__chev">'+SB_CHEV_SVG+'</span>'
+    + '</a>';
+}
 
 function buildSidebar(){
   var aside = document.getElementById('sidebar');
   if(!aside) return;
   var html = '';
   NAV.forEach(function(g, i){
-    var links = '';
-    // The category header toggles instead of navigating, so its landing page
-    // is reached from an Overview link at the top of the group's own items.
     if(g.landing){
-      links += '<a href="javascript:void(0)" onclick="showSection(\'' + g.landing + '\')" class="sb-link">Overview</a>';
-    }
-    g.items.forEach(function(it){
-      var tag = it.tag ? '<span class="sb-tag">'+it.tag+'</span>' : '';
-      links += '<a href="javascript:void(0)" onclick="showSection(\'' + it.id + '\')" class="sb-link">'+it.label+tag+'</a>';
-    });
-    if(g.landing){
+      // The category header toggles instead of navigating, so its landing page
+      // is reached from an Overview link at the top of the group's own items.
+      var links = sbLinkHTML(g.landing, 'Overview')
+        + g.items.map(function(it){ return sbLinkHTML(it.id, it.label, it.tag); }).join('');
       var itemsId = 'sb-items-' + i;
       html += '<div class="sb-group">'
            +    '<button type="button" class="sb-cat sb-cat--toggle" aria-expanded="false" aria-controls="'+itemsId+'" onclick="toggleNavGroup(this)">'
@@ -12914,8 +12936,11 @@ function buildSidebar(){
            +    '<div class="sb-group__items" id="'+itemsId+'">'+links+'</div>'
            +  '</div>';
     } else {
-      // Single-item categories (About) have no landing and stay always-visible.
-      html += '<div class="sb-cat">'+g.cat+'</div>'+links;
+      // A group with no landing is a plain top-level destination (Changelog) —
+      // rendered at category level rather than indented under a heading.
+      html += g.items.map(function(it){
+        return sbLinkHTML(it.id, it.label, it.tag, 'sb-link--top');
+      }).join('');
     }
   });
   aside.innerHTML = html;
@@ -13034,7 +13059,7 @@ window.addEventListener('hashchange', function(){
 var navSearchIndex = [];
 NAV.forEach(function(g){
   g.items.forEach(function(it){
-    navSearchIndex.push({ id: it.id, label: it.label, desc: it.desc || '', cat: g.cat });
+    navSearchIndex.push({ id: it.id, label: it.label, desc: it.desc || '', cat: g.cat || '' });
   });
 });
 var navSearchActiveIdx = -1;
