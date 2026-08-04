@@ -886,6 +886,7 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;font-feature-
 
 /* Playground */
 .btn-pg{border:1px solid var(--chrome-border);border-radius:12px;overflow:hidden}
+.btn-pg--dd{overflow:visible}
 .btn-pg__stage{display:flex;align-items:center;justify-content:center;min-height:220px;padding:56px 40px;transition:background .25s}
 .btn-pg__ctrls{display:flex;flex-direction:column;gap:16px;padding:20px 22px;background:var(--chrome-nav);border-top:1px solid var(--chrome-border);transition:background .25s}
 .btn-pg__group{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
@@ -1813,18 +1814,8 @@ body.home .main{max-width:none;margin:0;padding:0}
 .dpd-menu__clear{flex:1;background:none;border:1px solid var(--chrome-border);color:var(--chrome-txt);border-radius:8px;padding:8px;font-size:12.5px;font-weight:700;font-family:inherit;cursor:pointer}
 .dpd-menu__clear:hover{background:var(--chrome-hover)}
 
-/* Showcase surface + swatch grid, matching the Tabs conventions under a dropdown-specific name */
-.dpd-demo{border:1px solid var(--chrome-border);border-radius:12px;padding:28px 20px;background:var(--chrome-bg)}
-.dpd-demo--play{display:flex;justify-content:center}
-.dpd-swatchgrid{display:flex;flex-wrap:wrap;gap:32px;justify-content:center;align-items:flex-start}
-.dpd-swatch{display:flex;flex-direction:column;align-items:center;gap:12px}
-.dpd-swatch__cap{font-size:10.5px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--chrome-muted)}
-/* States matrix — 2-up grid (Bordered / Rounded), one column per style, stacked states inside */
-.dpd-swatchgrid--states{display:grid;grid-template-columns:repeat(2,max-content);justify-content:center;gap:28px 56px;align-items:start}
-@media(max-width:640px){.dpd-swatchgrid--states{grid-template-columns:max-content}}
-.dpd-states-col{display:flex;flex-direction:column;gap:20px}
-.dpd-state-row{display:flex;flex-direction:column;gap:6px}
-.dpd-state-row__cap{font-size:10.5px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--chrome-muted)}
+/* Style × size specimen swatch — used only in the Style tab's matrix row cells */
+.dpd-spec-swatch{display:flex;flex-direction:column;align-items:center;gap:10px}
 
 /* ================================================================
    CHECKBOXES & RADIO BUTTONS
@@ -4194,108 +4185,13 @@ body.home .main{max-width:none;margin:0;padding:0}
   </pre>
 </details>
     </section>
-    <section class="sec" id="s-dropdown">
+    <section class="sec sec--tabbed" id="s-dropdown">
+      <div class="sec-hero">
       <div class="sec__head">
-        <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Dropdown <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.2.1</span></h1>
-        <p class="sec__desc">A labelled select trigger that opens a card of options, in <strong>single-select</strong> (one exclusive choice, a plain label with a trailing check) or <strong>multi-select</strong> (several independent checkboxes) form. Built from a <strong>Dropdown field</strong> (label, trigger button, assistive caption) in <strong>Bordered</strong> or <strong>Rounded</strong> style, <strong>Medium</strong> or <strong>Small</strong> size, paired with a <strong>Dropdown list item</strong> inside the options card, plus an optional search input.</p>
-      </div>
-
-      <div class="type-sub">
-        <div class="type-sub__title">Single-select</div>
-        <div class="type-sub__desc">A working dropdown &mdash; click the trigger to open the list, click an option to select it and close. Click outside or press <code>Esc</code> to dismiss without changing the selection.</div>
-        <div class="dpd-demo dpd-demo--play" id="dpd-play"></div>
-      </div>
-
-      <div class="type-sub">
-        <div class="type-sub__title">Multi-select</div>
-        <div class="type-sub__desc">Click as many options as needed &mdash; each checkbox toggles independently and the menu stays open. The trigger summarises the pick as a label, or &ldquo;N selected&rdquo; once there&rsquo;s more than one. Use <strong>Clear</strong> to reset, or <strong>Done</strong> to close.</div>
-        <div class="dpd-demo dpd-demo--play" id="dpd-play-multi"></div>
-      </div>
-
-      <div class="type-sub">
-        <div class="type-sub__title">Style</div>
-        <div class="type-sub__desc"><strong>Bordered</strong> shows a visible grey outline at rest &mdash; use it wherever it needs to read clearly as a form field. <strong>Rounded</strong> hides the outline until hover/focus/open, for a softer, pill-shaped trigger that suits denser filter bars.</div>
-        <div class="dpd-demo"><div class="dpd-swatchgrid" id="dpd-style"></div></div>
-      </div>
-
-      <div class="type-sub">
-        <div class="type-sub__title">Sizes</div>
-        <div class="type-sub__desc"><strong>Medium</strong> (48px trigger) is the default for standalone forms. <strong>Small</strong> (40px trigger) suits denser contexts such as filter rows or table toolbars.</div>
-        <div class="dpd-demo"><div class="dpd-swatchgrid" id="dpd-sizes"></div></div>
-      </div>
-
-      <div class="type-sub">
-        <div class="type-sub__title">Placeholder &amp; selected</div>
-        <div class="type-sub__desc">With no option chosen, the trigger shows a subtle placeholder in <strong>Body m &ndash; semibold / text-subtle</strong>. Once an option is selected, the same slot switches to <strong>text-primary</strong> and keeps the selected item highlighted in the list.</div>
-        <div class="dpd-demo"><div class="dpd-swatchgrid" id="dpd-selection"></div></div>
-      </div>
-
-      <div class="type-sub">
-        <div class="type-sub__title">States</div>
-        <div class="type-sub__desc">Every trigger resolves to one of four states. <strong>Default</strong> sits on a muted fill; <strong>Hover</strong> darkens the fill slightly; <strong>Keyboard focus</strong> and <strong>Open</strong> both switch the border to the inverse colour, and Open additionally flips the chevron and reveals the options card.</div>
-        <div class="dpd-demo"><div class="dpd-swatchgrid dpd-swatchgrid--states" id="dpd-states"></div></div>
-      </div>
-
-      <div class="type-sub">
-        <div class="type-sub__title">Options list &amp; search</div>
-        <div class="type-sub__desc">Each row is a <strong>Dropdown list item</strong> &mdash; hover-highlighted, with the active choice on a success tint. Single-select shows a trailing check mark; multi-select (above) shows a real checkbox, since more than one row can be active. The card can optionally lead with a search input to filter long option lists.</div>
-        <div class="dpd-demo"><div class="dpd-swatchgrid" id="dpd-list"></div></div>
-      </div>
-
-      <div class="type-sub">
-        <div class="type-sub__title">Anatomy &amp; specs</div>
-        <div class="type-sub__desc">Measurements and tokens per size.</div>
-        <div class="dd-table-wrap">
-          <table class="dd-table">
-            <thead><tr><th>Property</th><th>Medium</th><th>Small</th><th>Token</th></tr></thead>
-            <tbody>
-              <tr><td class="dd-table__name">Trigger height</td><td>48px</td><td>40px</td><td>&mdash;</td></tr>
-              <tr><td class="dd-table__name">Horizontal padding</td><td>12px</td><td>10px</td><td>&mdash;</td></tr>
-              <tr><td class="dd-table__name">Label size</td><td colspan="2">14px medium</td><td>Input label</td></tr>
-              <tr><td class="dd-table__name">Trigger text size</td><td>16px semibold</td><td>14px semibold</td><td>Body m / Body s &ndash; semibold</td></tr>
-              <tr><td class="dd-table__name">Caption size</td><td colspan="2">12px medium</td><td>Body xs &ndash; medium</td></tr>
-              <tr><td class="dd-table__name">Default fill / border</td><td colspan="2">#f8f8f8 / #d1d1d1 <span style="color:var(--chrome-muted)">(Bordered only)</span></td><td><code>color-input-bg</code> / <code>color-input-border</code></td></tr>
-              <tr><td class="dd-table__name">Focus / open border</td><td colspan="2">#000 <span style="color:var(--chrome-muted)">(dark #fff)</span></td><td><code>color-input-focus</code></td></tr>
-              <tr><td class="dd-table__name">Trigger radius</td><td colspan="2">Bordered 6px &middot; Rounded 999px (pill)</td><td>&mdash;</td></tr>
-              <tr><td class="dd-table__name">Card radius / shadow</td><td colspan="2">12px &middot; 0 8px 24px rgba(0,0,0,.14)</td><td>&mdash;</td></tr>
-              <tr><td class="dd-table__name">List item selected (single)</td><td colspan="2">Success tint fill, trailing check mark</td><td><code>color-success-l</code> / <code>color-success-h</code></td></tr>
-              <tr><td class="dd-table__name">List item selected (multi)</td><td colspan="2">Success tint fill, success-coloured checkbox</td><td><code>color-success-l</code> / <code>color-success-h</code></td></tr>
-              <tr><td class="dd-table__name">Multi-select trigger</td><td colspan="2">Label when one is picked &middot; &ldquo;N selected&rdquo; from two up</td><td>&mdash;</td></tr>
-              <tr><td class="dd-table__name">Multi-select footer</td><td colspan="2">Clear (outline) &middot; Done (primary black)</td><td><code>color-btn-s-bg</code></td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <div class="type-sub">
-        <div class="type-sub__title">When to use</div>
-        <div class="type-sub__desc">Dropdowns pick one value from a bounded list without leaving the current screen &mdash; they are not a substitute for navigation, and not the right tool for open-ended text entry.</div>
-        <div class="sel-usage">
-          <div class="sel-usage__card">
-            <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
-            <ul class="sel-usage__list">
-              <li>Use a dropdown when there are roughly 5&ndash;15 known options.</li>
-              <li>Reach for multi-select only when picking several values genuinely makes sense &mdash; otherwise use single-select.</li>
-              <li>Always show a clear placeholder until a value is chosen &mdash; never default to a hidden first option.</li>
-              <li>Add the search input once a list runs past a screen&rsquo;s worth of items.</li>
-              <li>Pair the trigger with a label and, where useful, an assistive caption explaining the choice.</li>
-            </ul>
-          </div>
-          <div class="sel-usage__card">
-            <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don&rsquo;t</div>
-            <ul class="sel-usage__list">
-              <li>Don&rsquo;t use a dropdown for 2&ndash;3 options &mdash; radios or a segmented control are faster to scan and select.</li>
-              <li>Don&rsquo;t use multi-select when only one answer is ever valid &mdash; that&rsquo;s just extra clicks.</li>
-              <li>Don&rsquo;t close a multi-select menu the instant one box is ticked &mdash; let the user finish, then confirm with Done.</li>
-              <li>Don&rsquo;t bury a primary, frequently-changed filter three menus deep &mdash; surface it directly.</li>
-              <li>Don&rsquo;t mix Bordered and Rounded styles within the same form.</li>
-              <li>Don&rsquo;t rely on the placeholder colour alone to signal &ldquo;required&rdquo; &mdash; pair it with real validation.</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <details class="ai-ctx">
+        <h1 class="sec__title">Dropdown</h1>
+        <div class="sec-header-meta">
+          <span class="comp-ver-badge" style="margin-left:0">v1.3.0</span>
+          <details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-dropdown">
 {
@@ -4337,7 +4233,7 @@ body.home .main{max-width:none;margin:0;padding:0}
     ".pop__apply"
   ],
   "css": "/* ================================================================\n   DROPDOWN\n================================================================ */\n.dpd-field { display:flex;flex-direction:column;gap:4px;width:267px;font-family:inherit }\n.dpd-label { font-size:14px;font-weight:600;color:var(--color-text-1);padding-bottom:2px }\n.dpd-wrap { position:relative }\n.dpd-trigger { display:flex;align-items:center;justify-content:space-between;gap:8px;width:100%;height:48px;padding:0 12px;border-radius:6px;border:2px solid var(--color-input-border);background:var(--color-input-bg);cursor:pointer;font-family:inherit;text-align:left;transition:border-color .15s,background-color .15s }\n.dpd-trigger__text { flex:1 1 auto;min-width:0;font-size:16px;font-weight:600;color:var(--color-text-s);overflow:hidden;text-overflow:ellipsis;white-space:nowrap }\n.dpd-trigger.has-value .dpd-trigger__text { color:var(--color-text-1) }\n.dpd-trigger__chevron { flex-shrink:0;width:12px;height:12px;display:flex;align-items:center;justify-content:center;color:var(--color-text-1);transition:transform .18s ease }\n.dpd-trigger__chevron svg { width:100%;height:100% }\n.dpd-caption { font-size:12px;color:var(--color-text-3) }\n/* hover */\n.dpd-trigger:hover,.dpd-trigger--hover { background:var(--color-surface-n1) }\n/* keyboard focus / open — border switches to the inverse (black in light, white in dark) */\n.dpd-trigger:focus-visible,.dpd-trigger--focus,.dpd-trigger--open { outline:none;border-color:var(--color-input-focus);background:var(--color-surface-base) }\n.dpd-wrap.is-open .dpd-trigger__chevron,.dpd-trigger--open .dpd-trigger__chevron { transform:rotate(180deg) }\n/* Rounded style — pill trigger, border hidden until hover/focus/open */\n.dpd-field--rounded .dpd-trigger { border-radius:999px;border-color:var(--color-input-bg) }\n.dpd-field--rounded .dpd-trigger:hover,.dpd-field--rounded .dpd-trigger--hover { border-color:var(--color-surface-n1) }\n.dpd-field--rounded .dpd-trigger:focus-visible,.dpd-field--rounded .dpd-trigger--focus,.dpd-field--rounded .dpd-trigger--open { border-color:var(--color-input-focus) }\n/* Small size */\n.dpd-field--sm .dpd-trigger { height:40px;padding:0 10px;gap:6px }\n.dpd-field--sm .dpd-trigger__text { font-size:14px }\n.dpd-field--sm .dpd-trigger__chevron { width:10px;height:10px }\n.dpd-field--sm .dpd-label { font-size:13px }\n.dpd-field--sm .dpd-caption { font-size:11px }\n/* Menu card — attaches under the trigger, real instances float; static swatches lay out inline */\n.dpd-menu { position:absolute;left:0;right:0;top:calc(100% + 6px);z-index:20;max-height:280px;overflow-y:auto;display:flex;flex-direction:column;gap:2px;padding:4px;border-radius:12px;border:1px solid var(--chrome-border);background:var(--color-surface-base);box-shadow:0 8px 24px rgba(0,0,0,.14) }\n.dpd-menu[hidden] { display:none }\n.dpd-menu--inline { position:static;top:auto;margin-top:6px;box-shadow:0 1px 2px rgba(0,0,0,.1) }\n.dpd-search { display:flex;align-items:center;gap:8px;padding:9px 12px;margin-bottom:2px;border-radius:999px;background:var(--color-surface-n1);color:var(--color-text-3);flex-shrink:0 }\n.dpd-search svg { width:14px;height:14px;flex-shrink:0 }\n.dpd-search input { flex:1;min-width:0;border:none;background:none;outline:none;font-family:inherit;font-size:13px;color:var(--color-text-1) }\n.dpd-item { display:flex;align-items:center;gap:8px;min-height:44px;padding:8px 10px;border-radius:6px;cursor:pointer;border:none;background:none;width:100%;text-align:left;font-family:inherit;flex-shrink:0 }\n.dpd-item:hover,.dpd-item--hover { background:var(--color-surface-n1) }\n.dpd-item__box { flex-shrink:0;width:18px;height:18px;border-radius:5px;border:2px solid var(--chrome-muted);background-color:var(--color-surface-base);background-repeat:no-repeat;background-position:center;background-size:70%;transition:background-color .15s,border-color .15s }\n.dpd-item__label { flex:1 1 auto;min-width:0;font-size:15px;font-weight:500;color:var(--color-text-1);overflow:hidden;text-overflow:ellipsis;white-space:nowrap }\n.dpd-item.is-selected,.dpd-item--selected { background:var(--color-success-l) }\n.dpd-item.is-selected .dpd-item__box,.dpd-item--selected .dpd-item__box { background-color:var(--color-success-h);border-color:var(--color-success-h);background-image:url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='none' stroke='%23fff' stroke-width='2.3' stroke-linecap='round' stroke-linejoin='round' d='M3.5 8.4l3 3 6-6.6'/%3E%3C/svg%3E\") }\n.dpd-item.is-selected .dpd-item__label,.dpd-item--selected .dpd-item__label { font-weight:700 }\n.dpd-item__check { margin-left:auto;flex-shrink:0;width:16px;height:16px;color:var(--color-success-h);opacity:0;transition:opacity .1s }\n.dpd-item__check svg { display:block;width:100%;height:100% }\n.dpd-item.is-selected .dpd-item__check,.dpd-item--selected .dpd-item__check { opacity:1 }\n.dpd-menu__foot { display:flex;gap:8px;padding:8px 6px 4px;margin-top:2px;border-top:1px solid var(--chrome-border);flex-shrink:0 }\n.dpd-menu__clear { flex:1;background:none;border:1px solid var(--chrome-border);color:var(--chrome-txt);border-radius:8px;padding:8px;font-size:12.5px;font-weight:700;font-family:inherit;cursor:pointer }\n.dpd-menu__clear:hover { background:var(--chrome-hover) }\n.pop__apply { flex:1;background:var(--color-btn-s-bg);color:var(--color-btn-s-txt);border:0;border-radius:8px;padding:8px;font-size:12.5px;font-weight:700;font-family:inherit;cursor:pointer }",
-  "js": "function itemHtml(label, selected){\n    return '&lt;button type=\"button\" class=\"dpd-item' + (selected ? ' is-selected' : '') + '\"&gt;' +\n      '&lt;span class=\"dpd-item__label\"&gt;' + label + '&lt;/span&gt;' +\n      '&lt;span class=\"dpd-item__check\"&gt;' + CHECK_ICON + '&lt;/span&gt;' +\n    '&lt;/button&gt;';\n  }\n\nfunction itemHtmlCheckbox(label, selected){\n    return '&lt;button type=\"button\" class=\"dpd-item' + (selected ? ' is-selected' : '') + '\"&gt;' +\n      '&lt;span class=\"dpd-item__box\"&gt;&lt;/span&gt;' +\n      '&lt;span class=\"dpd-item__label\"&gt;' + label + '&lt;/span&gt;' +\n    '&lt;/button&gt;';\n  }\n\nfunction menuHtml(options, selectedIndex, opts){\n    opts = opts || {};\n    var search = opts.showSearch ? ('&lt;div class=\"dpd-search\"&gt;' + SEARCH_ICON + '&lt;input type=\"text\" placeholder=\"Search\" aria-label=\"Search options\"&gt;&lt;/div&gt;') : '';\n    var items = options.map(function(o, i){ return itemHtml(o, i === selectedIndex); }).join('');\n    return '&lt;div class=\"dpd-menu' + (opts.inline ? ' dpd-menu--inline' : '') + '\"' + (opts.inline ? '' : ' hidden') + '&gt;' + search + items + '&lt;/div&gt;';\n  }\n\nfunction triggerHtml(opts){\n    var cls = 'dpd-trigger';\n    if(opts.state === 'hover') cls += ' dpd-trigger--hover';\n    if(opts.state === 'focus') cls += ' dpd-trigger--focus';\n    if(opts.state === 'open')  cls += ' dpd-trigger--open';\n    var hasValue = opts.selectedIndex != null;\n    if(hasValue) cls += ' has-value';\n    var text = hasValue ? opts.options[opts.selectedIndex] : (opts.placeholder || 'Choose an option');\n    return '&lt;button type=\"button\" class=\"' + cls + '\"&gt;&lt;span class=\"dpd-trigger__text\"&gt;' + text + '&lt;/span&gt;&lt;span class=\"dpd-trigger__chevron\"&gt;' + CHEVRON + '&lt;/span&gt;&lt;/button&gt;';\n  }\n\nfunction fieldHtml(opts){\n    opts = opts || {};\n    var options = opts.options || OPTIONS;\n    var cls = 'dpd-field';\n    if(opts.style === 'rounded') cls += ' dpd-field--rounded';\n    if(opts.size === 'sm') cls += ' dpd-field--sm';\n    var label   = opts.showLabel   === false ? '' : '&lt;div class=\"dpd-label\"&gt;' + (opts.label || 'Dropdown label') + '&lt;/div&gt;';\n    var caption = opts.showCaption === false ? '' : '&lt;div class=\"dpd-caption\"&gt;' + (opts.caption || 'Assistive caption') + '&lt;/div&gt;';\n    var menu = opts.state === 'open' ? menuHtml(options, opts.selectedIndex, {showSearch: opts.showSearch, inline: true}) : '';\n    return '&lt;div class=\"' + cls + '\"&gt;' + label +\n      '&lt;div class=\"dpd-wrap' + (opts.state === 'open' ? ' is-open' : '') + '\"&gt;' + triggerHtml(Object.assign({}, opts, {options: options})) + menu + '&lt;/div&gt;' +\n      caption +\n    '&lt;/div&gt;';\n  }\n\nfunction interactiveFieldHtml(opts){\n    var cls = 'dpd-field' + (opts.style === 'rounded' ? ' dpd-field--rounded' : '') + (opts.size === 'sm' ? ' dpd-field--sm' : '');\n    var label = '&lt;div class=\"dpd-label\"&gt;' + (opts.label || 'Dropdown label') + '&lt;/div&gt;';\n    var caption = '&lt;div class=\"dpd-caption\"&gt;' + (opts.caption || 'Assistive caption') + '&lt;/div&gt;';\n    var menu = menuHtml(opts.options, null, {showSearch: opts.showSearch, inline: false});\n    return '&lt;div class=\"' + cls + '\"&gt;' + label +\n      '&lt;div class=\"dpd-wrap\"&gt;' + triggerHtml({options: opts.options, placeholder: opts.placeholder}) + menu + '&lt;/div&gt;' +\n      caption +\n    '&lt;/div&gt;';\n  }\n\nfunction wireInteractive(root){\n    var wrap = root.querySelector('.dpd-wrap');\n    var trigger = wrap.querySelector('.dpd-trigger');\n    var menu = wrap.querySelector('.dpd-menu');\n    var textEl = trigger.querySelector('.dpd-trigger__text');\n    function close(){\n      wrap.classList.remove('is-open');\n      trigger.classList.remove('dpd-trigger--open');\n      menu.setAttribute('hidden', '');\n    }\n    function openMenu(){\n      wrap.classList.add('is-open');\n      trigger.classList.add('dpd-trigger--open');\n      menu.removeAttribute('hidden');\n      var search = menu.querySelector('input');\n      if(search) search.focus();\n    }\n    trigger.addEventListener('click', function(e){\n      e.stopPropagation();\n      if(wrap.classList.contains('is-open')) close(); else openMenu();\n    });\n    menu.querySelectorAll('.dpd-item').forEach(function(btn){\n      btn.addEventListener('click', function(e){\n        e.stopPropagation();\n        menu.querySelectorAll('.dpd-item').forEach(function(b){ b.classList.remove('is-selected'); });\n        btn.classList.add('is-selected');\n        textEl.textContent = btn.querySelector('.dpd-item__label').textContent;\n        trigger.classList.add('has-value');\n        close();\n      });\n    });\n    var search = menu.querySelector('input');\n    if(search){\n      search.addEventListener('click', function(e){ e.stopPropagation(); });\n      search.addEventListener('input', function(){\n        var q = search.value.trim().toLowerCase();\n        menu.querySelectorAll('.dpd-item').forEach(function(btn){\n          var txt = btn.querySelector('.dpd-item__label').textContent.toLowerCase();\n          btn.style.display = txt.indexOf(q) &gt; -1 ? '' : 'none';\n        });\n      });\n    }\n    document.addEventListener('click', function(e){\n      if(!wrap.contains(e.target)) close();\n    });\n    document.addEventListener('keydown', function(e){\n      if(e.key === 'Escape' &amp;&amp; wrap.classList.contains('is-open')) close();\n    });\n  }\n\nfunction interactiveMultiFieldHtml(opts){\n    var cls = 'dpd-field' + (opts.style === 'rounded' ? ' dpd-field--rounded' : '') + (opts.size === 'sm' ? ' dpd-field--sm' : '');\n    var label = '&lt;div class=\"dpd-label\"&gt;' + (opts.label || 'Dropdown label') + '&lt;/div&gt;';\n    var caption = '&lt;div class=\"dpd-caption\"&gt;' + (opts.caption || 'Assistive caption') + '&lt;/div&gt;';\n    var items = opts.options.map(function(o){ return itemHtmlCheckbox(o, false); }).join('');\n    var search = opts.showSearch ? ('&lt;div class=\"dpd-search\"&gt;' + SEARCH_ICON + '&lt;input type=\"text\" placeholder=\"Search\" aria-label=\"Search options\"&gt;&lt;/div&gt;') : '';\n    var foot = '&lt;div class=\"dpd-menu__foot\"&gt;&lt;button type=\"button\" class=\"dpd-menu__clear\"&gt;Clear&lt;/button&gt;&lt;button type=\"button\" class=\"pop__apply\"&gt;Done&lt;/button&gt;&lt;/div&gt;';\n    var menu = '&lt;div class=\"dpd-menu\" hidden&gt;' + search + items + foot + '&lt;/div&gt;';\n    return '&lt;div class=\"' + cls + '\"&gt;' + label +\n      '&lt;div class=\"dpd-wrap\"&gt;' + triggerHtml({options: opts.options, placeholder: opts.placeholder}) + menu + '&lt;/div&gt;' +\n      caption +\n    '&lt;/div&gt;';\n  }\n\nfunction wireInteractiveMulti(root, opts){\n    var wrap = root.querySelector('.dpd-wrap');\n    var trigger = wrap.querySelector('.dpd-trigger');\n    var menu = wrap.querySelector('.dpd-menu');\n    var textEl = trigger.querySelector('.dpd-trigger__text');\n    var options = opts.options;\n    var selected = new Set();\n    function close(){\n      wrap.classList.remove('is-open');\n      trigger.classList.remove('dpd-trigger--open');\n      menu.setAttribute('hidden', '');\n    }\n    function openMenu(){\n      wrap.classList.add('is-open');\n      trigger.classList.add('dpd-trigger--open');\n      menu.removeAttribute('hidden');\n      var search = menu.querySelector('input');\n      if(search) search.focus();\n    }\n    function updateTrigger(){\n      if(selected.size === 0){\n        textEl.textContent = opts.placeholder || 'Choose an option';\n        trigger.classList.remove('has-value');\n      } else if(selected.size === 1){\n        textEl.textContent = options[selected.values().next().value];\n        trigger.classList.add('has-value');\n      } else {\n        textEl.textContent = selected.size + ' selected';\n        trigger.classList.add('has-value');\n      }\n    }\n    trigger.addEventListener('click', function(e){\n      e.stopPropagation();\n      if(wrap.classList.contains('is-open')) close(); else openMenu();\n    });\n    var itemEls = Array.prototype.slice.call(menu.querySelectorAll('.dpd-item'));\n    itemEls.forEach(function(btn, i){\n      btn.addEventListener('click', function(e){\n        e.stopPropagation();\n        if(selected.has(i)){ selected.delete(i); btn.classList.remove('is-selected'); }\n        else { selected.add(i); btn.classList.add('is-selected'); }\n        updateTrigger();\n      });\n    });\n    var clearBtn = menu.querySelector('.dpd-menu__clear');\n    if(clearBtn) clearBtn.addEventListener('click', function(e){\n      e.stopPropagation();\n      selected.clear();\n      itemEls.forEach(function(b){ b.classList.remove('is-selected'); });\n      updateTrigger();\n    });\n    var doneBtn = menu.querySelector('.pop__apply');\n    if(doneBtn) doneBtn.addEventListener('click', function(e){ e.stopPropagation(); close(); });\n    var search = menu.querySelector('.dpd-search input');\n    if(search){\n      search.addEventListener('click', function(e){ e.stopPropagation(); });\n      search.addEventListener('input', function(){\n        var q = search.value.trim().toLowerCase();\n        itemEls.forEach(function(btn){\n          var txt = btn.querySelector('.dpd-item__label').textContent.toLowerCase();\n          btn.style.display = txt.indexOf(q) &gt; -1 ? '' : 'none';\n        });\n      });\n    }\n    document.addEventListener('click', function(e){\n      if(!wrap.contains(e.target)) close();\n    });\n    document.addEventListener('keydown', function(e){\n      if(e.key === 'Escape' &amp;&amp; wrap.classList.contains('is-open')) close();\n    });\n    updateTrigger();\n  }\n\nvar CHEVRON = '&lt;svg viewBox=\"0 0 12 8\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"&gt;&lt;path d=\"M1 1.5L6 6.5L11 1.5\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/&gt;&lt;/svg&gt;';\n\nvar SEARCH_ICON = '&lt;svg viewBox=\"0 0 16 16\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"&gt;&lt;circle cx=\"7\" cy=\"7\" r=\"5\" stroke=\"currentColor\" stroke-width=\"1.6\"/&gt;&lt;path d=\"M11.5 11.5L15 15\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\"/&gt;&lt;/svg&gt;';\n\nvar CHECK_ICON = '&lt;svg viewBox=\"0 0 16 16\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"&gt;&lt;path d=\"M3 8.5L6.5 12L13 4.5\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/&gt;&lt;/svg&gt;';\n\nvar OPTIONS = ['Airtime &amp; Data','Electricity','Bill Payments','Vouchers','Gaming','Insurance','Lottery','Data Bundles'];",
+  "js": "function itemHtml(label, selected){\n  return '&lt;button type=\"button\" class=\"dpd-item' + (selected ? ' is-selected' : '') + '\"&gt;' +\n    '&lt;span class=\"dpd-item__label\"&gt;' + label + '&lt;/span&gt;' +\n    '&lt;span class=\"dpd-item__check\"&gt;' + CHECK_ICON + '&lt;/span&gt;' +\n  '&lt;/button&gt;';\n}\n\nfunction itemHtmlCheckbox(label, selected){\n  return '&lt;button type=\"button\" class=\"dpd-item' + (selected ? ' is-selected' : '') + '\"&gt;' +\n    '&lt;span class=\"dpd-item__box\"&gt;&lt;/span&gt;' +\n    '&lt;span class=\"dpd-item__label\"&gt;' + label + '&lt;/span&gt;' +\n  '&lt;/button&gt;';\n}\n\nfunction menuHtml(options, selectedIndex, opts){\n  opts = opts || {};\n  var search = opts.showSearch ? ('&lt;div class=\"dpd-search\"&gt;' + SEARCH_ICON + '&lt;input type=\"text\" placeholder=\"Search\" aria-label=\"Search options\"&gt;&lt;/div&gt;') : '';\n  var items = options.map(function(o, i){ return itemHtml(o, i === selectedIndex); }).join('');\n  return '&lt;div class=\"dpd-menu' + (opts.inline ? ' dpd-menu--inline' : '') + '\"' + (opts.inline ? '' : ' hidden') + '&gt;' + search + items + '&lt;/div&gt;';\n}\n\nfunction triggerHtml(opts){\n  var cls = 'dpd-trigger';\n  if(opts.state === 'hover') cls += ' dpd-trigger--hover';\n  if(opts.state === 'focus') cls += ' dpd-trigger--focus';\n  if(opts.state === 'open')  cls += ' dpd-trigger--open';\n  var hasValue = opts.selectedIndex != null;\n  if(hasValue) cls += ' has-value';\n  var text = hasValue ? opts.options[opts.selectedIndex] : (opts.placeholder || 'Choose an option');\n  return '&lt;button type=\"button\" class=\"' + cls + '\"&gt;&lt;span class=\"dpd-trigger__text\"&gt;' + text + '&lt;/span&gt;&lt;span class=\"dpd-trigger__chevron\"&gt;' + CHEVRON + '&lt;/span&gt;&lt;/button&gt;';\n}\n\nfunction fieldHtml(opts){\n  opts = opts || {};\n  var options = opts.options || OPTIONS;\n  var cls = 'dpd-field';\n  if(opts.style === 'rounded') cls += ' dpd-field--rounded';\n  if(opts.size === 'sm') cls += ' dpd-field--sm';\n  var label   = opts.showLabel   === false ? '' : '&lt;div class=\"dpd-label\"&gt;' + (opts.label || 'Dropdown label') + '&lt;/div&gt;';\n  var caption = opts.showCaption === false ? '' : '&lt;div class=\"dpd-caption\"&gt;' + (opts.caption || 'Assistive caption') + '&lt;/div&gt;';\n  var menu = opts.state === 'open' ? menuHtml(options, opts.selectedIndex, {showSearch: opts.showSearch, inline: true}) : '';\n  return '&lt;div class=\"' + cls + '\"&gt;' + label +\n    '&lt;div class=\"dpd-wrap' + (opts.state === 'open' ? ' is-open' : '') + '\"&gt;' + triggerHtml(Object.assign({}, opts, {options: options})) + menu + '&lt;/div&gt;' +\n    caption +\n  '&lt;/div&gt;';\n}\n\nfunction interactiveFieldHtml(opts){\n  var cls = 'dpd-field' + (opts.style === 'rounded' ? ' dpd-field--rounded' : '') + (opts.size === 'sm' ? ' dpd-field--sm' : '');\n  var label = '&lt;div class=\"dpd-label\"&gt;' + (opts.label || 'Dropdown label') + '&lt;/div&gt;';\n  var caption = '&lt;div class=\"dpd-caption\"&gt;' + (opts.caption || 'Assistive caption') + '&lt;/div&gt;';\n  var menu = menuHtml(opts.options, null, {showSearch: opts.showSearch, inline: false});\n  return '&lt;div class=\"' + cls + '\"&gt;' + label +\n    '&lt;div class=\"dpd-wrap\"&gt;' + triggerHtml({options: opts.options, placeholder: opts.placeholder}) + menu + '&lt;/div&gt;' +\n    caption +\n  '&lt;/div&gt;';\n}\n\nfunction wireInteractive(root){\n  var wrap = root.querySelector('.dpd-wrap');\n  var trigger = wrap.querySelector('.dpd-trigger');\n  var menu = wrap.querySelector('.dpd-menu');\n  var textEl = trigger.querySelector('.dpd-trigger__text');\n  function close(){\n    wrap.classList.remove('is-open');\n    trigger.classList.remove('dpd-trigger--open');\n    menu.setAttribute('hidden', '');\n  }\n  function openMenu(){\n    wrap.classList.add('is-open');\n    trigger.classList.add('dpd-trigger--open');\n    menu.removeAttribute('hidden');\n    var search = menu.querySelector('input');\n    if(search) search.focus();\n  }\n  trigger.addEventListener('click', function(e){\n    e.stopPropagation();\n    if(wrap.classList.contains('is-open')) close(); else openMenu();\n  });\n  menu.querySelectorAll('.dpd-item').forEach(function(btn){\n    btn.addEventListener('click', function(e){\n      e.stopPropagation();\n      menu.querySelectorAll('.dpd-item').forEach(function(b){ b.classList.remove('is-selected'); });\n      btn.classList.add('is-selected');\n      textEl.textContent = btn.querySelector('.dpd-item__label').textContent;\n      trigger.classList.add('has-value');\n      close();\n    });\n  });\n  var search = menu.querySelector('input');\n  if(search){\n    search.addEventListener('click', function(e){ e.stopPropagation(); });\n    search.addEventListener('input', function(){\n      var q = search.value.trim().toLowerCase();\n      menu.querySelectorAll('.dpd-item').forEach(function(btn){\n        var txt = btn.querySelector('.dpd-item__label').textContent.toLowerCase();\n        btn.style.display = txt.indexOf(q) &gt; -1 ? '' : 'none';\n      });\n    });\n  }\n  document.addEventListener('click', function(e){\n    if(!wrap.contains(e.target)) close();\n  });\n  document.addEventListener('keydown', function(e){\n    if(e.key === 'Escape' &amp;&amp; wrap.classList.contains('is-open')) close();\n  });\n}\n\nfunction interactiveMultiFieldHtml(opts){\n  var cls = 'dpd-field' + (opts.style === 'rounded' ? ' dpd-field--rounded' : '') + (opts.size === 'sm' ? ' dpd-field--sm' : '');\n  var label = '&lt;div class=\"dpd-label\"&gt;' + (opts.label || 'Dropdown label') + '&lt;/div&gt;';\n  var caption = '&lt;div class=\"dpd-caption\"&gt;' + (opts.caption || 'Assistive caption') + '&lt;/div&gt;';\n  var items = opts.options.map(function(o){ return itemHtmlCheckbox(o, false); }).join('');\n  var search = opts.showSearch ? ('&lt;div class=\"dpd-search\"&gt;' + SEARCH_ICON + '&lt;input type=\"text\" placeholder=\"Search\" aria-label=\"Search options\"&gt;&lt;/div&gt;') : '';\n  var foot = '&lt;div class=\"dpd-menu__foot\"&gt;&lt;button type=\"button\" class=\"dpd-menu__clear\"&gt;Clear&lt;/button&gt;&lt;button type=\"button\" class=\"pop__apply\"&gt;Done&lt;/button&gt;&lt;/div&gt;';\n  var menu = '&lt;div class=\"dpd-menu\" hidden&gt;' + search + items + foot + '&lt;/div&gt;';\n  return '&lt;div class=\"' + cls + '\"&gt;' + label +\n    '&lt;div class=\"dpd-wrap\"&gt;' + triggerHtml({options: opts.options, placeholder: opts.placeholder}) + menu + '&lt;/div&gt;' +\n    caption +\n  '&lt;/div&gt;';\n}\n\nfunction wireInteractiveMulti(root, opts){\n  var wrap = root.querySelector('.dpd-wrap');\n  var trigger = wrap.querySelector('.dpd-trigger');\n  var menu = wrap.querySelector('.dpd-menu');\n  var textEl = trigger.querySelector('.dpd-trigger__text');\n  var options = opts.options;\n  var selected = new Set();\n  function close(){\n    wrap.classList.remove('is-open');\n    trigger.classList.remove('dpd-trigger--open');\n    menu.setAttribute('hidden', '');\n  }\n  function openMenu(){\n    wrap.classList.add('is-open');\n    trigger.classList.add('dpd-trigger--open');\n    menu.removeAttribute('hidden');\n    var search = menu.querySelector('input');\n    if(search) search.focus();\n  }\n  function updateTrigger(){\n    if(selected.size === 0){\n      textEl.textContent = opts.placeholder || 'Choose an option';\n      trigger.classList.remove('has-value');\n    } else if(selected.size === 1){\n      textEl.textContent = options[selected.values().next().value];\n      trigger.classList.add('has-value');\n    } else {\n      textEl.textContent = selected.size + ' selected';\n      trigger.classList.add('has-value');\n    }\n  }\n  trigger.addEventListener('click', function(e){\n    e.stopPropagation();\n    if(wrap.classList.contains('is-open')) close(); else openMenu();\n  });\n  var itemEls = Array.prototype.slice.call(menu.querySelectorAll('.dpd-item'));\n  itemEls.forEach(function(btn, i){\n    btn.addEventListener('click', function(e){\n      e.stopPropagation();\n      if(selected.has(i)){ selected.delete(i); btn.classList.remove('is-selected'); }\n      else { selected.add(i); btn.classList.add('is-selected'); }\n      updateTrigger();\n    });\n  });\n  var clearBtn = menu.querySelector('.dpd-menu__clear');\n  if(clearBtn) clearBtn.addEventListener('click', function(e){\n    e.stopPropagation();\n    selected.clear();\n    itemEls.forEach(function(b){ b.classList.remove('is-selected'); });\n    updateTrigger();\n  });\n  var doneBtn = menu.querySelector('.pop__apply');\n  if(doneBtn) doneBtn.addEventListener('click', function(e){ e.stopPropagation(); close(); });\n  var search = menu.querySelector('.dpd-search input');\n  if(search){\n    search.addEventListener('click', function(e){ e.stopPropagation(); });\n    search.addEventListener('input', function(){\n      var q = search.value.trim().toLowerCase();\n      itemEls.forEach(function(btn){\n        var txt = btn.querySelector('.dpd-item__label').textContent.toLowerCase();\n        btn.style.display = txt.indexOf(q) &gt; -1 ? '' : 'none';\n      });\n    });\n  }\n  document.addEventListener('click', function(e){\n    if(!wrap.contains(e.target)) close();\n  });\n  document.addEventListener('keydown', function(e){\n    if(e.key === 'Escape' &amp;&amp; wrap.classList.contains('is-open')) close();\n  });\n  updateTrigger();\n}\n\nvar CHEVRON = '&lt;svg viewBox=\"0 0 12 8\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"&gt;&lt;path d=\"M1 1.5L6 6.5L11 1.5\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/&gt;&lt;/svg&gt;';\n\nvar SEARCH_ICON = '&lt;svg viewBox=\"0 0 16 16\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"&gt;&lt;circle cx=\"7\" cy=\"7\" r=\"5\" stroke=\"currentColor\" stroke-width=\"1.6\"/&gt;&lt;path d=\"M11.5 11.5L15 15\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\"/&gt;&lt;/svg&gt;';\n\nvar CHECK_ICON = '&lt;svg viewBox=\"0 0 16 16\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"&gt;&lt;path d=\"M3 8.5L6.5 12L13 4.5\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/&gt;&lt;/svg&gt;';\n\nvar OPTIONS = ['Airtime &amp; Data','Electricity','Bill Payments','Vouchers','Gaming','Insurance','Lottery','Data Bundles'];",
   "usage": {
     "do": [
       "Use a dropdown when there are roughly 5–15 known options.",
@@ -4355,10 +4251,64 @@ body.home .main{max-width:none;margin:0;padding:0}
       "Don’t rely on the placeholder colour alone to signal “required” — pair it with real validation."
     ]
   },
-  "contentHash": "ac32722d0dc7678781e2a3c6ddcfc81dabf8dabb5dab83c713c7d777db10b079"
+  "contentHash": "bc2a542f975dc7ef53d5a637304b2a7d86b7a6fbc540d2ac55f1492eb881302e",
+  "note": "Canonical builders (itemHtml/itemHtmlCheckbox/menuHtml/triggerHtml/fieldHtml/interactiveFieldHtml/wireInteractive/interactiveMultiFieldHtml/wireInteractiveMulti) are shared by the interactive Overview playground and the static Style-tab specimens. ddpg (playground state)/getDdCode*/render*/DD_* option lists are doc-site-only plumbing, excluded. Moved to the .sec--tabbed layout (Overview/Style/Code/Changelog) in this PR."
 }
   </pre>
 </details>
+        </div>
+      </div>
+      <div class="sec-hero__preview"><div class="mk mk-col" style="gap:7px"><div class="mk-card" style="width:70%;padding:9px 12px;display:flex;justify-content:space-between;align-items:center"><span class="mk-bar" style="width:55px"></span><span style="color:var(--chrome-muted)">&#9662;</span></div><div class="mk-card" style="width:70%;padding:6px"><div style="display:flex;flex-direction:column;gap:4px"><span style="padding:6px 8px;border-radius:5px;background:var(--chrome-hover)"><span class="mk-bar" style="width:70%"></span></span><span style="padding:6px 8px;display:block"><span class="mk-bar" style="width:50%"></span></span></div></div></div></div>
+      </div>
+      <div class="tabs-list sec-tabs" id="dd-tabs-list">
+        <button type="button" class="tab-item on" data-dd-tab="overview" onclick="ddTabSwitch('overview')"><span class="tab-item__inner"><span class="tab-item__label">Overview</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-dd-tab="style" onclick="ddTabSwitch('style')"><span class="tab-item__inner"><span class="tab-item__label">Style</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-dd-tab="code" onclick="ddTabSwitch('code')"><span class="tab-item__inner"><span class="tab-item__label">Code</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-dd-tab="changelog" onclick="ddTabSwitch('changelog')"><span class="tab-item__inner"><span class="tab-item__label">Changelog</span></span><span class="tab-item__line"></span></button>
+      </div>
+      <div class="tabs-panel on" data-dd-panel="overview">
+        <div id="dd-playground" class="type-sub"></div>
+        <div id="dd-insitu" class="type-sub"></div>
+        <div class="type-sub cpg-variants" id="dd-usage">
+          <div class="cpg-section-heading">
+            <div class="cpg-layout__title">Do's and don'ts</div>
+            <div class="cpg-layout__desc">Dropdowns pick one value from a bounded list without leaving the current screen &mdash; they are not a substitute for navigation, and not the right tool for open-ended text entry.</div>
+          </div>
+          <div class="cpg-section-block">
+            <div class="sel-usage">
+              <div class="sel-usage__card">
+                <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
+                <ul class="sel-usage__list">
+                  <li>Use a dropdown when there are roughly 5&ndash;15 known options.</li>
+                  <li>Reach for multi-select only when picking several values genuinely makes sense &mdash; otherwise use single-select.</li>
+                  <li>Always show a clear placeholder until a value is chosen &mdash; never default to a hidden first option.</li>
+                  <li>Add the search input once a list runs past a screen&rsquo;s worth of items.</li>
+                  <li>Pair the trigger with a label and, where useful, an assistive caption explaining the choice.</li>
+                </ul>
+              </div>
+              <div class="sel-usage__card">
+                <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don't</div>
+                <ul class="sel-usage__list">
+                  <li>Don&rsquo;t use a dropdown for 2&ndash;3 options &mdash; radios or a segmented control are faster to scan and select.</li>
+                  <li>Don&rsquo;t use multi-select when only one answer is ever valid &mdash; that&rsquo;s just extra clicks.</li>
+                  <li>Don&rsquo;t close a multi-select menu the instant one box is ticked &mdash; let the user finish, then confirm with Done.</li>
+                  <li>Don&rsquo;t bury a primary, frequently-changed filter three menus deep &mdash; surface it directly.</li>
+                  <li>Don&rsquo;t mix Bordered and Rounded styles within the same form.</li>
+                  <li>Don&rsquo;t rely on the placeholder colour alone to signal &ldquo;required&rdquo; &mdash; pair it with real validation.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tabs-panel" data-dd-panel="style">
+        <div id="dd-reference" class="type-sub spec-panel spec-stack"></div>
+      </div>
+      <div class="tabs-panel" data-dd-panel="code">
+        <div id="dd-code-playground" class="type-sub spec-panel spec-code-playground"></div>
+        <div id="dd-code-tab" class="type-sub spec-panel"></div>
+      </div>
+      <div class="tabs-panel" data-dd-panel="changelog" id="dd-changelog-panel"></div>
     </section>
     <section class="sec" id="s-lists">
       <div class="sec__head">
@@ -7359,6 +7309,9 @@ function toggleTheme() {
   try { if(typeof renderSwitchStates==='function' && document.getElementById('sw-states')) renderSwitchStates(); } catch(e){}
   try { if(typeof renderSwitchInSitu==='function' && document.getElementById('sw-insitu')) renderSwitchInSitu(); } catch(e){}
   try { if(typeof renderSwitchReference==='function' && document.getElementById('sw-reference')) renderSwitchReference(); } catch(e){}
+  try { if(typeof renderDropdownPlayground==='function' && document.getElementById('dd-playground')) renderDropdownPlayground(); } catch(e){}
+  try { if(typeof renderDropdownInSitu==='function' && document.getElementById('dd-insitu')) renderDropdownInSitu(); } catch(e){}
+  try { if(typeof renderDropdownReference==='function' && document.getElementById('dd-reference')) renderDropdownReference(); } catch(e){}
   try { if(typeof renderSelReference==='function' && document.getElementById('sel-reference')) renderSelReference(); } catch(e){}
   try { if(typeof renderBshQuickCopy==='function' && document.getElementById('bsh-quickcopy')) renderBshQuickCopy(); } catch(e){}
   try { if(typeof renderBshHeaderRef==='function' && document.getElementById('bsh-header-ref')) renderBshHeaderRef(); } catch(e){}
@@ -10598,12 +10551,19 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.47.1';
+const SYSTEM_VERSION = '1.48.0';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.48.0', date:'2026-08-04', author:'Helen', title:'Dropdown rebuilt on the Chips & Pills tabbed treatment', changes:[
+        ['changed','Dropdown (s-dropdown) moves from a flat, single-scroll page to the shared .sec--tabbed layout: Overview / Style / Code / Changelog tabs, a hero with a live preview card, and a Code tab behind the three-language (HTML/CSS · Blazor · React TSX) segmented switcher'],
+        ['added','One interactive playground covering both forms — a Mode control (Single-select / Multi-select) sits alongside Style, Size and Search, rendered into two mounts (the Overview stage and the Code tab\'s mini-playground) that stay in sync, replacing the old separate Single-select/Multi-select demo blocks'],
+        ['added','Style tab: Anatomy (hero + 6 numbered parts — Label, Trigger, Chevron, Menu card, List item, Search), Size & dimensions, a Style × size matrix (Bordered/Rounded × Medium/Small, replacing the old flat swatch grids), States, and a Tokens table — all on the shared .spec-*/.tb-ref documentation furniture Chips and Switch already use'],
+        ['added','In-context now shows two mockups — a compact Rounded filter in a table toolbar, and a labelled Bordered field in a settlement form — down from the old five separate static swatch sections (Style, Sizes, Placeholder & selected, States, Options list & search), which are superseded by the Style tab'],
+        ['changed','.dpd-demo/.dpd-swatchgrid/.dpd-swatch/.dpd-states-col doc-only furniture removed now that the Style tab covers the same ground with shared components; the real .dpd-* component classes are unchanged'],
+      ]},
       {version:'1.47.1', date:'2026-08-04', author:'Mo', title:'Typography — Medium-weight heading rows relabelled to distinguish them from their Black-weight counterparts', changes:[
         ['changed','Heading Scale row tags for the reduced-emphasis Medium (500) variants at L, M, and S now read "L - Medium", "M - Medium", "S - Medium" instead of a bare "L"/"M"/"S" shared with the Black-weight row, for both desktop and mobile viewports'],
       ]},
@@ -11983,7 +11943,15 @@ const CHANGELOG = {
         ['added','Interactive playground, size/icon comparisons, a full states matrix and an anatomy/spec table'],
       ]},
     ]},
-    {secId:'s-dropdown', name:'Dropdown', version:'1.2.1', entries:[
+    {secId:'s-dropdown', name:'Dropdown', version:'1.3.0', entries:[
+      {version:'1.3.0', date:'2026-08-04', author:'Helen', title:'Rebuilt on the Chips & Pills tabbed treatment', changes:[
+        ['changed','Moved from a flat page to .sec--tabbed: Overview (playground, In-context, Do/Don\'t), Style (Anatomy, Size & dimensions, Style × size, States, Tokens), Code (HTML/CSS · Blazor · React TSX), and Changelog tabs'],
+        ['added','Single playground with a Mode toggle (Single-select / Multi-select) plus Style, Size and Search controls, replacing the separate single- and multi-select demo blocks'],
+        ['added','Code tab — a three-language snippet (HTML/CSS, Blazor, React TSX) behind a segmented language switcher, matching the current playground configuration; Dropdown previously had no code snippet at all'],
+        ['added','Style tab\'s Style × size matrix (Bordered/Rounded × Medium/Small) replaces the old separate Style and Sizes swatch grids'],
+        ['changed','In-context reduced to two representative mockups (table filter, form field) from five flat static sections; the removed sections\' content is now covered by the Style tab'],
+        ['removed','.dpd-demo/.dpd-swatchgrid/.dpd-swatch/.dpd-states-col doc-only CSS, superseded by the shared .spec-*/.tb-ref furniture'],
+      ]},
       {version:'1.2.1', date:'2026-07-29', author:'Mo', title:'AI context tab added', changes:[
         ['added','AI context tab documenting the real .dpd-field/.dpd-trigger/.dpd-menu/.dpd-item structural classes and the itemHtml/itemHtmlCheckbox/menuHtml/triggerHtml/fieldHtml/interactiveFieldHtml/wireInteractive/interactiveMultiFieldHtml/wireInteractiveMulti builders plus the CHEVRON/SEARCH_ICON/CHECK_ICON/OPTIONS data, and its existing "When to use" Do/Dont guidance (5 do / 6 dont)'],
       ]},
@@ -12702,283 +12670,633 @@ function tblPgToggleChecked(cb){
   syncHeader();
 })();
 
-/* ── DROPDOWN ── */
-(function(){
-  var CHEVRON = '<svg viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1.5L6 6.5L11 1.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-  var SEARCH_ICON = '<svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="7" cy="7" r="5" stroke="currentColor" stroke-width="1.6"/><path d="M11.5 11.5L15 15" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>';
-  var CHECK_ICON = '<svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 8.5L6.5 12L13 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-  var OPTIONS = ['Airtime & Data','Electricity','Bill Payments','Vouchers','Gaming','Insurance','Lottery','Data Bundles'];
+/* ── DROPDOWN — .sec--tabbed treatment (Overview / Style / Code / Changelog), a shared-state
+   playground rendered into two mounts (single/multi mode toggle), and a three-language code panel. ── */
+var CHEVRON = '<svg viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1.5L6 6.5L11 1.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+var SEARCH_ICON = '<svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="7" cy="7" r="5" stroke="currentColor" stroke-width="1.6"/><path d="M11.5 11.5L15 15" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>';
+var CHECK_ICON = '<svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 8.5L6.5 12L13 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+var OPTIONS = ['Airtime & Data','Electricity','Bill Payments','Vouchers','Gaming','Insurance','Lottery','Data Bundles'];
 
-  // Single-select row — no checkbox; a trailing check mark shows the active choice
-  function itemHtml(label, selected){
-    return '<button type="button" class="dpd-item' + (selected ? ' is-selected' : '') + '">' +
-      '<span class="dpd-item__label">' + label + '</span>' +
-      '<span class="dpd-item__check">' + CHECK_ICON + '</span>' +
-    '</button>';
+// Single-select row — no checkbox; a trailing check mark shows the active choice
+function itemHtml(label, selected){
+  return '<button type="button" class="dpd-item' + (selected ? ' is-selected' : '') + '">' +
+    '<span class="dpd-item__label">' + label + '</span>' +
+    '<span class="dpd-item__check">' + CHECK_ICON + '</span>' +
+  '</button>';
+}
+// Multi-select row — real checkbox, since several can be active at once
+function itemHtmlCheckbox(label, selected){
+  return '<button type="button" class="dpd-item' + (selected ? ' is-selected' : '') + '">' +
+    '<span class="dpd-item__box"></span>' +
+    '<span class="dpd-item__label">' + label + '</span>' +
+  '</button>';
+}
+function menuHtml(options, selectedIndex, opts){
+  opts = opts || {};
+  var search = opts.showSearch ? ('<div class="dpd-search">' + SEARCH_ICON + '<input type="text" placeholder="Search" aria-label="Search options"></div>') : '';
+  var items = options.map(function(o, i){ return itemHtml(o, i === selectedIndex); }).join('');
+  return '<div class="dpd-menu' + (opts.inline ? ' dpd-menu--inline' : '') + '"' + (opts.inline ? '' : ' hidden') + '>' + search + items + '</div>';
+}
+function triggerHtml(opts){
+  var cls = 'dpd-trigger';
+  if(opts.state === 'hover') cls += ' dpd-trigger--hover';
+  if(opts.state === 'focus') cls += ' dpd-trigger--focus';
+  if(opts.state === 'open')  cls += ' dpd-trigger--open';
+  var hasValue = opts.selectedIndex != null;
+  if(hasValue) cls += ' has-value';
+  var text = hasValue ? opts.options[opts.selectedIndex] : (opts.placeholder || 'Choose an option');
+  return '<button type="button" class="' + cls + '"><span class="dpd-trigger__text">' + text + '</span><span class="dpd-trigger__chevron">' + CHEVRON + '</span></button>';
+}
+// Static swatch field — forced state via modifier classes, no JS wiring
+function fieldHtml(opts){
+  opts = opts || {};
+  var options = opts.options || OPTIONS;
+  var cls = 'dpd-field';
+  if(opts.style === 'rounded') cls += ' dpd-field--rounded';
+  if(opts.size === 'sm') cls += ' dpd-field--sm';
+  var label   = opts.showLabel   === false ? '' : '<div class="dpd-label">' + (opts.label || 'Dropdown label') + '</div>';
+  var caption = opts.showCaption === false ? '' : '<div class="dpd-caption">' + (opts.caption || 'Assistive caption') + '</div>';
+  var menu = opts.state === 'open' ? menuHtml(options, opts.selectedIndex, {showSearch: opts.showSearch, inline: true}) : '';
+  return '<div class="' + cls + '">' + label +
+    '<div class="dpd-wrap' + (opts.state === 'open' ? ' is-open' : '') + '">' + triggerHtml(Object.assign({}, opts, {options: options})) + menu + '</div>' +
+    caption +
+  '</div>';
+}
+// Live field — real menu always in the DOM (hidden), wired for click/search/keyboard behaviour
+function interactiveFieldHtml(opts){
+  var cls = 'dpd-field' + (opts.style === 'rounded' ? ' dpd-field--rounded' : '') + (opts.size === 'sm' ? ' dpd-field--sm' : '');
+  var label = '<div class="dpd-label">' + (opts.label || 'Dropdown label') + '</div>';
+  var caption = '<div class="dpd-caption">' + (opts.caption || 'Assistive caption') + '</div>';
+  var menu = menuHtml(opts.options, null, {showSearch: opts.showSearch, inline: false});
+  return '<div class="' + cls + '">' + label +
+    '<div class="dpd-wrap">' + triggerHtml({options: opts.options, placeholder: opts.placeholder}) + menu + '</div>' +
+    caption +
+  '</div>';
+}
+function wireInteractive(root){
+  var wrap = root.querySelector('.dpd-wrap');
+  var trigger = wrap.querySelector('.dpd-trigger');
+  var menu = wrap.querySelector('.dpd-menu');
+  var textEl = trigger.querySelector('.dpd-trigger__text');
+  function close(){
+    wrap.classList.remove('is-open');
+    trigger.classList.remove('dpd-trigger--open');
+    menu.setAttribute('hidden', '');
   }
-  // Multi-select row — real checkbox, since several can be active at once
-  function itemHtmlCheckbox(label, selected){
-    return '<button type="button" class="dpd-item' + (selected ? ' is-selected' : '') + '">' +
-      '<span class="dpd-item__box"></span>' +
-      '<span class="dpd-item__label">' + label + '</span>' +
-    '</button>';
-  }
-  function menuHtml(options, selectedIndex, opts){
-    opts = opts || {};
-    var search = opts.showSearch ? ('<div class="dpd-search">' + SEARCH_ICON + '<input type="text" placeholder="Search" aria-label="Search options"></div>') : '';
-    var items = options.map(function(o, i){ return itemHtml(o, i === selectedIndex); }).join('');
-    return '<div class="dpd-menu' + (opts.inline ? ' dpd-menu--inline' : '') + '"' + (opts.inline ? '' : ' hidden') + '>' + search + items + '</div>';
-  }
-  function triggerHtml(opts){
-    var cls = 'dpd-trigger';
-    if(opts.state === 'hover') cls += ' dpd-trigger--hover';
-    if(opts.state === 'focus') cls += ' dpd-trigger--focus';
-    if(opts.state === 'open')  cls += ' dpd-trigger--open';
-    var hasValue = opts.selectedIndex != null;
-    if(hasValue) cls += ' has-value';
-    var text = hasValue ? opts.options[opts.selectedIndex] : (opts.placeholder || 'Choose an option');
-    return '<button type="button" class="' + cls + '"><span class="dpd-trigger__text">' + text + '</span><span class="dpd-trigger__chevron">' + CHEVRON + '</span></button>';
-  }
-  // Static swatch field — forced state via modifier classes, no JS wiring
-  function fieldHtml(opts){
-    opts = opts || {};
-    var options = opts.options || OPTIONS;
-    var cls = 'dpd-field';
-    if(opts.style === 'rounded') cls += ' dpd-field--rounded';
-    if(opts.size === 'sm') cls += ' dpd-field--sm';
-    var label   = opts.showLabel   === false ? '' : '<div class="dpd-label">' + (opts.label || 'Dropdown label') + '</div>';
-    var caption = opts.showCaption === false ? '' : '<div class="dpd-caption">' + (opts.caption || 'Assistive caption') + '</div>';
-    var menu = opts.state === 'open' ? menuHtml(options, opts.selectedIndex, {showSearch: opts.showSearch, inline: true}) : '';
-    return '<div class="' + cls + '">' + label +
-      '<div class="dpd-wrap' + (opts.state === 'open' ? ' is-open' : '') + '">' + triggerHtml(Object.assign({}, opts, {options: options})) + menu + '</div>' +
-      caption +
-    '</div>';
-  }
-  // Live field — real menu always in the DOM (hidden), wired for click/search/keyboard behaviour
-  function interactiveFieldHtml(opts){
-    var cls = 'dpd-field' + (opts.style === 'rounded' ? ' dpd-field--rounded' : '') + (opts.size === 'sm' ? ' dpd-field--sm' : '');
-    var label = '<div class="dpd-label">' + (opts.label || 'Dropdown label') + '</div>';
-    var caption = '<div class="dpd-caption">' + (opts.caption || 'Assistive caption') + '</div>';
-    var menu = menuHtml(opts.options, null, {showSearch: opts.showSearch, inline: false});
-    return '<div class="' + cls + '">' + label +
-      '<div class="dpd-wrap">' + triggerHtml({options: opts.options, placeholder: opts.placeholder}) + menu + '</div>' +
-      caption +
-    '</div>';
-  }
-  function wireInteractive(root){
-    var wrap = root.querySelector('.dpd-wrap');
-    var trigger = wrap.querySelector('.dpd-trigger');
-    var menu = wrap.querySelector('.dpd-menu');
-    var textEl = trigger.querySelector('.dpd-trigger__text');
-    function close(){
-      wrap.classList.remove('is-open');
-      trigger.classList.remove('dpd-trigger--open');
-      menu.setAttribute('hidden', '');
-    }
-    function openMenu(){
-      wrap.classList.add('is-open');
-      trigger.classList.add('dpd-trigger--open');
-      menu.removeAttribute('hidden');
-      var search = menu.querySelector('input');
-      if(search) search.focus();
-    }
-    trigger.addEventListener('click', function(e){
-      e.stopPropagation();
-      if(wrap.classList.contains('is-open')) close(); else openMenu();
-    });
-    menu.querySelectorAll('.dpd-item').forEach(function(btn){
-      btn.addEventListener('click', function(e){
-        e.stopPropagation();
-        menu.querySelectorAll('.dpd-item').forEach(function(b){ b.classList.remove('is-selected'); });
-        btn.classList.add('is-selected');
-        textEl.textContent = btn.querySelector('.dpd-item__label').textContent;
-        trigger.classList.add('has-value');
-        close();
-      });
-    });
+  function openMenu(){
+    wrap.classList.add('is-open');
+    trigger.classList.add('dpd-trigger--open');
+    menu.removeAttribute('hidden');
     var search = menu.querySelector('input');
-    if(search){
-      search.addEventListener('click', function(e){ e.stopPropagation(); });
-      search.addEventListener('input', function(){
-        var q = search.value.trim().toLowerCase();
-        menu.querySelectorAll('.dpd-item').forEach(function(btn){
-          var txt = btn.querySelector('.dpd-item__label').textContent.toLowerCase();
-          btn.style.display = txt.indexOf(q) > -1 ? '' : 'none';
-        });
-      });
-    }
-    document.addEventListener('click', function(e){
-      if(!wrap.contains(e.target)) close();
-    });
-    document.addEventListener('keydown', function(e){
-      if(e.key === 'Escape' && wrap.classList.contains('is-open')) close();
-    });
+    if(search) search.focus();
   }
-  // Multi-select — every item toggles independently; menu stays open until Done
-  function interactiveMultiFieldHtml(opts){
-    var cls = 'dpd-field' + (opts.style === 'rounded' ? ' dpd-field--rounded' : '') + (opts.size === 'sm' ? ' dpd-field--sm' : '');
-    var label = '<div class="dpd-label">' + (opts.label || 'Dropdown label') + '</div>';
-    var caption = '<div class="dpd-caption">' + (opts.caption || 'Assistive caption') + '</div>';
-    var items = opts.options.map(function(o){ return itemHtmlCheckbox(o, false); }).join('');
-    var search = opts.showSearch ? ('<div class="dpd-search">' + SEARCH_ICON + '<input type="text" placeholder="Search" aria-label="Search options"></div>') : '';
-    var foot = '<div class="dpd-menu__foot"><button type="button" class="dpd-menu__clear">Clear</button><button type="button" class="pop__apply">Done</button></div>';
-    var menu = '<div class="dpd-menu" hidden>' + search + items + foot + '</div>';
-    return '<div class="' + cls + '">' + label +
-      '<div class="dpd-wrap">' + triggerHtml({options: opts.options, placeholder: opts.placeholder}) + menu + '</div>' +
-      caption +
-    '</div>';
-  }
-  function wireInteractiveMulti(root, opts){
-    var wrap = root.querySelector('.dpd-wrap');
-    var trigger = wrap.querySelector('.dpd-trigger');
-    var menu = wrap.querySelector('.dpd-menu');
-    var textEl = trigger.querySelector('.dpd-trigger__text');
-    var options = opts.options;
-    var selected = new Set();
-    function close(){
-      wrap.classList.remove('is-open');
-      trigger.classList.remove('dpd-trigger--open');
-      menu.setAttribute('hidden', '');
-    }
-    function openMenu(){
-      wrap.classList.add('is-open');
-      trigger.classList.add('dpd-trigger--open');
-      menu.removeAttribute('hidden');
-      var search = menu.querySelector('input');
-      if(search) search.focus();
-    }
-    function updateTrigger(){
-      if(selected.size === 0){
-        textEl.textContent = opts.placeholder || 'Choose an option';
-        trigger.classList.remove('has-value');
-      } else if(selected.size === 1){
-        textEl.textContent = options[selected.values().next().value];
-        trigger.classList.add('has-value');
-      } else {
-        textEl.textContent = selected.size + ' selected';
-        trigger.classList.add('has-value');
-      }
-    }
-    trigger.addEventListener('click', function(e){
+  trigger.addEventListener('click', function(e){
+    e.stopPropagation();
+    if(wrap.classList.contains('is-open')) close(); else openMenu();
+  });
+  menu.querySelectorAll('.dpd-item').forEach(function(btn){
+    btn.addEventListener('click', function(e){
       e.stopPropagation();
-      if(wrap.classList.contains('is-open')) close(); else openMenu();
+      menu.querySelectorAll('.dpd-item').forEach(function(b){ b.classList.remove('is-selected'); });
+      btn.classList.add('is-selected');
+      textEl.textContent = btn.querySelector('.dpd-item__label').textContent;
+      trigger.classList.add('has-value');
+      close();
     });
-    var itemEls = Array.prototype.slice.call(menu.querySelectorAll('.dpd-item'));
-    itemEls.forEach(function(btn, i){
-      btn.addEventListener('click', function(e){
-        e.stopPropagation();
-        if(selected.has(i)){ selected.delete(i); btn.classList.remove('is-selected'); }
-        else { selected.add(i); btn.classList.add('is-selected'); }
-        updateTrigger();
+  });
+  var search = menu.querySelector('input');
+  if(search){
+    search.addEventListener('click', function(e){ e.stopPropagation(); });
+    search.addEventListener('input', function(){
+      var q = search.value.trim().toLowerCase();
+      menu.querySelectorAll('.dpd-item').forEach(function(btn){
+        var txt = btn.querySelector('.dpd-item__label').textContent.toLowerCase();
+        btn.style.display = txt.indexOf(q) > -1 ? '' : 'none';
       });
     });
-    var clearBtn = menu.querySelector('.dpd-menu__clear');
-    if(clearBtn) clearBtn.addEventListener('click', function(e){
+  }
+  document.addEventListener('click', function(e){
+    if(!wrap.contains(e.target)) close();
+  });
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape' && wrap.classList.contains('is-open')) close();
+  });
+}
+// Multi-select — every item toggles independently; menu stays open until Done
+function interactiveMultiFieldHtml(opts){
+  var cls = 'dpd-field' + (opts.style === 'rounded' ? ' dpd-field--rounded' : '') + (opts.size === 'sm' ? ' dpd-field--sm' : '');
+  var label = '<div class="dpd-label">' + (opts.label || 'Dropdown label') + '</div>';
+  var caption = '<div class="dpd-caption">' + (opts.caption || 'Assistive caption') + '</div>';
+  var items = opts.options.map(function(o){ return itemHtmlCheckbox(o, false); }).join('');
+  var search = opts.showSearch ? ('<div class="dpd-search">' + SEARCH_ICON + '<input type="text" placeholder="Search" aria-label="Search options"></div>') : '';
+  var foot = '<div class="dpd-menu__foot"><button type="button" class="dpd-menu__clear">Clear</button><button type="button" class="pop__apply">Done</button></div>';
+  var menu = '<div class="dpd-menu" hidden>' + search + items + foot + '</div>';
+  return '<div class="' + cls + '">' + label +
+    '<div class="dpd-wrap">' + triggerHtml({options: opts.options, placeholder: opts.placeholder}) + menu + '</div>' +
+    caption +
+  '</div>';
+}
+function wireInteractiveMulti(root, opts){
+  var wrap = root.querySelector('.dpd-wrap');
+  var trigger = wrap.querySelector('.dpd-trigger');
+  var menu = wrap.querySelector('.dpd-menu');
+  var textEl = trigger.querySelector('.dpd-trigger__text');
+  var options = opts.options;
+  var selected = new Set();
+  function close(){
+    wrap.classList.remove('is-open');
+    trigger.classList.remove('dpd-trigger--open');
+    menu.setAttribute('hidden', '');
+  }
+  function openMenu(){
+    wrap.classList.add('is-open');
+    trigger.classList.add('dpd-trigger--open');
+    menu.removeAttribute('hidden');
+    var search = menu.querySelector('input');
+    if(search) search.focus();
+  }
+  function updateTrigger(){
+    if(selected.size === 0){
+      textEl.textContent = opts.placeholder || 'Choose an option';
+      trigger.classList.remove('has-value');
+    } else if(selected.size === 1){
+      textEl.textContent = options[selected.values().next().value];
+      trigger.classList.add('has-value');
+    } else {
+      textEl.textContent = selected.size + ' selected';
+      trigger.classList.add('has-value');
+    }
+  }
+  trigger.addEventListener('click', function(e){
+    e.stopPropagation();
+    if(wrap.classList.contains('is-open')) close(); else openMenu();
+  });
+  var itemEls = Array.prototype.slice.call(menu.querySelectorAll('.dpd-item'));
+  itemEls.forEach(function(btn, i){
+    btn.addEventListener('click', function(e){
       e.stopPropagation();
-      selected.clear();
-      itemEls.forEach(function(b){ b.classList.remove('is-selected'); });
+      if(selected.has(i)){ selected.delete(i); btn.classList.remove('is-selected'); }
+      else { selected.add(i); btn.classList.add('is-selected'); }
       updateTrigger();
     });
-    var doneBtn = menu.querySelector('.pop__apply');
-    if(doneBtn) doneBtn.addEventListener('click', function(e){ e.stopPropagation(); close(); });
-    var search = menu.querySelector('.dpd-search input');
-    if(search){
-      search.addEventListener('click', function(e){ e.stopPropagation(); });
-      search.addEventListener('input', function(){
-        var q = search.value.trim().toLowerCase();
-        itemEls.forEach(function(btn){
-          var txt = btn.querySelector('.dpd-item__label').textContent.toLowerCase();
-          btn.style.display = txt.indexOf(q) > -1 ? '' : 'none';
-        });
-      });
-    }
-    document.addEventListener('click', function(e){
-      if(!wrap.contains(e.target)) close();
-    });
-    document.addEventListener('keydown', function(e){
-      if(e.key === 'Escape' && wrap.classList.contains('is-open')) close();
-    });
+  });
+  var clearBtn = menu.querySelector('.dpd-menu__clear');
+  if(clearBtn) clearBtn.addEventListener('click', function(e){
+    e.stopPropagation();
+    selected.clear();
+    itemEls.forEach(function(b){ b.classList.remove('is-selected'); });
     updateTrigger();
-  }
-  function swatch(cap, inner){
-    return '<div class="dpd-swatch"><div class="dpd-swatch__cap">' + cap + '</div>' + inner + '</div>';
-  }
-
-  // Interactive playground — single-select
-  var play = document.getElementById('dpd-play');
-  if(play){
-    play.innerHTML = interactiveFieldHtml({
-      options: OPTIONS, showSearch: true,
-      label: 'Merchant category', placeholder: 'Choose a category',
-      caption: 'Used to route your settlement report.'
+  });
+  var doneBtn = menu.querySelector('.pop__apply');
+  if(doneBtn) doneBtn.addEventListener('click', function(e){ e.stopPropagation(); close(); });
+  var search = menu.querySelector('.dpd-search input');
+  if(search){
+    search.addEventListener('click', function(e){ e.stopPropagation(); });
+    search.addEventListener('input', function(){
+      var q = search.value.trim().toLowerCase();
+      itemEls.forEach(function(btn){
+        var txt = btn.querySelector('.dpd-item__label').textContent.toLowerCase();
+        btn.style.display = txt.indexOf(q) > -1 ? '' : 'none';
+      });
     });
-    wireInteractive(play);
   }
+  document.addEventListener('click', function(e){
+    if(!wrap.contains(e.target)) close();
+  });
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape' && wrap.classList.contains('is-open')) close();
+  });
+  updateTrigger();
+}
 
-  // Interactive playground — multi-select
-  var playMulti = document.getElementById('dpd-play-multi');
-  if(playMulti){
-    var multiOpts = {options: OPTIONS, showSearch: true, placeholder: 'Choose categories'};
-    playMulti.innerHTML = interactiveMultiFieldHtml({
-      options: OPTIONS, showSearch: true,
-      label: 'Categories', placeholder: 'Choose categories',
-      caption: 'Select every category this merchant sells.'
-    });
-    wireInteractiveMulti(playMulti, multiOpts);
-  }
+/* ── DROPDOWN PLAYGROUND ── */
+let ddpg = { mode: 'single', style: 'bordered', size: 'md', showSearch: true };
 
-  // Style — Bordered vs Rounded
-  var styleEl = document.getElementById('dpd-style');
-  if(styleEl){
-    styleEl.innerHTML =
-      swatch('Bordered', fieldHtml({style: 'bordered'})) +
-      swatch('Rounded',  fieldHtml({style: 'rounded'}));
-  }
+const DD_MODES  = [ {key:'single',label:'Single-select'}, {key:'multi',label:'Multi-select'} ];
+const DD_STYLES = [ {key:'bordered',label:'Bordered'}, {key:'rounded',label:'Rounded'} ];
+const DD_SIZES  = [ {key:'md',label:'Medium'}, {key:'sm',label:'Small'} ];
 
-  // Sizes — Medium vs Small
-  var sizesEl = document.getElementById('dpd-sizes');
-  if(sizesEl){
-    sizesEl.innerHTML =
-      swatch('Medium · 48px', fieldHtml({size: 'md'})) +
-      swatch('Small · 40px',  fieldHtml({size: 'sm'}));
+function ddStageField(){
+  const wrap = document.createElement('div');
+  if(ddpg.mode === 'single'){
+    wrap.innerHTML = interactiveFieldHtml({options: OPTIONS, showSearch: ddpg.showSearch, style: ddpg.style, size: ddpg.size, label: 'Merchant category', placeholder: 'Choose a category', caption: 'Used to route your settlement report.'});
+    wireInteractive(wrap);
+  } else {
+    wrap.innerHTML = interactiveMultiFieldHtml({options: OPTIONS, showSearch: ddpg.showSearch, style: ddpg.style, size: ddpg.size, label: 'Categories', placeholder: 'Choose categories', caption: 'Select every category this merchant sells.'});
+    wireInteractiveMulti(wrap, {options: OPTIONS, placeholder: 'Choose categories'});
   }
+  return wrap.firstElementChild;
+}
 
-  // Placeholder vs Selected
-  var selEl = document.getElementById('dpd-selection');
-  if(selEl){
-    selEl.innerHTML =
-      swatch('Placeholder', fieldHtml({})) +
-      swatch('Selected',    fieldHtml({selectedIndex: 1}));
-  }
+function ddpgRefresh(){
+  document.querySelectorAll('.ddpg-stage-el').forEach(function(stage){
+    stage.innerHTML = '';
+    stage.appendChild(ddStageField());
+  });
+  const block = document.getElementById('ddpg-code-block');
+  if(block) block.innerHTML = getDdCode();
+}
 
-  // States — 2-up grid (Bordered / Rounded), 4 state rows stacked inside each
-  var statesEl = document.getElementById('dpd-states');
-  if(statesEl){
-    var stateOrder = [
-      {state: 'default', cap: 'Default'},
-      {state: 'hover',   cap: 'Hover'},
-      {state: 'focus',   cap: 'Keyboard focus'},
-      {state: 'open',    cap: 'Open'}
-    ];
-    var styleCols = [{style: 'bordered', cap: 'Bordered'}, {style: 'rounded', cap: 'Rounded'}];
-    statesEl.innerHTML = styleCols.map(function(col){
-      var rows = stateOrder.map(function(o){
-        return '<div class="dpd-state-row"><div class="dpd-state-row__cap">' + o.cap + '</div>' +
-          fieldHtml({style: col.style, state: o.state, showCaption: false}) +
-        '</div>';
-      }).join('');
-      return swatch(col.cap, '<div class="dpd-states-col">' + rows + '</div>');
-    }).join('');
-  }
+const DD_LANGS = [
+  {key:'html',   label:'HTML / CSS', file:'dropdown.html'},
+  {key:'blazor', label:'Blazor',     file:'DsDropdown.razor'},
+  {key:'tsx',    label:'React TSX',  file:'DsDropdown.tsx'},
+];
+let ddLang = 'html';
 
-  // Options list & search
-  var listEl = document.getElementById('dpd-list');
-  if(listEl){
-    listEl.innerHTML =
-      swatch('Without search', fieldHtml({state: 'open', selectedIndex: 2, showCaption: false})) +
-      swatch('With search',    fieldHtml({state: 'open', selectedIndex: 2, showCaption: false, showSearch: true}));
+function getDdCodeHTML(){
+  const {mode, style, size, showSearch} = ddpg;
+  const fieldCls = 'dpd-field' + (style==='rounded' ? ' dpd-field--rounded' : '') + (size==='sm' ? ' dpd-field--sm' : '');
+  const searchLine = showSearch ? `\n      <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"dpd-search"</span><span class="code-kw">></span><span class="code-cm">&#60;!-- search input --></span><span class="code-kw">&#60;/div></span>` : '';
+  if(mode==='single'){
+    return `<span class="code-cm">/* Flash · Dropdown field · ${cap(style)} · ${size==='md'?'Medium':'Small'} · single-select */</span>
+<span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"${fieldCls}"</span><span class="code-kw">></span>
+  <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"dpd-label"</span><span class="code-kw">></span>Merchant category<span class="code-kw">&#60;/div></span>
+  <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"dpd-wrap"</span><span class="code-kw">></span>
+    <span class="code-kw">&#60;button</span> <span class="code-cls">class</span>=<span class="code-val">"dpd-trigger has-value"</span><span class="code-kw">></span>
+      <span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"dpd-trigger__text"</span><span class="code-kw">></span>Electricity<span class="code-kw">&#60;/span></span>
+      <span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"dpd-trigger__chevron"</span><span class="code-kw">>&#8230;&#60;/span></span>
+    <span class="code-kw">&#60;/button></span>
+    <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"dpd-menu"</span> hidden<span class="code-kw">></span>${searchLine}
+      <span class="code-kw">&#60;button</span> <span class="code-cls">class</span>=<span class="code-val">"dpd-item"</span><span class="code-kw">>&#8230;&#60;/button></span>
+      <span class="code-kw">&#60;button</span> <span class="code-cls">class</span>=<span class="code-val">"dpd-item is-selected"</span><span class="code-kw">>&#8230;&#60;/button></span>
+    <span class="code-kw">&#60;/div></span>
+  <span class="code-kw">&#60;/div></span>
+  <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"dpd-caption"</span><span class="code-kw">></span>Used to route your settlement report.<span class="code-kw">&#60;/div></span>
+<span class="code-kw">&#60;/div></span>`;
   }
-})();
+  return `<span class="code-cm">/* Flash · Dropdown field · ${cap(style)} · ${size==='md'?'Medium':'Small'} · multi-select */</span>
+<span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"${fieldCls}"</span><span class="code-kw">></span>
+  <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"dpd-label"</span><span class="code-kw">></span>Categories<span class="code-kw">&#60;/div></span>
+  <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"dpd-wrap"</span><span class="code-kw">></span>
+    <span class="code-kw">&#60;button</span> <span class="code-cls">class</span>=<span class="code-val">"dpd-trigger has-value"</span><span class="code-kw">></span>
+      <span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"dpd-trigger__text"</span><span class="code-kw">></span>2 selected<span class="code-kw">&#60;/span></span>
+      <span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"dpd-trigger__chevron"</span><span class="code-kw">>&#8230;&#60;/span></span>
+    <span class="code-kw">&#60;/button></span>
+    <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"dpd-menu"</span> hidden<span class="code-kw">></span>${searchLine}
+      <span class="code-kw">&#60;button</span> <span class="code-cls">class</span>=<span class="code-val">"dpd-item"</span><span class="code-kw">></span>&#60;span class="dpd-item__box"&#62;&#8230;<span class="code-kw">&#60;/button></span>
+      <span class="code-kw">&#60;button</span> <span class="code-cls">class</span>=<span class="code-val">"dpd-item is-selected"</span><span class="code-kw">></span>&#60;span class="dpd-item__box"&#62;&#8230;<span class="code-kw">&#60;/button></span>
+      <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"dpd-menu__foot"</span><span class="code-kw">></span>
+        <span class="code-kw">&#60;button</span> <span class="code-cls">class</span>=<span class="code-val">"dpd-menu__clear"</span><span class="code-kw">>Clear&#60;/button></span>
+        <span class="code-kw">&#60;button</span> <span class="code-cls">class</span>=<span class="code-val">"pop__apply"</span><span class="code-kw">>Done&#60;/button></span>
+      <span class="code-kw">&#60;/div></span>
+    <span class="code-kw">&#60;/div></span>
+  <span class="code-kw">&#60;/div></span>
+  <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"dpd-caption"</span><span class="code-kw">></span>Select every category this merchant sells.<span class="code-kw">&#60;/div></span>
+<span class="code-kw">&#60;/div></span>`;
+}
+
+function getDdCodeBlazor(){
+  const {mode, style, size, showSearch} = ddpg;
+  if(mode==='single'){
+    return `<span class="code-cm">@* DsDropdown.razor — usage *@</span>
+<span class="code-kw">&#60;DsDropdown</span> <span class="code-attr">Label</span>=<span class="code-val">"Merchant category"</span>
+            <span class="code-attr">Style</span>=<span class="code-val">"DropdownStyle.${cap(style)}"</span>
+            <span class="code-attr">Size</span>=<span class="code-val">"DropdownSize.${size==='md'?'Medium':'Small'}"</span>${showSearch?`\n            <span class="code-attr">ShowSearch</span>=<span class="code-val">"true"</span>`:''}
+            <span class="code-attr">Options</span>=<span class="code-val">"categories"</span>
+            <span class="code-attr">Placeholder</span>=<span class="code-val">"Choose a category"</span>
+            <span class="code-attr">Caption</span>=<span class="code-val">"Used to route your settlement report."</span> <span class="code-kw">/></span>
+
+<span class="code-kw">@code</span> {
+  <span class="code-kw">private</span> List&#60;string> categories = <span class="code-kw">new</span>() { <span class="code-val">"Airtime &amp; Data"</span>, <span class="code-val">"Electricity"</span>, <span class="code-val">"Bill Payments"</span> };
+}`;
+  }
+  return `<span class="code-cm">@* DsMultiDropdown.razor — usage *@</span>
+<span class="code-kw">&#60;DsMultiDropdown</span> <span class="code-attr">Label</span>=<span class="code-val">"Categories"</span>
+                 <span class="code-attr">Style</span>=<span class="code-val">"DropdownStyle.${cap(style)}"</span>
+                 <span class="code-attr">Size</span>=<span class="code-val">"DropdownSize.${size==='md'?'Medium':'Small'}"</span>${showSearch?`\n                 <span class="code-attr">ShowSearch</span>=<span class="code-val">"true"</span>`:''}
+                 <span class="code-attr">Options</span>=<span class="code-val">"categories"</span>
+                 <span class="code-attr">Placeholder</span>=<span class="code-val">"Choose categories"</span>
+                 <span class="code-attr">OnDone</span>=<span class="code-val">"HandleDone"</span> <span class="code-kw">/></span>
+
+<span class="code-kw">@code</span> {
+  <span class="code-kw">private</span> List&#60;string> categories = <span class="code-kw">new</span>() { <span class="code-val">"Airtime &amp; Data"</span>, <span class="code-val">"Electricity"</span>, <span class="code-val">"Bill Payments"</span> };
+  <span class="code-kw">private void</span> HandleDone(List&#60;string> selected) { }
+}`;
+}
+
+function getDdCodeTSX(){
+  const {mode, style, size, showSearch} = ddpg;
+  if(mode==='single'){
+    return `<span class="code-cm">// DsDropdown.tsx — usage</span>
+<span class="code-kw">import</span> { DsDropdown } <span class="code-kw">from</span> <span class="code-val">'./DsDropdown'</span>;
+
+<span class="code-kw">const</span> categories = [<span class="code-val">'Airtime &amp; Data'</span>, <span class="code-val">'Electricity'</span>, <span class="code-val">'Bill Payments'</span>];
+
+&#60;DsDropdown
+  label=<span class="code-val">"Merchant category"</span>
+  options={categories}
+  style=<span class="code-val">"${style}"</span>
+  size=<span class="code-val">"${size}"</span>${showSearch?`\n  showSearch`:''}
+  placeholder=<span class="code-val">"Choose a category"</span>
+  caption=<span class="code-val">"Used to route your settlement report."</span>
+  onChange={(value) => {}}
+/></span>`;
+  }
+  return `<span class="code-cm">// DsMultiDropdown.tsx — usage</span>
+<span class="code-kw">import</span> { DsMultiDropdown } <span class="code-kw">from</span> <span class="code-val">'./DsMultiDropdown'</span>;
+
+<span class="code-kw">const</span> categories = [<span class="code-val">'Airtime &amp; Data'</span>, <span class="code-val">'Electricity'</span>, <span class="code-val">'Bill Payments'</span>];
+
+&#60;DsMultiDropdown
+  label=<span class="code-val">"Categories"</span>
+  options={categories}
+  style=<span class="code-val">"${style}"</span>
+  size=<span class="code-val">"${size}"</span>${showSearch?`\n  showSearch`:''}
+  placeholder=<span class="code-val">"Choose categories"</span>
+  onDone={(selected) => {}}
+/></span>`;
+}
+
+function getDdCode(){
+  return ddLang==='blazor' ? getDdCodeBlazor()
+       : ddLang==='tsx'    ? getDdCodeTSX()
+       : getDdCodeHTML();
+}
+
+function setDdLang(lang){
+  if(!DD_LANGS.some(l=>l.key===lang)) return;
+  ddLang = lang;
+  document.querySelectorAll('#dd-code-tab .code-seg__btn').forEach(b=>{
+    const on = b.dataset.lang===lang;
+    b.setAttribute('aria-selected', on ? 'true' : 'false');
+    b.setAttribute('tabindex', on ? '0' : '-1');
+  });
+  const file = document.getElementById('dd-lang-file');
+  const meta = DD_LANGS.find(l=>l.key===lang);
+  if(file && meta) file.textContent = meta.file;
+  const block = document.getElementById('ddpg-code-block');
+  if(block) block.innerHTML = getDdCode();
+}
+
+function ddLangKeydown(e){
+  const i = DD_LANGS.findIndex(l=>l.key===ddLang);
+  let n = i;
+  if(e.key==='ArrowLeft')       n = (i - 1 + DD_LANGS.length) % DD_LANGS.length;
+  else if(e.key==='ArrowRight') n = (i + 1) % DD_LANGS.length;
+  else if(e.key==='Home')       n = 0;
+  else if(e.key==='End')        n = DD_LANGS.length - 1;
+  else return;
+  e.preventDefault();
+  setDdLang(DD_LANGS[n].key);
+  const btn = document.getElementById('dd-lang-' + DD_LANGS[n].key);
+  if(btn) btn.focus();
+}
+
+const DD_PLAYGROUND_MOUNTS = [
+  {rootId:'dd-playground', idSuffix:'', wrap:true, title:'Try the component', desc:'Adjust the filters to test component states.', headingAbove:'A dropdown picks one value &mdash; or several, in multi-select &mdash; from a bounded, known list.'},
+  {rootId:'dd-code-playground', idSuffix:'-code', style:'code', title:'Playground', desc:'Live demo of the component.'},
+];
+
+function renderDropdownPlayground(){
+  const theme = tbTheme();
+  const sbg = stageBg(theme);
+  const modeBtns   = DD_MODES.map(m=>`<button class="btn-pg__pill${ddpg.mode===m.key?' on':''}" onclick="ddpgSet('mode','${m.key}')">${m.label}</button>`).join('');
+  const styleBtns  = DD_STYLES.map(s=>`<button class="btn-pg__pill${ddpg.style===s.key?' on':''}" onclick="ddpgSet('style','${s.key}')">${s.label}</button>`).join('');
+  const sizeBtns   = DD_SIZES.map(s=>`<button class="btn-pg__pill${ddpg.size===s.key?' on':''}" onclick="ddpgSet('size','${s.key}')">${s.label}</button>`).join('');
+  const searchBtns = ['off','on'].map(x=>`<button class="btn-pg__pill${(ddpg.showSearch?(x==='on'):(x==='off'))?' on':''}" onclick="ddpgSet('showSearch','${x}')">${x==='on'?'Search on':'Search off'}</button>`).join('');
+
+  DD_PLAYGROUND_MOUNTS.forEach(mount=>{
+    const root = document.getElementById(mount.rootId);
+    if(!root) return;
+    const s = mount.idSuffix;
+    const demo = `
+      <div class="btn-pg btn-pg--dd">
+        <div class="btn-pg__stage ddpg-stage-el" id="ddpg-stage${s}" style="background:${sbg}"></div>
+        <div class="btn-pg__ctrls">
+          <div class="btn-pg__group"><span class="btn-pg__clabel">Mode</span><div class="btn-pg__pill-row">${modeBtns}</div></div>
+          <div class="btn-pg__group"><span class="btn-pg__clabel">Style</span><div class="btn-pg__pill-row">${styleBtns}</div></div>
+          <div class="btn-pg__group"><span class="btn-pg__clabel">Size</span><div class="btn-pg__pill-row">${sizeBtns}</div></div>
+          <div class="btn-pg__group"><span class="btn-pg__clabel">Search</span><div class="btn-pg__pill-row">${searchBtns}</div></div>
+        </div>
+      </div>`;
+
+    if(mount.style==='code'){
+      root.innerHTML = `
+        <div class="type-sub__title">${mount.title}</div>
+        <div class="type-sub__desc">${mount.desc}</div>
+        <div class="cpg-section-outline">${demo}</div>`;
+      return;
+    }
+
+    const inner = `
+      <div class="cpg-layout">
+        <div class="cpg-layout__intro">
+          ${mount.wrap ? `<span class="cpg-cursor-icon">${CPG_CURSOR_ICON_SVG}</span>` : ''}
+          <div class="cpg-layout__title">${mount.title}</div>
+          <div class="cpg-layout__desc">${mount.desc}</div>
+        </div>
+        <div class="cpg-layout__demo">${demo}</div>
+      </div>`;
+    const wrapped = mount.wrap ? `<div class="cpg-section-block">${inner}</div>` : inner;
+    root.innerHTML = (mount.headingAbove ? `<div class="cpg-overview-heading"><span class="cpg-overview-heading__icon">${CPG_INFO_ICON_SVG}</span><span>${mount.headingAbove}</span></div>` : '') + wrapped;
+  });
+
+  ddpgRefresh();
+}
+
+function ddpgSet(key, val){
+  if(key==='showSearch') ddpg.showSearch = (val==='on');
+  else ddpg[key] = val;
+  renderDropdownPlayground();
+}
+
+function ddpgCopyCode(){
+  const b = document.getElementById('ddpg-code-block');
+  if(!b) return;
+  navigator.clipboard.writeText(b.innerText||b.textContent).catch(()=>{});
+  const btn = document.getElementById('ddpg-copy-btn');
+  if(btn){ btn.textContent = 'Copied!'; setTimeout(()=>btn.textContent='Copy', 2000); }
+}
+
+function renderDropdownCodeTab(){
+  const root = document.getElementById('dd-code-tab');
+  if(!root) return;
+  root.innerHTML = `
+    <div class="type-sub__title">Code</div>
+    <div class="type-sub__desc">Live snippet matching the current Playground configuration &mdash; switch to Overview to change it.</div>
+    <div class="cpg-section-outline">
+      <div class="code-panel code-panel--bare open">
+        <div class="code-panel__head">
+          <div class="code-seg" role="tablist" aria-label="Code language" onkeydown="ddLangKeydown(event)">
+            ${DD_LANGS.map(l=>`<button type="button" role="tab" class="code-seg__btn" id="dd-lang-${l.key}" data-lang="${l.key}" aria-selected="${ddLang===l.key?'true':'false'}" aria-controls="ddpg-code-block" tabindex="${ddLang===l.key?'0':'-1'}" onclick="setDdLang('${l.key}')">${l.label}</button>`).join('')}
+          </div>
+          <span class="code-lang-file" id="dd-lang-file">${(DD_LANGS.find(l=>l.key===ddLang)||DD_LANGS[0]).file}</span>
+          <button class="code-copy-btn" onclick="ddpgCopyCode()" id="ddpg-copy-btn">Copy</button>
+        </div>
+        <div class="code-body"><div class="code-block" id="ddpg-code-block" role="tabpanel" aria-live="polite"></div></div>
+      </div>
+    </div>`;
+}
+
+function renderDropdownInSitu(){
+  const root = document.getElementById('dd-insitu');
+  if(!root) return;
+  const theme = tbTheme();
+  const sbg = stageBg(theme);
+
+  const filterField = fieldHtml({style:'rounded', size:'sm', showLabel:false, showCaption:false, selectedIndex:0, placeholder:'Status'});
+  const filterMock = `
+    <div class="spec-mock__stage" style="background:${sbg}">
+      <div class="spec-mock__filterrow">${filterField}</div>
+      <div class="spec-mock__row"><span class="spec-mock__bar" style="width:70%"></span></div>
+      <div class="spec-mock__row"><span class="spec-mock__bar" style="width:55%"></span></div>
+      <div class="spec-mock__row"><span class="spec-mock__bar" style="width:62%"></span></div>
+    </div>
+    <div class="spec-mock__cap"><b>Filter a table</b>A small, Rounded dropdown sits in a toolbar to narrow the rows below it.</div>`;
+
+  const formField = fieldHtml({style:'bordered', size:'md', selectedIndex:2, label:'Merchant category', caption:'Used to route your settlement report.'});
+  const formMock = `
+    <div class="spec-mock__stage" style="background:${sbg};align-items:center">${formField}</div>
+    <div class="spec-mock__cap"><b>Form field</b>A labelled, Bordered dropdown with an assistive caption inside a settlement form.</div>`;
+
+  root.innerHTML = `
+    <div class="cpg-section-heading">
+      <div class="cpg-layout__title">In context</div>
+      <div class="cpg-layout__desc">Two everyday jobs &mdash; a compact filter in a table toolbar, and a labelled field inside a form.</div>
+    </div>
+    <div class="cpg-section-block">
+      <div class="spec-insitu-grid" style="grid-template-columns:repeat(2,minmax(0,1fr))">
+        <div class="spec-mock">${filterMock}</div>
+        <div class="spec-mock">${formMock}</div>
+      </div>
+    </div>`;
+}
+
+function renderDropdownReference(){
+  const root = document.getElementById('dd-reference');
+  if(!root) return;
+  const theme = tbTheme();
+  const sbg = stageBg(theme);
+
+  /* ---- Anatomy ---- */
+  const heroField = fieldHtml({state:'open', selectedIndex:2, showSearch:true});
+  const parts = [
+    {num:1, name:'Label',     note:'Sits above the trigger, describing the field.',                     vis:'<span style="font-weight:700;font-size:14px;color:var(--chrome-txt)">Dropdown label</span>'},
+    {num:2, name:'Trigger',   note:'The closed-state button; shows the placeholder or selected value.', vis:'<div style="width:120px;height:34px;border-radius:6px;border:2px solid var(--chrome-border);display:flex;align-items:center;padding:0 10px;font-size:12px;color:var(--chrome-txt)">Choose&hellip;</div>'},
+    {num:3, name:'Chevron',   note:'Flips 180&deg; when the menu opens.',                                vis:`<span class="dpd-trigger__chevron" style="width:20px;height:20px;color:var(--chrome-txt)">${CHEVRON}</span>`},
+    {num:4, name:'Menu card', note:'Floats under the trigger, 12px radius, drop shadow.',                vis:'<div style="width:100px;height:56px;border-radius:10px;border:1.5px dashed var(--chrome-muted);opacity:.7"></div>'},
+    {num:5, name:'List item', note:'One row per option &mdash; a check (single) or checkbox (multi).',   vis:itemHtml('Option', true)},
+    {num:6, name:'Search',    note:'Optional, leads the menu to filter long lists.',                     vis:`<div class="dpd-search" style="width:130px;flex-shrink:0">${SEARCH_ICON}<span style="font-size:12px;opacity:.6">Search</span></div>`},
+  ];
+  const partCards = parts.map(p=>`
+    <div class="spec-part">
+      <div class="spec-part__stage" style="background:${sbg}">${p.vis}</div>
+      <div class="spec-part__body">
+        <div class="spec-part__name"><span class="spec-part__num">${p.num}</span>${p.name}</div>
+        <div class="spec-part__note">${p.note}</div>
+      </div>
+    </div>`).join('');
+
+  /* ---- Size & dimensions ---- */
+  const sizeDemo = DD_SIZES.map(sz=>`
+    <div class="spec-size-item">
+      ${fieldHtml({size: sz.key, showLabel:false, showCaption:false, selectedIndex:0})}
+      <span class="spec-size-item__lbl">${sz.key==='md' ? '48px' : '40px'}</span>
+    </div>`).join('');
+  const sizeRows = `
+    <tr><td class="dd-table__name">Trigger height</td><td>48px</td><td>40px</td></tr>
+    <tr><td class="dd-table__name">Horizontal padding</td><td>12px</td><td>10px</td></tr>
+    <tr><td class="dd-table__name">Trigger text</td><td>16px semibold</td><td>14px semibold</td></tr>
+    <tr><td class="dd-table__name">Label</td><td colspan="2">14px medium</td></tr>
+    <tr><td class="dd-table__name">Caption</td><td colspan="2">12px medium</td></tr>`;
+
+  /* ---- Style × size ---- */
+  const styleSizeRows = DD_STYLES.map(st=>{
+    const cells = DD_SIZES.map(sz=>`<div class="tb-ref__cell"><div class="dpd-spec-swatch">${fieldHtml({style:st.key, size:sz.key, showLabel:false, showCaption:false})}<span class="tb-ref__cell-cap">${sz.label}</span></div></div>`).join('');
+    return `<div class="tb-ref__row"><div class="tb-ref__label">${st.label}</div><div class="tb-ref__cells">${cells}</div></div>`;
+  }).join('');
+
+  /* ---- States ---- */
+  const states = [
+    {name:'Default',        note:'Muted fill, visible border (Bordered).',           field:fieldHtml({showCaption:false})},
+    {name:'Hover',          note:'Fill darkens slightly.',                           field:fieldHtml({state:'hover', showCaption:false})},
+    {name:'Keyboard focus', note:'Border switches to the inverse colour.',           field:fieldHtml({state:'focus', showCaption:false})},
+    {name:'Open',           note:'Border stays inverse; chevron flips; menu shows.', field:fieldHtml({state:'open', selectedIndex:1, showCaption:false})},
+  ];
+  const stateCells = states.map(s=>`
+    <div class="spec-cell">
+      <div class="spec-cell__stage" style="background:${sbg}">${s.field}</div>
+      <div class="spec-cell__name">${s.name}</div>
+      <div class="spec-cell__desc">${s.note}</div>
+    </div>`).join('');
+
+  /* ---- Tokens ---- */
+  const tokRows = [
+    {name:'Default fill',        val:'var(--color-input-bg)',     tok:'color-input-bg'},
+    {name:'Default border',      val:'var(--color-input-border)', tok:'color-input-border'},
+    {name:'Focus / open border', val:'var(--color-input-focus)',  tok:'color-input-focus'},
+    {name:'List item selected',  val:'var(--color-success-l)',    tok:'color-success-l'},
+    {name:'Selected accent',     val:'var(--color-success-h)',    tok:'color-success-h'},
+    {name:'Done button',        val:'var(--color-btn-s-bg)',     tok:'color-btn-s-bg'},
+  ].map(t=>`
+    <tr>
+      <td class="dd-table__name">${t.name}</td>
+      <td><div class="spec-tok-cell"><span class="spec-tok-sw" style="background:${t.val}"></span><code>${t.val}</code></div></td>
+      <td><code>${t.tok}</code></td>
+    </tr>`).join('');
+
+  root.innerHTML = `
+    <div class="type-sub">
+      <div class="type-sub__title">Anatomy</div>
+      <div class="type-sub__desc">A Dropdown field pairs a label and trigger with a menu card of list items, plus an optional search input.</div>
+      <div class="cpg-section-outline">
+        <div class="spec-hero" style="background:${sbg}">${heroField}</div>
+        <div class="spec-parts">${partCards}</div>
+      </div>
+    </div>
+
+    <div class="type-sub">
+      <div class="type-sub__title">Size &amp; dimensions</div>
+      <div class="type-sub__desc">Two sizes share one shape &mdash; height, text and padding scale together.</div>
+      <div class="cpg-section-outline">
+        <div class="spec-size-demo" style="background:${sbg}">${sizeDemo}</div>
+        <div class="dd-table-wrap"><table class="dd-table">
+          <thead><tr><th>Property</th><th>Medium</th><th>Small</th></tr></thead>
+          <tbody>${sizeRows}</tbody>
+        </table></div>
+      </div>
+    </div>
+
+    <div class="type-sub">
+      <div class="type-sub__title">Style &times; size</div>
+      <div class="type-sub__desc">Bordered shows a visible outline at rest; Rounded hides it until hover, focus or open &mdash; across both sizes.</div>
+      <div class="cpg-section-outline">
+        <div class="tb-ref" style="background:${sbg}">${styleSizeRows}</div>
+      </div>
+    </div>
+
+    <div class="type-sub">
+      <div class="type-sub__title">States</div>
+      <div class="type-sub__desc">Every trigger resolves to one of four states.</div>
+      <div class="cpg-section-outline">
+        <div class="spec-grid">${stateCells}</div>
+      </div>
+    </div>
+
+    <div class="type-sub" style="margin-bottom:0">
+      <div class="type-sub__title">Tokens</div>
+      <div class="type-sub__desc">Borders and fills ride real semantic tokens, so they follow light and dark automatically.</div>
+      <div class="cpg-section-outline">
+        <div class="dd-table-wrap"><table class="dd-table" style="min-width:420px">
+          <thead><tr><th>Part</th><th>Value</th><th>Token</th></tr></thead>
+          <tbody>${tokRows}</tbody>
+        </table></div>
+      </div>
+    </div>`;
+}
+
+try { renderDropdownCodeTab(); } catch(e){ console.error('dd-code-tab',e); }
+try { renderDropdownPlayground(); } catch(e){ console.error('dd-playground',e); }
+try { renderDropdownInSitu(); } catch(e){ console.error('dd-insitu',e); }
+try { renderDropdownReference(); } catch(e){ console.error('dd-reference',e); }
+
+function ddTabSwitch(tab){
+  const nav = document.getElementById('dd-tabs-list');
+  if(!nav) return;
+  nav.querySelectorAll('.tab-item').forEach(btn=>btn.classList.toggle('on', btn.getAttribute('data-dd-tab')===tab));
+  document.querySelectorAll('#s-dropdown .tabs-panel[data-dd-panel]').forEach(p=>p.classList.toggle('on', p.getAttribute('data-dd-panel')===tab));
+}
 
 /* ================================================================
    SHADCN-GAP COMPONENT JS — themed to Flash (Mo · 2026-07-09)
@@ -13580,6 +13898,7 @@ try { renderSectionChangelogs(); } catch(e){ console.error('section-changelog',e
 [
   {secId:'s-chips',  panelId:'chip-changelog-panel'},
   {secId:'s-switch', panelId:'sw-changelog-panel'},
+  {secId:'s-dropdown', panelId:'dd-changelog-panel'},
 ].forEach(({secId, panelId})=>{
   try {
     const chlog = document.querySelector(`#${secId} > .sec-chlog`);
