@@ -1337,6 +1337,8 @@ body.home .main{max-width:none;margin:0;padding:0}
 #s-chips .cpg-section-block .cpg-layout__intro{padding-left:20px;padding-right:20px}
 #s-chips .cpg-section-block .btn-pg__ctrls{background:var(--chrome-bg)}
 [data-theme="dark"] #s-chips .cpg-section-block .btn-pg__ctrls{background:var(--prim-gb-425)}
+#s-chips .cpg-section-block .sel-usage__card{background:var(--chrome-bg)}
+[data-theme="dark"] #s-chips .cpg-section-block .sel-usage__card{background:var(--prim-gb-425)}
 #s-chips .cpg-layout{display:flex;gap:40px;align-items:stretch}
 #s-chips .cpg-layout__intro{flex:1 1 0%;display:flex;flex-direction:column;justify-content:center}
 #s-chips .cpg-layout__demo{flex:2 1 0%;min-width:0}
@@ -3475,7 +3477,7 @@ body.home .main{max-width:none;margin:0;padding:0}
       <div class="sec__head">
         <h1 class="sec__title">Chips and pills</h1>
         <div class="chip-header-meta">
-          <span class="comp-ver-badge" style="margin-left:0">v1.10.0</span>
+          <span class="comp-ver-badge" style="margin-left:0">v1.11.0</span>
           <details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-chips">
@@ -3531,6 +3533,7 @@ body.home .main{max-width:none;margin:0;padding:0}
         <div id="chip-variants" class="type-sub"></div>
         <div id="chip-insitu" class="type-sub"></div>
         <div class="type-sub cpg-variants" id="chip-usage">
+          <div class="cpg-section-block">
           <div class="cpg-layout">
             <div class="cpg-layout__intro">
               <div class="cpg-layout__title">Do's &amp; don'ts</div>
@@ -3564,6 +3567,7 @@ body.home .main{max-width:none;margin:0;padding:0}
                 </div>
               </div>
             </div>
+          </div>
           </div>
         </div>
       </div>
@@ -9058,6 +9062,7 @@ function renderChipVariants(){
     </div>`).join('');
 
   root.innerHTML = `
+    <div class="cpg-section-block">
     <div class="cpg-layout cpg-variants">
       <div class="cpg-layout__intro">
         <div class="cpg-layout__title">Key variants</div>
@@ -9066,6 +9071,7 @@ function renderChipVariants(){
       <div class="cpg-layout__demo">
         <div class="chip-variants-grid">${cells}</div>
       </div>
+    </div>
     </div>`;
 }
 
@@ -9115,6 +9121,7 @@ function renderChipInSitu(){
     <div class="chip-mock__cap"><b>Tags in a field</b>Removable chips collect several choices in one input.</div>`;
 
   root.innerHTML = `
+    <div class="cpg-section-block">
     <div class="cpg-layout cpg-variants">
       <div class="cpg-layout__intro">
         <div class="cpg-layout__title">In context</div>
@@ -9127,6 +9134,7 @@ function renderChipInSitu(){
           <div class="chip-mock">${fieldMock}</div>
         </div>
       </div>
+    </div>
     </div>`;
 }
 
@@ -9537,12 +9545,16 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.38.0';
+const SYSTEM_VERSION = '1.39.0';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.39.0', date:'2026-08-03', author:'Helen', title:'Wrapped Key variants, In context and Do\'s & don\'ts in the same card treatment as Try the component', changes:[
+        ['changed','"Key variants" (renderChipVariants), "In context" (renderChipInSitu) and "Do\'s & don\'ts" (the #chip-usage block) now each sit inside a #s-chips .cpg-section-block — the same bordered, tinted card already used for "Try the component" — instead of sitting directly on the page background'],
+        ['added','#s-chips .cpg-section-block .sel-usage__card now gets a chrome-bg (light) / prim-gb-425 (dark) background override, matching the existing .btn-pg__ctrls override, so the Do/Don\'t cards read as white cards against the section-block\'s tinted background instead of blending into it'],
+      ]},
       {version:'1.38.0', date:'2026-08-03', author:'Helen', title:'Rebalanced playground description size and Style tab section spacing', changes:[
         ['changed','Reverted the previous 12px shrink (v1.37.3) — that read too small. #s-chips .cpg-layout__desc is now 16px, a balanced middle ground between the original 20px and the too-small 12px'],
         ['changed','The 16px now applies consistently to all four playground-style descriptions: "Adjust the filters to test component states." (Try the component), "Five semantic colours, each with a job..." (Key variants), "The same chip does three everyday jobs..." (In context), and "A few simple rules that keep chips readable..." (Do\'s & don\'ts) — previously only the first was shrunk, the rest were unintentionally left at 20px'],
@@ -10471,7 +10483,10 @@ const CHANGELOG = {
         ['added','“Tag or Chip?” guidance clarifying when to use each'],
       ]},
     ]},
-    {secId:'s-chips', name:'Chips & Pills', version:'1.10.0', entries:[
+    {secId:'s-chips', name:'Chips & Pills', version:'1.11.0', entries:[
+      {version:'1.11.0', date:'2026-08-03', author:'Helen', title:'Key variants, In context and Do\'s & don\'ts now share the Try the component card treatment', changes:[
+        ['changed','All four Overview sections now sit inside the same bordered, tinted card (.cpg-section-block) — previously only "Try the component" had it, so "Key variants", "In context" and "Do\'s & don\'ts" looked visually disconnected from it'],
+      ]},
       {version:'1.10.0', date:'2026-08-03', author:'Helen', title:'Rebalanced description size and Style tab spacing', changes:[
         ['changed','Reverted the 12px shrink from v1.9.2 (too small) — all four playground-style descriptions ("Try the component", "Key variants", "In context", "Do\'s & don\'ts") now consistently render at 16px, a balanced middle ground between the original 20px and the too-small 12px'],
         ['changed','Style tab sections (Anatomy, Size & dimensions, Colour variants, States) now have 72px between them instead of 52px'],
