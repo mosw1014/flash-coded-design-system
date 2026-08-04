@@ -4821,7 +4821,7 @@ body.home .main{max-width:none;margin:0;padding:0}
       <div class="sec__head">
         <h1 class="sec__title">Switch</h1>
         <div class="sec-header-meta">
-          <span class="comp-ver-badge" style="margin-left:0">v1.1.0</span>
+          <span class="comp-ver-badge" style="margin-left:0">v1.1.1</span>
           <details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-switch">
@@ -4880,7 +4880,7 @@ body.home .main{max-width:none;margin:0;padding:0}
         <div class="type-sub cpg-variants" id="sw-usage">
           <div class="cpg-section-heading">
             <div class="cpg-layout__title">Do's &amp; don'ts</div>
-            <div class="cpg-layout__desc">A switch commits instantly. If the choice only takes effect on submit, use a checkbox.</div>
+            <div class="cpg-layout__desc">A switch applies its setting immediately, with no confirmation step. Use a checkbox when a change should wait for a Save action.</div>
           </div>
           <div class="cpg-section-block">
             <div class="sel-usage">
@@ -9840,7 +9840,7 @@ function spgRefresh(){
 /* Like the chip playground, this renders into more than one mount (the big
    Overview demo and a compact copy on the Code tab) off one shared spg state. */
 const SW_PLAYGROUND_MOUNTS = [
-  {rootId:'sw-playground', idSuffix:'', wrap:true, title:'Try the component', desc:'Adjust the controls to test every state — or just click the switch.', headingAbove:'A switch applies a single on/off setting the moment it&rsquo;s flipped &mdash; there is no Save step.'},
+  {rootId:'sw-playground', idSuffix:'', wrap:true, title:'Try the component', desc:'Adjust the controls to test every state — or just click the switch.', headingAbove:'A switch applies a single on/off setting when flipped.'},
   {rootId:'sw-code-playground', idSuffix:'-code', style:'code', title:'Playground', desc:'Live demo of the component.'},
 ];
 
@@ -9941,16 +9941,10 @@ function renderSwitchStates(){
   if(!root) return;
   const sbg = stageBg(currentTheme());
 
-  /* The focus ring is drawn inline rather than via a stylesheet rule: a
-     doc-only rule naming .sw__track would be swept into this section's AI
-     context tab as though it were real component CSS. */
-  const focusVis = `<span style="pointer-events:none"><label class="sw"><input type="checkbox" class="sw__input" checked><span class="sw__track" style="outline:2px solid var(--color-input-focus);outline-offset:2px"><span class="sw__thumb"></span></span></label></span>`;
-
   const states = [
-    {name:'Off',      note:'Neutral track, thumb left. The default for an inactive setting.', vis:swStatic({on:false, showLabel:false})},
-    {name:'On',       note:'Brand green track, thumb travels 16px right.',                    vis:swStatic({on:true,  showLabel:false})},
-    {name:'Disabled', note:'Whole control drops to 45% and stops responding.',                vis:swStatic({on:true,  disabled:true, showLabel:false})},
-    {name:'Focused',  note:'2px focus ring, 2px offset — keyboard only.',                     vis:focusVis},
+    {name:'Off',      note:'Neutral track, thumb left. Default for an inactive setting.', vis:swStatic({on:false, showLabel:false})},
+    {name:'On',       note:'Brand green track, thumb travels 16px right.',                vis:swStatic({on:true,  showLabel:false})},
+    {name:'Disabled', note:'Opacity drops to 45%; the control stops responding to input.',vis:swStatic({on:true,  disabled:true, showLabel:false})},
   ];
 
   const cells = states.map(s=>`
@@ -9963,7 +9957,7 @@ function renderSwitchStates(){
   root.innerHTML = `
     <div class="cpg-section-heading">
       <div class="cpg-layout__title">Key states</div>
-      <div class="cpg-layout__desc">Four states carry the whole component. Thumb position does the work colour alone can't &mdash; so the switch still reads correctly without it.</div>
+      <div class="cpg-layout__desc">Off, On and Disabled cover every state. Thumb position signals state independent of colour.</div>
     </div>
     <div class="cpg-section-block">
       <div class="spec-grid">${cells}</div>
@@ -9993,7 +9987,7 @@ function renderSwitchInSitu(){
       <div class="sw-mock-rule"></div>
       ${row('Weekly summary','',{on:true, showLabel:false})}
     </div>
-    <div class="spec-mock__cap"><b>A settings list</b>One switch per setting, each applying straight away.</div>`;
+    <div class="spec-mock__cap"><b>A settings list</b>One switch per setting; each change applies immediately.</div>`;
 
   // 2. Table row — Small size earns its keep in dense rows
   const bar = w => `<span class="spec-mock__bar" style="width:${w}"></span>`;
@@ -10005,7 +9999,7 @@ function renderSwitchInSitu(){
 
   const tableMock = `
     <div class="spec-mock__stage" style="background:${sbg}">${tableRows}</div>
-    <div class="spec-mock__cap"><b>In a table row</b>Small (32&times;18) keeps dense rows from growing taller.</div>`;
+    <div class="spec-mock__cap"><b>In a table row</b>Small (32&times;18) reduces row height in dense layouts.</div>`;
 
   // 3. Permissions panel — a grouped set under one heading
   const permsMock = `
@@ -10016,12 +10010,12 @@ function renderSwitchInSitu(){
       ${row('Can delete reports','',{size:'sm', on:false, showLabel:false})}
       ${row('Can invite members','',{size:'sm', on:false, disabled:true, showLabel:false})}
     </div>
-    <div class="spec-mock__cap"><b>A permissions panel</b>Grouped switches; unavailable options stay visible but disabled.</div>`;
+    <div class="spec-mock__cap"><b>A permissions panel</b>Grouped switches; unavailable options remain visible but disabled.</div>`;
 
   root.innerHTML = `
     <div class="cpg-section-heading">
       <div class="cpg-layout__title">In context</div>
-      <div class="cpg-layout__desc">The same switch does three everyday jobs &mdash; a settings list, a dense table row, and a grouped permissions panel.</div>
+      <div class="cpg-layout__desc">Three common placements: a settings list, a dense table row, and a grouped permissions panel.</div>
     </div>
     <div class="cpg-section-block">
       <div class="spec-insitu-grid">
@@ -10385,12 +10379,17 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.43.0';
+const SYSTEM_VERSION = '1.43.1';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.43.1', date:'2026-08-04', author:'Helen', title:'Tightened Switch Overview copy, removed the non-existent Focused state', changes:[
+        ['changed','The Overview hero line now reads "A switch applies a single on/off setting when flipped." (was a longer, more conversational line ending "— there is no Save step")'],
+        ['changed','Key states, In context and Do\'s & don\'ts explainer lines rewritten to lead with the fact rather than a scene-setting sentence, matching the direct tone of the "Adjust the controls…" playground line, which was left unchanged'],
+        ['removed','The "Focused" cell from Key states — a focus ring is a real, working part of the component (see the Style tab\'s Anatomy card and token table, both untouched), but it is not one of the component\'s named states alongside Off/On/Disabled and was miscategorised by treating it as a fourth state'],
+      ]},
       {version:'1.43.0', date:'2026-08-04', author:'Helen', title:'Switch rebuilt on the tabbed component-page layout, which is now a shared .sec--tabbed pattern', changes:[
         ['added','New .sec--tabbed opt-in class carrying the whole tabbed component-page treatment (1280px measure, 64px title, two-column hero with preview card, tab strip, tinted .cpg-section-block vs outline-only .cpg-section-outline, the 44px heading-beside-demo .cpg-layout, and the .spec-* documentation furniture). Previously this was ~100 rules hard-scoped to #s-chips with a comment saying it was a trial "before rolling anything out to other pages" — this is that rollout'],
         ['changed','Chips & Pills now opts in via .sec--tabbed instead of owning the CSS. Its component-specific rules (.chip, .chip-ref*) stay chip-scoped; every rule that was really page furniture moved to the shared block. Verified pixel-identical: measure, title size, block/outline padding and fills, .cpg-layout__title size, cell and mock chrome, tab gap and Style-tab 72px section rhythm all unchanged in light and dark'],
@@ -11089,7 +11088,12 @@ const CHANGELOG = {
         ['added','Scroll-snap slider with prev/next arrows and position dots'],
       ]},
     ]},
-    {secId:'s-switch', name:'Switch', version:'1.1.0', entries:[
+    {secId:'s-switch', name:'Switch', version:'1.1.1', entries:[
+      {version:'1.1.1', date:'2026-08-04', author:'Helen', title:'Tightened Overview copy, removed the non-existent Focused state', changes:[
+        ['changed','Hero line shortened to "A switch applies a single on/off setting when flipped."'],
+        ['changed','Key states, In context and Do\'s & don\'ts descriptions, plus all three "In context" mock captions, rewritten to lead with the fact rather than scene-setting prose — e.g. "Off, On and Disabled cover every state. Thumb position signals state independent of colour." instead of "Four states carry the whole component…". The "Adjust the controls to test every state…" playground line was left exactly as written'],
+        ['removed','"Focused" from Key states (was framed as a fourth state alongside Off/On/Disabled). The focus ring itself is untouched and still real — it remains documented as anatomy part 4 and in the token table on the Style tab — it just isn\'t one of the component\'s states'],
+      ]},
       {version:'1.1.0', date:'2026-08-04', author:'Helen', title:'Facelift — same tabbed page, playground and multi-language code panel as Chips & Pills', changes:[
         ['changed','The page is now four tabs (Overview / Style / Code / Changelog) instead of one long scroll, on the shared .sec--tabbed layout: a 64px title with the version and AI-context pills beside it, and a live preview card in the hero'],
         ['added','An interactive playground with Size, State, Enabled and Label controls plus editable label text. The switch on the stage is genuinely clickable — flipping it updates the State control and the code snippet, so the demo and the code never disagree'],
