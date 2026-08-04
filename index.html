@@ -7191,15 +7191,15 @@ function hexToRgba(hex, alpha) {
   return `rgba(${r},${g},${b},${alpha})`;
 }
 
-// Primary leads the set — Flash Green (Bright-green-500-base, the brand's
-// CTA/emphasis green), the default first colour for a single-series chart —
-// followed by the Category Colours identity set for multi-series charts.
+// Primary leads the set — Mid Green (#10C504, Green-500-base), the default
+// first colour for a single-series chart — followed by the Category
+// Colours identity set for multi-series charts.
 // Airtime is overridden to Medium Green here only: its Category Colours hex
-// sits too close to Flash Green to read as a distinct chart series, so this
+// sits too close to Primary to read as a distinct chart series, so this
 // swap is chart-scoped and does not touch the shared CATS identity used for
 // category icons/chips/tables.
 const CHART_COLORS = [
-  ['Primary','#1dfa0f'],
+  ['Primary','#10c504'],
   ...CATS.map(([name, hex]) => name === 'Airtime' ? [name, '#3fb549'] : [name, hex]),
 ];
 // Desaturated set is the same hue at reduced opacity — the same "dim the
@@ -7233,7 +7233,7 @@ chartFam.innerHTML = `
   <div class="fam__head">
     <div class="fam__info">
       <div class="fam__name">Chart Colours</div>
-      <div class="fam__desc">Primary (Flash green) leads as the default first colour for a single-series chart, followed by the category colour identity set for multi-series charts and data visualisation.</div>
+      <div class="fam__desc">Primary (Mid Green) leads as the default first colour for a single-series chart, followed by the category colour identity set for multi-series charts and data visualisation.</div>
     </div>
     <div class="fam__badge fam__badge--cat">${CHART_COLORS.length} Colours</div>
   </div>
@@ -10614,10 +10614,10 @@ const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
-      {version:'1.47.2', date:'2026-08-04', author:'Mo', title:'Chart Colours gains a Primary (Flash Green) entry as the default first series colour; Airtime recoloured for contrast', changes:[
-        ['added','"Primary" (#1dfa0f, Flash Green — the brand\'s CTA/emphasis green) prepended to Chart Colours as the default first colour for a single-series chart, ahead of the 15 Category Colours used for multi-series charts'],
+      {version:'1.47.2', date:'2026-08-04', author:'Mo', title:'Chart Colours gains a Primary (Mid Green) entry as the default first series colour; Airtime recoloured for contrast', changes:[
+        ['added','"Primary" (#10c504, Mid Green / Green-500-base) prepended to Chart Colours as the default first colour for a single-series chart, ahead of the 15 Category Colours used for multi-series charts'],
         ['changed','Chart Colours — Desaturated now derives from Chart Colours (was a separate reference to the Category Colours CATS array), so Primary automatically gets its 45%-opacity companion swatch too'],
-        ['changed','Within Chart Colours only, Airtime is recoloured to Medium Green (#3fb549) — its Category Colours hex (#2dcc57) read too close to the new Flash Green Primary to work as a distinct chart series. The shared CATS array (Category Colours identity used for icons/chips/tables) is untouched, so Airtime\'s real category colour is unaffected'],
+        ['changed','Within Chart Colours only, Airtime is recoloured to Medium Green (#3fb549) — its Category Colours hex (#2dcc57) read too close to Primary to work as a distinct chart series. The shared CATS array (Category Colours identity used for icons/chips/tables) is untouched, so Airtime\'s real category colour is unaffected'],
       ]},
       {version:'1.47.1', date:'2026-08-04', author:'Mo', title:'Typography — Medium-weight heading rows relabelled to distinguish them from their Black-weight counterparts', changes:[
         ['changed','Heading Scale row tags for the reduced-emphasis Medium (500) variants at L, M, and S now read "L - Medium", "M - Medium", "S - Medium" instead of a bare "L"/"M"/"S" shared with the Black-weight row, for both desktop and mobile viewports'],
@@ -11547,10 +11547,10 @@ const CHANGELOG = {
     ]},
     {secId:'s-colours', name:'Colours', version:'1.7.0', entries:[
       {version:'1.7.0', date:'2026-08-04', author:'Mo', title:'Added a Primary entry to Chart Colours; Airtime recoloured there for contrast', changes:[
-        ['added','CHART_COLORS now leads with [\'Primary\',\'#1dfa0f\'] (Flash Green, Bright-green-500-base — the brand\'s CTA/emphasis green, not Mid Green) ahead of the CATS category colours, so a single-series chart has a documented default; the family badge count and grid update to 16 automatically'],
+        ['added','CHART_COLORS now leads with [\'Primary\',\'#10c504\'] (Mid Green, Green-500-base) ahead of the CATS category colours, so a single-series chart has a documented default; the family badge count and grid update to 16 automatically'],
         ['changed','CHART_COLORS_DESAT now points at CHART_COLORS instead of duplicating a separate reference to CATS, so Primary\'s 45%-opacity companion swatch renders without extra data'],
         ['changed','Chart Colours family description updated to explain the Primary-then-categories ordering'],
-        ['changed','CHART_COLORS maps CATS to override just Airtime\'s hex to Medium Green (#3fb549), chart-scoped only — its stock Category Colours green (#2dcc57) was too close to the new Flash Green Primary to read as a distinct series. CATS itself (Category Colours identity used for icons/chips/tables) is unchanged'],
+        ['changed','CHART_COLORS maps CATS to override just Airtime\'s hex to Medium Green (#3fb549), chart-scoped only — its stock Category Colours green (#2dcc57) was too close to Primary to read as a distinct series. CATS itself (Category Colours identity used for icons/chips/tables) is unchanged'],
       ]},
       {version:'1.6.0', date:'2026-08-04', author:'Mo', title:'Added Chart Colours and a reduced-opacity companion set', changes:[
         ['added','New "Chart Colours" primitive family block (#fam-chart, .cat-grid#chart-grid) duplicating the Category Colours 15-colour set under its own name, for use as a default chart/data-viz series palette'],
