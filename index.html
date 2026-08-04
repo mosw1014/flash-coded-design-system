@@ -1003,10 +1003,13 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;font-feature-
    HOME — Flash Design System landing (fixed light design)
 ============================================================ */
 body.home .sidebar{display:none}
+/* Home bands run full-bleed at every screen size — the 1366 cap applies to the
+   content inside each band (see .fds-*__inner below), not the coloured band itself */
+body.home .layout{max-width:none;margin:0}
 body.home .main{max-width:none;margin:0;padding:0}
 #s-brand{margin:0}
 #s-brand .sec-chlog{display:none}
-.fds-hero__inner,.fds-statement,.fds-cards,.fds-essence__title,.fds-essence__grid{max-width:1200px;margin-left:auto;margin-right:auto}
+.fds-hero__inner,.fds-statement,.fds-cards,.fds-essence__title,.fds-essence__grid{max-width:1366px;margin-left:auto;margin-right:auto}
 
 /* Hero */
 .fds-hero{background:#000;color:#fff;overflow:hidden;padding:72px 48px 104px;
@@ -7092,7 +7095,39 @@ function setJump(el) {
 /* ============================================================
    SPA NAVIGATION
 ============================================================ */
-function showSection(id) {
+// The URL hash is the source of truth for which section is open, so a refresh
+// lands where you were and sections are linkable. Scroll offset rides along in
+// localStorage (best-effort — if storage is unavailable you still land on the
+// right section, just at its top).
+var SCROLL_KEY = 'flash-ds-scroll';
+function saveScroll(id, scrollTop) {
+  try { localStorage.setItem(SCROLL_KEY, JSON.stringify({ id: id, scrollTop: scrollTop })); } catch (e) {}
+}
+// Read once, before any showSection() during init can overwrite it.
+var SAVED_SCROLL = (function(){
+  try {
+    var raw = localStorage.getItem(SCROLL_KEY);
+    return raw ? JSON.parse(raw) : null;
+  } catch (e) { return null; }
+})();
+// Routes are '#/<section-id>'. The '/' matters: a bare '#s-tables' matches a
+// real element id, so the browser's own fragment navigation would scroll that
+// section into view after load and fight the restored scroll offset.
+function parseHash(hash) { return (hash || '').replace(/^#\/?/, ''); }
+function sectionFromHash() {
+  var id = parseHash(location.hash);
+  return id && document.getElementById(id) ? id : null;
+}
+// The hash the page was opened with, captured before any showSection() during
+// init can rewrite it. Not validated yet — later sections may not be parsed.
+var INITIAL_HASH_ID = parseHash(location.hash);
+// showSection() runs once during init, before the real route is resolved; it
+// must not write the hash then or it would overwrite the incoming URL.
+var NAV_READY = false;
+var currentSectionId = null;
+
+function showSection(id, opts) {
+  opts = opts || {};
   // Hide all sections
   document.querySelectorAll('.sec').forEach(s => s.classList.remove('active'));
   // Show target
@@ -7109,9 +7144,24 @@ function showSection(id) {
     const oc = l.getAttribute('onclick') || '';
     l.classList.toggle('on', oc.indexOf("'" + id + "'") > -1);
   });
-  // Scroll main content to top
-  const main = document.querySelector('.main');
-  if (main) main.scrollTop = 0;
+  // Scroll to top (or restore a remembered position) — the page itself
+  // scrolls (window), .main has no overflow of its own. html has
+  // scroll-behavior:smooth, so a restore must opt out of the animation.
+  const top = opts.scrollTop || 0;
+  if (opts.instant) {
+    window.scrollTo({ top: top, behavior: 'instant' });
+    // The section only just became display:block — re-apply once layout
+    // settles so a late reflow can't leave us short of the target.
+    requestAnimationFrame(function(){ window.scrollTo({ top: top, behavior: 'instant' }); });
+  } else {
+    window.scrollTo(0, top);
+  }
+  currentSectionId = id;
+  saveScroll(id, top);
+  // Reflect the open section in the URL so a refresh lands here again.
+  if (NAV_READY && location.hash !== '#/' + id) {
+    try { history.replaceState(null, '', '#/' + id); } catch (e) { location.hash = '/' + id; }
+  }
 }
 // Show brand intro on load
 showSection('s-brand');
@@ -9551,15 +9601,29 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.40.2';
+const SYSTEM_VERSION = '1.40.4';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
-      {version:'1.40.2', date:'2026-08-04', author:'Jaco', title:'Reworked the hover state on the two home entry cards', changes:[
+      {version:'1.40.4', date:'2026-08-04', author:'Jaco', title:'Home page bands now run full-bleed at every screen size', changes:[
+        ['fixed','The black hero on the home page was capped at 1366px along with everything else, so on screens wider than that it sat as a centred island with white gutters either side instead of reading as a full-width header. body.home now clears the .layout max-width, so the hero (and the statement, cards and Brand essence bands) span 100% of the viewport at every screen size'],
+        ['changed','The 1366px cap now applies to the content inside each band rather than the coloured band itself — .fds-hero__inner / .fds-statement / .fds-cards / .fds-essence__title / .fds-essence__grid raised from 1200px to 1366px so the hero copy, cards and essence grid line up on exactly the same column as the top navigation content'],
+      ]},
+      {version:'1.40.3', date:'2026-08-04', author:'Jaco', title:'Reworked the hover state on the two home entry cards', changes:[
         ['removed','The lift-and-shadow hover on the Brand/Components entry cards (.fds-card) — transform:translateY(-4px) plus a 54px-blur drop shadow, which read heavy and sat awkwardly against the flat page'],
         ['changed','Hover is now a 2px Mid Green (#10C504) stroke plus a slight background deepening — the Components card goes #F0F0F0 → #E8E8E8 and the Brand card\'s gradient pulls its green stop in from 289% to 250%. The 2px border sits on the resting state as transparent (with padding trimmed 44px → 42px and the arrow inset 40px → 38px) so nothing shifts or changes size on hover'],
+      ]},
+      {version:'1.40.2', date:'2026-08-04', author:'Mo', title:'Refreshing the page no longer forces you back to the landing screen', changes:[
+        ['added','The open section is now reflected in the URL as a \'#/<section-id>\' route (history.replaceState on every showSection()), so a refresh lands on the same section and any section can be linked or bookmarked directly'],
+        ['added','hashchange listener so browser back/forward moves between sections instead of doing nothing'],
+        ['added','Scroll offset within a section is remembered in localStorage (flash-ds-scroll, 150ms debounce on scroll) and reapplied on load — best-effort only, so if storage is blocked you still land on the right section, just at its top'],
+        ['changed','Page load now resolves the section from the URL instead of always calling showSection(\'s-brand\') — the brand intro is still the fallback when there is no route'],
+        ['fixed','showSection() previously set the non-scrolling .main element\'s scrollTop, which had no visible effect since the page actually scrolls at the window/document level — now uses window.scrollTo()'],
+        ['fixed','Restoring a scroll offset now passes behavior:\'instant\' (and reapplies on the next frame), since html{scroll-behavior:smooth} otherwise animated the restore from the top'],
+        ['fixed','Routes are \'#/id\' rather than a bare \'#id\' on purpose: a bare fragment matches the section\'s real element id, so the browser\'s own fragment navigation scrolled that section into view ~300ms after load and overrode the restored scroll position'],
+        ['fixed','The init-time showSection(\'s-brand\') call was overwriting the incoming location.hash before the real route was resolved, so every refresh fell back to the landing page — hash writes are now gated behind a NAV_READY flag, and the incoming route and saved scroll offset are both snapshotted up front so nothing during init can clobber them'],
       ]},
       {version:'1.40.1', date:'2026-08-04', author:'Jaco', title:'Fixed header logo showing a white box behind "flash"', changes:[
         ['fixed','Header logo (.bar__logo-img) now uses the designer-supplied assets/logos/Logo_new.svg — a fully transparent vector lockup (mark + "flash" + green "Design") — instead of assets/home/logo.png, whose export had baked in an opaque white background behind the wordmark; removed the now-unused logo.png'],
@@ -12543,7 +12607,32 @@ function injectBreadcrumbs(){
 buildSidebar();
 buildLandings();
 injectBreadcrumbs();
-showSection('s-brand');
+(function restoreLastView(){
+  NAV_READY = true;
+  const id = INITIAL_HASH_ID && document.getElementById(INITIAL_HASH_ID) ? INITIAL_HASH_ID : null;
+  if (!id) { showSection('s-brand'); return; }
+  // Only reuse the stored offset if it belongs to the section we're opening.
+  const top = (SAVED_SCROLL && SAVED_SCROLL.id === id) ? SAVED_SCROLL.scrollTop || 0 : 0;
+  showSection(id, { scrollTop: top, instant: true });
+})();
+
+// Back/forward between sections.
+window.addEventListener('hashchange', function(){
+  const id = sectionFromHash() || 's-brand';
+  if (id !== currentSectionId) showSection(id, { instant: true });
+});
+
+// Keep the remembered scroll position for the current section up to date
+// as the person scrolls, so a refresh mid-scroll lands in the same spot.
+(function trackScrollPosition(){
+  let scrollSaveTimer = null;
+  window.addEventListener('scroll', function(){
+    clearTimeout(scrollSaveTimer);
+    scrollSaveTimer = setTimeout(function(){
+      if (currentSectionId) saveScroll(currentSectionId, window.scrollY);
+    }, 150);
+  }, { passive: true });
+})();
 
 // ============================================================
 // NAV SEARCH — search bar in the top header, surfaces sections
