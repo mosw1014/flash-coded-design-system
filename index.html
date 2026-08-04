@@ -109,6 +109,7 @@
   --chrome-accent-text:var(--prim-green-800);
   --chrome-txt:var(--prim-black); --chrome-muted:var(--prim-grey-900);
   --chrome-border:var(--prim-grey-400); --chrome-hover:rgba(0,0,0,0.04);
+  --chrome-active:rgba(0,0,0,0.08);
 }
 /* ================================================================
    FLASH · DARK
@@ -143,6 +144,7 @@
   --chrome-accent-text:var(--prim-green-500);
   --chrome-txt:var(--prim-white); --chrome-muted:var(--prim-grey-400);
   --chrome-border:var(--prim-gb-425); --chrome-hover:rgba(255,255,255,0.05);
+  --chrome-active:rgba(255,255,255,0.10);
 }
 /* ================================================================
    FLASH DARK (reserved)
@@ -211,12 +213,18 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;font-feature-
 .layout{display:flex;min-height:calc(100vh - 52px)}
 
 /* Sidebar */
-.sidebar{width:210px;flex-shrink:0;background:var(--chrome-nav);border-right:1px solid var(--chrome-border);position:sticky;top:52px;height:calc(100vh - 52px);overflow-y:auto;padding:20px 0;transition:background .25s}
-.sb-cat{display:flex;align-items:center;gap:8px;font-size:12.5px;font-weight:800;letter-spacing:0;color:var(--chrome-txt);padding:0 16px;margin:18px 0 5px}
+.sidebar{width:252px;flex-shrink:0;background:var(--chrome-nav);border-right:1px solid var(--chrome-border);position:sticky;top:52px;height:calc(100vh - 52px);overflow-y:auto;padding:26px 0 40px;transition:background .25s}
+.sb-cat{display:flex;align-items:center;gap:8px;font-size:15px;font-weight:800;letter-spacing:-.01em;color:var(--chrome-txt);padding:0 20px;margin:26px 0 6px}
 .sb-cat:first-child,.sb-group:first-child .sb-cat{margin-top:0}
-.sb-link{display:flex;align-items:center;gap:8px;padding:7px 16px;font-size:12.5px;font-weight:500;color:var(--chrome-muted);text-decoration:none;border-left:2px solid transparent;transition:all .15s}
+.sb-link{display:flex;align-items:center;gap:8px;padding:10px 16px 10px 34px;font-size:14px;font-weight:600;color:var(--chrome-muted);text-decoration:none;border-left:3px solid transparent;transition:background .15s,color .15s,border-color .15s}
 .sb-link:hover{color:var(--chrome-txt);background:var(--chrome-hover)}
-.sb-link.on{color:var(--chrome-txt);border-left-color:var(--chrome-accent);background:var(--chrome-hover);font-weight:700}
+.sb-link.on{color:var(--chrome-txt);border-left-color:var(--chrome-accent);background:var(--chrome-active);font-weight:800}
+/* Trailing chevron — signals the row drills into a section (muted until hover/active) */
+.sb-link__chev{margin-left:auto;width:11px;height:11px;flex-shrink:0;color:var(--chrome-muted);opacity:.5;transition:opacity .15s,color .15s}
+.sb-link__chev svg{width:100%;height:100%;display:block;fill:currentColor}
+.sb-link:hover .sb-link__chev,.sb-link.on .sb-link__chev{opacity:1;color:var(--chrome-txt)}
+/* A top-level destination with no category of its own (Changelog) */
+.sb-link--top{padding-left:20px;margin-top:26px;font-size:15px;font-weight:800;color:var(--chrome-txt)}
 .sb-icon{width:15px;height:15px;flex-shrink:0;color:var(--chrome-muted);transition:color .15s}
 .sb-link:hover .sb-icon{color:var(--chrome-txt)}
 .sb-link.on .sb-icon{color:var(--chrome-accent-text)}
@@ -226,7 +234,7 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;font-feature-
 .sb-cat--toggle:hover{color:var(--chrome-accent-text)}
 .sb-cat--toggle.on{color:var(--chrome-accent-text)}
 .sb-cat--toggle:focus-visible{outline:2px solid var(--color-input-focus);outline-offset:-2px;border-radius:4px}
-.sb-cat__caret{width:10px;height:10px;flex-shrink:0;color:var(--chrome-muted);transition:transform .2s}
+.sb-cat__caret{width:12px;height:12px;flex-shrink:0;color:var(--chrome-muted);transition:transform .2s}
 .sb-cat__caret svg{width:100%;height:100%;display:block;fill:currentColor}
 .sb-cat--toggle[aria-expanded="true"] .sb-cat__caret{transform:rotate(180deg)}
 .sb-group__items{display:none}
@@ -294,7 +302,7 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;font-feature-
 .mk-key{min-width:30px;height:30px;padding:0 8px;border-radius:7px;border:1px solid var(--chrome-border);border-bottom-width:3px;background:var(--chrome-bg);font:800 13px 'Satoshi',sans-serif;color:var(--chrome-txt);display:inline-flex;align-items:center;justify-content:center}
 .mk-tip{position:relative;background:var(--chrome-txt);color:var(--chrome-bg);font:700 11px 'Satoshi',sans-serif;padding:7px 11px;border-radius:8px}
 .mk-tip::after{content:'';position:absolute;left:50%;bottom:-5px;transform:translateX(-50%);border:5px solid transparent;border-top-color:var(--chrome-txt);border-bottom:0}
-.sb-tag{margin-left:auto;font-size:9.5px;padding:1px 6px;border-radius:10px;background:var(--chrome-border);color:var(--chrome-muted);white-space:nowrap}
+.sb-tag{font-size:10px;padding:2px 7px;border-radius:10px;background:var(--chrome-border);color:var(--chrome-muted);white-space:nowrap}
 
 /* Main */
 /* auto side margins centre the content in the space beside the flush-left sidebar */
@@ -9840,12 +9848,28 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.43.0';
+const SYSTEM_VERSION = '1.45.0';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.45.0', date:'2026-08-04', author:'Jaco', title:'Sidebar restyled with more breathing room, larger type and a clearer active row; About heading dropped', changes:[
+        ['removed','The About category heading — Changelog is now a standalone top-level link at the bottom of the sidebar (new .sb-link--top: category-level size and weight, no indent, 26px above it). A NAV group with neither cat nor landing renders this way'],
+        ['changed','Sidebar sizing opened up to match the density of references like Uber Base — sidebar 210px → 252px wide, category headings 12.5px → 15px, nav links 12.5px → 14px at weight 600, row padding 7px → 10px with a 34px indent under each heading, and 26px between groups (was 18px)'],
+        ['changed','The active nav row is much clearer: fill moved from --chrome-hover (4% / 5% alpha, near-invisible) to a new --chrome-active token (8% black in light, 10% white in dark), the left accent bar went 2px → 3px, and the label now sits at weight 800'],
+        ['added','--chrome-active semantic token in both the light and dark chrome blocks, for a selected row that needs to read as distinct from a hover'],
+        ['added','A trailing chevron on every sidebar row (.sb-link__chev), muted at 50% opacity and brightening to full on hover or when active, signalling that the row drills into a section'],
+        ['added','sbLinkHTML() — one helper building every sidebar row (label, optional Soon tag, chevron, optional modifier class), replacing the three places that hand-assembled .sb-link markup'],
+        ['changed','.sb-tag no longer uses margin-left:auto — the trailing chevron now takes that role, so a Soon tag sits directly beside its label instead of splitting the free space with the chevron'],
+        ['fixed','navSearchIndex fell over on a NAV group with no cat (navSearchMatch() calls .toLowerCase() on it) — now falls back to an empty string, which the Changelog entry needs since it no longer sits under About'],
+      ]},
+      {version:'1.44.0', date:'2026-08-04', author:'Jaco', title:'Components split from one 33-item list into six purpose-based groups, Uber Base style', changes:[
+        ['changed','The single Components category is replaced by six groups in the NAV manifest — Actions, Inputs & controls, Data display, Feedback & status, Surfaces & overlays and Navigation — each with its own landing page (s-cat-actions, s-cat-inputs, s-cat-data, s-cat-feedback, s-cat-surfaces, s-cat-navigation), intro copy and breadcrumb. With Foundations and About that is eight sidebar entries instead of four, and the whole nav now fits on screen with a group open'],
+        ['removed','The Coming soon category — Modals now sits in Surfaces & overlays and Toasts in Feedback & status, both keeping their Soon tag, so a roadmap component is filed with the components it belongs beside rather than in a separate holding pen'],
+        ['added','A component:true flag on the six component groups, and buildAllComponentsLanding() which builds the s-cat-components landing from every flagged group\'s items, alphabetised. The home page\'s Components entry card points at a single page rather than at any one group, so that page is kept as an umbrella listing all 35 components; it has no sidebar entry of its own'],
+        ['changed','Component section ids are all unchanged, so every existing deep link (#/s-buttons, #/s-modals, …) still resolves — only the grouping around them moved'],
+      ]},
       {version:'1.43.0', date:'2026-08-04', author:'Jaco', title:'Sidebar categories are now collapsible groups, Brand renamed Foundations, every group gains an Overview link', changes:[
         ['added','Each landing category in the sidebar is now a collapsible accordion — a .sb-group wrapper, a .sb-cat--toggle button header carrying aria-expanded/aria-controls and a rotating .sb-cat__caret chevron, and a .sb-group__items panel that only renders when the group is open. toggleNavGroup() flips one group; several can be open at once'],
         ['added','syncNavGroups(), called from showSection(), expands whichever group holds the section being opened and flags that group\'s header .on — so deep links, search results and home-page tiles all land with the right group already expanded, while groups the person opened or closed by hand keep their state'],
@@ -12766,50 +12790,67 @@ const NAV = [
       {id:'s-spacing', label:'Spacing & Grid', desc:'An 8px base scale for spacing, radius and grid.'},
       {id:'s-type',    label:'Typography',     desc:'The Satoshi type scale and weight tokens.'},
     ]},
-  { cat:'Components', landing:'s-cat-components',
-    intro:'Flexible, reusable building blocks for Flash apps and sites. Every component shares the same tokens, spacing and states — pick one to see its playground, specs and code.',
+  { cat:'Actions', landing:'s-cat-actions', component:true,
+    intro:'The controls someone reaches for to make something happen — commit to an action, filter a set, or drive the interface from the keyboard.',
     items:[
-      {id:'s-accordion',    label:'Accordion',           desc:'Collapsible stacked sections.'},
-      {id:'s-alert',        label:'Alert',               desc:'Inline messages for status and feedback.'},
-      {id:'s-avatar',       label:'Avatar',              desc:'User and brand identity marks.'},
-      {id:'s-drawers',      label:'Bottom Sheets',       desc:'Panels that slide up from the bottom edge.'},
-      {id:'s-breadcrumb',   label:'Breadcrumb',          desc:'Shows the path back through a hierarchy.'},
       {id:'s-buttons',      label:'Buttons',             desc:'Primary, secondary, accent, simple and link.'},
-      {id:'s-calendar',     label:'Calendar',            desc:'Date pickers and month grids.'},
-      {id:'s-cards',        label:'Cards',               desc:'Flexible containers for grouped content.'},
-      {id:'s-carousel',     label:'Carousel',            desc:'Swipeable slides with pagination.'},
-      {id:'s-charts',       label:'Charts',              desc:'Data visualisation with brand-styled charts.'},
-      {id:'s-selection',    label:'Checkboxes & Radios', desc:'Multi- and single-select controls.'},
       {id:'s-chips',        label:'Chips & Pills',       desc:'Compact selectable and filter tokens.'},
-      {id:'s-command',      label:'Command',             desc:'Searchable command palette.'},
-      {id:'s-context-menu', label:'Context Menu',        desc:'Right-click and overflow action menus.'},
-      {id:'s-data',         label:'Data Display',        desc:'Stat tiles and key-value lists.'},
-      {id:'s-dropdown',     label:'Dropdown',            desc:'Single- and multi-select menus.'},
-      {id:'s-hover-card',   label:'Hover Card',          desc:'Rich preview shown on hover.'},
-      {id:'s-input-otp',    label:'Input OTP',           desc:'One-time passcode entry fields.'},
       {id:'s-kbd',          label:'Keyboard Shortcuts',  desc:'Keycaps and shortcut hints.'},
-      {id:'s-nav',          label:'Navigation',          desc:'Side navigation and menu systems.'},
-      {id:'s-pagination',   label:'Pagination',          desc:'Page-by-page navigation controls.'},
-      {id:'s-popover',      label:'Popover',             desc:'Anchored floating content.'},
-      {id:'s-separator',    label:'Separator',           desc:'Dividers between content groups.'},
-      {id:'s-skeleton',     label:'Skeleton loader',     desc:'Loading placeholders.'},
+    ]},
+  { cat:'Inputs & controls', landing:'s-cat-inputs', component:true,
+    intro:'Everything someone types into, picks from or toggles. Shared focus, error and disabled states keep a form coherent however it is assembled.',
+    items:[
+      {id:'s-calendar',     label:'Calendar',            desc:'Date pickers and month grids.'},
+      {id:'s-selection',    label:'Checkboxes & Radios', desc:'Multi- and single-select controls.'},
+      {id:'s-dropdown',     label:'Dropdown',            desc:'Single- and multi-select menus.'},
+      {id:'s-input-otp',    label:'Input OTP',           desc:'One-time passcode entry fields.'},
       {id:'s-slider',       label:'Slider',              desc:'Range and value selection.'},
-      {id:'s-spinner',      label:'Spinner',             desc:'Indeterminate loading indicators.'},
       {id:'s-switch',       label:'Switch',              desc:'On / off toggles.'},
-      {id:'s-tables',       label:'Tables',              desc:'Structured, selectable data tables.'},
-      {id:'s-tabs',         label:'Tabs',                desc:'Switch between related views.'},
-      {id:'s-tags',         label:'Tags & Badges',       desc:'Labels, counts and status markers.'},
       {id:'s-inputs',       label:'Text Inputs',         desc:'Text, search and password fields.'},
       {id:'s-toggle-group', label:'Toggle Group',        desc:'Segmented single / multi choice.'},
+    ]},
+  { cat:'Data display', landing:'s-cat-data', component:true,
+    intro:'Components that present information rather than collect it — from a single stat or badge through to a full table or chart.',
+    items:[
+      {id:'s-avatar',       label:'Avatar',              desc:'User and brand identity marks.'},
+      {id:'s-cards',        label:'Cards',               desc:'Flexible containers for grouped content.'},
+      {id:'s-charts',       label:'Charts',              desc:'Data visualisation with brand-styled charts.'},
+      {id:'s-data',         label:'Data Display',        desc:'Stat tiles and key-value lists.'},
+      {id:'s-separator',    label:'Separator',           desc:'Dividers between content groups.'},
+      {id:'s-tables',       label:'Tables',              desc:'Structured, selectable data tables.'},
+      {id:'s-tags',         label:'Tags & Badges',       desc:'Labels, counts and status markers.'},
+    ]},
+  { cat:'Feedback & status', landing:'s-cat-feedback', component:true,
+    intro:'How the interface tells someone what is happening — that something loaded, worked, failed, or is still on its way.',
+    items:[
+      {id:'s-alert',        label:'Alert',               desc:'Inline messages for status and feedback.'},
+      {id:'s-skeleton',     label:'Skeleton loader',     desc:'Loading placeholders.'},
+      {id:'s-spinner',      label:'Spinner',             desc:'Indeterminate loading indicators.'},
+      {id:'s-toasts',       label:'Toasts', tag:'Soon',  desc:'Transient status notifications.'},
+    ]},
+  { cat:'Surfaces & overlays', landing:'s-cat-surfaces', component:true,
+    intro:'Containers that layer content above or alongside the page — expanding in place, floating on hover, or taking focus outright.',
+    items:[
+      {id:'s-accordion',    label:'Accordion',           desc:'Collapsible stacked sections.'},
+      {id:'s-drawers',      label:'Bottom Sheets',       desc:'Panels that slide up from the bottom edge.'},
+      {id:'s-command',      label:'Command',             desc:'Searchable command palette.'},
+      {id:'s-context-menu', label:'Context Menu',        desc:'Right-click and overflow action menus.'},
+      {id:'s-hover-card',   label:'Hover Card',          desc:'Rich preview shown on hover.'},
+      {id:'s-modals',       label:'Modals', tag:'Soon',  desc:'Focused dialogs and confirmations.'},
+      {id:'s-popover',      label:'Popover',             desc:'Anchored floating content.'},
       {id:'s-tooltip',      label:'Tooltip',             desc:'Brief on-hover hints.'},
     ]},
-  { cat:'Coming soon', landing:'s-cat-coming',
-    intro:'Components on the roadmap. The patterns are defined — full playgrounds and specs are on the way.',
+  { cat:'Navigation', landing:'s-cat-navigation', component:true,
+    intro:'Getting around — moving between sections, stepping through pages, and showing where in the product someone currently is.',
     items:[
-      {id:'s-modals', label:'Modals', tag:'Soon', desc:'Focused dialogs and confirmations.'},
-      {id:'s-toasts', label:'Toasts', tag:'Soon', desc:'Transient status notifications.'},
+      {id:'s-breadcrumb',   label:'Breadcrumb',          desc:'Shows the path back through a hierarchy.'},
+      {id:'s-carousel',     label:'Carousel',            desc:'Swipeable slides with pagination.'},
+      {id:'s-nav',          label:'Navigation',          desc:'Side navigation and menu systems.'},
+      {id:'s-pagination',   label:'Pagination',          desc:'Page-by-page navigation controls.'},
+      {id:'s-tabs',         label:'Tabs',                desc:'Switch between related views.'},
     ]},
-  { cat:'About', items:[ {id:'s-changelog', label:'Changelog'} ] },
+  // No cat and no landing — renders as a standalone top-level link at the bottom.
+  { items:[ {id:'s-changelog', label:'Changelog'} ] },
 ];
 
 const MOCKS = {
@@ -12867,23 +12908,26 @@ function lpCardHTML(item){
 }
 
 var SB_CARET_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.7 9.3a1 1 0 0 1 1.41 0L12 13.19l3.89-3.89a1 1 0 1 1 1.41 1.41l-4.59 4.6a1 1 0 0 1-1.42 0l-4.59-4.6a1 1 0 0 1 0-1.41Z"/></svg>';
+var SB_CHEV_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.29 6.71a1 1 0 0 1 1.42 0l4.58 4.58a1 1 0 0 1 0 1.42l-4.58 4.58a1 1 0 1 1-1.42-1.41L13.17 12 9.29 8.12a1 1 0 0 1 0-1.41Z"/></svg>';
+
+function sbLinkHTML(id, label, tag, extraCls){
+  return '<a href="javascript:void(0)" onclick="showSection(\'' + id + '\')" class="sb-link'+(extraCls ? ' '+extraCls : '')+'">'
+    + label
+    + (tag ? '<span class="sb-tag">'+tag+'</span>' : '')
+    + '<span class="sb-link__chev">'+SB_CHEV_SVG+'</span>'
+    + '</a>';
+}
 
 function buildSidebar(){
   var aside = document.getElementById('sidebar');
   if(!aside) return;
   var html = '';
   NAV.forEach(function(g, i){
-    var links = '';
-    // The category header toggles instead of navigating, so its landing page
-    // is reached from an Overview link at the top of the group's own items.
     if(g.landing){
-      links += '<a href="javascript:void(0)" onclick="showSection(\'' + g.landing + '\')" class="sb-link">Overview</a>';
-    }
-    g.items.forEach(function(it){
-      var tag = it.tag ? '<span class="sb-tag">'+it.tag+'</span>' : '';
-      links += '<a href="javascript:void(0)" onclick="showSection(\'' + it.id + '\')" class="sb-link">'+it.label+tag+'</a>';
-    });
-    if(g.landing){
+      // The category header toggles instead of navigating, so its landing page
+      // is reached from an Overview link at the top of the group's own items.
+      var links = sbLinkHTML(g.landing, 'Overview')
+        + g.items.map(function(it){ return sbLinkHTML(it.id, it.label, it.tag); }).join('');
       var itemsId = 'sb-items-' + i;
       html += '<div class="sb-group">'
            +    '<button type="button" class="sb-cat sb-cat--toggle" aria-expanded="false" aria-controls="'+itemsId+'" onclick="toggleNavGroup(this)">'
@@ -12892,8 +12936,11 @@ function buildSidebar(){
            +    '<div class="sb-group__items" id="'+itemsId+'">'+links+'</div>'
            +  '</div>';
     } else {
-      // Single-item categories (About) have no landing and stay always-visible.
-      html += '<div class="sb-cat">'+g.cat+'</div>'+links;
+      // A group with no landing is a plain top-level destination (Changelog) —
+      // rendered at category level rather than indented under a heading.
+      html += g.items.map(function(it){
+        return sbLinkHTML(it.id, it.label, it.tag, 'sb-link--top');
+      }).join('');
     }
   });
   aside.innerHTML = html;
@@ -12933,6 +12980,25 @@ function buildLandings(){
       + '<div class="lp-grid">'+g.items.map(lpCardHTML).join('')+'</div>';
     main.appendChild(sec);
   });
+  buildAllComponentsLanding(main);
+}
+
+// The home page's Components entry card points at one umbrella landing rather
+// than at any single group, so build it from every component group's items.
+// It has no sidebar entry of its own — the groups are the way in from there.
+function buildAllComponentsLanding(main){
+  if(document.getElementById('s-cat-components')) return;
+  var items = NAV.filter(function(g){ return g.component; })
+                 .reduce(function(all, g){ return all.concat(g.items); }, [])
+                 .sort(function(a, b){ return a.label.localeCompare(b.label); });
+  var sec = document.createElement('section');
+  sec.className = 'sec';
+  sec.id = 's-cat-components';
+  sec.innerHTML = '<div class="sec__head">'
+    + '<h1 class="sec__title">Components</h1>'
+    + '<p class="sec__desc">Flexible, reusable building blocks for Flash apps and sites. Every component shares the same tokens, spacing and states — pick one to see its playground, specs and code.</p></div>'
+    + '<div class="lp-grid">'+items.map(lpCardHTML).join('')+'</div>';
+  main.appendChild(sec);
 }
 
 var CRUMB_BACK_SVG = '<svg viewBox="0 0 26 26" fill="currentColor" aria-hidden="true"><path d="M11.413 7.08193C11.8029 6.62704 12.4883 6.57392 12.9432 6.96376C13.3982 7.35369 13.4504 8.03911 13.0604 8.49403L10.2557 11.7655H18.0223C18.6214 11.7655 19.1072 12.2514 19.1073 12.8505C19.1073 13.4496 18.6215 13.9354 18.0223 13.9354H10.2557L13.0604 17.2079C13.4502 17.6628 13.398 18.3473 12.9432 18.7372C12.4883 19.1271 11.8029 19.0748 11.413 18.62L7.47741 14.0272C6.89702 13.3501 6.89701 12.3509 7.47741 11.6737L11.413 7.08193Z"/></svg>';
@@ -12993,7 +13059,7 @@ window.addEventListener('hashchange', function(){
 var navSearchIndex = [];
 NAV.forEach(function(g){
   g.items.forEach(function(it){
-    navSearchIndex.push({ id: it.id, label: it.label, desc: it.desc || '', cat: g.cat });
+    navSearchIndex.push({ id: it.id, label: it.label, desc: it.desc || '', cat: g.cat || '' });
   });
 });
 var navSearchActiveIdx = -1;
