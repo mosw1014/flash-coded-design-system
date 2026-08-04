@@ -109,7 +109,7 @@
   --chrome-accent-text:var(--prim-green-800);
   --chrome-txt:var(--prim-black); --chrome-muted:var(--prim-grey-900);
   --chrome-border:var(--prim-grey-400); --chrome-hover:rgba(0,0,0,0.04);
-  --chrome-pill:var(--prim-white);
+  --chrome-active:var(--prim-grey-400);
 }
 /* ================================================================
    FLASH · DARK
@@ -144,7 +144,7 @@
   --chrome-accent-text:var(--prim-green-500);
   --chrome-txt:var(--prim-white); --chrome-muted:var(--prim-grey-400);
   --chrome-border:var(--prim-gb-425); --chrome-hover:rgba(255,255,255,0.05);
-  --chrome-pill:rgba(255,255,255,0.10);
+  --chrome-active:rgba(255,255,255,0.12);
 }
 /* ================================================================
    FLASH DARK (reserved)
@@ -213,15 +213,16 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;font-feature-
 .layout{display:flex;min-height:calc(100vh - 52px)}
 
 /* Sidebar */
-.sidebar{width:252px;flex-shrink:0;background:var(--chrome-nav);border-right:1px solid var(--chrome-border);position:sticky;top:52px;height:calc(100vh - 52px);overflow-y:auto;padding:24px 16px 40px;transition:background .25s}
+.sidebar{width:252px;flex-shrink:0;background:var(--chrome-nav);border-right:1px solid var(--chrome-border);position:sticky;top:52px;height:calc(100vh - 52px);overflow-y:auto;padding:24px 20px 40px;transition:background .25s}
 .sb-cat{display:flex;align-items:center;gap:8px;font-size:16px;font-weight:800;letter-spacing:-.01em;color:var(--chrome-txt);padding:0;margin:24px 0 6px}
 .sb-cat:first-child{margin-top:0}
-/* Rows sit flush left; the hover/active pill is what indents the label by 8px. */
-.sb-link{display:flex;align-items:center;gap:8px;min-height:40px;padding:8px 8px 8px 0;border-radius:8px;font-size:13px;font-weight:500;line-height:1.3;color:var(--chrome-muted);text-decoration:none;transition:background .15s,color .15s,padding .15s}
-.sb-link:hover{padding-left:8px;background:var(--chrome-pill);color:var(--chrome-txt);font-weight:600}
-.sb-link.on{padding-left:8px;background:var(--chrome-txt);color:var(--chrome-bg);font-weight:700}
+/* Rows keep a constant 8px inset; hover is a weight/colour shift, and only the
+   selected row carries a fill. Category labels and Changelog sit flush outside it. */
+.sb-link{display:flex;align-items:center;gap:8px;min-height:40px;padding:8px;border-radius:8px;font-size:13px;font-weight:500;line-height:1.3;color:var(--chrome-muted);text-decoration:none;transition:background .15s,color .15s}
+.sb-link:hover{color:var(--chrome-txt);font-weight:700}
+.sb-link.on{background:var(--chrome-active);color:var(--chrome-txt);font-weight:700}
 /* A top-level destination with no category of its own (Changelog) */
-.sb-link--top{margin-top:24px;font-weight:800;color:var(--chrome-txt)}
+.sb-link--top{padding-left:0;margin-top:24px;font-weight:800;color:var(--chrome-txt)}
 .sb-icon{width:15px;height:15px;flex-shrink:0;color:var(--chrome-muted);transition:color .15s}
 .sb-link:hover .sb-icon{color:var(--chrome-txt)}
 .sb-link.on .sb-icon{color:var(--chrome-accent-text)}
@@ -231,13 +232,12 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;font-feature-
 .sb-sub__toggle:focus-visible{outline:2px solid var(--color-input-focus);outline-offset:-2px}
 .sb-sub__caret{margin-left:auto;width:12px;height:12px;flex-shrink:0;transition:transform .2s}
 .sb-sub__caret svg{width:100%;height:100%;display:block;fill:currentColor}
-/* An open sub-group keeps the pill treatment so its children read as nested */
-.sb-sub__toggle[aria-expanded="true"]{padding-left:8px;background:var(--chrome-pill);color:var(--chrome-txt);font-weight:600}
+/* An open sub-group reads like a hovered row — no fill, just weight and colour */
+.sb-sub__toggle[aria-expanded="true"]{color:var(--chrome-txt);font-weight:700}
 .sb-sub__toggle[aria-expanded="true"] .sb-sub__caret{transform:rotate(180deg)}
 .sb-sub__items{display:none}
 .sb-sub.open>.sb-sub__items{display:block}
-.sb-sub__items .sb-link{padding-left:12px}
-.sb-sub__items .sb-link:hover,.sb-sub__items .sb-link.on{padding-left:20px}
+.sb-sub__items .sb-link{padding-left:16px}
 /* ===== Breadcrumb ===== */
 .crumb{margin-bottom:20px}
 .crumb__link{display:inline-flex;align-items:center;gap:10px;text-decoration:none;cursor:pointer}
@@ -301,7 +301,11 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;font-feature-
 .mk-key{min-width:30px;height:30px;padding:0 8px;border-radius:7px;border:1px solid var(--chrome-border);border-bottom-width:3px;background:var(--chrome-bg);font:800 13px 'Satoshi',sans-serif;color:var(--chrome-txt);display:inline-flex;align-items:center;justify-content:center}
 .mk-tip{position:relative;background:var(--chrome-txt);color:var(--chrome-bg);font:700 11px 'Satoshi',sans-serif;padding:7px 11px;border-radius:8px}
 .mk-tip::after{content:'';position:absolute;left:50%;bottom:-5px;transform:translateX(-50%);border:5px solid transparent;border-top-color:var(--chrome-txt);border-bottom:0}
-.sb-tag{font-size:10px;padding:2px 7px;border-radius:10px;background:var(--chrome-border);color:var(--chrome-muted);white-space:nowrap}
+/* Roadmap marker on a nav row — the real Chip component at its Small size,
+   carrying the documented `muted` variant colours (the variant map lives in
+   CHIP_VARIANTS, so the values are repeated here as the CSS equivalent). */
+.sb-tag{--chip-bg:var(--prim-grey-200);--chip-text:var(--prim-grey-900);font-size:11px;gap:4px;padding:0 9px}
+[data-theme="dark"] .sb-tag{--chip-bg:var(--prim-gb-425);--chip-text:var(--prim-gb-100)}
 
 /* Main */
 /* auto side margins centre the content in the space beside the flush-left sidebar */
@@ -10604,13 +10608,15 @@ const CHANGELOG = {
     version: SYSTEM_VERSION,
     entries: [
       {version:'1.48.0', date:'2026-08-04', author:'Jaco', title:'Sidebar goes back to one alphabetical component list, with sub-groups only for genuinely related pairs, and picks up the Figma pill styling', changes:[
-        ['removed','The six purpose-based component categories (Actions, Inputs & controls, Data display, Feedback & status, Surfaces & overlays, Navigation) and their landing pages. Sorting every component into broad buckets put unrelated things together — Avatar beside Tables beside Charts — and Carbon, Material 3 and Biings all stay alphabetical instead. Components is one A-Z list again, with Modals and Toasts folded in alphabetically keeping their Soon tags'],
-        ['added','Sub-groups in the NAV manifest — an entry with `items` instead of an `id` renders as a row that expands in place into related components, reserved for genuinely coupled pairs rather than broad themes. Cards & Charts is the first (and currently only) one; toggleNavSub() drives it and syncNavGroups() expands whichever sub-group holds the open section, so a deep link never lands on a page whose nav row is hidden'],
+        ['removed','The six purpose-based component categories (Actions, Inputs & controls, Data display, Feedback & status, Surfaces & overlays, Navigation) and their landing pages. Sorting every component into broad buckets put unrelated things together — Avatar beside Tables beside Charts — and Carbon, Material 3 and Biings all stay alphabetical instead. Components is one A-Z list again, with Modals and Toasts folded in alphabetically carrying a Coming soon chip'],
+        ['added','Sub-groups in the NAV manifest — an entry with `items` instead of an `id` renders as a row that expands in place into related components, reserved for genuinely coupled pairs rather than broad themes. Cards & Charts is the first (and currently only) one; toggleNavSub() drives it and syncNavGroups() expands whichever sub-group holds the open section, so a deep link never lands on a page whose nav row is hidden. An open sub-group row reads like a hovered one — bold, no fill, chevron flipped — and its children indent to 16px'],
         ['added','navLeaves() flattens sub-groups back to a plain list, so landing grids, breadcrumbs and the header search index keep seeing every component regardless of how the sidebar nests it'],
         ['changed','Category headings are static labels again rather than accordion toggles — with one list per category there is nothing worth collapsing, and each landing page is still reached from the Overview link at the top of its list'],
-        ['changed','Nav rows now match the Figma spec: 40px tall, 13px Satoshi Medium in --chrome-muted (#646464), flush left with no fill. Hover puts a white pill behind the row, indents the label 8px and goes semibold; the selected row is a solid inverted pill — black on white in light, white on black in dark — at weight 700. Replaces the left accent bar and near-invisible tint fill'],
+        ['changed','Nav rows now match the Figma spec: 40px tall, 8px inset, 8px radius, 13px Satoshi Medium in --chrome-muted (#646464). Hover carries no fill at all — the label just goes full-contrast and bold. Only the selected row takes a fill, a soft --prim-grey-400 (#dddddd) pill with black bold text. Replaces the left accent bar and near-invisible tint fill'],
         ['changed','The Foundations and Components headings sit at 16px with slightly tighter tracking, a clear step above the 13px rows beneath them, so the two lists read as distinct blocks rather than one continuous run'],
-        ['added','--chrome-pill token (white in light, 10% white in dark) for the hover/expanded pill, replacing --chrome-active which the inverted selected row no longer needs'],
+        ['changed','Sidebar horizontal padding 16px → 20px, so a row label sits 28px in and the category labels and Changelog stay flush at 20px, matching the Figma frame (212px nav inside a 252px rail)'],
+        ['changed','--chrome-active is now the selected-row fill rather than a hover tint: #dddddd in light, 12% white in dark. The design is light-only, so dark mirrors its logic inverted — subtle light fill plus white bold text for selected, weight-and-colour only for hover — instead of carrying a literal light pill onto a dark rail'],
+        ['changed','The roadmap marker on a nav row is now the real Chip component (.chip.chip--sm) carrying the documented `muted` variant colours — #e6e6e6 on #646464 in light, #33343a on #a1a3a8 in dark — and reads "Coming soon" rather than "Soon". It sits at the Chip\'s Small size (24px) rather than the 16px in the design, to stay on the documented size scale instead of introducing a smaller step. Those rows stay clickable; the pages exist and have content'],
         ['removed','The trailing chevron on every nav row — a chevron now appears only on a sub-group row, where it actually means something (expand/collapse), matching the Figma where plain rows carry no icon'],
         ['removed','buildAllComponentsLanding() and the `component:true` group flag — with Components a single group again, its landing page is generated by buildLandings() like every other, so the umbrella-page special case is gone'],
       ]},
@@ -13651,7 +13657,7 @@ const NAV = [
       {id:'s-input-otp',    label:'Input OTP',           desc:'One-time passcode entry fields.'},
       {id:'s-kbd',          label:'Keyboard Shortcuts',  desc:'Keycaps and shortcut hints.'},
       {id:'s-lists',        label:'Lists',               desc:'Key-value lists and activity timelines.'},
-      {id:'s-modals',       label:'Modals', tag:'Soon',  desc:'Focused dialogs and confirmations.'},
+      {id:'s-modals',       label:'Modals', tag:'Coming soon',  desc:'Focused dialogs and confirmations.'},
       {id:'s-nav',          label:'Navigation',          desc:'Side navigation and menu systems.'},
       {id:'s-pagination',   label:'Pagination',          desc:'Page-by-page navigation controls.'},
       {id:'s-popover',      label:'Popover',             desc:'Anchored floating content.'},
@@ -13664,7 +13670,7 @@ const NAV = [
       {id:'s-tabs',         label:'Tabs',                desc:'Switch between related views.'},
       {id:'s-tags',         label:'Tags & Badges',       desc:'Labels, counts and status markers.'},
       {id:'s-inputs',       label:'Text Inputs',         desc:'Text, search and password fields.'},
-      {id:'s-toasts',       label:'Toasts', tag:'Soon',  desc:'Transient status notifications.'},
+      {id:'s-toasts',       label:'Toasts', tag:'Coming soon',  desc:'Transient status notifications.'},
       {id:'s-toggle-group', label:'Toggle Group',        desc:'Segmented single / multi choice.'},
       {id:'s-tooltip',      label:'Tooltip',             desc:'Brief on-hover hints.'},
     ]},
@@ -13732,7 +13738,7 @@ var SB_CARET_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.7 9.
 function sbLinkHTML(id, label, tag, extraCls){
   return '<a href="javascript:void(0)" onclick="showSection(\'' + id + '\')" class="sb-link'+(extraCls ? ' '+extraCls : '')+'">'
     + label
-    + (tag ? '<span class="sb-tag">'+tag+'</span>' : '')
+    + (tag ? '<span class="chip chip--sm sb-tag">'+tag+'</span>' : '')
     + '</a>';
 }
 
