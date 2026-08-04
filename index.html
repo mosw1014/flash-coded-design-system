@@ -7084,18 +7084,35 @@ function setJump(el) {
 /* ============================================================
    SPA NAVIGATION
 ============================================================ */
-// Remembers the last section + scroll position across refreshes, so a
-// reload lands back where the person was instead of forcing the landing page.
-var LAST_VIEW_KEY = 'flash-ds-last-view';
-function saveLastView(id, scrollTop) {
-  try { localStorage.setItem(LAST_VIEW_KEY, JSON.stringify({ id: id, scrollTop: scrollTop })); } catch (e) {}
+// The URL hash is the source of truth for which section is open, so a refresh
+// lands where you were and sections are linkable. Scroll offset rides along in
+// localStorage (best-effort — if storage is unavailable you still land on the
+// right section, just at its top).
+var SCROLL_KEY = 'flash-ds-scroll';
+function saveScroll(id, scrollTop) {
+  try { localStorage.setItem(SCROLL_KEY, JSON.stringify({ id: id, scrollTop: scrollTop })); } catch (e) {}
 }
-function loadLastView() {
+// Read once, before any showSection() during init can overwrite it.
+var SAVED_SCROLL = (function(){
   try {
-    const raw = localStorage.getItem(LAST_VIEW_KEY);
+    var raw = localStorage.getItem(SCROLL_KEY);
     return raw ? JSON.parse(raw) : null;
   } catch (e) { return null; }
+})();
+// Routes are '#/<section-id>'. The '/' matters: a bare '#s-tables' matches a
+// real element id, so the browser's own fragment navigation would scroll that
+// section into view after load and fight the restored scroll offset.
+function parseHash(hash) { return (hash || '').replace(/^#\/?/, ''); }
+function sectionFromHash() {
+  var id = parseHash(location.hash);
+  return id && document.getElementById(id) ? id : null;
 }
+// The hash the page was opened with, captured before any showSection() during
+// init can rewrite it. Not validated yet — later sections may not be parsed.
+var INITIAL_HASH_ID = parseHash(location.hash);
+// showSection() runs once during init, before the real route is resolved; it
+// must not write the hash then or it would overwrite the incoming URL.
+var NAV_READY = false;
 var currentSectionId = null;
 
 function showSection(id, opts) {
@@ -7117,10 +7134,23 @@ function showSection(id, opts) {
     l.classList.toggle('on', oc.indexOf("'" + id + "'") > -1);
   });
   // Scroll to top (or restore a remembered position) — the page itself
-  // scrolls (window), .main has no overflow of its own
-  window.scrollTo(0, opts.scrollTop || 0);
+  // scrolls (window), .main has no overflow of its own. html has
+  // scroll-behavior:smooth, so a restore must opt out of the animation.
+  const top = opts.scrollTop || 0;
+  if (opts.instant) {
+    window.scrollTo({ top: top, behavior: 'instant' });
+    // The section only just became display:block — re-apply once layout
+    // settles so a late reflow can't leave us short of the target.
+    requestAnimationFrame(function(){ window.scrollTo({ top: top, behavior: 'instant' }); });
+  } else {
+    window.scrollTo(0, top);
+  }
   currentSectionId = id;
-  saveLastView(id, opts.scrollTop || 0);
+  saveScroll(id, top);
+  // Reflect the open section in the URL so a refresh lands here again.
+  if (NAV_READY && location.hash !== '#/' + id) {
+    try { history.replaceState(null, '', '#/' + id); } catch (e) { location.hash = '/' + id; }
+  }
 }
 // Show brand intro on load
 showSection('s-brand');
@@ -9561,9 +9591,14 @@ const CHANGELOG = {
     version: SYSTEM_VERSION,
     entries: [
       {version:'1.38.2', date:'2026-08-04', author:'Mo', title:'Refreshing the page no longer forces you back to the landing screen', changes:[
-        ['added','showSection() now persists the active section id + scroll position to localStorage (flash-ds-last-view) on every navigation and on scroll (150ms debounce)'],
-        ['changed','Page load now restores the last-viewed section and scroll offset from localStorage instead of always calling showSection(\'s-brand\') — falls back to the brand intro landing page if nothing was saved or the saved section no longer exists'],
-        ['fixed','showSection() previously set the non-scrolling .main element\'s scrollTop, which had no visible effect since the page actually scrolls at the window/document level — scroll-to-top and scroll-restore now correctly use window.scrollTo()'],
+        ['added','The open section is now reflected in the URL as a \'#/<section-id>\' route (history.replaceState on every showSection()), so a refresh lands on the same section and any section can be linked or bookmarked directly'],
+        ['added','hashchange listener so browser back/forward moves between sections instead of doing nothing'],
+        ['added','Scroll offset within a section is remembered in localStorage (flash-ds-scroll, 150ms debounce on scroll) and reapplied on load — best-effort only, so if storage is blocked you still land on the right section, just at its top'],
+        ['changed','Page load now resolves the section from the URL instead of always calling showSection(\'s-brand\') — the brand intro is still the fallback when there is no route'],
+        ['fixed','showSection() previously set the non-scrolling .main element\'s scrollTop, which had no visible effect since the page actually scrolls at the window/document level — now uses window.scrollTo()'],
+        ['fixed','Restoring a scroll offset now passes behavior:\'instant\' (and reapplies on the next frame), since html{scroll-behavior:smooth} otherwise animated the restore from the top'],
+        ['fixed','Routes are \'#/id\' rather than a bare \'#id\' on purpose: a bare fragment matches the section\'s real element id, so the browser\'s own fragment navigation scrolled that section into view ~300ms after load and overrode the restored scroll position'],
+        ['fixed','The init-time showSection(\'s-brand\') call was overwriting the incoming location.hash before the real route was resolved, so every refresh fell back to the landing page — hash writes are now gated behind a NAV_READY flag, and the incoming route and saved scroll offset are both snapshotted up front so nothing during init can clobber them'],
       ]},
       {version:'1.38.1', date:'2026-08-03', author:'Mo', title:'Added 16 business/reporting icons to the Icons library', changes:[
         ['added','16 new icons vendored from Font Awesome 6 Free: briefcase, chart-line, chart-pie, chart-bar, clipboard, clipboard-list, file-invoice, receipt, money-bill-1, coins, building, handshake, globe, percent, table, database — Library grows from 48 to 64 icons'],
@@ -12528,13 +12563,19 @@ buildSidebar();
 buildLandings();
 injectBreadcrumbs();
 (function restoreLastView(){
-  const last = loadLastView();
-  if (last && last.id && document.getElementById(last.id)) {
-    showSection(last.id, { scrollTop: last.scrollTop || 0 });
-  } else {
-    showSection('s-brand');
-  }
+  NAV_READY = true;
+  const id = INITIAL_HASH_ID && document.getElementById(INITIAL_HASH_ID) ? INITIAL_HASH_ID : null;
+  if (!id) { showSection('s-brand'); return; }
+  // Only reuse the stored offset if it belongs to the section we're opening.
+  const top = (SAVED_SCROLL && SAVED_SCROLL.id === id) ? SAVED_SCROLL.scrollTop || 0 : 0;
+  showSection(id, { scrollTop: top, instant: true });
 })();
+
+// Back/forward between sections.
+window.addEventListener('hashchange', function(){
+  const id = sectionFromHash() || 's-brand';
+  if (id !== currentSectionId) showSection(id, { instant: true });
+});
 
 // Keep the remembered scroll position for the current section up to date
 // as the person scrolls, so a refresh mid-scroll lands in the same spot.
@@ -12543,7 +12584,7 @@ injectBreadcrumbs();
   window.addEventListener('scroll', function(){
     clearTimeout(scrollSaveTimer);
     scrollSaveTimer = setTimeout(function(){
-      if (currentSectionId) saveLastView(currentSectionId, window.scrollY);
+      if (currentSectionId) saveScroll(currentSectionId, window.scrollY);
     }, 150);
   }, { passive: true });
 })();
