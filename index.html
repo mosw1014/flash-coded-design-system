@@ -109,7 +109,7 @@
   --chrome-accent-text:var(--prim-green-800);
   --chrome-txt:var(--prim-black); --chrome-muted:var(--prim-grey-900);
   --chrome-border:var(--prim-grey-400); --chrome-hover:rgba(0,0,0,0.04);
-  --chrome-pill:var(--prim-white);
+  --chrome-active:var(--prim-grey-400);
 }
 /* ================================================================
    FLASH · DARK
@@ -144,7 +144,7 @@
   --chrome-accent-text:var(--prim-green-500);
   --chrome-txt:var(--prim-white); --chrome-muted:var(--prim-grey-400);
   --chrome-border:var(--prim-gb-425); --chrome-hover:rgba(255,255,255,0.05);
-  --chrome-pill:rgba(255,255,255,0.10);
+  --chrome-active:rgba(255,255,255,0.12);
 }
 /* ================================================================
    FLASH DARK (reserved)
@@ -213,15 +213,16 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;font-feature-
 .layout{display:flex;min-height:calc(100vh - 52px)}
 
 /* Sidebar */
-.sidebar{width:252px;flex-shrink:0;background:var(--chrome-nav);border-right:1px solid var(--chrome-border);position:sticky;top:52px;height:calc(100vh - 52px);overflow-y:auto;padding:24px 16px 40px;transition:background .25s}
+.sidebar{width:252px;flex-shrink:0;background:var(--chrome-nav);border-right:1px solid var(--chrome-border);position:sticky;top:52px;height:calc(100vh - 52px);overflow-y:auto;padding:24px 20px 40px;transition:background .25s}
 .sb-cat{display:flex;align-items:center;gap:8px;font-size:16px;font-weight:800;letter-spacing:-.01em;color:var(--chrome-txt);padding:0;margin:24px 0 6px}
 .sb-cat:first-child{margin-top:0}
-/* Rows sit flush left; the hover/active pill is what indents the label by 8px. */
-.sb-link{display:flex;align-items:center;gap:8px;min-height:40px;padding:8px 8px 8px 0;border-radius:8px;font-size:13px;font-weight:500;line-height:1.3;color:var(--chrome-muted);text-decoration:none;transition:background .15s,color .15s,padding .15s}
-.sb-link:hover{padding-left:8px;background:var(--chrome-pill);color:var(--chrome-txt);font-weight:600}
-.sb-link.on{padding-left:8px;background:var(--chrome-txt);color:var(--chrome-bg);font-weight:700}
+/* Rows keep a constant 8px inset; hover is a weight/colour shift, and only the
+   selected row carries a fill. Category labels and Changelog sit flush outside it. */
+.sb-link{display:flex;align-items:center;gap:8px;min-height:40px;padding:8px;border-radius:8px;font-size:13px;font-weight:500;line-height:1.3;color:var(--chrome-muted);text-decoration:none;transition:background .15s,color .15s}
+.sb-link:hover{color:var(--chrome-txt);font-weight:700}
+.sb-link.on{background:var(--chrome-active);color:var(--chrome-txt);font-weight:700}
 /* A top-level destination with no category of its own (Changelog) */
-.sb-link--top{margin-top:24px;font-weight:800;color:var(--chrome-txt)}
+.sb-link--top{padding-left:0;margin-top:24px;font-weight:800;color:var(--chrome-txt)}
 .sb-icon{width:15px;height:15px;flex-shrink:0;color:var(--chrome-muted);transition:color .15s}
 .sb-link:hover .sb-icon{color:var(--chrome-txt)}
 .sb-link.on .sb-icon{color:var(--chrome-accent-text)}
@@ -231,13 +232,12 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;font-feature-
 .sb-sub__toggle:focus-visible{outline:2px solid var(--color-input-focus);outline-offset:-2px}
 .sb-sub__caret{margin-left:auto;width:12px;height:12px;flex-shrink:0;transition:transform .2s}
 .sb-sub__caret svg{width:100%;height:100%;display:block;fill:currentColor}
-/* An open sub-group keeps the pill treatment so its children read as nested */
-.sb-sub__toggle[aria-expanded="true"]{padding-left:8px;background:var(--chrome-pill);color:var(--chrome-txt);font-weight:600}
+/* An open sub-group reads like a hovered row — no fill, just weight and colour */
+.sb-sub__toggle[aria-expanded="true"]{color:var(--chrome-txt);font-weight:700}
 .sb-sub__toggle[aria-expanded="true"] .sb-sub__caret{transform:rotate(180deg)}
 .sb-sub__items{display:none}
 .sb-sub.open>.sb-sub__items{display:block}
-.sb-sub__items .sb-link{padding-left:12px}
-.sb-sub__items .sb-link:hover,.sb-sub__items .sb-link.on{padding-left:20px}
+.sb-sub__items .sb-link{padding-left:16px}
 /* ===== Breadcrumb ===== */
 .crumb{margin-bottom:20px}
 .crumb__link{display:inline-flex;align-items:center;gap:10px;text-decoration:none;cursor:pointer}
@@ -301,7 +301,11 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;font-feature-
 .mk-key{min-width:30px;height:30px;padding:0 8px;border-radius:7px;border:1px solid var(--chrome-border);border-bottom-width:3px;background:var(--chrome-bg);font:800 13px 'Satoshi',sans-serif;color:var(--chrome-txt);display:inline-flex;align-items:center;justify-content:center}
 .mk-tip{position:relative;background:var(--chrome-txt);color:var(--chrome-bg);font:700 11px 'Satoshi',sans-serif;padding:7px 11px;border-radius:8px}
 .mk-tip::after{content:'';position:absolute;left:50%;bottom:-5px;transform:translateX(-50%);border:5px solid transparent;border-top-color:var(--chrome-txt);border-bottom:0}
-.sb-tag{font-size:10px;padding:2px 7px;border-radius:10px;background:var(--chrome-border);color:var(--chrome-muted);white-space:nowrap}
+/* Roadmap marker on a nav row — the real Pill component at its Small size,
+   carrying the documented `muted` variant colours (the variant map lives in
+   PILL_VARIANTS, so the values are repeated here as the CSS equivalent). */
+.sb-tag{--pill-bg:var(--prim-grey-200);--pill-text:var(--prim-grey-900);font-size:11px;gap:4px;padding:0 9px}
+[data-theme="dark"] .sb-tag{--pill-bg:var(--prim-gb-425);--pill-text:var(--prim-gb-100)}
 
 /* Main */
 /* auto side margins centre the content in the space beside the flush-left sidebar */
@@ -11466,12 +11470,20 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.53.0';
+const SYSTEM_VERSION = '1.54.0';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.54.0', date:'2026-08-04', author:'Jaco', title:'Sidebar row states updated — hover loses its fill, the selected row becomes a soft grey pill, and the roadmap marker becomes a real Pill', changes:[
+        ['changed','Hover no longer paints a fill or shifts the label. It is now purely an emphasis change — the label goes full-contrast and bold — so only one row on screen ever carries a background'],
+        ['changed','The selected row is a soft --prim-grey-400 (#dddddd) pill with black bold text, replacing the solid inverted pill (black fill, white text) from 1.48.0. Far less heavy beside a list of muted labels'],
+        ['changed','--chrome-active is now the selected-row fill rather than a hover tint: #dddddd in light, 12% white in dark. The Figma design is light-only, so dark mirrors its logic inverted — subtle light fill with white bold text — rather than carrying a literal light pill onto a dark rail. Drops --chrome-pill, which nothing references now'],
+        ['changed','Nav rows keep a constant 8px inset instead of sitting flush and indenting 8px on hover, so nothing shifts under the cursor. Sidebar horizontal padding 16px → 20px to match the Figma frame (a 212px nav inside the 252px rail), putting a row label 28px in while category labels and Changelog stay flush at 20px'],
+        ['changed','An open sub-group row now reads like a hovered one — bold, no fill, chevron flipped — and its children indent to 16px (was 12px)'],
+        ['changed','The roadmap marker on a nav row is the real Pill component (.pill.pill--sm — renamed from .chip.chip--sm since this merge, see 1.53.0) carrying the documented `muted` variant colours — #e6e6e6 on #646464 in light, #33343a on #a1a3a8 in dark — and reads "Coming soon" rather than "Soon". It sits at the Pill\'s Small size (24px) rather than the 16px in the design, to stay on the documented size scale rather than introduce a smaller step. Those rows stay clickable, since the pages exist and have content'],
+      ]},
       {version:'1.53.0', date:'2026-08-04', author:'Helen', title:'Chips & Pills renamed to Pills; "Do\'s and don\'ts" spelled out on every tabbed page', changes:[
         ['changed','Page renamed from "Chips and pills" to "Pills" — title, sidebar label and Components landing card now just say "Pills". This is a full rename, not just a label swap: the real CSS classes (.chip→.pill and all .chip__*/.chip--* variants), custom props (--chip-bg/--chip-text→--pill-bg/--pill-text), every JS identifier (CHIP_VARIANTS→PILL_VARIANTS, makeChipHTML→makePillHTML, etc.) and the generated Code-tab output (chip.html→pill.html, DsChip.razor/.tsx→DsPill.razor/.tsx, ChipVariant→PillVariant) all say Pill now. The section\'s routing id (#s-chips) and its CHANGELOG secId are deliberately unchanged, so existing deep links and this page\'s own version history still resolve — same approach already used when Tags & Badges split kept secId ‘s-tags’ through its rename'],
         ['changed','Tags\' "Tag or Pill?" comparison callout (in its Do\'s and don\'ts intro) and its AI-context note updated to say Pill instead of Chip; Cards\' AI-context note referencing the filter-chips demo now says filter-pills'],
@@ -14632,7 +14644,7 @@ const NAV = [
       {id:'s-input-otp',    label:'Input OTP',           desc:'One-time passcode entry fields.'},
       {id:'s-kbd',          label:'Keyboard Shortcuts',  desc:'Keycaps and shortcut hints.'},
       {id:'s-lists',        label:'Lists',               desc:'Key-value lists and activity timelines.'},
-      {id:'s-modals',       label:'Modals', tag:'Soon',  desc:'Focused dialogs and confirmations.'},
+      {id:'s-modals',       label:'Modals', tag:'Coming soon',  desc:'Focused dialogs and confirmations.'},
       {id:'s-nav',          label:'Navigation',          desc:'Side navigation and menu systems.'},
       {id:'s-pagination',   label:'Pagination',          desc:'Page-by-page navigation controls.'},
       {id:'s-popover',      label:'Popover',             desc:'Anchored floating content.'},
@@ -14645,7 +14657,7 @@ const NAV = [
       {id:'s-tabs',         label:'Tabs',                desc:'Switch between related views.'},
       {id:'s-tags',         label:'Tags',                desc:'Read-only category and metadata labels.'},
       {id:'s-inputs',       label:'Text Inputs',         desc:'Text, search and password fields.'},
-      {id:'s-toasts',       label:'Toasts', tag:'Soon',  desc:'Transient status notifications.'},
+      {id:'s-toasts',       label:'Toasts', tag:'Coming soon',  desc:'Transient status notifications.'},
       {id:'s-toggle-group', label:'Toggle Group',        desc:'Segmented single / multi choice.'},
       {id:'s-tooltip',      label:'Tooltip',             desc:'Brief on-hover hints.'},
     ]},
@@ -14714,7 +14726,7 @@ var SB_CARET_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.7 9.
 function sbLinkHTML(id, label, tag, extraCls){
   return '<a href="javascript:void(0)" onclick="showSection(\'' + id + '\')" class="sb-link'+(extraCls ? ' '+extraCls : '')+'">'
     + label
-    + (tag ? '<span class="sb-tag">'+tag+'</span>' : '')
+    + (tag ? '<span class="pill pill--sm sb-tag">'+tag+'</span>' : '')
     + '</a>';
 }
 
