@@ -1400,6 +1400,15 @@ body.home .main{max-width:none;margin:0;padding:0}
 .chlog-search .ti-search-clear:hover{color:var(--chrome-txt)}
 .chlog-empty{padding:20px 2px;font-size:13px;color:var(--chrome-muted)}
 .chlog-count{font-size:12px;color:var(--chrome-muted);margin:-10px 0 16px}
+.chlog-filters{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 20px}
+.chlog-filter-select{font:inherit;font-size:12.5px;font-weight:600;color:var(--chrome-txt);background:var(--chrome-nav);border:1px solid var(--chrome-border);border-radius:8px;padding:8px 12px;cursor:pointer;min-width:150px}
+.chlog-filter-select:hover{border-color:var(--chrome-muted)}
+.chlog-filter-select:focus-visible{outline:2px solid var(--color-input-focus);outline-offset:1px}
+/* Section label stamped on each entry so it reads unambiguously once entries
+   from different sections can appear together (author/section filters, or the
+   "By section" name-match convenience) — not just implied by which .sec-chlog
+   accordion happens to contain it. */
+.chlog-section-tag{font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:var(--chrome-muted);background:var(--chrome-bg);border:1px solid var(--chrome-border);padding:2px 7px;border-radius:20px;flex-shrink:0}
 
 /* ---- State journeys (static, non-interactive showcase) ---- */
 .ti-journey{margin-bottom:28px}
@@ -11935,12 +11944,18 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.60.0';
+const SYSTEM_VERSION = '1.61.0';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.61.0', date:'2026-08-05', author:'Mo', title:'Changelog search gains author and section filters, entries now show which section they belong to', changes:[
+        ['added','Two <select> filters ("All authors" / "All sections") next to the search field — Author lists everyone with at least one entry; Section lists "Design System" plus every component/foundation, sorted alphabetically. Both AND with each other and with the text query'],
+        ['added','Every entry inside the "Design System" block is now stamped with a .chlog-section-tag reading "Design System" — the per-component "By section" blocks don\'t repeat this since the component name is already that block\'s header'],
+        ['changed','The empty state now names every active filter, e.g. \'No changes match "foo" by Mo in Buttons\', instead of only ever quoting the text query'],
+        ['changed','chlogRenderBody() no longer takes a query argument — it and the search/author/section handlers all read/write one shared chlogFilters state object, so any of the three inputs can change independently and still recombine on the next render'],
+      ]},
       {version:'1.60.0', date:'2026-08-05', author:'Mo', title:'Changelog page gains a search bar', changes:[
         ['added','A search field above the "Design System" block on the Changelog page (renderChangelog(), reusing the Text Inputs .ti-search field with a theme-aware .chlog-search colour override). Typing filters live against every entry\'s version, title, author, date and change text/tag'],
         ['added','Matching component sections auto-expand and a "N matching entries" count appears while a query is active; clearing the field (× button or emptying it) restores the default view — Design System open, every component collapsed'],
@@ -13575,7 +13590,11 @@ const CHANGELOG = {
   ]
 };
 
-function chlogEntryHtml(e) {
+// sectionLabel is the human-readable section a caller wants stamped on the
+// entry ("Design System", a component name) — omitted when an entry already
+// sits inside an unambiguous context (e.g. the mini changelog injected at the
+// bottom of the component's own page, see renderSectionChangelogs()).
+function chlogEntryHtml(e, sectionLabel) {
   const tag = (t) => `<span class="chlog-tag chlog-tag--${t}">${t}</span>`;
   const initials = (e.author||'?').split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
   const timestamp = e.time ? `${e.date} · ${e.time}` : e.date;
@@ -13583,6 +13602,7 @@ function chlogEntryHtml(e) {
     <div class="chlog-entry">
       <div class="chlog-head">
         <span class="chlog-version">v${e.version}</span>
+        ${sectionLabel ? `<span class="chlog-section-tag">${chlogEsc(sectionLabel)}</span>` : ''}
         <span class="chlog-title">${e.title}</span>
         <span class="chlog-author" title="${e.author||'Unknown'}">
           <span class="chlog-author__avatar">${initials}</span>${e.author||'Unknown'}
@@ -13608,9 +13628,29 @@ function chlogMatches(e, q) {
   return hay.indexOf(q) > -1;
 }
 
+// Filter state lives here rather than being threaded through every call —
+// the search box, the two <select> filters and chlogRenderBody() all read/
+// write this one object so any of the three can change independently and
+// still recombine (AND'd together) on the next render.
+const chlogFilters = { q: '', author: '', section: '' };
+
+function chlogAllAuthors() {
+  const set = new Set();
+  CHANGELOG.system.entries.forEach(e => set.add(e.author));
+  CHANGELOG.components.forEach(c => c.entries.forEach(e => set.add(e.author)));
+  return [...set].sort((a, b) => a.localeCompare(b));
+}
+
 function renderChangelog() {
   const root = document.getElementById('changelog-root');
   if(!root) return;
+
+  const authorOptions = chlogAllAuthors()
+    .map(a => `<option value="${chlogEsc(a)}">${chlogEsc(a)}</option>`).join('');
+  const sectionOptions = [...CHANGELOG.components]
+    .filter(c => c.entries.length)
+    .sort((a, b) => a.name.localeCompare(b.name))
+    .map(c => `<option value="${chlogEsc(c.secId)}">${chlogEsc(c.name)}</option>`).join('');
 
   root.innerHTML = `
     <div class="ti-search chlog-search" data-bg="colour" data-size="small" id="chlog-search">
@@ -13622,16 +13662,27 @@ function renderChangelog() {
         <button type="button" class="ti-search-clear" aria-label="Clear search" onclick="chlogSearchClear()">${TI_CLEAR_SVG}</button>
       </div>
     </div>
+    <div class="chlog-filters">
+      <select class="chlog-filter-select" id="chlog-filter-author" aria-label="Filter by author" onchange="chlogFilterChange()">
+        <option value="">All authors</option>
+        ${authorOptions}
+      </select>
+      <select class="chlog-filter-select" id="chlog-filter-section" aria-label="Filter by section" onchange="chlogFilterChange()">
+        <option value="">All sections</option>
+        <option value="system">Design System</option>
+        ${sectionOptions}
+      </select>
+    </div>
     <div id="changelog-body"></div>`;
 
-  chlogRenderBody('');
+  chlogRenderBody();
 }
 
 function chlogSearchInput(value) {
   const wrap = document.getElementById('chlog-search');
-  const q = (value || '').trim();
-  if(wrap) wrap.classList.toggle('ti-show-clear', q.length > 0);
-  chlogRenderBody(q);
+  chlogFilters.q = (value || '').trim();
+  if(wrap) wrap.classList.toggle('ti-show-clear', chlogFilters.q.length > 0);
+  chlogRenderBody();
 }
 
 function chlogSearchClear() {
@@ -13641,15 +13692,29 @@ function chlogSearchClear() {
   if(input) input.focus();
 }
 
-function chlogRenderBody(query) {
+function chlogFilterChange() {
+  const authorEl = document.getElementById('chlog-filter-author');
+  const sectionEl = document.getElementById('chlog-filter-section');
+  chlogFilters.author = authorEl ? authorEl.value : '';
+  chlogFilters.section = sectionEl ? sectionEl.value : '';
+  chlogRenderBody();
+}
+
+function chlogRenderBody() {
   const body = document.getElementById('changelog-body');
   if(!body) return;
-  const q = (query || '').trim().toLowerCase();
+  const q = chlogFilters.q.trim().toLowerCase();
+  const author = chlogFilters.author;
+  const section = chlogFilters.section;
+  const active = !!(q || author || section);
+
+  const passesEntry = e => (!author || e.author === author) && chlogMatches(e, q);
 
   const sys = CHANGELOG.system;
-  const sysEntries = sys.entries.filter(e => chlogMatches(e, q));
+  const showSystem = !section || section === 'system';
+  const sysEntries = showSystem ? sys.entries.filter(passesEntry) : [];
   const systemHtml = sysEntries.length ? `
-    <div class="sec-chlog${(!q || sysEntries.length) ? ' open' : ''}">
+    <div class="sec-chlog${(!active || sysEntries.length) ? ' open' : ''}">
       <div class="sec-chlog-toggle" onclick="this.parentNode.classList.toggle('open')">
         <span class="sec-chlog-toggle-label">Design System</span>
         <span class="chlog-version" style="margin-left:auto">v${sys.version}</span>
@@ -13657,7 +13722,7 @@ function chlogRenderBody(query) {
       </div>
       <div class="sec-chlog-body">
         <div class="type-sub__desc">Complete release history across all foundations and components.</div>
-        <div style="margin:16px 0 8px">${sysEntries.map(chlogEntryHtml).join('')}</div>
+        <div style="margin:16px 0 8px">${sysEntries.map(e => chlogEntryHtml(e, 'Design System')).join('')}</div>
       </div>
     </div>` : '';
 
@@ -13674,12 +13739,13 @@ function chlogRenderBody(query) {
 
   let matchCount = sysEntries.length;
   const compHtml = byLastUpdated.map(c => {
-    const nameMatch = !!q && c.name.toLowerCase().indexOf(q) > -1;
-    const entries = (!q || nameMatch) ? c.entries : c.entries.filter(e => chlogMatches(e, q));
-    if(q && !entries.length) return '';
+    if(section && section !== 'system' && c.secId !== section) return '';
+    const nameMatch = !!q && !author && c.name.toLowerCase().indexOf(q) > -1;
+    const entries = (!q || nameMatch) ? c.entries.filter(e => !author || e.author === author) : c.entries.filter(passesEntry);
+    if(active && !entries.length) return '';
     matchCount += entries.length;
     return `
-    <div class="sec-chlog chlog-comp-section${q ? ' open' : ''}">
+    <div class="sec-chlog chlog-comp-section${active ? ' open' : ''}">
       <div class="sec-chlog-toggle" onclick="this.parentNode.classList.toggle('open')">
         <span class="sec-chlog-toggle-label">
           <a href="javascript:void(0)" onclick="event.stopPropagation();showSection('${c.secId}')" style="color:inherit;text-decoration:none">${c.name}</a>
@@ -13696,13 +13762,17 @@ function chlogRenderBody(query) {
     </div>`;
   }).join('');
 
-  if(q && !matchCount) {
-    body.innerHTML = `<div class="chlog-empty">No changes match “${chlogEsc(query.trim())}”.</div>`;
+  if(active && !matchCount) {
+    const parts = [];
+    if(q) parts.push(`“${chlogEsc(chlogFilters.q.trim())}”`);
+    if(author) parts.push(`by ${chlogEsc(author)}`);
+    if(section) parts.push(`in ${chlogEsc(section === 'system' ? 'Design System' : (CHANGELOG.components.find(c => c.secId === section) || {}).name || section)}`);
+    body.innerHTML = `<div class="chlog-empty">No changes match ${parts.join(' ')}.</div>`;
     return;
   }
 
   body.innerHTML = `
-    ${q ? `<div class="chlog-count">${matchCount} matching ${matchCount === 1 ? 'entry' : 'entries'}</div>` : ''}
+    ${active ? `<div class="chlog-count">${matchCount} matching ${matchCount === 1 ? 'entry' : 'entries'}</div>` : ''}
     ${systemHtml}
     <div style="height:1px;background:var(--chrome-border);margin:${systemHtml ? '40px' : '0'} 0 32px"></div>
     <div class="type-sub__title">By section</div>
