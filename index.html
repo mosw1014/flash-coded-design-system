@@ -7689,12 +7689,16 @@ function hexToRgba(hex, alpha) {
   return `rgba(${r},${g},${b},${alpha})`;
 }
 
-const CHART_COLORS = CATS;
+// Chart Colours leads with the Flash brand primary green (--prim-green-500,
+// the same hex charts already default to via --c1), then the rest of the
+// Category Colours identity set — its own array, not an alias of CATS, so
+// this addition doesn't spill into the Category Colours family.
+const CHART_COLORS = [['Primary Green', '#10c504'], ...CATS];
 // Desaturated set is the same hue at reduced opacity — the same "dim the
 // rest" treatment .cht__seg uses on donut/bar hover (opacity:.32) — rather
 // than a greyed-out HSL desaturation, so it reads as "faded", not "muddy".
 const CHART_DESAT_OPACITY = 0.45;
-const CHART_COLORS_DESAT = CATS;
+const CHART_COLORS_DESAT = CHART_COLORS;
 
 function renderColorGrid(gridId, pairs, opacity) {
   const grid = document.getElementById(gridId);
@@ -11924,12 +11928,15 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.64.2';
+const SYSTEM_VERSION = '1.64.3';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.64.3', date:'2026-08-05', author:'Mo', title:'Chart Colours and its desaturated companion now lead with the brand primary green', changes:[
+        ['added','New "Primary Green" swatch (#10c504) prepended to Chart Colours and Chart Colours — Desaturated on the Colours page, so chart/data-viz series lead with the Flash brand primary the same way charts themselves already do via --c1'],
+      ]},
       {version:'1.64.2', date:'2026-08-05', author:'Mo', title:'Text inputs and search fields capped at a max width', changes:[
         ['changed','.ti-shell, .ti-outer and .ti-search (Text Inputs\' standard/password field, its label-outside wrapper, and the Search variant) now cap at max-width:400px instead of stretching to fill their container at width:100%, matching the max-width already used on the Changelog search bar (.chlog-search)'],
       ]},
@@ -13002,7 +13009,10 @@ const CHANGELOG = {
         ['added','New "Logos" page under the Brand category listing all 8 Flash logo variations (Primary, White, Monochrome Black, Monochrome White — each horizontal and stacked), each downloadable as a transparent SVG or PNG from assets/logos/'],
       ]},
     ]},
-    {secId:'s-colours', name:'Colours', version:'1.11.0', entries:[
+    {secId:'s-colours', name:'Colours', version:'1.12.0', entries:[
+      {version:'1.12.0', date:'2026-08-05', author:'Mo', title:'Chart Colours and its desaturated companion now lead with the brand primary green', changes:[
+        ['added','New "Primary Green" swatch (#10c504, the same --prim-green-500/--color-brand hex charts already default to via --c1) prepended to Chart Colours and Chart Colours — Desaturated. CHART_COLORS is now its own array (no longer an alias of CATS) so this addition is scoped to the two chart families and does not affect Category Colours'],
+      ]},
       {version:'1.11.0', date:'2026-08-04', author:'Mo', title:'Primary hero swatch labels moved from overlaid text to a footer underneath', changes:[
         ['changed','New .hero-card/.hero-grid pair replaces .brand-sw/.brand-swatches for the Primary hero render — swatch colour fills a square .hero-card__swatch, with name/hex now in a .hero-card__info footer below it (border-top, --chrome-nav background) instead of overlaid text inside the coloured area'],
         ['removed','PRIMARY_HERO entries dropped their per-swatch `text` colour field — no longer needed now labels render on a neutral background rather than on top of the swatch'],
