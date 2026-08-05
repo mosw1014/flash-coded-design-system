@@ -3723,7 +3723,7 @@ body.home .main{max-width:none;margin:0;padding:0}
       <div class="sec__head">
         <h1 class="sec__title">Pills</h1>
         <div class="sec-header-meta">
-          <span class="comp-ver-badge" style="margin-left:0">v1.17.0</span>
+          <span class="comp-ver-badge" style="margin-left:0">v1.17.1</span>
           <details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-chips">
@@ -10360,7 +10360,7 @@ function pillTabSwitch(tab){
   const nav = document.getElementById('pill-tabs-list');
   if(!nav) return;
   nav.querySelectorAll('.tab-item').forEach(btn=>btn.classList.toggle('on', btn.getAttribute('data-pill-tab')===tab));
-  document.querySelectorAll('#s-pills .tabs-panel[data-pill-panel]').forEach(p=>p.classList.toggle('on', p.getAttribute('data-pill-panel')===tab));
+  document.querySelectorAll('#s-chips .tabs-panel[data-pill-panel]').forEach(p=>p.classList.toggle('on', p.getAttribute('data-pill-panel')===tab));
 }
 
 /* ============================================================
@@ -11894,12 +11894,16 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.63.0';
+const SYSTEM_VERSION = '1.63.1';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.63.1', date:'2026-08-05', author:'Helen', title:'Fixed regressions left by the Chips & Pills → Pills rename', changes:[
+        ['fixed','Pills page (#s-chips): Style, Code and Changelog tabs were unclickable — pillTabSwitch() queried a stale #s-pills scope instead of the section\'s real #s-chips id, so only Overview ever displayed regardless of which tab was clicked'],
+        ['fixed','Sidebar nav: Pills had been left sorted under its retired "Chips" name (between Checkboxes & Radios and Command); moved into correct alphabetical position between Pagination and Popover'],
+      ]},
       {version:'1.63.0', date:'2026-08-05', author:'Helen', title:'Dropdown rebuilt on the Chips & Pills tabbed treatment', changes:[
         ['changed','Dropdown (s-dropdown) moves from a flat, single-scroll page to the shared .sec--tabbed layout: Overview / Style / Code / Changelog tabs, a hero with a live preview card, and a Code tab behind the three-language (HTML/CSS · Blazor · React TSX) segmented switcher'],
         ['added','One interactive playground covering both forms — a Mode control (Single-select / Multi-select) sits alongside Style, Size, Search and the existing Label position (Outside/Inside, from 1.49.0) controls, rendered into two mounts (the Overview stage and the Code tab\'s mini-playground) that stay in sync, replacing the old separate Single-select/Multi-select demo blocks and their standalone Label position toggles'],
@@ -13175,7 +13179,11 @@ const CHANGELOG = {
         ['added','Do\'s & don\'ts written specifically for badges as a group — count-at-zero, colour-alone status, and badges-aren\'t-buttons'],
       ]},
     ]},
-    {secId:'s-chips', name:'Pills', version:'1.17.0', entries:[
+    {secId:'s-chips', name:'Pills', version:'1.17.1', entries:[
+      {version:'1.17.1', date:'2026-08-05', author:'Helen', title:'Fixed Style/Code/Changelog tabs and nav position left broken by the Pills rename', changes:[
+        ['fixed','pillTabSwitch() was scoping its panel query to #s-pills, a section id that never existed after the rename (the section kept its original #s-chips id for routing continuity) — Style, Code and Changelog tabs were unclickable dead ends stuck on Overview; the selector now targets #s-chips'],
+        ['fixed','Sidebar nav entry for Pills was left in its old alphabetical slot under the retired "Chips" name (between Checkboxes & Radios and Command) instead of "Pills" — moved to sit between Pagination and Popover'],
+      ]},
       {version:'1.17.0', date:'2026-08-04', author:'Helen', title:'Renamed Chips & Pills to Pills — full rename, not just the label', changes:[
         ['changed','Every real class renamed: .chip→.pill, .chip__label/__icon/__x→.pill__label/__icon/__x, .chip--sm/reg/lg→.pill--sm/reg/lg, .dd-chips/.dd-chips__clear→.dd-pills/.dd-pills__clear, and the custom props --chip-bg/--chip-text→--pill-bg/--pill-text'],
         ['changed','Every JS identifier renamed to match — PILL_SIZES, PILL_VARIANTS, PILL_LANGS, pillHeartSVG, makePillHTML, makePillEl, ovPill, renderPillPlayground/Variants/InSitu/Reference/CodeTab, pillTabSwitch, getPillCode*, setPillLang, pillLangKeydown, pillMutedNote, and the playground state var cpg→ppg with its ppgSet/ppgRefresh/ppgReset/ppgCopyCode/ppgSetLabel/ppgEsc helpers'],
@@ -15735,7 +15743,6 @@ const NAV = [
         {id:'s-charts-distribution', label:'Distribution',    desc:'Split a total across categories.'},
       ]},
       {id:'s-selection',    label:'Checkboxes & Radios', desc:'Multi- and single-select controls.'},
-      {id:'s-chips',        label:'Pills',               desc:'Compact selectable and filter tokens.'},
       {id:'s-command',      label:'Command',             desc:'Searchable command palette.'},
       {id:'s-context-menu', label:'Context Menu',        desc:'Right-click and overflow action menus.'},
       {id:'s-dropdown',     label:'Dropdown',            desc:'Single- and multi-select menus.'},
@@ -15746,6 +15753,7 @@ const NAV = [
       {id:'s-modals',       label:'Modals', tag:'Coming soon',  desc:'Focused dialogs and confirmations.'},
       {id:'s-nav',          label:'Navigation',          desc:'Side navigation and menu systems.'},
       {id:'s-pagination',   label:'Pagination',          desc:'Page-by-page navigation controls.'},
+      {id:'s-chips',        label:'Pills',               desc:'Compact selectable and filter tokens.'},
       {id:'s-popover',      label:'Popover',             desc:'Anchored floating content.'},
       {id:'s-separator',    label:'Separator',           desc:'Dividers between content groups.'},
       {id:'s-skeleton',     label:'Skeleton loader',     desc:'Loading placeholders.'},
