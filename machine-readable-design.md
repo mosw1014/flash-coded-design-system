@@ -1,6 +1,6 @@
 ---
 document: Flash UI Reskin Guide
-version: 2.0.0
+version: 2.2.0
 design_system: https://mosw1014.github.io/flash-coded-design-system/
 purpose: Guide design judgement while the live design system supplies tokens, components and implementation.
 scope: Existing interfaces created with Claude, Replit, Lovable or similar tools.
@@ -135,6 +135,9 @@ Black, white and neutral surfaces should do most of the structural work. Green m
 
 The coded Button system distinguishes `Primary` from `Accent`: Primary is the normal high-emphasis action; Accent is the rare brand-coloured spotlight. Do not treat Accent as the default primary button.
 
+- **Accent requires Primary buttons already present on the page.** Accent's whole purpose is to draw attention to the one main action *among* other Primary buttons already competing for attention — it is a spotlight relative to existing Primary emphasis, not a stronger default button.
+- **If a page has only one button, that button is Primary, never Accent.** A lone button has no competing Primary emphasis for Accent to stand out against, so Accent on its own reads as an arbitrary colour choice, not a deliberate spotlight.
+
 ### Shape
 
 Use generous rounding for major brand surfaces and large containers. Use the exact radius built into each coded component for buttons, cards, inputs, navigation and overlays.
@@ -189,6 +192,22 @@ Good interventions include:
 
 Do not reorder content solely to make the composition unusual.
 
+### Complex filters
+
+A small filter set (one or two simple controls) stays inline beside the results it controls. Once a filter set grows bloated — several dropdowns, date ranges, toggles and chips competing for space in the header — collapse it behind a single expandable "Filters" trigger (a button that opens a Popover, Drawer or Accordion panel per Section 8) rather than spreading every control across the page permanently.
+
+- The trigger itself stays visible and inline; the individual filter controls only appear once it is opened.
+- Keep any already-applied filter visible as a summary or Chip outside the panel, so the current state is legible without opening it.
+- Do not collapse a genuinely small, low-count filter row just to add an interaction step — this rule exists to reduce clutter, not to hide simple controls unnecessarily.
+
+### Page header layout
+
+A page's top header area (title plus its supporting controls) has one correct structure: the main page title sits on its own line, and every control that belongs to that header — toggles, filter triggers, tabs, buttons — sits together on a single row **directly under the title**, sharing one horizontal alignment line.
+
+- Do not place controls above the title, or beside it on the same line, splitting attention between the title and the controls.
+- Every control in that row shares the same baseline/centre alignment — mixed vertical positions (one control centred, another top-aligned) read as unfinished, not intentional.
+- This governs the header row specifically; it does not require every action anywhere on the page to move — actions placed beside the specific content they affect (per Rearrangement, above) stay there.
+
 ### Grid and spacing
 
 Use the live 8px-based spacing system and grid:
@@ -242,6 +261,9 @@ Use the weight to communicate role:
 | 500 Medium | Body copy, supporting text, captions and reduced-emphasis headings |
 
 Do not make every heading Black. If several headings compete, lower their size or weight according to hierarchy.
+
+- **Section headings always use Black (900).** A section heading is never Semibold or Medium — that flattens the hierarchy the reader relies on to scan the page.
+- **Medium (500) is only used for a subheading or supporting line that sits directly beneath a Black section heading** — never as a standalone section heading, and never for a heading with no Black heading immediately above it. If a heading has no Black heading above it, it is itself a section heading and takes Black, not Medium.
 
 ### Size selection
 
@@ -302,7 +324,7 @@ Read the relevant live component page before implementing any component below.
 
 | Need | Choose | Decision rule |
 | --- | --- | --- |
-| Main action | Buttons `s-buttons` | Primary for the normal main action; Secondary for support; Accent only for a rare standout moment; Simple for low emphasis; Link for inline action |
+| Main action | Buttons `s-buttons` | Primary for the normal main action; Secondary for support; Accent only when Primary buttons already exist on the page and one action needs to stand out among them — never the only button on a page; Simple for low emphasis; Link for inline action |
 | Group one coherent object | Cards `s-cards` | Basic for content, Footer when actions need separation, Media when imagery matters, Interactive only when the whole card has one destination |
 | Persistent app destinations | Navigation `s-nav` | Side Nav for a small set of top-level destinations; one active item; one colour context and size per panel |
 | Related views of one object | Tabs `s-tabs` | One active tab; short parallel labels; do not use for unrelated destinations |
@@ -329,6 +351,15 @@ Read the relevant live component page before implementing any component below.
 | Date is the main choice | Calendar `s-calendar` | Inline for date-focused tasks; field pattern inside forms |
 
 If a component is not listed here, inspect its live page and `AI context` before choosing it.
+
+### Form field consistency
+
+A form, filter row or panel that mixes Text Inputs, Dropdowns, Search fields and similar field-shaped controls uses **one consistent field style throughout** — not a different label position or size per field just because each happens to be a different component.
+
+- **Pick one label position and use it for every field in the group.** If one field uses a Caption label placed outside/above the field, every other field in that group does too — do not mix outside-label fields with inline-label fields, or a labelled field with an unlabelled one, in the same form or row.
+- **Match field heights and sizes across the group**, the same way button clusters share one size (see Size judgement, below) — a Dropdown next to a Text Input in the same row should be the same height, not a visually different control shape.
+- **This produces one shared alignment line**: labels line up with labels, and fields line up with fields, down the group — not a ragged mix of taller/shorter or differently-labelled controls.
+- Different field *types* (Text Input vs. Dropdown vs. Search) are fine to combine — it is the label position and sizing convention that must stay one choice per group, not the component itself.
 
 ### Icon sourcing
 
@@ -446,6 +477,14 @@ Before finishing, confirm:
 - [ ] Green is used as a controlled spark, not decoration.
 - [ ] Satoshi and the live type tokens are used correctly.
 - [ ] Weight choices follow semantic roles.
+- [ ] Every section heading is Black (900); Medium (500) appears only directly beneath a Black
+      heading, never as a standalone section heading.
+- [ ] Every top page header's controls (toggles, buttons, tabs) sit together on one row directly
+      under the page title, sharing one alignment line — not above or beside the title.
+- [ ] A bloated filter set is collapsed behind a single expandable Filters trigger, with any
+      already-applied filter still visible as a summary outside the panel.
+- [ ] Accent buttons appear only on a page that already has Primary buttons, marking the one main
+      action among them; a page with a single button uses Primary, not Accent.
 - [ ] Layout follows the live grid and spacing system.
 - [ ] Cards and containers have a real grouping purpose.
 - [ ] Every changed component was read from the live design system.
@@ -455,6 +494,8 @@ Before finishing, confirm:
       sharing that row is sized to match too.
 - [ ] Every avatar-plus-name/label cell uses a flex layout (avatar `flex-shrink:0` beside a text
       column) — checked by actually wrapping a long name, not just eyeballing the short ones.
+- [ ] Every Text Input, Dropdown and Search field in the same form or row shares one label
+      position and one field height — not a mix of outside/inline labels or inconsistent sizes.
 - [ ] Every icon SVG renders `display:block` and sits visibly centred in its box at the smallest
       size it's actually used at, not just at the default size.
 - [ ] No placeholder component was fabricated.
