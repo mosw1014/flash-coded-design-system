@@ -1600,6 +1600,8 @@ body.home .main{max-width:none;margin:0;padding:0}
    which darken their -l token) — give the info tag the same deep-navy dark override
    already used for .alrt--info so it actually shifts with the theme toggle. */
 [data-theme="dark"] .tag--info{--tag-bg:var(--prim-sup-blue-3)}
+/* Fill toggle — drops the tinted container, leaving just the coloured label (and dot, if any). */
+.tag--no-fill{background:transparent}
 
 /* AI context tab — shared across any section that adopts one, see AI-CONTEXT.md.
    Low visual hierarchy by size/position/collapsed-state, not by low contrast:
@@ -3499,7 +3501,7 @@ body.home .main{max-width:none;margin:0;padding:0}
       <div class="sec__head">
         <h1 class="sec__title">Tags</h1>
         <div class="sec-header-meta">
-          <span class="comp-ver-badge" style="margin-left:0">v2.0.0</span>
+          <span class="comp-ver-badge" style="margin-left:0">v2.1.0</span>
           <details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-tags">
@@ -3519,11 +3521,12 @@ body.home .main{max-width:none;margin:0;padding:0}
     ".tag--success",
     ".tag--warning",
     ".tag--error",
+    ".tag--no-fill",
     ".tag__dot",
     ".tag__label"
   ],
-  "css": "/* ================================================================\n   TAGS &amp; BADGES\n   Tags = subtle, static category labels (tinted, softly-rounded —\n   deliberately NOT the saturated look of a Pill). Badges = count,\n   avatar and status-dot markers. All colours ride the semantic\n   --color-*-h / --color-*-l token pairs, so they flip with theme.\n================================================================ */\n/* Tag */\n.tag { display:inline-flex;align-items:center;gap:5px;border-radius:6px;font-family:inherit;font-weight:700;line-height:1;white-space:nowrap;background:var(--tag-bg);color:var(--tag-fg) }\n.tag--sm { height:20px;padding:0 7px;font-size:11px }\n.tag--reg { height:24px;padding:0 9px;font-size:12px }\n.tag__dot { width:6px;height:6px;border-radius:50%;background:currentColor;flex-shrink:0 }\n.tag--neutral { --tag-bg:var(--chrome-nav);--tag-fg:var(--chrome-muted) }\n.tag--info { --tag-bg:var(--color-info-l);--tag-fg:var(--color-info-h) }\n.tag--success { --tag-bg:var(--color-success-l);--tag-fg:var(--color-success-h) }\n.tag--warning { --tag-bg:var(--color-warn-l);--tag-fg:var(--color-warn-h) }\n.tag--error { --tag-bg:var(--color-crit-l);--tag-fg:var(--color-crit-h) }\n/* --color-info-l stays pale in dark mode (unlike its success/warning/error siblings,\n   which darken their -l token) — give the info tag the same deep-navy dark override\n   already used for .alrt--info so it actually shifts with the theme toggle. */\n[data-theme=\"dark\"] .tag--info { --tag-bg:var(--prim-sup-blue-3) }",
-  "js": "const TAG_VARIANTS = [\n  {key:'neutral', label:'Neutral'},\n  {key:'info',    label:'Info'},\n  {key:'success', label:'Success'},\n  {key:'warning', label:'Warning'},\n  {key:'error',   label:'Error'},\n];\n\nconst TAG_SIZES = [ {key:'sm', label:'Small'}, {key:'reg', label:'Regular'} ];\n\nfunction tagHTML(variant, size, label, dot){\n  const d = dot ? `&lt;span class=\"tag__dot\"&gt;&lt;/span&gt;` : '';\n  return `&lt;span class=\"tag tag--${variant} tag--${size}\"&gt;${d}&lt;span class=\"tag__label\"&gt;${tbEsc(label)}&lt;/span&gt;&lt;/span&gt;`;\n}",
+  "css": "/* ================================================================\n   TAGS &amp; BADGES\n   Tags = subtle, static category labels (tinted, softly-rounded —\n   deliberately NOT the saturated look of a Pill). Badges = count,\n   avatar and status-dot markers. All colours ride the semantic\n   --color-*-h / --color-*-l token pairs, so they flip with theme.\n================================================================ */\n/* Tag */\n.tag { display:inline-flex;align-items:center;gap:5px;border-radius:6px;font-family:inherit;font-weight:700;line-height:1;white-space:nowrap;background:var(--tag-bg);color:var(--tag-fg) }\n.tag--sm { height:20px;padding:0 7px;font-size:11px }\n.tag--reg { height:24px;padding:0 9px;font-size:12px }\n.tag__dot { width:6px;height:6px;border-radius:50%;background:currentColor;flex-shrink:0 }\n.tag--neutral { --tag-bg:var(--chrome-nav);--tag-fg:var(--chrome-muted) }\n.tag--info { --tag-bg:var(--color-info-l);--tag-fg:var(--color-info-h) }\n.tag--success { --tag-bg:var(--color-success-l);--tag-fg:var(--color-success-h) }\n.tag--warning { --tag-bg:var(--color-warn-l);--tag-fg:var(--color-warn-h) }\n.tag--error { --tag-bg:var(--color-crit-l);--tag-fg:var(--color-crit-h) }\n/* --color-info-l stays pale in dark mode (unlike its success/warning/error siblings,\n   which darken their -l token) — give the info tag the same deep-navy dark override\n   already used for .alrt--info so it actually shifts with the theme toggle. */\n[data-theme=\"dark\"] .tag--info { --tag-bg:var(--prim-sup-blue-3) }\n/* Fill toggle — drops the tinted container, leaving just the coloured label (and dot, if any). */\n.tag--no-fill { background:transparent }",
+  "js": "const TAG_VARIANTS = [\n  {key:'neutral', label:'Neutral'},\n  {key:'info',    label:'Info'},\n  {key:'success', label:'Success'},\n  {key:'warning', label:'Warning'},\n  {key:'error',   label:'Error'},\n];\n\nconst TAG_SIZES = [ {key:'sm', label:'Small'}, {key:'reg', label:'Regular'} ];\n\nfunction tagHTML(variant, size, label, dot, fill){\n  const d = dot ? `&lt;span class=\"tag__dot\"&gt;&lt;/span&gt;` : '';\n  const fillCls = fill===false ? ' tag--no-fill' : '';\n  return `&lt;span class=\"tag tag--${variant} tag--${size}${fillCls}\"&gt;${d}&lt;span class=\"tag__label\"&gt;${tbEsc(label)}&lt;/span&gt;&lt;/span&gt;`;\n}",
   "usage": {
     "do": [
       "Use a tag for read-only metadata — a transaction type, an API version, a category like “Betting”.",
@@ -3534,8 +3537,8 @@ body.home .main{max-width:none;margin:0;padding:0}
       "Don't stack more than a couple of tags on one row — they stop reading as metadata and start looking like filters."
     ]
   },
-  "contentHash": "37125135464c01bea548698577d77926ac4220ca629c674ecf55f3e49e74dbb5",
-  "note": "A tag is read-only metadata — no click handler, no dismiss button; that's what separates it from a Pill (see s-chips). tagHTML is the canonical builder (variant/size/label/dot -&gt; tag HTML string). tpg (playground state)/getTagCode*/renderTag*/TAG_KEY_VARIANTS/TAG_TOKENS are doc-site-only plumbing, excluded. Badges (count/avatar/status markers) were split out to their own s-badges section — they no longer live on this page."
+  "contentHash": "cc77ece2bc5d1d11434fb3883cd4f8a369615a01e0e16b6bc9c85fc8af49c717",
+  "note": "A tag is read-only metadata — no click handler, no dismiss button; that's what separates it from a Pill (see s-chips). tagHTML is the canonical builder (variant/size/label/dot/fill -&gt; tag HTML string; fill defaults true, pass false to add .tag--no-fill and drop the tinted background while keeping the semantic text colour). tpg (playground state)/getTagCode*/renderTag*/TAG_KEY_VARIANTS/TAG_TOKENS are doc-site-only plumbing, excluded. Badges (count/avatar/status markers) were split out to their own s-badges section — they no longer live on this page."
 }
   </pre>
 </details>
@@ -10881,17 +10884,18 @@ const TAG_VARIANTS = [
 ];
 const TAG_SIZES = [ {key:'sm', label:'Small'}, {key:'reg', label:'Regular'} ];
 
-function tagHTML(variant, size, label, dot){
+function tagHTML(variant, size, label, dot, fill){
   const d = dot ? `<span class="tag__dot"></span>` : '';
-  return `<span class="tag tag--${variant} tag--${size}">${d}<span class="tag__label">${tbEsc(label)}</span></span>`;
+  const fillCls = fill===false ? ' tag--no-fill' : '';
+  return `<span class="tag tag--${variant} tag--${size}${fillCls}">${d}<span class="tag__label">${tbEsc(label)}</span></span>`;
 }
 
 /* ── TAG PLAYGROUND ── */
-let tpg = { variant:'neutral', size:'reg', dot:false, label:'Betting' };
+let tpg = { variant:'neutral', size:'reg', dot:false, fill:true, label:'Betting' };
 
 function tpgRefresh(){
   document.querySelectorAll('.tpg-stage-el').forEach(stage=>{
-    stage.innerHTML = tagHTML(tpg.variant, tpg.size, tpg.label||'Tag', tpg.dot);
+    stage.innerHTML = tagHTML(tpg.variant, tpg.size, tpg.label||'Tag', tpg.dot, tpg.fill);
   });
   document.querySelectorAll('.tpg-label-input-el').forEach(inp=>{
     if(document.activeElement !== inp) inp.value = tpg.label;
@@ -10914,8 +10918,9 @@ let tagLang = 'html';
 
 function getTagCodeHTML(){
   const dotLine = tpg.dot ? `\n  <span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"tag__dot"</span><span class="code-kw">>&#60;/span></span>` : '';
-  return `<span class="code-cm">/* Flash · ${cap(tpg.variant)} tag · ${tpg.size==='sm'?'Small':'Regular'} */</span>
-<span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"tag tag--${tpg.variant} tag--${tpg.size}"</span><span class="code-kw">></span>${dotLine}
+  const fillCls = tpg.fill===false ? ' tag--no-fill' : '';
+  return `<span class="code-cm">/* Flash · ${cap(tpg.variant)} tag · ${tpg.size==='sm'?'Small':'Regular'}${tpg.fill===false?' · No fill':''} */</span>
+<span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"tag tag--${tpg.variant} tag--${tpg.size}${fillCls}"</span><span class="code-kw">></span>${dotLine}
   <span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"tag__label"</span><span class="code-kw">></span>${tbEsc(tpg.label||'Tag')}<span class="code-kw">&#60;/span></span>
 <span class="code-kw">&#60;/span></span>`;
 }
@@ -10927,7 +10932,7 @@ function getTagCodeBlazor(){
   return `<span class="code-cm">@* DsTag.razor — usage *@</span>
 <span class="code-kw">&#60;DsTag</span> <span class="code-attr">Variant</span>=<span class="code-val">"TagVariant.${variantPascal}"</span>
        <span class="code-attr">Size</span>=<span class="code-val">"TagSize.${sizePascal}"</span>
-       <span class="code-attr">Label</span>=<span class="code-val">"${label}"</span>${tpg.dot?`\n       <span class="code-attr">Dot</span>=<span class="code-val">"true"</span>`:''} <span class="code-kw">/></span>
+       <span class="code-attr">Label</span>=<span class="code-val">"${label}"</span>${tpg.dot?`\n       <span class="code-attr">Dot</span>=<span class="code-val">"true"</span>`:''}${tpg.fill===false?`\n       <span class="code-attr">Fill</span>=<span class="code-val">"false"</span>`:''} <span class="code-kw">/></span>
 
 <span class="code-cm">@* DsTag.razor — component definition *@</span>
 <span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"@CssClass"</span><span class="code-kw">></span>
@@ -10942,17 +10947,19 @@ function getTagCodeBlazor(){
   [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> TagSize Size { get; set; } = TagSize.Regular;
   [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> <span class="code-cls">string</span> Label { get; set; } = <span class="code-val">""</span>;
   [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> <span class="code-cls">bool</span> Dot { get; set; }
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> <span class="code-cls">bool</span> Fill { get; set; } = <span class="code-kw">true</span>;
 
   <span class="code-cm">// tag--sm / tag--reg — mapped explicitly, not ToString()</span>
   <span class="code-kw">private</span> <span class="code-cls">string</span> SizeClass => Size == TagSize.Small ? <span class="code-val">"sm"</span> : <span class="code-val">"reg"</span>;
   <span class="code-kw">private</span> <span class="code-cls">string</span> VariantClass => $<span class="code-val">"tag--{Variant.ToString().ToLower()}"</span>;
-  <span class="code-kw">private</span> <span class="code-cls">string</span> CssClass => $<span class="code-val">"tag {VariantClass} tag--{SizeClass}"</span>;
+  <span class="code-kw">private</span> <span class="code-cls">string</span> FillClass => Fill ? <span class="code-val">""</span> : <span class="code-val">" tag--no-fill"</span>;
+  <span class="code-kw">private</span> <span class="code-cls">string</span> CssClass => $<span class="code-val">"tag {VariantClass} tag--{SizeClass}{FillClass}"</span>;
 }`;
 }
 
 function getTagCodeTSX(){
   const label = tbEsc(tpg.label||'Tag');
-  const usageProps = `variant=<span class="code-val">"${tpg.variant}"</span> size=<span class="code-val">"${tpg.size}"</span> label=<span class="code-val">"${label}"</span>` + (tpg.dot?' dot':'');
+  const usageProps = `variant=<span class="code-val">"${tpg.variant}"</span> size=<span class="code-val">"${tpg.size}"</span> label=<span class="code-val">"${label}"</span>` + (tpg.dot?' dot':'') + (tpg.fill===false?' fill={false}':'');
   return `<span class="code-cm">// DsTag.tsx</span>
 <span class="code-kw">import</span> React <span class="code-kw">from</span> <span class="code-val">'react'</span>;
 
@@ -10964,6 +10971,7 @@ function getTagCodeTSX(){
   variant?: <span class="code-cls">TagVariant</span>;
   size?: <span class="code-cls">TagSize</span>;
   dot?: <span class="code-cls">boolean</span>;
+  fill?: <span class="code-cls">boolean</span>;
 }
 
 <span class="code-kw">export const</span> <span class="code-cls">DsTag</span>: React.FC&#60;DsTagProps> = ({
@@ -10971,8 +10979,9 @@ function getTagCodeTSX(){
   variant = <span class="code-val">'neutral'</span>,
   size = <span class="code-val">'reg'</span>,
   dot = <span class="code-kw">false</span>,
+  fill = <span class="code-kw">true</span>,
 }) => (
-  &#60;span className={\`tag tag--\${variant} tag--\${size}\`}>
+  &#60;span className={\`tag tag--\${variant} tag--\${size}\${fill ? '' : ' tag--no-fill'}\`}>
     {dot &amp;&amp; &#60;span className=<span class="code-val">"tag__dot"</span> />}
     &#60;span className=<span class="code-val">"tag__label"</span>>{label}&#60;/span>
   &#60;/span>
@@ -11030,6 +11039,7 @@ function renderTagPlayground(){
   const varBtns = TAG_VARIANTS.map(v=>`<button class="btn-pg__pill${tpg.variant===v.key?' on':''}" onclick="tpgSet('variant','${v.key}')">${v.label}</button>`).join('');
   const szBtns  = TAG_SIZES.map(s=>`<button class="btn-pg__pill${tpg.size===s.key?' on':''}" onclick="tpgSet('size','${s.key}')">${s.label}</button>`).join('');
   const dotBtns = ['off','on'].map(x=>`<button class="btn-pg__pill${(tpg.dot?(x==='on'):(x==='off'))?' on':''}" onclick="tpgSet('dot','${x}')">${x==='on'?'With dot':'No dot'}</button>`).join('');
+  const fillBtns = ['on','off'].map(x=>`<button class="btn-pg__pill${(tpg.fill?(x==='on'):(x==='off'))?' on':''}" onclick="tpgSet('fill','${x}')">${x==='on'?'Fill':'No fill'}</button>`).join('');
 
   TAG_PLAYGROUND_MOUNTS.forEach(mount=>{
     const root = document.getElementById(mount.rootId);
@@ -11042,6 +11052,7 @@ function renderTagPlayground(){
           <div class="btn-pg__group"><span class="btn-pg__clabel">Variant</span><div class="btn-pg__pill-row">${varBtns}</div></div>
           <div class="btn-pg__group"><span class="btn-pg__clabel">Size</span><div class="btn-pg__pill-row">${szBtns}</div></div>
           <div class="btn-pg__group"><span class="btn-pg__clabel">Leading dot</span><div class="btn-pg__pill-row">${dotBtns}</div></div>
+          <div class="btn-pg__group"><span class="btn-pg__clabel">Background fill</span><div class="btn-pg__pill-row">${fillBtns}</div></div>
           <div class="btn-pg__group"><span class="btn-pg__clabel">Label</span><input class="cpg-label-input tpg-label-input-el" id="tpg-label-input${s}" value="${tbEsc(tpg.label)}" maxlength="24" oninput="tpgSetLabel(this.value)" placeholder="Tag"></div>
         </div>
       </div>`;
@@ -11072,6 +11083,7 @@ function renderTagPlayground(){
 
 function tpgSet(key, val){
   if(key==='dot') tpg.dot = (val==='on');
+  else if(key==='fill') tpg.fill = (val==='on');
   else tpg[key] = val;
   renderTagPlayground();
 }
@@ -11249,6 +11261,16 @@ function renderTagReference(){
     return `<tr><td class="dd-table__name">${v.label}</td><td><code>var(${t.bgVar})</code></td><td><code>var(${t.fgVar})</code></td></tr>`;
   }).join('');
 
+  /* ---- Fill toggle ---- */
+  const fillDemo = TAG_VARIANTS.map(v=>`
+    <div class="spec-cell">
+      <div class="spec-cell__stage" style="background:${sbg};display:flex;gap:8px;align-items:center;justify-content:center">
+        ${tagHTML(v.key,'reg',v.label,false,true)}
+        ${tagHTML(v.key,'reg',v.label,false,false)}
+      </div>
+      <div class="spec-cell__name">${cap(v.key)}</div>
+    </div>`).join('');
+
   root.innerHTML = `
     <div class="type-sub">
       <div class="type-sub__title">Anatomy</div>
@@ -11271,7 +11293,7 @@ function renderTagReference(){
       </div>
     </div>
 
-    <div class="type-sub" style="margin-bottom:0">
+    <div class="type-sub">
       <div class="type-sub__title">Colour variants</div>
       <div class="type-sub__desc">Five semantic variants across two sizes, in the current theme. Every fill rides a semantic token pair, so colour follows light and dark automatically &mdash; Info is the one variant with a dedicated dark-mode override, matching the same fix already applied to the Info alert.</div>
       <div class="cpg-section-outline">
@@ -11280,6 +11302,14 @@ function renderTagReference(){
           <thead><tr><th>Variant</th><th>Background</th><th>Label text</th></tr></thead>
           <tbody>${tokRows}</tbody>
         </table></div>
+      </div>
+    </div>
+
+    <div class="type-sub" style="margin-bottom:0">
+      <div class="type-sub__title">Fill</div>
+      <div class="type-sub__desc">Toggle the tinted container off with <code>.tag--no-fill</code> to leave just the coloured label (and dot, if present) &mdash; the label keeps its semantic colour, only the background disappears. Each pair below shows filled, then no-fill.</div>
+      <div class="cpg-section-outline">
+        <div class="spec-grid">${fillDemo}</div>
       </div>
     </div>`;
 }
@@ -11894,12 +11924,15 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.63.1';
+const SYSTEM_VERSION = '1.64.0';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.64.0', date:'2026-08-05', author:'Helen', title:'Tags: added a Fill toggle for a text-only, no-background variant', changes:[
+        ['added','Tags (s-tags) gain a Background fill control (Fill / No fill) in the Overview playground — .tag--no-fill drops the tinted container while the label keeps its semantic colour. Reflected in the Style tab reference and all three Code tab languages'],
+      ]},
       {version:'1.63.1', date:'2026-08-05', author:'Helen', title:'Fixed regressions left by the Chips & Pills → Pills rename', changes:[
         ['fixed','Pills page (#s-chips): Style, Code and Changelog tabs were unclickable — pillTabSwitch() queried a stale #s-pills scope instead of the section\'s real #s-chips id, so only Overview ever displayed regardless of which tab was clicked'],
         ['fixed','Sidebar nav: Pills had been left sorted under its retired "Chips" name (between Checkboxes & Radios and Command); moved into correct alphabetical position between Pagination and Popover'],
@@ -13140,7 +13173,14 @@ const CHANGELOG = {
         ['added','Light & dark reference grid, quick-copy card, tap-target guidance and usage do/don\'t'],
       ]},
     ]},
-    {secId:'s-tags', name:'Tags', version:'2.0.0', entries:[
+    {secId:'s-tags', name:'Tags', version:'2.1.0', entries:[
+      {version:'2.1.0', date:'2026-08-05', author:'Helen', title:'Added a Fill toggle — drop the tinted container, keep just the coloured text', changes:[
+        ['added','New .tag--no-fill modifier: sets the container background to transparent while the label (and dot, if present) keep their semantic colour via the existing --tag-fg token — no new colour tokens introduced'],
+        ['added','tagHTML() takes a 5th fill argument (defaults true); pass false to render with .tag--no-fill'],
+        ['added','Overview playground: a "Background fill" control (Fill / No fill) alongside Variant, Size and Leading dot, wired the same way as the existing dot toggle'],
+        ['added','Style tab: a new "Fill" section showing each of the five variants filled vs. no-fill side by side'],
+        ['added','Code tab: HTML/CSS, Blazor (new Fill parameter, default true) and React TSX (new fill prop, default true) all reflect the playground\'s fill state'],
+      ]},
       {version:'2.0.0', date:'2026-08-04', author:'Helen', title:'Facelift — rebuilt on the Chips & Pills tabbed treatment; Badges split to its own page', changes:[
         ['changed','Badges (count, avatar and status-dot markers) moved off this page entirely, to a new standalone Badges page (s-badges). This page now covers Tag only — the "Tag or Chip?" guidance stays here since it\'s about this component\'s boundary with Chips'],
         ['changed','Page rebuilt as four tabs (Overview / Style / Code / Changelog) on the shared .sec--tabbed layout, replacing the single long scroll: a 64px title with a live preview card in the hero, matching Chips & Pills and Switch'],
