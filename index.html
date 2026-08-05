@@ -2284,8 +2284,9 @@ body.home .main{max-width:none;margin:0;padding:0}
 .cht__cap{font-size:13px;font-weight:700;color:var(--chrome-txt);margin-bottom:2px}
 .cht__sub{font-size:11.5px;color:var(--chrome-muted);margin-bottom:16px}
 .cht svg{display:block;width:100%;height:auto;overflow:visible}
-.cht__bar{fill:var(--chrome-muted);opacity:.45;transition:fill .15s,opacity .15s;cursor:pointer}
-.cht__bar.on{fill:var(--c1);opacity:1}
+.cht__bar{fill:var(--c1);opacity:1;transition:fill .15s,opacity .15s;cursor:pointer}
+.cht svg.is-hot .cht__bar{opacity:.32}
+.cht svg.is-hot .cht__bar.on{opacity:1}
 .cht__line{fill:none;stroke:var(--c1);stroke-width:2.5;stroke-linejoin:round;stroke-linecap:round}
 .cht__area{fill:url(#chtAreaGrad)}
 .cht__dot{fill:var(--chrome-bg);stroke:var(--c1);stroke-width:2.5;transition:fill .12s}
@@ -6403,7 +6404,7 @@ body.home .main{max-width:none;margin:0;padding:0}
     ".cht__axis",
     ".cht__tip"
   ],
-  "css": "/* ---- Chart (Flash palette + interactive) ---- */\n.cht { position:relative;border:1px solid var(--chrome-border);border-radius:14px;padding:20px 22px;background:var(--chrome-bg);width:380px;max-width:100%;\n  --c1:var(--prim-green-500);--c2:var(--prim-sup-blue-1);--c3:var(--prim-sup-purple-4);--c4:var(--prim-sup-orange-1);--c5:var(--prim-sup-pink-1) }\n.cht__cap { font-size:13px;font-weight:700;color:var(--chrome-txt);margin-bottom:2px }\n.cht__sub { font-size:11.5px;color:var(--chrome-muted);margin-bottom:16px }\n.cht svg { display:block;width:100%;height:auto;overflow:visible }\n.cht__bar { fill:var(--chrome-muted);opacity:.45;transition:fill .15s,opacity .15s;cursor:pointer }\n.cht__bar.on { fill:var(--c1);opacity:1 }\n.cht__hit { fill:transparent;cursor:pointer }\n.cht__axis { fill:var(--chrome-muted);font-size:10px;font-family:inherit }\n.cht svg.is-hot .cht__seg { opacity:.32 }\n.cht svg.is-hot .cht__seg.on { opacity:1 }\n.cht__tip { position:absolute;z-index:5;pointer-events:none;background:var(--color-surface-inverse);color:var(--color-text-inv);font-size:11.5px;font-weight:600;padding:5px 9px;border-radius:7px;white-space:nowrap;opacity:0;transform:translate(-50%,-100%);transition:opacity .12s;box-shadow:0 4px 14px rgba(0,0,0,.22) }\n.cht__tip.show { opacity:1 }\n.cht__tip b { font-weight:800 }",
+  "css": "/* ---- Chart (Flash palette + interactive) ---- */\n.cht { position:relative;border:1px solid var(--chrome-border);border-radius:14px;padding:20px 22px;background:var(--chrome-bg);width:380px;max-width:100%;\n  --c1:var(--prim-green-500);--c2:var(--prim-sup-blue-1);--c3:var(--prim-sup-purple-4);--c4:var(--prim-sup-orange-1);--c5:var(--prim-sup-pink-1) }\n.cht__cap { font-size:13px;font-weight:700;color:var(--chrome-txt);margin-bottom:2px }\n.cht__sub { font-size:11.5px;color:var(--chrome-muted);margin-bottom:16px }\n.cht svg { display:block;width:100%;height:auto;overflow:visible }\n.cht__bar { fill:var(--c1);opacity:1;transition:fill .15s,opacity .15s;cursor:pointer }\n.cht svg.is-hot .cht__bar { opacity:.32 }\n.cht svg.is-hot .cht__bar.on { opacity:1 }\n.cht__hit { fill:transparent;cursor:pointer }\n.cht__axis { fill:var(--chrome-muted);font-size:10px;font-family:inherit }\n.cht svg.is-hot .cht__seg { opacity:.32 }\n.cht svg.is-hot .cht__seg.on { opacity:1 }\n.cht__tip { position:absolute;z-index:5;pointer-events:none;background:var(--color-surface-inverse);color:var(--color-text-inv);font-size:11.5px;font-weight:600;padding:5px 9px;border-radius:7px;white-space:nowrap;opacity:0;transform:translate(-50%,-100%);transition:opacity .12s;box-shadow:0 4px 14px rgba(0,0,0,.22) }\n.cht__tip.show { opacity:1 }\n.cht__tip b { font-weight:800 }",
   "js": "function fmt(n){ return n&gt;=1000 ? (n/1000).toFixed(1).replace(/\\.0$/,'')+'k' : ''+n; }\n\nfunction mkTip(card){ var t=document.createElement('div'); t.className='cht__tip'; card.appendChild(t); return t; }\n\nfunction moveTip(t,card,el,html){ var r=el.getBoundingClientRect(), cr=card.getBoundingClientRect(); t.innerHTML=html; t.style.left=(r.left-cr.left+r.width/2)+'px'; t.style.top=(r.top-cr.top-8)+'px'; t.classList.add('show'); }",
   "usage": {
     "do": [
@@ -6417,7 +6418,7 @@ body.home .main{max-width:none;margin:0;padding:0}
       "Don’t truncate a value axis in a way that exaggerates differences."
     ]
   },
-  "contentHash": "bfda6e1f811dbddad7ed32e4372fc320735b4b323e37701c349eaee19ec82c91",
+  "contentHash": "fd5ab216190d5dc57f46f48a7cc95d929398f150e3997198004edc0e66d1f6d8",
   "note": "Split out of the former combined Charts page (v1.1.0). The bar renderer itself is inline logic inside an anonymous IIFE (keyed off document.getElementById('cht-bar')) rather than a separately named function, so only the shared fmt/mkTip/moveTip helpers are individually extractable by identifier. All series colours ride --c1..--c5 (Flash palette), not hardcoded hex."
 }
   </pre>
@@ -6482,7 +6483,7 @@ body.home .main{max-width:none;margin:0;padding:0}
     ".cht__axis",
     ".cht__tip"
   ],
-  "css": "/* ---- Chart (Flash palette + interactive) ---- */\n.cht { position:relative;border:1px solid var(--chrome-border);border-radius:14px;padding:20px 22px;background:var(--chrome-bg);width:380px;max-width:100%;\n  --c1:var(--prim-green-500);--c2:var(--prim-sup-blue-1);--c3:var(--prim-sup-purple-4);--c4:var(--prim-sup-orange-1);--c5:var(--prim-sup-pink-1) }\n.cht__cap { font-size:13px;font-weight:700;color:var(--chrome-txt);margin-bottom:2px }\n.cht__sub { font-size:11.5px;color:var(--chrome-muted);margin-bottom:16px }\n.cht svg { display:block;width:100%;height:auto;overflow:visible }\n.cht__line { fill:none;stroke:var(--c1);stroke-width:2.5;stroke-linejoin:round;stroke-linecap:round }\n.cht__area { fill:url(#chtAreaGrad) }\n.cht__dot { fill:var(--chrome-bg);stroke:var(--c1);stroke-width:2.5;transition:fill .12s }\n.cht__dot.on { fill:var(--c1) }\n.cht__hit { fill:transparent;cursor:pointer }\n.cht__axis { fill:var(--chrome-muted);font-size:10px;font-family:inherit }\n.cht svg.is-hot .cht__seg { opacity:.32 }\n.cht svg.is-hot .cht__seg.on { opacity:1 }\n.cht__tip { position:absolute;z-index:5;pointer-events:none;background:var(--color-surface-inverse);color:var(--color-text-inv);font-size:11.5px;font-weight:600;padding:5px 9px;border-radius:7px;white-space:nowrap;opacity:0;transform:translate(-50%,-100%);transition:opacity .12s;box-shadow:0 4px 14px rgba(0,0,0,.22) }\n.cht__tip.show { opacity:1 }\n.cht__tip b { font-weight:800 }",
+  "css": "/* ---- Chart (Flash palette + interactive) ---- */\n.cht { position:relative;border:1px solid var(--chrome-border);border-radius:14px;padding:20px 22px;background:var(--chrome-bg);width:380px;max-width:100%;\n  --c1:var(--prim-green-500);--c2:var(--prim-sup-blue-1);--c3:var(--prim-sup-purple-4);--c4:var(--prim-sup-orange-1);--c5:var(--prim-sup-pink-1) }\n.cht__cap { font-size:13px;font-weight:700;color:var(--chrome-txt);margin-bottom:2px }\n.cht__sub { font-size:11.5px;color:var(--chrome-muted);margin-bottom:16px }\n.cht svg { display:block;width:100%;height:auto;overflow:visible }\n.cht svg.is-hot .cht__bar { opacity:.32 }\n.cht svg.is-hot .cht__bar.on { opacity:1 }\n.cht__line { fill:none;stroke:var(--c1);stroke-width:2.5;stroke-linejoin:round;stroke-linecap:round }\n.cht__area { fill:url(#chtAreaGrad) }\n.cht__dot { fill:var(--chrome-bg);stroke:var(--c1);stroke-width:2.5;transition:fill .12s }\n.cht__dot.on { fill:var(--c1) }\n.cht__hit { fill:transparent;cursor:pointer }\n.cht__axis { fill:var(--chrome-muted);font-size:10px;font-family:inherit }\n.cht svg.is-hot .cht__seg { opacity:.32 }\n.cht svg.is-hot .cht__seg.on { opacity:1 }\n.cht__tip { position:absolute;z-index:5;pointer-events:none;background:var(--color-surface-inverse);color:var(--color-text-inv);font-size:11.5px;font-weight:600;padding:5px 9px;border-radius:7px;white-space:nowrap;opacity:0;transform:translate(-50%,-100%);transition:opacity .12s;box-shadow:0 4px 14px rgba(0,0,0,.22) }\n.cht__tip.show { opacity:1 }\n.cht__tip b { font-weight:800 }",
   "js": "function fmt(n){ return n&gt;=1000 ? (n/1000).toFixed(1).replace(/\\.0$/,'')+'k' : ''+n; }\n\nfunction mkTip(card){ var t=document.createElement('div'); t.className='cht__tip'; card.appendChild(t); return t; }\n\nfunction moveTip(t,card,el,html){ var r=el.getBoundingClientRect(), cr=card.getBoundingClientRect(); t.innerHTML=html; t.style.left=(r.left-cr.left+r.width/2)+'px'; t.style.top=(r.top-cr.top-8)+'px'; t.classList.add('show'); }\n\nfunction lineChart(el, data, filled){\n    var card=el.closest('.cht'), tip=mkTip(card);\n    var W=340,H=168,padT=12,padB=22,padX=10, cw=W-padX*2, ch=H-padT-padB;\n    var max=Math.max.apply(null,data.map(function(d){return d.v;})), n=data.length;\n    var xs=function(i){return padX+(n&lt;=1?0:i/(n-1)*cw);}, ys=function(v){return padT+ch-(max?v/max*ch:0);};\n    var defs='', area='';\n    if(filled){\n      defs='&lt;defs&gt;&lt;linearGradient id=\"chtAreaGrad\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"&gt;&lt;stop offset=\"0\" stop-color=\"var(--c1)\" stop-opacity=\"0.32\"/&gt;&lt;stop offset=\"1\" stop-color=\"var(--c1)\" stop-opacity=\"0\"/&gt;&lt;/linearGradient&gt;&lt;/defs&gt;';\n      var d='M '+xs(0).toFixed(1)+','+(padT+ch).toFixed(1);\n      data.forEach(function(dd,i){ d+=' L '+xs(i).toFixed(1)+','+ys(dd.v).toFixed(1); });\n      d+=' L '+xs(n-1).toFixed(1)+','+(padT+ch).toFixed(1)+' Z'; area='&lt;path class=\"cht__area\" d=\"'+d+'\"/&gt;';\n    }\n    var pts=data.map(function(dd,i){return xs(i).toFixed(1)+','+ys(dd.v).toFixed(1);}).join(' ');\n    var dots=data.map(function(dd,i){return '&lt;circle class=\"cht__dot\" data-i=\"'+i+'\" cx=\"'+xs(i).toFixed(1)+'\" cy=\"'+ys(dd.v).toFixed(1)+'\" r=\"3.5\"/&gt;';}).join('');\n    var hits=data.map(function(dd,i){ var x0=i===0?0:(xs(i-1)+xs(i))/2, x1=i===n-1?W:(xs(i)+xs(i+1))/2;\n      return '&lt;rect class=\"cht__hit\" data-i=\"'+i+'\" x=\"'+x0.toFixed(1)+'\" y=\"0\" width=\"'+(x1-x0).toFixed(1)+'\" height=\"'+(padT+ch).toFixed(1)+'\"/&gt;'; }).join('');\n    var labs=data.map(function(dd,i){return '&lt;text class=\"cht__axis\" x=\"'+xs(i).toFixed(1)+'\" y=\"'+(H-7)+'\" text-anchor=\"middle\"&gt;'+dd.label+'&lt;/text&gt;';}).join('');\n    el.innerHTML='&lt;svg viewBox=\"0 0 '+W+' '+H+'\" role=\"img\" aria-label=\"Line chart\"&gt;'+defs+area+'&lt;polyline class=\"cht__line\" points=\"'+pts+'\"/&gt;'+dots+labs+hits+'&lt;/svg&gt;';\n    var dotEls=el.querySelectorAll('.cht__dot');\n    Array.prototype.forEach.call(el.querySelectorAll('.cht__hit'),function(h){ var i=+h.getAttribute('data-i'), dot=dotEls[i];\n      h.addEventListener('mouseenter',function(){ dot.classList.add('on'); dot.setAttribute('r','5.5'); moveTip(tip,card,dot,'&lt;b&gt;'+data[i].v+'&lt;/b&gt; &amp;middot; '+data[i].label); });\n      h.addEventListener('mouseleave',function(){ dot.classList.remove('on'); dot.setAttribute('r','3.5'); tip.classList.remove('show'); });\n    });\n  }",
   "usage": {
     "do": [
@@ -6496,7 +6497,7 @@ body.home .main{max-width:none;margin:0;padding:0}
       "Don’t fill the area under more than one series — overlapping fills obscure each other."
     ]
   },
-  "contentHash": "c18ffd15335967d4e3c2870cd503a7010678302b357369d12f57e03bee399823",
+  "contentHash": "8e11ceeef353d4f79b62abae76313f1c97e74a547d6fbfce50a23c7b49c32c52",
   "note": "Split out of the former combined Charts page (v1.1.0). fmt/mkTip/moveTip/lineChart are the named builder functions this demo actually calls."
 }
   </pre>
@@ -6558,7 +6559,7 @@ body.home .main{max-width:none;margin:0;padding:0}
     ".cht-donut-lab",
     ".cht__tip"
   ],
-  "css": "/* ---- Chart (Flash palette + interactive) ---- */\n.cht { position:relative;border:1px solid var(--chrome-border);border-radius:14px;padding:20px 22px;background:var(--chrome-bg);width:380px;max-width:100%;\n  --c1:var(--prim-green-500);--c2:var(--prim-sup-blue-1);--c3:var(--prim-sup-purple-4);--c4:var(--prim-sup-orange-1);--c5:var(--prim-sup-pink-1) }\n.cht__cap { font-size:13px;font-weight:700;color:var(--chrome-txt);margin-bottom:2px }\n.cht__sub { font-size:11.5px;color:var(--chrome-muted);margin-bottom:16px }\n.cht svg { display:block;width:100%;height:auto;overflow:visible }\n.cht__seg { transition:opacity .18s,stroke-width .18s;cursor:pointer }\n.cht svg.is-hot .cht__seg { opacity:.32 }\n.cht svg.is-hot .cht__seg.on { opacity:1 }\n.cht-legend { display:flex;flex-wrap:wrap;gap:8px 14px;margin-top:16px }\n.cht-legend__item { display:inline-flex;align-items:center;gap:7px;font-size:12px;color:var(--chrome-txt);cursor:pointer;padding:2px 5px;border-radius:6px;transition:background .12s }\n.cht-legend__item:hover { background:var(--chrome-hover) }\n.cht-legend__dot { width:10px;height:10px;border-radius:3px;flex-shrink:0 }\n.cht-donut-val { fill:var(--chrome-txt);font-weight:800 }\n.cht-donut-lab { fill:var(--chrome-muted) }\n.cht__tip { position:absolute;z-index:5;pointer-events:none;background:var(--color-surface-inverse);color:var(--color-text-inv);font-size:11.5px;font-weight:600;padding:5px 9px;border-radius:7px;white-space:nowrap;opacity:0;transform:translate(-50%,-100%);transition:opacity .12s;box-shadow:0 4px 14px rgba(0,0,0,.22) }\n.cht__tip.show { opacity:1 }\n.cht__tip b { font-weight:800 }",
+  "css": "/* ---- Chart (Flash palette + interactive) ---- */\n.cht { position:relative;border:1px solid var(--chrome-border);border-radius:14px;padding:20px 22px;background:var(--chrome-bg);width:380px;max-width:100%;\n  --c1:var(--prim-green-500);--c2:var(--prim-sup-blue-1);--c3:var(--prim-sup-purple-4);--c4:var(--prim-sup-orange-1);--c5:var(--prim-sup-pink-1) }\n.cht__cap { font-size:13px;font-weight:700;color:var(--chrome-txt);margin-bottom:2px }\n.cht__sub { font-size:11.5px;color:var(--chrome-muted);margin-bottom:16px }\n.cht svg { display:block;width:100%;height:auto;overflow:visible }\n.cht svg.is-hot .cht__bar { opacity:.32 }\n.cht svg.is-hot .cht__bar.on { opacity:1 }\n.cht__seg { transition:opacity .18s,stroke-width .18s;cursor:pointer }\n.cht svg.is-hot .cht__seg { opacity:.32 }\n.cht svg.is-hot .cht__seg.on { opacity:1 }\n.cht-legend { display:flex;flex-wrap:wrap;gap:8px 14px;margin-top:16px }\n.cht-legend__item { display:inline-flex;align-items:center;gap:7px;font-size:12px;color:var(--chrome-txt);cursor:pointer;padding:2px 5px;border-radius:6px;transition:background .12s }\n.cht-legend__item:hover { background:var(--chrome-hover) }\n.cht-legend__dot { width:10px;height:10px;border-radius:3px;flex-shrink:0 }\n.cht-donut-val { fill:var(--chrome-txt);font-weight:800 }\n.cht-donut-lab { fill:var(--chrome-muted) }\n.cht__tip { position:absolute;z-index:5;pointer-events:none;background:var(--color-surface-inverse);color:var(--color-text-inv);font-size:11.5px;font-weight:600;padding:5px 9px;border-radius:7px;white-space:nowrap;opacity:0;transform:translate(-50%,-100%);transition:opacity .12s;box-shadow:0 4px 14px rgba(0,0,0,.22) }\n.cht__tip.show { opacity:1 }\n.cht__tip b { font-weight:800 }",
   "js": "function fmt(n){ return n&gt;=1000 ? (n/1000).toFixed(1).replace(/\\.0$/,'')+'k' : ''+n; }\n\nfunction mkTip(card){ var t=document.createElement('div'); t.className='cht__tip'; card.appendChild(t); return t; }\n\nfunction moveTip(t,card,el,html){ var r=el.getBoundingClientRect(), cr=card.getBoundingClientRect(); t.innerHTML=html; t.style.left=(r.left-cr.left+r.width/2)+'px'; t.style.top=(r.top-cr.top-8)+'px'; t.classList.add('show'); }",
   "usage": {
     "do": [
@@ -6572,7 +6573,7 @@ body.home .main{max-width:none;margin:0;padding:0}
       "Don’t rely on slice angle alone for precision — pair it with a legend that carries the figures."
     ]
   },
-  "contentHash": "d1af57897c8b8e7cb9771ef04c438cfdf62e42c1a6e38d2b6d2038a916a6e755",
+  "contentHash": "dd3ee7bf5c2ce56b6aa7d5a0d57314b28eb09d45176ce9ef525c3c007efc27d1",
   "note": "Split out of the former combined Charts page (v1.1.0). The donut renderer itself is inline logic inside an anonymous IIFE (keyed off document.getElementById('cht-donut')) rather than a separately named function, so only the shared fmt/mkTip/moveTip helpers are individually extractable by identifier."
 }
   </pre>
@@ -6591,11 +6592,11 @@ body.home .main{max-width:none;margin:0;padding:0}
         <div class="dd-meters">
           <div class="dd-meter">
             <div class="dd-meter__top"><span class="dd-meter__label">Monthly GMV target</span><span class="dd-meter__val">R48.2M / R60M · 80%</span></div>
-            <div class="dd-meter__track"><div class="dd-meter__fill" style="width:80%;background:var(--chrome-accent)"></div></div>
+            <div class="dd-meter__track"><div class="dd-meter__fill" style="width:80%;background:var(--color-brand)"></div></div>
           </div>
           <div class="dd-meter">
             <div class="dd-meter__top"><span class="dd-meter__label">Trader onboarding</span><span class="dd-meter__val">18,930 / 25,000 · 76%</span></div>
-            <div class="dd-meter__track"><div class="dd-meter__fill" style="width:76%;background:var(--chrome-accent)"></div></div>
+            <div class="dd-meter__track"><div class="dd-meter__fill" style="width:76%;background:var(--color-brand)"></div></div>
           </div>
           <div class="dd-meter">
             <div class="dd-meter__top"><span class="dd-meter__label">Float utilisation</span><span class="dd-meter__val">88%</span></div>
@@ -11928,12 +11929,17 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.64.3';
+const SYSTEM_VERSION = '1.64.4';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.64.4', date:'2026-08-05', author:'Mo', title:'Brand primary green is now the enforced default for every single-series chart', changes:[
+        ['changed','Bar Charts: bars default to brand green (var(--c1)) again instead of grey, dimming to the rest only on hover — matches Line & Area and Progress Meters, which already led with green by default'],
+        ['changed','Progress Meters: the two on-track (non-Warning/Critical) meters now pull their default fill from var(--color-brand) instead of the doc-chrome-only var(--chrome-accent) — same colour, real token'],
+        ['changed','Donut and Distribution are unaffected: both chart multiple categories in one view (a legend/key), so they keep the multi-colour Flash palette rather than a single default'],
+      ]},
       {version:'1.64.3', date:'2026-08-05', author:'Mo', title:'Chart Colours and its desaturated companion now lead with the brand primary green', changes:[
         ['added','New "Primary Green" swatch (#10c504) prepended to Chart Colours and Chart Colours — Desaturated on the Colours page, so chart/data-viz series lead with the Flash brand primary the same way charts themselves already do via --c1'],
       ]},
@@ -12705,7 +12711,11 @@ const CHANGELOG = {
     ]
   },
   components: [
-    {secId:'s-charts-bar', name:'Bar Charts', version:'1.2.0', entries:[
+    {secId:'s-charts-bar', name:'Bar Charts', version:'1.3.0', entries:[
+      {version:'1.3.0', date:'2026-08-05', author:'Mo', title:'Bars default to brand green again — single-series charts lead with the primary colour', changes:[
+        ['changed','.cht__bar now defaults to fill:var(--c1) (brand green) at full opacity instead of var(--chrome-muted) at .45; this is a single-series chart with no legend key, so it should lead with the Flash primary the same way Line & Area and Progress Meters already do — intentionally reverts the "grey by default, green on hover" behaviour introduced in v1.0.1'],
+        ['added','.cht svg.is-hot .cht__bar{opacity:.32} / .cht svg.is-hot .cht__bar.on{opacity:1} — the existing hover-to-dim-the-rest interaction (already used by Donut\'s .cht__seg) now also applies to bars, since the default state is no longer pre-dimmed'],
+      ]},
       {version:'1.2.0', date:'2026-08-04', author:'Mo', title:'Charts split into one section per chart type, each with its own nav sub-group entry', changes:[
         ['changed','The single combined Charts page is now 5 sections — Bar (this one), Line & Area, Donut, Progress Meters and Distribution — each with its own id, heading, demo and "When to use". The sidebar\'s "Cards & Charts" sub-group is replaced by a standalone "Charts" sub-group listing all 5'],
         ['changed','Bar keeps the original Charts page\'s general "which chart type" decision guidance, since it\'s the entry point into the new sub-group'],
@@ -12735,7 +12745,10 @@ const CHANGELOG = {
         ['added','Donut Charts — carved out of the former combined Charts page into its own section, with a "When to use" tailored to composition charts specifically'],
       ]},
     ]},
-    {secId:'s-charts-meters', name:'Progress Meters', version:'1.0.0', entries:[
+    {secId:'s-charts-meters', name:'Progress Meters', version:'1.1.0', entries:[
+      {version:'1.1.0', date:'2026-08-05', author:'Mo', title:'Default meter fill switched from a doc-chrome token to the real brand token', changes:[
+        ['changed','The two on-track meters (Monthly GMV target, Trader onboarding) switch their default fill from var(--chrome-accent) — a doc-site-only chrome variable — to var(--color-brand), the real semantic token consuming apps actually have. Same rendered colour (both resolve to the primary green); Warning/Critical meters are untouched since their semantic override is the point'],
+      ]},
       {version:'1.0.0', date:'2026-08-04', author:'Mo', title:'Split out of Charts as its own section', changes:[
         ['added','Progress Meters — carved out of the former combined Charts page into its own section, with a "When to use" tailored to single-value-against-a-limit meters specifically'],
       ]},
