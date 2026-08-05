@@ -1404,6 +1404,26 @@ body.home .main{max-width:none;margin:0;padding:0}
 .chlog-filter-select{font:inherit;font-size:12.5px;font-weight:600;color:var(--chrome-txt);background:var(--chrome-nav);border:1px solid var(--chrome-border);border-radius:8px;padding:8px 12px;cursor:pointer;min-width:150px}
 .chlog-filter-select:hover{border-color:var(--chrome-muted)}
 .chlog-filter-select:focus-visible{outline:2px solid var(--color-input-focus);outline-offset:1px}
+
+/* Section filter — a searchable, grouped combobox instead of a single 50+
+   option <select>, since a flat alphabetical dump of every component is slow
+   to scan. Reuses .bar__search-results/.bsr-item/.bsr-cat (the nav search
+   dropdown's result-list styling, see .bar__search above) rather than
+   inventing a second panel/row idiom. */
+.chlog-sec-filter{position:relative}
+.chlog-sec-filter__btn{display:flex;align-items:center;justify-content:space-between;gap:10px;font:inherit;font-size:12.5px;font-weight:600;color:var(--chrome-txt);background:var(--chrome-nav);border:1px solid var(--chrome-border);border-radius:8px;padding:8px 12px;cursor:pointer;min-width:170px}
+.chlog-sec-filter__btn:hover{border-color:var(--chrome-muted)}
+.chlog-sec-filter__btn:focus-visible{outline:2px solid var(--color-input-focus);outline-offset:1px}
+.chlog-sec-filter__btn svg{color:var(--chrome-muted);flex-shrink:0;transition:transform .15s}
+.chlog-sec-filter__btn[aria-expanded="true"] svg{transform:rotate(180deg)}
+.chlog-sec-filter__panel{width:260px;max-width:80vw;display:flex;flex-direction:column;gap:1px}
+.chlog-sec-filter__panel[hidden]{display:none}
+.chlog-sec-filter__search{padding:6px 4px}
+.chlog-sec-filter__search input{width:100%;font:inherit;font-size:12.5px;color:var(--chrome-txt);background:var(--chrome-hover);border:1px solid transparent;border-radius:6px;padding:7px 10px;outline:none}
+.chlog-sec-filter__search input:focus{border-color:var(--chrome-border)}
+.chlog-sec-filter__search input::placeholder{color:var(--chrome-muted)}
+#chlog-sec-list{max-height:280px;overflow-y:auto}
+
 /* Section label stamped on each entry so it reads unambiguously once entries
    from different sections can appear together (author/section filters, or the
    "By section" name-match convenience) — not just implied by which .sec-chlog
@@ -11944,14 +11964,19 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.61.0';
+const SYSTEM_VERSION = '1.62.0';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.62.0', date:'2026-08-05', author:'Mo', title:'Changelog section filter rebuilt as a searchable, grouped combobox', changes:[
+        ['changed','The section filter is no longer a flat &lt;select&gt; listing 50+ components alphabetically — it\'s now a button that opens a panel (chlogSectionGroups()) grouping sections under "Homepage", "Foundations" and "Components", the same categories NAV already uses for the sidebar (via navLeaves(), which also flattens Cards/Charts\' sub-groups)'],
+        ['added','A "Filter sections…" text box inside the panel narrows the grouped list live as you type (chlogSecFilter()), on top of the pinned "All sections" and "Design System" rows at the top'],
+        ['added','Escape closes the panel and returns focus to the trigger button; clicking outside the panel closes it too, matching the existing nav search combobox\'s behaviour'],
+      ]},
       {version:'1.61.0', date:'2026-08-05', author:'Mo', title:'Changelog search gains author and section filters, entries now show which section they belong to', changes:[
-        ['added','Two <select> filters ("All authors" / "All sections") next to the search field — Author lists everyone with at least one entry; Section lists "Design System" plus every component/foundation, sorted alphabetically. Both AND with each other and with the text query'],
+        ['added','An author &lt;select&gt; filter ("All authors") next to the search field, listing everyone with at least one entry, plus an equivalent section filter (see 1.62.0 for its combobox rebuild). Both AND with each other and with the text query'],
         ['added','Every entry inside the "Design System" block is now stamped with a .chlog-section-tag reading "Design System" — the per-component "By section" blocks don\'t repeat this since the component name is already that block\'s header'],
         ['changed','The empty state now names every active filter, e.g. \'No changes match "foo" by Mo in Buttons\', instead of only ever quoting the text query'],
         ['changed','chlogRenderBody() no longer takes a query argument — it and the search/author/section handlers all read/write one shared chlogFilters state object, so any of the three inputs can change independently and still recombine on the next render'],
@@ -13641,16 +13666,60 @@ function chlogAllAuthors() {
   return [...set].sort((a, b) => a.localeCompare(b));
 }
 
+// Groups every section with real history under the same Foundations/
+// Components categories the sidebar already uses (NAV), via navLeaves() to
+// flatten Cards/Charts' sub-groups — so the filter panel reads like the nav
+// the person already knows, instead of one 50-item alphabetical dump. The
+// homepage (s-brand) isn't a NAV leaf at all (it's reached via the logo, not
+// the sidebar), so it gets its own pinned "Homepage" group.
+function chlogSectionGroups() {
+  const catById = {};
+  NAV.forEach(g => { if(g.cat) navLeaves(g.items).forEach(it => { catById[it.id] = g.cat; }); });
+  catById['s-brand'] = 'Homepage';
+
+  const groups = {};
+  [...CHANGELOG.components].filter(c => c.entries.length).forEach(c => {
+    const cat = catById[c.secId] || 'Other';
+    (groups[cat] = groups[cat] || []).push(c);
+  });
+  Object.values(groups).forEach(list => list.sort((a, b) => a.name.localeCompare(b.name)));
+
+  const order = ['Homepage', 'Foundations', 'Components'];
+  return order.concat(Object.keys(groups).filter(k => !order.includes(k)))
+    .filter(cat => groups[cat] && groups[cat].length)
+    .map(cat => ({ cat, items: groups[cat] }));
+}
+
+let chlogSectionGroupsCache = null;
+
+function chlogSecLabelFor(value) {
+  if(!value) return 'All sections';
+  if(value === 'system') return 'Design System';
+  const c = CHANGELOG.components.find(c => c.secId === value);
+  return c ? c.name : value;
+}
+
+function chlogSecListHtml(filterText) {
+  const q = (filterText || '').trim().toLowerCase();
+  const groups = chlogSectionGroupsCache;
+  const rows = groups.map(g => {
+    const items = q ? g.items.filter(c => c.name.toLowerCase().indexOf(q) > -1) : g.items;
+    if(!items.length) return '';
+    return `<div class="bsr-cat">${chlogEsc(g.cat)}</div>` + items.map(c => `
+      <a href="javascript:void(0)" class="bsr-item${chlogFilters.section === c.secId ? ' on' : ''}" onclick="chlogSecSelect('${c.secId}')">
+        <span class="bsr-item__label">${chlogEsc(c.name)}</span>
+      </a>`).join('');
+  }).join('');
+  return rows || `<div class="bsr-empty">No sections match "${chlogEsc(filterText.trim())}"</div>`;
+}
+
 function renderChangelog() {
   const root = document.getElementById('changelog-root');
   if(!root) return;
 
+  chlogSectionGroupsCache = chlogSectionGroups();
   const authorOptions = chlogAllAuthors()
     .map(a => `<option value="${chlogEsc(a)}">${chlogEsc(a)}</option>`).join('');
-  const sectionOptions = [...CHANGELOG.components]
-    .filter(c => c.entries.length)
-    .sort((a, b) => a.name.localeCompare(b.name))
-    .map(c => `<option value="${chlogEsc(c.secId)}">${chlogEsc(c.name)}</option>`).join('');
 
   root.innerHTML = `
     <div class="ti-search chlog-search" data-bg="colour" data-size="small" id="chlog-search">
@@ -13663,15 +13732,24 @@ function renderChangelog() {
       </div>
     </div>
     <div class="chlog-filters">
-      <select class="chlog-filter-select" id="chlog-filter-author" aria-label="Filter by author" onchange="chlogFilterChange()">
+      <select class="chlog-filter-select" id="chlog-filter-author" aria-label="Filter by author" onchange="chlogAuthorChange()">
         <option value="">All authors</option>
         ${authorOptions}
       </select>
-      <select class="chlog-filter-select" id="chlog-filter-section" aria-label="Filter by section" onchange="chlogFilterChange()">
-        <option value="">All sections</option>
-        <option value="system">Design System</option>
-        ${sectionOptions}
-      </select>
+      <div class="chlog-sec-filter" id="chlog-sec-filter">
+        <button type="button" class="chlog-sec-filter__btn" id="chlog-sec-btn" aria-haspopup="listbox" aria-expanded="false" onclick="chlogSecToggle()">
+          <span id="chlog-sec-btn-label">All sections</span>
+          <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="M2 3.5L5 6.5L8 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="bar__search-results chlog-sec-filter__panel" id="chlog-sec-panel" role="listbox" hidden>
+          <a href="javascript:void(0)" class="bsr-item${chlogFilters.section === '' ? ' on' : ''}" onclick="chlogSecSelect('')"><span class="bsr-item__label">All sections</span></a>
+          <a href="javascript:void(0)" class="bsr-item${chlogFilters.section === 'system' ? ' on' : ''}" onclick="chlogSecSelect('system')"><span class="bsr-item__label">Design System</span></a>
+          <div class="chlog-sec-filter__search">
+            <input type="text" id="chlog-sec-search" placeholder="Filter sections…" autocomplete="off" oninput="chlogSecFilter(this.value)" onkeydown="chlogSecKeydown(event)">
+          </div>
+          <div id="chlog-sec-list">${chlogSecListHtml('')}</div>
+        </div>
+      </div>
     </div>
     <div id="changelog-body"></div>`;
 
@@ -13692,13 +13770,55 @@ function chlogSearchClear() {
   if(input) input.focus();
 }
 
-function chlogFilterChange() {
+function chlogAuthorChange() {
   const authorEl = document.getElementById('chlog-filter-author');
-  const sectionEl = document.getElementById('chlog-filter-section');
   chlogFilters.author = authorEl ? authorEl.value : '';
-  chlogFilters.section = sectionEl ? sectionEl.value : '';
   chlogRenderBody();
 }
+
+function chlogSecToggle() {
+  const panel = document.getElementById('chlog-sec-panel');
+  const btn = document.getElementById('chlog-sec-btn');
+  if(!panel || !btn) return;
+  const opening = panel.hidden;
+  panel.hidden = !opening;
+  btn.setAttribute('aria-expanded', String(opening));
+  if(opening) {
+    const search = document.getElementById('chlog-sec-search');
+    if(search) { search.value = ''; search.focus(); }
+    const list = document.getElementById('chlog-sec-list');
+    if(list) list.innerHTML = chlogSecListHtml('');
+  }
+}
+
+function chlogSecClose() {
+  const panel = document.getElementById('chlog-sec-panel');
+  const btn = document.getElementById('chlog-sec-btn');
+  if(panel) panel.hidden = true;
+  if(btn) btn.setAttribute('aria-expanded', 'false');
+}
+
+function chlogSecFilter(value) {
+  const list = document.getElementById('chlog-sec-list');
+  if(list) list.innerHTML = chlogSecListHtml(value);
+}
+
+function chlogSecKeydown(e) {
+  if(e.key === 'Escape') { chlogSecClose(); document.getElementById('chlog-sec-btn').focus(); }
+}
+
+function chlogSecSelect(value) {
+  chlogFilters.section = value;
+  const label = document.getElementById('chlog-sec-btn-label');
+  if(label) label.textContent = chlogSecLabelFor(value);
+  chlogSecClose();
+  chlogRenderBody();
+}
+
+document.addEventListener('click', function(e) {
+  const wrap = document.getElementById('chlog-sec-filter');
+  if(wrap && !wrap.contains(e.target)) chlogSecClose();
+});
 
 function chlogRenderBody() {
   const body = document.getElementById('changelog-body');
@@ -15263,7 +15383,6 @@ function renderIcons(root){
 /* @@SHADCN_JS@@ */
 
 try { renderTablesPlayground(); } catch(e){ console.error('tbl-playground',e); }
-try { renderChangelog(); } catch(e){ console.error('changelog',e); }
 try { renderSectionChangelogs(); } catch(e){ console.error('section-changelog',e); }
 
 /* .sec--tabbed pages have their own Changelog tab — relocate the auto-injected
@@ -15365,6 +15484,11 @@ const NAV = [
   // No cat and no landing — renders as a standalone top-level link at the bottom.
   { items:[ {id:'s-changelog', label:'Changelog'} ] },
 ];
+
+// renderChangelog()'s section filter groups by NAV category (see
+// chlogSectionGroups()), so it has to run after NAV is declared — everything
+// else in this render batch happens above, right after the DOM is built.
+try { renderChangelog(); } catch(e){ console.error('changelog',e); }
 
 const MOCKS = {
   's-colours': '<div class="mk"><span class="mk-circle" style="width:46px;height:46px;background:var(--color-brand)"></span><span class="mk-circle" style="width:46px;height:46px;background:var(--chrome-txt)"></span><span class="mk-circle" style="width:46px;height:46px;background:var(--chrome-bg);border:1px solid var(--chrome-border)"></span></div>',
