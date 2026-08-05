@@ -11894,12 +11894,19 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.63.0';
+const SYSTEM_VERSION = '1.64.0';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.64.0', date:'2026-08-05', author:'Mo', title:'Historical changelog entries reassigned to the section they actually touched', changes:[
+        ['changed','Several system-level entries described a single home-page change alongside an unrelated sidebar/header change in one entry, which hid the home-page half from Brand Introduction\'s own history and its author from the Changelog\'s section filter. Mixed entries were split in two — the home-page half moved to Brand Introduction (s-brand) as its own entry, the rest stays here — rather than duplicated, so each half has exactly one home'],
+        ['changed','1.41.3 kept only its header-Changelog-button removal; its home-top-nav-width fix is now Brand Introduction v1.11.1'],
+        ['changed','1.34.1 kept only its sitewide logo/Changelog-pill change; its home-page rebuild is now Brand Introduction v1.10.0'],
+        ['changed','1.33.0 kept only its "Introduction removed from the sidebar and category nav" change; the rest (Introduction becoming the home page, its two entry blocks, relocating the brand foundation blocks out, dropping the old CTA) is now Brand Introduction v1.9.0'],
+        ['removed','1.40.4, 1.40.3, 1.40.0 and 1.34.2 were entirely about the home page (full-bleed bands, entry-card hover, and two rounds of entry-card icon swaps) and had nothing left to keep here once moved — each now lives solely as Brand Introduction v1.11.0/v1.10.3/v1.10.2/v1.10.1 respectively'],
+      ]},
       {version:'1.63.0', date:'2026-08-05', author:'Helen', title:'Dropdown rebuilt on the Chips & Pills tabbed treatment', changes:[
         ['changed','Dropdown (s-dropdown) moves from a flat, single-scroll page to the shared .sec--tabbed layout: Overview / Style / Code / Changelog tabs, a hero with a live preview card, and a Code tab behind the three-language (HTML/CSS · Blazor · React TSX) segmented switcher'],
         ['added','One interactive playground covering both forms — a Mode control (Single-select / Multi-select) sits alongside Style, Size, Search and the existing Label position (Outside/Inside, from 1.49.0) controls, rendered into two mounts (the Overview stage and the Code tab\'s mini-playground) that stay in sync, replacing the old separate Single-select/Multi-select demo blocks and their standalone Label position toggles'],
@@ -12063,9 +12070,8 @@ const CHANGELOG = {
         ['added','.code-panel--bare modifier — drops .code-panel\'s --chrome-nav fill and top rule so a panel nested inside a bordered .cpg-section-outline card no longer stacks a second grey band on it, replacing the inline border-top:0/padding overrides previously hand-written in renderChipCodeTab()'],
         ['removed','The "</> View code" label row from the Chips Code tab — redundant beside a tab already called Code and a "Code" heading, and its slot is now the language switcher'],
       ]},
-      {version:'1.41.3', date:'2026-08-04', author:'Jaco', title:'Removed the header Changelog button; home top nav now full width like every other page', changes:[
+      {version:'1.41.3', date:'2026-08-04', author:'Jaco', title:'Removed the header Changelog button', changes:[
         ['removed','The green "Changelog" pill in the top header (.bar__changelog) and its CSS — the Changelog page is still reachable from the sidebar (About → Changelog)'],
-        ['fixed','The home page\'s top nav was capped at 1366px and centred while every other page\'s nav ran full width — dropped the body.home .bar__inner override so .bar__inner is full width everywhere, keeping the logo at the same left edge on every page. The page content below the header is unaffected: it still centres/caps exactly as before'],
       ]},
       {version:'1.41.2', date:'2026-08-04', author:'Jaco', title:'Page content centres in the space beside the sidebar', changes:[
         ['changed','On pages with a sidebar the content column sat hard against the sidebar with all the leftover space falling to its right; .main now takes margin-inline:auto so its 1156px measure centres within the area beside the flush-left sidebar (e.g. at 1800px wide it gets an equal 217px either side). Below ~1366px the content still fills the available space, so nothing changes on smaller screens, and the home page is unaffected since body.home .main resets the margin'],
@@ -12097,14 +12103,6 @@ const CHANGELOG = {
         ['changed','The 1366px measure is now capped on .main instead (max-width:1156px — 1366 minus the 210px sidebar), so the content column keeps exactly the width it had before, just left-aligned beside the sidebar rather than centred in the viewport'],
         ['changed','Header content follows the same logic: .bar__inner is full width on component/foundation pages so the logo lines up with the flush-left sidebar, and caps to 1366 centred on the home page (which has no sidebar) so the logo stays aligned with the centred hero content'],
       ]},
-      {version:'1.40.4', date:'2026-08-04', author:'Jaco', title:'Home page bands now run full-bleed at every screen size', changes:[
-        ['fixed','The black hero on the home page was capped at 1366px along with everything else, so on screens wider than that it sat as a centred island with white gutters either side instead of reading as a full-width header. body.home now clears the .layout max-width, so the hero (and the statement, cards and Brand essence bands) span 100% of the viewport at every screen size'],
-        ['changed','The 1366px cap now applies to the content inside each band rather than the coloured band itself — .fds-hero__inner / .fds-statement / .fds-cards / .fds-essence__title / .fds-essence__grid raised from 1200px to 1366px so the hero copy, cards and essence grid line up on exactly the same column as the top navigation content'],
-      ]},
-      {version:'1.40.3', date:'2026-08-04', author:'Jaco', title:'Reworked the hover state on the two home entry cards', changes:[
-        ['removed','The lift-and-shadow hover on the Brand/Components entry cards (.fds-card) — transform:translateY(-4px) plus a 54px-blur drop shadow, which read heavy and sat awkwardly against the flat page'],
-        ['changed','Hover is now a 2px Mid Green (#10C504) stroke plus a slight background deepening — the Components card goes #F0F0F0 → #E8E8E8 and the Brand card\'s gradient pulls its green stop in from 289% to 250%. The 2px border sits on the resting state as transparent (with padding trimmed 44px → 42px and the arrow inset 40px → 38px) so nothing shifts or changes size on hover'],
-      ]},
       {version:'1.40.2', date:'2026-08-04', author:'Mo', title:'Refreshing the page no longer forces you back to the landing screen', changes:[
         ['added','The open section is now reflected in the URL as a \'#/<section-id>\' route (history.replaceState on every showSection()), so a refresh lands on the same section and any section can be linked or bookmarked directly'],
         ['added','hashchange listener so browser back/forward moves between sections instead of doing nothing'],
@@ -12117,9 +12115,6 @@ const CHANGELOG = {
       ]},
       {version:'1.40.1', date:'2026-08-04', author:'Jaco', title:'Fixed header logo showing a white box behind "flash"', changes:[
         ['fixed','Header logo (.bar__logo-img) now uses the designer-supplied assets/logos/Logo_new.svg — a fully transparent vector lockup (mark + "flash" + green "Design") — instead of assets/home/logo.png, whose export had baked in an opaque white background behind the wordmark; removed the now-unused logo.png'],
-      ]},
-      {version:'1.40.0', date:'2026-08-04', author:'Jaco', title:'Home entry-card icons swapped to the new transparent PNGs', changes:[
-        ['changed','Brand and Components entry-card icons now use the supplied transparent PNGs (assets/home/Brand.png, Components.png) instead of the SVGs; removed the now-unused icon-brand.svg / icon-components.svg'],
       ]},
       {version:'1.39.1', date:'2026-08-04', author:'Jaco', title:'Logo as PNG, new sidebar category icons, 1366px max width, cleaner landing headers', changes:[
         ['changed','Site header logo replaced with a single exported PNG of the full lockup — mark + "flash" + green "Design" (assets/home/logo.png) — instead of the SVG mark + separate "Design" text span; removed the now-unused logo-flash.svg and .bar__logo-design style'],
@@ -12209,16 +12204,9 @@ const CHANGELOG = {
       {version:'1.34.3', date:'2026-08-03', author:'Mo', title:'Fixed the info tag not changing in dark mode', changes:[
         ['fixed','.tag--info background stayed pale blue in dark mode because --color-info-l (unlike its success/warning/error siblings) doesn\'t darken between themes — added a [data-theme="dark"] .tag--info override using --prim-sup-blue-3, matching the existing .alrt--info dark-mode fix'],
       ]},
-      {version:'1.34.2', date:'2026-07-31', author:'Jaco', title:'Home entry-card icons updated to the refined glass SVGs', changes:[
-        ['changed','Brand and Components entry-card icons replaced with refined transparent SVGs (assets/home/icon-brand.svg, icon-components.svg) — the Brand mark is a gradient-stroke ring plus a flattened pale-green frosted-glass circle (no background-blur, so it exports cleanly with no white backdrop); Components keeps the two-tone chevron pair'],
-      ]},
-      {version:'1.34.1', date:'2026-07-31', author:'Jaco', title:'Home page rebuilt to the new Flash Design System landing design; site logo updated', changes:[
+      {version:'1.34.1', date:'2026-07-31', author:'Jaco', title:'Site logo replaced sitewide; Changelog pill added to the header', changes:[
         ['changed','Site header logo (whole site) replaced with the new Flash lockup — bull mark + "flash" wordmark (assets/home/logo-flash.svg) + green "Design" label — swapping out the old inline bull mark + "Flash Design System" text'],
         ['added','"Changelog" pill added to the top-right of the header (links to the Changelog page); the light/dark toggle is kept alongside it'],
-        ['changed','Home page (s-brand) rebuilt to match the Figma landing design: full-bleed black hero (Kilimanjaro "FLASH / DESIGN / SYSTEM" headline with green FLASH, intro paragraph, decorative mark cluster and green glow), centred unified-system statement, Brand + Components entry cards (gradient / grey, top-right arrow) and a "BRAND ESSENCE" band (Clarity / Confidence / Energy) with a footer'],
-        ['removed','Previous Introduction content — Brand essence (Bold/Direct/Energetic), Working principles, and the .brand-hero/.brand-entries/.brand-essence/.brand-principle styles — replaced by the new .fds-* home styles'],
-        ['added','Home landing assets under assets/home/ (hero-marks, card + essence icons, arrow, logo) exported from Figma; the home page renders as a fixed light design regardless of the site theme'],
-        ['changed','Home shown full-bleed (body.home clears the main max-width/padding); the per-section Changelog history strip is hidden on the home page'],
       ]},
       {version:'1.34.0', date:'2026-07-31', author:'Mo', title:'Added a search bar to the top nav header to jump straight to any section', changes:[
         ['added','A search field in the black top header (.bar__search, reusing the Text Inputs "Search" pill — .ti-search — restyled for the dark bar), searching every component/foundation label and description from the NAV manifest and surfacing up to 8 matches in a dropdown (e.g. searching "logo" surfaces Logos, "text input" surfaces Text Inputs)'],
@@ -12235,12 +12223,8 @@ const CHANGELOG = {
         ['fixed','Landing-category headings (.sb-cat--link — Brand, Components, Coming soon) were rendering at the inherited body weight because font:inherit clobbered .sb-cat\'s font-weight:800; swapped to font-family:inherit so they render bold like the rest'],
         ['added','An icon beside each landing category in the sidebar — star (Brand), copy (Components), calendar (Coming soon); driven by a new optional icon field on the NAV manifest groups and a .sb-cat__icon span. Single-item categories (About) stay icon-free'],
       ]},
-      {version:'1.33.0', date:'2026-07-29', author:'Jaco', title:'Introduction reworked into a sidebar-less home page; brand foundations moved to their own pages', changes:[
-        ['changed','Introduction is now the home/landing page — shown full-width with the sidebar hidden (body.home), reachable by clicking "Flash Design System" in the top header (the logo now targets s-brand instead of s-colours)'],
-        ['removed','Introduction removed from the sidebar and category nav (the Overview / s-brand item was dropped from the NAV manifest)'],
-        ['added','Two clickable entry-point blocks — Brand and Components — added near the top of the Introduction, linking to the s-cat-brand and s-cat-components landing pages (.brand-entries / .brand-entry)'],
-        ['changed','The brand foundation blocks were relocated out of the Introduction to the top of their own pages — Core colours → Colours, Typography → Typography, The logo → Logos — leaving Brand essence and Working principles on the restyled landing page'],
-        ['removed','The redundant "Explore the foundations" CTA (.brand-cta) and its now-unused CSS — navigation is handled by the two new entry blocks'],
+      {version:'1.33.0', date:'2026-07-29', author:'Jaco', title:'Introduction removed from the sidebar and category nav', changes:[
+        ['removed','Introduction removed from the sidebar and category nav (the Overview / s-brand item was dropped from the NAV manifest) — it became the home page instead, reachable by clicking "Flash Design System" in the top header (see the Brand Introduction section\'s own changelog)'],
       ]},
       {version:'1.32.37', date:'2026-07-29', author:'Helen', title:'Chips & Pills — new heading above the Playground block, explainer updated', changes:[
         ['added','New heading above the "Try the component" block on the Overview tab: "Use chips to show a status, mark a category, or let people pick a filter at a glance." (the sentence previously used as the block\'s own explainer)'],
@@ -12917,7 +12901,36 @@ const CHANGELOG = {
         ['added','Segmented one-time-passcode field with auto-advance, backspace, arrow keys, paste-to-fill and an error state'],
       ]},
     ]},
-    {secId:'s-brand', name:'Brand Introduction', version:'1.8.1', entries:[
+    {secId:'s-brand', name:'Brand Introduction', version:'1.11.1', entries:[
+      {version:'1.11.1', date:'2026-08-04', author:'Jaco', title:'Home top nav now full width like every other page', changes:[
+        ['fixed','The home page\'s top nav was capped at 1366px and centred while every other page\'s nav ran full width — dropped the body.home .bar__inner override so .bar__inner is full width everywhere, keeping the logo at the same left edge on every page. The page content below the header is unaffected: it still centres/caps exactly as before'],
+      ]},
+      {version:'1.11.0', date:'2026-08-04', author:'Jaco', title:'Home page bands now run full-bleed at every screen size', changes:[
+        ['fixed','The black hero on the home page was capped at 1366px along with everything else, so on screens wider than that it sat as a centred island with white gutters either side instead of reading as a full-width header. body.home now clears the .layout max-width, so the hero (and the statement, cards and Brand essence bands) span 100% of the viewport at every screen size'],
+        ['changed','The 1366px cap now applies to the content inside each band rather than the coloured band itself — .fds-hero__inner / .fds-statement / .fds-cards / .fds-essence__title / .fds-essence__grid raised from 1200px to 1366px so the hero copy, cards and essence grid line up on exactly the same column as the top navigation content'],
+      ]},
+      {version:'1.10.3', date:'2026-08-04', author:'Jaco', title:'Reworked the hover state on the two home entry cards', changes:[
+        ['removed','The lift-and-shadow hover on the Brand/Components entry cards (.fds-card) — transform:translateY(-4px) plus a 54px-blur drop shadow, which read heavy and sat awkwardly against the flat page'],
+        ['changed','Hover is now a 2px Mid Green (#10C504) stroke plus a slight background deepening — the Components card goes #F0F0F0 → #E8E8E8 and the Brand card\'s gradient pulls its green stop in from 289% to 250%. The 2px border sits on the resting state as transparent (with padding trimmed 44px → 42px and the arrow inset 40px → 38px) so nothing shifts or changes size on hover'],
+      ]},
+      {version:'1.10.2', date:'2026-08-04', author:'Jaco', title:'Home entry-card icons swapped to the new transparent PNGs', changes:[
+        ['changed','Brand and Components entry-card icons now use the supplied transparent PNGs (assets/home/Brand.png, Components.png) instead of the SVGs; removed the now-unused icon-brand.svg / icon-components.svg'],
+      ]},
+      {version:'1.10.1', date:'2026-07-31', author:'Jaco', title:'Home entry-card icons updated to the refined glass SVGs', changes:[
+        ['changed','Brand and Components entry-card icons replaced with refined transparent SVGs (assets/home/icon-brand.svg, icon-components.svg) — the Brand mark is a gradient-stroke ring plus a flattened pale-green frosted-glass circle (no background-blur, so it exports cleanly with no white backdrop); Components keeps the two-tone chevron pair'],
+      ]},
+      {version:'1.10.0', date:'2026-07-31', author:'Jaco', title:'Home page rebuilt to the new Flash Design System landing design', changes:[
+        ['changed','Home page (s-brand) rebuilt to match the Figma landing design: full-bleed black hero (Kilimanjaro "FLASH / DESIGN / SYSTEM" headline with green FLASH, intro paragraph, decorative mark cluster and green glow), centred unified-system statement, Brand + Components entry cards (gradient / grey, top-right arrow) and a "BRAND ESSENCE" band (Clarity / Confidence / Energy) with a footer'],
+        ['removed','Previous Introduction content — Brand essence (Bold/Direct/Energetic), Working principles, and the .brand-hero/.brand-entries/.brand-essence/.brand-principle styles — replaced by the new .fds-* home styles'],
+        ['added','Home landing assets under assets/home/ (hero-marks, card + essence icons, arrow, logo) exported from Figma; the home page renders as a fixed light design regardless of the site theme'],
+        ['changed','Home shown full-bleed (body.home clears the main max-width/padding); the per-section Changelog history strip is hidden on the home page'],
+      ]},
+      {version:'1.9.0', date:'2026-07-29', author:'Jaco', title:'Introduction reworked into a sidebar-less home page', changes:[
+        ['changed','Introduction is now the home/landing page — shown full-width with the sidebar hidden (body.home), reachable by clicking "Flash Design System" in the top header (the logo now targets s-brand instead of s-colours) — see the Design System changelog for the matching sidebar/nav-manifest side of this change'],
+        ['added','Two clickable entry-point blocks — Brand and Components — added near the top of the Introduction, linking to the s-cat-brand and s-cat-components landing pages (.brand-entries / .brand-entry)'],
+        ['changed','The brand foundation blocks were relocated out of the Introduction to the top of their own pages — Core colours → Colours, Typography → Typography, The logo → Logos — leaving Brand essence and Working principles on the restyled landing page'],
+        ['removed','The redundant "Explore the foundations" CTA (.brand-cta) and its now-unused CSS — navigation is handled by the two new entry blocks'],
+      ]},
       {version:'1.8.1', date:'2026-07-27', author:'Helen', title:'Hero title copy update', changes:[
         ['changed','Hero title changed from "An amazing, direct, energetic brand." to "A bold, direct, energetic brand."'],
       ]},
