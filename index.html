@@ -10833,11 +10833,13 @@ function renderAvatarInSitu(){
   const bar = w => `<span class="spec-mock__bar" style="width:${w}"></span>`;
 
   // 1. User list row — avatar + name + role
+  const roleColor = {Admin:{bg:'#0062EB',text:'#ffffff'}, Editor:{bg:'#16A220',text:'#ffffff'}, Viewer:{bg:'#E6E6E6',text:'#646464'}};
+  const rolePill = role => { const c = roleColor[role]; return `<span class="pill pill--sm" style="--pill-bg:${c.bg};--pill-text:${c.text};font-size:11px;padding:0 9px"><span class="pill__label">${role}</span></span>`; };
   const listRows = [
-    {initials:'JC', name:'Jane Cole',    role:'Admin'},
-    {initials:'RB', name:'Riley Baker', role:'Editor'},
-    {initials:'AK', name:'Amara Khan',  role:'Viewer'},
-  ].map(p=>`<div class="spec-mock__row">${ovAvatar({type:'initials', size:'sm', initials:p.initials})}<span class="spec-mock__spacer" style="width:10px"></span><span class="spec-mock__label" style="min-width:90px">${p.name}</span>${bar('54px')}<span style="margin-left:auto;color:var(--chrome-muted);font-size:11px">${p.role}</span></div>`).join('');
+    {initials:'JC', name:'Jane Cole',   role:'Admin',  presence:'online'},
+    {initials:'RB', name:'Riley Baker', role:'Editor', presence:'online'},
+    {initials:'AK', name:'Amara Khan',  role:'Viewer', presence:'offline'},
+  ].map(p=>`<div class="spec-mock__row">${ovAvatar({type:'initials', size:'sm', initials:p.initials, presence:p.presence})}<span class="spec-mock__spacer" style="width:10px"></span><span class="spec-mock__label" style="min-width:90px">${p.name}</span>${bar('54px')}<span style="margin-left:auto">${rolePill(p.role)}</span></div>`).join('');
 
   const listMock = `
     <div class="spec-mock__stage" style="background:${sbg}">${listRows}</div>
@@ -10847,19 +10849,19 @@ function renderAvatarInSitu(){
   const groupMock = `
     <div class="spec-mock__stage" style="background:${sbg}">
       <div class="avt-group">
-        ${ovAvatar({type:'initials', size:'sm', initials:'JC'})}
+        ${ovAvatar({type:'initials', size:'sm', initials:'JC', presence:'online'})}
         ${ovAvatar({type:'photo', size:'sm'})}
-        ${ovAvatar({type:'initials', size:'sm', initials:'AK'})}
+        ${ovAvatar({type:'initials', size:'sm', initials:'AK', presence:'online'})}
         <span class="avt-more" style="width:32px;height:32px;font-size:11px">+2</span>
       </div>
-      <div class="spec-mock__row" style="margin-top:8px">${bar('80%')}</div>
+      <div class="spec-mock__row" style="margin-top:8px;align-items:center;gap:6px">${bar('80%')}<span class="pill pill--sm" style="--pill-bg:#16A220;--pill-text:#ffffff;font-size:10.5px;padding:0 8px;flex-shrink:0"><span class="pill__label">3 online</span></span></div>
     </div>
     <div class="spec-mock__cap"><b>Avatar group</b>5 people editing this doc, stacked and capped with +N.</div>`;
 
   // 3. Profile header — large avatar + name/title
   const profileMock = `
     <div class="spec-mock__stage" style="background:${sbg}">
-      <div class="spec-mock__row" style="align-items:center">${ovAvatar({type:'initials', size:'xl', initials:'JC'})}<span class="spec-mock__spacer" style="width:14px"></span><div><div class="spec-mock__label" style="font-weight:700">Jane Cole</div><div class="spec-mock__label" style="color:var(--chrome-muted);font-size:11px">Product Designer</div></div></div>
+      <div class="spec-mock__row" style="align-items:center">${ovAvatar({type:'initials', size:'xl', initials:'JC', presence:'online'})}<span class="spec-mock__spacer" style="width:14px"></span><div><div class="spec-mock__label" style="font-weight:700">Jane Cole</div><div class="spec-mock__row" style="margin-top:4px;gap:6px;align-items:center"><span class="spec-mock__label" style="color:var(--chrome-muted);font-size:11px">Product Designer</span><span class="pill pill--sm" style="--pill-bg:#0062EB;--pill-text:#ffffff;font-size:10.5px;padding:0 8px"><span class="pill__label">Admin</span></span></div></div></div>
     </div>
     <div class="spec-mock__cap"><b>Profile header</b>An XL avatar anchors a profile page's name and title.</div>`;
 
