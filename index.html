@@ -2300,6 +2300,7 @@ body.home .main{max-width:none;margin:0;padding:0}
 .cht__dot.on{fill:var(--c1);opacity:1}
 .cht__hit{fill:transparent;cursor:pointer}
 .cht__axis{fill:var(--chrome-muted);font-size:10px;font-family:inherit}
+.cht__val{fill:var(--chrome-txt);font-size:10px;font-weight:700;font-family:inherit}
 .cht__seg{transition:opacity .18s,stroke-width .18s;cursor:pointer;opacity:.25}
 .cht__seg.on{opacity:1}
 .cht-legend{display:flex;flex-wrap:wrap;gap:8px 14px;margin-top:16px}
@@ -2319,7 +2320,8 @@ body.home .main{max-width:none;margin:0;padding:0}
 .dd-meter__label{font-size:12.5px;font-weight:700;color:var(--chrome-txt)}
 .dd-meter__val{font-size:12px;font-weight:700;color:var(--chrome-muted);font-variant-numeric:tabular-nums}
 .dd-meter__track{height:8px;border-radius:999px;background:var(--chrome-nav);overflow:hidden}
-.dd-meter__fill{height:100%;border-radius:999px}
+.dd-meter__fill{height:100%;border-radius:999px;opacity:.25;transition:opacity .15s}
+.dd-meter:hover .dd-meter__fill{opacity:1}
 .dd-dist{border:1px solid var(--chrome-border);border-radius:12px;padding:22px}
 .dd-dist__row{margin-bottom:16px}
 .dd-dist__row:last-child{margin-bottom:0}
@@ -2328,7 +2330,8 @@ body.home .main{max-width:none;margin:0;padding:0}
 .dd-dist__swatch{width:9px;height:9px;border-radius:3px;flex-shrink:0}
 .dd-dist__val{font-size:12px;font-weight:700;color:var(--chrome-muted);font-variant-numeric:tabular-nums;white-space:nowrap}
 .dd-dist__track{height:10px;border-radius:999px;background:var(--chrome-nav);overflow:hidden}
-.dd-dist__fill{height:100%;border-radius:999px;transition:width .3s}
+.dd-dist__fill{height:100%;border-radius:999px;opacity:.25;transition:width .3s,opacity .15s}
+.dd-dist__row:hover .dd-dist__fill{opacity:1}
 .dd-break{border:1px solid var(--chrome-border);border-radius:12px;padding:22px}
 .dd-break__top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:11px}
 .dd-break__label{font-size:12.5px;font-weight:700;color:var(--chrome-txt)}
@@ -6365,7 +6368,7 @@ body.home .main{max-width:none;margin:0;padding:0}
     <section class="sec" id="s-charts-bar">
       <div class="sec__head">
         <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Bar Charts <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.4.1</span></h1>
+        <h1 class="sec__title">Bar Charts <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.4.2</span></h1>
         <p class="sec__desc">Compare discrete values across categories. Rendered as inline SVG &mdash; no charting library. Hover a bar to emphasise it and read its value; the rest dim back.</p>
       </div>
       <div class="type-sub">
@@ -6418,7 +6421,7 @@ body.home .main{max-width:none;margin:0;padding:0}
     ".cht__axis",
     ".cht__tip"
   ],
-  "css": "/* ---- Chart (Flash palette + interactive) ---- */\n.cht { position:relative;border:1px solid var(--chrome-border);border-radius:14px;padding:20px 22px;background:var(--chrome-bg);width:380px;max-width:100%;\n  --c1:var(--prim-green-500);--c2:var(--prim-sup-blue-1);--c3:var(--prim-sup-purple-4);--c4:var(--prim-sup-pink-1);--c5:var(--prim-sup-orange-1) }\n.cht__cap { font-size:13px;font-weight:700;color:var(--chrome-txt);margin-bottom:2px }\n.cht__sub { font-size:11.5px;color:var(--chrome-muted);margin-bottom:16px }\n.cht svg { display:block;width:100%;height:auto;overflow:visible }\n.cht__bar { fill:var(--c1);opacity:.25;transition:fill .15s,opacity .15s;cursor:pointer }\n.cht__bar.on { opacity:1 }\n.cht svg.is-hot .cht__line { opacity:1 }\n.cht__hit { fill:transparent;cursor:pointer }\n.cht__axis { fill:var(--chrome-muted);font-size:10px;font-family:inherit }\n.cht__tip { position:absolute;z-index:5;pointer-events:none;background:var(--color-surface-inverse);color:var(--color-text-inv);font-size:11.5px;font-weight:600;padding:5px 9px;border-radius:7px;white-space:nowrap;opacity:0;transform:translate(-50%,-100%);transition:opacity .12s;box-shadow:0 4px 14px rgba(0,0,0,.22) }\n.cht__tip.show { opacity:1 }\n.cht__tip b { font-weight:800 }",
+  "css": "/* ---- Chart (Flash palette + interactive) ---- */\n.cht { position:relative;border:1px solid var(--chrome-border);border-radius:14px;padding:20px 22px;background:var(--chrome-bg);width:380px;max-width:100%;\n  --c1:var(--prim-green-500);--c2:var(--prim-sup-blue-1);--c3:var(--prim-sup-purple-4);--c4:var(--prim-sup-pink-1);--c5:var(--prim-sup-orange-1) }\n.cht__cap { font-size:13px;font-weight:700;color:var(--chrome-txt);margin-bottom:2px }\n.cht__sub { font-size:11.5px;color:var(--chrome-muted);margin-bottom:16px }\n.cht svg { display:block;width:100%;height:auto;overflow:visible }\n.cht__bar { fill:var(--c1);opacity:.25;transition:fill .15s,opacity .15s;cursor:pointer }\n.cht__bar.on { opacity:1 }\n.cht svg.is-hot .cht__line { opacity:1 }\n.cht__hit { fill:transparent;cursor:pointer }\n.cht__axis { fill:var(--chrome-muted);font-size:10px;font-family:inherit }\n.cht__val { fill:var(--chrome-txt);font-size:10px;font-weight:700;font-family:inherit }\n.cht__tip { position:absolute;z-index:5;pointer-events:none;background:var(--color-surface-inverse);color:var(--color-text-inv);font-size:11.5px;font-weight:600;padding:5px 9px;border-radius:7px;white-space:nowrap;opacity:0;transform:translate(-50%,-100%);transition:opacity .12s;box-shadow:0 4px 14px rgba(0,0,0,.22) }\n.cht__tip.show { opacity:1 }\n.cht__tip b { font-weight:800 }",
   "js": "function fmt(n){ return n&gt;=1000 ? (n/1000).toFixed(1).replace(/\\.0$/,'')+'k' : ''+n; }\n\nfunction mkTip(card){ var t=document.createElement('div'); t.className='cht__tip'; card.appendChild(t); return t; }\n\nfunction moveTip(t,card,el,html){ var r=el.getBoundingClientRect(), cr=card.getBoundingClientRect(); t.innerHTML=html; t.style.left=(r.left-cr.left+r.width/2)+'px'; t.style.top=(r.top-cr.top-8)+'px'; t.classList.add('show'); }",
   "usage": {
     "do": [
@@ -6435,7 +6438,7 @@ body.home .main{max-width:none;margin:0;padding:0}
       "Don’t lead with red or orange — they read as error/warning. Only reach for them once other colours are already in use."
     ]
   },
-  "contentHash": "0169fd280f5afdb277c5d21c297f869ea5139f9dd218abbf2b8643fc067a11ce",
+  "contentHash": "815202db2e9e35c78ccf2a2a3700e15cbc6990cdafcf91af369f4cfbfefee20f",
   "note": "Split out of the former combined Charts page (v1.1.0). The bar renderer itself is inline logic inside an anonymous IIFE (keyed off document.getElementById('cht-bar')) rather than a separately named function, so only the shared fmt/mkTip/moveTip helpers are individually extractable by identifier. All series colours ride --c1..--c5 (Flash palette), not hardcoded hex."
 }
   </pre>
@@ -6445,7 +6448,7 @@ body.home .main{max-width:none;margin:0;padding:0}
     <section class="sec" id="s-charts-line">
       <div class="sec__head">
         <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Line &amp; Area Charts <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.1.1</span></h1>
+        <h1 class="sec__title">Line &amp; Area Charts <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.1.2</span></h1>
         <p class="sec__desc">Show a trend over a continuous range. The area variant fills beneath the line to emphasise volume.</p>
       </div>
       <div class="type-sub">
@@ -6504,8 +6507,8 @@ body.home .main{max-width:none;margin:0;padding:0}
     ".cht__axis",
     ".cht__tip"
   ],
-  "css": "/* ---- Chart (Flash palette + interactive) ---- */\n.cht { position:relative;border:1px solid var(--chrome-border);border-radius:14px;padding:20px 22px;background:var(--chrome-bg);width:380px;max-width:100%;\n  --c1:var(--prim-green-500);--c2:var(--prim-sup-blue-1);--c3:var(--prim-sup-purple-4);--c4:var(--prim-sup-pink-1);--c5:var(--prim-sup-orange-1) }\n.cht__cap { font-size:13px;font-weight:700;color:var(--chrome-txt);margin-bottom:2px }\n.cht__sub { font-size:11.5px;color:var(--chrome-muted);margin-bottom:16px }\n.cht svg { display:block;width:100%;height:auto;overflow:visible }\n.cht__line { fill:none;stroke:var(--c1);stroke-width:2.5;stroke-linejoin:round;stroke-linecap:round;opacity:.25;transition:opacity .15s }\n.cht svg.is-hot .cht__line { opacity:1 }\n.cht__area { fill:url(#chtAreaGrad) }\n.cht__dot { fill:var(--chrome-bg);stroke:var(--c1);stroke-width:2.5;opacity:.25;transition:fill .12s,opacity .12s }\n.cht__dot.on { fill:var(--c1);opacity:1 }\n.cht__hit { fill:transparent;cursor:pointer }\n.cht__axis { fill:var(--chrome-muted);font-size:10px;font-family:inherit }\n.cht__tip { position:absolute;z-index:5;pointer-events:none;background:var(--color-surface-inverse);color:var(--color-text-inv);font-size:11.5px;font-weight:600;padding:5px 9px;border-radius:7px;white-space:nowrap;opacity:0;transform:translate(-50%,-100%);transition:opacity .12s;box-shadow:0 4px 14px rgba(0,0,0,.22) }\n.cht__tip.show { opacity:1 }\n.cht__tip b { font-weight:800 }",
-  "js": "function fmt(n){ return n&gt;=1000 ? (n/1000).toFixed(1).replace(/\\.0$/,'')+'k' : ''+n; }\n\nfunction mkTip(card){ var t=document.createElement('div'); t.className='cht__tip'; card.appendChild(t); return t; }\n\nfunction moveTip(t,card,el,html){ var r=el.getBoundingClientRect(), cr=card.getBoundingClientRect(); t.innerHTML=html; t.style.left=(r.left-cr.left+r.width/2)+'px'; t.style.top=(r.top-cr.top-8)+'px'; t.classList.add('show'); }\n\nfunction lineChart(el, data, filled){\n    var card=el.closest('.cht'), tip=mkTip(card);\n    var W=340,H=168,padT=12,padB=22,padX=10, cw=W-padX*2, ch=H-padT-padB;\n    var max=Math.max.apply(null,data.map(function(d){return d.v;})), n=data.length;\n    var xs=function(i){return padX+(n&lt;=1?0:i/(n-1)*cw);}, ys=function(v){return padT+ch-(max?v/max*ch:0);};\n    var defs='', area='';\n    if(filled){\n      defs='&lt;defs&gt;&lt;linearGradient id=\"chtAreaGrad\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"&gt;&lt;stop offset=\"0\" stop-color=\"var(--c1)\" stop-opacity=\"0.32\"/&gt;&lt;stop offset=\"1\" stop-color=\"var(--c1)\" stop-opacity=\"0\"/&gt;&lt;/linearGradient&gt;&lt;/defs&gt;';\n      var d='M '+xs(0).toFixed(1)+','+(padT+ch).toFixed(1);\n      data.forEach(function(dd,i){ d+=' L '+xs(i).toFixed(1)+','+ys(dd.v).toFixed(1); });\n      d+=' L '+xs(n-1).toFixed(1)+','+(padT+ch).toFixed(1)+' Z'; area='&lt;path class=\"cht__area\" d=\"'+d+'\"/&gt;';\n    }\n    var pts=data.map(function(dd,i){return xs(i).toFixed(1)+','+ys(dd.v).toFixed(1);}).join(' ');\n    var dots=data.map(function(dd,i){return '&lt;circle class=\"cht__dot\" data-i=\"'+i+'\" cx=\"'+xs(i).toFixed(1)+'\" cy=\"'+ys(dd.v).toFixed(1)+'\" r=\"3.5\"/&gt;';}).join('');\n    var hits=data.map(function(dd,i){ var x0=i===0?0:(xs(i-1)+xs(i))/2, x1=i===n-1?W:(xs(i)+xs(i+1))/2;\n      return '&lt;rect class=\"cht__hit\" data-i=\"'+i+'\" x=\"'+x0.toFixed(1)+'\" y=\"0\" width=\"'+(x1-x0).toFixed(1)+'\" height=\"'+(padT+ch).toFixed(1)+'\"/&gt;'; }).join('');\n    var labs=data.map(function(dd,i){return '&lt;text class=\"cht__axis\" x=\"'+xs(i).toFixed(1)+'\" y=\"'+(H-7)+'\" text-anchor=\"middle\"&gt;'+dd.label+'&lt;/text&gt;';}).join('');\n    el.innerHTML='&lt;svg viewBox=\"0 0 '+W+' '+H+'\" role=\"img\" aria-label=\"Line chart\"&gt;'+defs+area+'&lt;polyline class=\"cht__line\" points=\"'+pts+'\"/&gt;'+dots+labs+hits+'&lt;/svg&gt;';\n    var dotEls=el.querySelectorAll('.cht__dot');\n    Array.prototype.forEach.call(el.querySelectorAll('.cht__hit'),function(h){ var i=+h.getAttribute('data-i'), dot=dotEls[i];\n      h.addEventListener('mouseenter',function(){ dot.classList.add('on'); dot.setAttribute('r','5.5'); moveTip(tip,card,dot,'&lt;b&gt;'+data[i].v+'&lt;/b&gt; &amp;middot; '+data[i].label); });\n      h.addEventListener('mouseleave',function(){ dot.classList.remove('on'); dot.setAttribute('r','3.5'); tip.classList.remove('show'); });\n    });\n  }",
+  "css": "/* ---- Chart (Flash palette + interactive) ---- */\n.cht { position:relative;border:1px solid var(--chrome-border);border-radius:14px;padding:20px 22px;background:var(--chrome-bg);width:380px;max-width:100%;\n  --c1:var(--prim-green-500);--c2:var(--prim-sup-blue-1);--c3:var(--prim-sup-purple-4);--c4:var(--prim-sup-pink-1);--c5:var(--prim-sup-orange-1) }\n.cht__cap { font-size:13px;font-weight:700;color:var(--chrome-txt);margin-bottom:2px }\n.cht__sub { font-size:11.5px;color:var(--chrome-muted);margin-bottom:16px }\n.cht svg { display:block;width:100%;height:auto;overflow:visible }\n.cht__line { fill:none;stroke:var(--c1);stroke-width:2.5;stroke-linejoin:round;stroke-linecap:round;opacity:.25;transition:opacity .15s }\n.cht svg.is-hot .cht__line { opacity:1 }\n.cht__area { fill:url(#chtAreaGrad) }\n.cht__dot { fill:var(--chrome-bg);stroke:var(--c1);stroke-width:2.5;opacity:.25;transition:fill .12s,opacity .12s }\n.cht__dot.on { fill:var(--c1);opacity:1 }\n.cht__hit { fill:transparent;cursor:pointer }\n.cht__axis { fill:var(--chrome-muted);font-size:10px;font-family:inherit }\n.cht__val { fill:var(--chrome-txt);font-size:10px;font-weight:700;font-family:inherit }\n.cht__tip { position:absolute;z-index:5;pointer-events:none;background:var(--color-surface-inverse);color:var(--color-text-inv);font-size:11.5px;font-weight:600;padding:5px 9px;border-radius:7px;white-space:nowrap;opacity:0;transform:translate(-50%,-100%);transition:opacity .12s;box-shadow:0 4px 14px rgba(0,0,0,.22) }\n.cht__tip.show { opacity:1 }\n.cht__tip b { font-weight:800 }",
+  "js": "function fmt(n){ return n&gt;=1000 ? (n/1000).toFixed(1).replace(/\\.0$/,'')+'k' : ''+n; }\n\nfunction mkTip(card){ var t=document.createElement('div'); t.className='cht__tip'; card.appendChild(t); return t; }\n\nfunction moveTip(t,card,el,html){ var r=el.getBoundingClientRect(), cr=card.getBoundingClientRect(); t.innerHTML=html; t.style.left=(r.left-cr.left+r.width/2)+'px'; t.style.top=(r.top-cr.top-8)+'px'; t.classList.add('show'); }\n\nfunction lineChart(el, data, filled){\n    var card=el.closest('.cht'), tip=mkTip(card);\n    var W=340,H=168,padT=22,padB=22,padX=10, cw=W-padX*2, ch=H-padT-padB;\n    var max=Math.max.apply(null,data.map(function(d){return d.v;})), n=data.length;\n    var xs=function(i){return padX+(n&lt;=1?0:i/(n-1)*cw);}, ys=function(v){return padT+ch-(max?v/max*ch:0);};\n    var defs='', area='';\n    if(filled){\n      defs='&lt;defs&gt;&lt;linearGradient id=\"chtAreaGrad\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"&gt;&lt;stop offset=\"0\" stop-color=\"var(--c1)\" stop-opacity=\"0.32\"/&gt;&lt;stop offset=\"1\" stop-color=\"var(--c1)\" stop-opacity=\"0\"/&gt;&lt;/linearGradient&gt;&lt;/defs&gt;';\n      var d='M '+xs(0).toFixed(1)+','+(padT+ch).toFixed(1);\n      data.forEach(function(dd,i){ d+=' L '+xs(i).toFixed(1)+','+ys(dd.v).toFixed(1); });\n      d+=' L '+xs(n-1).toFixed(1)+','+(padT+ch).toFixed(1)+' Z'; area='&lt;path class=\"cht__area\" d=\"'+d+'\"/&gt;';\n    }\n    var pts=data.map(function(dd,i){return xs(i).toFixed(1)+','+ys(dd.v).toFixed(1);}).join(' ');\n    var dots=data.map(function(dd,i){return '&lt;circle class=\"cht__dot\" data-i=\"'+i+'\" cx=\"'+xs(i).toFixed(1)+'\" cy=\"'+ys(dd.v).toFixed(1)+'\" r=\"3.5\"/&gt;';}).join('');\n    var vals=data.map(function(dd,i){return '&lt;text class=\"cht__val\" x=\"'+xs(i).toFixed(1)+'\" y=\"'+(ys(dd.v)-8).toFixed(1)+'\" text-anchor=\"middle\"&gt;'+fmt(dd.v)+'&lt;/text&gt;';}).join('');\n    var hits=data.map(function(dd,i){ var x0=i===0?0:(xs(i-1)+xs(i))/2, x1=i===n-1?W:(xs(i)+xs(i+1))/2;\n      return '&lt;rect class=\"cht__hit\" data-i=\"'+i+'\" x=\"'+x0.toFixed(1)+'\" y=\"0\" width=\"'+(x1-x0).toFixed(1)+'\" height=\"'+(padT+ch).toFixed(1)+'\"/&gt;'; }).join('');\n    var labs=data.map(function(dd,i){return '&lt;text class=\"cht__axis\" x=\"'+xs(i).toFixed(1)+'\" y=\"'+(H-7)+'\" text-anchor=\"middle\"&gt;'+dd.label+'&lt;/text&gt;';}).join('');\n    el.innerHTML='&lt;svg viewBox=\"0 0 '+W+' '+H+'\" role=\"img\" aria-label=\"Line chart\"&gt;'+defs+area+'&lt;polyline class=\"cht__line\" points=\"'+pts+'\"/&gt;'+dots+vals+labs+hits+'&lt;/svg&gt;';\n    var dotEls=el.querySelectorAll('.cht__dot');\n    Array.prototype.forEach.call(el.querySelectorAll('.cht__hit'),function(h){ var i=+h.getAttribute('data-i'), dot=dotEls[i];\n      h.addEventListener('mouseenter',function(){ dot.classList.add('on'); dot.setAttribute('r','5.5'); moveTip(tip,card,dot,'&lt;b&gt;'+data[i].v+'&lt;/b&gt; &amp;middot; '+data[i].label); });\n      h.addEventListener('mouseleave',function(){ dot.classList.remove('on'); dot.setAttribute('r','3.5'); tip.classList.remove('show'); });\n    });\n  }",
   "usage": {
     "do": [
       "Use a line for a trend across a continuous range — time, distance, sequence.",
@@ -6521,7 +6524,7 @@ body.home .main{max-width:none;margin:0;padding:0}
       "Don’t lead with red or orange — they read as error/warning. Only reach for them once other colours are already in use."
     ]
   },
-  "contentHash": "081bed33ac7b7c7652cad985c08b899874a79296bdffd1d5c3b1de5bfacc6731",
+  "contentHash": "5bc2b7c85953185a58cb1e441200ee69e92a82f552af85222d32c0d8411c1817",
   "note": "Split out of the former combined Charts page (v1.1.0). fmt/mkTip/moveTip/lineChart are the named builder functions this demo actually calls."
 }
   </pre>
@@ -6531,7 +6534,7 @@ body.home .main{max-width:none;margin:0;padding:0}
     <section class="sec" id="s-charts-donut">
       <div class="sec__head">
         <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Donut Charts <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.1.1</span></h1>
+        <h1 class="sec__title">Donut Charts <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.1.2</span></h1>
         <p class="sec__desc">Show parts of a whole. Each slice takes a colour from the Flash palette; hover a slice or its legend entry to pop it out and read its share in the centre.</p>
       </div>
       <div class="type-sub">
@@ -6613,7 +6616,7 @@ body.home .main{max-width:none;margin:0;padding:0}
     <section class="sec" id="s-charts-meters">
       <div class="sec__head">
         <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Progress Meters <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.1.1</span></h1>
+        <h1 class="sec__title">Progress Meters <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.2.0</span></h1>
         <p class="sec__desc">Labelled bars for quotas, targets and health. The fill uses the brand token by default and switches to Warning / Critical semantics as a value approaches its limit.</p>
       </div>
       <div class="type-sub">
@@ -6648,7 +6651,7 @@ body.home .main{max-width:none;margin:0;padding:0}
               <li>Use it for a single value tracked against a target or ceiling.</li>
               <li>Switch the fill to Warning / Critical tokens as the value nears its limit.</li>
               <li>Label both the raw figures and the percentage, as in this demo.</li>
-              <li>Default to a desaturated primary colour for the track/inactive state, and the saturated primary for the active fill.</li>
+              <li>Default to 25% opacity for the track/inactive state, and full opacity (the saturated colour) for the active fill.</li>
             </ul>
           </div>
           <div class="sel-usage__card">
@@ -6676,13 +6679,13 @@ body.home .main{max-width:none;margin:0;padding:0}
     ".dd-meter__track",
     ".dd-meter__fill"
   ],
-  "css": "/* ---- Progress meter / Distribution bars (Charts) ---- */\n.dd-meters { border:1px solid var(--chrome-border);border-radius:12px;padding:22px }\n.dd-meter { margin-bottom:18px }\n.dd-meter:last-child { margin-bottom:0 }\n.dd-meter__top { display:flex;justify-content:space-between;align-items:baseline;margin-bottom:7px }\n.dd-meter__label { font-size:12.5px;font-weight:700;color:var(--chrome-txt) }\n.dd-meter__val { font-size:12px;font-weight:700;color:var(--chrome-muted);font-variant-numeric:tabular-nums }\n.dd-meter__track { height:8px;border-radius:999px;background:var(--chrome-nav);overflow:hidden }\n.dd-meter__fill { height:100%;border-radius:999px }",
+  "css": "/* ---- Progress meter / Distribution bars (Charts) ---- */\n.dd-meters { border:1px solid var(--chrome-border);border-radius:12px;padding:22px }\n.dd-meter { margin-bottom:18px }\n.dd-meter:last-child { margin-bottom:0 }\n.dd-meter__top { display:flex;justify-content:space-between;align-items:baseline;margin-bottom:7px }\n.dd-meter__label { font-size:12.5px;font-weight:700;color:var(--chrome-txt) }\n.dd-meter__val { font-size:12px;font-weight:700;color:var(--chrome-muted);font-variant-numeric:tabular-nums }\n.dd-meter__track { height:8px;border-radius:999px;background:var(--chrome-nav);overflow:hidden }\n.dd-meter__fill { height:100%;border-radius:999px;opacity:.25;transition:opacity .15s }\n.dd-meter:hover .dd-meter__fill { opacity:1 }",
   "usage": {
     "do": [
       "Use it for a single value tracked against a target or ceiling.",
       "Switch the fill to Warning / Critical tokens as the value nears its limit.",
       "Label both the raw figures and the percentage, as in this demo.",
-      "Default to a desaturated primary colour for the track/inactive state, and the saturated primary for the active fill."
+      "Default to 25% opacity for the track/inactive state, and full opacity (the saturated colour) for the active fill."
     ],
     "dont": [
       "Don’t use a meter to compare unrelated metrics — that’s a stat card row.",
@@ -6691,7 +6694,7 @@ body.home .main{max-width:none;margin:0;padding:0}
       "Don’t use grey for a meter fill — reach for a desaturated primary shade instead."
     ]
   },
-  "contentHash": "4069908bb2c92b96882f8718569f7f65ecf385fe132e3c7ba62e4f96b938193c",
+  "contentHash": "3022a0f8a8eb98318464e3701d23131c05955b78bafb290507d9644aa1094ce5",
   "note": "Split out of the former combined Charts page (v1.1.0). Static hand-authored markup, migrated from the retired Data Display section."
 }
   </pre>
@@ -6701,7 +6704,7 @@ body.home .main{max-width:none;margin:0;padding:0}
     <section class="sec" id="s-charts-distribution">
       <div class="sec__head">
         <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Distribution Charts <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.1.1</span></h1>
+        <h1 class="sec__title">Distribution Charts <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.2.0</span></h1>
         <p class="sec__desc">Two ways to split a total across categories: a single segmented bar for a compact overview, or a ranked, one-row-per-category breakdown when each share needs its own line.</p>
       </div>
       <div class="type-sub">
@@ -6800,7 +6803,7 @@ body.home .main{max-width:none;margin:0;padding:0}
     ".dd-break__k",
     ".dd-break__v"
   ],
-  "css": ".dd-dist { border:1px solid var(--chrome-border);border-radius:12px;padding:22px }\n.dd-dist__row { margin-bottom:16px }\n.dd-dist__row:last-child { margin-bottom:0 }\n.dd-dist__top { display:flex;justify-content:space-between;align-items:baseline;margin-bottom:7px;gap:12px }\n.dd-dist__label { display:inline-flex;align-items:center;gap:8px;font-size:12.5px;font-weight:700;color:var(--chrome-txt) }\n.dd-dist__swatch { width:9px;height:9px;border-radius:3px;flex-shrink:0 }\n.dd-dist__val { font-size:12px;font-weight:700;color:var(--chrome-muted);font-variant-numeric:tabular-nums;white-space:nowrap }\n.dd-dist__track { height:10px;border-radius:999px;background:var(--chrome-nav);overflow:hidden }\n.dd-dist__fill { height:100%;border-radius:999px;transition:width .3s }\n.dd-break { border:1px solid var(--chrome-border);border-radius:12px;padding:22px }\n.dd-break__top { display:flex;justify-content:space-between;align-items:baseline;margin-bottom:11px }\n.dd-break__label { font-size:12.5px;font-weight:700;color:var(--chrome-txt) }\n.dd-break__total { font-size:12px;font-weight:700;color:var(--chrome-muted);font-variant-numeric:tabular-nums }\n.dd-break__bar { display:flex;gap:2px;height:14px;border-radius:999px;overflow:hidden;background:var(--chrome-nav) }\n.dd-break__seg { height:100%;opacity:.25;transition:opacity .15s }\n.dd-break__seg:hover { opacity:1 }\n.dd-break__legend { display:flex;flex-wrap:wrap;gap:12px 22px;margin-top:16px }\n.dd-break__item { display:flex;align-items:center;gap:8px }\n.dd-break__swatch { width:10px;height:10px;border-radius:3px;flex-shrink:0 }\n.dd-break__k { font-size:12.5px;font-weight:700;color:var(--chrome-txt) }\n.dd-break__v { font-size:12px;font-weight:700;color:var(--chrome-muted);font-variant-numeric:tabular-nums }",
+  "css": ".dd-dist { border:1px solid var(--chrome-border);border-radius:12px;padding:22px }\n.dd-dist__row { margin-bottom:16px }\n.dd-dist__row:last-child { margin-bottom:0 }\n.dd-dist__top { display:flex;justify-content:space-between;align-items:baseline;margin-bottom:7px;gap:12px }\n.dd-dist__label { display:inline-flex;align-items:center;gap:8px;font-size:12.5px;font-weight:700;color:var(--chrome-txt) }\n.dd-dist__swatch { width:9px;height:9px;border-radius:3px;flex-shrink:0 }\n.dd-dist__val { font-size:12px;font-weight:700;color:var(--chrome-muted);font-variant-numeric:tabular-nums;white-space:nowrap }\n.dd-dist__track { height:10px;border-radius:999px;background:var(--chrome-nav);overflow:hidden }\n.dd-dist__fill { height:100%;border-radius:999px;opacity:.25;transition:width .3s,opacity .15s }\n.dd-dist__row:hover .dd-dist__fill { opacity:1 }\n.dd-break { border:1px solid var(--chrome-border);border-radius:12px;padding:22px }\n.dd-break__top { display:flex;justify-content:space-between;align-items:baseline;margin-bottom:11px }\n.dd-break__label { font-size:12.5px;font-weight:700;color:var(--chrome-txt) }\n.dd-break__total { font-size:12px;font-weight:700;color:var(--chrome-muted);font-variant-numeric:tabular-nums }\n.dd-break__bar { display:flex;gap:2px;height:14px;border-radius:999px;overflow:hidden;background:var(--chrome-nav) }\n.dd-break__seg { height:100%;opacity:.25;transition:opacity .15s }\n.dd-break__seg:hover { opacity:1 }\n.dd-break__legend { display:flex;flex-wrap:wrap;gap:12px 22px;margin-top:16px }\n.dd-break__item { display:flex;align-items:center;gap:8px }\n.dd-break__swatch { width:10px;height:10px;border-radius:3px;flex-shrink:0 }\n.dd-break__k { font-size:12.5px;font-weight:700;color:var(--chrome-txt) }\n.dd-break__v { font-size:12px;font-weight:700;color:var(--chrome-muted);font-variant-numeric:tabular-nums }",
   "usage": {
     "do": [
       "Use the single segmented bar when the overview matters more than reading each figure at a glance.",
@@ -6816,7 +6819,7 @@ body.home .main{max-width:none;margin:0;padding:0}
       "Don’t lead with red or orange — they read as error/warning. Only reach for them once other colours are already in use."
     ]
   },
-  "contentHash": "687eddccb6482330f6d0a09ae00fc71e52ab17af299634606e6e2514214e2f5c",
+  "contentHash": "8529d12449110bdf84795cabb1a4f31045f4d5dd9e9769cf4db8a4aaf0a72c28",
   "note": "Split out of the former combined Charts page (v1.1.0), which also covered Bar/Line/Donut (now s-charts-bar/s-charts-line/s-charts-donut) and Progress meters (now s-charts-meters). Both distribution-bar patterns (.dd-dist*/.dd-break*) are static hand-authored markup, migrated from the retired Data Display section."
 }
   </pre>
@@ -11982,32 +11985,38 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.64.22';
+const SYSTEM_VERSION = '1.64.24';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
-      {version:'1.64.22', date:'2026-08-07', author:'Mo', title:'Playground Header toggle (default off); fixed clipped trailing links and a malformed Focused ring', changes:[
+      {version:'1.64.24', date:'2026-08-07', author:'Mo', title:'Playground Header toggle (default off); fixed clipped trailing links and a malformed Focused ring', changes:[
         ['added','New Header toggle in the Playground controls, off by default — the single-row demo now matches its original bare-row presentation unless Header is switched on, at which point it gains the black head + card frame'],
         ['fixed','.tbl-pg__card only set overflow:hidden, so the trailing links (shown in the Hover state) got clipped off the right edge on narrower viewports instead of being reachable; added overflow-x:auto to match the real Interactive table\'s .tbl-wrap pattern'],
         ['fixed','The Focused state\'s inset ring looked clipped at the bottom corners because the row had border-radius:0 while its card ancestor clipped to a 14px rounded corner; .tbl-pg__card .tbl-row now carries a matching border-radius:0 0 13px 13px'],
       ]},
-      {version:'1.64.21', date:'2026-08-07', author:'Mo', title:'Fixed Playground header label misalignment', changes:[
+      {version:'1.64.23', date:'2026-08-07', author:'Mo', title:'Fixed Playground header label misalignment', changes:[
         ['fixed','Playground header labels (Product/Column/Status) were missing a spacer for the row\'s product picture, so they sat 30px left of the cells they label. Added a dedicated picture-width spacer alongside the checkbox spacer so every header label now lines up exactly with its row cell.'],
       ]},
-      {version:'1.64.20', date:'2026-08-07', author:'Mo', title:'Playground header moved inside the row card, gains Sorting and Checkbox toggles', changes:[
+      {version:'1.64.22', date:'2026-08-07', author:'Mo', title:'Playground header moved inside the row card, gains Sorting and Checkbox toggles', changes:[
         ['changed','The Playground\'s header bar now sits inside the same bordered/rounded card as the single-row demo (.tbl-pg__card wraps .tbl-pg__head + the row), instead of floating above it as a separate full-width bar'],
         ['added','New Sorting and Checkbox pill toggles in the Playground controls — Sorting shows/hides the sort icons on every header label, Checkbox shows/hides the row\'s leading checkbox and its matching header spacer'],
       ]},
-      {version:'1.64.19', date:'2026-08-07', author:'Mo', title:'Playground gains a header row; Actions header label removed; Amount header realigned', changes:[
+      {version:'1.64.21', date:'2026-08-07', author:'Mo', title:'Playground gains a header row; Actions header label removed; Amount header realigned', changes:[
         ['added','The Tables Playground single-row demo now renders a black header bar above the row (Product/Column x3/Status, each with a sort icon) so the live demo matches the full Interactive table header'],
         ['removed','The Interactive table header\'s Actions column no longer shows a visible "Actions" label (kept as an aria-label for accessibility) since that column isn\'t sortable'],
         ['fixed','.tbl-head__cell.tcol-amt now sets justify-content:flex-end so the "Amount" label + sort icon align right, matching the right-aligned numeric values in the column below'],
       ]},
-      {version:'1.64.18', date:'2026-08-07', author:'Mo', title:'Table headers restyled to black fill with sort icons, matching the Customer Service Portal spec', changes:[
+      {version:'1.64.20', date:'2026-08-07', author:'Mo', title:'Table headers restyled to black fill with sort icons, matching the Customer Service Portal spec', changes:[
         ['changed','.tbl-head (Interactive table) and .dd-table thead th (Reporting variant) backgrounds changed from var(--chrome-nav) to a fixed #000 fill, with header label colour changed from var(--chrome-muted) to #fff — matches the Figma "Support table header" component and stays black in both light and dark theme'],
         ['added','Every sortable header cell in both table variants now shows a white up/down sort icon (.tbl-sort-icon) next to its label; the Interactive table\'s Actions column and checkbox column are left without one since they aren\'t sortable'],
+      ]},
+      {version:'1.64.19', date:'2026-08-07', author:'Mo', title:'Restored the always-visible chart value labels lost in an earlier merge', changes:[
+        ['fixed','Bar chart value labels, Line & Area point labels, and the Donut legend\'s raw figures (all shipped in a since-orphaned PR) had been silently dropped — the PR that added them was based on a branch that merged into main before the PR itself did, so its commit never reached main\'s history. Reapplied all three onto the current file: .cht__val CSS rule, the bar/line renderer text elements, and fmt(x.v) in the donut legend'],
+      ]},
+      {version:'1.64.18', date:'2026-08-07', author:'Mo', title:'Progress Meters and Distribution bars now match their own Do rule: 25% opacity default, full opacity on hover', changes:[
+        ['fixed','.dd-meter__fill and .dd-dist__fill (the ranked distribution bars) had no opacity treatment at all — every fill rendered at full saturation with no way to see the desaturated/inactive state their own "When to use" Do rule already described. Both now default to opacity:.25, jumping to opacity:1 when the row is hovered'],
       ]},
       {version:'1.64.17', date:'2026-08-07', author:'Mo', title:'Chart palette no longer leads with orange; new Don\'t rule against leading with red/orange', changes:[
         ['changed','The shared chart palette (--c1..--c5, used by Bar/Line & Area/Donut) reorders orange from 4th to last (5th) and moves pink into 4th — a 4-category chart (the most common case) now uses green/blue/purple/pink and never reaches orange or red at all'],
@@ -12812,7 +12821,10 @@ const CHANGELOG = {
     ]
   },
   components: [
-    {secId:'s-charts-bar', name:'Bar Charts', version:'1.4.1', entries:[
+    {secId:'s-charts-bar', name:'Bar Charts', version:'1.4.2', entries:[
+      {version:'1.4.2', date:'2026-08-07', author:'Mo', title:'Restored the always-visible value labels above each bar', changes:[
+        ['fixed','.cht__val text label above each bar (added in a prior release) had been silently dropped by a later merge — reapplied the CSS rule and the bar renderer\'s text element, restoring the value shown above every bar without needing to hover'],
+      ]},
       {version:'1.4.1', date:'2026-08-07', author:'Mo', title:'Palette no longer leads with orange; new Don\'t rule against leading with red/orange', changes:[
         ['changed','--c4/--c5 swapped so orange moves from 4th to last (5th) and pink takes 4th — a 4-category chart no longer reaches orange at all'],
         ['added','"When to use" gains a Don\'t rule: don\'t lead with red or orange — they read as error/warning; only reach for them once other colours are already in use'],
@@ -12848,7 +12860,10 @@ const CHANGELOG = {
         ['added','Interactive inline-SVG bar, line, area and donut charts rendered from data, Flash colour palette, with hover tooltips, dim-the-rest emphasis, donut pop-out and an interactive legend'],
       ]},
     ]},
-    {secId:'s-charts-line', name:'Line & Area Charts', version:'1.1.1', entries:[
+    {secId:'s-charts-line', name:'Line & Area Charts', version:'1.1.2', entries:[
+      {version:'1.1.2', date:'2026-08-07', author:'Mo', title:'Restored the always-visible value labels above each point', changes:[
+        ['fixed','lineChart()\'s .cht__val text label above each point (added in a prior release) had been silently dropped by a later merge — reapplied the CSS rule, the padT increase, and the vals text elements, restoring the value shown above every point without needing to hover'],
+      ]},
       {version:'1.1.1', date:'2026-08-07', author:'Mo', title:'Palette no longer leads with orange; new Don\'t rule against leading with red/orange', changes:[
         ['changed','--c4/--c5 swapped so orange moves from 4th to last (5th) and pink takes 4th'],
         ['added','"When to use" gains a Don\'t rule: don\'t lead with red or orange — they read as error/warning; only reach for them once other colours are already in use'],
@@ -12864,7 +12879,10 @@ const CHANGELOG = {
         ['added','Line & Area Charts — carved out of the former combined Charts page into its own section, with a "When to use" tailored to trend charts specifically'],
       ]},
     ]},
-    {secId:'s-charts-donut', name:'Donut Charts', version:'1.1.1', entries:[
+    {secId:'s-charts-donut', name:'Donut Charts', version:'1.1.2', entries:[
+      {version:'1.1.2', date:'2026-08-07', author:'Mo', title:'Restored the legend\'s always-visible raw figures', changes:[
+        ['fixed','.cht-legend__item\'s fmt(x.v) raw figure (added in a prior release, e.g. "Card · 1.2k · 52%") had been silently dropped by a later merge, leaving only the percentage — reapplied it to the legend\'s innerHTML template'],
+      ]},
       {version:'1.1.1', date:'2026-08-07', author:'Mo', title:'Palette no longer leads with orange; new Don\'t rule against leading with red/orange', changes:[
         ['changed','--c4/--c5 swapped so orange moves from 4th to last (5th) and pink takes 4th — the 4-category demo (Card/EFT/Cash/Wallet) now renders green/blue/purple/pink with no orange or red at all'],
         ['added','"When to use" gains a Don\'t rule: don\'t lead with red or orange — they read as error/warning; only reach for them once other colours are already in use'],
@@ -12881,7 +12899,10 @@ const CHANGELOG = {
         ['added','Donut Charts — carved out of the former combined Charts page into its own section, with a "When to use" tailored to composition charts specifically'],
       ]},
     ]},
-    {secId:'s-charts-meters', name:'Progress Meters', version:'1.1.1', entries:[
+    {secId:'s-charts-meters', name:'Progress Meters', version:'1.2.0', entries:[
+      {version:'1.2.0', date:'2026-08-07', author:'Mo', title:'Meter fills now match the Do rule: 25% opacity default, full opacity on hover', changes:[
+        ['fixed','.dd-meter__fill had no opacity treatment — every fill rendered at full saturation with no way to see the desaturated/inactive state the "When to use" Do rule already described. Now defaults to opacity:.25, jumping to opacity:1 when the meter row is hovered'],
+      ]},
       {version:'1.1.1', date:'2026-08-07', author:'Mo', title:'New Do/Don\'t rule: no grey — desaturated primary for inactive, saturated primary for active/hover', changes:[
         ['added','"When to use" gains a Do rule: default to a desaturated primary colour for the track/inactive state, and the saturated primary for the active fill'],
         ['added','"When to use" gains a Don\'t rule: don\'t use grey for a meter fill — reach for a desaturated primary shade instead'],
@@ -12893,7 +12914,10 @@ const CHANGELOG = {
         ['added','Progress Meters — carved out of the former combined Charts page into its own section, with a "When to use" tailored to single-value-against-a-limit meters specifically'],
       ]},
     ]},
-    {secId:'s-charts-distribution', name:'Distribution Charts', version:'1.1.1', entries:[
+    {secId:'s-charts-distribution', name:'Distribution Charts', version:'1.2.0', entries:[
+      {version:'1.2.0', date:'2026-08-07', author:'Mo', title:'Ranked distribution bars now match the Do rule: 25% opacity default, full opacity on hover', changes:[
+        ['fixed','.dd-dist__fill (the ranked, one-row-per-category bars) had no opacity treatment — every fill rendered at full saturation with no way to see the desaturated/inactive state the "When to use" Do rule already described. Now defaults to opacity:.25, jumping to opacity:1 when the row is hovered. The segmented bar (.dd-break__seg) already had this treatment from a prior release'],
+      ]},
       {version:'1.1.1', date:'2026-08-07', author:'Mo', title:'New Don\'t rule: don\'t lead with red or orange', changes:[
         ['added','"When to use" gains a Don\'t rule: don\'t lead with red or orange — they read as error/warning; only reach for them once other colours are already in use'],
       ]},
@@ -15531,10 +15555,11 @@ function ddTabSwitch(tab){
   if(barEl){
     var card=barEl.closest('.cht'), tip=mkTip(card);
     var data=[{label:'Jan',v:42},{label:'Feb',v:55},{label:'Mar',v:48},{label:'Apr',v:63},{label:'May',v:71},{label:'Jun',v:66},{label:'Jul',v:82}];
-    var W=340,H=180,padT=8,padB=22,padX=6, cw=W-padX*2, ch=H-padT-padB;
+    var W=340,H=180,padT=20,padB=22,padX=6, cw=W-padX*2, ch=H-padT-padB;
     var max=Math.max.apply(null,data.map(function(d){return d.v;})), n=data.length, gap=10, bw=(cw-gap*(n-1))/n, s='';
     data.forEach(function(d,i){ var bh=max?d.v/max*ch:0, x=padX+i*(bw+gap), y=padT+ch-bh;
       s+='<rect class="cht__bar" data-i="'+i+'" x="'+x.toFixed(1)+'" y="'+y.toFixed(1)+'" width="'+bw.toFixed(1)+'" height="'+bh.toFixed(1)+'" rx="3"/>';
+      s+='<text class="cht__val" x="'+(x+bw/2).toFixed(1)+'" y="'+(y-6).toFixed(1)+'" text-anchor="middle">'+fmt(d.v)+'</text>';
       s+='<text class="cht__axis" x="'+(x+bw/2).toFixed(1)+'" y="'+(H-7)+'" text-anchor="middle">'+d.label+'</text>';
     });
     barEl.innerHTML='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Bar chart of monthly volume">'+s+'</svg>';
@@ -15548,7 +15573,7 @@ function ddTabSwitch(tab){
   /* Line / Area — hover bands reveal the nearest point */
   function lineChart(el, data, filled){
     var card=el.closest('.cht'), tip=mkTip(card);
-    var W=340,H=168,padT=12,padB=22,padX=10, cw=W-padX*2, ch=H-padT-padB;
+    var W=340,H=168,padT=22,padB=22,padX=10, cw=W-padX*2, ch=H-padT-padB;
     var max=Math.max.apply(null,data.map(function(d){return d.v;})), n=data.length;
     var xs=function(i){return padX+(n<=1?0:i/(n-1)*cw);}, ys=function(v){return padT+ch-(max?v/max*ch:0);};
     var defs='', area='';
@@ -15560,10 +15585,11 @@ function ddTabSwitch(tab){
     }
     var pts=data.map(function(dd,i){return xs(i).toFixed(1)+','+ys(dd.v).toFixed(1);}).join(' ');
     var dots=data.map(function(dd,i){return '<circle class="cht__dot" data-i="'+i+'" cx="'+xs(i).toFixed(1)+'" cy="'+ys(dd.v).toFixed(1)+'" r="3.5"/>';}).join('');
+    var vals=data.map(function(dd,i){return '<text class="cht__val" x="'+xs(i).toFixed(1)+'" y="'+(ys(dd.v)-8).toFixed(1)+'" text-anchor="middle">'+fmt(dd.v)+'</text>';}).join('');
     var hits=data.map(function(dd,i){ var x0=i===0?0:(xs(i-1)+xs(i))/2, x1=i===n-1?W:(xs(i)+xs(i+1))/2;
       return '<rect class="cht__hit" data-i="'+i+'" x="'+x0.toFixed(1)+'" y="0" width="'+(x1-x0).toFixed(1)+'" height="'+(padT+ch).toFixed(1)+'"/>'; }).join('');
     var labs=data.map(function(dd,i){return '<text class="cht__axis" x="'+xs(i).toFixed(1)+'" y="'+(H-7)+'" text-anchor="middle">'+dd.label+'</text>';}).join('');
-    el.innerHTML='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Line chart">'+defs+area+'<polyline class="cht__line" points="'+pts+'"/>'+dots+labs+hits+'</svg>';
+    el.innerHTML='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Line chart">'+defs+area+'<polyline class="cht__line" points="'+pts+'"/>'+dots+vals+labs+hits+'</svg>';
     var dotEls=el.querySelectorAll('.cht__dot');
     Array.prototype.forEach.call(el.querySelectorAll('.cht__hit'),function(h){ var i=+h.getAttribute('data-i'), dot=dotEls[i];
       h.addEventListener('mouseenter',function(){ dot.classList.add('on'); dot.setAttribute('r','5.5'); moveTip(tip,card,dot,'<b>'+data[i].v+'</b> &middot; '+data[i].label); });
@@ -15588,7 +15614,7 @@ function ddTabSwitch(tab){
       +'<text class="cht-donut-val" x="90" y="88" text-anchor="middle" font-size="26">'+fmt(total)+'</text>'
       +'<text class="cht-donut-lab" x="90" y="106" text-anchor="middle" font-size="10">txns</text></svg>';
     var dSvg=donutEl.querySelector('svg'), valEl=dSvg.querySelector('.cht-donut-val'), labEl=dSvg.querySelector('.cht-donut-lab'), segEls=dSvg.querySelectorAll('.cht__seg');
-    if(legEl) legEl.innerHTML=dd.map(function(x,i){return '<span class="cht-legend__item" data-i="'+i+'"><span class="cht-legend__dot" style="background:'+PAL[i%PAL.length]+'"></span>'+x.label+' &middot; '+Math.round(x.v/total*100)+'%</span>';}).join('');
+    if(legEl) legEl.innerHTML=dd.map(function(x,i){return '<span class="cht-legend__item" data-i="'+i+'"><span class="cht-legend__dot" style="background:'+PAL[i%PAL.length]+'"></span>'+x.label+' &middot; '+fmt(x.v)+' &middot; '+Math.round(x.v/total*100)+'%</span>';}).join('');
     function hot(i){ dSvg.classList.add('is-hot'); segEls[i].classList.add('on'); segEls[i].setAttribute('stroke-width',sw+5); valEl.textContent=Math.round(dd[i].v/total*100)+'%'; labEl.textContent=dd[i].label; }
     function cool(){ dSvg.classList.remove('is-hot'); Array.prototype.forEach.call(segEls,function(s){ s.classList.remove('on'); s.setAttribute('stroke-width',sw); }); valEl.textContent=fmt(total); labEl.textContent='txns'; }
     Array.prototype.forEach.call(segEls,function(s){ var i=+s.getAttribute('data-i'); s.addEventListener('mouseenter',function(){hot(i);}); s.addEventListener('mouseleave',cool); });
