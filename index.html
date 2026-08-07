@@ -6357,7 +6357,7 @@ body.home .main{max-width:none;margin:0;padding:0}
     <section class="sec" id="s-charts-bar">
       <div class="sec__head">
         <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Bar Charts <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.2.0</span></h1>
+        <h1 class="sec__title">Bar Charts <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.3.1</span></h1>
         <p class="sec__desc">Compare discrete values across categories. Rendered as inline SVG &mdash; no charting library. Hover a bar to emphasise it and read its value; the rest dim back.</p>
       </div>
       <div class="type-sub">
@@ -6375,6 +6375,7 @@ body.home .main{max-width:none;margin:0;padding:0}
               <li>Use bars for comparison, lines for trends, donuts for a few parts of a whole.</li>
               <li>Label axes; give each category or series its own palette colour, and keep single-series charts to one.</li>
               <li>Start bar and area value axes at zero.</li>
+              <li>Default to a desaturated primary colour for the inactive state, and the saturated primary for active/hover.</li>
             </ul>
           </div>
           <div class="sel-usage__card">
@@ -6383,6 +6384,7 @@ body.home .main{max-width:none;margin:0;padding:0}
               <li>Don&rsquo;t use a donut for more than ~5 segments &mdash; a bar reads better.</li>
               <li>Don&rsquo;t colour series just for decoration &mdash; it implies meaning that isn&rsquo;t there.</li>
               <li>Don&rsquo;t truncate a value axis in a way that exaggerates differences.</li>
+              <li>Don&rsquo;t use grey for chart colours &mdash; when representing multiple things (several bars, slices or series), give each its own palette colour instead.</li>
             </ul>
           </div>
         </div>
@@ -6412,15 +6414,17 @@ body.home .main{max-width:none;margin:0;padding:0}
     "do": [
       "Use bars for comparison, lines for trends, donuts for a few parts of a whole.",
       "Label axes; give each category or series its own palette colour, and keep single-series charts to one.",
-      "Start bar and area value axes at zero."
+      "Start bar and area value axes at zero.",
+      "Default to a desaturated primary colour for the inactive state, and the saturated primary for active/hover."
     ],
     "dont": [
       "Don’t use a donut for more than ~5 segments — a bar reads better.",
       "Don’t colour series just for decoration — it implies meaning that isn’t there.",
-      "Don’t truncate a value axis in a way that exaggerates differences."
+      "Don’t truncate a value axis in a way that exaggerates differences.",
+      "Don’t use grey for chart colours — when representing multiple things (several bars, slices or series), give each its own palette colour instead."
     ]
   },
-  "contentHash": "fd5ab216190d5dc57f46f48a7cc95d929398f150e3997198004edc0e66d1f6d8",
+  "contentHash": "5127c817eb6495699f009483ebea23445c647fa86d06e762c9ea931153183f80",
   "note": "Split out of the former combined Charts page (v1.1.0). The bar renderer itself is inline logic inside an anonymous IIFE (keyed off document.getElementById('cht-bar')) rather than a separately named function, so only the shared fmt/mkTip/moveTip helpers are individually extractable by identifier. All series colours ride --c1..--c5 (Flash palette), not hardcoded hex."
 }
   </pre>
@@ -6430,7 +6434,7 @@ body.home .main{max-width:none;margin:0;padding:0}
     <section class="sec" id="s-charts-line">
       <div class="sec__head">
         <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Line &amp; Area Charts <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.0</span></h1>
+        <h1 class="sec__title">Line &amp; Area Charts <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.1</span></h1>
         <p class="sec__desc">Show a trend over a continuous range. The area variant fills beneath the line to emphasise volume.</p>
       </div>
       <div class="type-sub">
@@ -6451,6 +6455,7 @@ body.home .main{max-width:none;margin:0;padding:0}
               <li>Use a line for a trend across a continuous range &mdash; time, distance, sequence.</li>
               <li>Use the area fill when the volume beneath the line matters, not just its direction.</li>
               <li>Start the value axis at zero, same as bar charts.</li>
+              <li>Default to a desaturated primary colour for the inactive state, and the saturated primary for active/hover.</li>
             </ul>
           </div>
           <div class="sel-usage__card">
@@ -6459,6 +6464,7 @@ body.home .main{max-width:none;margin:0;padding:0}
               <li>Don&rsquo;t plot more than 2&ndash;3 lines on one chart &mdash; it turns into a tangle.</li>
               <li>Don&rsquo;t use a line chart for discrete, unordered categories &mdash; that&rsquo;s a bar chart.</li>
               <li>Don&rsquo;t fill the area under more than one series &mdash; overlapping fills obscure each other.</li>
+              <li>Don&rsquo;t use grey for chart colours &mdash; give each series its own palette colour when plotting more than one.</li>
             </ul>
           </div>
         </div>
@@ -6491,15 +6497,17 @@ body.home .main{max-width:none;margin:0;padding:0}
     "do": [
       "Use a line for a trend across a continuous range — time, distance, sequence.",
       "Use the area fill when the volume beneath the line matters, not just its direction.",
-      "Start the value axis at zero, same as bar charts."
+      "Start the value axis at zero, same as bar charts.",
+      "Default to a desaturated primary colour for the inactive state, and the saturated primary for active/hover."
     ],
     "dont": [
       "Don’t plot more than 2–3 lines on one chart — it turns into a tangle.",
       "Don’t use a line chart for discrete, unordered categories — that’s a bar chart.",
-      "Don’t fill the area under more than one series — overlapping fills obscure each other."
+      "Don’t fill the area under more than one series — overlapping fills obscure each other.",
+      "Don’t use grey for chart colours — give each series its own palette colour when plotting more than one."
     ]
   },
-  "contentHash": "8e11ceeef353d4f79b62abae76313f1c97e74a547d6fbfce50a23c7b49c32c52",
+  "contentHash": "2f79d383510e7c1540472bc389a37c88a06b9ae6b60f03f590531e596383604b",
   "note": "Split out of the former combined Charts page (v1.1.0). fmt/mkTip/moveTip/lineChart are the named builder functions this demo actually calls."
 }
   </pre>
@@ -6509,7 +6517,7 @@ body.home .main{max-width:none;margin:0;padding:0}
     <section class="sec" id="s-charts-donut">
       <div class="sec__head">
         <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Donut Charts <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.0</span></h1>
+        <h1 class="sec__title">Donut Charts <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.1</span></h1>
         <p class="sec__desc">Show parts of a whole. Each slice takes a colour from the Flash palette; hover a slice or its legend entry to pop it out and read its share in the centre.</p>
       </div>
       <div class="type-sub">
@@ -6527,6 +6535,7 @@ body.home .main{max-width:none;margin:0;padding:0}
               <li>Use it for composition &mdash; a handful of parts adding up to one total.</li>
               <li>Sort slices largest to smallest, clockwise from 12 o&rsquo;clock.</li>
               <li>Show the total or the hovered share in the centre, as in this demo.</li>
+              <li>Give every slice its own palette colour &mdash; default to a desaturated primary for the inactive state, and the saturated primary for active/hover.</li>
             </ul>
           </div>
           <div class="sel-usage__card">
@@ -6535,6 +6544,7 @@ body.home .main{max-width:none;margin:0;padding:0}
               <li>Don&rsquo;t use a donut for more than ~5 segments &mdash; a bar reads better past that.</li>
               <li>Don&rsquo;t use it to compare two totals side by side &mdash; use bars instead.</li>
               <li>Don&rsquo;t rely on slice angle alone for precision &mdash; pair it with a legend that carries the figures.</li>
+              <li>Don&rsquo;t use grey for a slice &mdash; each slice representing a different thing should get its own palette colour.</li>
             </ul>
           </div>
         </div>
@@ -6567,15 +6577,17 @@ body.home .main{max-width:none;margin:0;padding:0}
     "do": [
       "Use it for composition — a handful of parts adding up to one total.",
       "Sort slices largest to smallest, clockwise from 12 o’clock.",
-      "Show the total or the hovered share in the centre, as in this demo."
+      "Show the total or the hovered share in the centre, as in this demo.",
+      "Give every slice its own palette colour — default to a desaturated primary for the inactive state, and the saturated primary for active/hover."
     ],
     "dont": [
       "Don’t use a donut for more than ~5 segments — a bar reads better past that.",
       "Don’t use it to compare two totals side by side — use bars instead.",
-      "Don’t rely on slice angle alone for precision — pair it with a legend that carries the figures."
+      "Don’t rely on slice angle alone for precision — pair it with a legend that carries the figures.",
+      "Don’t use grey for a slice — each slice representing a different thing should get its own palette colour."
     ]
   },
-  "contentHash": "dd3ee7bf5c2ce56b6aa7d5a0d57314b28eb09d45176ce9ef525c3c007efc27d1",
+  "contentHash": "643d7df908e4bf520dc5efb0fb2fff752fac5812bca488af3f844fc72ebba46f",
   "note": "Split out of the former combined Charts page (v1.1.0). The donut renderer itself is inline logic inside an anonymous IIFE (keyed off document.getElementById('cht-donut')) rather than a separately named function, so only the shared fmt/mkTip/moveTip helpers are individually extractable by identifier."
 }
   </pre>
@@ -6585,7 +6597,7 @@ body.home .main{max-width:none;margin:0;padding:0}
     <section class="sec" id="s-charts-meters">
       <div class="sec__head">
         <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Progress Meters <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.0</span></h1>
+        <h1 class="sec__title">Progress Meters <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.1.1</span></h1>
         <p class="sec__desc">Labelled bars for quotas, targets and health. The fill uses the brand token by default and switches to Warning / Critical semantics as a value approaches its limit.</p>
       </div>
       <div class="type-sub">
@@ -6620,6 +6632,7 @@ body.home .main{max-width:none;margin:0;padding:0}
               <li>Use it for a single value tracked against a target or ceiling.</li>
               <li>Switch the fill to Warning / Critical tokens as the value nears its limit.</li>
               <li>Label both the raw figures and the percentage, as in this demo.</li>
+              <li>Default to a desaturated primary colour for the track/inactive state, and the saturated primary for the active fill.</li>
             </ul>
           </div>
           <div class="sel-usage__card">
@@ -6628,6 +6641,7 @@ body.home .main{max-width:none;margin:0;padding:0}
               <li>Don&rsquo;t use a meter to compare unrelated metrics &mdash; that&rsquo;s a stat card row.</li>
               <li>Don&rsquo;t stack more than 4&ndash;5 meters together &mdash; group or paginate instead.</li>
               <li>Don&rsquo;t use the Critical colour for a value that isn&rsquo;t actually critical.</li>
+              <li>Don&rsquo;t use grey for a meter fill &mdash; reach for a desaturated primary shade instead.</li>
             </ul>
           </div>
         </div>
@@ -6651,15 +6665,17 @@ body.home .main{max-width:none;margin:0;padding:0}
     "do": [
       "Use it for a single value tracked against a target or ceiling.",
       "Switch the fill to Warning / Critical tokens as the value nears its limit.",
-      "Label both the raw figures and the percentage, as in this demo."
+      "Label both the raw figures and the percentage, as in this demo.",
+      "Default to a desaturated primary colour for the track/inactive state, and the saturated primary for the active fill."
     ],
     "dont": [
       "Don’t use a meter to compare unrelated metrics — that’s a stat card row.",
       "Don’t stack more than 4–5 meters together — group or paginate instead.",
-      "Don’t use the Critical colour for a value that isn’t actually critical."
+      "Don’t use the Critical colour for a value that isn’t actually critical.",
+      "Don’t use grey for a meter fill — reach for a desaturated primary shade instead."
     ]
   },
-  "contentHash": "baa2002b2f0c532249c49ba4b255a4b804be77a92e2eaa1e21572e9d2900793e",
+  "contentHash": "4069908bb2c92b96882f8718569f7f65ecf385fe132e3c7ba62e4f96b938193c",
   "note": "Split out of the former combined Charts page (v1.1.0). Static hand-authored markup, migrated from the retired Data Display section."
 }
   </pre>
@@ -6669,7 +6685,7 @@ body.home .main{max-width:none;margin:0;padding:0}
     <section class="sec" id="s-charts-distribution">
       <div class="sec__head">
         <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Distribution Charts <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.0</span></h1>
+        <h1 class="sec__title">Distribution Charts <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.1</span></h1>
         <p class="sec__desc">Two ways to split a total across categories: a single segmented bar for a compact overview, or a ranked, one-row-per-category breakdown when each share needs its own line.</p>
       </div>
       <div class="type-sub">
@@ -6727,6 +6743,7 @@ body.home .main{max-width:none;margin:0;padding:0}
               <li>Use the single segmented bar when the overview matters more than reading each figure at a glance.</li>
               <li>Use ranked bars when every category needs its own precise, legible row.</li>
               <li>Sort by share, largest first, in both patterns.</li>
+              <li>Give each category its own palette colour &mdash; default to a desaturated primary for the inactive state, and the saturated primary for active/hover.</li>
             </ul>
           </div>
           <div class="sel-usage__card">
@@ -6735,6 +6752,7 @@ body.home .main{max-width:none;margin:0;padding:0}
               <li>Don&rsquo;t use either pattern for more than ~6 categories &mdash; group the tail into &ldquo;Other&rdquo;.</li>
               <li>Don&rsquo;t reuse a colour across two unrelated categories in the same chart.</li>
               <li>Don&rsquo;t drop the legend from the segmented bar &mdash; segment width alone isn&rsquo;t precise enough.</li>
+              <li>Don&rsquo;t use grey for a segment or row &mdash; each one representing a different category should get its own palette colour.</li>
             </ul>
           </div>
         </div>
@@ -6770,15 +6788,17 @@ body.home .main{max-width:none;margin:0;padding:0}
     "do": [
       "Use the single segmented bar when the overview matters more than reading each figure at a glance.",
       "Use ranked bars when every category needs its own precise, legible row.",
-      "Sort by share, largest first, in both patterns."
+      "Sort by share, largest first, in both patterns.",
+      "Give each category its own palette colour — default to a desaturated primary for the inactive state, and the saturated primary for active/hover."
     ],
     "dont": [
       "Don’t use either pattern for more than ~6 categories — group the tail into “Other”.",
       "Don’t reuse a colour across two unrelated categories in the same chart.",
-      "Don’t drop the legend from the segmented bar — segment width alone isn’t precise enough."
+      "Don’t drop the legend from the segmented bar — segment width alone isn’t precise enough.",
+      "Don’t use grey for a segment or row — each one representing a different category should get its own palette colour."
     ]
   },
-  "contentHash": "3376df126e98d95d18a11bb644242fcfc2ec540f0f72dd7a6474b2e9ebe73f6d",
+  "contentHash": "17bf7f08a17f488515fffd97ae797ffefc5ee9866dbb5a78b8b2d3675312c835",
   "note": "Split out of the former combined Charts page (v1.1.0), which also covered Bar/Line/Donut (now s-charts-bar/s-charts-line/s-charts-donut) and Progress meters (now s-charts-meters). Both distribution-bar patterns (.dd-dist*/.dd-break*) are static hand-authored markup, migrated from the retired Data Display section."
 }
   </pre>
@@ -11943,12 +11963,15 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.64.12';
+const SYSTEM_VERSION = '1.64.13';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.64.13', date:'2026-08-07', author:'Mo', title:'New colour rule across all 5 chart types: no grey, desaturated/saturated primary for inactive/active', changes:[
+        ['added','Bar, Line & Area, Donut, Progress Meters and Distribution Charts each gain a Do/Don\'t pair: default to a desaturated primary colour for the inactive state and the saturated primary for active/hover, and never use grey — give each bar/slice/segment/series its own palette colour when representing multiple things'],
+      ]},
       {version:'1.64.12', date:'2026-08-07', author:'Mo', title:'Cards and Charts nav children now name their type in the label', changes:[
         ['changed','Sidebar nav: Cards sub-group children relabelled Basic Card, Media Card and Interactive Card (Stat Cards and Hover Cards already carried "Cards")'],
         ['changed','Sidebar nav: Charts sub-group children relabelled Bar Chart, Line & Area Chart, Donut Chart, Progress Meters Chart and Distribution Chart'],
@@ -12735,7 +12758,11 @@ const CHANGELOG = {
     ]
   },
   components: [
-    {secId:'s-charts-bar', name:'Bar Charts', version:'1.3.0', entries:[
+    {secId:'s-charts-bar', name:'Bar Charts', version:'1.3.1', entries:[
+      {version:'1.3.1', date:'2026-08-07', author:'Mo', title:'New Do/Don\'t rule: no grey — desaturated primary for inactive, saturated primary for active/hover', changes:[
+        ['added','"When to use" gains a Do rule: default to a desaturated primary colour for the inactive state, and the saturated primary for active/hover'],
+        ['added','"When to use" gains a Don\'t rule: don\'t use grey for chart colours — when representing multiple things (several bars, slices or series), give each its own palette colour'],
+      ]},
       {version:'1.3.0', date:'2026-08-05', author:'Mo', title:'Bars default to brand green again — single-series charts lead with the primary colour', changes:[
         ['changed','.cht__bar now defaults to fill:var(--c1) (brand green) at full opacity instead of var(--chrome-muted) at .45; this is a single-series chart with no legend key, so it should lead with the Flash primary the same way Line & Area and Progress Meters already do — intentionally reverts the "grey by default, green on hover" behaviour introduced in v1.0.1'],
         ['added','.cht svg.is-hot .cht__bar{opacity:.32} / .cht svg.is-hot .cht__bar.on{opacity:1} — the existing hover-to-dim-the-rest interaction (already used by Donut\'s .cht__seg) now also applies to bars, since the default state is no longer pre-dimmed'],
@@ -12759,17 +12786,29 @@ const CHANGELOG = {
         ['added','Interactive inline-SVG bar, line, area and donut charts rendered from data, Flash colour palette, with hover tooltips, dim-the-rest emphasis, donut pop-out and an interactive legend'],
       ]},
     ]},
-    {secId:'s-charts-line', name:'Line & Area Charts', version:'1.0.0', entries:[
+    {secId:'s-charts-line', name:'Line & Area Charts', version:'1.0.1', entries:[
+      {version:'1.0.1', date:'2026-08-07', author:'Mo', title:'New Do/Don\'t rule: no grey — desaturated primary for inactive, saturated primary for active/hover', changes:[
+        ['added','"When to use" gains a Do rule: default to a desaturated primary colour for the inactive state, and the saturated primary for active/hover'],
+        ['added','"When to use" gains a Don\'t rule: don\'t use grey for chart colours — give each series its own palette colour when plotting more than one'],
+      ]},
       {version:'1.0.0', date:'2026-08-04', author:'Mo', title:'Split out of Charts as its own section', changes:[
         ['added','Line & Area Charts — carved out of the former combined Charts page into its own section, with a "When to use" tailored to trend charts specifically'],
       ]},
     ]},
-    {secId:'s-charts-donut', name:'Donut Charts', version:'1.0.0', entries:[
+    {secId:'s-charts-donut', name:'Donut Charts', version:'1.0.1', entries:[
+      {version:'1.0.1', date:'2026-08-07', author:'Mo', title:'New Do/Don\'t rule: no grey — desaturated primary for inactive, saturated primary for active/hover', changes:[
+        ['added','"When to use" gains a Do rule: give every slice its own palette colour, defaulting to a desaturated primary for the inactive state and the saturated primary for active/hover'],
+        ['added','"When to use" gains a Don\'t rule: don\'t use grey for a slice — each slice representing a different thing should get its own palette colour'],
+      ]},
       {version:'1.0.0', date:'2026-08-04', author:'Mo', title:'Split out of Charts as its own section', changes:[
         ['added','Donut Charts — carved out of the former combined Charts page into its own section, with a "When to use" tailored to composition charts specifically'],
       ]},
     ]},
-    {secId:'s-charts-meters', name:'Progress Meters', version:'1.1.0', entries:[
+    {secId:'s-charts-meters', name:'Progress Meters', version:'1.1.1', entries:[
+      {version:'1.1.1', date:'2026-08-07', author:'Mo', title:'New Do/Don\'t rule: no grey — desaturated primary for inactive, saturated primary for active/hover', changes:[
+        ['added','"When to use" gains a Do rule: default to a desaturated primary colour for the track/inactive state, and the saturated primary for the active fill'],
+        ['added','"When to use" gains a Don\'t rule: don\'t use grey for a meter fill — reach for a desaturated primary shade instead'],
+      ]},
       {version:'1.1.0', date:'2026-08-05', author:'Mo', title:'Default meter fill switched from a doc-chrome token to the real brand token', changes:[
         ['changed','The two on-track meters (Monthly GMV target, Trader onboarding) switch their default fill from var(--chrome-accent) — a doc-site-only chrome variable — to var(--color-brand), the real semantic token consuming apps actually have. Same rendered colour (both resolve to the primary green); Warning/Critical meters are untouched since their semantic override is the point'],
       ]},
@@ -12777,7 +12816,11 @@ const CHANGELOG = {
         ['added','Progress Meters — carved out of the former combined Charts page into its own section, with a "When to use" tailored to single-value-against-a-limit meters specifically'],
       ]},
     ]},
-    {secId:'s-charts-distribution', name:'Distribution Charts', version:'1.0.0', entries:[
+    {secId:'s-charts-distribution', name:'Distribution Charts', version:'1.0.1', entries:[
+      {version:'1.0.1', date:'2026-08-07', author:'Mo', title:'New Do/Don\'t rule: no grey — desaturated primary for inactive, saturated primary for active/hover', changes:[
+        ['added','"When to use" gains a Do rule: give each category its own palette colour, defaulting to a desaturated primary for the inactive state and the saturated primary for active/hover'],
+        ['added','"When to use" gains a Don\'t rule: don\'t use grey for a segment or row — each one representing a different category should get its own palette colour'],
+      ]},
       {version:'1.0.0', date:'2026-08-04', author:'Mo', title:'Split out of Charts as its own section', changes:[
         ['added','Distribution Charts — carved out of the former combined Charts page into its own section, covering both the single segmented bar and the ranked distribution-bars pattern, with a "When to use" comparing the two'],
       ]},
