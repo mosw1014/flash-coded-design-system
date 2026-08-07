@@ -6006,7 +6006,7 @@ body.home .main{max-width:none;margin:0;padding:0}
     ".avt-more"
   ],
   "css": "/* ---- Avatar ---- */\n.avt { display:inline-flex;align-items:center;justify-content:center;border-radius:50%;background:var(--color-surface-n2);color:var(--color-text-2);font-weight:700;flex-shrink:0;position:relative;line-height:1;user-select:none;text-transform:uppercase }\n.avt img { width:100%;height:100%;object-fit:cover;display:block;border-radius:50% }\n.avt--photo { background:var(--color-surface-n1);color:var(--color-text-m) }\n.avt--photo svg { width:60%;height:60% }\n.avt--icon { color:var(--chrome-muted);background:var(--color-surface-n1) }\n.avt--icon svg { width:55%;height:55% }\n.avt--xs { width:24px;height:24px;font-size:9px }\n.avt--sm { width:32px;height:32px;font-size:11px }\n.avt--md { width:40px;height:40px;font-size:14px }\n.avt--lg { width:56px;height:56px;font-size:19px }\n.avt--xl { width:72px;height:72px;font-size:25px }\n.avt__status { position:absolute;bottom:1px;right:1px;width:27%;height:27%;border-radius:50%;border:2px solid var(--chrome-nav);background:var(--color-success-h);box-sizing:border-box }\n.avt__status--off { background:var(--prim-grey-700) }\n.avt-group { display:inline-flex;align-items:center }\n.avt-group &gt; * { border:2px solid var(--chrome-nav);border-radius:50%;margin-left:-11px }\n.avt-group &gt; *:first-child { margin-left:0 }\n.avt-more { display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%;background:var(--color-surface-n2);color:var(--chrome-txt);font-size:12px;font-weight:700;flex-shrink:0 }",
-  "js": "const AVT_SIZES = [\n  {key:'xs', label:'XS', px:24, fs:9},\n  {key:'sm', label:'SM', px:32, fs:11},\n  {key:'md', label:'MD', px:40, fs:14},\n  {key:'lg', label:'LG', px:56, fs:19},\n  {key:'xl', label:'XL', px:72, fs:25},\n];\n\nconst AVT_TYPES = [\n  {key:'photo',    label:'Photo'},\n  {key:'initials', label:'Initials'},\n  {key:'icon',     label:'Icon'},\n];\n\nfunction avtPhotoSVG(){\n  return `&lt;svg viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"&gt;&lt;circle cx=\"8\" cy=\"8\" r=\"2.4\" fill=\"currentColor\"/&gt;&lt;path d=\"M2.5 19l5.8-7 3.6 4.3 2.8-3.3 6.8 6h-19z\" fill=\"currentColor\"/&gt;&lt;/svg&gt;`;\n}\n\nfunction avtIconSVG(){\n  return `&lt;svg viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"&gt;&lt;circle cx=\"12\" cy=\"8\" r=\"4\" fill=\"currentColor\"/&gt;&lt;path d=\"M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8\" fill=\"currentColor\"/&gt;&lt;/svg&gt;`;\n}\n\nfunction makeAvatarHTML(type, sizeKey, initials, presence){\n  const cls = `avt avt--${sizeKey}${type==='photo'?' avt--photo':''}${type==='icon'?' avt--icon':''}`;\n  let inner = '';\n  if(type==='photo') inner = avtPhotoSVG();\n  else if(type==='icon') inner = avtIconSVG();\n  else inner = avtEsc((initials||'MO').slice(0,2).toUpperCase());\n  if(presence &amp;&amp; presence!=='none') inner += `&lt;span class=\"avt__status${presence==='offline'?' avt__status--off':''}\"&gt;&lt;/span&gt;`;\n  const aria = type==='photo' ? ' aria-label=\"Photo placeholder\"' : '';\n  return `&lt;span class=\"${cls}\"${aria}&gt;${inner}&lt;/span&gt;`;\n}\n\nfunction makeAvatarEl(){\n  const av = document.createElement('span');\n  av.className = `avt avt--${apg.size}${apg.type==='photo'?' avt--photo':''}${apg.type==='icon'?' avt--icon':''}`;\n  if(apg.type==='photo'){ av.innerHTML = avtPhotoSVG(); av.setAttribute('aria-label','Photo placeholder'); }\n  else if(apg.type==='icon'){ av.innerHTML = avtIconSVG(); }\n  else { av.textContent = (apg.initials||'MO').slice(0,2).toUpperCase(); }\n  if(apg.presence &amp;&amp; apg.presence!=='none'){\n    const dot = document.createElement('span');\n    dot.className = `avt__status${apg.presence==='offline'?' avt__status--off':''}`;\n    av.appendChild(dot);\n  }\n  return av;\n}",
+  "js": "const AVT_SIZES = [\n  {key:'xs', label:'XS', px:24, fs:9},\n  {key:'sm', label:'SM', px:32, fs:11},\n  {key:'md', label:'MD', px:40, fs:14},\n  {key:'lg', label:'LG', px:56, fs:19},\n  {key:'xl', label:'XL', px:72, fs:25},\n];\n\nconst AVT_TYPES = [\n  {key:'photo',    label:'Photo'},\n  {key:'initials', label:'Initials'},\n  {key:'icon',     label:'Icon'},\n];\n\nfunction avtPhotoSVG(){\n  return `&lt;svg viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"&gt;&lt;circle cx=\"8\" cy=\"8\" r=\"2.4\" fill=\"currentColor\"/&gt;&lt;path d=\"M2.5 19l5.8-7 3.6 4.3 2.8-3.3 6.8 6h-19z\" fill=\"currentColor\"/&gt;&lt;/svg&gt;`;\n}\n\nfunction avtIconSVG(){\n  return `&lt;svg viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"&gt;&lt;circle cx=\"12\" cy=\"8\" r=\"4\" fill=\"currentColor\"/&gt;&lt;path d=\"M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8\" fill=\"currentColor\"/&gt;&lt;/svg&gt;`;\n}\n\nfunction makeAvatarHTML(type, sizeKey, initials, presence){\n  const cls = `avt avt--${sizeKey}${type==='photo'?' avt--photo':''}${type==='icon'?' avt--icon':''}`;\n  let inner = '';\n  if(type==='photo') inner = avtPhotoSVG();\n  else if(type==='icon') inner = avtIconSVG();\n  else inner = avtEsc((initials||'JC').slice(0,2).toUpperCase());\n  if(presence &amp;&amp; presence!=='none') inner += `&lt;span class=\"avt__status${presence==='offline'?' avt__status--off':''}\"&gt;&lt;/span&gt;`;\n  const aria = type==='photo' ? ' aria-label=\"Photo placeholder\"' : '';\n  return `&lt;span class=\"${cls}\"${aria}&gt;${inner}&lt;/span&gt;`;\n}\n\nfunction makeAvatarEl(){\n  const av = document.createElement('span');\n  av.className = `avt avt--${apg.size}${apg.type==='photo'?' avt--photo':''}${apg.type==='icon'?' avt--icon':''}`;\n  if(apg.type==='photo'){ av.innerHTML = avtPhotoSVG(); av.setAttribute('aria-label','Photo placeholder'); }\n  else if(apg.type==='icon'){ av.innerHTML = avtIconSVG(); }\n  else { av.textContent = (apg.initials||'JC').slice(0,2).toUpperCase(); }\n  if(apg.presence &amp;&amp; apg.presence!=='none'){\n    const dot = document.createElement('span');\n    dot.className = `avt__status${apg.presence==='offline'?' avt__status--off':''}`;\n    av.appendChild(dot);\n  }\n  return av;\n}",
   "usage": {
     "do": [
       "Always provide a fallback: initials, then a generic glyph.",
@@ -6020,14 +6020,14 @@ body.home .main{max-width:none;margin:0;padding:0}
       "Don't rely on the presence dot's colour alone to convey status."
     ]
   },
-  "contentHash": "f1305e3b72fe14af0e0c9932d1af64da841fe2edb381d192d483ee8f99486437",
+  "contentHash": "7adfdaf58097e26b26db2a4d3b517fe7d1340e29c6b692ed0f5cf0c2100cdf25",
   "note": "makeAvatarHTML is the minimal real-markup builder (type+size+initials+presence -&gt; avatar HTML string); makeAvatarEl is the fuller version used by the live playground stage. apg (playground state)/getAvatarCode*/renderAvatarPlayground/renderAvatarReference/renderAvatarInSitu/renderAvatarKeyTypes/ovAvatar are doc-site-only playground plumbing, excluded."
 }
   </pre>
 </details>
         </div>
       </div>
-      <div class="sec-hero__preview"><div class="mk"><span class="avt avt--sm">MO</span><span class="avt avt--sm avt--photo" aria-label="Photo placeholder"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="8" cy="8" r="2.4" fill="currentColor"/><path d="M2.5 19l5.8-7 3.6 4.3 2.8-3.3 6.8 6h-19z" fill="currentColor"/></svg></span><span class="avt avt--sm">AK<span class="avt__status"></span></span></div></div>
+      <div class="sec-hero__preview"><div class="mk"><span class="avt avt--sm">JC</span><span class="avt avt--sm avt--photo" aria-label="Photo placeholder"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="8" cy="8" r="2.4" fill="currentColor"/><path d="M2.5 19l5.8-7 3.6 4.3 2.8-3.3 6.8 6h-19z" fill="currentColor"/></svg></span><span class="avt avt--sm">AK<span class="avt__status"></span></span></div></div>
       </div>
       <div class="tabs-list sec-tabs" id="avatar-tabs-list">
         <button type="button" class="tab-item on" data-avatar-tab="overview" onclick="avatarTabSwitch('overview')"><span class="tab-item__inner"><span class="tab-item__label">Overview</span></span><span class="tab-item__line"></span></button>
@@ -6044,7 +6044,7 @@ body.home .main{max-width:none;margin:0;padding:0}
           <div class="type-sub__desc">Stack a few avatars to show shared ownership or attendees, capped with a &ldquo;+N&rdquo; count.</div>
           <div class="sg-stage">
             <div class="avt-group">
-              <span class="avt avt--md">MO</span>
+              <span class="avt avt--md">JC</span>
               <span class="avt avt--md avt--photo" aria-label="Photo placeholder"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="8" cy="8" r="2.4" fill="currentColor"/><path d="M2.5 19l5.8-7 3.6 4.3 2.8-3.3 6.8 6h-19z" fill="currentColor"/></svg></span>
               <span class="avt avt--md">RB</span>
               <span class="avt avt--md">AK</span>
@@ -6068,7 +6068,7 @@ body.home .main{max-width:none;margin:0;padding:0}
                   <li>Use two letters for initials &mdash; first and last, uppercase.</li>
                 </ul>
                 <div class="spec-usage-demo">
-                  <span class="avt avt--md">MO</span>
+                  <span class="avt avt--md">JC</span>
                   <span class="avt avt--md">RB</span>
                   <span class="avt avt--md">AK</span>
                 </div>
@@ -10486,21 +10486,21 @@ function makeAvatarHTML(type, sizeKey, initials, presence){
   let inner = '';
   if(type==='photo') inner = avtPhotoSVG();
   else if(type==='icon') inner = avtIconSVG();
-  else inner = avtEsc((initials||'MO').slice(0,2).toUpperCase());
+  else inner = avtEsc((initials||'JC').slice(0,2).toUpperCase());
   if(presence && presence!=='none') inner += `<span class="avt__status${presence==='offline'?' avt__status--off':''}"></span>`;
   const aria = type==='photo' ? ' aria-label="Photo placeholder"' : '';
   return `<span class="${cls}"${aria}>${inner}</span>`;
 }
 
 /* ── AVATAR PLAYGROUND ── */
-let apg = { type:'initials', size:'md', presence:'none', initials:'MO', theme:'light' };
+let apg = { type:'initials', size:'md', presence:'none', initials:'JC', theme:'light' };
 
 function makeAvatarEl(){
   const av = document.createElement('span');
   av.className = `avt avt--${apg.size}${apg.type==='photo'?' avt--photo':''}${apg.type==='icon'?' avt--icon':''}`;
   if(apg.type==='photo'){ av.innerHTML = avtPhotoSVG(); av.setAttribute('aria-label','Photo placeholder'); }
   else if(apg.type==='icon'){ av.innerHTML = avtIconSVG(); }
-  else { av.textContent = (apg.initials||'MO').slice(0,2).toUpperCase(); }
+  else { av.textContent = (apg.initials||'JC').slice(0,2).toUpperCase(); }
   if(apg.presence && apg.presence!=='none'){
     const dot = document.createElement('span');
     dot.className = `avt__status${apg.presence==='offline'?' avt__status--off':''}`;
@@ -10515,7 +10515,7 @@ function getAvatarCodeHTML(){
   const presenceLine = (apg.presence && apg.presence!=='none') ? `\n  <span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"avt__status${apg.presence==='offline'?' avt__status--off':''}"</span><span class="code-kw">>&#60;/span></span>` : '';
   const inner = apg.type==='photo' ? `<span class="code-cm">&#60;!-- photo placeholder svg --></span>`
     : apg.type==='icon' ? `<span class="code-cm">&#60;!-- generic icon svg --></span>`
-    : avtEsc((apg.initials||'MO').slice(0,2).toUpperCase());
+    : avtEsc((apg.initials||'JC').slice(0,2).toUpperCase());
   return `<span class="code-cm">/* Flash · ${cap(apg.theme)} · ${cap(apg.type)} avatar · ${sz.label} */</span>
 <span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"${cls}"</span><span class="code-kw">></span>${inner}${presenceLine}
 <span class="code-kw">&#60;/span></span>`;
@@ -10536,7 +10536,7 @@ function getAvatarCodeBlazor(){
   const sz = AVT_SIZES.find(s=>s.key===apg.size)||AVT_SIZES[2];
   const typePascal = cap(apg.type);
   const sizePascal = cap(apg.size);
-  const initials = avtEsc((apg.initials||'MO').slice(0,2).toUpperCase());
+  const initials = avtEsc((apg.initials||'JC').slice(0,2).toUpperCase());
   const presenceAttr = (apg.presence && apg.presence!=='none') ? `\n        <span class="code-attr">Presence</span>=<span class="code-val">"AvatarPresence.${cap(apg.presence)}"</span>` : '';
   return `<span class="code-cm">@* DsAvatar.razor — usage *@</span>
 <span class="code-kw">&#60;DsAvatar</span> <span class="code-attr">Type</span>=<span class="code-val">"AvatarType.${typePascal}"</span>
@@ -10555,7 +10555,7 @@ function getAvatarCodeBlazor(){
 <span class="code-kw">@code</span> {
   [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> AvatarType Type { get; set; } = AvatarType.Initials;
   [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> AvatarSize Size { get; set; } = AvatarSize.Md;
-  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> <span class="code-cls">string</span> Initials { get; set; } = <span class="code-val">"MO"</span>;
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> <span class="code-cls">string</span> Initials { get; set; } = <span class="code-val">"JC"</span>;
   [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> AvatarPresence Presence { get; set; } = AvatarPresence.None;
   [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> RenderFragment PhotoContent { get; set; }
   [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> RenderFragment IconContent { get; set; }
@@ -10576,7 +10576,7 @@ function getAvatarCodeBlazor(){
 }
 
 function getAvatarCodeTSX(){
-  const initials = avtEsc((apg.initials||'MO').slice(0,2).toUpperCase());
+  const initials = avtEsc((apg.initials||'JC').slice(0,2).toUpperCase());
   const usageProps = `type=<span class="code-val">"${apg.type}"</span> size=<span class="code-val">"${apg.size}"</span>`
     + (apg.type==='initials' ? ` initials=<span class="code-val">"${initials}"</span>` : '')
     + ((apg.presence && apg.presence!=='none') ? ` presence=<span class="code-val">"${apg.presence}"</span>` : '');
@@ -10599,7 +10599,7 @@ function getAvatarCodeTSX(){
 <span class="code-kw">export const</span> <span class="code-cls">DsAvatar</span>: React.FC&#60;DsAvatarProps> = ({
   type = <span class="code-val">'initials'</span>,
   size = <span class="code-val">'md'</span>,
-  initials = <span class="code-val">'MO'</span>,
+  initials = <span class="code-val">'JC'</span>,
   presence = <span class="code-val">'none'</span>,
   photo,
   icon,
@@ -10703,7 +10703,7 @@ function renderAvatarPlayground(){
           <div class="btn-pg__group"><span class="btn-pg__clabel">Type</span><div class="btn-pg__pill-row">${typeBtns}</div></div>
           <div class="btn-pg__group"><span class="btn-pg__clabel">Size</span><div class="btn-pg__pill-row">${szBtns}</div></div>
           <div class="btn-pg__group"><span class="btn-pg__clabel">Presence</span><div class="btn-pg__pill-row">${presBtns}</div></div>
-          <div class="btn-pg__group"><span class="btn-pg__clabel">Initials</span><input class="cpg-label-input apg-initials-input-el" id="apg-initials-input${s}" value="${avtEsc(apg.initials)}" maxlength="2" oninput="apgSetInitials(this.value)" placeholder="MO" ${apg.type!=='initials'?'disabled':''}></div>
+          <div class="btn-pg__group"><span class="btn-pg__clabel">Initials</span><input class="cpg-label-input apg-initials-input-el" id="apg-initials-input${s}" value="${avtEsc(apg.initials)}" maxlength="2" oninput="apgSetInitials(this.value)" placeholder="JC" ${apg.type!=='initials'?'disabled':''}></div>
         </div>
       </div>`;
 
@@ -10755,7 +10755,7 @@ function renderAvatarCodeTab(){
    (key types, in-context mockups) — real .avt markup with a given
    type/size/initials/presence. Doc-site-only helper; makeAvatarHTML /
    makeAvatarEl remain the canonical builders. */
-function ovAvatar({type='initials', size='md', initials='MO', presence='none'}={}){
+function ovAvatar({type='initials', size='md', initials='JC', presence='none'}={}){
   return makeAvatarHTML(type, size, initials, presence);
 }
 
@@ -10797,7 +10797,7 @@ function renderAvatarInSitu(){
 
   // 1. User list row — avatar + name + role
   const listRows = [
-    {initials:'MO', name:'Mo Osei',    role:'Admin'},
+    {initials:'JC', name:'Jane Cole',    role:'Admin'},
     {initials:'RB', name:'Riley Baker', role:'Editor'},
     {initials:'AK', name:'Amara Khan',  role:'Viewer'},
   ].map(p=>`<div class="spec-mock__row">${ovAvatar({type:'initials', size:'sm', initials:p.initials})}<span class="spec-mock__spacer" style="width:10px"></span><span class="spec-mock__label" style="min-width:90px">${p.name}</span>${bar('54px')}<span style="margin-left:auto;color:var(--chrome-muted);font-size:11px">${p.role}</span></div>`).join('');
@@ -10806,20 +10806,11 @@ function renderAvatarInSitu(){
     <div class="spec-mock__stage" style="background:${sbg}">${listRows}</div>
     <div class="spec-mock__cap"><b>User list row</b>Avatar, name and role in a settings or members list.</div>`;
 
-  // 2. Comment / notification card — avatar + presence dot beside name/timestamp
-  const commentMock = `
-    <div class="spec-mock__stage" style="background:${sbg}">
-      <div class="spec-mock__row">${ovAvatar({type:'initials', size:'sm', initials:'RB', presence:'online'})}<span class="spec-mock__spacer" style="width:10px"></span><span class="spec-mock__label"><b>Riley Baker</b> &middot; 2m ago</span></div>
-      <div class="spec-mock__row" style="padding-left:42px">${bar('92%')}</div>
-      <div class="spec-mock__row" style="padding-left:42px">${bar('64%')}</div>
-    </div>
-    <div class="spec-mock__cap"><b>Comment / notification</b>Presence dot shows the commenter is online right now.</div>`;
-
-  // 3. Avatar group / stack — collaborators row
+  // 2. Avatar group / stack — collaborators row
   const groupMock = `
     <div class="spec-mock__stage" style="background:${sbg}">
       <div class="avt-group">
-        ${ovAvatar({type:'initials', size:'sm', initials:'MO'})}
+        ${ovAvatar({type:'initials', size:'sm', initials:'JC'})}
         ${ovAvatar({type:'photo', size:'sm'})}
         ${ovAvatar({type:'initials', size:'sm', initials:'AK'})}
         <span class="avt-more" style="width:32px;height:32px;font-size:11px">+2</span>
@@ -10828,22 +10819,21 @@ function renderAvatarInSitu(){
     </div>
     <div class="spec-mock__cap"><b>Avatar group</b>5 people editing this doc, stacked and capped with +N.</div>`;
 
-  // 4. Profile header — large avatar + name/title
+  // 3. Profile header — large avatar + name/title
   const profileMock = `
     <div class="spec-mock__stage" style="background:${sbg}">
-      <div class="spec-mock__row" style="align-items:center">${ovAvatar({type:'initials', size:'xl', initials:'MO'})}<span class="spec-mock__spacer" style="width:14px"></span><div><div class="spec-mock__label" style="font-weight:700">Mo Osei</div><div class="spec-mock__label" style="color:var(--chrome-muted);font-size:11px">Product Designer</div></div></div>
+      <div class="spec-mock__row" style="align-items:center">${ovAvatar({type:'initials', size:'xl', initials:'JC'})}<span class="spec-mock__spacer" style="width:14px"></span><div><div class="spec-mock__label" style="font-weight:700">Jane Cole</div><div class="spec-mock__label" style="color:var(--chrome-muted);font-size:11px">Product Designer</div></div></div>
     </div>
     <div class="spec-mock__cap"><b>Profile header</b>An XL avatar anchors a profile page's name and title.</div>`;
 
   root.innerHTML = `
     <div class="cpg-section-heading">
       <div class="cpg-layout__title">In context</div>
-      <div class="cpg-layout__desc">The same avatar does four everyday jobs &mdash; a list row, a comment, a group stack, and a profile header.</div>
+      <div class="cpg-layout__desc">The same avatar does three everyday jobs &mdash; a list row, a group stack, and a profile header.</div>
     </div>
     <div class="cpg-section-block">
       <div class="spec-insitu-grid">
         <div class="spec-mock">${listMock}</div>
-        <div class="spec-mock">${commentMock}</div>
         <div class="spec-mock">${groupMock}</div>
         <div class="spec-mock">${profileMock}</div>
       </div>
@@ -10855,7 +10845,7 @@ function apgSet(key, val){
   renderAvatarPlayground();
 }
 function apgSetInitials(val){ apg.initials = val.slice(0,2).toUpperCase(); apgRefresh(); }
-function apgReset(){ apg.type='initials'; apg.size='md'; apg.presence='none'; apg.initials='MO'; renderAvatarPlayground(); }
+function apgReset(){ apg.type='initials'; apg.size='md'; apg.presence='none'; apg.initials='JC'; renderAvatarPlayground(); }
 function apgCopyCode(){
   const b = document.getElementById('apg-code-block');
   if(!b) return;
@@ -10877,7 +10867,7 @@ function renderAvatarReference(){
   const parts = [
     {num:1, name:'Container',  note:'Circular surface, 50% radius, coloured by fallback type.', vis:'<span class="avt avt--lg" style="background:var(--color-surface-n2)"></span>'},
     {num:2, name:'Content',    note:'A photo, two uppercase initials, or a generic glyph — always one of the three.', vis:'<span style="font-weight:700;font-size:19px;color:var(--chrome-txt)">RB</span>'},
-    {num:3, name:'Presence dot', note:'Optional. Bottom-right, bordered to separate it from the avatar.', vis:'<span class="avt__status" style="position:relative;bottom:0;right:0"></span>'},
+    {num:3, name:'Presence dot', note:'Optional. Bottom-right, bordered to separate it from the avatar.', vis:'<span class="avt avt--lg" style="background:var(--color-surface-n2)"><span class="avt__status"></span></span>'},
   ];
   const partCards = parts.map(p=>`
     <div class="spec-part">
@@ -10891,7 +10881,7 @@ function renderAvatarReference(){
   /* ---- Size & dimensions ---- */
   const sizeDemo = AVT_SIZES.map(sz=>`
     <div class="spec-size-item">
-      ${ovAvatar({type:'initials', size:sz.key, initials:'MO'})}
+      ${ovAvatar({type:'initials', size:sz.key, initials:'JC'})}
       <span class="spec-size-item__lbl">${sz.px}px</span>
     </div>`).join('');
 
@@ -10918,9 +10908,9 @@ function renderAvatarReference(){
 
   /* ---- States (presence is a genuine, non-removable/selectable state) ---- */
   const states = [
-    {name:'None',    note:'No presence dot — the default.',       av:ovAvatar({type:'initials', size:'lg', initials:'MO', presence:'none'})},
-    {name:'Online',  note:'Success-coloured dot, bottom-right.',  av:ovAvatar({type:'initials', size:'lg', initials:'MO', presence:'online'})},
-    {name:'Offline', note:'Neutral grey dot, bottom-right.',      av:ovAvatar({type:'initials', size:'lg', initials:'MO', presence:'offline'})},
+    {name:'None',    note:'No presence dot — the default.',       av:ovAvatar({type:'initials', size:'lg', initials:'JC', presence:'none'})},
+    {name:'Online',  note:'Success-coloured dot, bottom-right.',  av:ovAvatar({type:'initials', size:'lg', initials:'JC', presence:'online'})},
+    {name:'Offline', note:'Neutral grey dot, bottom-right.',      av:ovAvatar({type:'initials', size:'lg', initials:'JC', presence:'offline'})},
   ];
   const stateCells = states.map(s=>`
     <div class="spec-cell">
@@ -12552,9 +12542,11 @@ const CHANGELOG = {
         ['changed','Avatar rebuilt from a static section into a tabbed .sec--tabbed page (Overview / Style / Code / Changelog), matching Pills\' structure — hero with a mini live preview, sec-tabs bar, and a Changelog tab holding the section\'s auto-injected changelog block'],
         ['added','Interactive playground (apg state) with Type (Photo/Initials/Icon), Size (XS–XL), Presence (None/Online/Offline) and an editable Initials input, rendered into both an Overview mount and a smaller Code-tab mount from the same shared state'],
         ['added','Key types grid replacing Pills\' colour-variant grid — guidance on when to reach for Photo vs Initials vs Icon'],
-        ['added','Four In-context mockups: a user list row, a comment/notification card with a presence dot, an avatar group/stack, and a profile header'],
+        ['added','Three In-context mockups: a user list row, an avatar group/stack, and a profile header'],
         ['added','Style tab: anatomy, size table, a colour/presence token table (no colour-variant axis, since Avatar has none), and a genuine presence-only states grid'],
         ['added','Code tab with HTML/CSS, Blazor and React TSX behind a segmented language switcher, driven by the same playground state'],
+        ['fixed','Style tab\'s anatomy "Presence dot" card rendered the bare .avt__status span outside any sized .avt parent, so its 27%-of-parent width/height had nothing to resolve against and the dot warped — now shown inside an actual .avt avt--lg swatch, matching how the dot really sits'],
+        ['changed','Placeholder person renamed from "Mo Osei" (confusable with the changelog author "Mo") to "Jane Cole" throughout the playground default, In-context mockups, and code samples'],
       ]},
       {version:'1.64.19', date:'2026-08-07', author:'Mo', title:'Restored the always-visible chart value labels lost in an earlier merge', changes:[
         ['fixed','Bar chart value labels, Line & Area point labels, and the Donut legend\'s raw figures (all shipped in a since-orphaned PR) had been silently dropped — the PR that added them was based on a branch that merged into main before the PR itself did, so its commit never reached main\'s history. Reapplied all three onto the current file: .cht__val CSS rule, the bar/line renderer text elements, and fmt(x.v) in the donut legend'],
@@ -13647,10 +13639,12 @@ const CHANGELOG = {
       {version:'1.2.0', date:'2026-08-07', author:'Helen', title:'Full Pills-page treatment: tabs, playground, In context, Style & Code', changes:[
         ['added','Tabbed Overview/Style/Code/Changelog layout matching Pills, with a hero mini preview and .sec-tabs bar'],
         ['added','Interactive playground with Type/Size/Presence controls and an editable Initials field, with live code generation (HTML/Blazor/TSX)'],
-        ['added','Four In-context mockups: user list row, comment/notification card, avatar group/stack, and profile header'],
+        ['added','Three In-context mockups: user list row, avatar group/stack, and profile header'],
         ['added','Key types grid replacing Pills\' colour-variant grid, for Photo/Initials/Icon guidance'],
         ['added','Style tab: anatomy breakdown, size table, colour/presence token table, and a presence-only states grid (None/Online/Offline)'],
         ['changed','Do/Dont list grows from 3 do / 3 dont to 4 do / 3 dont, adding a rule to use two uppercase letters for initials'],
+        ['fixed','Anatomy tab\'s "Presence dot" swatch, which rendered warped with no sized parent to resolve its percentage-based width/height against'],
+        ['changed','Placeholder person renamed from "Mo Osei" to "Jane Cole" everywhere, to avoid confusion with changelog author "Mo"'],
       ]},
       {version:'1.1.1', date:'2026-08-03', author:'Mo', title:'AI context tab added', changes:[
         ['added','AI context tab documenting the real, fully static .avt/.avt--*/.avt__status/.avt-group/.avt-more markup, plus its existing "When to use" Do/Dont guidance (3 do / 3 dont)'],
