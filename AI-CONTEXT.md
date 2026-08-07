@@ -197,3 +197,10 @@ you're unsure.
 - The `CHANGELOG` JS object has two parts: `CHANGELOG.system` (global entries) and
   `CHANGELOG.components` (one array per section, keyed by `secId`). Both need updating for a
   component change, per this repo's `CLAUDE.md`.
+- **Cards at the same hierarchy level must share identical heading typography.** When several
+  card instances sit side by side as peers (e.g. three cards in a row, a grid of stat cards), the
+  heading inside each one — font-size, weight, line-height, colour — must match exactly across all
+  of them. A heading one size or weight heavier than its siblings reads as "this card matters
+  more," which is misleading if they're actually equal-weight peers. This applies across card
+  variants (basic, media, interactive, stat, hover) and is a rule tooling reimplementing or
+  reskinning cards should enforce, not just something to eyeball once.
