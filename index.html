@@ -1657,7 +1657,8 @@ body.home .main{max-width:none;margin:0;padding:0}
 /* ── SPEC TABLE (shared utility — used by Cards, Tables, Navigation, Tabs, Dropdown, Switch, Icons specs, plus the Tables "Reporting variant" demo) ── */
 .dd-table-wrap{border:1px solid var(--chrome-border);border-radius:12px;overflow:hidden;overflow-x:auto}
 .dd-table{width:100%;border-collapse:collapse;font-size:13px;min-width:540px}
-.dd-table thead th{text-align:left;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--chrome-muted);padding:13px 16px;background:var(--chrome-nav);border-bottom:1px solid var(--chrome-border);white-space:nowrap}
+.dd-table thead th{text-align:left;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:#fff;padding:13px 16px;background:#000;border-bottom:1px solid var(--chrome-border);white-space:nowrap}
+.tbl-th-inner{display:inline-flex;align-items:center;gap:6px}
 .dd-table tbody td{padding:13px 16px;border-bottom:1px solid var(--chrome-border);color:var(--chrome-txt);font-weight:500}
 .dd-table tbody tr:last-child td{border-bottom:none}
 .dd-table tbody tr{transition:background .12s}
@@ -1743,7 +1744,11 @@ body.home .main{max-width:none;margin:0;padding:0}
 /* Playground — customise a single Table Row live */
 .tbl-pg{border:1px solid var(--chrome-border);border-radius:14px;overflow:hidden;background:var(--chrome-bg);transition:background .25s}
 .tbl-pg__stage{display:flex;align-items:center;padding:40px;min-height:120px;overflow-x:auto}
-.tbl-pg__stage .tbl-row{flex:1 1 auto;min-width:640px}
+.tbl-pg__stage>.tbl-row{flex:1 1 auto;min-width:640px}
+.tbl-pg__card{flex:1 1 auto;min-width:640px;border:1px solid var(--chrome-border);border-radius:14px;overflow:hidden;overflow-x:auto}
+.tbl-pg__head{display:flex;align-items:center;gap:20px;height:40px;padding:0 14px;background:#000}
+.tbl-pg__head .tbl-head__cell{flex-shrink:0}
+.tbl-pg__card .tbl-row{border-radius:0 0 13px 13px}
 .tbl-pg__ctrls{display:flex;flex-direction:column;gap:16px;padding:20px 22px;background:var(--chrome-nav);border-top:1px solid var(--chrome-border);transition:background .25s}
 .tbl-pg__group{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
 .tbl-pg__clabel{font-size:12px;font-weight:600;color:var(--chrome-muted);white-space:nowrap;width:60px;flex-shrink:0}
@@ -1762,19 +1767,21 @@ body.home .main{max-width:none;margin:0;padding:0}
 /* full table — header + rows */
 .tbl-wrap{border:1px solid var(--chrome-border);border-radius:14px;overflow:hidden;overflow-x:auto}
 .tbl-inner{min-width:900px}
-.tbl-head{display:flex;align-items:center;gap:20px;padding:0 14px;height:44px;background:var(--chrome-nav);border-bottom:1px solid var(--chrome-border)}
-.tbl-head__cell{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--chrome-muted);white-space:nowrap}
+.tbl-head{display:flex;align-items:center;gap:20px;padding:0 14px;height:44px;background:#000;border-bottom:1px solid var(--chrome-border)}
+.tbl-head__cell{display:inline-flex;align-items:center;gap:6px;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:#fff;white-space:nowrap}
+.tbl-sort-icon{width:10px;height:12px;flex-shrink:0;color:#fff}
 .tbl-body .tbl-row{border-radius:0;border-bottom:1px solid var(--chrome-border)}
 .tbl-body .tbl-row:last-child{border-bottom:none}
 /* shared column widths — keep header labels aligned with row cells */
 .tcol-check{flex:0 0 20px}
 .tcol-product{flex:2 1 0;min-width:0;display:flex;align-items:center;gap:12px}
-.tbl-head__cell.tcol-product{gap:0}
+.tbl-head__cell.tcol-product{gap:6px}
 .tcol-ref{flex:1.3 1 0;min-width:0}
 .tcol-date{flex:1.4 1 0;min-width:0}
 .tcol-type{flex:1.2 1 0;min-width:0}
 .tcol-status{flex:0 0 88px}
 .tcol-amt{flex:0 0 96px;text-align:right;font-variant-numeric:tabular-nums;font-weight:700}
+.tbl-head__cell.tcol-amt{justify-content:flex-end}
 /* trailing row actions — hidden until the row is hovered or keyboard-focused.
    :has(:focus-visible), not :focus-within — a plain mouse click leaves the
    checkbox holding focus, which would keep the row "stuck" showing actions. */
@@ -4850,7 +4857,7 @@ body.home .main{max-width:none;margin:0;padding:0}
     <section class="sec" id="s-tables">
       <div class="sec__head">
         <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Tables <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.2.0</span></h1>
+        <h1 class="sec__title">Tables <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.3.0</span></h1>
         <p class="sec__desc">A selectable, row-based <strong>Table Row</strong> for records and transactions. Each row is assembled from cells &mdash; the <strong>List building block</strong> &mdash; starting with a leading checkbox, a product icon and a bold primary label, then any number of data cells, a status tag and optional trailing links. Rows resolve to five states and stack under a select-all header to form a full table. Adapts to light &amp; dark via semantic tokens.</p>
       </div>
 
@@ -4867,13 +4874,13 @@ body.home .main{max-width:none;margin:0;padding:0}
           <div class="tbl-inner">
             <div class="tbl-head">
               <span class="tcol-check"><input type="checkbox" class="fsel__input tbl-check tbl-check--all" aria-label="Select all rows"></span>
-              <span class="tbl-head__cell tcol-product">Product</span>
-              <span class="tbl-head__cell tcol-ref">Reference</span>
-              <span class="tbl-head__cell tcol-date">Date</span>
-              <span class="tbl-head__cell tcol-type">Type</span>
-              <span class="tbl-head__cell tcol-status">Status</span>
-              <span class="tbl-head__cell tcol-amt">Amount</span>
-              <span class="tbl-head__cell tcol-actions">Actions</span>
+              <span class="tbl-head__cell tcol-product">Product<svg class="tbl-sort-icon" viewBox="0 0 10 12" fill="none"><path d="M5 0L8.5 4.5H1.5L5 0Z" fill="currentColor"/><path d="M5 12L1.5 7.5H8.5L5 12Z" fill="currentColor"/></svg></span>
+              <span class="tbl-head__cell tcol-ref">Reference<svg class="tbl-sort-icon" viewBox="0 0 10 12" fill="none"><path d="M5 0L8.5 4.5H1.5L5 0Z" fill="currentColor"/><path d="M5 12L1.5 7.5H8.5L5 12Z" fill="currentColor"/></svg></span>
+              <span class="tbl-head__cell tcol-date">Date<svg class="tbl-sort-icon" viewBox="0 0 10 12" fill="none"><path d="M5 0L8.5 4.5H1.5L5 0Z" fill="currentColor"/><path d="M5 12L1.5 7.5H8.5L5 12Z" fill="currentColor"/></svg></span>
+              <span class="tbl-head__cell tcol-type">Type<svg class="tbl-sort-icon" viewBox="0 0 10 12" fill="none"><path d="M5 0L8.5 4.5H1.5L5 0Z" fill="currentColor"/><path d="M5 12L1.5 7.5H8.5L5 12Z" fill="currentColor"/></svg></span>
+              <span class="tbl-head__cell tcol-status">Status<svg class="tbl-sort-icon" viewBox="0 0 10 12" fill="none"><path d="M5 0L8.5 4.5H1.5L5 0Z" fill="currentColor"/><path d="M5 12L1.5 7.5H8.5L5 12Z" fill="currentColor"/></svg></span>
+              <span class="tbl-head__cell tcol-amt">Amount<svg class="tbl-sort-icon" viewBox="0 0 10 12" fill="none"><path d="M5 0L8.5 4.5H1.5L5 0Z" fill="currentColor"/><path d="M5 12L1.5 7.5H8.5L5 12Z" fill="currentColor"/></svg></span>
+              <span class="tbl-head__cell tcol-actions" aria-label="Actions"></span>
             </div>
             <div class="tbl-body">
               <div class="tbl-row">
@@ -4948,11 +4955,11 @@ body.home .main{max-width:none;margin:0;padding:0}
           <table class="dd-table">
             <thead>
               <tr>
-                <th>Product</th>
-                <th>Category</th>
-                <th class="dd-num">Volume</th>
-                <th class="dd-num">Value</th>
-                <th>Status</th>
+                <th><span class="tbl-th-inner">Product<svg class="tbl-sort-icon" viewBox="0 0 10 12" fill="none"><path d="M5 0L8.5 4.5H1.5L5 0Z" fill="currentColor"/><path d="M5 12L1.5 7.5H8.5L5 12Z" fill="currentColor"/></svg></span></th>
+                <th><span class="tbl-th-inner">Category<svg class="tbl-sort-icon" viewBox="0 0 10 12" fill="none"><path d="M5 0L8.5 4.5H1.5L5 0Z" fill="currentColor"/><path d="M5 12L1.5 7.5H8.5L5 12Z" fill="currentColor"/></svg></span></th>
+                <th class="dd-num"><span class="tbl-th-inner">Volume<svg class="tbl-sort-icon" viewBox="0 0 10 12" fill="none"><path d="M5 0L8.5 4.5H1.5L5 0Z" fill="currentColor"/><path d="M5 12L1.5 7.5H8.5L5 12Z" fill="currentColor"/></svg></span></th>
+                <th class="dd-num"><span class="tbl-th-inner">Value<svg class="tbl-sort-icon" viewBox="0 0 10 12" fill="none"><path d="M5 0L8.5 4.5H1.5L5 0Z" fill="currentColor"/><path d="M5 12L1.5 7.5H8.5L5 12Z" fill="currentColor"/></svg></span></th>
+                <th><span class="tbl-th-inner">Status<svg class="tbl-sort-icon" viewBox="0 0 10 12" fill="none"><path d="M5 0L8.5 4.5H1.5L5 0Z" fill="currentColor"/><path d="M5 12L1.5 7.5H8.5L5 12Z" fill="currentColor"/></svg></span></th>
               </tr>
             </thead>
             <tbody>
@@ -5165,7 +5172,7 @@ body.home .main{max-width:none;margin:0;padding:0}
     ".dd-status",
     ".dd-dot"
   ],
-  "css": "/* dd-num/dd-status/dd-dot are exclusive to the Tables \"Reporting variant\" demo */\n.dd-num { text-align:left;font-variant-numeric:tabular-nums;font-weight:700 }\n.dd-status { display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:600;white-space:nowrap }\n.dd-dot { width:7px;height:7px;border-radius:50%;flex-shrink:0 }\n/* ================================================================\n   TABLES\n================================================================ */\n/* Table row — a selectable record row assembled from cells */\n.tbl-row { --tbl-hover:#f4f4f4; --tbl-checked:#e9f9ea;\n  display:flex;align-items:center;gap:20px;\n  min-height:50px;padding:0 14px;border-radius:8px;\n  background:transparent;color:var(--chrome-txt);\n  transition:background .12s,box-shadow .12s; }\n[data-theme=\"dark\"] .tbl-row { --tbl-hover:rgba(255,255,255,.05);--tbl-checked:rgba(16,197,4,.13) }\n.tbl-row.is-hover,.tbl-row:not(.is-disabled):not(.is-checked):hover { background:var(--tbl-hover) }\n.tbl-row.is-focus { background:var(--chrome-bg);box-shadow:inset 0 0 0 2px var(--chrome-txt) }\n.tbl-row.is-checked { background:var(--tbl-checked) }\n.tbl-row.is-disabled { pointer-events:none }\n/* cells */\n.tbl-cell { font-size:14px;font-weight:500;color:var(--chrome-txt);white-space:nowrap;overflow:hidden;text-overflow:ellipsis }\n.tbl-cell--check { flex:0 0 20px }\n.tbl-cell--name { flex:0 0 92px;font-weight:700 }\n.tbl-cell--col { flex:0 0 116px }\n.tbl-cell--links { margin-left:auto;display:flex;gap:22px }\n.tbl-link { color:var(--color-link);font-weight:700;font-size:14px;text-decoration:none;cursor:pointer;white-space:nowrap }\n.tbl-link:hover { text-decoration:underline }\n/* disabled dims the content */\n.tbl-row.is-disabled .tbl-cell,.tbl-row.is-disabled .tbl-link { color:var(--chrome-muted);opacity:.85 }\n.tbl-row.is-disabled .tbl-pic { filter:grayscale(1);opacity:.5 }\n/* product icon */\n.tbl-pic { width:30px;height:30px;border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#fff;font-weight:900;font-size:15px }\n.tbl-pic svg { width:17px;height:17px;display:block }\n.tbl-pic--1v { background:var(--prim-1v-500) }\n.tbl-pic--gift { background:var(--prim-sup-pink-1) }\n/* status tag */\n.tbl-tag { display:inline-flex;align-items:center;height:22px;padding:0 9px;border-radius:6px;font-size:12px;font-weight:700;white-space:nowrap;line-height:1 }\n.tbl-tag--pending { background:#e6e6e6;color:#414141 }\n.tbl-tag--success { background:#16a220;color:#fff }\n.tbl-tag--failed { background:#eb0029;color:#fff }\n[data-theme=\"dark\"] .tbl-tag--pending { background:rgba(255,255,255,.14);color:#e6e6e6 }\n.tbl-pg__stage .tbl-row { flex:1 1 auto;min-width:640px }\n.tbl-staterow&gt;.tbl-row { flex:1 1 auto }\n/* full table — header + rows */\n.tbl-wrap { border:1px solid var(--chrome-border);border-radius:14px;overflow:hidden;overflow-x:auto }\n.tbl-inner { min-width:900px }\n.tbl-head { display:flex;align-items:center;gap:20px;padding:0 14px;height:44px;background:var(--chrome-nav);border-bottom:1px solid var(--chrome-border) }\n.tbl-head__cell { font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--chrome-muted);white-space:nowrap }\n.tbl-body .tbl-row { border-radius:0;border-bottom:1px solid var(--chrome-border) }\n.tbl-body .tbl-row:last-child { border-bottom:none }\n/* shared column widths — keep header labels aligned with row cells */\n.tcol-check { flex:0 0 20px }\n.tcol-product { flex:2 1 0;min-width:0;display:flex;align-items:center;gap:12px }\n.tbl-head__cell.tcol-product { gap:0 }\n.tcol-ref { flex:1.3 1 0;min-width:0 }\n.tcol-date { flex:1.4 1 0;min-width:0 }\n.tcol-type { flex:1.2 1 0;min-width:0 }\n.tcol-status { flex:0 0 88px }\n.tcol-amt { flex:0 0 96px;text-align:right;font-variant-numeric:tabular-nums;font-weight:700 }\n/* trailing row actions — hidden until the row is hovered or keyboard-focused.\n   :has(:focus-visible), not :focus-within — a plain mouse click leaves the\n   checkbox holding focus, which would keep the row \"stuck\" showing actions. */\n.tcol-actions { flex:0 0 132px;display:flex;justify-content:flex-end;gap:18px;opacity:0;transition:opacity .12s }\n.tbl-body .tbl-row:hover .tcol-actions,.tbl-body .tbl-row.is-hover .tcol-actions,.tbl-body .tbl-row:has(:focus-visible) .tcol-actions { opacity:1 }\n.tbl-head__cell.tcol-actions { opacity:1 }\n/* hover (real + forced .is-hover) */\n.fsel:hover&gt;.fsel__input:not(:disabled),.fsel__input.is-hover:not(:disabled) { border-color:#9a9ea6 }\n.fsel:hover&gt;.fsel__input:checked:not(:disabled),.fsel__input.is-hover:checked:not(:disabled) { border-color:var(--fs-green);filter:brightness(.93) }\n/* focus (real + forced .is-focus) */\n.fsel__input:focus-visible,.fsel__input.is-focus { outline:none;box-shadow:0 0 0 4px var(--fs-ring) }\n.fsel__input:checked:focus-visible,.fsel__input.is-focus:checked { box-shadow:0 0 0 4px rgba(16,197,4,.24) }\n.selref__stage--dark .fsel:hover&gt;.fsel__input:not(:disabled),.selref__stage--dark .fsel__input.is-hover:not(:disabled),[data-theme=\"dark\"] .fsel:hover&gt;.fsel__input:not(:disabled) { border-color:#8b8e97 }",
+  "css": "/* dd-num/dd-status/dd-dot are exclusive to the Tables \"Reporting variant\" demo */\n.dd-num { text-align:left;font-variant-numeric:tabular-nums;font-weight:700 }\n.dd-status { display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:600;white-space:nowrap }\n.dd-dot { width:7px;height:7px;border-radius:50%;flex-shrink:0 }\n/* ================================================================\n   TABLES\n================================================================ */\n/* Table row — a selectable record row assembled from cells */\n.tbl-row { --tbl-hover:#f4f4f4; --tbl-checked:#e9f9ea;\n  display:flex;align-items:center;gap:20px;\n  min-height:50px;padding:0 14px;border-radius:8px;\n  background:transparent;color:var(--chrome-txt);\n  transition:background .12s,box-shadow .12s; }\n[data-theme=\"dark\"] .tbl-row { --tbl-hover:rgba(255,255,255,.05);--tbl-checked:rgba(16,197,4,.13) }\n.tbl-row.is-hover,.tbl-row:not(.is-disabled):not(.is-checked):hover { background:var(--tbl-hover) }\n.tbl-row.is-focus { background:var(--chrome-bg);box-shadow:inset 0 0 0 2px var(--chrome-txt) }\n.tbl-row.is-checked { background:var(--tbl-checked) }\n.tbl-row.is-disabled { pointer-events:none }\n/* cells */\n.tbl-cell { font-size:14px;font-weight:500;color:var(--chrome-txt);white-space:nowrap;overflow:hidden;text-overflow:ellipsis }\n.tbl-cell--check { flex:0 0 20px }\n.tbl-cell--name { flex:0 0 92px;font-weight:700 }\n.tbl-cell--col { flex:0 0 116px }\n.tbl-cell--links { margin-left:auto;display:flex;gap:22px }\n.tbl-link { color:var(--color-link);font-weight:700;font-size:14px;text-decoration:none;cursor:pointer;white-space:nowrap }\n.tbl-link:hover { text-decoration:underline }\n/* disabled dims the content */\n.tbl-row.is-disabled .tbl-cell,.tbl-row.is-disabled .tbl-link { color:var(--chrome-muted);opacity:.85 }\n.tbl-row.is-disabled .tbl-pic { filter:grayscale(1);opacity:.5 }\n/* product icon */\n.tbl-pic { width:30px;height:30px;border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#fff;font-weight:900;font-size:15px }\n.tbl-pic svg { width:17px;height:17px;display:block }\n.tbl-pic--1v { background:var(--prim-1v-500) }\n.tbl-pic--gift { background:var(--prim-sup-pink-1) }\n/* status tag */\n.tbl-tag { display:inline-flex;align-items:center;height:22px;padding:0 9px;border-radius:6px;font-size:12px;font-weight:700;white-space:nowrap;line-height:1 }\n.tbl-tag--pending { background:#e6e6e6;color:#414141 }\n.tbl-tag--success { background:#16a220;color:#fff }\n.tbl-tag--failed { background:#eb0029;color:#fff }\n[data-theme=\"dark\"] .tbl-tag--pending { background:rgba(255,255,255,.14);color:#e6e6e6 }\n.tbl-pg__stage&gt;.tbl-row { flex:1 1 auto;min-width:640px }\n.tbl-pg__head .tbl-head__cell { flex-shrink:0 }\n.tbl-pg__card .tbl-row { border-radius:0 0 13px 13px }\n.tbl-staterow&gt;.tbl-row { flex:1 1 auto }\n/* full table — header + rows */\n.tbl-wrap { border:1px solid var(--chrome-border);border-radius:14px;overflow:hidden;overflow-x:auto }\n.tbl-inner { min-width:900px }\n.tbl-head { display:flex;align-items:center;gap:20px;padding:0 14px;height:44px;background:#000;border-bottom:1px solid var(--chrome-border) }\n.tbl-head__cell { display:inline-flex;align-items:center;gap:6px;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:#fff;white-space:nowrap }\n.tbl-body .tbl-row { border-radius:0;border-bottom:1px solid var(--chrome-border) }\n.tbl-body .tbl-row:last-child { border-bottom:none }\n/* shared column widths — keep header labels aligned with row cells */\n.tcol-check { flex:0 0 20px }\n.tcol-product { flex:2 1 0;min-width:0;display:flex;align-items:center;gap:12px }\n.tbl-head__cell.tcol-product { gap:6px }\n.tcol-ref { flex:1.3 1 0;min-width:0 }\n.tcol-date { flex:1.4 1 0;min-width:0 }\n.tcol-type { flex:1.2 1 0;min-width:0 }\n.tcol-status { flex:0 0 88px }\n.tcol-amt { flex:0 0 96px;text-align:right;font-variant-numeric:tabular-nums;font-weight:700 }\n.tbl-head__cell.tcol-amt { justify-content:flex-end }\n/* trailing row actions — hidden until the row is hovered or keyboard-focused.\n   :has(:focus-visible), not :focus-within — a plain mouse click leaves the\n   checkbox holding focus, which would keep the row \"stuck\" showing actions. */\n.tcol-actions { flex:0 0 132px;display:flex;justify-content:flex-end;gap:18px;opacity:0;transition:opacity .12s }\n.tbl-body .tbl-row:hover .tcol-actions,.tbl-body .tbl-row.is-hover .tcol-actions,.tbl-body .tbl-row:has(:focus-visible) .tcol-actions { opacity:1 }\n.tbl-head__cell.tcol-actions { opacity:1 }\n/* hover (real + forced .is-hover) */\n.fsel:hover&gt;.fsel__input:not(:disabled),.fsel__input.is-hover:not(:disabled) { border-color:#9a9ea6 }\n.fsel:hover&gt;.fsel__input:checked:not(:disabled),.fsel__input.is-hover:checked:not(:disabled) { border-color:var(--fs-green);filter:brightness(.93) }\n/* focus (real + forced .is-focus) */\n.fsel__input:focus-visible,.fsel__input.is-focus { outline:none;box-shadow:0 0 0 4px var(--fs-ring) }\n.fsel__input:checked:focus-visible,.fsel__input.is-focus:checked { box-shadow:0 0 0 4px rgba(16,197,4,.24) }\n.selref__stage--dark .fsel:hover&gt;.fsel__input:not(:disabled),.selref__stage--dark .fsel__input.is-hover:not(:disabled),[data-theme=\"dark\"] .fsel:hover&gt;.fsel__input:not(:disabled) { border-color:#8b8e97 }",
   "usage": {
     "do": [
       "Use a table for lists of like records — transactions, stores, tickets — that users scan and compare.",
@@ -5180,7 +5187,7 @@ body.home .main{max-width:none;margin:0;padding:0}
       "Don’t mix left- and right-alignment for the same column across rows."
     ]
   },
-  "contentHash": "78d2e9b321e64d5d74b4b3531b2f0a624da44605b70dc039a711752a3f5b4304",
+  "contentHash": "c7e50a5260b724afb9d3ec612173c67e7622139ec2edf928f559a665d8f8b591",
   "note": "Static hand-authored markup — the reference table's HTML is written directly in the section, not built by JS (a separate #tbl-playground exists only for a single-row live demo). Five row states: default, hover, focused, checked, disabled. The Reporting variant demo (.dd-num/.dd-status/.dd-dot) was migrated from the retired Data Display section; the .dd-table-wrap/.dd-table/.dd-table__name markup it sits in is a shared spec-table utility reused across many sections and is intentionally excluded from this tab's realClasses."
 }
   </pre>
@@ -13052,13 +13059,13 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.65.1';
+const SYSTEM_VERSION = '1.65.2';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
-      {version:'1.65.1', date:'2026-08-07', author:'Helen', title:'Avatar gets the full Pills-page treatment', changes:[
+      {version:'1.65.2', date:'2026-08-07', author:'Helen', title:'Avatar gets the full Pills-page treatment', changes:[
         ['changed','Avatar rebuilt from a static section into a tabbed .sec--tabbed page (Overview / Style / Code / Changelog), matching Pills\' structure — hero with a mini live preview, sec-tabs bar, and a Changelog tab holding the section\'s auto-injected changelog block'],
         ['added','Interactive playground (apg state) with Type (Photo/Initials/Icon), Size (XS–XL), Presence (None/Online/Offline) and an editable Initials input, rendered into both an Overview mount and a smaller Code-tab mount from the same shared state'],
         ['added','Key types grid replacing Pills\' colour-variant grid — guidance on when to reach for Photo vs Initials vs Icon'],
@@ -13066,12 +13073,33 @@ const CHANGELOG = {
         ['added','Style tab: anatomy, size table, a colour/presence token table (no colour-variant axis, since Avatar has none), and a genuine presence-only states grid'],
         ['added','Code tab with HTML/CSS, Blazor and React TSX behind a segmented language switcher, driven by the same playground state'],
       ]},
+      {version:'1.65.1', date:'2026-08-07', author:'Mo', title:'Playground Header toggle (default off); fixed clipped trailing links and a malformed Focused ring', changes:[
+        ['added','New Header toggle in the Playground controls, off by default — the single-row demo now matches its original bare-row presentation unless Header is switched on, at which point it gains the black head + card frame'],
+        ['fixed','.tbl-pg__card only set overflow:hidden, so the trailing links (shown in the Hover state) got clipped off the right edge on narrower viewports instead of being reachable; added overflow-x:auto to match the real Interactive table\'s .tbl-wrap pattern'],
+        ['fixed','The Focused state\'s inset ring looked clipped at the bottom corners because the row had border-radius:0 while its card ancestor clipped to a 14px rounded corner; .tbl-pg__card .tbl-row now carries a matching border-radius:0 0 13px 13px'],
+      ]},
       {version:'1.65.0', date:'2026-08-07', author:'Helen', title:'Alert rebuilt with the full Pills-page treatment — tabs, playground, In context, Style & Code', changes:[
         ['changed','Alert moves from a flat single-panel section to the .sec--tabbed convention shared by Pills, Switch, Tags and Badges: a hero with a live preview, and Overview / Style / Code / Changelog tabs'],
         ['added','Overview tab gains an interactive playground (severity, dismissible toggle, editable title/message), a Key variants grid (Info/Success/Warning/Critical), and three In context mockups — form validation, a system banner, and a dismissible notification stack'],
         ['added','Style tab gains an Anatomy diagram (Icon/Title/Message/Dismiss), a Colour variants grid with a background/icon token table (light + dark hex), and a States grid (Default/Dismissible)'],
         ['added','Code tab gains a live snippet synced to the Playground, with a segmented HTML / Blazor / React TSX switcher'],
         ['changed','Unlike Pills, Alert has no size axis (single size) and no selectable state — those concepts don\'t apply here and were left out of the playground, Style tab and variant grids rather than stubbed in'],
+      ]},
+      {version:'1.64.23', date:'2026-08-07', author:'Mo', title:'Fixed Playground header label misalignment', changes:[
+        ['fixed','Playground header labels (Product/Column/Status) were missing a spacer for the row\'s product picture, so they sat 30px left of the cells they label. Added a dedicated picture-width spacer alongside the checkbox spacer so every header label now lines up exactly with its row cell.'],
+      ]},
+      {version:'1.64.22', date:'2026-08-07', author:'Mo', title:'Playground header moved inside the row card, gains Sorting and Checkbox toggles', changes:[
+        ['changed','The Playground\'s header bar now sits inside the same bordered/rounded card as the single-row demo (.tbl-pg__card wraps .tbl-pg__head + the row), instead of floating above it as a separate full-width bar'],
+        ['added','New Sorting and Checkbox pill toggles in the Playground controls — Sorting shows/hides the sort icons on every header label, Checkbox shows/hides the row\'s leading checkbox and its matching header spacer'],
+      ]},
+      {version:'1.64.21', date:'2026-08-07', author:'Mo', title:'Playground gains a header row; Actions header label removed; Amount header realigned', changes:[
+        ['added','The Tables Playground single-row demo now renders a black header bar above the row (Product/Column x3/Status, each with a sort icon) so the live demo matches the full Interactive table header'],
+        ['removed','The Interactive table header\'s Actions column no longer shows a visible "Actions" label (kept as an aria-label for accessibility) since that column isn\'t sortable'],
+        ['fixed','.tbl-head__cell.tcol-amt now sets justify-content:flex-end so the "Amount" label + sort icon align right, matching the right-aligned numeric values in the column below'],
+      ]},
+      {version:'1.64.20', date:'2026-08-07', author:'Mo', title:'Table headers restyled to black fill with sort icons, matching the Customer Service Portal spec', changes:[
+        ['changed','.tbl-head (Interactive table) and .dd-table thead th (Reporting variant) backgrounds changed from var(--chrome-nav) to a fixed #000 fill, with header label colour changed from var(--chrome-muted) to #fff — matches the Figma "Support table header" component and stays black in both light and dark theme'],
+        ['added','Every sortable header cell in both table variants now shows a white up/down sort icon (.tbl-sort-icon) next to its label; the Interactive table\'s Actions column and checkbox column are left without one since they aren\'t sortable'],
       ]},
       {version:'1.64.19', date:'2026-08-07', author:'Mo', title:'Restored the always-visible chart value labels lost in an earlier merge', changes:[
         ['fixed','Bar chart value labels, Line & Area point labels, and the Donut legend\'s raw figures (all shipped in a since-orphaned PR) had been silently dropped — the PR that added them was based on a branch that merged into main before the PR itself did, so its commit never reached main\'s history. Reapplied all three onto the current file: .cht__val CSS rule, the bar/line renderer text elements, and fmt(x.v) in the donut legend'],
@@ -14885,7 +14913,28 @@ const CHANGELOG = {
         ['added','Empty State section (s-empty-state) — a dashed-border card with a muted glyph, title, short explanation and one primary action, plus When to use guidance'],
       ]},
     ]},
-    {secId:'s-tables', name:'Tables', version:'1.2.0', entries:[
+    {secId:'s-tables', name:'Tables', version:'1.3.4', entries:[
+      {version:'1.3.4', date:'2026-08-07', author:'Mo', title:'Header toggle (default off) for the Playground; fixed clipped links and Focused ring', changes:[
+        ['added','Header toggle in the Playground controls, defaulting to Off — the single-row demo reverts to its original bare-row look unless switched on'],
+        ['fixed','.tbl-pg__card gained overflow-x:auto (matching .tbl-wrap) so the Hover state\'s trailing links scroll into view instead of being clipped by the card\'s overflow:hidden on narrow viewports'],
+        ['fixed','.tbl-pg__card .tbl-row now matches its card ancestor\'s corner radius (0 0 13px 13px) so the Focused state\'s inset ring no longer looks clipped at the bottom corners'],
+      ]},
+      {version:'1.3.3', date:'2026-08-07', author:'Mo', title:'Fixed Playground header label misalignment', changes:[
+        ['fixed','Header labels (Product/Column/Status) in the Playground demo now include a 30px spacer matching the row\'s product picture, in addition to the checkbox spacer — labels were previously offset 30px left of the cells they describe'],
+      ]},
+      {version:'1.3.2', date:'2026-08-07', author:'Mo', title:'Playground header nested inside the row card, plus Sorting/Checkbox toggles', changes:[
+        ['changed','.tbl-pg__head now renders inside .tbl-pg__card together with the row, forming one bordered/rounded card — matching how the real Interactive table pairs its header with its body, instead of a detached bar above the demo'],
+        ['added','Sorting toggle (Playground controls) shows/hides every header sort icon; Checkbox toggle shows/hides the row\'s leading checkbox together with its header spacer'],
+      ]},
+      {version:'1.3.1', date:'2026-08-07', author:'Mo', title:'Playground header row added; Actions label removed; Amount header realigned', changes:[
+        ['added','New .tbl-pg__head bar renders above the Playground\'s single-row demo, giving it a black header with generic column labels + sort icons so it matches the full Interactive table'],
+        ['removed','Visible "Actions" text removed from the Interactive table header (column isn\'t sortable); kept as aria-label for screen readers'],
+        ['fixed','Amount header label + sort icon now right-align via .tbl-head__cell.tcol-amt{justify-content:flex-end}, matching the right-aligned Amount values in the rows below'],
+      ]},
+      {version:'1.3.0', date:'2026-08-07', author:'Mo', title:'Header restyled to black fill with sort icons (Customer Service Portal spec)', changes:[
+        ['changed','Interactive table (.tbl-head) and Reporting variant (.dd-table thead th) header backgrounds changed to a fixed #000 fill with white (#fff) label text, replacing the muted-grey-on-nav-surface style — always black regardless of light/dark theme'],
+        ['added','White up/down sort icon (.tbl-sort-icon) added next to every sortable column label in both table variants'],
+      ]},
       {version:'1.2.0', date:'2026-08-04', author:'Mo', title:'Reporting variant added, migrated from Data Display', changes:[
         ['added','Reporting variant — a denser, plain-table style with an uppercase header, tabular numerics, hover rows and a status dot, alongside the flex-row Table Row'],
       ]},
@@ -15671,7 +15720,7 @@ function renderSectionChangelogs() {
 // state is the single source of truth (Default / Hover / Focused / Checked / Disabled),
 // mirroring the five states in the reference below. Trailing links are a hover-revealed
 // affordance, so they only render in the Hover state — never at rest.
-var tblPg = { product:'1v', status:'pending', state:'default', links:true };
+var tblPg = { product:'1v', status:'pending', state:'default', links:true, sort:true, checkbox:true, header:false };
 var TBL_PG_GIFT_SVG = '<svg viewBox="0 0 24 24" fill="none"><path d="M20 12v8H4v-8M2 7h20v5H2zM12 22V7M12 7S9 2 6.5 4.5 12 7 12 7zM12 7s3-5 5.5-2.5S12 7 12 7z" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"/></svg>';
 
 function tblPgRowHtml(){
@@ -15690,8 +15739,11 @@ function tblPgRowHtml(){
   var linksHtml = (tblPg.links && tblPg.state === 'hover')
     ? '<span class="tbl-cell--links"><a class="tbl-link">Link text</a><a class="tbl-link">Link text</a></span>'
     : '';
+  var checkboxHtml = tblPg.checkbox
+    ? '<input type="checkbox" class="fsel__input tbl-check tbl-cell--check" ' + checkedAttr + ' ' + disabledAttr + ' onchange="tblPgToggleChecked(this)" aria-label="Select row">'
+    : '';
   return '<div class="' + rowCls + '" id="tblpg-row">' +
-    '<input type="checkbox" class="fsel__input tbl-check tbl-cell--check" ' + checkedAttr + ' ' + disabledAttr + ' onchange="tblPgToggleChecked(this)" aria-label="Select row">' +
+    checkboxHtml +
     '<span class="tbl-pic ' + product.cls + '">' + product.inner + '</span>' +
     '<span class="tbl-cell tbl-cell--name">' + product.name + '</span>' +
     '<span class="tbl-cell tbl-cell--col">Lorem ipsum</span>' +
@@ -15719,18 +15771,53 @@ function renderTablesPlayground(){
   var linksBtns =
     '<button type="button" class="tbl-pg__pill' + (!linksOn?' on':'') + '" onclick="tblPgSetLinks(false)">Off</button>' +
     '<button type="button" class="tbl-pg__pill' + (linksOn?' on':'') + '" onclick="tblPgSetLinks(true)">On</button>';
+  var sortOn = tblPg.sort;
+  var sortBtns =
+    '<button type="button" class="tbl-pg__pill' + (!sortOn?' on':'') + '" onclick="tblPgSetBool(\'sort\',false)">Off</button>' +
+    '<button type="button" class="tbl-pg__pill' + (sortOn?' on':'') + '" onclick="tblPgSetBool(\'sort\',true)">On</button>';
+  var checkboxOn = tblPg.checkbox;
+  var checkboxBtns =
+    '<button type="button" class="tbl-pg__pill' + (!checkboxOn?' on':'') + '" onclick="tblPgSetBool(\'checkbox\',false)">Off</button>' +
+    '<button type="button" class="tbl-pg__pill' + (checkboxOn?' on':'') + '" onclick="tblPgSetBool(\'checkbox\',true)">On</button>';
+  var headerOn = tblPg.header;
+  var headerBtns =
+    '<button type="button" class="tbl-pg__pill' + (!headerOn?' on':'') + '" onclick="tblPgSetBool(\'header\',false)">Off</button>' +
+    '<button type="button" class="tbl-pg__pill' + (headerOn?' on':'') + '" onclick="tblPgSetBool(\'header\',true)">On</button>';
   var hint = (tblPg.links && tblPg.state !== 'hover')
     ? '<div class="tbl-pg__hint">Trailing links are revealed on hover &mdash; set State to <strong>Hover</strong> to preview them.</div>'
     : '';
 
+  var sortIcon = sortOn ? '<svg class="tbl-sort-icon" viewBox="0 0 10 12" fill="none"><path d="M5 0L8.5 4.5H1.5L5 0Z" fill="currentColor"/><path d="M5 12L1.5 7.5H8.5L5 12Z" fill="currentColor"/></svg>' : '';
+  // Spacers mirror the row's own leading elements (checkbox, then the product
+  // picture) so the header labels below line up with the row's real cells —
+  // .tbl-pg__head and .tbl-row share the same gap:20px/padding:0 14px.
+  var checkSpacer = checkboxOn ? '<span style="flex:0 0 20px"></span>' : '';
+  var picSpacer = '<span style="flex:0 0 30px"></span>';
+  var stageContent = headerOn
+    ? '<div class="tbl-pg__card">' +
+        '<div class="tbl-pg__head">' +
+          checkSpacer +
+          picSpacer +
+          '<span class="tbl-head__cell" style="flex:0 0 92px">Product' + sortIcon + '</span>' +
+          '<span class="tbl-head__cell" style="flex:0 0 116px">Column' + sortIcon + '</span>' +
+          '<span class="tbl-head__cell" style="flex:0 0 116px">Column' + sortIcon + '</span>' +
+          '<span class="tbl-head__cell" style="flex:0 0 116px">Column' + sortIcon + '</span>' +
+          '<span class="tbl-head__cell">Status' + sortIcon + '</span>' +
+        '</div>' +
+        tblPgRowHtml() +
+      '</div>'
+    : tblPgRowHtml();
   el.innerHTML =
     '<div class="tbl-pg">' +
-      '<div class="tbl-pg__stage">' + tblPgRowHtml() + '</div>' +
+      '<div class="tbl-pg__stage">' + stageContent + '</div>' +
       '<div class="tbl-pg__ctrls">' +
         '<div class="tbl-pg__group"><span class="tbl-pg__clabel">Product</span><div class="tbl-pg__pill-row">' + productBtns + '</div></div>' +
         '<div class="tbl-pg__group"><span class="tbl-pg__clabel">Status</span><div class="tbl-pg__pill-row">' + statusBtns + '</div></div>' +
         '<div class="tbl-pg__group"><span class="tbl-pg__clabel">State</span><div class="tbl-pg__pill-row">' + stateBtns + '</div></div>' +
         '<div class="tbl-pg__group"><span class="tbl-pg__clabel">Links</span><div class="tbl-pg__pill-row">' + linksBtns + '</div></div>' +
+        '<div class="tbl-pg__group"><span class="tbl-pg__clabel">Header</span><div class="tbl-pg__pill-row">' + headerBtns + '</div></div>' +
+        '<div class="tbl-pg__group"><span class="tbl-pg__clabel">Sorting</span><div class="tbl-pg__pill-row">' + sortBtns + '</div></div>' +
+        '<div class="tbl-pg__group"><span class="tbl-pg__clabel">Checkbox</span><div class="tbl-pg__pill-row">' + checkboxBtns + '</div></div>' +
         hint +
       '</div>' +
     '</div>';
@@ -15742,6 +15829,10 @@ function tblPgSet(key, val){
 }
 function tblPgSetLinks(val){
   tblPg.links = val;
+  renderTablesPlayground();
+}
+function tblPgSetBool(key, val){
+  tblPg[key] = val;
   renderTablesPlayground();
 }
 // Clicking the real checkbox maps to the Checked / Default states so the row and the
