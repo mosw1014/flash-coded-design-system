@@ -1744,10 +1744,11 @@ body.home .main{max-width:none;margin:0;padding:0}
 /* Playground — customise a single Table Row live */
 .tbl-pg{border:1px solid var(--chrome-border);border-radius:14px;overflow:hidden;background:var(--chrome-bg);transition:background .25s}
 .tbl-pg__stage{display:flex;align-items:center;padding:40px;min-height:120px;overflow-x:auto}
-.tbl-pg__card{flex:1 1 auto;min-width:640px;border:1px solid var(--chrome-border);border-radius:14px;overflow:hidden}
+.tbl-pg__stage>.tbl-row{flex:1 1 auto;min-width:640px}
+.tbl-pg__card{flex:1 1 auto;min-width:640px;border:1px solid var(--chrome-border);border-radius:14px;overflow:hidden;overflow-x:auto}
 .tbl-pg__head{display:flex;align-items:center;gap:20px;height:40px;padding:0 14px;background:#000}
 .tbl-pg__head .tbl-head__cell{flex-shrink:0}
-.tbl-pg__card .tbl-row{border-radius:0}
+.tbl-pg__card .tbl-row{border-radius:0 0 13px 13px}
 .tbl-pg__ctrls{display:flex;flex-direction:column;gap:16px;padding:20px 22px;background:var(--chrome-nav);border-top:1px solid var(--chrome-border);transition:background .25s}
 .tbl-pg__group{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
 .tbl-pg__clabel{font-size:12px;font-weight:600;color:var(--chrome-muted);white-space:nowrap;width:60px;flex-shrink:0}
@@ -5166,7 +5167,7 @@ body.home .main{max-width:none;margin:0;padding:0}
     ".dd-status",
     ".dd-dot"
   ],
-  "css": "/* dd-num/dd-status/dd-dot are exclusive to the Tables \"Reporting variant\" demo */\n.dd-num { text-align:left;font-variant-numeric:tabular-nums;font-weight:700 }\n.dd-status { display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:600;white-space:nowrap }\n.dd-dot { width:7px;height:7px;border-radius:50%;flex-shrink:0 }\n/* ================================================================\n   TABLES\n================================================================ */\n/* Table row — a selectable record row assembled from cells */\n.tbl-row { --tbl-hover:#f4f4f4; --tbl-checked:#e9f9ea;\n  display:flex;align-items:center;gap:20px;\n  min-height:50px;padding:0 14px;border-radius:8px;\n  background:transparent;color:var(--chrome-txt);\n  transition:background .12s,box-shadow .12s; }\n[data-theme=\"dark\"] .tbl-row { --tbl-hover:rgba(255,255,255,.05);--tbl-checked:rgba(16,197,4,.13) }\n.tbl-row.is-hover,.tbl-row:not(.is-disabled):not(.is-checked):hover { background:var(--tbl-hover) }\n.tbl-row.is-focus { background:var(--chrome-bg);box-shadow:inset 0 0 0 2px var(--chrome-txt) }\n.tbl-row.is-checked { background:var(--tbl-checked) }\n.tbl-row.is-disabled { pointer-events:none }\n/* cells */\n.tbl-cell { font-size:14px;font-weight:500;color:var(--chrome-txt);white-space:nowrap;overflow:hidden;text-overflow:ellipsis }\n.tbl-cell--check { flex:0 0 20px }\n.tbl-cell--name { flex:0 0 92px;font-weight:700 }\n.tbl-cell--col { flex:0 0 116px }\n.tbl-cell--links { margin-left:auto;display:flex;gap:22px }\n.tbl-link { color:var(--color-link);font-weight:700;font-size:14px;text-decoration:none;cursor:pointer;white-space:nowrap }\n.tbl-link:hover { text-decoration:underline }\n/* disabled dims the content */\n.tbl-row.is-disabled .tbl-cell,.tbl-row.is-disabled .tbl-link { color:var(--chrome-muted);opacity:.85 }\n.tbl-row.is-disabled .tbl-pic { filter:grayscale(1);opacity:.5 }\n/* product icon */\n.tbl-pic { width:30px;height:30px;border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#fff;font-weight:900;font-size:15px }\n.tbl-pic svg { width:17px;height:17px;display:block }\n.tbl-pic--1v { background:var(--prim-1v-500) }\n.tbl-pic--gift { background:var(--prim-sup-pink-1) }\n/* status tag */\n.tbl-tag { display:inline-flex;align-items:center;height:22px;padding:0 9px;border-radius:6px;font-size:12px;font-weight:700;white-space:nowrap;line-height:1 }\n.tbl-tag--pending { background:#e6e6e6;color:#414141 }\n.tbl-tag--success { background:#16a220;color:#fff }\n.tbl-tag--failed { background:#eb0029;color:#fff }\n[data-theme=\"dark\"] .tbl-tag--pending { background:rgba(255,255,255,.14);color:#e6e6e6 }\n.tbl-pg__head .tbl-head__cell { flex-shrink:0 }\n.tbl-pg__card .tbl-row { border-radius:0 }\n.tbl-staterow&gt;.tbl-row { flex:1 1 auto }\n/* full table — header + rows */\n.tbl-wrap { border:1px solid var(--chrome-border);border-radius:14px;overflow:hidden;overflow-x:auto }\n.tbl-inner { min-width:900px }\n.tbl-head { display:flex;align-items:center;gap:20px;padding:0 14px;height:44px;background:#000;border-bottom:1px solid var(--chrome-border) }\n.tbl-head__cell { display:inline-flex;align-items:center;gap:6px;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:#fff;white-space:nowrap }\n.tbl-body .tbl-row { border-radius:0;border-bottom:1px solid var(--chrome-border) }\n.tbl-body .tbl-row:last-child { border-bottom:none }\n/* shared column widths — keep header labels aligned with row cells */\n.tcol-check { flex:0 0 20px }\n.tcol-product { flex:2 1 0;min-width:0;display:flex;align-items:center;gap:12px }\n.tbl-head__cell.tcol-product { gap:6px }\n.tcol-ref { flex:1.3 1 0;min-width:0 }\n.tcol-date { flex:1.4 1 0;min-width:0 }\n.tcol-type { flex:1.2 1 0;min-width:0 }\n.tcol-status { flex:0 0 88px }\n.tcol-amt { flex:0 0 96px;text-align:right;font-variant-numeric:tabular-nums;font-weight:700 }\n.tbl-head__cell.tcol-amt { justify-content:flex-end }\n/* trailing row actions — hidden until the row is hovered or keyboard-focused.\n   :has(:focus-visible), not :focus-within — a plain mouse click leaves the\n   checkbox holding focus, which would keep the row \"stuck\" showing actions. */\n.tcol-actions { flex:0 0 132px;display:flex;justify-content:flex-end;gap:18px;opacity:0;transition:opacity .12s }\n.tbl-body .tbl-row:hover .tcol-actions,.tbl-body .tbl-row.is-hover .tcol-actions,.tbl-body .tbl-row:has(:focus-visible) .tcol-actions { opacity:1 }\n.tbl-head__cell.tcol-actions { opacity:1 }\n/* hover (real + forced .is-hover) */\n.fsel:hover&gt;.fsel__input:not(:disabled),.fsel__input.is-hover:not(:disabled) { border-color:#9a9ea6 }\n.fsel:hover&gt;.fsel__input:checked:not(:disabled),.fsel__input.is-hover:checked:not(:disabled) { border-color:var(--fs-green);filter:brightness(.93) }\n/* focus (real + forced .is-focus) */\n.fsel__input:focus-visible,.fsel__input.is-focus { outline:none;box-shadow:0 0 0 4px var(--fs-ring) }\n.fsel__input:checked:focus-visible,.fsel__input.is-focus:checked { box-shadow:0 0 0 4px rgba(16,197,4,.24) }\n.selref__stage--dark .fsel:hover&gt;.fsel__input:not(:disabled),.selref__stage--dark .fsel__input.is-hover:not(:disabled),[data-theme=\"dark\"] .fsel:hover&gt;.fsel__input:not(:disabled) { border-color:#8b8e97 }",
+  "css": "/* dd-num/dd-status/dd-dot are exclusive to the Tables \"Reporting variant\" demo */\n.dd-num { text-align:left;font-variant-numeric:tabular-nums;font-weight:700 }\n.dd-status { display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:600;white-space:nowrap }\n.dd-dot { width:7px;height:7px;border-radius:50%;flex-shrink:0 }\n/* ================================================================\n   TABLES\n================================================================ */\n/* Table row — a selectable record row assembled from cells */\n.tbl-row { --tbl-hover:#f4f4f4; --tbl-checked:#e9f9ea;\n  display:flex;align-items:center;gap:20px;\n  min-height:50px;padding:0 14px;border-radius:8px;\n  background:transparent;color:var(--chrome-txt);\n  transition:background .12s,box-shadow .12s; }\n[data-theme=\"dark\"] .tbl-row { --tbl-hover:rgba(255,255,255,.05);--tbl-checked:rgba(16,197,4,.13) }\n.tbl-row.is-hover,.tbl-row:not(.is-disabled):not(.is-checked):hover { background:var(--tbl-hover) }\n.tbl-row.is-focus { background:var(--chrome-bg);box-shadow:inset 0 0 0 2px var(--chrome-txt) }\n.tbl-row.is-checked { background:var(--tbl-checked) }\n.tbl-row.is-disabled { pointer-events:none }\n/* cells */\n.tbl-cell { font-size:14px;font-weight:500;color:var(--chrome-txt);white-space:nowrap;overflow:hidden;text-overflow:ellipsis }\n.tbl-cell--check { flex:0 0 20px }\n.tbl-cell--name { flex:0 0 92px;font-weight:700 }\n.tbl-cell--col { flex:0 0 116px }\n.tbl-cell--links { margin-left:auto;display:flex;gap:22px }\n.tbl-link { color:var(--color-link);font-weight:700;font-size:14px;text-decoration:none;cursor:pointer;white-space:nowrap }\n.tbl-link:hover { text-decoration:underline }\n/* disabled dims the content */\n.tbl-row.is-disabled .tbl-cell,.tbl-row.is-disabled .tbl-link { color:var(--chrome-muted);opacity:.85 }\n.tbl-row.is-disabled .tbl-pic { filter:grayscale(1);opacity:.5 }\n/* product icon */\n.tbl-pic { width:30px;height:30px;border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#fff;font-weight:900;font-size:15px }\n.tbl-pic svg { width:17px;height:17px;display:block }\n.tbl-pic--1v { background:var(--prim-1v-500) }\n.tbl-pic--gift { background:var(--prim-sup-pink-1) }\n/* status tag */\n.tbl-tag { display:inline-flex;align-items:center;height:22px;padding:0 9px;border-radius:6px;font-size:12px;font-weight:700;white-space:nowrap;line-height:1 }\n.tbl-tag--pending { background:#e6e6e6;color:#414141 }\n.tbl-tag--success { background:#16a220;color:#fff }\n.tbl-tag--failed { background:#eb0029;color:#fff }\n[data-theme=\"dark\"] .tbl-tag--pending { background:rgba(255,255,255,.14);color:#e6e6e6 }\n.tbl-pg__stage&gt;.tbl-row { flex:1 1 auto;min-width:640px }\n.tbl-pg__head .tbl-head__cell { flex-shrink:0 }\n.tbl-pg__card .tbl-row { border-radius:0 0 13px 13px }\n.tbl-staterow&gt;.tbl-row { flex:1 1 auto }\n/* full table — header + rows */\n.tbl-wrap { border:1px solid var(--chrome-border);border-radius:14px;overflow:hidden;overflow-x:auto }\n.tbl-inner { min-width:900px }\n.tbl-head { display:flex;align-items:center;gap:20px;padding:0 14px;height:44px;background:#000;border-bottom:1px solid var(--chrome-border) }\n.tbl-head__cell { display:inline-flex;align-items:center;gap:6px;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:#fff;white-space:nowrap }\n.tbl-body .tbl-row { border-radius:0;border-bottom:1px solid var(--chrome-border) }\n.tbl-body .tbl-row:last-child { border-bottom:none }\n/* shared column widths — keep header labels aligned with row cells */\n.tcol-check { flex:0 0 20px }\n.tcol-product { flex:2 1 0;min-width:0;display:flex;align-items:center;gap:12px }\n.tbl-head__cell.tcol-product { gap:6px }\n.tcol-ref { flex:1.3 1 0;min-width:0 }\n.tcol-date { flex:1.4 1 0;min-width:0 }\n.tcol-type { flex:1.2 1 0;min-width:0 }\n.tcol-status { flex:0 0 88px }\n.tcol-amt { flex:0 0 96px;text-align:right;font-variant-numeric:tabular-nums;font-weight:700 }\n.tbl-head__cell.tcol-amt { justify-content:flex-end }\n/* trailing row actions — hidden until the row is hovered or keyboard-focused.\n   :has(:focus-visible), not :focus-within — a plain mouse click leaves the\n   checkbox holding focus, which would keep the row \"stuck\" showing actions. */\n.tcol-actions { flex:0 0 132px;display:flex;justify-content:flex-end;gap:18px;opacity:0;transition:opacity .12s }\n.tbl-body .tbl-row:hover .tcol-actions,.tbl-body .tbl-row.is-hover .tcol-actions,.tbl-body .tbl-row:has(:focus-visible) .tcol-actions { opacity:1 }\n.tbl-head__cell.tcol-actions { opacity:1 }\n/* hover (real + forced .is-hover) */\n.fsel:hover&gt;.fsel__input:not(:disabled),.fsel__input.is-hover:not(:disabled) { border-color:#9a9ea6 }\n.fsel:hover&gt;.fsel__input:checked:not(:disabled),.fsel__input.is-hover:checked:not(:disabled) { border-color:var(--fs-green);filter:brightness(.93) }\n/* focus (real + forced .is-focus) */\n.fsel__input:focus-visible,.fsel__input.is-focus { outline:none;box-shadow:0 0 0 4px var(--fs-ring) }\n.fsel__input:checked:focus-visible,.fsel__input.is-focus:checked { box-shadow:0 0 0 4px rgba(16,197,4,.24) }\n.selref__stage--dark .fsel:hover&gt;.fsel__input:not(:disabled),.selref__stage--dark .fsel__input.is-hover:not(:disabled),[data-theme=\"dark\"] .fsel:hover&gt;.fsel__input:not(:disabled) { border-color:#8b8e97 }",
   "usage": {
     "do": [
       "Use a table for lists of like records — transactions, stores, tickets — that users scan and compare.",
@@ -5181,7 +5182,7 @@ body.home .main{max-width:none;margin:0;padding:0}
       "Don’t mix left- and right-alignment for the same column across rows."
     ]
   },
-  "contentHash": "748322e076ab11e9eecd54d20ec707653ab6f808faa15b0fc3ee66211eaf1ed9",
+  "contentHash": "c7e50a5260b724afb9d3ec612173c67e7622139ec2edf928f559a665d8f8b591",
   "note": "Static hand-authored markup — the reference table's HTML is written directly in the section, not built by JS (a separate #tbl-playground exists only for a single-row live demo). Five row states: default, hover, focused, checked, disabled. The Reporting variant demo (.dd-num/.dd-status/.dd-dot) was migrated from the retired Data Display section; the .dd-table-wrap/.dd-table/.dd-table__name markup it sits in is a shared spec-table utility reused across many sections and is intentionally excluded from this tab's realClasses."
 }
   </pre>
@@ -11981,12 +11982,17 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.64.21';
+const SYSTEM_VERSION = '1.64.22';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.64.22', date:'2026-08-07', author:'Mo', title:'Playground Header toggle (default off); fixed clipped trailing links and a malformed Focused ring', changes:[
+        ['added','New Header toggle in the Playground controls, off by default — the single-row demo now matches its original bare-row presentation unless Header is switched on, at which point it gains the black head + card frame'],
+        ['fixed','.tbl-pg__card only set overflow:hidden, so the trailing links (shown in the Hover state) got clipped off the right edge on narrower viewports instead of being reachable; added overflow-x:auto to match the real Interactive table\'s .tbl-wrap pattern'],
+        ['fixed','The Focused state\'s inset ring looked clipped at the bottom corners because the row had border-radius:0 while its card ancestor clipped to a 14px rounded corner; .tbl-pg__card .tbl-row now carries a matching border-radius:0 0 13px 13px'],
+      ]},
       {version:'1.64.21', date:'2026-08-07', author:'Mo', title:'Fixed Playground header label misalignment', changes:[
         ['fixed','Playground header labels (Product/Column/Status) were missing a spacer for the row\'s product picture, so they sat 30px left of the cells they label. Added a dedicated picture-width spacer alongside the checkbox spacer so every header label now lines up exactly with its row cell.'],
       ]},
@@ -13775,7 +13781,12 @@ const CHANGELOG = {
         ['added','Empty State section (s-empty-state) — a dashed-border card with a muted glyph, title, short explanation and one primary action, plus When to use guidance'],
       ]},
     ]},
-    {secId:'s-tables', name:'Tables', version:'1.3.3', entries:[
+    {secId:'s-tables', name:'Tables', version:'1.3.4', entries:[
+      {version:'1.3.4', date:'2026-08-07', author:'Mo', title:'Header toggle (default off) for the Playground; fixed clipped links and Focused ring', changes:[
+        ['added','Header toggle in the Playground controls, defaulting to Off — the single-row demo reverts to its original bare-row look unless switched on'],
+        ['fixed','.tbl-pg__card gained overflow-x:auto (matching .tbl-wrap) so the Hover state\'s trailing links scroll into view instead of being clipped by the card\'s overflow:hidden on narrow viewports'],
+        ['fixed','.tbl-pg__card .tbl-row now matches its card ancestor\'s corner radius (0 0 13px 13px) so the Focused state\'s inset ring no longer looks clipped at the bottom corners'],
+      ]},
       {version:'1.3.3', date:'2026-08-07', author:'Mo', title:'Fixed Playground header label misalignment', changes:[
         ['fixed','Header labels (Product/Column/Status) in the Playground demo now include a 30px spacer matching the row\'s product picture, in addition to the checkbox spacer — labels were previously offset 30px left of the cells they describe'],
       ]},
@@ -14577,7 +14588,7 @@ function renderSectionChangelogs() {
 // state is the single source of truth (Default / Hover / Focused / Checked / Disabled),
 // mirroring the five states in the reference below. Trailing links are a hover-revealed
 // affordance, so they only render in the Hover state — never at rest.
-var tblPg = { product:'1v', status:'pending', state:'default', links:true, sort:true, checkbox:true };
+var tblPg = { product:'1v', status:'pending', state:'default', links:true, sort:true, checkbox:true, header:false };
 var TBL_PG_GIFT_SVG = '<svg viewBox="0 0 24 24" fill="none"><path d="M20 12v8H4v-8M2 7h20v5H2zM12 22V7M12 7S9 2 6.5 4.5 12 7 12 7zM12 7s3-5 5.5-2.5S12 7 12 7z" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"/></svg>';
 
 function tblPgRowHtml(){
@@ -14636,6 +14647,10 @@ function renderTablesPlayground(){
   var checkboxBtns =
     '<button type="button" class="tbl-pg__pill' + (!checkboxOn?' on':'') + '" onclick="tblPgSetBool(\'checkbox\',false)">Off</button>' +
     '<button type="button" class="tbl-pg__pill' + (checkboxOn?' on':'') + '" onclick="tblPgSetBool(\'checkbox\',true)">On</button>';
+  var headerOn = tblPg.header;
+  var headerBtns =
+    '<button type="button" class="tbl-pg__pill' + (!headerOn?' on':'') + '" onclick="tblPgSetBool(\'header\',false)">Off</button>' +
+    '<button type="button" class="tbl-pg__pill' + (headerOn?' on':'') + '" onclick="tblPgSetBool(\'header\',true)">On</button>';
   var hint = (tblPg.links && tblPg.state !== 'hover')
     ? '<div class="tbl-pg__hint">Trailing links are revealed on hover &mdash; set State to <strong>Hover</strong> to preview them.</div>'
     : '';
@@ -14646,27 +14661,29 @@ function renderTablesPlayground(){
   // .tbl-pg__head and .tbl-row share the same gap:20px/padding:0 14px.
   var checkSpacer = checkboxOn ? '<span style="flex:0 0 20px"></span>' : '';
   var picSpacer = '<span style="flex:0 0 30px"></span>';
+  var stageContent = headerOn
+    ? '<div class="tbl-pg__card">' +
+        '<div class="tbl-pg__head">' +
+          checkSpacer +
+          picSpacer +
+          '<span class="tbl-head__cell" style="flex:0 0 92px">Product' + sortIcon + '</span>' +
+          '<span class="tbl-head__cell" style="flex:0 0 116px">Column' + sortIcon + '</span>' +
+          '<span class="tbl-head__cell" style="flex:0 0 116px">Column' + sortIcon + '</span>' +
+          '<span class="tbl-head__cell" style="flex:0 0 116px">Column' + sortIcon + '</span>' +
+          '<span class="tbl-head__cell">Status' + sortIcon + '</span>' +
+        '</div>' +
+        tblPgRowHtml() +
+      '</div>'
+    : tblPgRowHtml();
   el.innerHTML =
     '<div class="tbl-pg">' +
-      '<div class="tbl-pg__stage">' +
-        '<div class="tbl-pg__card">' +
-          '<div class="tbl-pg__head">' +
-            checkSpacer +
-            picSpacer +
-            '<span class="tbl-head__cell" style="flex:0 0 92px">Product' + sortIcon + '</span>' +
-            '<span class="tbl-head__cell" style="flex:0 0 116px">Column' + sortIcon + '</span>' +
-            '<span class="tbl-head__cell" style="flex:0 0 116px">Column' + sortIcon + '</span>' +
-            '<span class="tbl-head__cell" style="flex:0 0 116px">Column' + sortIcon + '</span>' +
-            '<span class="tbl-head__cell">Status' + sortIcon + '</span>' +
-          '</div>' +
-          tblPgRowHtml() +
-        '</div>' +
-      '</div>' +
+      '<div class="tbl-pg__stage">' + stageContent + '</div>' +
       '<div class="tbl-pg__ctrls">' +
         '<div class="tbl-pg__group"><span class="tbl-pg__clabel">Product</span><div class="tbl-pg__pill-row">' + productBtns + '</div></div>' +
         '<div class="tbl-pg__group"><span class="tbl-pg__clabel">Status</span><div class="tbl-pg__pill-row">' + statusBtns + '</div></div>' +
         '<div class="tbl-pg__group"><span class="tbl-pg__clabel">State</span><div class="tbl-pg__pill-row">' + stateBtns + '</div></div>' +
         '<div class="tbl-pg__group"><span class="tbl-pg__clabel">Links</span><div class="tbl-pg__pill-row">' + linksBtns + '</div></div>' +
+        '<div class="tbl-pg__group"><span class="tbl-pg__clabel">Header</span><div class="tbl-pg__pill-row">' + headerBtns + '</div></div>' +
         '<div class="tbl-pg__group"><span class="tbl-pg__clabel">Sorting</span><div class="tbl-pg__pill-row">' + sortBtns + '</div></div>' +
         '<div class="tbl-pg__group"><span class="tbl-pg__clabel">Checkbox</span><div class="tbl-pg__pill-row">' + checkboxBtns + '</div></div>' +
         hint +
