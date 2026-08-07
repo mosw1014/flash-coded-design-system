@@ -5972,74 +5972,25 @@ body.home .main{max-width:none;margin:0;padding:0}
     <!-- ============================================================
          AVATAR
     ============================================================ -->
-    <section class="sec" id="s-avatar">
+    <section class="sec sec--tabbed" id="s-avatar">
+      <div class="sec-hero">
       <div class="sec__head">
-        <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Avatar <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.1.1</span></h1>
-        <p class="sec__desc">A circular representation of a person or entity &mdash; a photo when available, initials or a generic glyph as fallbacks. Five sizes, an optional presence dot, and a stacked group for showing many at once.</p>
-      </div>
-      <div class="type-sub">
-        <div class="type-sub__title">Sizes</div>
-        <div class="type-sub__desc">Five steps from 24px to 72px. Pick one size per context and stay consistent within a list.</div>
-        <div class="sg-stage"><div class="sg-row">
-          <div class="sg-swatch"><span class="sg-swatch__cap">XS</span><span class="avt avt--xs">MO</span></div>
-          <div class="sg-swatch"><span class="sg-swatch__cap">SM</span><span class="avt avt--sm">MO</span></div>
-          <div class="sg-swatch"><span class="sg-swatch__cap">MD</span><span class="avt avt--md">MO</span></div>
-          <div class="sg-swatch"><span class="sg-swatch__cap">LG</span><span class="avt avt--lg">MO</span></div>
-          <div class="sg-swatch"><span class="sg-swatch__cap">XL</span><span class="avt avt--xl">MO</span></div>
-        </div></div>
-      </div>
-      <div class="type-sub">
-        <div class="type-sub__title">Types &amp; presence</div>
-        <div class="type-sub__desc">Photo shows a neutral placeholder illustration until a real image loads; initials or a generic fallback glyph cover the rest. An optional presence dot shows online / offline.</div>
-        <div class="sg-stage"><div class="sg-row">
-          <div class="sg-swatch"><span class="sg-swatch__cap">Photo</span><span class="avt avt--lg avt--photo" aria-label="Photo placeholder"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="8" cy="8" r="2.4" fill="currentColor"/><path d="M2.5 19l5.8-7 3.6 4.3 2.8-3.3 6.8 6h-19z" fill="currentColor"/></svg></span></div>
-          <div class="sg-swatch"><span class="sg-swatch__cap">Initials</span><span class="avt avt--lg">RB</span></div>
-          <div class="sg-swatch"><span class="sg-swatch__cap">Fallback</span><span class="avt avt--lg avt--icon"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="8" r="4" fill="currentColor"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8" fill="currentColor"/></svg></span></div>
-          <div class="sg-swatch"><span class="sg-swatch__cap">Online</span><span class="avt avt--lg">AK<span class="avt__status"></span></span></div>
-          <div class="sg-swatch"><span class="sg-swatch__cap">Offline</span><span class="avt avt--lg">JP<span class="avt__status avt__status--off"></span></span></div>
-        </div></div>
-      </div>
-      <div class="type-sub">
-        <div class="type-sub__title">Group</div>
-        <div class="type-sub__desc">Stack a few avatars to show shared ownership or attendees, capped with a &ldquo;+N&rdquo; count.</div>
-        <div class="sg-stage">
-          <div class="avt-group">
-            <span class="avt avt--md">MO</span>
-            <span class="avt avt--md avt--photo" aria-label="Photo placeholder"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="8" cy="8" r="2.4" fill="currentColor"/><path d="M2.5 19l5.8-7 3.6 4.3 2.8-3.3 6.8 6h-19z" fill="currentColor"/></svg></span>
-            <span class="avt avt--md">RB</span>
-            <span class="avt avt--md">AK</span>
-            <span class="avt-more">+3</span>
-          </div>
-        </div>
-      </div>
-      <div class="type-sub">
-        <div class="type-sub__title">When to use</div>
-        <div class="type-sub__desc">Avatars identify people and entities at a glance. They&rsquo;re identity, not decoration.</div>
-        <div class="sel-usage">
-          <div class="sel-usage__card">
-            <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
-            <ul class="sel-usage__list">
-              <li>Always provide a fallback: initials, then a generic glyph.</li>
-              <li>Keep one avatar size consistent within a given list.</li>
-              <li>Add a presence dot only where online status is meaningful.</li>
-            </ul>
-          </div>
-          <div class="sel-usage__card">
-            <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don&rsquo;t</div>
-            <ul class="sel-usage__list">
-              <li>Don&rsquo;t use avatars for decorative or generic imagery.</li>
-              <li>Don&rsquo;t stretch non-square photos &mdash; always crop to fill.</li>
-              <li>Don&rsquo;t rely on the presence dot&rsquo;s colour alone to convey status.</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <details class="ai-ctx">
+        <h1 class="sec__title">Avatar</h1>
+        <div class="sec-header-meta">
+          <span class="comp-ver-badge" style="margin-left:0">v1.2.0</span>
+          <details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-avatar">
 {
-  "status": "static",
+  "status": "js-rendered",
+  "builderFunctions": [
+    "AVT_SIZES",
+    "AVT_TYPES",
+    "avtPhotoSVG",
+    "avtIconSVG",
+    "makeAvatarHTML",
+    "makeAvatarEl"
+  ],
   "realClasses": [
     ".avt",
     ".avt--photo",
@@ -6055,22 +6006,96 @@ body.home .main{max-width:none;margin:0;padding:0}
     ".avt-more"
   ],
   "css": "/* ---- Avatar ---- */\n.avt { display:inline-flex;align-items:center;justify-content:center;border-radius:50%;background:var(--color-surface-n2);color:var(--color-text-2);font-weight:700;flex-shrink:0;position:relative;line-height:1;user-select:none;text-transform:uppercase }\n.avt img { width:100%;height:100%;object-fit:cover;display:block;border-radius:50% }\n.avt--photo { background:var(--color-surface-n1);color:var(--color-text-m) }\n.avt--photo svg { width:60%;height:60% }\n.avt--icon { color:var(--chrome-muted);background:var(--color-surface-n1) }\n.avt--icon svg { width:55%;height:55% }\n.avt--xs { width:24px;height:24px;font-size:9px }\n.avt--sm { width:32px;height:32px;font-size:11px }\n.avt--md { width:40px;height:40px;font-size:14px }\n.avt--lg { width:56px;height:56px;font-size:19px }\n.avt--xl { width:72px;height:72px;font-size:25px }\n.avt__status { position:absolute;bottom:1px;right:1px;width:27%;height:27%;border-radius:50%;border:2px solid var(--chrome-nav);background:var(--color-success-h);box-sizing:border-box }\n.avt__status--off { background:var(--prim-grey-700) }\n.avt-group { display:inline-flex;align-items:center }\n.avt-group &gt; * { border:2px solid var(--chrome-nav);border-radius:50%;margin-left:-11px }\n.avt-group &gt; *:first-child { margin-left:0 }\n.avt-more { display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%;background:var(--color-surface-n2);color:var(--chrome-txt);font-size:12px;font-weight:700;flex-shrink:0 }",
+  "js": "const AVT_SIZES = [\n  {key:'xs', label:'XS', px:24, fs:9},\n  {key:'sm', label:'SM', px:32, fs:11},\n  {key:'md', label:'MD', px:40, fs:14},\n  {key:'lg', label:'LG', px:56, fs:19},\n  {key:'xl', label:'XL', px:72, fs:25},\n];\n\nconst AVT_TYPES = [\n  {key:'photo',    label:'Photo'},\n  {key:'initials', label:'Initials'},\n  {key:'icon',     label:'Icon'},\n];\n\nfunction avtPhotoSVG(){\n  return `&lt;svg viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"&gt;&lt;circle cx=\"8\" cy=\"8\" r=\"2.4\" fill=\"currentColor\"/&gt;&lt;path d=\"M2.5 19l5.8-7 3.6 4.3 2.8-3.3 6.8 6h-19z\" fill=\"currentColor\"/&gt;&lt;/svg&gt;`;\n}\n\nfunction avtIconSVG(){\n  return `&lt;svg viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"&gt;&lt;circle cx=\"12\" cy=\"8\" r=\"4\" fill=\"currentColor\"/&gt;&lt;path d=\"M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8\" fill=\"currentColor\"/&gt;&lt;/svg&gt;`;\n}\n\nfunction makeAvatarHTML(type, sizeKey, initials, presence){\n  const cls = `avt avt--${sizeKey}${type==='photo'?' avt--photo':''}${type==='icon'?' avt--icon':''}`;\n  let inner = '';\n  if(type==='photo') inner = avtPhotoSVG();\n  else if(type==='icon') inner = avtIconSVG();\n  else inner = avtEsc((initials||'MO').slice(0,2).toUpperCase());\n  if(presence &amp;&amp; presence!=='none') inner += `&lt;span class=\"avt__status${presence==='offline'?' avt__status--off':''}\"&gt;&lt;/span&gt;`;\n  const aria = type==='photo' ? ' aria-label=\"Photo placeholder\"' : '';\n  return `&lt;span class=\"${cls}\"${aria}&gt;${inner}&lt;/span&gt;`;\n}\n\nfunction makeAvatarEl(){\n  const av = document.createElement('span');\n  av.className = `avt avt--${apg.size}${apg.type==='photo'?' avt--photo':''}${apg.type==='icon'?' avt--icon':''}`;\n  if(apg.type==='photo'){ av.innerHTML = avtPhotoSVG(); av.setAttribute('aria-label','Photo placeholder'); }\n  else if(apg.type==='icon'){ av.innerHTML = avtIconSVG(); }\n  else { av.textContent = (apg.initials||'MO').slice(0,2).toUpperCase(); }\n  if(apg.presence &amp;&amp; apg.presence!=='none'){\n    const dot = document.createElement('span');\n    dot.className = `avt__status${apg.presence==='offline'?' avt__status--off':''}`;\n    av.appendChild(dot);\n  }\n  return av;\n}",
   "usage": {
     "do": [
       "Always provide a fallback: initials, then a generic glyph.",
       "Keep one avatar size consistent within a given list.",
-      "Add a presence dot only where online status is meaningful."
+      "Add a presence dot only where online status is meaningful.",
+      "Use two letters for initials — first and last, uppercase."
     ],
     "dont": [
-      "Don’t use avatars for decorative or generic imagery.",
-      "Don’t stretch non-square photos — always crop to fill.",
-      "Don’t rely on the presence dot’s colour alone to convey status."
+      "Don't use avatars for decorative or generic imagery.",
+      "Don't stretch non-square photos — always crop to fill.",
+      "Don't rely on the presence dot's colour alone to convey status."
     ]
   },
-  "contentHash": "adc86590acd9f4948dcdff9ab31cad964bc0f8202cfab2b4c9b6fa00dfe02c47"
+  "contentHash": "f1305e3b72fe14af0e0c9932d1af64da841fe2edb381d192d483ee8f99486437",
+  "note": "makeAvatarHTML is the minimal real-markup builder (type+size+initials+presence -&gt; avatar HTML string); makeAvatarEl is the fuller version used by the live playground stage. apg (playground state)/getAvatarCode*/renderAvatarPlayground/renderAvatarReference/renderAvatarInSitu/renderAvatarKeyTypes/ovAvatar are doc-site-only playground plumbing, excluded."
 }
   </pre>
 </details>
+        </div>
+      </div>
+      <div class="sec-hero__preview"><div class="mk"><span class="avt avt--sm">MO</span><span class="avt avt--sm avt--photo" aria-label="Photo placeholder"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="8" cy="8" r="2.4" fill="currentColor"/><path d="M2.5 19l5.8-7 3.6 4.3 2.8-3.3 6.8 6h-19z" fill="currentColor"/></svg></span><span class="avt avt--sm">AK<span class="avt__status"></span></span></div></div>
+      </div>
+      <div class="tabs-list sec-tabs" id="avatar-tabs-list">
+        <button type="button" class="tab-item on" data-avatar-tab="overview" onclick="avatarTabSwitch('overview')"><span class="tab-item__inner"><span class="tab-item__label">Overview</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-avatar-tab="style" onclick="avatarTabSwitch('style')"><span class="tab-item__inner"><span class="tab-item__label">Style</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-avatar-tab="code" onclick="avatarTabSwitch('code')"><span class="tab-item__inner"><span class="tab-item__label">Code</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-avatar-tab="changelog" onclick="avatarTabSwitch('changelog')"><span class="tab-item__inner"><span class="tab-item__label">Changelog</span></span><span class="tab-item__line"></span></button>
+      </div>
+      <div class="tabs-panel on" data-avatar-panel="overview">
+        <div id="avatar-playground" class="type-sub"></div>
+        <div id="avatar-keytypes" class="type-sub"></div>
+        <div id="avatar-insitu" class="type-sub"></div>
+        <div class="type-sub">
+          <div class="type-sub__title">Group</div>
+          <div class="type-sub__desc">Stack a few avatars to show shared ownership or attendees, capped with a &ldquo;+N&rdquo; count.</div>
+          <div class="sg-stage">
+            <div class="avt-group">
+              <span class="avt avt--md">MO</span>
+              <span class="avt avt--md avt--photo" aria-label="Photo placeholder"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="8" cy="8" r="2.4" fill="currentColor"/><path d="M2.5 19l5.8-7 3.6 4.3 2.8-3.3 6.8 6h-19z" fill="currentColor"/></svg></span>
+              <span class="avt avt--md">RB</span>
+              <span class="avt avt--md">AK</span>
+              <span class="avt-more">+3</span>
+            </div>
+          </div>
+        </div>
+        <div class="type-sub cpg-variants" id="avatar-usage">
+          <div class="cpg-section-heading">
+            <div class="cpg-layout__title">Do's and don'ts</div>
+            <div class="cpg-layout__desc">A few simple rules that keep avatars readable and identifiable.</div>
+          </div>
+          <div class="cpg-section-block">
+            <div class="sel-usage">
+              <div class="sel-usage__card">
+                <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
+                <ul class="sel-usage__list">
+                  <li>Always provide a fallback: initials, then a generic glyph.</li>
+                  <li>Keep one avatar size consistent within a given list.</li>
+                  <li>Add a presence dot only where online status is meaningful.</li>
+                  <li>Use two letters for initials &mdash; first and last, uppercase.</li>
+                </ul>
+                <div class="spec-usage-demo">
+                  <span class="avt avt--md">MO</span>
+                  <span class="avt avt--md">RB</span>
+                  <span class="avt avt--md">AK</span>
+                </div>
+              </div>
+              <div class="sel-usage__card">
+                <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don't</div>
+                <ul class="sel-usage__list">
+                  <li>Don't use avatars for decorative or generic imagery.</li>
+                  <li>Don't stretch non-square photos &mdash; always crop to fill.</li>
+                  <li>Don't rely on the presence dot's colour alone to convey status.</li>
+                </ul>
+                <div class="spec-usage-demo">
+                  <span class="avt avt--md" style="text-transform:none">Mo O.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tabs-panel" data-avatar-panel="style">
+        <div id="avatar-reference" class="type-sub spec-panel spec-stack"></div>
+      </div>
+      <div class="tabs-panel" data-avatar-panel="code">
+        <div id="avatar-code-playground" class="type-sub spec-panel spec-code-playground"></div>
+        <div id="avatar-code-tab" class="type-sub spec-panel"></div>
+      </div>
+      <div class="tabs-panel" data-avatar-panel="changelog" id="avatar-changelog-panel"></div>
     </section>
 
     <!-- ============================================================
@@ -7914,6 +7939,10 @@ function toggleTheme() {
   try { if(typeof renderBadgeInSitu==='function' && document.getElementById('badge-insitu')) renderBadgeInSitu(); } catch(e){}
   try { if(typeof renderBadgeReference==='function' && document.getElementById('badge-reference')) renderBadgeReference(); } catch(e){}
   try { if(typeof renderPillReference==='function' && document.getElementById('pill-reference')) renderPillReference(); } catch(e){}
+  try { if(typeof renderAvatarPlayground==='function' && document.getElementById('avatar-playground')) renderAvatarPlayground(); } catch(e){}
+  try { if(typeof renderAvatarKeyTypes==='function' && document.getElementById('avatar-keytypes')) renderAvatarKeyTypes(); } catch(e){}
+  try { if(typeof renderAvatarInSitu==='function' && document.getElementById('avatar-insitu')) renderAvatarInSitu(); } catch(e){}
+  try { if(typeof renderAvatarReference==='function' && document.getElementById('avatar-reference')) renderAvatarReference(); } catch(e){}
   try { if(typeof renderSwitchPlayground==='function' && document.getElementById('sw-playground')) renderSwitchPlayground(); } catch(e){}
   try { if(typeof renderSwitchStates==='function' && document.getElementById('sw-states')) renderSwitchStates(); } catch(e){}
   try { if(typeof renderSwitchInSitu==='function' && document.getElementById('sw-insitu')) renderSwitchInSitu(); } catch(e){}
@@ -10421,6 +10450,541 @@ function pillTabSwitch(tab){
 }
 
 /* ============================================================
+   AVATAR
+   Same tabbed-page treatment as Pills (.sec--tabbed): Overview /
+   Style / Code / Changelog, a shared-state playground rendered
+   into two mounts, and a three-language code panel. Unlike Pills,
+   Avatar has no colour axis and nothing removable/selectable —
+   its controls are Type / Size / Presence, plus an initials input.
+============================================================ */
+const AVT_SIZES = [
+  {key:'xs', label:'XS', px:24, fs:9},
+  {key:'sm', label:'SM', px:32, fs:11},
+  {key:'md', label:'MD', px:40, fs:14},
+  {key:'lg', label:'LG', px:56, fs:19},
+  {key:'xl', label:'XL', px:72, fs:25},
+];
+
+const AVT_TYPES = [
+  {key:'photo',    label:'Photo'},
+  {key:'initials', label:'Initials'},
+  {key:'icon',     label:'Icon'},
+];
+
+function avtEsc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&#60;').replace(/>/g,'&#62;').replace(/"/g,'&quot;'); }
+
+function avtPhotoSVG(){
+  return `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="8" cy="8" r="2.4" fill="currentColor"/><path d="M2.5 19l5.8-7 3.6 4.3 2.8-3.3 6.8 6h-19z" fill="currentColor"/></svg>`;
+}
+function avtIconSVG(){
+  return `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="8" r="4" fill="currentColor"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8" fill="currentColor"/></svg>`;
+}
+
+/* Minimal real-markup builder: type+size+initials+presence -> .avt HTML string. */
+function makeAvatarHTML(type, sizeKey, initials, presence){
+  const cls = `avt avt--${sizeKey}${type==='photo'?' avt--photo':''}${type==='icon'?' avt--icon':''}`;
+  let inner = '';
+  if(type==='photo') inner = avtPhotoSVG();
+  else if(type==='icon') inner = avtIconSVG();
+  else inner = avtEsc((initials||'MO').slice(0,2).toUpperCase());
+  if(presence && presence!=='none') inner += `<span class="avt__status${presence==='offline'?' avt__status--off':''}"></span>`;
+  const aria = type==='photo' ? ' aria-label="Photo placeholder"' : '';
+  return `<span class="${cls}"${aria}>${inner}</span>`;
+}
+
+/* ── AVATAR PLAYGROUND ── */
+let apg = { type:'initials', size:'md', presence:'none', initials:'MO', theme:'light' };
+
+function makeAvatarEl(){
+  const av = document.createElement('span');
+  av.className = `avt avt--${apg.size}${apg.type==='photo'?' avt--photo':''}${apg.type==='icon'?' avt--icon':''}`;
+  if(apg.type==='photo'){ av.innerHTML = avtPhotoSVG(); av.setAttribute('aria-label','Photo placeholder'); }
+  else if(apg.type==='icon'){ av.innerHTML = avtIconSVG(); }
+  else { av.textContent = (apg.initials||'MO').slice(0,2).toUpperCase(); }
+  if(apg.presence && apg.presence!=='none'){
+    const dot = document.createElement('span');
+    dot.className = `avt__status${apg.presence==='offline'?' avt__status--off':''}`;
+    av.appendChild(dot);
+  }
+  return av;
+}
+
+function getAvatarCodeHTML(){
+  const sz = AVT_SIZES.find(s=>s.key===apg.size)||AVT_SIZES[2];
+  const cls = `avt avt--${apg.size}${apg.type==='photo'?' avt--photo':''}${apg.type==='icon'?' avt--icon':''}`;
+  const presenceLine = (apg.presence && apg.presence!=='none') ? `\n  <span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"avt__status${apg.presence==='offline'?' avt__status--off':''}"</span><span class="code-kw">>&#60;/span></span>` : '';
+  const inner = apg.type==='photo' ? `<span class="code-cm">&#60;!-- photo placeholder svg --></span>`
+    : apg.type==='icon' ? `<span class="code-cm">&#60;!-- generic icon svg --></span>`
+    : avtEsc((apg.initials||'MO').slice(0,2).toUpperCase());
+  return `<span class="code-cm">/* Flash · ${cap(apg.theme)} · ${cap(apg.type)} avatar · ${sz.label} */</span>
+<span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"${cls}"</span><span class="code-kw">></span>${inner}${presenceLine}
+<span class="code-kw">&#60;/span></span>`;
+}
+
+/* ── CODE PANEL LANGUAGES ──
+   HTML/CSS is the source of truth (real .avt markup). Blazor and React TSX
+   are illustrative wrappers over the same classes, so size/type/presence
+   stay the only things a consumer ports. */
+const AVATAR_LANGS = [
+  {key:'html',   label:'HTML / CSS', file:'avatar.html'},
+  {key:'blazor', label:'Blazor',     file:'DsAvatar.razor'},
+  {key:'tsx',    label:'React TSX',  file:'DsAvatar.tsx'},
+];
+let avatarLang = 'html';
+
+function getAvatarCodeBlazor(){
+  const sz = AVT_SIZES.find(s=>s.key===apg.size)||AVT_SIZES[2];
+  const typePascal = cap(apg.type);
+  const sizePascal = cap(apg.size);
+  const initials = avtEsc((apg.initials||'MO').slice(0,2).toUpperCase());
+  const presenceAttr = (apg.presence && apg.presence!=='none') ? `\n        <span class="code-attr">Presence</span>=<span class="code-val">"AvatarPresence.${cap(apg.presence)}"</span>` : '';
+  return `<span class="code-cm">@* DsAvatar.razor — usage *@</span>
+<span class="code-kw">&#60;DsAvatar</span> <span class="code-attr">Type</span>=<span class="code-val">"AvatarType.${typePascal}"</span>
+         <span class="code-attr">Size</span>=<span class="code-val">"AvatarSize.${sizePascal}"</span>${apg.type==='initials'?`\n         <span class="code-attr">Initials</span>=<span class="code-val">"${initials}"</span>`:''}${presenceAttr} <span class="code-kw">/></span>
+
+<span class="code-cm">@* DsAvatar.razor — component definition *@</span>
+<span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"@CssClass"</span><span class="code-kw">></span>
+  <span class="code-kw">@if</span> (Type == AvatarType.Photo) { @PhotoContent }
+  <span class="code-kw">else if</span> (Type == AvatarType.Icon) { @IconContent }
+  <span class="code-kw">else</span> { @Initials }
+  <span class="code-kw">@if</span> (Presence != AvatarPresence.None) {
+    <span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"@PresenceClass"</span><span class="code-kw">>&#60;/span></span>
+  }
+<span class="code-kw">&#60;/span></span>
+
+<span class="code-kw">@code</span> {
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> AvatarType Type { get; set; } = AvatarType.Initials;
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> AvatarSize Size { get; set; } = AvatarSize.Md;
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> <span class="code-cls">string</span> Initials { get; set; } = <span class="code-val">"MO"</span>;
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> AvatarPresence Presence { get; set; } = AvatarPresence.None;
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> RenderFragment PhotoContent { get; set; }
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> RenderFragment IconContent { get; set; }
+
+  <span class="code-cm">// avt--xs / avt--sm / avt--md / avt--lg / avt--xl — mapped explicitly</span>
+  <span class="code-kw">private</span> <span class="code-cls">string</span> SizeClass => Size <span class="code-kw">switch</span> {
+    AvatarSize.Xs => <span class="code-val">"xs"</span>, AvatarSize.Sm => <span class="code-val">"sm"</span>, AvatarSize.Lg => <span class="code-val">"lg"</span>, AvatarSize.Xl => <span class="code-val">"xl"</span>, _ => <span class="code-val">"md"</span>
+  };
+
+  <span class="code-kw">private</span> <span class="code-cls">string</span> CssClass =>
+    $<span class="code-val">"avt avt--{SizeClass}"</span> +
+    (Type == AvatarType.Photo ? <span class="code-val">" avt--photo"</span> : <span class="code-val">""</span>) +
+    (Type == AvatarType.Icon  ? <span class="code-val">" avt--icon"</span>  : <span class="code-val">""</span>);
+
+  <span class="code-kw">private</span> <span class="code-cls">string</span> PresenceClass =>
+    <span class="code-val">"avt__status"</span> + (Presence == AvatarPresence.Offline ? <span class="code-val">" avt__status--off"</span> : <span class="code-val">""</span>);
+}`;
+}
+
+function getAvatarCodeTSX(){
+  const initials = avtEsc((apg.initials||'MO').slice(0,2).toUpperCase());
+  const usageProps = `type=<span class="code-val">"${apg.type}"</span> size=<span class="code-val">"${apg.size}"</span>`
+    + (apg.type==='initials' ? ` initials=<span class="code-val">"${initials}"</span>` : '')
+    + ((apg.presence && apg.presence!=='none') ? ` presence=<span class="code-val">"${apg.presence}"</span>` : '');
+  return `<span class="code-cm">// DsAvatar.tsx</span>
+<span class="code-kw">import</span> React <span class="code-kw">from</span> <span class="code-val">'react'</span>;
+
+<span class="code-kw">type</span> <span class="code-cls">AvatarType</span> = <span class="code-val">'photo'</span> | <span class="code-val">'initials'</span> | <span class="code-val">'icon'</span>;
+<span class="code-kw">type</span> <span class="code-cls">AvatarSize</span> = <span class="code-val">'xs'</span> | <span class="code-val">'sm'</span> | <span class="code-val">'md'</span> | <span class="code-val">'lg'</span> | <span class="code-val">'xl'</span>;
+<span class="code-kw">type</span> <span class="code-cls">AvatarPresence</span> = <span class="code-val">'none'</span> | <span class="code-val">'online'</span> | <span class="code-val">'offline'</span>;
+
+<span class="code-kw">interface</span> <span class="code-cls">DsAvatarProps</span> {
+  type?: <span class="code-cls">AvatarType</span>;
+  size?: <span class="code-cls">AvatarSize</span>;
+  initials?: <span class="code-cls">string</span>;
+  presence?: <span class="code-cls">AvatarPresence</span>;
+  photo?: React.ReactNode;
+  icon?: React.ReactNode;
+}
+
+<span class="code-kw">export const</span> <span class="code-cls">DsAvatar</span>: React.FC&#60;DsAvatarProps> = ({
+  type = <span class="code-val">'initials'</span>,
+  size = <span class="code-val">'md'</span>,
+  initials = <span class="code-val">'MO'</span>,
+  presence = <span class="code-val">'none'</span>,
+  photo,
+  icon,
+}) => {
+  <span class="code-kw">const</span> classes = [
+    <span class="code-val">'avt'</span>,
+    \`avt--\${size}\`,
+    type === <span class="code-val">'photo'</span> &amp;&amp; <span class="code-val">'avt--photo'</span>,
+    type === <span class="code-val">'icon'</span>  &amp;&amp; <span class="code-val">'avt--icon'</span>,
+  ].filter(Boolean).join(<span class="code-val">' '</span>);
+
+  <span class="code-kw">return</span> (
+    &#60;span className={classes}>
+      {type === <span class="code-val">'photo'</span> ? photo : type === <span class="code-val">'icon'</span> ? icon : initials.slice(0, 2).toUpperCase()}
+      {presence !== <span class="code-val">'none'</span> &amp;&amp; (
+        &#60;span className={\`avt__status\${presence === <span class="code-val">'offline'</span> ? <span class="code-val">' avt__status--off'</span> : <span class="code-val">''</span>}\`} />
+      )}
+    &#60;/span>
+  );
+};
+
+<span class="code-cm">// Usage</span>
+&#60;DsAvatar ${usageProps} />`;
+}
+
+function getAvatarCode(){
+  return avatarLang==='blazor' ? getAvatarCodeBlazor()
+       : avatarLang==='tsx'    ? getAvatarCodeTSX()
+       : getAvatarCodeHTML();
+}
+
+function setAvatarLang(lang){
+  if(!AVATAR_LANGS.some(l=>l.key===lang)) return;
+  avatarLang = lang;
+  document.querySelectorAll('#avatar-code-tab .code-seg__btn').forEach(b=>{
+    const on = b.dataset.lang===lang;
+    b.setAttribute('aria-selected', on ? 'true' : 'false');
+    b.setAttribute('tabindex', on ? '0' : '-1');
+  });
+  const file = document.getElementById('avatar-lang-file');
+  const meta = AVATAR_LANGS.find(l=>l.key===lang);
+  if(file && meta) file.textContent = meta.file;
+  const block = document.getElementById('apg-code-block');
+  if(block) block.innerHTML = getAvatarCode();
+}
+
+/* Arrow-key navigation, per the WAI-ARIA tablist pattern: the segmented
+   control is one tab stop and Left/Right (plus Home/End) move between
+   languages. */
+function avatarLangKeydown(e){
+  const i = AVATAR_LANGS.findIndex(l=>l.key===avatarLang);
+  let n = i;
+  if(e.key==='ArrowLeft')       n = (i - 1 + AVATAR_LANGS.length) % AVATAR_LANGS.length;
+  else if(e.key==='ArrowRight') n = (i + 1) % AVATAR_LANGS.length;
+  else if(e.key==='Home')       n = 0;
+  else if(e.key==='End')        n = AVATAR_LANGS.length - 1;
+  else return;
+  e.preventDefault();
+  setAvatarLang(AVATAR_LANGS[n].key);
+  const btn = document.getElementById('avatar-lang-' + AVATAR_LANGS[n].key);
+  if(btn) btn.focus();
+}
+
+function apgRefresh(){
+  document.querySelectorAll('.apg-stage-el').forEach(stage=>{
+    stage.innerHTML = '';
+    stage.appendChild(makeAvatarEl());
+  });
+  document.querySelectorAll('.apg-initials-input-el').forEach(inp=>{
+    inp.disabled = apg.type !== 'initials';
+    if(document.activeElement !== inp) inp.value = apg.initials;
+  });
+  const block = document.getElementById('apg-code-block');
+  if(block) block.innerHTML = getAvatarCode();
+}
+
+/* Avatar Playground renders into more than one mount (the main Overview
+   demo, and a smaller copy on the Code tab) so both stay in sync with
+   the same shared apg state. */
+const AVATAR_PLAYGROUND_MOUNTS = [
+  {rootId:'avatar-playground', idSuffix:'', wrap:true, title:'Try the component', desc:'Adjust the controls to test component states.', headingAbove:'Use avatars to identify a person or entity at a glance, with a fallback that always applies.'},
+  {rootId:'avatar-code-playground', idSuffix:'-code', style:'code', title:'Playground', desc:'Live demo of the component.'},
+];
+
+function renderAvatarPlayground(){
+  apg.theme = document.documentElement.getAttribute('data-theme')==='dark' ? 'dark' : 'light';
+  const sbg = stageBg(apg.theme);
+
+  const typeBtns = AVT_TYPES.map(t=>`<button class="btn-pg__pill${apg.type===t.key?' on':''}" onclick="apgSet('type','${t.key}')">${t.label}</button>`).join('');
+  const szBtns   = AVT_SIZES.map(s=>`<button class="btn-pg__pill${apg.size===s.key?' on':''}" onclick="apgSet('size','${s.key}')">${s.label}</button>`).join('');
+  const presBtns = [['none','None'],['online','Online'],['offline','Offline']].map(([k,l])=>`<button class="btn-pg__pill${apg.presence===k?' on':''}" onclick="apgSet('presence','${k}')">${l}</button>`).join('');
+
+  AVATAR_PLAYGROUND_MOUNTS.forEach(mount=>{
+    const root = document.getElementById(mount.rootId);
+    if(!root) return;
+    const s = mount.idSuffix;
+    const demo = `
+      <div class="btn-pg">
+        <div class="btn-pg__stage apg-stage-el" id="apg-stage${s}" style="background:${sbg}"></div>
+        <div class="btn-pg__ctrls">
+          <div class="btn-pg__group"><span class="btn-pg__clabel">Type</span><div class="btn-pg__pill-row">${typeBtns}</div></div>
+          <div class="btn-pg__group"><span class="btn-pg__clabel">Size</span><div class="btn-pg__pill-row">${szBtns}</div></div>
+          <div class="btn-pg__group"><span class="btn-pg__clabel">Presence</span><div class="btn-pg__pill-row">${presBtns}</div></div>
+          <div class="btn-pg__group"><span class="btn-pg__clabel">Initials</span><input class="cpg-label-input apg-initials-input-el" id="apg-initials-input${s}" value="${avtEsc(apg.initials)}" maxlength="2" oninput="apgSetInitials(this.value)" placeholder="MO" ${apg.type!=='initials'?'disabled':''}></div>
+        </div>
+      </div>`;
+
+    if(mount.style==='code'){
+      root.innerHTML = `
+        <div class="type-sub__title">${mount.title}</div>
+        <div class="type-sub__desc">${mount.desc}</div>
+        <div class="cpg-section-outline">${demo}</div>`;
+      return;
+    }
+
+    const inner = `
+      <div class="cpg-layout">
+        <div class="cpg-layout__intro">
+          ${mount.wrap ? `<span class="cpg-cursor-icon">${CPG_CURSOR_ICON_SVG}</span>` : ''}
+          <div class="cpg-layout__title">${mount.title}</div>
+          <div class="cpg-layout__desc">${mount.desc}</div>
+        </div>
+        <div class="cpg-layout__demo">${demo}</div>
+      </div>`;
+    const wrapped = mount.wrap ? `<div class="cpg-section-block">${inner}</div>` : inner;
+    root.innerHTML = (mount.headingAbove ? `<div class="cpg-overview-heading"><span class="cpg-overview-heading__icon">${CPG_INFO_ICON_SVG}</span><span>${mount.headingAbove}</span></div>` : '') + wrapped;
+  });
+
+  apgRefresh();
+}
+
+function renderAvatarCodeTab(){
+  const root = document.getElementById('avatar-code-tab');
+  if(!root) return;
+  root.innerHTML = `
+    <div class="type-sub__title">Code</div>
+    <div class="type-sub__desc">Live snippet matching the current Playground configuration &mdash; switch to Overview to change it.</div>
+    <div class="cpg-section-outline">
+      <div class="code-panel code-panel--bare open">
+        <div class="code-panel__head">
+          <div class="code-seg" role="tablist" aria-label="Code language" onkeydown="avatarLangKeydown(event)">
+            ${AVATAR_LANGS.map(l=>`<button type="button" role="tab" class="code-seg__btn" id="avatar-lang-${l.key}" data-lang="${l.key}" aria-selected="${avatarLang===l.key?'true':'false'}" aria-controls="apg-code-block" tabindex="${avatarLang===l.key?'0':'-1'}" onclick="setAvatarLang('${l.key}')">${l.label}</button>`).join('')}
+          </div>
+          <span class="code-lang-file" id="avatar-lang-file">${(AVATAR_LANGS.find(l=>l.key===avatarLang)||AVATAR_LANGS[0]).file}</span>
+          <button class="code-copy-btn" onclick="apgCopyCode()" id="apg-copy-btn">Copy</button>
+        </div>
+        <div class="code-body"><div class="code-block" id="apg-code-block" role="tabpanel" aria-live="polite"></div></div>
+      </div>
+    </div>`;
+}
+
+/* Flexible avatar markup builder for the Overview's illustrative sections
+   (key types, in-context mockups) — real .avt markup with a given
+   type/size/initials/presence. Doc-site-only helper; makeAvatarHTML /
+   makeAvatarEl remain the canonical builders. */
+function ovAvatar({type='initials', size='md', initials='MO', presence='none'}={}){
+  return makeAvatarHTML(type, size, initials, presence);
+}
+
+const KEY_TYPES = [
+  {key:'photo',    name:'Photo',    use:'A real user image exists and has loaded — the strongest identity signal.'},
+  {key:'initials', name:'Initials', use:'The default fallback: two uppercase letters when there is no photo.'},
+  {key:'icon',     name:'Icon',     use:'A generic glyph for system actors or unknown/unassigned entities.'},
+];
+
+function renderAvatarKeyTypes(){
+  const root = document.getElementById('avatar-keytypes');
+  if(!root) return;
+  const theme = currentTheme();
+
+  const cells = KEY_TYPES.map(t=>`
+    <div class="spec-cell">
+      <div class="spec-cell__stage" style="background:${stageBg(theme)}">${ovAvatar({type:t.key, size:'lg', initials:'RB'})}</div>
+      <div class="spec-cell__name">${t.name}</div>
+      <div class="spec-cell__desc">${t.use}</div>
+    </div>`).join('');
+
+  root.innerHTML = `
+    <div class="cpg-section-heading">
+      <div class="cpg-layout__title">Key types</div>
+      <div class="cpg-layout__desc">Three types, one identity marker. Photo when it exists, initials as the default fallback, an icon for anything without a name.</div>
+    </div>
+    <div class="cpg-section-block">
+      <div class="spec-grid">${cells}</div>
+    </div>`;
+}
+
+function renderAvatarInSitu(){
+  const root = document.getElementById('avatar-insitu');
+  if(!root) return;
+  const theme = currentTheme();
+  const sbg = stageBg(theme);
+
+  const bar = w => `<span class="spec-mock__bar" style="width:${w}"></span>`;
+
+  // 1. User list row — avatar + name + role
+  const listRows = [
+    {initials:'MO', name:'Mo Osei',    role:'Admin'},
+    {initials:'RB', name:'Riley Baker', role:'Editor'},
+    {initials:'AK', name:'Amara Khan',  role:'Viewer'},
+  ].map(p=>`<div class="spec-mock__row">${ovAvatar({type:'initials', size:'sm', initials:p.initials})}<span class="spec-mock__spacer" style="width:10px"></span><span class="spec-mock__label" style="min-width:90px">${p.name}</span>${bar('54px')}<span style="margin-left:auto;color:var(--chrome-muted);font-size:11px">${p.role}</span></div>`).join('');
+
+  const listMock = `
+    <div class="spec-mock__stage" style="background:${sbg}">${listRows}</div>
+    <div class="spec-mock__cap"><b>User list row</b>Avatar, name and role in a settings or members list.</div>`;
+
+  // 2. Comment / notification card — avatar + presence dot beside name/timestamp
+  const commentMock = `
+    <div class="spec-mock__stage" style="background:${sbg}">
+      <div class="spec-mock__row">${ovAvatar({type:'initials', size:'sm', initials:'RB', presence:'online'})}<span class="spec-mock__spacer" style="width:10px"></span><span class="spec-mock__label"><b>Riley Baker</b> &middot; 2m ago</span></div>
+      <div class="spec-mock__row" style="padding-left:42px">${bar('92%')}</div>
+      <div class="spec-mock__row" style="padding-left:42px">${bar('64%')}</div>
+    </div>
+    <div class="spec-mock__cap"><b>Comment / notification</b>Presence dot shows the commenter is online right now.</div>`;
+
+  // 3. Avatar group / stack — collaborators row
+  const groupMock = `
+    <div class="spec-mock__stage" style="background:${sbg}">
+      <div class="avt-group">
+        ${ovAvatar({type:'initials', size:'sm', initials:'MO'})}
+        ${ovAvatar({type:'photo', size:'sm'})}
+        ${ovAvatar({type:'initials', size:'sm', initials:'AK'})}
+        <span class="avt-more" style="width:32px;height:32px;font-size:11px">+2</span>
+      </div>
+      <div class="spec-mock__row" style="margin-top:8px">${bar('80%')}</div>
+    </div>
+    <div class="spec-mock__cap"><b>Avatar group</b>5 people editing this doc, stacked and capped with +N.</div>`;
+
+  // 4. Profile header — large avatar + name/title
+  const profileMock = `
+    <div class="spec-mock__stage" style="background:${sbg}">
+      <div class="spec-mock__row" style="align-items:center">${ovAvatar({type:'initials', size:'xl', initials:'MO'})}<span class="spec-mock__spacer" style="width:14px"></span><div><div class="spec-mock__label" style="font-weight:700">Mo Osei</div><div class="spec-mock__label" style="color:var(--chrome-muted);font-size:11px">Product Designer</div></div></div>
+    </div>
+    <div class="spec-mock__cap"><b>Profile header</b>An XL avatar anchors a profile page's name and title.</div>`;
+
+  root.innerHTML = `
+    <div class="cpg-section-heading">
+      <div class="cpg-layout__title">In context</div>
+      <div class="cpg-layout__desc">The same avatar does four everyday jobs &mdash; a list row, a comment, a group stack, and a profile header.</div>
+    </div>
+    <div class="cpg-section-block">
+      <div class="spec-insitu-grid">
+        <div class="spec-mock">${listMock}</div>
+        <div class="spec-mock">${commentMock}</div>
+        <div class="spec-mock">${groupMock}</div>
+        <div class="spec-mock">${profileMock}</div>
+      </div>
+    </div>`;
+}
+
+function apgSet(key, val){
+  apg[key] = val;
+  renderAvatarPlayground();
+}
+function apgSetInitials(val){ apg.initials = val.slice(0,2).toUpperCase(); apgRefresh(); }
+function apgReset(){ apg.type='initials'; apg.size='md'; apg.presence='none'; apg.initials='MO'; renderAvatarPlayground(); }
+function apgCopyCode(){
+  const b = document.getElementById('apg-code-block');
+  if(!b) return;
+  navigator.clipboard.writeText(b.innerText||b.textContent).catch(()=>{});
+  const btn = document.getElementById('apg-copy-btn');
+  if(btn){ btn.textContent = 'Copied!'; setTimeout(()=>btn.textContent='Copy', 2000); }
+}
+
+function renderAvatarReference(){
+  const root = document.getElementById('avatar-reference');
+  if(!root) return;
+
+  const theme = currentTheme();
+  const sbg = stageBg(theme);
+
+  /* ---- Anatomy ---- */
+  const heroAvatar = ovAvatar({type:'initials', size:'xl', initials:'RB', presence:'online'});
+
+  const parts = [
+    {num:1, name:'Container',  note:'Circular surface, 50% radius, coloured by fallback type.', vis:'<span class="avt avt--lg" style="background:var(--color-surface-n2)"></span>'},
+    {num:2, name:'Content',    note:'A photo, two uppercase initials, or a generic glyph — always one of the three.', vis:'<span style="font-weight:700;font-size:19px;color:var(--chrome-txt)">RB</span>'},
+    {num:3, name:'Presence dot', note:'Optional. Bottom-right, bordered to separate it from the avatar.', vis:'<span class="avt__status" style="position:relative;bottom:0;right:0"></span>'},
+  ];
+  const partCards = parts.map(p=>`
+    <div class="spec-part">
+      <div class="spec-part__stage" style="background:${sbg}">${p.vis}</div>
+      <div class="spec-part__body">
+        <div class="spec-part__name"><span class="spec-part__num">${p.num}</span>${p.name}</div>
+        <div class="spec-part__note">${p.note}</div>
+      </div>
+    </div>`).join('');
+
+  /* ---- Size & dimensions ---- */
+  const sizeDemo = AVT_SIZES.map(sz=>`
+    <div class="spec-size-item">
+      ${ovAvatar({type:'initials', size:sz.key, initials:'MO'})}
+      <span class="spec-size-item__lbl">${sz.px}px</span>
+    </div>`).join('');
+
+  const sizeRows = AVT_SIZES.map(sz=>`
+    <tr>
+      <td class="dd-table__name">${sz.label}</td>
+      <td>${sz.px}px</td>
+      <td>${sz.fs}px</td>
+    </tr>`).join('');
+
+  /* ---- Colour / presence tokens ---- */
+  const tokRows = [
+    {name:'Initials background', tok:'--color-surface-n2', sw:'var(--color-surface-n2)'},
+    {name:'Initials text',       tok:'--color-text-2',     sw:'var(--color-text-2)'},
+    {name:'Photo / icon background', tok:'--color-surface-n1', sw:'var(--color-surface-n1)'},
+    {name:'Icon glyph colour',   tok:'--chrome-muted',     sw:'var(--chrome-muted)'},
+    {name:'Presence — online',  tok:'--color-success-h',  sw:'var(--color-success-h)'},
+    {name:'Presence — offline', tok:'--prim-grey-700',     sw:'var(--prim-grey-700)'},
+  ].map(t=>`
+    <tr>
+      <td class="dd-table__name">${t.name}</td>
+      <td><div class="spec-tok-cell"><span class="spec-tok-sw" style="background:${t.sw}"></span><code>${t.tok}</code></div></td>
+    </tr>`).join('');
+
+  /* ---- States (presence is a genuine, non-removable/selectable state) ---- */
+  const states = [
+    {name:'None',    note:'No presence dot — the default.',       av:ovAvatar({type:'initials', size:'lg', initials:'MO', presence:'none'})},
+    {name:'Online',  note:'Success-coloured dot, bottom-right.',  av:ovAvatar({type:'initials', size:'lg', initials:'MO', presence:'online'})},
+    {name:'Offline', note:'Neutral grey dot, bottom-right.',      av:ovAvatar({type:'initials', size:'lg', initials:'MO', presence:'offline'})},
+  ];
+  const stateCells = states.map(s=>`
+    <div class="spec-cell">
+      <div class="spec-cell__stage" style="background:${sbg}">${s.av}</div>
+      <div class="spec-cell__name">${s.name}</div>
+      <div class="spec-cell__desc">${s.note}</div>
+    </div>`).join('');
+
+  root.innerHTML = `
+    <div class="type-sub">
+      <div class="type-sub__title">Anatomy</div>
+      <div class="type-sub__desc">An avatar is a circular container with photo, initials or icon content, plus an optional presence dot.</div>
+      <div class="cpg-section-outline">
+        <div class="spec-hero" style="background:${sbg}">${heroAvatar}</div>
+        <div class="spec-parts">${partCards}</div>
+      </div>
+    </div>
+
+    <div class="type-sub">
+      <div class="type-sub__title">Size &amp; dimensions</div>
+      <div class="type-sub__desc">Five sizes share one shape; height, width and text scale together. All sizes use a 50% (circular) radius and 700 weight uppercase initials.</div>
+      <div class="cpg-section-outline">
+        <div class="spec-size-demo" style="background:${sbg}">${sizeDemo}</div>
+        <div class="dd-table-wrap"><table class="dd-table">
+          <thead><tr><th>Size</th><th>Dimension</th><th>Text</th></tr></thead>
+          <tbody>${sizeRows}</tbody>
+        </table></div>
+      </div>
+    </div>
+
+    <div class="type-sub">
+      <div class="type-sub__title">Colour &amp; presence tokens</div>
+      <div class="type-sub__desc">Avatar has no colour axis like Pills &mdash; these are the fallback background/text tokens and the two presence-dot colours.</div>
+      <div class="cpg-section-outline">
+        <div class="dd-table-wrap"><table class="dd-table" style="min-width:420px">
+          <thead><tr><th>Token</th><th>Value</th></tr></thead>
+          <tbody>${tokRows}</tbody>
+        </table></div>
+      </div>
+    </div>
+
+    <div class="type-sub" style="margin-bottom:0">
+      <div class="type-sub__title">States</div>
+      <div class="type-sub__desc">The only real Avatar state is presence &mdash; none, online, or offline.</div>
+      <div class="cpg-section-outline">
+        <div class="spec-grid">${stateCells}</div>
+      </div>
+    </div>`;
+}
+
+try { renderAvatarCodeTab(); } catch(e){ console.error('avatar-code-tab',e); }
+try { renderAvatarPlayground(); } catch(e){ console.error('avatar-playground',e); }
+try { renderAvatarKeyTypes(); } catch(e){ console.error('avatar-keytypes',e); }
+try { renderAvatarInSitu(); } catch(e){ console.error('avatar-insitu',e); }
+try { renderAvatarReference(); } catch(e){ console.error('avatar-reference',e); }
+
+function avatarTabSwitch(tab){
+  const nav = document.getElementById('avatar-tabs-list');
+  if(!nav) return;
+  nav.querySelectorAll('.tab-item').forEach(btn=>btn.classList.toggle('on', btn.getAttribute('data-avatar-tab')===tab));
+  document.querySelectorAll('#s-avatar .tabs-panel[data-avatar-panel]').forEach(p=>p.classList.toggle('on', p.getAttribute('data-avatar-panel')===tab));
+}
+
+/* ============================================================
    SWITCH
    Same tabbed-page treatment as Chips & Pills (.sec--tabbed):
    Overview / Style / Code / Changelog, a shared-state playground
@@ -11978,12 +12542,20 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.64.19';
+const SYSTEM_VERSION = '1.65.0';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.65.0', date:'2026-08-07', author:'Helen', title:'Avatar gets the full Pills-page treatment', changes:[
+        ['changed','Avatar rebuilt from a static section into a tabbed .sec--tabbed page (Overview / Style / Code / Changelog), matching Pills\' structure — hero with a mini live preview, sec-tabs bar, and a Changelog tab holding the section\'s auto-injected changelog block'],
+        ['added','Interactive playground (apg state) with Type (Photo/Initials/Icon), Size (XS–XL), Presence (None/Online/Offline) and an editable Initials input, rendered into both an Overview mount and a smaller Code-tab mount from the same shared state'],
+        ['added','Key types grid replacing Pills\' colour-variant grid — guidance on when to reach for Photo vs Initials vs Icon'],
+        ['added','Four In-context mockups: a user list row, a comment/notification card with a presence dot, an avatar group/stack, and a profile header'],
+        ['added','Style tab: anatomy, size table, a colour/presence token table (no colour-variant axis, since Avatar has none), and a genuine presence-only states grid'],
+        ['added','Code tab with HTML/CSS, Blazor and React TSX behind a segmented language switcher, driven by the same playground state'],
+      ]},
       {version:'1.64.19', date:'2026-08-07', author:'Mo', title:'Restored the always-visible chart value labels lost in an earlier merge', changes:[
         ['fixed','Bar chart value labels, Line & Area point labels, and the Donut legend\'s raw figures (all shipped in a since-orphaned PR) had been silently dropped — the PR that added them was based on a branch that merged into main before the PR itself did, so its commit never reached main\'s history. Reapplied all three onto the current file: .cht__val CSS rule, the bar/line renderer text elements, and fmt(x.v) in the donut legend'],
       ]},
@@ -13071,7 +13643,15 @@ const CHANGELOG = {
         ['added','Single-select segmented control and multi-select formatting toolbar, both interactive'],
       ]},
     ]},
-    {secId:'s-avatar', name:'Avatar', version:'1.1.1', entries:[
+    {secId:'s-avatar', name:'Avatar', version:'1.2.0', entries:[
+      {version:'1.2.0', date:'2026-08-07', author:'Helen', title:'Full Pills-page treatment: tabs, playground, In context, Style & Code', changes:[
+        ['added','Tabbed Overview/Style/Code/Changelog layout matching Pills, with a hero mini preview and .sec-tabs bar'],
+        ['added','Interactive playground with Type/Size/Presence controls and an editable Initials field, with live code generation (HTML/Blazor/TSX)'],
+        ['added','Four In-context mockups: user list row, comment/notification card, avatar group/stack, and profile header'],
+        ['added','Key types grid replacing Pills\' colour-variant grid, for Photo/Initials/Icon guidance'],
+        ['added','Style tab: anatomy breakdown, size table, colour/presence token table, and a presence-only states grid (None/Online/Offline)'],
+        ['changed','Do/Dont list grows from 3 do / 3 dont to 4 do / 3 dont, adding a rule to use two uppercase letters for initials'],
+      ]},
       {version:'1.1.1', date:'2026-08-03', author:'Mo', title:'AI context tab added', changes:[
         ['added','AI context tab documenting the real, fully static .avt/.avt--*/.avt__status/.avt-group/.avt-more markup, plus its existing "When to use" Do/Dont guidance (3 do / 3 dont)'],
       ]},
@@ -15920,6 +16500,7 @@ try { renderSectionChangelogs(); } catch(e){ console.error('section-changelog',e
    instead of leaving it inline above the tabs. */
 [
   {secId:'s-chips',  panelId:'pill-changelog-panel'},
+  {secId:'s-avatar', panelId:'avatar-changelog-panel'},
   {secId:'s-switch', panelId:'sw-changelog-panel'},
   {secId:'s-dropdown', panelId:'dd-changelog-panel'},
   {secId:'s-tags',   panelId:'tag-changelog-panel'},
