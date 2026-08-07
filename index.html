@@ -6015,7 +6015,7 @@ body.home .main{max-width:none;margin:0;padding:0}
         <h1 class="sec__title">Avatar</h1>
         <div class="sec-header-meta">
           <span class="comp-ver-badge" style="margin-left:0">v1.2.0</span>
-          <details class="ai-ctx">
+<details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-avatar">
 {
@@ -6043,7 +6043,7 @@ body.home .main{max-width:none;margin:0;padding:0}
     ".avt-more"
   ],
   "css": "/* ---- Avatar ---- */\n.avt { display:inline-flex;align-items:center;justify-content:center;border-radius:50%;background:var(--color-surface-n2);color:var(--color-text-2);font-weight:700;flex-shrink:0;position:relative;line-height:1;user-select:none;text-transform:uppercase }\n.avt img { width:100%;height:100%;object-fit:cover;display:block;border-radius:50% }\n.avt--photo { background:var(--color-surface-n1);color:var(--color-text-m) }\n.avt--photo svg { width:60%;height:60% }\n.avt--icon { color:var(--chrome-muted);background:var(--color-surface-n1) }\n.avt--icon svg { width:55%;height:55% }\n.avt--xs { width:24px;height:24px;font-size:9px }\n.avt--sm { width:32px;height:32px;font-size:11px }\n.avt--md { width:40px;height:40px;font-size:14px }\n.avt--lg { width:56px;height:56px;font-size:19px }\n.avt--xl { width:72px;height:72px;font-size:25px }\n.avt__status { position:absolute;bottom:1px;right:1px;width:27%;height:27%;border-radius:50%;border:2px solid var(--chrome-nav);background:var(--color-success-h);box-sizing:border-box }\n.avt__status--off { background:var(--prim-grey-700) }\n.avt-group { display:inline-flex;align-items:center }\n.avt-group &gt; * { border:2px solid var(--chrome-nav);border-radius:50%;margin-left:-11px }\n.avt-group &gt; *:first-child { margin-left:0 }\n.avt-more { display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%;background:var(--color-surface-n2);color:var(--chrome-txt);font-size:12px;font-weight:700;flex-shrink:0 }",
-  "js": "const AVT_SIZES = [\n  {key:'xs', label:'XS', px:24, fs:9},\n  {key:'sm', label:'SM', px:32, fs:11},\n  {key:'md', label:'MD', px:40, fs:14},\n  {key:'lg', label:'LG', px:56, fs:19},\n  {key:'xl', label:'XL', px:72, fs:25},\n];\n\nconst AVT_TYPES = [\n  {key:'photo',    label:'Photo'},\n  {key:'initials', label:'Initials'},\n  {key:'icon',     label:'Icon'},\n];\n\nfunction avtPhotoSVG(){\n  return `&lt;svg viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"&gt;&lt;circle cx=\"8\" cy=\"8\" r=\"2.4\" fill=\"currentColor\"/&gt;&lt;path d=\"M2.5 19l5.8-7 3.6 4.3 2.8-3.3 6.8 6h-19z\" fill=\"currentColor\"/&gt;&lt;/svg&gt;`;\n}\n\nfunction avtIconSVG(){\n  return `&lt;svg viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"&gt;&lt;circle cx=\"12\" cy=\"8\" r=\"4\" fill=\"currentColor\"/&gt;&lt;path d=\"M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8\" fill=\"currentColor\"/&gt;&lt;/svg&gt;`;\n}\n\nfunction makeAvatarHTML(type, sizeKey, initials, presence){\n  const cls = `avt avt--${sizeKey}${type==='photo'?' avt--photo':''}${type==='icon'?' avt--icon':''}`;\n  let inner = '';\n  if(type==='photo') inner = avtPhotoSVG();\n  else if(type==='icon') inner = avtIconSVG();\n  else inner = avtEsc((initials||'JC').slice(0,2).toUpperCase());\n  if(presence &amp;&amp; presence!=='none') inner += `&lt;span class=\"avt__status${presence==='offline'?' avt__status--off':''}\"&gt;&lt;/span&gt;`;\n  const aria = type==='photo' ? ' aria-label=\"Photo placeholder\"' : '';\n  return `&lt;span class=\"${cls}\"${aria}&gt;${inner}&lt;/span&gt;`;\n}\n\nfunction makeAvatarEl(){\n  const av = document.createElement('span');\n  av.className = `avt avt--${apg.size}${apg.type==='photo'?' avt--photo':''}${apg.type==='icon'?' avt--icon':''}`;\n  if(apg.type==='photo'){ av.innerHTML = avtPhotoSVG(); av.setAttribute('aria-label','Photo placeholder'); }\n  else if(apg.type==='icon'){ av.innerHTML = avtIconSVG(); }\n  else { av.textContent = (apg.initials||'JC').slice(0,2).toUpperCase(); }\n  if(apg.presence &amp;&amp; apg.presence!=='none'){\n    const dot = document.createElement('span');\n    dot.className = `avt__status${apg.presence==='offline'?' avt__status--off':''}`;\n    av.appendChild(dot);\n  }\n  return av;\n}",
+  "js": "const AVT_SIZES = [\n  {key:'xs', label:'XS', px:24, fs:9},\n  {key:'sm', label:'SM', px:32, fs:11},\n  {key:'md', label:'MD', px:40, fs:14},\n  {key:'lg', label:'LG', px:56, fs:19},\n  {key:'xl', label:'XL', px:72, fs:25},\n];\n\nconst AVT_TYPES = [\n  {key:'photo',    label:'Photo'},\n  {key:'initials', label:'Initials'},\n  {key:'icon',     label:'Icon'},\n];\n\nfunction avtPhotoSVG(){\n  return `&lt;svg viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"&gt;&lt;circle cx=\"8\" cy=\"8\" r=\"2.4\" fill=\"currentColor\"/&gt;&lt;path d=\"M2.5 19l5.8-7 3.6 4.3 2.8-3.3 6.8 6h-19z\" fill=\"currentColor\"/&gt;&lt;/svg&gt;`;\n}\n\nfunction avtIconSVG(){\n  return `&lt;svg viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"&gt;&lt;circle cx=\"12\" cy=\"8\" r=\"4\" fill=\"currentColor\"/&gt;&lt;path d=\"M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8\" fill=\"currentColor\"/&gt;&lt;/svg&gt;`;\n}\n\nfunction makeAvatarHTML(type, sizeKey, initials, presence){\n  const cls = `avt avt--${sizeKey}${type==='photo'?' avt--photo':''}${type==='icon'?' avt--icon':''}`;\n  let inner = '';\n  if(type==='photo') inner = avtPhotoSVG();\n  else if(type==='icon') inner = avtIconSVG();\n  else inner = avtEsc((initials||'JC').slice(0,2).toUpperCase());\n  if(presence &amp;&amp; presence!=='none') inner += `&lt;span class=\"avt__status${presence==='offline'?' avt__status--off':''}\"&gt;&lt;/span&gt;`;\n  const aria = type==='photo' ? ' aria-label=\"Photo placeholder\"' : '';\n  return `&lt;span class=\"${cls}\"${aria}&gt;${inner}&lt;/span&gt;`;\n}\n\nfunction makeAvatarEl(){\n  const av = document.createElement('span');\n  av.className = `avt avt--${avPg.size}${avPg.type==='photo'?' avt--photo':''}${avPg.type==='icon'?' avt--icon':''}`;\n  if(avPg.type==='photo'){ av.innerHTML = avtPhotoSVG(); av.setAttribute('aria-label','Photo placeholder'); }\n  else if(avPg.type==='icon'){ av.innerHTML = avtIconSVG(); }\n  else { av.textContent = (avPg.initials||'JC').slice(0,2).toUpperCase(); }\n  if(avPg.presence &amp;&amp; avPg.presence!=='none'){\n    const dot = document.createElement('span');\n    dot.className = `avt__status${avPg.presence==='offline'?' avt__status--off':''}`;\n    av.appendChild(dot);\n  }\n  return av;\n}",
   "usage": {
     "do": [
       "Always provide a fallback: initials, then a generic glyph.",
@@ -6057,8 +6057,8 @@ body.home .main{max-width:none;margin:0;padding:0}
       "Don't rely on the presence dot's colour alone to convey status."
     ]
   },
-  "contentHash": "7adfdaf58097e26b26db2a4d3b517fe7d1340e29c6b692ed0f5cf0c2100cdf25",
-  "note": "makeAvatarHTML is the minimal real-markup builder (type+size+initials+presence -&gt; avatar HTML string); makeAvatarEl is the fuller version used by the live playground stage. apg (playground state)/getAvatarCode*/renderAvatarPlayground/renderAvatarReference/renderAvatarInSitu/renderAvatarKeyTypes/ovAvatar are doc-site-only playground plumbing, excluded."
+  "contentHash": "a98943ed4803825b3c13a1712cfb05b73f4e34197abf740dc5f9101ad24db541",
+  "note": "makeAvatarHTML is the minimal real-markup builder (type+size+initials+presence -&gt; avatar HTML string); makeAvatarEl is the fuller version used by the live playground stage. avPg (playground state, renamed from apg to avoid colliding with Alert's identically-named playground)/getAvatarCode*/renderAvatarPlayground/renderAvatarReference/renderAvatarInSitu/renderAvatarKeyTypes/ovAvatar are doc-site-only playground plumbing, excluded."
 }
   </pre>
 </details>
@@ -10530,30 +10530,30 @@ function makeAvatarHTML(type, sizeKey, initials, presence){
 }
 
 /* ── AVATAR PLAYGROUND ── */
-let apg = { type:'initials', size:'md', presence:'none', initials:'JC', theme:'light' };
+let avPg = { type:'initials', size:'md', presence:'none', initials:'JC', theme:'light' };
 
 function makeAvatarEl(){
   const av = document.createElement('span');
-  av.className = `avt avt--${apg.size}${apg.type==='photo'?' avt--photo':''}${apg.type==='icon'?' avt--icon':''}`;
-  if(apg.type==='photo'){ av.innerHTML = avtPhotoSVG(); av.setAttribute('aria-label','Photo placeholder'); }
-  else if(apg.type==='icon'){ av.innerHTML = avtIconSVG(); }
-  else { av.textContent = (apg.initials||'JC').slice(0,2).toUpperCase(); }
-  if(apg.presence && apg.presence!=='none'){
+  av.className = `avt avt--${avPg.size}${avPg.type==='photo'?' avt--photo':''}${avPg.type==='icon'?' avt--icon':''}`;
+  if(avPg.type==='photo'){ av.innerHTML = avtPhotoSVG(); av.setAttribute('aria-label','Photo placeholder'); }
+  else if(avPg.type==='icon'){ av.innerHTML = avtIconSVG(); }
+  else { av.textContent = (avPg.initials||'JC').slice(0,2).toUpperCase(); }
+  if(avPg.presence && avPg.presence!=='none'){
     const dot = document.createElement('span');
-    dot.className = `avt__status${apg.presence==='offline'?' avt__status--off':''}`;
+    dot.className = `avt__status${avPg.presence==='offline'?' avt__status--off':''}`;
     av.appendChild(dot);
   }
   return av;
 }
 
 function getAvatarCodeHTML(){
-  const sz = AVT_SIZES.find(s=>s.key===apg.size)||AVT_SIZES[2];
-  const cls = `avt avt--${apg.size}${apg.type==='photo'?' avt--photo':''}${apg.type==='icon'?' avt--icon':''}`;
-  const presenceLine = (apg.presence && apg.presence!=='none') ? `\n  <span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"avt__status${apg.presence==='offline'?' avt__status--off':''}"</span><span class="code-kw">>&#60;/span></span>` : '';
-  const inner = apg.type==='photo' ? `<span class="code-cm">&#60;!-- photo placeholder svg --></span>`
-    : apg.type==='icon' ? `<span class="code-cm">&#60;!-- generic icon svg --></span>`
-    : avtEsc((apg.initials||'JC').slice(0,2).toUpperCase());
-  return `<span class="code-cm">/* Flash · ${cap(apg.theme)} · ${cap(apg.type)} avatar · ${sz.label} */</span>
+  const sz = AVT_SIZES.find(s=>s.key===avPg.size)||AVT_SIZES[2];
+  const cls = `avt avt--${avPg.size}${avPg.type==='photo'?' avt--photo':''}${avPg.type==='icon'?' avt--icon':''}`;
+  const presenceLine = (avPg.presence && avPg.presence!=='none') ? `\n  <span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"avt__status${avPg.presence==='offline'?' avt__status--off':''}"</span><span class="code-kw">>&#60;/span></span>` : '';
+  const inner = avPg.type==='photo' ? `<span class="code-cm">&#60;!-- photo placeholder svg --></span>`
+    : avPg.type==='icon' ? `<span class="code-cm">&#60;!-- generic icon svg --></span>`
+    : avtEsc((avPg.initials||'JC').slice(0,2).toUpperCase());
+  return `<span class="code-cm">/* Flash · ${cap(avPg.theme)} · ${cap(avPg.type)} avatar · ${sz.label} */</span>
 <span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"${cls}"</span><span class="code-kw">></span>${inner}${presenceLine}
 <span class="code-kw">&#60;/span></span>`;
 }
@@ -10570,14 +10570,14 @@ const AVATAR_LANGS = [
 let avatarLang = 'html';
 
 function getAvatarCodeBlazor(){
-  const sz = AVT_SIZES.find(s=>s.key===apg.size)||AVT_SIZES[2];
-  const typePascal = cap(apg.type);
-  const sizePascal = cap(apg.size);
-  const initials = avtEsc((apg.initials||'JC').slice(0,2).toUpperCase());
-  const presenceAttr = (apg.presence && apg.presence!=='none') ? `\n        <span class="code-attr">Presence</span>=<span class="code-val">"AvatarPresence.${cap(apg.presence)}"</span>` : '';
+  const sz = AVT_SIZES.find(s=>s.key===avPg.size)||AVT_SIZES[2];
+  const typePascal = cap(avPg.type);
+  const sizePascal = cap(avPg.size);
+  const initials = avtEsc((avPg.initials||'JC').slice(0,2).toUpperCase());
+  const presenceAttr = (avPg.presence && avPg.presence!=='none') ? `\n        <span class="code-attr">Presence</span>=<span class="code-val">"AvatarPresence.${cap(avPg.presence)}"</span>` : '';
   return `<span class="code-cm">@* DsAvatar.razor — usage *@</span>
 <span class="code-kw">&#60;DsAvatar</span> <span class="code-attr">Type</span>=<span class="code-val">"AvatarType.${typePascal}"</span>
-         <span class="code-attr">Size</span>=<span class="code-val">"AvatarSize.${sizePascal}"</span>${apg.type==='initials'?`\n         <span class="code-attr">Initials</span>=<span class="code-val">"${initials}"</span>`:''}${presenceAttr} <span class="code-kw">/></span>
+         <span class="code-attr">Size</span>=<span class="code-val">"AvatarSize.${sizePascal}"</span>${avPg.type==='initials'?`\n         <span class="code-attr">Initials</span>=<span class="code-val">"${initials}"</span>`:''}${presenceAttr} <span class="code-kw">/></span>
 
 <span class="code-cm">@* DsAvatar.razor — component definition *@</span>
 <span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"@CssClass"</span><span class="code-kw">></span>
@@ -10613,10 +10613,10 @@ function getAvatarCodeBlazor(){
 }
 
 function getAvatarCodeTSX(){
-  const initials = avtEsc((apg.initials||'JC').slice(0,2).toUpperCase());
-  const usageProps = `type=<span class="code-val">"${apg.type}"</span> size=<span class="code-val">"${apg.size}"</span>`
-    + (apg.type==='initials' ? ` initials=<span class="code-val">"${initials}"</span>` : '')
-    + ((apg.presence && apg.presence!=='none') ? ` presence=<span class="code-val">"${apg.presence}"</span>` : '');
+  const initials = avtEsc((avPg.initials||'JC').slice(0,2).toUpperCase());
+  const usageProps = `type=<span class="code-val">"${avPg.type}"</span> size=<span class="code-val">"${avPg.size}"</span>`
+    + (avPg.type==='initials' ? ` initials=<span class="code-val">"${initials}"</span>` : '')
+    + ((avPg.presence && avPg.presence!=='none') ? ` presence=<span class="code-val">"${avPg.presence}"</span>` : '');
   return `<span class="code-cm">// DsAvatar.tsx</span>
 <span class="code-kw">import</span> React <span class="code-kw">from</span> <span class="code-val">'react'</span>;
 
@@ -10679,7 +10679,7 @@ function setAvatarLang(lang){
   const file = document.getElementById('avatar-lang-file');
   const meta = AVATAR_LANGS.find(l=>l.key===lang);
   if(file && meta) file.textContent = meta.file;
-  const block = document.getElementById('apg-code-block');
+  const block = document.getElementById('avPg-code-block');
   if(block) block.innerHTML = getAvatarCode();
 }
 
@@ -10700,34 +10700,34 @@ function avatarLangKeydown(e){
   if(btn) btn.focus();
 }
 
-function apgRefresh(){
-  document.querySelectorAll('.apg-stage-el').forEach(stage=>{
+function avPgRefresh(){
+  document.querySelectorAll('.avPg-stage-el').forEach(stage=>{
     stage.innerHTML = '';
     stage.appendChild(makeAvatarEl());
   });
-  document.querySelectorAll('.apg-initials-input-el').forEach(inp=>{
-    inp.disabled = apg.type !== 'initials';
-    if(document.activeElement !== inp) inp.value = apg.initials;
+  document.querySelectorAll('.avPg-initials-input-el').forEach(inp=>{
+    inp.disabled = avPg.type !== 'initials';
+    if(document.activeElement !== inp) inp.value = avPg.initials;
   });
-  const block = document.getElementById('apg-code-block');
+  const block = document.getElementById('avPg-code-block');
   if(block) block.innerHTML = getAvatarCode();
 }
 
 /* Avatar Playground renders into more than one mount (the main Overview
    demo, and a smaller copy on the Code tab) so both stay in sync with
-   the same shared apg state. */
+   the same shared avPg state. */
 const AVATAR_PLAYGROUND_MOUNTS = [
   {rootId:'avatar-playground', idSuffix:'', wrap:true, title:'Try the component', desc:'Adjust the controls to test component states.', headingAbove:'Use avatars to identify a person or entity at a glance, with a fallback that always applies.'},
   {rootId:'avatar-code-playground', idSuffix:'-code', style:'code', title:'Playground', desc:'Live demo of the component.'},
 ];
 
 function renderAvatarPlayground(){
-  apg.theme = document.documentElement.getAttribute('data-theme')==='dark' ? 'dark' : 'light';
-  const sbg = stageBg(apg.theme);
+  avPg.theme = document.documentElement.getAttribute('data-theme')==='dark' ? 'dark' : 'light';
+  const sbg = stageBg(avPg.theme);
 
-  const typeBtns = AVT_TYPES.map(t=>`<button class="btn-pg__pill${apg.type===t.key?' on':''}" onclick="apgSet('type','${t.key}')">${t.label}</button>`).join('');
-  const szBtns   = AVT_SIZES.map(s=>`<button class="btn-pg__pill${apg.size===s.key?' on':''}" onclick="apgSet('size','${s.key}')">${s.label}</button>`).join('');
-  const presBtns = [['none','None'],['online','Online'],['offline','Offline']].map(([k,l])=>`<button class="btn-pg__pill${apg.presence===k?' on':''}" onclick="apgSet('presence','${k}')">${l}</button>`).join('');
+  const typeBtns = AVT_TYPES.map(t=>`<button class="btn-pg__pill${avPg.type===t.key?' on':''}" onclick="avPgSet('type','${t.key}')">${t.label}</button>`).join('');
+  const szBtns   = AVT_SIZES.map(s=>`<button class="btn-pg__pill${avPg.size===s.key?' on':''}" onclick="avPgSet('size','${s.key}')">${s.label}</button>`).join('');
+  const presBtns = [['none','None'],['online','Online'],['offline','Offline']].map(([k,l])=>`<button class="btn-pg__pill${avPg.presence===k?' on':''}" onclick="avPgSet('presence','${k}')">${l}</button>`).join('');
 
   AVATAR_PLAYGROUND_MOUNTS.forEach(mount=>{
     const root = document.getElementById(mount.rootId);
@@ -10735,12 +10735,12 @@ function renderAvatarPlayground(){
     const s = mount.idSuffix;
     const demo = `
       <div class="btn-pg">
-        <div class="btn-pg__stage apg-stage-el" id="apg-stage${s}" style="background:${sbg}"></div>
+        <div class="btn-pg__stage avPg-stage-el" id="avPg-stage${s}" style="background:${sbg}"></div>
         <div class="btn-pg__ctrls">
           <div class="btn-pg__group"><span class="btn-pg__clabel">Type</span><div class="btn-pg__pill-row">${typeBtns}</div></div>
           <div class="btn-pg__group"><span class="btn-pg__clabel">Size</span><div class="btn-pg__pill-row">${szBtns}</div></div>
           <div class="btn-pg__group"><span class="btn-pg__clabel">Presence</span><div class="btn-pg__pill-row">${presBtns}</div></div>
-          <div class="btn-pg__group"><span class="btn-pg__clabel">Initials</span><input class="cpg-label-input apg-initials-input-el" id="apg-initials-input${s}" value="${avtEsc(apg.initials)}" maxlength="2" oninput="apgSetInitials(this.value)" placeholder="JC" ${apg.type!=='initials'?'disabled':''}></div>
+          <div class="btn-pg__group"><span class="btn-pg__clabel">Initials</span><input class="cpg-label-input avPg-initials-input-el" id="avPg-initials-input${s}" value="${avtEsc(avPg.initials)}" maxlength="2" oninput="avPgSetInitials(this.value)" placeholder="JC" ${avPg.type!=='initials'?'disabled':''}></div>
         </div>
       </div>`;
 
@@ -10765,7 +10765,7 @@ function renderAvatarPlayground(){
     root.innerHTML = (mount.headingAbove ? `<div class="cpg-overview-heading"><span class="cpg-overview-heading__icon">${CPG_INFO_ICON_SVG}</span><span>${mount.headingAbove}</span></div>` : '') + wrapped;
   });
 
-  apgRefresh();
+  avPgRefresh();
 }
 
 function renderAvatarCodeTab(){
@@ -10778,12 +10778,12 @@ function renderAvatarCodeTab(){
       <div class="code-panel code-panel--bare open">
         <div class="code-panel__head">
           <div class="code-seg" role="tablist" aria-label="Code language" onkeydown="avatarLangKeydown(event)">
-            ${AVATAR_LANGS.map(l=>`<button type="button" role="tab" class="code-seg__btn" id="avatar-lang-${l.key}" data-lang="${l.key}" aria-selected="${avatarLang===l.key?'true':'false'}" aria-controls="apg-code-block" tabindex="${avatarLang===l.key?'0':'-1'}" onclick="setAvatarLang('${l.key}')">${l.label}</button>`).join('')}
+            ${AVATAR_LANGS.map(l=>`<button type="button" role="tab" class="code-seg__btn" id="avatar-lang-${l.key}" data-lang="${l.key}" aria-selected="${avatarLang===l.key?'true':'false'}" aria-controls="avPg-code-block" tabindex="${avatarLang===l.key?'0':'-1'}" onclick="setAvatarLang('${l.key}')">${l.label}</button>`).join('')}
           </div>
           <span class="code-lang-file" id="avatar-lang-file">${(AVATAR_LANGS.find(l=>l.key===avatarLang)||AVATAR_LANGS[0]).file}</span>
-          <button class="code-copy-btn" onclick="apgCopyCode()" id="apg-copy-btn">Copy</button>
+          <button class="code-copy-btn" onclick="avPgCopyCode()" id="avPg-copy-btn">Copy</button>
         </div>
-        <div class="code-body"><div class="code-block" id="apg-code-block" role="tabpanel" aria-live="polite"></div></div>
+        <div class="code-body"><div class="code-block" id="avPg-code-block" role="tabpanel" aria-live="polite"></div></div>
       </div>
     </div>`;
 }
@@ -10877,17 +10877,17 @@ function renderAvatarInSitu(){
     </div>`;
 }
 
-function apgSet(key, val){
-  apg[key] = val;
+function avPgSet(key, val){
+  avPg[key] = val;
   renderAvatarPlayground();
 }
-function apgSetInitials(val){ apg.initials = val.slice(0,2).toUpperCase(); apgRefresh(); }
-function apgReset(){ apg.type='initials'; apg.size='md'; apg.presence='none'; apg.initials='JC'; renderAvatarPlayground(); }
-function apgCopyCode(){
-  const b = document.getElementById('apg-code-block');
+function avPgSetInitials(val){ avPg.initials = val.slice(0,2).toUpperCase(); avPgRefresh(); }
+function avPgReset(){ avPg.type='initials'; avPg.size='md'; avPg.presence='none'; avPg.initials='JC'; renderAvatarPlayground(); }
+function avPgCopyCode(){
+  const b = document.getElementById('avPg-code-block');
   if(!b) return;
   navigator.clipboard.writeText(b.innerText||b.textContent).catch(()=>{});
-  const btn = document.getElementById('apg-copy-btn');
+  const btn = document.getElementById('avPg-copy-btn');
   if(btn){ btn.textContent = 'Copied!'; setTimeout(()=>btn.textContent='Copy', 2000); }
 }
 
