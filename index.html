@@ -11981,12 +11981,15 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.64.20';
+const SYSTEM_VERSION = '1.64.21';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.64.21', date:'2026-08-07', author:'Mo', title:'Fixed Playground header label misalignment', changes:[
+        ['fixed','Playground header labels (Product/Column/Status) were missing a spacer for the row\'s product picture, so they sat 30px left of the cells they label. Added a dedicated picture-width spacer alongside the checkbox spacer so every header label now lines up exactly with its row cell.'],
+      ]},
       {version:'1.64.20', date:'2026-08-07', author:'Mo', title:'Playground header moved inside the row card, gains Sorting and Checkbox toggles', changes:[
         ['changed','The Playground\'s header bar now sits inside the same bordered/rounded card as the single-row demo (.tbl-pg__card wraps .tbl-pg__head + the row), instead of floating above it as a separate full-width bar'],
         ['added','New Sorting and Checkbox pill toggles in the Playground controls — Sorting shows/hides the sort icons on every header label, Checkbox shows/hides the row\'s leading checkbox and its matching header spacer'],
@@ -13772,7 +13775,10 @@ const CHANGELOG = {
         ['added','Empty State section (s-empty-state) — a dashed-border card with a muted glyph, title, short explanation and one primary action, plus When to use guidance'],
       ]},
     ]},
-    {secId:'s-tables', name:'Tables', version:'1.3.2', entries:[
+    {secId:'s-tables', name:'Tables', version:'1.3.3', entries:[
+      {version:'1.3.3', date:'2026-08-07', author:'Mo', title:'Fixed Playground header label misalignment', changes:[
+        ['fixed','Header labels (Product/Column/Status) in the Playground demo now include a 30px spacer matching the row\'s product picture, in addition to the checkbox spacer — labels were previously offset 30px left of the cells they describe'],
+      ]},
       {version:'1.3.2', date:'2026-08-07', author:'Mo', title:'Playground header nested inside the row card, plus Sorting/Checkbox toggles', changes:[
         ['changed','.tbl-pg__head now renders inside .tbl-pg__card together with the row, forming one bordered/rounded card — matching how the real Interactive table pairs its header with its body, instead of a detached bar above the demo'],
         ['added','Sorting toggle (Playground controls) shows/hides every header sort icon; Checkbox toggle shows/hides the row\'s leading checkbox together with its header spacer'],
@@ -14635,13 +14641,18 @@ function renderTablesPlayground(){
     : '';
 
   var sortIcon = sortOn ? '<svg class="tbl-sort-icon" viewBox="0 0 10 12" fill="none"><path d="M5 0L8.5 4.5H1.5L5 0Z" fill="currentColor"/><path d="M5 12L1.5 7.5H8.5L5 12Z" fill="currentColor"/></svg>' : '';
-  var checkSpacer = checkboxOn ? '<span class="tbl-head__cell" style="flex:0 0 40px"></span>' : '';
+  // Spacers mirror the row's own leading elements (checkbox, then the product
+  // picture) so the header labels below line up with the row's real cells —
+  // .tbl-pg__head and .tbl-row share the same gap:20px/padding:0 14px.
+  var checkSpacer = checkboxOn ? '<span style="flex:0 0 20px"></span>' : '';
+  var picSpacer = '<span style="flex:0 0 30px"></span>';
   el.innerHTML =
     '<div class="tbl-pg">' +
       '<div class="tbl-pg__stage">' +
         '<div class="tbl-pg__card">' +
           '<div class="tbl-pg__head">' +
             checkSpacer +
+            picSpacer +
             '<span class="tbl-head__cell" style="flex:0 0 92px">Product' + sortIcon + '</span>' +
             '<span class="tbl-head__cell" style="flex:0 0 116px">Column' + sortIcon + '</span>' +
             '<span class="tbl-head__cell" style="flex:0 0 116px">Column' + sortIcon + '</span>' +
