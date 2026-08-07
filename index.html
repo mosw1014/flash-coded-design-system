@@ -2082,6 +2082,8 @@ body.home .main{max-width:none;margin:0;padding:0}
    between two rules as part of the next selector. The illustrative focus ring is
    applied inline from JS rather than as a rule here. */
 .sw-hero-mock{display:flex;flex-direction:column;gap:16px}
+.alrt-hero-mock{display:flex;flex-direction:column;gap:10px;width:100%;padding:0 18px}
+.alrt-hero-mock .alrt{padding:11px 13px;font-size:12px}
 .sw-mock-row{display:flex;align-items:center;justify-content:space-between;gap:14px}
 .sw-mock-row__txt{min-width:0}
 .sw-mock-row__title{font-size:12.5px;font-weight:700;color:var(--chrome-txt);line-height:1.3}
@@ -5463,56 +5465,22 @@ body.home .main{max-width:none;margin:0;padding:0}
     <!-- ============================================================
          ALERT / CALLOUT
     ============================================================ -->
-    <section class="sec" id="s-alert">
+    <section class="sec sec--tabbed" id="s-alert">
+      <div class="sec-hero">
       <div class="sec__head">
-        <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Alert <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.1.1</span></h1>
-        <p class="sec__desc">An inline banner that draws attention to a status or message tied to the surrounding content. Four semantic variants map straight onto the Flash Info / Success / Warning / Critical tokens, so they stay on-brand in light and dark.</p>
-      </div>
-      <div class="type-sub">
-        <div class="type-sub__title">Variants</div>
-        <div class="type-sub__desc">Each variant carries a matching tinted background and icon. Keep the title to a few words and the message to a sentence or two.</div>
-        <div class="sg-stage" style="display:block">
-          <div class="alrt alrt--info"><span class="alrt__ico">i</span><div class="alrt__bd"><div class="alrt__title">Heads up</div><div class="alrt__msg">Your monthly statement for June is now available to download.</div></div></div>
-          <div class="alrt alrt--success"><span class="alrt__ico">&#10003;</span><div class="alrt__bd"><div class="alrt__title">Payment received</div><div class="alrt__msg">R1,250.00 has been settled to your account.</div></div></div>
-          <div class="alrt alrt--warn"><span class="alrt__ico">!</span><div class="alrt__bd"><div class="alrt__title">Verify your account</div><div class="alrt__msg">Add your bank details before your first payout to avoid delays.</div></div></div>
-          <div class="alrt alrt--crit"><span class="alrt__ico">&times;</span><div class="alrt__bd"><div class="alrt__title">Transaction failed</div><div class="alrt__msg">The card was declined. Ask the customer to try another method.</div></div></div>
-        </div>
-      </div>
-      <div class="type-sub">
-        <div class="type-sub__title">Dismissible</div>
-        <div class="type-sub__desc">Add a close affordance for messages the user can clear. Keep persistent, action-critical alerts non-dismissible.</div>
-        <div class="sg-stage" style="display:block">
-          <div class="alrt alrt--info"><span class="alrt__ico">i</span><div class="alrt__bd"><div class="alrt__title">New feature</div><div class="alrt__msg">You can now export transactions to CSV from the Reports page.</div></div><button class="alrt__x" type="button" aria-label="Dismiss" onclick="this.closest('.alrt').style.display='none'">&times;</button></div>
-        </div>
-      </div>
-      <div class="type-sub">
-        <div class="type-sub__title">When to use</div>
-        <div class="type-sub__desc">Alerts belong in the page, next to what they describe. For transient confirmations use a toast; for blocking decisions use a dialog.</div>
-        <div class="sel-usage">
-          <div class="sel-usage__card">
-            <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
-            <ul class="sel-usage__list">
-              <li>Place the alert next to the content or form it refers to.</li>
-              <li>Match the variant to the severity of the message.</li>
-              <li>Lead with a short title, then a plain-language explanation.</li>
-            </ul>
-          </div>
-          <div class="sel-usage__card">
-            <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don&rsquo;t</div>
-            <ul class="sel-usage__list">
-              <li>Don&rsquo;t use an alert for a fleeting confirmation &mdash; that&rsquo;s a toast.</li>
-              <li>Don&rsquo;t stack many alerts &mdash; prioritise the one that matters.</li>
-              <li>Don&rsquo;t use critical red for routine, non-urgent information.</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <details class="ai-ctx">
+        <h1 class="sec__title">Alert</h1>
+        <div class="sec-header-meta">
+          <span class="comp-ver-badge" style="margin-left:0">v1.2.0</span>
+          <details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-alert">
 {
-  "status": "static",
+  "status": "js-rendered",
+  "builderFunctions": [
+    "ALRT_VARIANTS",
+    "makeAlrtEl",
+    "ovAlrt"
+  ],
   "realClasses": [
     ".alrt",
     ".alrt--info",
@@ -5523,9 +5491,11 @@ body.home .main{max-width:none;margin:0;padding:0}
     ".alrt__bd",
     ".alrt__title",
     ".alrt__msg",
-    ".alrt__x"
+    ".alrt__x",
+    ".alrt-hero-mock"
   ],
-  "css": "/* --color-info-l stays pale in dark mode (unlike its success/warning/error siblings,\n   which darken their -l token) — give the info tag the same deep-navy dark override\n   already used for .alrt--info so it actually shifts with the theme toggle. */\n[data-theme=\"dark\"] .tag--info { --tag-bg:var(--prim-sup-blue-3) }\n/* ---- Alert / Callout ---- */\n.alrt { display:flex;align-items:center;gap:11px;padding:13px 15px;border-radius:10px;font-size:13px;line-height:1.5;max-width:620px }\n.alrt + .alrt { margin-top:12px }\n.alrt__ico { flex-shrink:0;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:800;font-style:normal }\n.alrt__bd { flex:1;min-width:0 }\n.alrt__title { font-weight:700;color:var(--chrome-txt);margin-bottom:2px }\n.alrt__msg { color:var(--chrome-muted) }\n.alrt__x { align-self:flex-start;background:none;border:0;color:var(--chrome-muted);cursor:pointer;font-size:15px;line-height:1;padding:2px 5px;border-radius:5px;flex-shrink:0 }\n.alrt__x:hover { background:var(--chrome-hover);color:var(--chrome-txt) }\n.alrt--info { background:var(--color-info-l) }\n.alrt--info .alrt__ico { background:var(--color-info-h) }\n.alrt--success { background:var(--color-success-l) }\n.alrt--success .alrt__ico { background:var(--color-success-h) }\n.alrt--warn { background:var(--color-warn-l) }\n.alrt--warn .alrt__ico { background:var(--color-warn-h) }\n.alrt--crit { background:var(--color-crit-l) }\n.alrt--crit .alrt__ico { background:var(--color-crit-h) }\n/* --color-info-l stays light in dark mode (unlike its siblings), which would leave\n   light text unreadable — give the info alert a deep-navy tint in dark only. */\n[data-theme=\"dark\"] .alrt--info { background:var(--prim-sup-blue-3) }",
+  "css": "/* --color-info-l stays pale in dark mode (unlike its success/warning/error siblings,\n   which darken their -l token) — give the info tag the same deep-navy dark override\n   already used for .alrt--info so it actually shifts with the theme toggle. */\n[data-theme=\"dark\"] .tag--info { --tag-bg:var(--prim-sup-blue-3) }\n.alrt-hero-mock { display:flex;flex-direction:column;gap:10px;width:100%;padding:0 18px }\n.alrt-hero-mock .alrt { padding:11px 13px;font-size:12px }\n/* ---- Alert / Callout ---- */\n.alrt { display:flex;align-items:center;gap:11px;padding:13px 15px;border-radius:10px;font-size:13px;line-height:1.5;max-width:620px }\n.alrt + .alrt { margin-top:12px }\n.alrt__ico { flex-shrink:0;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:800;font-style:normal }\n.alrt__bd { flex:1;min-width:0 }\n.alrt__title { font-weight:700;color:var(--chrome-txt);margin-bottom:2px }\n.alrt__msg { color:var(--chrome-muted) }\n.alrt__x { align-self:flex-start;background:none;border:0;color:var(--chrome-muted);cursor:pointer;font-size:15px;line-height:1;padding:2px 5px;border-radius:5px;flex-shrink:0 }\n.alrt__x:hover { background:var(--chrome-hover);color:var(--chrome-txt) }\n.alrt--info { background:var(--color-info-l) }\n.alrt--info .alrt__ico { background:var(--color-info-h) }\n.alrt--success { background:var(--color-success-l) }\n.alrt--success .alrt__ico { background:var(--color-success-h) }\n.alrt--warn { background:var(--color-warn-l) }\n.alrt--warn .alrt__ico { background:var(--color-warn-h) }\n.alrt--crit { background:var(--color-crit-l) }\n.alrt--crit .alrt__ico { background:var(--color-crit-h) }\n/* --color-info-l stays light in dark mode (unlike its siblings), which would leave\n   light text unreadable — give the info alert a deep-navy tint in dark only. */\n[data-theme=\"dark\"] .alrt--info { background:var(--prim-sup-blue-3) }",
+  "js": "const ALRT_VARIANTS = [\n  {key:'info',    label:'Info',     icon:'i',                title:'Heads up',            message:'Your monthly statement for June is now available to download.', light:{bg:'#E4F5FF', ico:'#21A4FC'}, dark:{bg:'#001E31', ico:'#21A4FC'}},\n  {key:'success', label:'Success',  icon:'&amp;#10003;',          title:'Payment received',    message:'R1,250.00 has been settled to your account.',                   light:{bg:'#EAF9EB', ico:'#218A29'}, dark:{bg:'#145118', ico:'#59CE61'}},\n  {key:'warn',    label:'Warning',  icon:'!',                 title:'Verify your account', message:'Add your bank details before your first payout to avoid delays.', light:{bg:'#FFF3E5', ico:'#FF8900'}, dark:{bg:'#33343A', ico:'#FF8900'}},\n  {key:'crit',    label:'Critical', icon:'&amp;times;',           title:'Transaction failed',  message:'The card was declined. Ask the customer to try another method.',  light:{bg:'#FFF4F0', ico:'#EB0029'}, dark:{bg:'#260505', ico:'#EB0029'}},\n];\n\nfunction makeAlrtEl(){\n  const v = ALRT_VARIANTS.find(x=&gt;x.key===apg.variant)||ALRT_VARIANTS[0];\n  const wrap = document.createElement('div');\n  wrap.className = `alrt alrt--${apg.variant}`;\n  wrap.style.setProperty('--cpg-stage-bg', stageBg(apg.theme));\n  wrap.innerHTML = `&lt;span class=\"alrt__ico\"&gt;${v.icon}&lt;/span&gt;&lt;div class=\"alrt__bd\"&gt;&lt;div class=\"alrt__title\"&gt;${apgEsc(apg.title||v.title)}&lt;/div&gt;&lt;div class=\"alrt__msg\"&gt;${apgEsc(apg.message||v.message)}&lt;/div&gt;&lt;/div&gt;`;\n  if(apg.dismissible){\n    const x = document.createElement('button');\n    x.className = 'alrt__x'; x.type = 'button'; x.setAttribute('aria-label','Dismiss');\n    x.textContent = '×';\n    x.onclick = ()=&gt;{ apg.dismissed = true; apgRefresh(); };\n    wrap.appendChild(x);\n  }\n  return wrap;\n}\n\nfunction ovAlrt({variant='info', title, message, dismissible=false, compact=false}){\n  const v = ALRT_VARIANTS.find(x=&gt;x.key===variant) || ALRT_VARIANTS[0];\n  const t = title || v.title, m = message || v.message;\n  const xBtn = dismissible ? `&lt;button class=\"alrt__x\" type=\"button\" tabindex=\"-1\" aria-hidden=\"true\"&gt;&amp;times;&lt;/button&gt;` : '';\n  const style = compact ? ' style=\"max-width:none;font-size:12px;padding:10px 12px\"' : ' style=\"max-width:none\"';\n  return `&lt;div class=\"alrt alrt--${variant}\"${style}&gt;&lt;span class=\"alrt__ico\"&gt;${v.icon}&lt;/span&gt;&lt;div class=\"alrt__bd\"&gt;&lt;div class=\"alrt__title\"&gt;${apgEsc(t)}&lt;/div&gt;&lt;div class=\"alrt__msg\"&gt;${apgEsc(m)}&lt;/div&gt;&lt;/div&gt;${xBtn}&lt;/div&gt;`;\n}",
   "usage": {
     "do": [
       "Place the alert next to the content or form it refers to.",
@@ -5533,16 +5503,76 @@ body.home .main{max-width:none;margin:0;padding:0}
       "Lead with a short title, then a plain-language explanation."
     ],
     "dont": [
-      "Don’t use an alert for a fleeting confirmation — that’s a toast.",
-      "Don’t stack many alerts — prioritise the one that matters.",
-      "Don’t use critical red for routine, non-urgent information."
+      "Don't use an alert for a fleeting confirmation — that's a toast.",
+      "Don't stack many alerts — prioritise the one that matters.",
+      "Don't use critical red for routine, non-urgent information."
     ]
   },
-  "contentHash": "12ab4e023eae23a5adda3888fc13dfef0af9bc0f3f16b1aa416551ea573cc8a9",
-  "note": "Dismiss uses an inline onclick on the .alrt__x button (this.closest('.alrt').style.display='none'), not a named JS function — nothing to extract as a builder."
+  "contentHash": "01a73edd6acfc0bea16830621518ac360a5ff146367ddd2086d10436da41ecc5",
+  "note": "makeAlrtEl is the playground builder driven by apg state; ovAlrt is the flexible doc-only builder used for the Overview key-variants/in-context illustrations and Style-tab reference. Colours are real CSS custom-property-driven (.alrt--info/success/warn/crit read straight off --color-*-l/-h tokens), unlike Pill's hardcoded-hex approach, so no per-theme colour math lives in JS. apg (playground state)/getAlrtCode*/renderAlertPlayground/renderAlertReference/renderAlertInSitu are doc-site-only playground plumbing, excluded."
 }
   </pre>
 </details>
+        </div>
+      </div>
+      <div class="sec-hero__preview">
+        <div class="alrt-hero-mock">
+          <div class="alrt alrt--info" style="max-width:none"><span class="alrt__ico">i</span><div class="alrt__bd"><div class="alrt__title">Heads up</div><div class="alrt__msg">Statement ready to download.</div></div></div>
+          <div class="alrt alrt--success" style="max-width:none"><span class="alrt__ico">&#10003;</span><div class="alrt__bd"><div class="alrt__title">Payment received</div><div class="alrt__msg">R1,250.00 settled.</div></div></div>
+        </div>
+      </div>
+      </div>
+      <div class="tabs-list sec-tabs" id="alrt-tabs-list">
+        <button type="button" class="tab-item on" data-alrt-tab="overview" onclick="alrtTabSwitch('overview')"><span class="tab-item__inner"><span class="tab-item__label">Overview</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-alrt-tab="style" onclick="alrtTabSwitch('style')"><span class="tab-item__inner"><span class="tab-item__label">Style</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-alrt-tab="code" onclick="alrtTabSwitch('code')"><span class="tab-item__inner"><span class="tab-item__label">Code</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-alrt-tab="changelog" onclick="alrtTabSwitch('changelog')"><span class="tab-item__inner"><span class="tab-item__label">Changelog</span></span><span class="tab-item__line"></span></button>
+      </div>
+      <div class="tabs-panel on" data-alrt-panel="overview">
+        <div id="alrt-playground" class="type-sub"></div>
+        <div id="alrt-variants" class="type-sub"></div>
+        <div id="alrt-insitu" class="type-sub"></div>
+        <div class="type-sub cpg-variants" id="alrt-usage">
+          <div class="cpg-section-heading">
+            <div class="cpg-layout__title">Do's and don'ts</div>
+            <div class="cpg-layout__desc">Alerts belong in the page, next to what they describe. For transient confirmations use a toast; for blocking decisions use a dialog.</div>
+          </div>
+          <div class="cpg-section-block">
+            <div class="sel-usage">
+              <div class="sel-usage__card">
+                <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
+                <ul class="sel-usage__list">
+                  <li>Place the alert next to the content or form it refers to.</li>
+                  <li>Match the variant to the severity of the message.</li>
+                  <li>Lead with a short title, then a plain-language explanation.</li>
+                </ul>
+                <div class="spec-usage-demo" style="display:block">
+                  <div class="alrt alrt--warn" style="max-width:none"><span class="alrt__ico">!</span><div class="alrt__bd"><div class="alrt__title">Verify your account</div><div class="alrt__msg">Add your bank details before your first payout.</div></div></div>
+                </div>
+              </div>
+              <div class="sel-usage__card">
+                <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don't</div>
+                <ul class="sel-usage__list">
+                  <li>Don't use an alert for a fleeting confirmation &mdash; that's a toast.</li>
+                  <li>Don't stack many alerts &mdash; prioritise the one that matters.</li>
+                  <li>Don't use critical red for routine, non-urgent information.</li>
+                </ul>
+                <div class="spec-usage-demo" style="display:block">
+                  <div class="alrt alrt--crit" style="max-width:none"><span class="alrt__ico">&times;</span><div class="alrt__bd"><div class="alrt__title">Just so you know</div><div class="alrt__msg">Your session will remain active for the usual duration.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tabs-panel" data-alrt-panel="style">
+        <div id="alrt-reference" class="type-sub spec-panel spec-stack"></div>
+      </div>
+      <div class="tabs-panel" data-alrt-panel="code">
+        <div id="alrt-code-playground" class="type-sub spec-panel spec-code-playground"></div>
+        <div id="alrt-code-tab" class="type-sub spec-panel"></div>
+      </div>
+      <div class="tabs-panel" data-alrt-panel="changelog" id="alrt-changelog-panel"></div>
     </section>
 
     <!-- ============================================================
@@ -11917,6 +11947,486 @@ function badgeTabSwitch(tab){
 }
 
 /* ============================================================
+   ALERT
+   Same tabbed-page treatment as Chips/Pills, Switch, Tags & Badges
+   (.sec--tabbed). Alert's variant classes (.alrt--info/success/warn/crit)
+   already read straight off the semantic --color-*-l/-h tokens, so the
+   demo builder just toggles the class — no per-theme hex to compute in
+   JS like Pill's decorative colours. There is no size axis (single size)
+   and no selectable state (alerts aren't interactive), so those Pill
+   concepts are intentionally absent here rather than stubbed out.
+============================================================ */
+const ALRT_VARIANTS = [
+  {key:'info',    label:'Info',     icon:'i',                title:'Heads up',            message:'Your monthly statement for June is now available to download.', light:{bg:'#E4F5FF', ico:'#21A4FC'}, dark:{bg:'#001E31', ico:'#21A4FC'}},
+  {key:'success', label:'Success',  icon:'&#10003;',          title:'Payment received',    message:'R1,250.00 has been settled to your account.',                   light:{bg:'#EAF9EB', ico:'#218A29'}, dark:{bg:'#145118', ico:'#59CE61'}},
+  {key:'warn',    label:'Warning',  icon:'!',                 title:'Verify your account', message:'Add your bank details before your first payout to avoid delays.', light:{bg:'#FFF3E5', ico:'#FF8900'}, dark:{bg:'#33343A', ico:'#FF8900'}},
+  {key:'crit',    label:'Critical', icon:'&times;',           title:'Transaction failed',  message:'The card was declined. Ask the customer to try another method.',  light:{bg:'#FFF4F0', ico:'#EB0029'}, dark:{bg:'#260505', ico:'#EB0029'}},
+];
+
+/* ── ALERT PLAYGROUND ── */
+let apg = { variant:'info', dismissible:false, title:'', message:'', theme:'light', dismissed:false };
+
+function apgEsc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&#60;').replace(/>/g,'&#62;').replace(/"/g,'&quot;'); }
+
+function makeAlrtEl(){
+  const v = ALRT_VARIANTS.find(x=>x.key===apg.variant)||ALRT_VARIANTS[0];
+  const wrap = document.createElement('div');
+  wrap.className = `alrt alrt--${apg.variant}`;
+  wrap.style.setProperty('--cpg-stage-bg', stageBg(apg.theme));
+  wrap.innerHTML = `<span class="alrt__ico">${v.icon}</span><div class="alrt__bd"><div class="alrt__title">${apgEsc(apg.title||v.title)}</div><div class="alrt__msg">${apgEsc(apg.message||v.message)}</div></div>`;
+  if(apg.dismissible){
+    const x = document.createElement('button');
+    x.className = 'alrt__x'; x.type = 'button'; x.setAttribute('aria-label','Dismiss');
+    x.textContent = '×';
+    x.onclick = ()=>{ apg.dismissed = true; apgRefresh(); };
+    wrap.appendChild(x);
+  }
+  return wrap;
+}
+
+function getAlrtCodeHTML(){
+  const v = ALRT_VARIANTS.find(x=>x.key===apg.variant)||ALRT_VARIANTS[0];
+  const title = apgEsc(apg.title||v.title);
+  const msg = apgEsc(apg.message||v.message);
+  const xLine = apg.dismissible ? `\n  <span class="code-kw">&#60;button</span> <span class="code-cls">class</span>=<span class="code-val">"alrt__x"</span> <span class="code-attr">aria-label</span>=<span class="code-val">"Dismiss"</span><span class="code-kw">>&#215;&#60;/button></span>` : '';
+  return `<span class="code-cm">/* Flash &middot; ${cap(apg.theme)} &middot; ${v.label} alert */</span>
+<span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"alrt alrt--${apg.variant}"</span><span class="code-kw">></span>
+  <span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"alrt__ico"</span><span class="code-kw">></span>${v.icon}<span class="code-kw">&#60;/span></span>
+  <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"alrt__bd"</span><span class="code-kw">></span>
+    <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"alrt__title"</span><span class="code-kw">></span>${title}<span class="code-kw">&#60;/div></span>
+    <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"alrt__msg"</span><span class="code-kw">></span>${msg}<span class="code-kw">&#60;/div></span>
+  <span class="code-kw">&#60;/div></span>${xLine}
+<span class="code-kw">&#60;/div></span>`;
+}
+
+const ALRT_LANGS = [
+  {key:'html',   label:'HTML / CSS', file:'alert.html'},
+  {key:'blazor', label:'Blazor',     file:'DsAlert.razor'},
+  {key:'tsx',    label:'React TSX',  file:'DsAlert.tsx'},
+];
+let alrtLang = 'html';
+
+function getAlrtCodeBlazor(){
+  const v = ALRT_VARIANTS.find(x=>x.key===apg.variant)||ALRT_VARIANTS[0];
+  const variantPascal = v.key==='warn' ? 'Warning' : v.key==='crit' ? 'Critical' : cap(v.key);
+  const title = apgEsc(apg.title||v.title);
+  const msg = apgEsc(apg.message||v.message);
+  const opt = (name)=>`\n        <span class="code-attr">${name}</span>=<span class="code-val">"true"</span>`;
+  return `<span class="code-cm">@* DsAlert.razor &mdash; usage *@</span>
+<span class="code-kw">&#60;DsAlert</span> <span class="code-attr">Variant</span>=<span class="code-val">"AlertVariant.${variantPascal}"</span>
+         <span class="code-attr">Title</span>=<span class="code-val">"${title}"</span>
+         <span class="code-attr">Message</span>=<span class="code-val">"${msg}"</span>${apg.dismissible?opt('Dismissible'):''} <span class="code-kw">/></span>
+
+<span class="code-cm">@* DsAlert.razor &mdash; component definition *@</span>
+<span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"@CssClass"</span><span class="code-kw">></span>
+  <span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"alrt__ico"</span><span class="code-kw">></span>@Icon<span class="code-kw">&#60;/span></span>
+  <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"alrt__bd"</span><span class="code-kw">></span>
+    <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"alrt__title"</span><span class="code-kw">></span>@Title<span class="code-kw">&#60;/div></span>
+    <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"alrt__msg"</span><span class="code-kw">></span>@Message<span class="code-kw">&#60;/div></span>
+  <span class="code-kw">&#60;/div></span>
+  <span class="code-kw">@if</span> (Dismissible) {
+    <span class="code-kw">&#60;button</span> <span class="code-cls">class</span>=<span class="code-val">"alrt__x"</span> <span class="code-attr">type</span>=<span class="code-val">"button"</span> <span class="code-attr">aria-label</span>=<span class="code-val">"Dismiss"</span>
+            <span class="code-attr">@onclick</span>=<span class="code-val">"OnDismiss"</span><span class="code-kw">>&#215;&#60;/button></span>
+  }
+<span class="code-kw">&#60;/div></span>
+
+<span class="code-kw">@code</span> {
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> AlertVariant Variant { get; set; } = AlertVariant.Info;
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> <span class="code-cls">string</span> Title { get; set; }
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> <span class="code-cls">string</span> Message { get; set; }
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> <span class="code-cls">bool</span> Dismissible { get; set; }
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> EventCallback OnDismiss { get; set; }
+
+  <span class="code-cm">// alrt--info / alrt--success / alrt--warn / alrt--crit &mdash; mapped explicitly</span>
+  <span class="code-kw">private</span> <span class="code-cls">string</span> VariantClass => Variant <span class="code-kw">switch</span> {
+    AlertVariant.Success => <span class="code-val">"success"</span>, AlertVariant.Warning => <span class="code-val">"warn"</span>, AlertVariant.Critical => <span class="code-val">"crit"</span>, _ => <span class="code-val">"info"</span>
+  };
+  <span class="code-kw">private</span> <span class="code-cls">string</span> CssClass => $<span class="code-val">"alrt alrt--{VariantClass}"</span>;
+  <span class="code-kw">private</span> <span class="code-cls">string</span> Icon => Variant <span class="code-kw">switch</span> {
+    AlertVariant.Success => <span class="code-val">"&#10003;"</span>, AlertVariant.Warning => <span class="code-val">"!"</span>, AlertVariant.Critical => <span class="code-val">"&#215;"</span>, _ => <span class="code-val">"i"</span>
+  };
+}`;
+}
+
+function getAlrtCodeTSX(){
+  const v = ALRT_VARIANTS.find(x=>x.key===apg.variant)||ALRT_VARIANTS[0];
+  const title = apgEsc(apg.title||v.title);
+  const msg = apgEsc(apg.message||v.message);
+  const usageProps = `variant=<span class="code-val">"${apg.variant}"</span> title=<span class="code-val">"${title}"</span> message=<span class="code-val">"${msg}"</span>` + (apg.dismissible?' dismissible':'');
+  return `<span class="code-cm">// DsAlert.tsx</span>
+<span class="code-kw">import</span> React, { useState } <span class="code-kw">from</span> <span class="code-val">'react'</span>;
+
+<span class="code-kw">type</span> <span class="code-cls">AlertVariant</span> = <span class="code-val">'info'</span> | <span class="code-val">'success'</span> | <span class="code-val">'warn'</span> | <span class="code-val">'crit'</span>;
+
+<span class="code-kw">const</span> ALERT_ICONS: <span class="code-cls">Record</span>&#60;AlertVariant, <span class="code-cls">string</span>> = { info: <span class="code-val">'i'</span>, success: <span class="code-val">'&#10003;'</span>, warn: <span class="code-val">'!'</span>, crit: <span class="code-val">'&#215;'</span> };
+
+<span class="code-kw">interface</span> <span class="code-cls">DsAlertProps</span> {
+  variant?: <span class="code-cls">AlertVariant</span>;
+  title: <span class="code-cls">string</span>;
+  message: <span class="code-cls">string</span>;
+  dismissible?: <span class="code-cls">boolean</span>;
+}
+
+<span class="code-kw">export const</span> <span class="code-cls">DsAlert</span>: React.FC&#60;DsAlertProps> = ({
+  variant = <span class="code-val">'info'</span>,
+  title,
+  message,
+  dismissible = <span class="code-kw">false</span>,
+}) => {
+  <span class="code-kw">const</span> [dismissed, setDismissed] = useState(<span class="code-kw">false</span>);
+  <span class="code-kw">if</span> (dismissed) <span class="code-kw">return</span> <span class="code-kw">null</span>;
+
+  <span class="code-kw">return</span> (
+    &#60;div className={\`alrt alrt--\${variant}\`}>
+      &#60;span className=<span class="code-val">"alrt__ico"</span>>{ALERT_ICONS[variant]}&#60;/span>
+      &#60;div className=<span class="code-val">"alrt__bd"</span>>
+        &#60;div className=<span class="code-val">"alrt__title"</span>>{title}&#60;/div>
+        &#60;div className=<span class="code-val">"alrt__msg"</span>>{message}&#60;/div>
+      &#60;/div>
+      {dismissible && (
+        &#60;button className=<span class="code-val">"alrt__x"</span> type=<span class="code-val">"button"</span> aria-label=<span class="code-val">"Dismiss"</span> onClick={() => setDismissed(<span class="code-kw">true</span>)}>&#215;&#60;/button>
+      )}
+    &#60;/div>
+  );
+};
+
+<span class="code-cm">// Usage</span>
+&#60;DsAlert ${usageProps} />`;
+}
+
+function getAlrtCode(){
+  return alrtLang==='blazor' ? getAlrtCodeBlazor()
+       : alrtLang==='tsx'    ? getAlrtCodeTSX()
+       : getAlrtCodeHTML();
+}
+
+function setAlrtLang(lang){
+  if(!ALRT_LANGS.some(l=>l.key===lang)) return;
+  alrtLang = lang;
+  document.querySelectorAll('#alrt-code-tab .code-seg__btn').forEach(b=>{
+    const on = b.dataset.lang===lang;
+    b.setAttribute('aria-selected', on ? 'true' : 'false');
+    b.setAttribute('tabindex', on ? '0' : '-1');
+  });
+  const file = document.getElementById('alrt-lang-file');
+  const meta = ALRT_LANGS.find(l=>l.key===lang);
+  if(file && meta) file.textContent = meta.file;
+  const block = document.getElementById('apg-code-block');
+  if(block) block.innerHTML = getAlrtCode();
+}
+
+function alrtLangKeydown(e){
+  const i = ALRT_LANGS.findIndex(l=>l.key===alrtLang);
+  let n = i;
+  if(e.key==='ArrowLeft')       n = (i - 1 + ALRT_LANGS.length) % ALRT_LANGS.length;
+  else if(e.key==='ArrowRight') n = (i + 1) % ALRT_LANGS.length;
+  else if(e.key==='Home')       n = 0;
+  else if(e.key==='End')        n = ALRT_LANGS.length - 1;
+  else return;
+  e.preventDefault();
+  setAlrtLang(ALRT_LANGS[n].key);
+  const btn = document.getElementById('alrt-lang-' + ALRT_LANGS[n].key);
+  if(btn) btn.focus();
+}
+
+function apgRefresh(){
+  document.querySelectorAll('.apg-stage-el').forEach(stage=>{
+    stage.innerHTML = '';
+    if(apg.dismissed){
+      stage.innerHTML = `<button class="cpg-reset" onclick="apgReset()">&#8630;&nbsp;&nbsp;Bring alert back</button>`;
+    } else {
+      stage.appendChild(makeAlrtEl());
+    }
+  });
+  document.querySelectorAll('.apg-title-input-el').forEach(inp=>{
+    if(document.activeElement !== inp) inp.value = apg.title;
+  });
+  document.querySelectorAll('.apg-msg-input-el').forEach(inp=>{
+    if(document.activeElement !== inp) inp.value = apg.message;
+  });
+  const block = document.getElementById('apg-code-block');
+  if(block) block.innerHTML = getAlrtCode();
+}
+
+const ALRT_PLAYGROUND_MOUNTS = [
+  {rootId:'alrt-playground', idSuffix:'', wrap:true, title:'Try the component', desc:'Adjust the filters to test component states.', headingAbove:'An alert flags a status or message tied to the content beside it.'},
+  {rootId:'alrt-code-playground', idSuffix:'-code', style:'code', title:'Playground', desc:'Live demo of the component.'},
+];
+
+function renderAlertPlayground(){
+  apg.theme = document.documentElement.getAttribute('data-theme')==='dark' ? 'dark' : 'light';
+  const sbg = stageBg(apg.theme);
+
+  const varBtns = ALRT_VARIANTS.map(v=>`<button class="btn-pg__pill${apg.variant===v.key?' on':''}" onclick="apgSet('variant','${v.key}')">${v.label}</button>`).join('');
+  const dmBtns = ['off','on'].map(x=>`<button class="btn-pg__pill${(apg.dismissible?(x==='on'):(x==='off'))?' on':''}" onclick="apgSet('dismissible','${x}')">${x==='on'?'Dismissible':'Static'}</button>`).join('');
+
+  ALRT_PLAYGROUND_MOUNTS.forEach(mount=>{
+    const root = document.getElementById(mount.rootId);
+    if(!root) return;
+    const s = mount.idSuffix;
+    const demo = `
+      <div class="btn-pg">
+        <div class="btn-pg__stage apg-stage-el" id="apg-stage${s}" style="background:${sbg}"></div>
+        <div class="btn-pg__ctrls">
+          <div class="btn-pg__group"><span class="btn-pg__clabel">Severity</span><div class="btn-pg__pill-row">${varBtns}</div></div>
+          <div class="btn-pg__group"><span class="btn-pg__clabel">Dismiss</span><div class="btn-pg__pill-row">${dmBtns}</div></div>
+          <div class="btn-pg__group"><span class="btn-pg__clabel">Title</span><input class="cpg-label-input apg-title-input-el" id="apg-title-input${s}" value="${apgEsc(apg.title)}" maxlength="40" oninput="apgSetTitle(this.value)" placeholder="${apgEsc((ALRT_VARIANTS.find(v=>v.key===apg.variant)||ALRT_VARIANTS[0]).title)}"></div>
+          <div class="btn-pg__group"><span class="btn-pg__clabel">Message</span><input class="cpg-label-input apg-msg-input-el" id="apg-msg-input${s}" value="${apgEsc(apg.message)}" maxlength="120" oninput="apgSetMessage(this.value)" placeholder="${apgEsc((ALRT_VARIANTS.find(v=>v.key===apg.variant)||ALRT_VARIANTS[0]).message)}"></div>
+        </div>
+      </div>`;
+
+    if(mount.style==='code'){
+      root.innerHTML = `
+        <div class="type-sub__title">${mount.title}</div>
+        <div class="type-sub__desc">${mount.desc}</div>
+        <div class="cpg-section-outline">${demo}</div>`;
+      return;
+    }
+
+    const inner = `
+      <div class="cpg-layout">
+        <div class="cpg-layout__intro">
+          ${mount.wrap ? `<span class="cpg-cursor-icon">${CPG_CURSOR_ICON_SVG}</span>` : ''}
+          <div class="cpg-layout__title">${mount.title}</div>
+          <div class="cpg-layout__desc">${mount.desc}</div>
+        </div>
+        <div class="cpg-layout__demo">${demo}</div>
+      </div>`;
+    const wrapped = mount.wrap ? `<div class="cpg-section-block">${inner}</div>` : inner;
+    root.innerHTML = (mount.headingAbove ? `<div class="cpg-overview-heading"><span class="cpg-overview-heading__icon">${CPG_INFO_ICON_SVG}</span><span>${mount.headingAbove}</span></div>` : '') + wrapped;
+  });
+
+  apgRefresh();
+}
+
+function renderAlertCodeTab(){
+  const root = document.getElementById('alrt-code-tab');
+  if(!root) return;
+  root.innerHTML = `
+    <div class="type-sub__title">Code</div>
+    <div class="type-sub__desc">Live snippet matching the current Playground configuration &mdash; switch to Overview to change it.</div>
+    <div class="cpg-section-outline">
+      <div class="code-panel code-panel--bare open">
+        <div class="code-panel__head">
+          <div class="code-seg" role="tablist" aria-label="Code language" onkeydown="alrtLangKeydown(event)">
+            ${ALRT_LANGS.map(l=>`<button type="button" role="tab" class="code-seg__btn" id="alrt-lang-${l.key}" data-lang="${l.key}" aria-selected="${alrtLang===l.key?'true':'false'}" aria-controls="apg-code-block" tabindex="${alrtLang===l.key?'0':'-1'}" onclick="setAlrtLang('${l.key}')">${l.label}</button>`).join('')}
+          </div>
+          <span class="code-lang-file" id="alrt-lang-file">${(ALRT_LANGS.find(l=>l.key===alrtLang)||ALRT_LANGS[0]).file}</span>
+          <button class="code-copy-btn" onclick="apgCopyCode()" id="apg-copy-btn">Copy</button>
+        </div>
+        <div class="code-body"><div class="code-block" id="apg-code-block" role="tabpanel" aria-live="polite"></div></div>
+      </div>
+    </div>`;
+}
+
+/* Flexible alert markup builder for the Overview's illustrative sections
+   (key variants, in-context mockups) — real .alrt markup with an optional
+   dismiss button. Doc-site-only helper; makeAlrtEl remains the canonical
+   playground builder. */
+function ovAlrt({variant='info', title, message, dismissible=false, compact=false}){
+  const v = ALRT_VARIANTS.find(x=>x.key===variant) || ALRT_VARIANTS[0];
+  const t = title || v.title, m = message || v.message;
+  const xBtn = dismissible ? `<button class="alrt__x" type="button" tabindex="-1" aria-hidden="true">&times;</button>` : '';
+  const style = compact ? ' style="max-width:none;font-size:12px;padding:10px 12px"' : ' style="max-width:none"';
+  return `<div class="alrt alrt--${variant}"${style}><span class="alrt__ico">${v.icon}</span><div class="alrt__bd"><div class="alrt__title">${apgEsc(t)}</div><div class="alrt__msg">${apgEsc(m)}</div></div>${xBtn}</div>`;
+}
+
+const ALRT_KEY_VARIANTS = [
+  {key:'info',    name:'Info',     use:'A neutral update — nothing is wrong, just worth knowing'},
+  {key:'success', name:'Success',  use:'Confirms something completed the way it should'},
+  {key:'warn',    name:'Warning',  use:'Needs attention before it becomes a problem'},
+  {key:'crit',    name:'Critical', use:'Something has already failed or is blocking progress'},
+];
+
+function renderAlertVariants(){
+  const root = document.getElementById('alrt-variants');
+  if(!root) return;
+
+  const cells = ALRT_KEY_VARIANTS.map(v=>`
+    <div class="spec-cell">
+      <div class="spec-cell__stage" style="display:block;padding:14px">${ovAlrt({variant:v.key, compact:true})}</div>
+      <div class="spec-cell__name">${v.name}</div>
+      <div class="spec-cell__desc">${v.use}</div>
+    </div>`).join('');
+
+  root.innerHTML = `
+    <div class="cpg-section-heading">
+      <div class="cpg-layout__title">Key variants</div>
+      <div class="cpg-layout__desc">Four severities, each mapped straight onto a Flash semantic token. Match the variant to what actually happened — not how loud you want it to look.</div>
+    </div>
+    <div class="cpg-section-block">
+      <div class="spec-grid" style="grid-template-columns:repeat(auto-fill,minmax(220px,1fr))">${cells}</div>
+    </div>`;
+}
+
+function renderAlertInSitu(){
+  const root = document.getElementById('alrt-insitu');
+  if(!root) return;
+  const theme = currentTheme();
+  const sbg = stageBg(theme);
+
+  // 1. Form validation — a field with an inline critical alert underneath
+  const formMock = `
+    <div class="spec-mock__stage" style="background:${sbg}">
+      <div class="spec-mock__label">Bank account number</div>
+      <div class="spec-mock__field" style="border-color:var(--color-crit-h)">
+        <span class="spec-mock__bar" style="width:60%"></span>
+      </div>
+      ${ovAlrt({variant:'crit', title:'Check this field', message:'That account number is 3 digits short.', compact:true})}
+    </div>
+    <div class="spec-mock__cap"><b>Form validation</b>A critical alert sits right under the field it explains.</div>`;
+
+  // 2. System banner — full-width, top of a mini page mock
+  const bannerMock = `
+    <div class="spec-mock__stage" style="background:${sbg};padding:0;overflow:hidden">
+      <div style="padding:10px 12px 0">${ovAlrt({variant:'warn', title:'Scheduled maintenance', message:'Payouts may be delayed between 22:00 and 23:00.', compact:true})}</div>
+      <div class="spec-mock__row" style="margin:14px 12px 0">${`<span class="spec-mock__bar" style="width:55px"></span>`}<span class="spec-mock__spacer"></span><span class="spec-mock__bar" style="width:30px"></span></div>
+      <div class="spec-mock__row" style="margin:8px 12px 12px">${`<span class="spec-mock__bar" style="width:80%"></span>`}</div>
+    </div>
+    <div class="spec-mock__cap"><b>System banner</b>Spans the page above the content it affects, ahead of anything else.</div>`;
+
+  // 3. Toast-style stack — compact, stacked bottom of the stage
+  const toastMock = `
+    <div class="spec-mock__stage" style="background:${sbg};display:flex;flex-direction:column;justify-content:flex-end;gap:8px">
+      ${ovAlrt({variant:'success', title:'Changes saved', message:'Your profile is up to date.', dismissible:true, compact:true})}
+      ${ovAlrt({variant:'info', title:'Export ready', message:'transactions_june.csv is ready to download.', dismissible:true, compact:true})}
+    </div>
+    <div class="spec-mock__cap"><b>Notification stack</b>Dismissible alerts stacked as they arrive, most recent last.</div>`;
+
+  root.innerHTML = `
+    <div class="cpg-section-heading">
+      <div class="cpg-layout__title">In context</div>
+      <div class="cpg-layout__desc">The same alert does three everyday jobs &mdash; explaining a form error, announcing something page-wide, and confirming an action already taken.</div>
+    </div>
+    <div class="cpg-section-block">
+      <div class="spec-insitu-grid">
+        <div class="spec-mock">${formMock}</div>
+        <div class="spec-mock">${bannerMock}</div>
+        <div class="spec-mock">${toastMock}</div>
+      </div>
+    </div>`;
+}
+
+function apgSet(key, val){
+  if(key==='dismissible') apg.dismissible = (val==='on');
+  else apg[key] = val;
+  apg.dismissed = false;
+  renderAlertPlayground();
+}
+function apgSetTitle(val){ apg.title = val; apgRefresh(); }
+function apgSetMessage(val){ apg.message = val; apgRefresh(); }
+function apgReset(){ apg.dismissed = false; apgRefresh(); }
+function apgCopyCode(){
+  const b = document.getElementById('apg-code-block');
+  if(!b) return;
+  navigator.clipboard.writeText(b.innerText||b.textContent).catch(()=>{});
+  const btn = document.getElementById('apg-copy-btn');
+  if(btn){ btn.textContent = 'Copied!'; setTimeout(()=>btn.textContent='Copy', 2000); }
+}
+
+function renderAlertReference(){
+  const root = document.getElementById('alrt-reference');
+  if(!root) return;
+
+  const theme = currentTheme();
+  const sbg = stageBg(theme);
+
+  /* ---- Anatomy ---- */
+  const heroAlrt = `<div class="alrt alrt--info" style="max-width:420px;font-size:15px;padding:18px 20px"><span class="alrt__ico" style="width:24px;height:24px;font-size:14px">i</span><div class="alrt__bd"><div class="alrt__title">Heads up</div><div class="alrt__msg">A short, plain-language explanation goes here.</div></div><button class="alrt__x" type="button" tabindex="-1" aria-hidden="true" style="font-size:19px">&times;</button></div>`;
+
+  const parts = [
+    {num:1, name:'Icon',    note:'Fixed per severity &mdash; a circular badge coloured by the &#8209;h token.',   vis:'<span class="alrt__ico" style="position:static;background:var(--color-info-h)">i</span>'},
+    {num:2, name:'Title',   note:'Bold, one short line naming what happened.',                                    vis:'<span style="font-weight:700;font-size:15px;color:var(--chrome-txt)">Title</span>'},
+    {num:3, name:'Message', note:'One or two sentences of plain-language detail.',                                vis:'<span style="font-size:13px;color:var(--chrome-muted)">Message text</span>'},
+    {num:4, name:'Dismiss', note:'Optional close button, shown only on dismissible alerts.',                      vis:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="var(--chrome-txt)" stroke-width="2.2" stroke-linecap="round"/></svg>'},
+  ];
+  const partCards = parts.map(p=>`
+    <div class="spec-part">
+      <div class="spec-part__stage" style="background:${sbg}">${p.vis}</div>
+      <div class="spec-part__body">
+        <div class="spec-part__name"><span class="spec-part__num">${p.num}</span>${p.name}</div>
+        <div class="spec-part__note">${p.note}</div>
+      </div>
+    </div>`).join('');
+
+  /* ---- Colour variants + tokens (single size, so no size axis) ---- */
+  const variantCells = ALRT_VARIANTS.map(v=>`
+    <div class="spec-cell">
+      <div class="spec-cell__stage" style="display:block;padding:14px">${ovAlrt({variant:v.key, compact:true})}</div>
+      <div class="spec-cell__name">${v.label}</div>
+    </div>`).join('');
+
+  const tokCell = (lh, dh) => {
+    let html = `<div class="spec-tok-cell"><span class="spec-tok-sw" style="background:${lh}"></span><code>${lh.toUpperCase()}</code></div>`;
+    if(dh.toLowerCase() !== lh.toLowerCase()){
+      html += `<div class="spec-tok-cell" style="margin-top:6px"><span class="spec-tok-sw" style="background:${dh}"></span><code>${dh.toUpperCase()}</code><span style="color:var(--chrome-muted);font-size:11px">dark</span></div>`;
+    }
+    return html;
+  };
+  const tokRows = ALRT_VARIANTS.map(v=>`
+    <tr>
+      <td class="dd-table__name">${v.label}</td>
+      <td>${tokCell(v.light.bg, v.dark.bg)}</td>
+      <td>${tokCell(v.light.ico, v.dark.ico)}</td>
+    </tr>`).join('');
+
+  /* ---- States (no selectable/removable-with-sizes equivalent — just default vs dismissible) ---- */
+  const states = [
+    {name:'Default',     note:'Display only, no close affordance.', alrt:ovAlrt({variant:'info', compact:true})},
+    {name:'Dismissible',  note:'Adds a close button; clearing it hides the alert.', alrt:ovAlrt({variant:'info', dismissible:true, compact:true})},
+  ];
+  const stateCells = states.map(s=>`
+    <div class="spec-cell">
+      <div class="spec-cell__stage" style="display:block;padding:14px">${s.alrt}</div>
+      <div class="spec-cell__name">${s.name}</div>
+      <div class="spec-cell__desc">${s.note}</div>
+    </div>`).join('');
+
+  root.innerHTML = `
+    <div class="type-sub">
+      <div class="type-sub__title">Anatomy</div>
+      <div class="type-sub__desc">An alert is a tinted, rounded container pairing a severity icon with a title and message, plus an optional dismiss button.</div>
+      <div class="cpg-section-outline">
+        <div class="spec-hero" style="background:${sbg}">${heroAlrt}</div>
+        <div class="spec-parts">${partCards}</div>
+      </div>
+    </div>
+
+    <div class="type-sub">
+      <div class="type-sub__title">Colour variants</div>
+      <div class="type-sub__desc">Alert has one size, so severity is the only axis. Each variant reads its background and icon colour straight off the matching Flash semantic token &mdash; info is the one variant with a dedicated dark-mode override, since its light token doesn't darken on its own.</div>
+      <div class="cpg-section-outline">
+        <div class="spec-grid" style="grid-template-columns:repeat(auto-fill,minmax(220px,1fr))">${variantCells}</div>
+        <div class="dd-table-wrap" style="margin-top:16px"><table class="dd-table" style="min-width:420px">
+          <thead><tr><th>Variant</th><th>Background</th><th>Icon</th></tr></thead>
+          <tbody>${tokRows}</tbody>
+        </table></div>
+      </div>
+    </div>
+
+    <div class="type-sub" style="margin-bottom:0">
+      <div class="type-sub__title">States</div>
+      <div class="type-sub__desc">Beyond the static display alert, an alert can carry a dismiss button.</div>
+      <div class="cpg-section-outline">
+        <div class="spec-grid" style="grid-template-columns:repeat(auto-fill,minmax(220px,1fr))">${stateCells}</div>
+      </div>
+    </div>`;
+}
+
+try { renderAlertCodeTab(); } catch(e){ console.error('alrt-code-tab',e); }
+try { renderAlertPlayground(); } catch(e){ console.error('alrt-playground',e); }
+try { renderAlertVariants(); } catch(e){ console.error('alrt-variants',e); }
+try { renderAlertInSitu(); } catch(e){ console.error('alrt-insitu',e); }
+try { renderAlertReference(); } catch(e){ console.error('alrt-reference',e); }
+
+function alrtTabSwitch(tab){
+  const nav = document.getElementById('alrt-tabs-list');
+  if(!nav) return;
+  nav.querySelectorAll('.tab-item').forEach(btn=>btn.classList.toggle('on', btn.getAttribute('data-alrt-tab')===tab));
+  document.querySelectorAll('#s-alert .tabs-panel[data-alrt-panel]').forEach(p=>p.classList.toggle('on', p.getAttribute('data-alrt-panel')===tab));
+}
+
+/* ============================================================
    CHECKBOXES & RADIOS — reference grid
 ============================================================ */
 const SEL_SIZES = [
@@ -11985,16 +12495,23 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.64.24';
+const SYSTEM_VERSION = '1.65.1';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
-      {version:'1.64.24', date:'2026-08-07', author:'Mo', title:'Playground Header toggle (default off); fixed clipped trailing links and a malformed Focused ring', changes:[
+      {version:'1.65.1', date:'2026-08-07', author:'Mo', title:'Playground Header toggle (default off); fixed clipped trailing links and a malformed Focused ring', changes:[
         ['added','New Header toggle in the Playground controls, off by default — the single-row demo now matches its original bare-row presentation unless Header is switched on, at which point it gains the black head + card frame'],
         ['fixed','.tbl-pg__card only set overflow:hidden, so the trailing links (shown in the Hover state) got clipped off the right edge on narrower viewports instead of being reachable; added overflow-x:auto to match the real Interactive table\'s .tbl-wrap pattern'],
         ['fixed','The Focused state\'s inset ring looked clipped at the bottom corners because the row had border-radius:0 while its card ancestor clipped to a 14px rounded corner; .tbl-pg__card .tbl-row now carries a matching border-radius:0 0 13px 13px'],
+      ]},
+      {version:'1.65.0', date:'2026-08-07', author:'Helen', title:'Alert rebuilt with the full Pills-page treatment — tabs, playground, In context, Style & Code', changes:[
+        ['changed','Alert moves from a flat single-panel section to the .sec--tabbed convention shared by Pills, Switch, Tags and Badges: a hero with a live preview, and Overview / Style / Code / Changelog tabs'],
+        ['added','Overview tab gains an interactive playground (severity, dismissible toggle, editable title/message), a Key variants grid (Info/Success/Warning/Critical), and three In context mockups — form validation, a system banner, and a dismissible notification stack'],
+        ['added','Style tab gains an Anatomy diagram (Icon/Title/Message/Dismiss), a Colour variants grid with a background/icon token table (light + dark hex), and a States grid (Default/Dismissible)'],
+        ['added','Code tab gains a live snippet synced to the Playground, with a segmented HTML / Blazor / React TSX switcher'],
+        ['changed','Unlike Pills, Alert has no size axis (single size) and no selectable state — those concepts don\'t apply here and were left out of the playground, Style tab and variant grids rather than stubbed in'],
       ]},
       {version:'1.64.23', date:'2026-08-07', author:'Mo', title:'Fixed Playground header label misalignment', changes:[
         ['fixed','Playground header labels (Product/Column/Status) were missing a spacer for the row\'s product picture, so they sat 30px left of the cells they label. Added a dedicated picture-width spacer alongside the checkbox spacer so every header label now lines up exactly with its row cell.'],
@@ -13040,7 +13557,18 @@ const CHANGELOG = {
         ['added','Native <details> disclosure with single-open and multiple-open variants'],
       ]},
     ]},
-    {secId:'s-alert', name:'Alert', version:'1.1.1', entries:[
+    {secId:'s-alert', name:'Alert', version:'1.2.0', entries:[
+      {version:'1.2.0', date:'2026-08-07', author:'Helen', title:'Full Pills-page treatment: tabbed layout, playground, In context, Style & Code tab', changes:[
+        ['changed','Page restructured from a flat single-panel section to the .sec--tabbed convention — hero with a live two-alert preview, and Overview / Style / Code / Changelog tabs, matching Pills/Switch/Tags/Badges'],
+        ['added','Overview: interactive playground (apg state) with Severity and Dismiss controls plus editable Title/Message fields, driving a live .alrt built by makeAlrtEl()'],
+        ['added','Overview: "Key variants" grid documenting Info/Success/Warning/Critical as severities rather than decorative colours'],
+        ['added','Overview: "In context" section with three real-world mockups — a form-validation error under a field, a full-width system banner, and a dismissible notification stack'],
+        ['added','Style: Anatomy diagram (Icon/Title/Message/Dismiss parts), a Colour variants grid, and a Background/Icon token table with light and dark hex per severity'],
+        ['added','Style: States grid covering Default and Dismissible'],
+        ['added','Code: live snippet synced to the Playground state, with an HTML / Blazor / React TSX segmented switcher (getAlrtCode/setAlrtLang/alrtLangKeydown), mirroring Pills\' PILL_LANGS pattern'],
+        ['changed','The existing static "Variants" and "Dismissible" swatch blocks and the standalone "When to use" section are superseded by the new Key variants/States grids and the Do\'s-and-don\'ts block inside the Overview tab — copy is unchanged, only the container'],
+        ['changed','AI context tab regenerated as "js-rendered" (was "static") now that ALRT_VARIANTS/makeAlrtEl/ovAlrt exist as real builders, and now also lists .alrt-hero-mock'],
+      ]},
       {version:'1.1.1', date:'2026-07-29', author:'Mo', title:'AI context tab added', changes:[
         ['added','AI context tab documenting the real, fully static .alrt/.alrt__*/severity-variant markup, plus its existing "When to use" Do/Dont guidance (3 do / 3 dont); notes the dismiss control is a plain inline onclick, not a named JS builder'],
       ]},
@@ -16015,6 +16543,7 @@ try { renderSectionChangelogs(); } catch(e){ console.error('section-changelog',e
   {secId:'s-dropdown', panelId:'dd-changelog-panel'},
   {secId:'s-tags',   panelId:'tag-changelog-panel'},
   {secId:'s-badges', panelId:'badge-changelog-panel'},
+  {secId:'s-alert',  panelId:'alrt-changelog-panel'},
 ].forEach(({secId, panelId})=>{
   try {
     const chlog = document.querySelector(`#${secId} > .sec-chlog`);
