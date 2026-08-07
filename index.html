@@ -2280,7 +2280,7 @@ body.home .main{max-width:none;margin:0;padding:0}
 
 /* ---- Chart (Flash palette + interactive) ---- */
 .cht{position:relative;border:1px solid var(--chrome-border);border-radius:14px;padding:20px 22px;background:var(--chrome-bg);width:380px;max-width:100%;
-  --c1:var(--prim-green-500);--c2:var(--prim-sup-blue-1);--c3:var(--prim-sup-purple-4);--c4:var(--prim-sup-orange-1);--c5:var(--prim-sup-pink-1)}
+  --c1:var(--prim-green-500);--c2:var(--prim-sup-blue-1);--c3:var(--prim-sup-purple-4);--c4:var(--prim-sup-pink-1);--c5:var(--prim-sup-orange-1)}
 .cht__cap{font-size:13px;font-weight:700;color:var(--chrome-txt);margin-bottom:2px}
 .cht__sub{font-size:11.5px;color:var(--chrome-muted);margin-bottom:16px}
 .cht svg{display:block;width:100%;height:auto;overflow:visible}
@@ -6358,7 +6358,7 @@ body.home .main{max-width:none;margin:0;padding:0}
     <section class="sec" id="s-charts-bar">
       <div class="sec__head">
         <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Bar Charts <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.4.0</span></h1>
+        <h1 class="sec__title">Bar Charts <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.4.1</span></h1>
         <p class="sec__desc">Compare discrete values across categories. Rendered as inline SVG &mdash; no charting library. Hover a bar to emphasise it and read its value; the rest dim back.</p>
       </div>
       <div class="type-sub">
@@ -6386,6 +6386,7 @@ body.home .main{max-width:none;margin:0;padding:0}
               <li>Don&rsquo;t colour series just for decoration &mdash; it implies meaning that isn&rsquo;t there.</li>
               <li>Don&rsquo;t truncate a value axis in a way that exaggerates differences.</li>
               <li>Don&rsquo;t use grey for chart colours &mdash; when representing multiple things (several bars, slices or series), give each its own palette colour instead.</li>
+              <li>Don&rsquo;t lead with red or orange &mdash; they read as error/warning. Only reach for them once other colours are already in use.</li>
             </ul>
           </div>
         </div>
@@ -6410,7 +6411,7 @@ body.home .main{max-width:none;margin:0;padding:0}
     ".cht__axis",
     ".cht__tip"
   ],
-  "css": "/* ---- Chart (Flash palette + interactive) ---- */\n.cht { position:relative;border:1px solid var(--chrome-border);border-radius:14px;padding:20px 22px;background:var(--chrome-bg);width:380px;max-width:100%;\n  --c1:var(--prim-green-500);--c2:var(--prim-sup-blue-1);--c3:var(--prim-sup-purple-4);--c4:var(--prim-sup-orange-1);--c5:var(--prim-sup-pink-1) }\n.cht__cap { font-size:13px;font-weight:700;color:var(--chrome-txt);margin-bottom:2px }\n.cht__sub { font-size:11.5px;color:var(--chrome-muted);margin-bottom:16px }\n.cht svg { display:block;width:100%;height:auto;overflow:visible }\n.cht__bar { fill:var(--c1);opacity:.25;transition:fill .15s,opacity .15s;cursor:pointer }\n.cht__bar.on { opacity:1 }\n.cht svg.is-hot .cht__line { opacity:1 }\n.cht__hit { fill:transparent;cursor:pointer }\n.cht__axis { fill:var(--chrome-muted);font-size:10px;font-family:inherit }\n.cht__tip { position:absolute;z-index:5;pointer-events:none;background:var(--color-surface-inverse);color:var(--color-text-inv);font-size:11.5px;font-weight:600;padding:5px 9px;border-radius:7px;white-space:nowrap;opacity:0;transform:translate(-50%,-100%);transition:opacity .12s;box-shadow:0 4px 14px rgba(0,0,0,.22) }\n.cht__tip.show { opacity:1 }\n.cht__tip b { font-weight:800 }",
+  "css": "/* ---- Chart (Flash palette + interactive) ---- */\n.cht { position:relative;border:1px solid var(--chrome-border);border-radius:14px;padding:20px 22px;background:var(--chrome-bg);width:380px;max-width:100%;\n  --c1:var(--prim-green-500);--c2:var(--prim-sup-blue-1);--c3:var(--prim-sup-purple-4);--c4:var(--prim-sup-pink-1);--c5:var(--prim-sup-orange-1) }\n.cht__cap { font-size:13px;font-weight:700;color:var(--chrome-txt);margin-bottom:2px }\n.cht__sub { font-size:11.5px;color:var(--chrome-muted);margin-bottom:16px }\n.cht svg { display:block;width:100%;height:auto;overflow:visible }\n.cht__bar { fill:var(--c1);opacity:.25;transition:fill .15s,opacity .15s;cursor:pointer }\n.cht__bar.on { opacity:1 }\n.cht svg.is-hot .cht__line { opacity:1 }\n.cht__hit { fill:transparent;cursor:pointer }\n.cht__axis { fill:var(--chrome-muted);font-size:10px;font-family:inherit }\n.cht__tip { position:absolute;z-index:5;pointer-events:none;background:var(--color-surface-inverse);color:var(--color-text-inv);font-size:11.5px;font-weight:600;padding:5px 9px;border-radius:7px;white-space:nowrap;opacity:0;transform:translate(-50%,-100%);transition:opacity .12s;box-shadow:0 4px 14px rgba(0,0,0,.22) }\n.cht__tip.show { opacity:1 }\n.cht__tip b { font-weight:800 }",
   "js": "function fmt(n){ return n&gt;=1000 ? (n/1000).toFixed(1).replace(/\\.0$/,'')+'k' : ''+n; }\n\nfunction mkTip(card){ var t=document.createElement('div'); t.className='cht__tip'; card.appendChild(t); return t; }\n\nfunction moveTip(t,card,el,html){ var r=el.getBoundingClientRect(), cr=card.getBoundingClientRect(); t.innerHTML=html; t.style.left=(r.left-cr.left+r.width/2)+'px'; t.style.top=(r.top-cr.top-8)+'px'; t.classList.add('show'); }",
   "usage": {
     "do": [
@@ -6423,10 +6424,11 @@ body.home .main{max-width:none;margin:0;padding:0}
       "Don’t use a donut for more than ~5 segments — a bar reads better.",
       "Don’t colour series just for decoration — it implies meaning that isn’t there.",
       "Don’t truncate a value axis in a way that exaggerates differences.",
-      "Don’t use grey for chart colours — when representing multiple things (several bars, slices or series), give each its own palette colour instead."
+      "Don’t use grey for chart colours — when representing multiple things (several bars, slices or series), give each its own palette colour instead.",
+      "Don’t lead with red or orange — they read as error/warning. Only reach for them once other colours are already in use."
     ]
   },
-  "contentHash": "1f9bfeb67b4a62bb23f4bf2117467d1dbdbf01dc606116b650cbc26403b0e5c3",
+  "contentHash": "0169fd280f5afdb277c5d21c297f869ea5139f9dd218abbf2b8643fc067a11ce",
   "note": "Split out of the former combined Charts page (v1.1.0). The bar renderer itself is inline logic inside an anonymous IIFE (keyed off document.getElementById('cht-bar')) rather than a separately named function, so only the shared fmt/mkTip/moveTip helpers are individually extractable by identifier. All series colours ride --c1..--c5 (Flash palette), not hardcoded hex."
 }
   </pre>
@@ -6436,7 +6438,7 @@ body.home .main{max-width:none;margin:0;padding:0}
     <section class="sec" id="s-charts-line">
       <div class="sec__head">
         <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Line &amp; Area Charts <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.1.0</span></h1>
+        <h1 class="sec__title">Line &amp; Area Charts <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.1.1</span></h1>
         <p class="sec__desc">Show a trend over a continuous range. The area variant fills beneath the line to emphasise volume.</p>
       </div>
       <div class="type-sub">
@@ -6467,6 +6469,7 @@ body.home .main{max-width:none;margin:0;padding:0}
               <li>Don&rsquo;t use a line chart for discrete, unordered categories &mdash; that&rsquo;s a bar chart.</li>
               <li>Don&rsquo;t fill the area under more than one series &mdash; overlapping fills obscure each other.</li>
               <li>Don&rsquo;t use grey for chart colours &mdash; give each series its own palette colour when plotting more than one.</li>
+              <li>Don&rsquo;t lead with red or orange &mdash; they read as error/warning. Only reach for them once other colours are already in use.</li>
             </ul>
           </div>
         </div>
@@ -6494,7 +6497,7 @@ body.home .main{max-width:none;margin:0;padding:0}
     ".cht__axis",
     ".cht__tip"
   ],
-  "css": "/* ---- Chart (Flash palette + interactive) ---- */\n.cht { position:relative;border:1px solid var(--chrome-border);border-radius:14px;padding:20px 22px;background:var(--chrome-bg);width:380px;max-width:100%;\n  --c1:var(--prim-green-500);--c2:var(--prim-sup-blue-1);--c3:var(--prim-sup-purple-4);--c4:var(--prim-sup-orange-1);--c5:var(--prim-sup-pink-1) }\n.cht__cap { font-size:13px;font-weight:700;color:var(--chrome-txt);margin-bottom:2px }\n.cht__sub { font-size:11.5px;color:var(--chrome-muted);margin-bottom:16px }\n.cht svg { display:block;width:100%;height:auto;overflow:visible }\n.cht__line { fill:none;stroke:var(--c1);stroke-width:2.5;stroke-linejoin:round;stroke-linecap:round;opacity:.25;transition:opacity .15s }\n.cht svg.is-hot .cht__line { opacity:1 }\n.cht__area { fill:url(#chtAreaGrad) }\n.cht__dot { fill:var(--chrome-bg);stroke:var(--c1);stroke-width:2.5;opacity:.25;transition:fill .12s,opacity .12s }\n.cht__dot.on { fill:var(--c1);opacity:1 }\n.cht__hit { fill:transparent;cursor:pointer }\n.cht__axis { fill:var(--chrome-muted);font-size:10px;font-family:inherit }\n.cht__tip { position:absolute;z-index:5;pointer-events:none;background:var(--color-surface-inverse);color:var(--color-text-inv);font-size:11.5px;font-weight:600;padding:5px 9px;border-radius:7px;white-space:nowrap;opacity:0;transform:translate(-50%,-100%);transition:opacity .12s;box-shadow:0 4px 14px rgba(0,0,0,.22) }\n.cht__tip.show { opacity:1 }\n.cht__tip b { font-weight:800 }",
+  "css": "/* ---- Chart (Flash palette + interactive) ---- */\n.cht { position:relative;border:1px solid var(--chrome-border);border-radius:14px;padding:20px 22px;background:var(--chrome-bg);width:380px;max-width:100%;\n  --c1:var(--prim-green-500);--c2:var(--prim-sup-blue-1);--c3:var(--prim-sup-purple-4);--c4:var(--prim-sup-pink-1);--c5:var(--prim-sup-orange-1) }\n.cht__cap { font-size:13px;font-weight:700;color:var(--chrome-txt);margin-bottom:2px }\n.cht__sub { font-size:11.5px;color:var(--chrome-muted);margin-bottom:16px }\n.cht svg { display:block;width:100%;height:auto;overflow:visible }\n.cht__line { fill:none;stroke:var(--c1);stroke-width:2.5;stroke-linejoin:round;stroke-linecap:round;opacity:.25;transition:opacity .15s }\n.cht svg.is-hot .cht__line { opacity:1 }\n.cht__area { fill:url(#chtAreaGrad) }\n.cht__dot { fill:var(--chrome-bg);stroke:var(--c1);stroke-width:2.5;opacity:.25;transition:fill .12s,opacity .12s }\n.cht__dot.on { fill:var(--c1);opacity:1 }\n.cht__hit { fill:transparent;cursor:pointer }\n.cht__axis { fill:var(--chrome-muted);font-size:10px;font-family:inherit }\n.cht__tip { position:absolute;z-index:5;pointer-events:none;background:var(--color-surface-inverse);color:var(--color-text-inv);font-size:11.5px;font-weight:600;padding:5px 9px;border-radius:7px;white-space:nowrap;opacity:0;transform:translate(-50%,-100%);transition:opacity .12s;box-shadow:0 4px 14px rgba(0,0,0,.22) }\n.cht__tip.show { opacity:1 }\n.cht__tip b { font-weight:800 }",
   "js": "function fmt(n){ return n&gt;=1000 ? (n/1000).toFixed(1).replace(/\\.0$/,'')+'k' : ''+n; }\n\nfunction mkTip(card){ var t=document.createElement('div'); t.className='cht__tip'; card.appendChild(t); return t; }\n\nfunction moveTip(t,card,el,html){ var r=el.getBoundingClientRect(), cr=card.getBoundingClientRect(); t.innerHTML=html; t.style.left=(r.left-cr.left+r.width/2)+'px'; t.style.top=(r.top-cr.top-8)+'px'; t.classList.add('show'); }\n\nfunction lineChart(el, data, filled){\n    var card=el.closest('.cht'), tip=mkTip(card);\n    var W=340,H=168,padT=12,padB=22,padX=10, cw=W-padX*2, ch=H-padT-padB;\n    var max=Math.max.apply(null,data.map(function(d){return d.v;})), n=data.length;\n    var xs=function(i){return padX+(n&lt;=1?0:i/(n-1)*cw);}, ys=function(v){return padT+ch-(max?v/max*ch:0);};\n    var defs='', area='';\n    if(filled){\n      defs='&lt;defs&gt;&lt;linearGradient id=\"chtAreaGrad\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"&gt;&lt;stop offset=\"0\" stop-color=\"var(--c1)\" stop-opacity=\"0.32\"/&gt;&lt;stop offset=\"1\" stop-color=\"var(--c1)\" stop-opacity=\"0\"/&gt;&lt;/linearGradient&gt;&lt;/defs&gt;';\n      var d='M '+xs(0).toFixed(1)+','+(padT+ch).toFixed(1);\n      data.forEach(function(dd,i){ d+=' L '+xs(i).toFixed(1)+','+ys(dd.v).toFixed(1); });\n      d+=' L '+xs(n-1).toFixed(1)+','+(padT+ch).toFixed(1)+' Z'; area='&lt;path class=\"cht__area\" d=\"'+d+'\"/&gt;';\n    }\n    var pts=data.map(function(dd,i){return xs(i).toFixed(1)+','+ys(dd.v).toFixed(1);}).join(' ');\n    var dots=data.map(function(dd,i){return '&lt;circle class=\"cht__dot\" data-i=\"'+i+'\" cx=\"'+xs(i).toFixed(1)+'\" cy=\"'+ys(dd.v).toFixed(1)+'\" r=\"3.5\"/&gt;';}).join('');\n    var hits=data.map(function(dd,i){ var x0=i===0?0:(xs(i-1)+xs(i))/2, x1=i===n-1?W:(xs(i)+xs(i+1))/2;\n      return '&lt;rect class=\"cht__hit\" data-i=\"'+i+'\" x=\"'+x0.toFixed(1)+'\" y=\"0\" width=\"'+(x1-x0).toFixed(1)+'\" height=\"'+(padT+ch).toFixed(1)+'\"/&gt;'; }).join('');\n    var labs=data.map(function(dd,i){return '&lt;text class=\"cht__axis\" x=\"'+xs(i).toFixed(1)+'\" y=\"'+(H-7)+'\" text-anchor=\"middle\"&gt;'+dd.label+'&lt;/text&gt;';}).join('');\n    el.innerHTML='&lt;svg viewBox=\"0 0 '+W+' '+H+'\" role=\"img\" aria-label=\"Line chart\"&gt;'+defs+area+'&lt;polyline class=\"cht__line\" points=\"'+pts+'\"/&gt;'+dots+labs+hits+'&lt;/svg&gt;';\n    var dotEls=el.querySelectorAll('.cht__dot');\n    Array.prototype.forEach.call(el.querySelectorAll('.cht__hit'),function(h){ var i=+h.getAttribute('data-i'), dot=dotEls[i];\n      h.addEventListener('mouseenter',function(){ dot.classList.add('on'); dot.setAttribute('r','5.5'); moveTip(tip,card,dot,'&lt;b&gt;'+data[i].v+'&lt;/b&gt; &amp;middot; '+data[i].label); });\n      h.addEventListener('mouseleave',function(){ dot.classList.remove('on'); dot.setAttribute('r','3.5'); tip.classList.remove('show'); });\n    });\n  }",
   "usage": {
     "do": [
@@ -6507,10 +6510,11 @@ body.home .main{max-width:none;margin:0;padding:0}
       "Don’t plot more than 2–3 lines on one chart — it turns into a tangle.",
       "Don’t use a line chart for discrete, unordered categories — that’s a bar chart.",
       "Don’t fill the area under more than one series — overlapping fills obscure each other.",
-      "Don’t use grey for chart colours — give each series its own palette colour when plotting more than one."
+      "Don’t use grey for chart colours — give each series its own palette colour when plotting more than one.",
+      "Don’t lead with red or orange — they read as error/warning. Only reach for them once other colours are already in use."
     ]
   },
-  "contentHash": "efa0160844ecf33b37f4216b0a7df7111bd0fc5d7690821371dbb9ed162de6af",
+  "contentHash": "081bed33ac7b7c7652cad985c08b899874a79296bdffd1d5c3b1de5bfacc6731",
   "note": "Split out of the former combined Charts page (v1.1.0). fmt/mkTip/moveTip/lineChart are the named builder functions this demo actually calls."
 }
   </pre>
@@ -6520,7 +6524,7 @@ body.home .main{max-width:none;margin:0;padding:0}
     <section class="sec" id="s-charts-donut">
       <div class="sec__head">
         <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Donut Charts <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.1.0</span></h1>
+        <h1 class="sec__title">Donut Charts <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.1.1</span></h1>
         <p class="sec__desc">Show parts of a whole. Each slice takes a colour from the Flash palette; hover a slice or its legend entry to pop it out and read its share in the centre.</p>
       </div>
       <div class="type-sub">
@@ -6548,6 +6552,7 @@ body.home .main{max-width:none;margin:0;padding:0}
               <li>Don&rsquo;t use it to compare two totals side by side &mdash; use bars instead.</li>
               <li>Don&rsquo;t rely on slice angle alone for precision &mdash; pair it with a legend that carries the figures.</li>
               <li>Don&rsquo;t use grey for a slice &mdash; each slice representing a different thing should get its own palette colour.</li>
+              <li>Don&rsquo;t lead with red or orange &mdash; they read as error/warning. Only reach for them once other colours are already in use.</li>
             </ul>
           </div>
         </div>
@@ -6574,7 +6579,7 @@ body.home .main{max-width:none;margin:0;padding:0}
     ".cht-donut-lab",
     ".cht__tip"
   ],
-  "css": "/* ---- Chart (Flash palette + interactive) ---- */\n.cht { position:relative;border:1px solid var(--chrome-border);border-radius:14px;padding:20px 22px;background:var(--chrome-bg);width:380px;max-width:100%;\n  --c1:var(--prim-green-500);--c2:var(--prim-sup-blue-1);--c3:var(--prim-sup-purple-4);--c4:var(--prim-sup-orange-1);--c5:var(--prim-sup-pink-1) }\n.cht__cap { font-size:13px;font-weight:700;color:var(--chrome-txt);margin-bottom:2px }\n.cht__sub { font-size:11.5px;color:var(--chrome-muted);margin-bottom:16px }\n.cht svg { display:block;width:100%;height:auto;overflow:visible }\n.cht svg.is-hot .cht__line { opacity:1 }\n.cht__seg { transition:opacity .18s,stroke-width .18s;cursor:pointer;opacity:.25 }\n.cht__seg.on { opacity:1 }\n.cht-legend { display:flex;flex-wrap:wrap;gap:8px 14px;margin-top:16px }\n.cht-legend__item { display:inline-flex;align-items:center;gap:7px;font-size:12px;color:var(--chrome-txt);cursor:pointer;padding:2px 5px;border-radius:6px;transition:background .12s }\n.cht-legend__item:hover { background:var(--chrome-hover) }\n.cht-legend__dot { width:10px;height:10px;border-radius:3px;flex-shrink:0 }\n.cht-donut-val { fill:var(--chrome-txt);font-weight:800 }\n.cht-donut-lab { fill:var(--chrome-muted) }\n.cht__tip { position:absolute;z-index:5;pointer-events:none;background:var(--color-surface-inverse);color:var(--color-text-inv);font-size:11.5px;font-weight:600;padding:5px 9px;border-radius:7px;white-space:nowrap;opacity:0;transform:translate(-50%,-100%);transition:opacity .12s;box-shadow:0 4px 14px rgba(0,0,0,.22) }\n.cht__tip.show { opacity:1 }\n.cht__tip b { font-weight:800 }",
+  "css": "/* ---- Chart (Flash palette + interactive) ---- */\n.cht { position:relative;border:1px solid var(--chrome-border);border-radius:14px;padding:20px 22px;background:var(--chrome-bg);width:380px;max-width:100%;\n  --c1:var(--prim-green-500);--c2:var(--prim-sup-blue-1);--c3:var(--prim-sup-purple-4);--c4:var(--prim-sup-pink-1);--c5:var(--prim-sup-orange-1) }\n.cht__cap { font-size:13px;font-weight:700;color:var(--chrome-txt);margin-bottom:2px }\n.cht__sub { font-size:11.5px;color:var(--chrome-muted);margin-bottom:16px }\n.cht svg { display:block;width:100%;height:auto;overflow:visible }\n.cht svg.is-hot .cht__line { opacity:1 }\n.cht__seg { transition:opacity .18s,stroke-width .18s;cursor:pointer;opacity:.25 }\n.cht__seg.on { opacity:1 }\n.cht-legend { display:flex;flex-wrap:wrap;gap:8px 14px;margin-top:16px }\n.cht-legend__item { display:inline-flex;align-items:center;gap:7px;font-size:12px;color:var(--chrome-txt);cursor:pointer;padding:2px 5px;border-radius:6px;transition:background .12s }\n.cht-legend__item:hover { background:var(--chrome-hover) }\n.cht-legend__dot { width:10px;height:10px;border-radius:3px;flex-shrink:0 }\n.cht-donut-val { fill:var(--chrome-txt);font-weight:800 }\n.cht-donut-lab { fill:var(--chrome-muted) }\n.cht__tip { position:absolute;z-index:5;pointer-events:none;background:var(--color-surface-inverse);color:var(--color-text-inv);font-size:11.5px;font-weight:600;padding:5px 9px;border-radius:7px;white-space:nowrap;opacity:0;transform:translate(-50%,-100%);transition:opacity .12s;box-shadow:0 4px 14px rgba(0,0,0,.22) }\n.cht__tip.show { opacity:1 }\n.cht__tip b { font-weight:800 }",
   "js": "function fmt(n){ return n&gt;=1000 ? (n/1000).toFixed(1).replace(/\\.0$/,'')+'k' : ''+n; }\n\nfunction mkTip(card){ var t=document.createElement('div'); t.className='cht__tip'; card.appendChild(t); return t; }\n\nfunction moveTip(t,card,el,html){ var r=el.getBoundingClientRect(), cr=card.getBoundingClientRect(); t.innerHTML=html; t.style.left=(r.left-cr.left+r.width/2)+'px'; t.style.top=(r.top-cr.top-8)+'px'; t.classList.add('show'); }",
   "usage": {
     "do": [
@@ -6587,10 +6592,11 @@ body.home .main{max-width:none;margin:0;padding:0}
       "Don’t use a donut for more than ~5 segments — a bar reads better past that.",
       "Don’t use it to compare two totals side by side — use bars instead.",
       "Don’t rely on slice angle alone for precision — pair it with a legend that carries the figures.",
-      "Don’t use grey for a slice — each slice representing a different thing should get its own palette colour."
+      "Don’t use grey for a slice — each slice representing a different thing should get its own palette colour.",
+      "Don’t lead with red or orange — they read as error/warning. Only reach for them once other colours are already in use."
     ]
   },
-  "contentHash": "aa503a321310d27274a06e7bd6cc309341a14a080810a94b93139052f70a0714",
+  "contentHash": "2ea0a3019045bb66b114f392ff67363428b1442922a6df036663d0cc1a88dadc",
   "note": "Split out of the former combined Charts page (v1.1.0). The donut renderer itself is inline logic inside an anonymous IIFE (keyed off document.getElementById('cht-donut')) rather than a separately named function, so only the shared fmt/mkTip/moveTip helpers are individually extractable by identifier."
 }
   </pre>
@@ -6688,7 +6694,7 @@ body.home .main{max-width:none;margin:0;padding:0}
     <section class="sec" id="s-charts-distribution">
       <div class="sec__head">
         <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Distribution Charts <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.1.0</span></h1>
+        <h1 class="sec__title">Distribution Charts <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.1.1</span></h1>
         <p class="sec__desc">Two ways to split a total across categories: a single segmented bar for a compact overview, or a ranked, one-row-per-category breakdown when each share needs its own line.</p>
       </div>
       <div class="type-sub">
@@ -6756,6 +6762,7 @@ body.home .main{max-width:none;margin:0;padding:0}
               <li>Don&rsquo;t reuse a colour across two unrelated categories in the same chart.</li>
               <li>Don&rsquo;t drop the legend from the segmented bar &mdash; segment width alone isn&rsquo;t precise enough.</li>
               <li>Don&rsquo;t use grey for a segment or row &mdash; each one representing a different category should get its own palette colour.</li>
+              <li>Don&rsquo;t lead with red or orange &mdash; they read as error/warning. Only reach for them once other colours are already in use.</li>
             </ul>
           </div>
         </div>
@@ -6798,10 +6805,11 @@ body.home .main{max-width:none;margin:0;padding:0}
       "Don’t use either pattern for more than ~6 categories — group the tail into “Other”.",
       "Don’t reuse a colour across two unrelated categories in the same chart.",
       "Don’t drop the legend from the segmented bar — segment width alone isn’t precise enough.",
-      "Don’t use grey for a segment or row — each one representing a different category should get its own palette colour."
+      "Don’t use grey for a segment or row — each one representing a different category should get its own palette colour.",
+      "Don’t lead with red or orange — they read as error/warning. Only reach for them once other colours are already in use."
     ]
   },
-  "contentHash": "bab68359c3e7fc744b8943cf4d6d9c3e3c96ed89b248e2e0665026f0d2315b5a",
+  "contentHash": "687eddccb6482330f6d0a09ae00fc71e52ab17af299634606e6e2514214e2f5c",
   "note": "Split out of the former combined Charts page (v1.1.0), which also covered Bar/Line/Donut (now s-charts-bar/s-charts-line/s-charts-donut) and Progress meters (now s-charts-meters). Both distribution-bar patterns (.dd-dist*/.dd-break*) are static hand-authored markup, migrated from the retired Data Display section."
 }
   </pre>
@@ -11967,12 +11975,16 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.64.16';
+const SYSTEM_VERSION = '1.64.17';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.64.17', date:'2026-08-07', author:'Mo', title:'Chart palette no longer leads with orange; new Don\'t rule against leading with red/orange', changes:[
+        ['changed','The shared chart palette (--c1..--c5, used by Bar/Line & Area/Donut) reorders orange from 4th to last (5th) and moves pink into 4th — a 4-category chart (the most common case) now uses green/blue/purple/pink and never reaches orange or red at all'],
+        ['added','Bar, Line & Area, Donut and Distribution Charts each gain a Don\'t rule: don\'t lead with red or orange, since they read as error/warning — reserve them for once other colours are already in use'],
+      ]},
       {version:'1.64.16', date:'2026-08-07', author:'Mo', title:'Chart Colours — Desaturated now matches the real chart default of 25% opacity', changes:[
         ['changed','CHART_DESAT_OPACITY on the Colours page moves from 0.45 to 0.25, and its family description updated, to match the actual default (inactive-state) opacity charts themselves now render at before hover'],
       ]},
@@ -12772,7 +12784,11 @@ const CHANGELOG = {
     ]
   },
   components: [
-    {secId:'s-charts-bar', name:'Bar Charts', version:'1.4.0', entries:[
+    {secId:'s-charts-bar', name:'Bar Charts', version:'1.4.1', entries:[
+      {version:'1.4.1', date:'2026-08-07', author:'Mo', title:'Palette no longer leads with orange; new Don\'t rule against leading with red/orange', changes:[
+        ['changed','--c4/--c5 swapped so orange moves from 4th to last (5th) and pink takes 4th — a 4-category chart no longer reaches orange at all'],
+        ['added','"When to use" gains a Don\'t rule: don\'t lead with red or orange — they read as error/warning; only reach for them once other colours are already in use'],
+      ]},
       {version:'1.4.0', date:'2026-08-07', author:'Mo', title:'Bars now default to 25% opacity, full opacity on hover (was inverted)', changes:[
         ['fixed','.cht__bar defaulted to opacity:1 (full saturation) with only the hovered-elsewhere bars dimmed to .32 — backwards from the Do rule added in v1.3.1. Now opacity:.25 by default, opacity:1 on .on (hover)'],
         ['removed','.cht svg.is-hot .cht__bar / .cht svg.is-hot .cht__bar.on opacity rules — redundant now that the default state itself is dimmed'],
@@ -12804,7 +12820,11 @@ const CHANGELOG = {
         ['added','Interactive inline-SVG bar, line, area and donut charts rendered from data, Flash colour palette, with hover tooltips, dim-the-rest emphasis, donut pop-out and an interactive legend'],
       ]},
     ]},
-    {secId:'s-charts-line', name:'Line & Area Charts', version:'1.1.0', entries:[
+    {secId:'s-charts-line', name:'Line & Area Charts', version:'1.1.1', entries:[
+      {version:'1.1.1', date:'2026-08-07', author:'Mo', title:'Palette no longer leads with orange; new Don\'t rule against leading with red/orange', changes:[
+        ['changed','--c4/--c5 swapped so orange moves from 4th to last (5th) and pink takes 4th'],
+        ['added','"When to use" gains a Don\'t rule: don\'t lead with red or orange — they read as error/warning; only reach for them once other colours are already in use'],
+      ]},
       {version:'1.1.0', date:'2026-08-07', author:'Mo', title:'Line and dot now default to 25% opacity, full opacity on hover (was inverted)', changes:[
         ['fixed','.cht__line and .cht__dot defaulted to full opacity/full saturation with no dimmed state at all. Now opacity:.25 by default; .cht svg.is-hot .cht__line and .cht__dot.on both jump to opacity:1'],
       ]},
@@ -12816,7 +12836,11 @@ const CHANGELOG = {
         ['added','Line & Area Charts — carved out of the former combined Charts page into its own section, with a "When to use" tailored to trend charts specifically'],
       ]},
     ]},
-    {secId:'s-charts-donut', name:'Donut Charts', version:'1.1.0', entries:[
+    {secId:'s-charts-donut', name:'Donut Charts', version:'1.1.1', entries:[
+      {version:'1.1.1', date:'2026-08-07', author:'Mo', title:'Palette no longer leads with orange; new Don\'t rule against leading with red/orange', changes:[
+        ['changed','--c4/--c5 swapped so orange moves from 4th to last (5th) and pink takes 4th — the 4-category demo (Card/EFT/Cash/Wallet) now renders green/blue/purple/pink with no orange or red at all'],
+        ['added','"When to use" gains a Don\'t rule: don\'t lead with red or orange — they read as error/warning; only reach for them once other colours are already in use'],
+      ]},
       {version:'1.1.0', date:'2026-08-07', author:'Mo', title:'Slices now default to 25% opacity, full opacity on hover (was inverted)', changes:[
         ['fixed','.cht__seg defaulted to opacity:1 (full saturation) with only the hovered-elsewhere slices dimmed to .32 — backwards from the Do rule added in v1.0.1. Now opacity:.25 by default, opacity:1 on .on (hover)'],
         ['removed','.cht svg.is-hot .cht__seg / .cht svg.is-hot .cht__seg.on opacity rules — redundant now that the default state itself is dimmed'],
@@ -12841,7 +12865,10 @@ const CHANGELOG = {
         ['added','Progress Meters — carved out of the former combined Charts page into its own section, with a "When to use" tailored to single-value-against-a-limit meters specifically'],
       ]},
     ]},
-    {secId:'s-charts-distribution', name:'Distribution Charts', version:'1.1.0', entries:[
+    {secId:'s-charts-distribution', name:'Distribution Charts', version:'1.1.1', entries:[
+      {version:'1.1.1', date:'2026-08-07', author:'Mo', title:'New Don\'t rule: don\'t lead with red or orange', changes:[
+        ['added','"When to use" gains a Don\'t rule: don\'t lead with red or orange — they read as error/warning; only reach for them once other colours are already in use'],
+      ]},
       {version:'1.1.0', date:'2026-08-07', author:'Mo', title:'Segmented bar now defaults to 25% opacity, full opacity on hover (was inverted)', changes:[
         ['fixed','.dd-break__seg defaulted to full-opacity saturated fills with only a :hover brightness(1.08) bump — the default itself was never dimmed. Now opacity:.25 by default, opacity:1 on :hover'],
       ]},
