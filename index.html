@@ -2284,18 +2284,17 @@ body.home .main{max-width:none;margin:0;padding:0}
 .cht__cap{font-size:13px;font-weight:700;color:var(--chrome-txt);margin-bottom:2px}
 .cht__sub{font-size:11.5px;color:var(--chrome-muted);margin-bottom:16px}
 .cht svg{display:block;width:100%;height:auto;overflow:visible}
-.cht__bar{fill:var(--c1);opacity:1;transition:fill .15s,opacity .15s;cursor:pointer}
-.cht svg.is-hot .cht__bar{opacity:.32}
-.cht svg.is-hot .cht__bar.on{opacity:1}
-.cht__line{fill:none;stroke:var(--c1);stroke-width:2.5;stroke-linejoin:round;stroke-linecap:round}
+.cht__bar{fill:var(--c1);opacity:.25;transition:fill .15s,opacity .15s;cursor:pointer}
+.cht__bar.on{opacity:1}
+.cht__line{fill:none;stroke:var(--c1);stroke-width:2.5;stroke-linejoin:round;stroke-linecap:round;opacity:.25;transition:opacity .15s}
+.cht svg.is-hot .cht__line{opacity:1}
 .cht__area{fill:url(#chtAreaGrad)}
-.cht__dot{fill:var(--chrome-bg);stroke:var(--c1);stroke-width:2.5;transition:fill .12s}
-.cht__dot.on{fill:var(--c1)}
+.cht__dot{fill:var(--chrome-bg);stroke:var(--c1);stroke-width:2.5;opacity:.25;transition:fill .12s,opacity .12s}
+.cht__dot.on{fill:var(--c1);opacity:1}
 .cht__hit{fill:transparent;cursor:pointer}
 .cht__axis{fill:var(--chrome-muted);font-size:10px;font-family:inherit}
-.cht__seg{transition:opacity .18s,stroke-width .18s;cursor:pointer}
-.cht svg.is-hot .cht__seg{opacity:.32}
-.cht svg.is-hot .cht__seg.on{opacity:1}
+.cht__seg{transition:opacity .18s,stroke-width .18s;cursor:pointer;opacity:.25}
+.cht__seg.on{opacity:1}
 .cht-legend{display:flex;flex-wrap:wrap;gap:8px 14px;margin-top:16px}
 .cht-legend__item{display:inline-flex;align-items:center;gap:7px;font-size:12px;color:var(--chrome-txt);cursor:pointer;padding:2px 5px;border-radius:6px;transition:background .12s}
 .cht-legend__item:hover{background:var(--chrome-hover)}
@@ -2328,8 +2327,8 @@ body.home .main{max-width:none;margin:0;padding:0}
 .dd-break__label{font-size:12.5px;font-weight:700;color:var(--chrome-txt)}
 .dd-break__total{font-size:12px;font-weight:700;color:var(--chrome-muted);font-variant-numeric:tabular-nums}
 .dd-break__bar{display:flex;gap:2px;height:14px;border-radius:999px;overflow:hidden;background:var(--chrome-nav)}
-.dd-break__seg{height:100%;transition:filter .15s}
-.dd-break__seg:hover{filter:brightness(1.08)}
+.dd-break__seg{height:100%;opacity:.25;transition:opacity .15s}
+.dd-break__seg:hover{opacity:1}
 .dd-break__legend{display:flex;flex-wrap:wrap;gap:12px 22px;margin-top:16px}
 .dd-break__item{display:flex;align-items:center;gap:8px}
 .dd-break__swatch{width:10px;height:10px;border-radius:3px;flex-shrink:0}
@@ -6359,7 +6358,7 @@ body.home .main{max-width:none;margin:0;padding:0}
     <section class="sec" id="s-charts-bar">
       <div class="sec__head">
         <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Bar Charts <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.3.1</span></h1>
+        <h1 class="sec__title">Bar Charts <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.4.0</span></h1>
         <p class="sec__desc">Compare discrete values across categories. Rendered as inline SVG &mdash; no charting library. Hover a bar to emphasise it and read its value; the rest dim back.</p>
       </div>
       <div class="type-sub">
@@ -6377,7 +6376,7 @@ body.home .main{max-width:none;margin:0;padding:0}
               <li>Use bars for comparison, lines for trends, donuts for a few parts of a whole.</li>
               <li>Label axes; give each category or series its own palette colour, and keep single-series charts to one.</li>
               <li>Start bar and area value axes at zero.</li>
-              <li>Default to a desaturated primary colour for the inactive state, and the saturated primary for active/hover.</li>
+              <li>Default to 25% opacity for the inactive state, and full opacity (the saturated colour) for active/hover.</li>
             </ul>
           </div>
           <div class="sel-usage__card">
@@ -6406,18 +6405,19 @@ body.home .main{max-width:none;margin:0;padding:0}
     ".cht__cap",
     ".cht__sub",
     ".cht__bar",
+    ".cht__val",
     ".cht__hit",
     ".cht__axis",
     ".cht__tip"
   ],
-  "css": "/* ---- Chart (Flash palette + interactive) ---- */\n.cht { position:relative;border:1px solid var(--chrome-border);border-radius:14px;padding:20px 22px;background:var(--chrome-bg);width:380px;max-width:100%;\n  --c1:var(--prim-green-500);--c2:var(--prim-sup-blue-1);--c3:var(--prim-sup-purple-4);--c4:var(--prim-sup-orange-1);--c5:var(--prim-sup-pink-1) }\n.cht__cap { font-size:13px;font-weight:700;color:var(--chrome-txt);margin-bottom:2px }\n.cht__sub { font-size:11.5px;color:var(--chrome-muted);margin-bottom:16px }\n.cht svg { display:block;width:100%;height:auto;overflow:visible }\n.cht__bar { fill:var(--c1);opacity:1;transition:fill .15s,opacity .15s;cursor:pointer }\n.cht svg.is-hot .cht__bar { opacity:.32 }\n.cht svg.is-hot .cht__bar.on { opacity:1 }\n.cht__hit { fill:transparent;cursor:pointer }\n.cht__axis { fill:var(--chrome-muted);font-size:10px;font-family:inherit }\n.cht svg.is-hot .cht__seg { opacity:.32 }\n.cht svg.is-hot .cht__seg.on { opacity:1 }\n.cht__tip { position:absolute;z-index:5;pointer-events:none;background:var(--color-surface-inverse);color:var(--color-text-inv);font-size:11.5px;font-weight:600;padding:5px 9px;border-radius:7px;white-space:nowrap;opacity:0;transform:translate(-50%,-100%);transition:opacity .12s;box-shadow:0 4px 14px rgba(0,0,0,.22) }\n.cht__tip.show { opacity:1 }\n.cht__tip b { font-weight:800 }",
+  "css": "/* ---- Chart (Flash palette + interactive) ---- */\n.cht { position:relative;border:1px solid var(--chrome-border);border-radius:14px;padding:20px 22px;background:var(--chrome-bg);width:380px;max-width:100%;\n  --c1:var(--prim-green-500);--c2:var(--prim-sup-blue-1);--c3:var(--prim-sup-purple-4);--c4:var(--prim-sup-orange-1);--c5:var(--prim-sup-pink-1) }\n.cht__cap { font-size:13px;font-weight:700;color:var(--chrome-txt);margin-bottom:2px }\n.cht__sub { font-size:11.5px;color:var(--chrome-muted);margin-bottom:16px }\n.cht svg { display:block;width:100%;height:auto;overflow:visible }\n.cht__bar { fill:var(--c1);opacity:.25;transition:fill .15s,opacity .15s;cursor:pointer }\n.cht__bar.on { opacity:1 }\n.cht svg.is-hot .cht__line { opacity:1 }\n.cht__hit { fill:transparent;cursor:pointer }\n.cht__axis { fill:var(--chrome-muted);font-size:10px;font-family:inherit }\n.cht__tip { position:absolute;z-index:5;pointer-events:none;background:var(--color-surface-inverse);color:var(--color-text-inv);font-size:11.5px;font-weight:600;padding:5px 9px;border-radius:7px;white-space:nowrap;opacity:0;transform:translate(-50%,-100%);transition:opacity .12s;box-shadow:0 4px 14px rgba(0,0,0,.22) }\n.cht__tip.show { opacity:1 }\n.cht__tip b { font-weight:800 }",
   "js": "function fmt(n){ return n&gt;=1000 ? (n/1000).toFixed(1).replace(/\\.0$/,'')+'k' : ''+n; }\n\nfunction mkTip(card){ var t=document.createElement('div'); t.className='cht__tip'; card.appendChild(t); return t; }\n\nfunction moveTip(t,card,el,html){ var r=el.getBoundingClientRect(), cr=card.getBoundingClientRect(); t.innerHTML=html; t.style.left=(r.left-cr.left+r.width/2)+'px'; t.style.top=(r.top-cr.top-8)+'px'; t.classList.add('show'); }",
   "usage": {
     "do": [
       "Use bars for comparison, lines for trends, donuts for a few parts of a whole.",
       "Label axes; give each category or series its own palette colour, and keep single-series charts to one.",
       "Start bar and area value axes at zero.",
-      "Default to a desaturated primary colour for the inactive state, and the saturated primary for active/hover."
+      "Default to 25% opacity for the inactive state, and full opacity (the saturated colour) for active/hover."
     ],
     "dont": [
       "Don’t use a donut for more than ~5 segments — a bar reads better.",
@@ -6426,7 +6426,7 @@ body.home .main{max-width:none;margin:0;padding:0}
       "Don’t use grey for chart colours — when representing multiple things (several bars, slices or series), give each its own palette colour instead."
     ]
   },
-  "contentHash": "5127c817eb6495699f009483ebea23445c647fa86d06e762c9ea931153183f80",
+  "contentHash": "1f9bfeb67b4a62bb23f4bf2117467d1dbdbf01dc606116b650cbc26403b0e5c3",
   "note": "Split out of the former combined Charts page (v1.1.0). The bar renderer itself is inline logic inside an anonymous IIFE (keyed off document.getElementById('cht-bar')) rather than a separately named function, so only the shared fmt/mkTip/moveTip helpers are individually extractable by identifier. All series colours ride --c1..--c5 (Flash palette), not hardcoded hex."
 }
   </pre>
@@ -6436,7 +6436,7 @@ body.home .main{max-width:none;margin:0;padding:0}
     <section class="sec" id="s-charts-line">
       <div class="sec__head">
         <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Line &amp; Area Charts <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.1</span></h1>
+        <h1 class="sec__title">Line &amp; Area Charts <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.1.0</span></h1>
         <p class="sec__desc">Show a trend over a continuous range. The area variant fills beneath the line to emphasise volume.</p>
       </div>
       <div class="type-sub">
@@ -6457,7 +6457,7 @@ body.home .main{max-width:none;margin:0;padding:0}
               <li>Use a line for a trend across a continuous range &mdash; time, distance, sequence.</li>
               <li>Use the area fill when the volume beneath the line matters, not just its direction.</li>
               <li>Start the value axis at zero, same as bar charts.</li>
-              <li>Default to a desaturated primary colour for the inactive state, and the saturated primary for active/hover.</li>
+              <li>Default to 25% opacity for the inactive state, and full opacity (the saturated colour) for active/hover.</li>
             </ul>
           </div>
           <div class="sel-usage__card">
@@ -6489,18 +6489,19 @@ body.home .main{max-width:none;margin:0;padding:0}
     ".cht__line",
     ".cht__area",
     ".cht__dot",
+    ".cht__val",
     ".cht__hit",
     ".cht__axis",
     ".cht__tip"
   ],
-  "css": "/* ---- Chart (Flash palette + interactive) ---- */\n.cht { position:relative;border:1px solid var(--chrome-border);border-radius:14px;padding:20px 22px;background:var(--chrome-bg);width:380px;max-width:100%;\n  --c1:var(--prim-green-500);--c2:var(--prim-sup-blue-1);--c3:var(--prim-sup-purple-4);--c4:var(--prim-sup-orange-1);--c5:var(--prim-sup-pink-1) }\n.cht__cap { font-size:13px;font-weight:700;color:var(--chrome-txt);margin-bottom:2px }\n.cht__sub { font-size:11.5px;color:var(--chrome-muted);margin-bottom:16px }\n.cht svg { display:block;width:100%;height:auto;overflow:visible }\n.cht svg.is-hot .cht__bar { opacity:.32 }\n.cht svg.is-hot .cht__bar.on { opacity:1 }\n.cht__line { fill:none;stroke:var(--c1);stroke-width:2.5;stroke-linejoin:round;stroke-linecap:round }\n.cht__area { fill:url(#chtAreaGrad) }\n.cht__dot { fill:var(--chrome-bg);stroke:var(--c1);stroke-width:2.5;transition:fill .12s }\n.cht__dot.on { fill:var(--c1) }\n.cht__hit { fill:transparent;cursor:pointer }\n.cht__axis { fill:var(--chrome-muted);font-size:10px;font-family:inherit }\n.cht svg.is-hot .cht__seg { opacity:.32 }\n.cht svg.is-hot .cht__seg.on { opacity:1 }\n.cht__tip { position:absolute;z-index:5;pointer-events:none;background:var(--color-surface-inverse);color:var(--color-text-inv);font-size:11.5px;font-weight:600;padding:5px 9px;border-radius:7px;white-space:nowrap;opacity:0;transform:translate(-50%,-100%);transition:opacity .12s;box-shadow:0 4px 14px rgba(0,0,0,.22) }\n.cht__tip.show { opacity:1 }\n.cht__tip b { font-weight:800 }",
+  "css": "/* ---- Chart (Flash palette + interactive) ---- */\n.cht { position:relative;border:1px solid var(--chrome-border);border-radius:14px;padding:20px 22px;background:var(--chrome-bg);width:380px;max-width:100%;\n  --c1:var(--prim-green-500);--c2:var(--prim-sup-blue-1);--c3:var(--prim-sup-purple-4);--c4:var(--prim-sup-orange-1);--c5:var(--prim-sup-pink-1) }\n.cht__cap { font-size:13px;font-weight:700;color:var(--chrome-txt);margin-bottom:2px }\n.cht__sub { font-size:11.5px;color:var(--chrome-muted);margin-bottom:16px }\n.cht svg { display:block;width:100%;height:auto;overflow:visible }\n.cht__line { fill:none;stroke:var(--c1);stroke-width:2.5;stroke-linejoin:round;stroke-linecap:round;opacity:.25;transition:opacity .15s }\n.cht svg.is-hot .cht__line { opacity:1 }\n.cht__area { fill:url(#chtAreaGrad) }\n.cht__dot { fill:var(--chrome-bg);stroke:var(--c1);stroke-width:2.5;opacity:.25;transition:fill .12s,opacity .12s }\n.cht__dot.on { fill:var(--c1);opacity:1 }\n.cht__hit { fill:transparent;cursor:pointer }\n.cht__axis { fill:var(--chrome-muted);font-size:10px;font-family:inherit }\n.cht__tip { position:absolute;z-index:5;pointer-events:none;background:var(--color-surface-inverse);color:var(--color-text-inv);font-size:11.5px;font-weight:600;padding:5px 9px;border-radius:7px;white-space:nowrap;opacity:0;transform:translate(-50%,-100%);transition:opacity .12s;box-shadow:0 4px 14px rgba(0,0,0,.22) }\n.cht__tip.show { opacity:1 }\n.cht__tip b { font-weight:800 }",
   "js": "function fmt(n){ return n&gt;=1000 ? (n/1000).toFixed(1).replace(/\\.0$/,'')+'k' : ''+n; }\n\nfunction mkTip(card){ var t=document.createElement('div'); t.className='cht__tip'; card.appendChild(t); return t; }\n\nfunction moveTip(t,card,el,html){ var r=el.getBoundingClientRect(), cr=card.getBoundingClientRect(); t.innerHTML=html; t.style.left=(r.left-cr.left+r.width/2)+'px'; t.style.top=(r.top-cr.top-8)+'px'; t.classList.add('show'); }\n\nfunction lineChart(el, data, filled){\n    var card=el.closest('.cht'), tip=mkTip(card);\n    var W=340,H=168,padT=12,padB=22,padX=10, cw=W-padX*2, ch=H-padT-padB;\n    var max=Math.max.apply(null,data.map(function(d){return d.v;})), n=data.length;\n    var xs=function(i){return padX+(n&lt;=1?0:i/(n-1)*cw);}, ys=function(v){return padT+ch-(max?v/max*ch:0);};\n    var defs='', area='';\n    if(filled){\n      defs='&lt;defs&gt;&lt;linearGradient id=\"chtAreaGrad\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"&gt;&lt;stop offset=\"0\" stop-color=\"var(--c1)\" stop-opacity=\"0.32\"/&gt;&lt;stop offset=\"1\" stop-color=\"var(--c1)\" stop-opacity=\"0\"/&gt;&lt;/linearGradient&gt;&lt;/defs&gt;';\n      var d='M '+xs(0).toFixed(1)+','+(padT+ch).toFixed(1);\n      data.forEach(function(dd,i){ d+=' L '+xs(i).toFixed(1)+','+ys(dd.v).toFixed(1); });\n      d+=' L '+xs(n-1).toFixed(1)+','+(padT+ch).toFixed(1)+' Z'; area='&lt;path class=\"cht__area\" d=\"'+d+'\"/&gt;';\n    }\n    var pts=data.map(function(dd,i){return xs(i).toFixed(1)+','+ys(dd.v).toFixed(1);}).join(' ');\n    var dots=data.map(function(dd,i){return '&lt;circle class=\"cht__dot\" data-i=\"'+i+'\" cx=\"'+xs(i).toFixed(1)+'\" cy=\"'+ys(dd.v).toFixed(1)+'\" r=\"3.5\"/&gt;';}).join('');\n    var hits=data.map(function(dd,i){ var x0=i===0?0:(xs(i-1)+xs(i))/2, x1=i===n-1?W:(xs(i)+xs(i+1))/2;\n      return '&lt;rect class=\"cht__hit\" data-i=\"'+i+'\" x=\"'+x0.toFixed(1)+'\" y=\"0\" width=\"'+(x1-x0).toFixed(1)+'\" height=\"'+(padT+ch).toFixed(1)+'\"/&gt;'; }).join('');\n    var labs=data.map(function(dd,i){return '&lt;text class=\"cht__axis\" x=\"'+xs(i).toFixed(1)+'\" y=\"'+(H-7)+'\" text-anchor=\"middle\"&gt;'+dd.label+'&lt;/text&gt;';}).join('');\n    el.innerHTML='&lt;svg viewBox=\"0 0 '+W+' '+H+'\" role=\"img\" aria-label=\"Line chart\"&gt;'+defs+area+'&lt;polyline class=\"cht__line\" points=\"'+pts+'\"/&gt;'+dots+labs+hits+'&lt;/svg&gt;';\n    var dotEls=el.querySelectorAll('.cht__dot');\n    Array.prototype.forEach.call(el.querySelectorAll('.cht__hit'),function(h){ var i=+h.getAttribute('data-i'), dot=dotEls[i];\n      h.addEventListener('mouseenter',function(){ dot.classList.add('on'); dot.setAttribute('r','5.5'); moveTip(tip,card,dot,'&lt;b&gt;'+data[i].v+'&lt;/b&gt; &amp;middot; '+data[i].label); });\n      h.addEventListener('mouseleave',function(){ dot.classList.remove('on'); dot.setAttribute('r','3.5'); tip.classList.remove('show'); });\n    });\n  }",
   "usage": {
     "do": [
       "Use a line for a trend across a continuous range — time, distance, sequence.",
       "Use the area fill when the volume beneath the line matters, not just its direction.",
       "Start the value axis at zero, same as bar charts.",
-      "Default to a desaturated primary colour for the inactive state, and the saturated primary for active/hover."
+      "Default to 25% opacity for the inactive state, and full opacity (the saturated colour) for active/hover."
     ],
     "dont": [
       "Don’t plot more than 2–3 lines on one chart — it turns into a tangle.",
@@ -6509,7 +6510,7 @@ body.home .main{max-width:none;margin:0;padding:0}
       "Don’t use grey for chart colours — give each series its own palette colour when plotting more than one."
     ]
   },
-  "contentHash": "2f79d383510e7c1540472bc389a37c88a06b9ae6b60f03f590531e596383604b",
+  "contentHash": "efa0160844ecf33b37f4216b0a7df7111bd0fc5d7690821371dbb9ed162de6af",
   "note": "Split out of the former combined Charts page (v1.1.0). fmt/mkTip/moveTip/lineChart are the named builder functions this demo actually calls."
 }
   </pre>
@@ -6519,7 +6520,7 @@ body.home .main{max-width:none;margin:0;padding:0}
     <section class="sec" id="s-charts-donut">
       <div class="sec__head">
         <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Donut Charts <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.1</span></h1>
+        <h1 class="sec__title">Donut Charts <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.1.0</span></h1>
         <p class="sec__desc">Show parts of a whole. Each slice takes a colour from the Flash palette; hover a slice or its legend entry to pop it out and read its share in the centre.</p>
       </div>
       <div class="type-sub">
@@ -6537,7 +6538,7 @@ body.home .main{max-width:none;margin:0;padding:0}
               <li>Use it for composition &mdash; a handful of parts adding up to one total.</li>
               <li>Sort slices largest to smallest, clockwise from 12 o&rsquo;clock.</li>
               <li>Show the total or the hovered share in the centre, as in this demo.</li>
-              <li>Give every slice its own palette colour &mdash; default to a desaturated primary for the inactive state, and the saturated primary for active/hover.</li>
+              <li>Give every slice its own palette colour &mdash; default to 25% opacity for the inactive state, and full opacity (the saturated colour) for active/hover.</li>
             </ul>
           </div>
           <div class="sel-usage__card">
@@ -6573,14 +6574,14 @@ body.home .main{max-width:none;margin:0;padding:0}
     ".cht-donut-lab",
     ".cht__tip"
   ],
-  "css": "/* ---- Chart (Flash palette + interactive) ---- */\n.cht { position:relative;border:1px solid var(--chrome-border);border-radius:14px;padding:20px 22px;background:var(--chrome-bg);width:380px;max-width:100%;\n  --c1:var(--prim-green-500);--c2:var(--prim-sup-blue-1);--c3:var(--prim-sup-purple-4);--c4:var(--prim-sup-orange-1);--c5:var(--prim-sup-pink-1) }\n.cht__cap { font-size:13px;font-weight:700;color:var(--chrome-txt);margin-bottom:2px }\n.cht__sub { font-size:11.5px;color:var(--chrome-muted);margin-bottom:16px }\n.cht svg { display:block;width:100%;height:auto;overflow:visible }\n.cht svg.is-hot .cht__bar { opacity:.32 }\n.cht svg.is-hot .cht__bar.on { opacity:1 }\n.cht__seg { transition:opacity .18s,stroke-width .18s;cursor:pointer }\n.cht svg.is-hot .cht__seg { opacity:.32 }\n.cht svg.is-hot .cht__seg.on { opacity:1 }\n.cht-legend { display:flex;flex-wrap:wrap;gap:8px 14px;margin-top:16px }\n.cht-legend__item { display:inline-flex;align-items:center;gap:7px;font-size:12px;color:var(--chrome-txt);cursor:pointer;padding:2px 5px;border-radius:6px;transition:background .12s }\n.cht-legend__item:hover { background:var(--chrome-hover) }\n.cht-legend__dot { width:10px;height:10px;border-radius:3px;flex-shrink:0 }\n.cht-donut-val { fill:var(--chrome-txt);font-weight:800 }\n.cht-donut-lab { fill:var(--chrome-muted) }\n.cht__tip { position:absolute;z-index:5;pointer-events:none;background:var(--color-surface-inverse);color:var(--color-text-inv);font-size:11.5px;font-weight:600;padding:5px 9px;border-radius:7px;white-space:nowrap;opacity:0;transform:translate(-50%,-100%);transition:opacity .12s;box-shadow:0 4px 14px rgba(0,0,0,.22) }\n.cht__tip.show { opacity:1 }\n.cht__tip b { font-weight:800 }",
+  "css": "/* ---- Chart (Flash palette + interactive) ---- */\n.cht { position:relative;border:1px solid var(--chrome-border);border-radius:14px;padding:20px 22px;background:var(--chrome-bg);width:380px;max-width:100%;\n  --c1:var(--prim-green-500);--c2:var(--prim-sup-blue-1);--c3:var(--prim-sup-purple-4);--c4:var(--prim-sup-orange-1);--c5:var(--prim-sup-pink-1) }\n.cht__cap { font-size:13px;font-weight:700;color:var(--chrome-txt);margin-bottom:2px }\n.cht__sub { font-size:11.5px;color:var(--chrome-muted);margin-bottom:16px }\n.cht svg { display:block;width:100%;height:auto;overflow:visible }\n.cht svg.is-hot .cht__line { opacity:1 }\n.cht__seg { transition:opacity .18s,stroke-width .18s;cursor:pointer;opacity:.25 }\n.cht__seg.on { opacity:1 }\n.cht-legend { display:flex;flex-wrap:wrap;gap:8px 14px;margin-top:16px }\n.cht-legend__item { display:inline-flex;align-items:center;gap:7px;font-size:12px;color:var(--chrome-txt);cursor:pointer;padding:2px 5px;border-radius:6px;transition:background .12s }\n.cht-legend__item:hover { background:var(--chrome-hover) }\n.cht-legend__dot { width:10px;height:10px;border-radius:3px;flex-shrink:0 }\n.cht-donut-val { fill:var(--chrome-txt);font-weight:800 }\n.cht-donut-lab { fill:var(--chrome-muted) }\n.cht__tip { position:absolute;z-index:5;pointer-events:none;background:var(--color-surface-inverse);color:var(--color-text-inv);font-size:11.5px;font-weight:600;padding:5px 9px;border-radius:7px;white-space:nowrap;opacity:0;transform:translate(-50%,-100%);transition:opacity .12s;box-shadow:0 4px 14px rgba(0,0,0,.22) }\n.cht__tip.show { opacity:1 }\n.cht__tip b { font-weight:800 }",
   "js": "function fmt(n){ return n&gt;=1000 ? (n/1000).toFixed(1).replace(/\\.0$/,'')+'k' : ''+n; }\n\nfunction mkTip(card){ var t=document.createElement('div'); t.className='cht__tip'; card.appendChild(t); return t; }\n\nfunction moveTip(t,card,el,html){ var r=el.getBoundingClientRect(), cr=card.getBoundingClientRect(); t.innerHTML=html; t.style.left=(r.left-cr.left+r.width/2)+'px'; t.style.top=(r.top-cr.top-8)+'px'; t.classList.add('show'); }",
   "usage": {
     "do": [
       "Use it for composition — a handful of parts adding up to one total.",
       "Sort slices largest to smallest, clockwise from 12 o’clock.",
       "Show the total or the hovered share in the centre, as in this demo.",
-      "Give every slice its own palette colour — default to a desaturated primary for the inactive state, and the saturated primary for active/hover."
+      "Give every slice its own palette colour — default to 25% opacity for the inactive state, and full opacity (the saturated colour) for active/hover."
     ],
     "dont": [
       "Don’t use a donut for more than ~5 segments — a bar reads better past that.",
@@ -6589,7 +6590,7 @@ body.home .main{max-width:none;margin:0;padding:0}
       "Don’t use grey for a slice — each slice representing a different thing should get its own palette colour."
     ]
   },
-  "contentHash": "643d7df908e4bf520dc5efb0fb2fff752fac5812bca488af3f844fc72ebba46f",
+  "contentHash": "aa503a321310d27274a06e7bd6cc309341a14a080810a94b93139052f70a0714",
   "note": "Split out of the former combined Charts page (v1.1.0). The donut renderer itself is inline logic inside an anonymous IIFE (keyed off document.getElementById('cht-donut')) rather than a separately named function, so only the shared fmt/mkTip/moveTip helpers are individually extractable by identifier."
 }
   </pre>
@@ -6687,7 +6688,7 @@ body.home .main{max-width:none;margin:0;padding:0}
     <section class="sec" id="s-charts-distribution">
       <div class="sec__head">
         <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Distribution Charts <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.1</span></h1>
+        <h1 class="sec__title">Distribution Charts <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.1.0</span></h1>
         <p class="sec__desc">Two ways to split a total across categories: a single segmented bar for a compact overview, or a ranked, one-row-per-category breakdown when each share needs its own line.</p>
       </div>
       <div class="type-sub">
@@ -6745,7 +6746,7 @@ body.home .main{max-width:none;margin:0;padding:0}
               <li>Use the single segmented bar when the overview matters more than reading each figure at a glance.</li>
               <li>Use ranked bars when every category needs its own precise, legible row.</li>
               <li>Sort by share, largest first, in both patterns.</li>
-              <li>Give each category its own palette colour &mdash; default to a desaturated primary for the inactive state, and the saturated primary for active/hover.</li>
+              <li>Give each category its own palette colour &mdash; default to 25% opacity for the inactive state, and full opacity (the saturated colour) for active/hover.</li>
             </ul>
           </div>
           <div class="sel-usage__card">
@@ -6785,13 +6786,13 @@ body.home .main{max-width:none;margin:0;padding:0}
     ".dd-break__k",
     ".dd-break__v"
   ],
-  "css": ".dd-dist { border:1px solid var(--chrome-border);border-radius:12px;padding:22px }\n.dd-dist__row { margin-bottom:16px }\n.dd-dist__row:last-child { margin-bottom:0 }\n.dd-dist__top { display:flex;justify-content:space-between;align-items:baseline;margin-bottom:7px;gap:12px }\n.dd-dist__label { display:inline-flex;align-items:center;gap:8px;font-size:12.5px;font-weight:700;color:var(--chrome-txt) }\n.dd-dist__swatch { width:9px;height:9px;border-radius:3px;flex-shrink:0 }\n.dd-dist__val { font-size:12px;font-weight:700;color:var(--chrome-muted);font-variant-numeric:tabular-nums;white-space:nowrap }\n.dd-dist__track { height:10px;border-radius:999px;background:var(--chrome-nav);overflow:hidden }\n.dd-dist__fill { height:100%;border-radius:999px;transition:width .3s }\n.dd-break { border:1px solid var(--chrome-border);border-radius:12px;padding:22px }\n.dd-break__top { display:flex;justify-content:space-between;align-items:baseline;margin-bottom:11px }\n.dd-break__label { font-size:12.5px;font-weight:700;color:var(--chrome-txt) }\n.dd-break__total { font-size:12px;font-weight:700;color:var(--chrome-muted);font-variant-numeric:tabular-nums }\n.dd-break__bar { display:flex;gap:2px;height:14px;border-radius:999px;overflow:hidden;background:var(--chrome-nav) }\n.dd-break__seg { height:100%;transition:filter .15s }\n.dd-break__seg:hover { filter:brightness(1.08) }\n.dd-break__legend { display:flex;flex-wrap:wrap;gap:12px 22px;margin-top:16px }\n.dd-break__item { display:flex;align-items:center;gap:8px }\n.dd-break__swatch { width:10px;height:10px;border-radius:3px;flex-shrink:0 }\n.dd-break__k { font-size:12.5px;font-weight:700;color:var(--chrome-txt) }\n.dd-break__v { font-size:12px;font-weight:700;color:var(--chrome-muted);font-variant-numeric:tabular-nums }",
+  "css": ".dd-dist { border:1px solid var(--chrome-border);border-radius:12px;padding:22px }\n.dd-dist__row { margin-bottom:16px }\n.dd-dist__row:last-child { margin-bottom:0 }\n.dd-dist__top { display:flex;justify-content:space-between;align-items:baseline;margin-bottom:7px;gap:12px }\n.dd-dist__label { display:inline-flex;align-items:center;gap:8px;font-size:12.5px;font-weight:700;color:var(--chrome-txt) }\n.dd-dist__swatch { width:9px;height:9px;border-radius:3px;flex-shrink:0 }\n.dd-dist__val { font-size:12px;font-weight:700;color:var(--chrome-muted);font-variant-numeric:tabular-nums;white-space:nowrap }\n.dd-dist__track { height:10px;border-radius:999px;background:var(--chrome-nav);overflow:hidden }\n.dd-dist__fill { height:100%;border-radius:999px;transition:width .3s }\n.dd-break { border:1px solid var(--chrome-border);border-radius:12px;padding:22px }\n.dd-break__top { display:flex;justify-content:space-between;align-items:baseline;margin-bottom:11px }\n.dd-break__label { font-size:12.5px;font-weight:700;color:var(--chrome-txt) }\n.dd-break__total { font-size:12px;font-weight:700;color:var(--chrome-muted);font-variant-numeric:tabular-nums }\n.dd-break__bar { display:flex;gap:2px;height:14px;border-radius:999px;overflow:hidden;background:var(--chrome-nav) }\n.dd-break__seg { height:100%;opacity:.25;transition:opacity .15s }\n.dd-break__seg:hover { opacity:1 }\n.dd-break__legend { display:flex;flex-wrap:wrap;gap:12px 22px;margin-top:16px }\n.dd-break__item { display:flex;align-items:center;gap:8px }\n.dd-break__swatch { width:10px;height:10px;border-radius:3px;flex-shrink:0 }\n.dd-break__k { font-size:12.5px;font-weight:700;color:var(--chrome-txt) }\n.dd-break__v { font-size:12px;font-weight:700;color:var(--chrome-muted);font-variant-numeric:tabular-nums }",
   "usage": {
     "do": [
       "Use the single segmented bar when the overview matters more than reading each figure at a glance.",
       "Use ranked bars when every category needs its own precise, legible row.",
       "Sort by share, largest first, in both patterns.",
-      "Give each category its own palette colour — default to a desaturated primary for the inactive state, and the saturated primary for active/hover."
+      "Give each category its own palette colour — default to 25% opacity for the inactive state, and full opacity (the saturated colour) for active/hover."
     ],
     "dont": [
       "Don’t use either pattern for more than ~6 categories — group the tail into “Other”.",
@@ -6800,7 +6801,7 @@ body.home .main{max-width:none;margin:0;padding:0}
       "Don’t use grey for a segment or row — each one representing a different category should get its own palette colour."
     ]
   },
-  "contentHash": "17bf7f08a17f488515fffd97ae797ffefc5ee9866dbb5a78b8b2d3675312c835",
+  "contentHash": "bab68359c3e7fc744b8943cf4d6d9c3e3c96ed89b248e2e0665026f0d2315b5a",
   "note": "Split out of the former combined Charts page (v1.1.0), which also covered Bar/Line/Donut (now s-charts-bar/s-charts-line/s-charts-donut) and Progress meters (now s-charts-meters). Both distribution-bar patterns (.dd-dist*/.dd-break*) are static hand-authored markup, migrated from the retired Data Display section."
 }
   </pre>
@@ -11965,12 +11966,16 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.64.14';
+const SYSTEM_VERSION = '1.64.15';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.64.15', date:'2026-08-07', author:'Mo', title:'Chart colours reworked to 25% opacity default, full opacity on hover (was inverted)', changes:[
+        ['fixed','Bar, Donut, Line & Area and Distribution charts had it backwards — the saturated palette colour was the default and only the previously-added Do/Don\'t copy asked for a desaturated default. Implemented the intended behaviour: every bar/slice/point/segment now renders at 25% opacity by default, and the hovered/active one snaps to full opacity (the real saturated colour)'],
+        ['changed','.cht__bar, .cht__seg, .cht__line, .cht__dot and .dd-break__seg all gained opacity:.25 as their base state, with .on/:hover set to opacity:1; the old .cht svg.is-hot opacity-dimming rules for bars/segs are now redundant with the new default and were removed'],
+      ]},
       {version:'1.64.14', date:'2026-08-07', author:'Mo', title:'New Pills Do rule: 4px gap when stacked horizontally', changes:[
         ['added','Pills Do\'s and don\'ts gains a Do rule: use a 4px gap when pills are stacked horizontally next to each other'],
       ]},
@@ -12763,7 +12768,11 @@ const CHANGELOG = {
     ]
   },
   components: [
-    {secId:'s-charts-bar', name:'Bar Charts', version:'1.3.1', entries:[
+    {secId:'s-charts-bar', name:'Bar Charts', version:'1.4.0', entries:[
+      {version:'1.4.0', date:'2026-08-07', author:'Mo', title:'Bars now default to 25% opacity, full opacity on hover (was inverted)', changes:[
+        ['fixed','.cht__bar defaulted to opacity:1 (full saturation) with only the hovered-elsewhere bars dimmed to .32 — backwards from the Do rule added in v1.3.1. Now opacity:.25 by default, opacity:1 on .on (hover)'],
+        ['removed','.cht svg.is-hot .cht__bar / .cht svg.is-hot .cht__bar.on opacity rules — redundant now that the default state itself is dimmed'],
+      ]},
       {version:'1.3.1', date:'2026-08-07', author:'Mo', title:'New Do/Don\'t rule: no grey — desaturated primary for inactive, saturated primary for active/hover', changes:[
         ['added','"When to use" gains a Do rule: default to a desaturated primary colour for the inactive state, and the saturated primary for active/hover'],
         ['added','"When to use" gains a Don\'t rule: don\'t use grey for chart colours — when representing multiple things (several bars, slices or series), give each its own palette colour'],
@@ -12791,7 +12800,10 @@ const CHANGELOG = {
         ['added','Interactive inline-SVG bar, line, area and donut charts rendered from data, Flash colour palette, with hover tooltips, dim-the-rest emphasis, donut pop-out and an interactive legend'],
       ]},
     ]},
-    {secId:'s-charts-line', name:'Line & Area Charts', version:'1.0.1', entries:[
+    {secId:'s-charts-line', name:'Line & Area Charts', version:'1.1.0', entries:[
+      {version:'1.1.0', date:'2026-08-07', author:'Mo', title:'Line and dot now default to 25% opacity, full opacity on hover (was inverted)', changes:[
+        ['fixed','.cht__line and .cht__dot defaulted to full opacity/full saturation with no dimmed state at all. Now opacity:.25 by default; .cht svg.is-hot .cht__line and .cht__dot.on both jump to opacity:1'],
+      ]},
       {version:'1.0.1', date:'2026-08-07', author:'Mo', title:'New Do/Don\'t rule: no grey — desaturated primary for inactive, saturated primary for active/hover', changes:[
         ['added','"When to use" gains a Do rule: default to a desaturated primary colour for the inactive state, and the saturated primary for active/hover'],
         ['added','"When to use" gains a Don\'t rule: don\'t use grey for chart colours — give each series its own palette colour when plotting more than one'],
@@ -12800,7 +12812,11 @@ const CHANGELOG = {
         ['added','Line & Area Charts — carved out of the former combined Charts page into its own section, with a "When to use" tailored to trend charts specifically'],
       ]},
     ]},
-    {secId:'s-charts-donut', name:'Donut Charts', version:'1.0.1', entries:[
+    {secId:'s-charts-donut', name:'Donut Charts', version:'1.1.0', entries:[
+      {version:'1.1.0', date:'2026-08-07', author:'Mo', title:'Slices now default to 25% opacity, full opacity on hover (was inverted)', changes:[
+        ['fixed','.cht__seg defaulted to opacity:1 (full saturation) with only the hovered-elsewhere slices dimmed to .32 — backwards from the Do rule added in v1.0.1. Now opacity:.25 by default, opacity:1 on .on (hover)'],
+        ['removed','.cht svg.is-hot .cht__seg / .cht svg.is-hot .cht__seg.on opacity rules — redundant now that the default state itself is dimmed'],
+      ]},
       {version:'1.0.1', date:'2026-08-07', author:'Mo', title:'New Do/Don\'t rule: no grey — desaturated primary for inactive, saturated primary for active/hover', changes:[
         ['added','"When to use" gains a Do rule: give every slice its own palette colour, defaulting to a desaturated primary for the inactive state and the saturated primary for active/hover'],
         ['added','"When to use" gains a Don\'t rule: don\'t use grey for a slice — each slice representing a different thing should get its own palette colour'],
@@ -12821,7 +12837,10 @@ const CHANGELOG = {
         ['added','Progress Meters — carved out of the former combined Charts page into its own section, with a "When to use" tailored to single-value-against-a-limit meters specifically'],
       ]},
     ]},
-    {secId:'s-charts-distribution', name:'Distribution Charts', version:'1.0.1', entries:[
+    {secId:'s-charts-distribution', name:'Distribution Charts', version:'1.1.0', entries:[
+      {version:'1.1.0', date:'2026-08-07', author:'Mo', title:'Segmented bar now defaults to 25% opacity, full opacity on hover (was inverted)', changes:[
+        ['fixed','.dd-break__seg defaulted to full-opacity saturated fills with only a :hover brightness(1.08) bump — the default itself was never dimmed. Now opacity:.25 by default, opacity:1 on :hover'],
+      ]},
       {version:'1.0.1', date:'2026-08-07', author:'Mo', title:'New Do/Don\'t rule: no grey — desaturated primary for inactive, saturated primary for active/hover', changes:[
         ['added','"When to use" gains a Do rule: give each category its own palette colour, defaulting to a desaturated primary for the inactive state and the saturated primary for active/hover'],
         ['added','"When to use" gains a Don\'t rule: don\'t use grey for a segment or row — each one representing a different category should get its own palette colour'],
