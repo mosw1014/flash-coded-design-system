@@ -2312,7 +2312,8 @@ body.home .main{max-width:none;margin:0;padding:0}
 .dd-meter__label{font-size:12.5px;font-weight:700;color:var(--chrome-txt)}
 .dd-meter__val{font-size:12px;font-weight:700;color:var(--chrome-muted);font-variant-numeric:tabular-nums}
 .dd-meter__track{height:8px;border-radius:999px;background:var(--chrome-nav);overflow:hidden}
-.dd-meter__fill{height:100%;border-radius:999px}
+.dd-meter__fill{height:100%;border-radius:999px;opacity:.25;transition:opacity .15s}
+.dd-meter:hover .dd-meter__fill{opacity:1}
 .dd-dist{border:1px solid var(--chrome-border);border-radius:12px;padding:22px}
 .dd-dist__row{margin-bottom:16px}
 .dd-dist__row:last-child{margin-bottom:0}
@@ -2321,7 +2322,8 @@ body.home .main{max-width:none;margin:0;padding:0}
 .dd-dist__swatch{width:9px;height:9px;border-radius:3px;flex-shrink:0}
 .dd-dist__val{font-size:12px;font-weight:700;color:var(--chrome-muted);font-variant-numeric:tabular-nums;white-space:nowrap}
 .dd-dist__track{height:10px;border-radius:999px;background:var(--chrome-nav);overflow:hidden}
-.dd-dist__fill{height:100%;border-radius:999px;transition:width .3s}
+.dd-dist__fill{height:100%;border-radius:999px;opacity:.25;transition:width .3s,opacity .15s}
+.dd-dist__row:hover .dd-dist__fill{opacity:1}
 .dd-break{border:1px solid var(--chrome-border);border-radius:12px;padding:22px}
 .dd-break__top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:11px}
 .dd-break__label{font-size:12.5px;font-weight:700;color:var(--chrome-txt)}
@@ -6606,7 +6608,7 @@ body.home .main{max-width:none;margin:0;padding:0}
     <section class="sec" id="s-charts-meters">
       <div class="sec__head">
         <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Progress Meters <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.1.1</span></h1>
+        <h1 class="sec__title">Progress Meters <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.2.0</span></h1>
         <p class="sec__desc">Labelled bars for quotas, targets and health. The fill uses the brand token by default and switches to Warning / Critical semantics as a value approaches its limit.</p>
       </div>
       <div class="type-sub">
@@ -6641,7 +6643,7 @@ body.home .main{max-width:none;margin:0;padding:0}
               <li>Use it for a single value tracked against a target or ceiling.</li>
               <li>Switch the fill to Warning / Critical tokens as the value nears its limit.</li>
               <li>Label both the raw figures and the percentage, as in this demo.</li>
-              <li>Default to a desaturated primary colour for the track/inactive state, and the saturated primary for the active fill.</li>
+              <li>Default to 25% opacity for the track/inactive state, and full opacity (the saturated colour) for the active fill.</li>
             </ul>
           </div>
           <div class="sel-usage__card">
@@ -6669,13 +6671,13 @@ body.home .main{max-width:none;margin:0;padding:0}
     ".dd-meter__track",
     ".dd-meter__fill"
   ],
-  "css": "/* ---- Progress meter / Distribution bars (Charts) ---- */\n.dd-meters { border:1px solid var(--chrome-border);border-radius:12px;padding:22px }\n.dd-meter { margin-bottom:18px }\n.dd-meter:last-child { margin-bottom:0 }\n.dd-meter__top { display:flex;justify-content:space-between;align-items:baseline;margin-bottom:7px }\n.dd-meter__label { font-size:12.5px;font-weight:700;color:var(--chrome-txt) }\n.dd-meter__val { font-size:12px;font-weight:700;color:var(--chrome-muted);font-variant-numeric:tabular-nums }\n.dd-meter__track { height:8px;border-radius:999px;background:var(--chrome-nav);overflow:hidden }\n.dd-meter__fill { height:100%;border-radius:999px }",
+  "css": "/* ---- Progress meter / Distribution bars (Charts) ---- */\n.dd-meters { border:1px solid var(--chrome-border);border-radius:12px;padding:22px }\n.dd-meter { margin-bottom:18px }\n.dd-meter:last-child { margin-bottom:0 }\n.dd-meter__top { display:flex;justify-content:space-between;align-items:baseline;margin-bottom:7px }\n.dd-meter__label { font-size:12.5px;font-weight:700;color:var(--chrome-txt) }\n.dd-meter__val { font-size:12px;font-weight:700;color:var(--chrome-muted);font-variant-numeric:tabular-nums }\n.dd-meter__track { height:8px;border-radius:999px;background:var(--chrome-nav);overflow:hidden }\n.dd-meter__fill { height:100%;border-radius:999px;opacity:.25;transition:opacity .15s }\n.dd-meter:hover .dd-meter__fill { opacity:1 }",
   "usage": {
     "do": [
       "Use it for a single value tracked against a target or ceiling.",
       "Switch the fill to Warning / Critical tokens as the value nears its limit.",
       "Label both the raw figures and the percentage, as in this demo.",
-      "Default to a desaturated primary colour for the track/inactive state, and the saturated primary for the active fill."
+      "Default to 25% opacity for the track/inactive state, and full opacity (the saturated colour) for the active fill."
     ],
     "dont": [
       "Don’t use a meter to compare unrelated metrics — that’s a stat card row.",
@@ -6684,7 +6686,7 @@ body.home .main{max-width:none;margin:0;padding:0}
       "Don’t use grey for a meter fill — reach for a desaturated primary shade instead."
     ]
   },
-  "contentHash": "4069908bb2c92b96882f8718569f7f65ecf385fe132e3c7ba62e4f96b938193c",
+  "contentHash": "3022a0f8a8eb98318464e3701d23131c05955b78bafb290507d9644aa1094ce5",
   "note": "Split out of the former combined Charts page (v1.1.0). Static hand-authored markup, migrated from the retired Data Display section."
 }
   </pre>
@@ -6694,7 +6696,7 @@ body.home .main{max-width:none;margin:0;padding:0}
     <section class="sec" id="s-charts-distribution">
       <div class="sec__head">
         <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Distribution Charts <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.1.1</span></h1>
+        <h1 class="sec__title">Distribution Charts <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.2.0</span></h1>
         <p class="sec__desc">Two ways to split a total across categories: a single segmented bar for a compact overview, or a ranked, one-row-per-category breakdown when each share needs its own line.</p>
       </div>
       <div class="type-sub">
@@ -6793,7 +6795,7 @@ body.home .main{max-width:none;margin:0;padding:0}
     ".dd-break__k",
     ".dd-break__v"
   ],
-  "css": ".dd-dist { border:1px solid var(--chrome-border);border-radius:12px;padding:22px }\n.dd-dist__row { margin-bottom:16px }\n.dd-dist__row:last-child { margin-bottom:0 }\n.dd-dist__top { display:flex;justify-content:space-between;align-items:baseline;margin-bottom:7px;gap:12px }\n.dd-dist__label { display:inline-flex;align-items:center;gap:8px;font-size:12.5px;font-weight:700;color:var(--chrome-txt) }\n.dd-dist__swatch { width:9px;height:9px;border-radius:3px;flex-shrink:0 }\n.dd-dist__val { font-size:12px;font-weight:700;color:var(--chrome-muted);font-variant-numeric:tabular-nums;white-space:nowrap }\n.dd-dist__track { height:10px;border-radius:999px;background:var(--chrome-nav);overflow:hidden }\n.dd-dist__fill { height:100%;border-radius:999px;transition:width .3s }\n.dd-break { border:1px solid var(--chrome-border);border-radius:12px;padding:22px }\n.dd-break__top { display:flex;justify-content:space-between;align-items:baseline;margin-bottom:11px }\n.dd-break__label { font-size:12.5px;font-weight:700;color:var(--chrome-txt) }\n.dd-break__total { font-size:12px;font-weight:700;color:var(--chrome-muted);font-variant-numeric:tabular-nums }\n.dd-break__bar { display:flex;gap:2px;height:14px;border-radius:999px;overflow:hidden;background:var(--chrome-nav) }\n.dd-break__seg { height:100%;opacity:.25;transition:opacity .15s }\n.dd-break__seg:hover { opacity:1 }\n.dd-break__legend { display:flex;flex-wrap:wrap;gap:12px 22px;margin-top:16px }\n.dd-break__item { display:flex;align-items:center;gap:8px }\n.dd-break__swatch { width:10px;height:10px;border-radius:3px;flex-shrink:0 }\n.dd-break__k { font-size:12.5px;font-weight:700;color:var(--chrome-txt) }\n.dd-break__v { font-size:12px;font-weight:700;color:var(--chrome-muted);font-variant-numeric:tabular-nums }",
+  "css": ".dd-dist { border:1px solid var(--chrome-border);border-radius:12px;padding:22px }\n.dd-dist__row { margin-bottom:16px }\n.dd-dist__row:last-child { margin-bottom:0 }\n.dd-dist__top { display:flex;justify-content:space-between;align-items:baseline;margin-bottom:7px;gap:12px }\n.dd-dist__label { display:inline-flex;align-items:center;gap:8px;font-size:12.5px;font-weight:700;color:var(--chrome-txt) }\n.dd-dist__swatch { width:9px;height:9px;border-radius:3px;flex-shrink:0 }\n.dd-dist__val { font-size:12px;font-weight:700;color:var(--chrome-muted);font-variant-numeric:tabular-nums;white-space:nowrap }\n.dd-dist__track { height:10px;border-radius:999px;background:var(--chrome-nav);overflow:hidden }\n.dd-dist__fill { height:100%;border-radius:999px;opacity:.25;transition:width .3s,opacity .15s }\n.dd-dist__row:hover .dd-dist__fill { opacity:1 }\n.dd-break { border:1px solid var(--chrome-border);border-radius:12px;padding:22px }\n.dd-break__top { display:flex;justify-content:space-between;align-items:baseline;margin-bottom:11px }\n.dd-break__label { font-size:12.5px;font-weight:700;color:var(--chrome-txt) }\n.dd-break__total { font-size:12px;font-weight:700;color:var(--chrome-muted);font-variant-numeric:tabular-nums }\n.dd-break__bar { display:flex;gap:2px;height:14px;border-radius:999px;overflow:hidden;background:var(--chrome-nav) }\n.dd-break__seg { height:100%;opacity:.25;transition:opacity .15s }\n.dd-break__seg:hover { opacity:1 }\n.dd-break__legend { display:flex;flex-wrap:wrap;gap:12px 22px;margin-top:16px }\n.dd-break__item { display:flex;align-items:center;gap:8px }\n.dd-break__swatch { width:10px;height:10px;border-radius:3px;flex-shrink:0 }\n.dd-break__k { font-size:12.5px;font-weight:700;color:var(--chrome-txt) }\n.dd-break__v { font-size:12px;font-weight:700;color:var(--chrome-muted);font-variant-numeric:tabular-nums }",
   "usage": {
     "do": [
       "Use the single segmented bar when the overview matters more than reading each figure at a glance.",
@@ -6809,7 +6811,7 @@ body.home .main{max-width:none;margin:0;padding:0}
       "Don’t lead with red or orange — they read as error/warning. Only reach for them once other colours are already in use."
     ]
   },
-  "contentHash": "687eddccb6482330f6d0a09ae00fc71e52ab17af299634606e6e2514214e2f5c",
+  "contentHash": "8529d12449110bdf84795cabb1a4f31045f4d5dd9e9769cf4db8a4aaf0a72c28",
   "note": "Split out of the former combined Charts page (v1.1.0), which also covered Bar/Line/Donut (now s-charts-bar/s-charts-line/s-charts-donut) and Progress meters (now s-charts-meters). Both distribution-bar patterns (.dd-dist*/.dd-break*) are static hand-authored markup, migrated from the retired Data Display section."
 }
   </pre>
@@ -11975,12 +11977,15 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.64.17';
+const SYSTEM_VERSION = '1.64.18';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.64.18', date:'2026-08-07', author:'Mo', title:'Progress Meters and Distribution bars now match their own Do rule: 25% opacity default, full opacity on hover', changes:[
+        ['fixed','.dd-meter__fill and .dd-dist__fill (the ranked distribution bars) had no opacity treatment at all — every fill rendered at full saturation with no way to see the desaturated/inactive state their own "When to use" Do rule already described. Both now default to opacity:.25, jumping to opacity:1 when the row is hovered'],
+      ]},
       {version:'1.64.17', date:'2026-08-07', author:'Mo', title:'Chart palette no longer leads with orange; new Don\'t rule against leading with red/orange', changes:[
         ['changed','The shared chart palette (--c1..--c5, used by Bar/Line & Area/Donut) reorders orange from 4th to last (5th) and moves pink into 4th — a 4-category chart (the most common case) now uses green/blue/purple/pink and never reaches orange or red at all'],
         ['added','Bar, Line & Area, Donut and Distribution Charts each gain a Don\'t rule: don\'t lead with red or orange, since they read as error/warning — reserve them for once other colours are already in use'],
@@ -12853,7 +12858,10 @@ const CHANGELOG = {
         ['added','Donut Charts — carved out of the former combined Charts page into its own section, with a "When to use" tailored to composition charts specifically'],
       ]},
     ]},
-    {secId:'s-charts-meters', name:'Progress Meters', version:'1.1.1', entries:[
+    {secId:'s-charts-meters', name:'Progress Meters', version:'1.2.0', entries:[
+      {version:'1.2.0', date:'2026-08-07', author:'Mo', title:'Meter fills now match the Do rule: 25% opacity default, full opacity on hover', changes:[
+        ['fixed','.dd-meter__fill had no opacity treatment — every fill rendered at full saturation with no way to see the desaturated/inactive state the "When to use" Do rule already described. Now defaults to opacity:.25, jumping to opacity:1 when the meter row is hovered'],
+      ]},
       {version:'1.1.1', date:'2026-08-07', author:'Mo', title:'New Do/Don\'t rule: no grey — desaturated primary for inactive, saturated primary for active/hover', changes:[
         ['added','"When to use" gains a Do rule: default to a desaturated primary colour for the track/inactive state, and the saturated primary for the active fill'],
         ['added','"When to use" gains a Don\'t rule: don\'t use grey for a meter fill — reach for a desaturated primary shade instead'],
@@ -12865,7 +12873,10 @@ const CHANGELOG = {
         ['added','Progress Meters — carved out of the former combined Charts page into its own section, with a "When to use" tailored to single-value-against-a-limit meters specifically'],
       ]},
     ]},
-    {secId:'s-charts-distribution', name:'Distribution Charts', version:'1.1.1', entries:[
+    {secId:'s-charts-distribution', name:'Distribution Charts', version:'1.2.0', entries:[
+      {version:'1.2.0', date:'2026-08-07', author:'Mo', title:'Ranked distribution bars now match the Do rule: 25% opacity default, full opacity on hover', changes:[
+        ['fixed','.dd-dist__fill (the ranked, one-row-per-category bars) had no opacity treatment — every fill rendered at full saturation with no way to see the desaturated/inactive state the "When to use" Do rule already described. Now defaults to opacity:.25, jumping to opacity:1 when the row is hovered. The segmented bar (.dd-break__seg) already had this treatment from a prior release'],
+      ]},
       {version:'1.1.1', date:'2026-08-07', author:'Mo', title:'New Don\'t rule: don\'t lead with red or orange', changes:[
         ['added','"When to use" gains a Don\'t rule: don\'t lead with red or orange — they read as error/warning; only reach for them once other colours are already in use'],
       ]},
