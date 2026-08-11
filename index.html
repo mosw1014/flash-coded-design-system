@@ -1512,6 +1512,7 @@ body.home .main{max-width:none;margin:0;padding:0}
 .sec--tabbed .spec-mock__filterrow{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:4px}
 .sec--tabbed .spec-mock__label{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--chrome-muted)}
 .sec--tabbed .spec-mock__field{display:flex;flex-wrap:wrap;align-items:center;gap:6px;padding:8px 10px;border:1.5px solid var(--chrome-border);border-radius:10px;background:var(--color-surface-base)}
+.sec--tabbed .spec-mock__field svg{width:16px;height:16px;margin-left:auto;color:var(--chrome-muted);flex-shrink:0}
 .sec--tabbed .spec-mock__caret{width:1.5px;height:18px;background:var(--chrome-txt);opacity:.45}
 .sec--tabbed .spec-usage-demo{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:14px;padding-top:14px;border-top:1px dashed var(--chrome-border)}
 .sec--tabbed .spec-cell{border:1px solid var(--chrome-border);border-radius:12px;overflow:hidden;background:var(--chrome-bg);transition:background .25s,border-color .25s}
@@ -7033,7 +7034,7 @@ body.home .main{max-width:none;margin:0;padding:0}
       <div class="sec__head">
         <h1 class="sec__title">Date picker</h1>
         <div class="sec-header-meta">
-          <span class="comp-ver-badge" style="margin-left:0">v2.0.0</span>
+          <span class="comp-ver-badge" style="margin-left:0">v2.0.1</span>
           <details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-calendar">
@@ -8176,6 +8177,10 @@ function toggleTheme() {
   try { if(typeof renderBshInSitu==='function' && document.getElementById('bsh-insitu')) renderBshInSitu(); } catch(e){}
   try { if(typeof renderBshReference==='function' && document.getElementById('bsh-reference')) renderBshReference(); } catch(e){}
   try { if(typeof renderAccordionPlayground==='function' && document.getElementById('acc-playground')) renderAccordionPlayground(); } catch(e){}
+  try { if(typeof renderDpPlayground==='function' && document.getElementById('dp-playground')) renderDpPlayground(); } catch(e){}
+  try { if(typeof renderDpKeyVariants==='function' && document.getElementById('dp-keyvariants')) renderDpKeyVariants(); } catch(e){}
+  try { if(typeof renderDpInSitu==='function' && document.getElementById('dp-insitu')) renderDpInSitu(); } catch(e){}
+  try { if(typeof renderDpReference==='function' && document.getElementById('dp-reference')) renderDpReference(); } catch(e){}
 }
 
 // Colour view switch (prim / sem)
@@ -14287,12 +14292,17 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.67.0';
+const SYSTEM_VERSION = '1.67.1';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.67.1', date:'2026-08-11', author:'Helen', title:'Fixed styling regressions in the Date picker facelift', changes:[
+        ['fixed','Date picker "In context" mockups (renderDpInSitu): the calendar glyph in the Checkout and Travel date-field mockups rendered at its unconstrained intrinsic SVG size (near full-card) because .spec-mock__field had no icon-sizing rule; added .spec-mock__field svg{width:16px;height:16px} matching .dp__field'],
+        ['fixed','Date picker playground, In-context mockups, Key-variants and Style-tab reference panel did not re-render on the global light/dark toggle (renderDpPlayground/renderDpKeyVariants/renderDpInSitu/renderDpReference were missing from toggleTheme()), leaving their inline-styled stage backgrounds stuck in whichever theme was active on page load'],
+        ['fixed','Style tab token table listed the in-range fill token as var(--color-input-focus); the real .cal__day--in-range rule uses var(--chrome-hover) — table now matches the CSS'],
+      ]},
       {version:'1.67.0', date:'2026-08-11', author:'Helen', title:'Date picker gets the full Buttons-page treatment, plus range selection', changes:[
         ['changed','Date picker (#s-calendar) rebuilt into a tabbed Overview / Style / Code / Changelog page, matching Buttons\' structure'],
         ['added','Real date-range selection (start/end) in both the inline calendar and the date-picker field, via new .cal--range/.dp--range classes and .cal__day--range-start/--range-end/--in-range day states'],
@@ -15390,7 +15400,12 @@ const CHANGELOG = {
         ['added','Distribution Charts — carved out of the former combined Charts page into its own section, covering both the single segmented bar and the ranked distribution-bars pattern, with a "When to use" comparing the two'],
       ]},
     ]},
-    {secId:'s-calendar', name:'Date picker', version:'2.0.0', entries:[
+    {secId:'s-calendar', name:'Date picker', version:'2.0.1', entries:[
+      {version:'2.0.1', date:'2026-08-11', author:'Helen', title:'Fixed styling regressions from the facelift', changes:[
+        ['fixed','"In context" mockups: oversized calendar glyph in the Checkout and Travel mockups — .spec-mock__field had no svg sizing rule, so the icon rendered at its unconstrained intrinsic size instead of 16px'],
+        ['fixed','Playground, In-context mockups, Key-variants and the Style-tab reference panel now re-render on the global light/dark toggle (added renderDpPlayground/renderDpKeyVariants/renderDpInSitu/renderDpReference to toggleTheme()) — their inline stage backgrounds previously stayed stuck in the theme active at page load'],
+        ['fixed','Style tab token table: in-range fill token corrected from var(--color-input-focus) to var(--chrome-hover), matching the real .cal__day--in-range rule'],
+      ]},
       {version:'2.0.0', date:'2026-08-11', author:'Helen', title:'Date picker gets the full Buttons-page treatment, plus range selection', changes:[
         ['changed','Date picker rebuilt from a flat .sec section into a tabbed .sec--tabbed page (Overview / Style / Code / Changelog), matching Buttons\' structure: hero preview, sec-tabs bar, and a Changelog tab holding the section\'s auto-injected changelog block'],
         ['added','Date-range selection: .cal__day--range-start, .cal__day--range-end and .cal__day--in-range classes, plus a .cal--range/.dp--range mode built into the shared dpBuildCalHTML/dppg builder so both the inline calendar and the .dp field popover support picking a start and end date, not just a single day'],
@@ -19092,7 +19107,7 @@ function renderDpReference(){
     ['Day cell shape', 'aspect-ratio 1, 8px radius', '.cal__day'],
     ['Day font size', '12.5px', '.cal__day'],
     ['Selected fill', 'var(--color-btn-s-bg)', '.cal__day--sel / --range-start / --range-end'],
-    ['In-range fill', 'var(--color-input-focus)', '.cal__day--in-range'],
+    ['In-range fill', 'var(--chrome-hover)', '.cal__day--in-range'],
     ['Field min-width', '220px', '.dp__field'],
     ['Field radius', '10px', '.dp__field'],
   ].map(r=>`<tr><td class="dd-table__name">${r[0]}</td><td>${r[1]}</td><td><code>${r[2]}</code></td></tr>`).join('');
