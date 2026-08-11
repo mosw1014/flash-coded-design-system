@@ -2100,16 +2100,24 @@ body.home .main{max-width:none;margin:0;padding:0}
 .tip__trigger{cursor:default}
 
 /* ---- Accordion ---- */
-.acc{border:1px solid var(--chrome-border);border-radius:12px;overflow:hidden;background:var(--chrome-bg);max-width:620px;transition:background .25s}
-.acc__item{border-bottom:1px solid var(--chrome-border)}
+.acc{--acc-border:var(--chrome-border);--acc-bg:var(--chrome-bg);--acc-text:var(--chrome-txt);--acc-hover-bg:var(--chrome-hover);--acc-focus-ring:var(--color-input-focus);border:1px solid var(--acc-border);border-radius:12px;overflow:hidden;background:var(--acc-bg);max-width:620px;transition:background .25s}
+.acc__item{border-bottom:1px solid var(--acc-border)}
 .acc__item:last-child{border-bottom:none}
-.acc__sum{list-style:none;cursor:pointer;display:flex;align-items:center;gap:12px;padding:15px 18px;font-size:14px;font-weight:600;color:var(--chrome-txt);transition:background .15s}
+.acc__item[disabled] > .acc__sum{cursor:not-allowed;opacity:.5;pointer-events:none}
+.acc__sum{list-style:none;cursor:pointer;display:flex;align-items:center;gap:12px;padding:15px 18px;font-size:14px;font-weight:600;color:var(--acc-text);transition:background .15s}
 .acc__sum::-webkit-details-marker{display:none}
-.acc__sum:hover{background:var(--chrome-hover)}
-.acc__sum:focus-visible{outline:2px solid var(--color-input-focus);outline-offset:-2px}
+.acc__sum:hover{background:var(--acc-hover-bg)}
+.acc__sum:focus-visible{outline:2px solid var(--acc-focus-ring);outline-offset:-2px}
 .acc__chev{margin-left:auto;flex-shrink:0;font-size:19px;line-height:1;color:var(--chrome-muted);transition:transform .2s,color .2s}
+.acc__sum--lead .acc__chev{margin-left:0;order:-1}
 .acc__item[open] > .acc__sum .acc__chev{transform:rotate(90deg);color:var(--color-text-1)}
 .acc__body{padding:0 18px 16px;font-size:13px;line-height:1.6;color:var(--chrome-muted)}
+/* Sizes — sm mirrors the compact ~36px trigger row used by .pill--sm/.tag--sm; reg (default) is the original ~44px row */
+.acc--sm .acc__sum{padding:9px 14px;font-size:12.5px;gap:9px;min-height:36px}
+.acc--sm .acc__chev{font-size:16px}
+.acc--sm .acc__body{padding:0 14px 12px;font-size:12px}
+.acc--reg .acc__sum{padding:15px 18px;font-size:14px;gap:12px;min-height:44px}
+.acc--reg .acc__body{padding:0 18px 16px;font-size:13px}
 
 /* ---- Alert / Callout ---- */
 .alrt{display:flex;align-items:center;gap:11px;padding:13px 15px;border-radius:10px;font-size:13px;line-height:1.5;max-width:620px}
@@ -3537,7 +3545,7 @@ body.home .main{max-width:none;margin:0;padding:0}
     ".tag__dot",
     ".tag__label"
   ],
-  "css": "/* ================================================================\n   TAGS &amp; BADGES\n   Tags = subtle, static category labels (tinted, softly-rounded —\n   deliberately NOT the saturated look of a Pill). Badges = count,\n   avatar and status-dot markers. All colours ride the semantic\n   --color-*-h / --color-*-l token pairs, so they flip with theme.\n================================================================ */\n/* Tag */\n.tag { display:inline-flex;align-items:center;gap:5px;border-radius:6px;font-family:inherit;font-weight:700;line-height:1;white-space:nowrap;background:var(--tag-bg);color:var(--tag-fg) }\n.tag--sm { height:20px;padding:0 7px;font-size:11px }\n.tag--reg { height:24px;padding:0 9px;font-size:12px }\n.tag__dot { width:6px;height:6px;border-radius:50%;background:currentColor;flex-shrink:0 }\n.tag--neutral { --tag-bg:var(--chrome-nav);--tag-fg:var(--chrome-muted) }\n.tag--info { --tag-bg:var(--color-info-l);--tag-fg:var(--color-info-h) }\n.tag--success { --tag-bg:var(--color-success-l);--tag-fg:var(--color-success-h) }\n.tag--warning { --tag-bg:var(--color-warn-l);--tag-fg:var(--color-warn-h) }\n.tag--error { --tag-bg:var(--color-crit-l);--tag-fg:var(--color-crit-h) }\n/* --color-info-l stays pale in dark mode (unlike its success/warning/error siblings,\n   which darken their -l token) — give the info tag the same deep-navy dark override\n   already used for .alrt--info so it actually shifts with the theme toggle. */\n[data-theme=\"dark\"] .tag--info { --tag-bg:var(--prim-sup-blue-3) }\n/* Fill toggle — drops the tinted container, leaving just the coloured label (and dot, if any). */\n.tag--no-fill { background:transparent }",
+  "css": "/* ================================================================\n   TAGS &amp; BADGES\n   Tags = subtle, static category labels (tinted, softly-rounded —\n   deliberately NOT the saturated look of a Pill). Badges = count,\n   avatar and status-dot markers. All colours ride the semantic\n   --color-*-h / --color-*-l token pairs, so they flip with theme.\n================================================================ */\n/* Tag */\n.tag { display:inline-flex;align-items:center;gap:5px;border-radius:6px;font-family:inherit;font-weight:700;line-height:1;white-space:nowrap;background:var(--tag-bg);color:var(--tag-fg) }\n.tag--sm { height:20px;padding:0 7px;font-size:11px }\n.tag--reg { height:24px;padding:0 9px;font-size:12px }\n.tag__dot { width:6px;height:6px;border-radius:50%;background:currentColor;flex-shrink:0 }\n.tag--neutral { --tag-bg:var(--chrome-nav);--tag-fg:var(--chrome-muted) }\n.tag--info { --tag-bg:var(--color-info-l);--tag-fg:var(--color-info-h) }\n.tag--success { --tag-bg:var(--color-success-l);--tag-fg:var(--color-success-h) }\n.tag--warning { --tag-bg:var(--color-warn-l);--tag-fg:var(--color-warn-h) }\n.tag--error { --tag-bg:var(--color-crit-l);--tag-fg:var(--color-crit-h) }\n/* --color-info-l stays pale in dark mode (unlike its success/warning/error siblings,\n   which darken their -l token) — give the info tag the same deep-navy dark override\n   already used for .alrt--info so it actually shifts with the theme toggle. */\n[data-theme=\"dark\"] .tag--info { --tag-bg:var(--prim-sup-blue-3) }\n/* Fill toggle — drops the tinted container, leaving just the coloured label (and dot, if any). */\n.tag--no-fill { background:transparent }\n/* Sizes — sm mirrors the compact ~36px trigger row used by .pill--sm/.tag--sm; reg (default) is the original ~44px row */\n.acc--sm .acc__sum { padding:9px 14px;font-size:12.5px;gap:9px;min-height:36px }",
   "js": "const TAG_VARIANTS = [\n  {key:'neutral', label:'Neutral'},\n  {key:'info',    label:'Info'},\n  {key:'success', label:'Success'},\n  {key:'warning', label:'Warning'},\n  {key:'error',   label:'Error'},\n];\n\nconst TAG_SIZES = [ {key:'sm', label:'Small'}, {key:'reg', label:'Regular'} ];\n\nfunction tagHTML(variant, size, label, dot, fill){\n  const d = dot ? `&lt;span class=\"tag__dot\"&gt;&lt;/span&gt;` : '';\n  const fillCls = fill===false ? ' tag--no-fill' : '';\n  return `&lt;span class=\"tag tag--${variant} tag--${size}${fillCls}\"&gt;${d}&lt;span class=\"tag__label\"&gt;${tbEsc(label)}&lt;/span&gt;&lt;/span&gt;`;\n}",
   "usage": {
     "do": [
@@ -3549,7 +3557,7 @@ body.home .main{max-width:none;margin:0;padding:0}
       "Don't stack more than a couple of tags on one row — they stop reading as metadata and start looking like filters."
     ]
   },
-  "contentHash": "cc77ece2bc5d1d11434fb3883cd4f8a369615a01e0e16b6bc9c85fc8af49c717",
+  "contentHash": "c0e1990c7313faa132ccd8739298a3bffbae71bb2e66609e5b71853c3ee8a0ef",
   "note": "A tag is read-only metadata — no click handler, no dismiss button; that's what separates it from a Pill (see s-chips). tagHTML is the canonical builder (variant/size/label/dot/fill -&gt; tag HTML string; fill defaults true, pass false to add .tag--no-fill and drop the tinted background while keeping the semantic text colour). tpg (playground state)/getTagCode*/renderTag*/TAG_KEY_VARIANTS/TAG_TOKENS are doc-site-only plumbing, excluded. Badges (count/avatar/status markers) were split out to their own s-badges section — they no longer live on this page."
 }
   </pre>
@@ -3762,7 +3770,7 @@ body.home .main{max-width:none;margin:0;padding:0}
     ".dd-pills",
     ".dd-pills__clear"
   ],
-  "css": "/* ================================================================\n   PILLS\n================================================================ */\n.pill { display:inline-flex;align-items:center;border-radius:999px;font-family:inherit;font-weight:700;white-space:nowrap;background:var(--pill-bg);color:var(--pill-text);line-height:1 }\n.pill__icon { flex-shrink:0 }\n.pill--sm { height:24px }\n.pill--reg { height:28px }\n.pill--lg { height:33px }\n.pill__x { display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;margin-left:1px;margin-right:-2px;width:1.15em;height:1.15em;border-radius:999px;border:none;background:transparent;color:inherit;cursor:pointer;padding:0;opacity:.72;transition:opacity .12s,background .12s }\n.pill__x:hover { opacity:1;background:rgba(0,0,0,.2) }\n.pill.is-selectable { cursor:pointer }\n.pill.is-selected { box-shadow:0 0 0 2px var(--cpg-stage-bg,#fff),0 0 0 4px var(--pill-bg) }\n.dd-pills { display:flex;flex-wrap:wrap;align-items:center;gap:10px }\n.dd-pills .pill { box-shadow:none;padding:0 14px }\n.dd-pills__clear { font-family:inherit;font-size:12px;font-weight:700;color:var(--chrome-muted);background:none;border:none;cursor:pointer;padding:4px 2px;transition:color .15s }\n.dd-pills__clear:hover { color:var(--chrome-txt) }",
+  "css": "/* ================================================================\n   PILLS\n================================================================ */\n.pill { display:inline-flex;align-items:center;border-radius:999px;font-family:inherit;font-weight:700;white-space:nowrap;background:var(--pill-bg);color:var(--pill-text);line-height:1 }\n.pill__icon { flex-shrink:0 }\n.pill--sm { height:24px }\n.pill--reg { height:28px }\n.pill--lg { height:33px }\n.pill__x { display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;margin-left:1px;margin-right:-2px;width:1.15em;height:1.15em;border-radius:999px;border:none;background:transparent;color:inherit;cursor:pointer;padding:0;opacity:.72;transition:opacity .12s,background .12s }\n.pill__x:hover { opacity:1;background:rgba(0,0,0,.2) }\n.pill.is-selectable { cursor:pointer }\n.pill.is-selected { box-shadow:0 0 0 2px var(--cpg-stage-bg,#fff),0 0 0 4px var(--pill-bg) }\n.dd-pills { display:flex;flex-wrap:wrap;align-items:center;gap:10px }\n.dd-pills .pill { box-shadow:none;padding:0 14px }\n.dd-pills__clear { font-family:inherit;font-size:12px;font-weight:700;color:var(--chrome-muted);background:none;border:none;cursor:pointer;padding:4px 2px;transition:color .15s }\n.dd-pills__clear:hover { color:var(--chrome-txt) }\n/* Sizes — sm mirrors the compact ~36px trigger row used by .pill--sm/.tag--sm; reg (default) is the original ~44px row */\n.acc--sm .acc__sum { padding:9px 14px;font-size:12.5px;gap:9px;min-height:36px }",
   "js": "const PILL_SIZES = [\n  {key:'sm',  label:'Small',   h:24, padY:'0', padX:9,  fs:11,   gap:4, icon:11},\n  {key:'reg', label:'Regular', h:28, padY:'0', padX:11, fs:12.5, gap:5, icon:13},\n  {key:'lg',  label:'Large',   h:33, padY:'0', padX:13, fs:13.5, gap:6, icon:15},\n];\n\nconst PILL_VARIANTS = [\n  {key:'accent',  label:'Accent',  light:{bg:'#0062EB',text:'#ffffff'}, dark:{bg:'#0062EB',text:'#ffffff'}},\n  {key:'muted',   label:'Muted',   light:{bg:'#E6E6E6',text:'#646464'}, dark:{bg:'#33343A',text:'#A1A3A8'}},\n  {key:'success', label:'Success', light:{bg:'#16A220',text:'#ffffff'}, dark:{bg:'#16A220',text:'#ffffff'}},\n  {key:'warning', label:'Warning', light:{bg:'#FF8900',text:'#ffffff'}, dark:{bg:'#FF8900',text:'#ffffff'}},\n  {key:'error',   label:'Error',   light:{bg:'#EB0029',text:'#ffffff'}, dark:{bg:'#EB0029',text:'#ffffff'}},\n];\n\nfunction pillHeartSVG(size, color){\n  return `&lt;svg class=\"pill__icon\" width=\"${size}\" height=\"${size}\" viewBox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\"&gt;&lt;path fill=\"${color}\" d=\"M12 21.3s-7.6-4.7-10.3-9.4C.1 8.9 1.3 5.1 5 4.2c2.2-.5 4.2.4 5.5 2.2.4.5 1.1.5 1.5 0C13.3 4.6 15.3 3.7 17.5 4.2c3.7.9 4.9 4.7 3.3 7.7-2.7 4.7-8.8 9.4-8.8 9.4z\"/&gt;&lt;/svg&gt;`;\n}\n\nfunction makePillHTML(variant, sizeKey, theme){\n  const sz = PILL_SIZES.find(s=&gt;s.key===sizeKey);\n  const c  = variant[theme];\n  const style = `--pill-bg:${c.bg};--pill-text:${c.text};font-size:${sz.fs}px;gap:${sz.gap}px;padding:0 ${sz.padX}px 0 ${sz.padX-2}px`;\n  return `&lt;span class=\"pill pill--${sizeKey}\" style=\"${style}\"&gt;${pillHeartSVG(sz.icon, c.text)}&lt;span class=\"pill__label\"&gt;Pill&lt;/span&gt;&lt;/span&gt;`;\n}\n\nfunction makePillEl(){\n  const sz = PILL_SIZES.find(s=&gt;s.key===ppg.size)||PILL_SIZES[1];\n  const v  = PILL_VARIANTS.find(x=&gt;x.key===ppg.variant)||PILL_VARIANTS[0];\n  const c  = v[ppg.theme];\n  const pill = document.createElement('span');\n  pill.className = `pill pill--${ppg.size}${ppg.selectable?' is-selectable':''}${(ppg.selectable&amp;&amp;ppg.selected)?' is-selected':''}`;\n  pill.style.cssText = `--pill-bg:${c.bg};--pill-text:${c.text};font-size:${sz.fs}px;gap:${sz.gap}px;padding:0 ${sz.padX}px 0 ${sz.padX-2}px`;\n  pill.style.setProperty('--cpg-stage-bg', stageBg(ppg.theme));\n  let inner = '';\n  if(ppg.icon) inner += pillHeartSVG(sz.icon, c.text);\n  inner += `&lt;span class=\"pill__label\"&gt;${ppgEsc(ppg.label||'Pill')}&lt;/span&gt;`;\n  pill.innerHTML = inner;\n  if(ppg.removable){\n    const x = document.createElement('button');\n    x.className = 'pill__x'; x.type = 'button'; x.setAttribute('aria-label','Remove');\n    const xs = Math.round(sz.icon*0.82);\n    x.innerHTML = `&lt;svg width=\"${xs}\" height=\"${xs}\" viewBox=\"0 0 24 24\" fill=\"none\"&gt;&lt;path d=\"M6 6l12 12M18 6L6 18\" stroke=\"currentColor\" stroke-width=\"2.6\" stroke-linecap=\"round\"/&gt;&lt;/svg&gt;`;\n    x.onclick = (e)=&gt;{ e.stopPropagation(); ppg.dismissed = true; ppgRefresh(); };\n    pill.appendChild(x);\n  }\n  if(ppg.selectable){\n    pill.onclick = ()=&gt;{ ppg.selected = !ppg.selected; ppgRefresh(); };\n  }\n  return pill;\n}",
   "usage": {
     "do": [
@@ -3777,7 +3785,7 @@ body.home .main{max-width:none;margin:0;padding:0}
       "Don't colour pills just for decoration — colour should carry meaning."
     ]
   },
-  "contentHash": "1596871f4913c82a18b7f359380d44baeab275b7c2acb9ec962b7fc2e5e077c5",
+  "contentHash": "e8f3877eaeab3f425bddd05ddc6aa6c2a820ded4c2706868cc7c6aaeb3adbbf3",
   "note": "makePillHTML is the minimal real-markup builder (variant+size+theme -&gt; pill HTML string); makePillEl is the fuller version also handling removable (.pill__x) and selectable (.is-selectable/.is-selected, captured via the .pill boundary already) states. Filter pills (.dd-pills/.dd-pills__clear) is static hand-authored markup migrated from the retired Data Display section, added to the Overview tab. ppg (playground state)/getPillCodeHTML/renderPillPlayground/renderPillReference/renderPillInSitu are doc-site-only playground plumbing, excluded."
 }
   </pre>
@@ -5404,80 +5412,106 @@ body.home .main{max-width:none;margin:0;padding:0}
     <!-- ============================================================
          ACCORDION
     ============================================================ -->
-    <section class="sec" id="s-accordion">
+    <section class="sec sec--tabbed" id="s-accordion">
+      <div class="sec-hero">
       <div class="sec__head">
-        <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Accordion <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.1</span></h1>
-        <p class="sec__desc">Stacked headers that expand to reveal content, for progressively disclosing long or secondary information. Built on native <code>&lt;details&gt;</code> elements, so expand/collapse works without JavaScript and stays accessible.</p>
-      </div>
-      <div class="type-sub">
-        <div class="type-sub__title">Single open</div>
-        <div class="type-sub__desc">Grouped with a shared <code>name</code>, so opening one item closes the others &mdash; ideal for FAQs where one answer at a time keeps things tidy.</div>
-        <div class="acc">
-          <details class="acc__item" name="acc-demo" open><summary class="acc__sum">How do payouts work?<span class="acc__chev">&rsaquo;</span></summary><div class="acc__body">Settled funds are paid to your linked account on the next business day. You can review every payout and its breakdown in the Payouts tab.</div></details>
-          <details class="acc__item" name="acc-demo"><summary class="acc__sum">Can I refund a transaction?<span class="acc__chev">&rsaquo;</span></summary><div class="acc__body">Yes &mdash; full or partial refunds can be issued from a transaction&rsquo;s detail view for up to 180 days after the sale.</div></details>
-          <details class="acc__item" name="acc-demo"><summary class="acc__sum">Which cards are supported?<span class="acc__chev">&rsaquo;</span></summary><div class="acc__body">All major schemes are accepted, including Visa, Mastercard and domestic debit networks.</div></details>
-        </div>
-      </div>
-      <div class="type-sub">
-        <div class="type-sub__title">Multiple open</div>
-        <div class="type-sub__desc">Without a shared name, items open independently, so several can be expanded at once. Use this when sections are unrelated.</div>
-        <div class="acc">
-          <details class="acc__item"><summary class="acc__sum">Business details<span class="acc__chev">&rsaquo;</span></summary><div class="acc__body">Legal entity name, registration number and trading address.</div></details>
-          <details class="acc__item"><summary class="acc__sum">Bank account<span class="acc__chev">&rsaquo;</span></summary><div class="acc__body">The account where settled funds are deposited.</div></details>
-        </div>
-      </div>
-      <div class="type-sub">
-        <div class="type-sub__title">When to use</div>
-        <div class="type-sub__desc">Accordions trade visibility for density. Only fold away content the user won&rsquo;t always need.</div>
-        <div class="sel-usage">
-          <div class="sel-usage__card">
-            <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
-            <ul class="sel-usage__list">
-              <li>Use for FAQs, optional settings and long secondary content.</li>
-              <li>Write headers that describe exactly what&rsquo;s inside.</li>
-              <li>Default the most useful item open when it helps.</li>
-            </ul>
-          </div>
-          <div class="sel-usage__card">
-            <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don&rsquo;t</div>
-            <ul class="sel-usage__list">
-              <li>Don&rsquo;t bury content users need on every visit.</li>
-              <li>Don&rsquo;t nest accordions inside accordions.</li>
-              <li>Don&rsquo;t use one for a single item &mdash; just show it.</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <details class="ai-ctx">
+        <h1 class="sec__title">Accordion</h1>
+        <div class="sec-header-meta">
+          <span class="comp-ver-badge" style="margin-left:0">v1.1.0</span>
+          <details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-accordion">
 {
-  "status": "static",
+  "status": "js-rendered",
+  "builderFunctions": [
+    "ACC_BEHAVIORS",
+    "makeAccEl",
+    "ovAcc"
+  ],
   "realClasses": [
     ".acc",
+    ".acc--sm",
+    ".acc--reg",
     ".acc__item",
     ".acc__sum",
+    ".acc__sum--lead",
     ".acc__chev",
     ".acc__body"
   ],
-  "css": "/* ---- Accordion ---- */\n.acc { border:1px solid var(--chrome-border);border-radius:12px;overflow:hidden;background:var(--chrome-bg);max-width:620px;transition:background .25s }\n.acc__item { border-bottom:1px solid var(--chrome-border) }\n.acc__item:last-child { border-bottom:none }\n.acc__sum { list-style:none;cursor:pointer;display:flex;align-items:center;gap:12px;padding:15px 18px;font-size:14px;font-weight:600;color:var(--chrome-txt);transition:background .15s }\n.acc__sum::-webkit-details-marker { display:none }\n.acc__sum:hover { background:var(--chrome-hover) }\n.acc__sum:focus-visible { outline:2px solid var(--color-input-focus);outline-offset:-2px }\n.acc__chev { margin-left:auto;flex-shrink:0;font-size:19px;line-height:1;color:var(--chrome-muted);transition:transform .2s,color .2s }\n.acc__item[open] &gt; .acc__sum .acc__chev { transform:rotate(90deg);color:var(--color-text-1) }\n.acc__body { padding:0 18px 16px;font-size:13px;line-height:1.6;color:var(--chrome-muted) }",
+  "css": "/* ---- Accordion ---- */\n.acc { --acc-border:var(--chrome-border);--acc-bg:var(--chrome-bg);--acc-text:var(--chrome-txt);--acc-hover-bg:var(--chrome-hover);--acc-focus-ring:var(--color-input-focus);border:1px solid var(--acc-border);border-radius:12px;overflow:hidden;background:var(--acc-bg);max-width:620px;transition:background .25s }\n.acc__item { border-bottom:1px solid var(--acc-border) }\n.acc__item:last-child { border-bottom:none }\n.acc__item[disabled] &gt; .acc__sum { cursor:not-allowed;opacity:.5;pointer-events:none }\n.acc__sum { list-style:none;cursor:pointer;display:flex;align-items:center;gap:12px;padding:15px 18px;font-size:14px;font-weight:600;color:var(--acc-text);transition:background .15s }\n.acc__sum::-webkit-details-marker { display:none }\n.acc__sum:hover { background:var(--acc-hover-bg) }\n.acc__sum:focus-visible { outline:2px solid var(--acc-focus-ring);outline-offset:-2px }\n.acc__chev { margin-left:auto;flex-shrink:0;font-size:19px;line-height:1;color:var(--chrome-muted);transition:transform .2s,color .2s }\n.acc__sum--lead .acc__chev { margin-left:0;order:-1 }\n.acc__item[open] &gt; .acc__sum .acc__chev { transform:rotate(90deg);color:var(--color-text-1) }\n.acc__body { padding:0 18px 16px;font-size:13px;line-height:1.6;color:var(--chrome-muted) }\n/* Sizes — sm mirrors the compact ~36px trigger row used by .pill--sm/.tag--sm; reg (default) is the original ~44px row */\n.acc--sm .acc__sum { padding:9px 14px;font-size:12.5px;gap:9px;min-height:36px }\n.acc--sm .acc__chev { font-size:16px }\n.acc--sm .acc__body { padding:0 14px 12px;font-size:12px }\n.acc--reg .acc__sum { padding:15px 18px;font-size:14px;gap:12px;min-height:44px }\n.acc--reg .acc__body { padding:0 18px 16px;font-size:13px }",
+  "js": "const ACC_BEHAVIORS = [\n  {key:'single', label:'Single-open'},\n  {key:'multi',  label:'Multiple-open'},\n];\n\nfunction makeAccEl(){\n  const wrap = document.createElement('div');\n  wrap.className = `acc acc--${acpg.size}`;\n  wrap.style.setProperty('--cpg-stage-bg', stageBg(acpg.theme));\n  const nm = acpg.behavior==='single' ? ' name=\"acpg-demo\"' : '';\n  let html = '';\n  acpg.items.slice(0, acpg.itemCount).forEach((it, i)=&gt;{\n    const dis = (acpg.disabledIndex===i) ? ' disabled' : '';\n    const openAttr = (i===0 &amp;&amp; acpg.disabledIndex!==0) ? ' open' : '';\n    const chevCls = acpg.iconPos==='leading' ? ' acc__sum--lead' : '';\n    html += `&lt;details class=\"acc__item\"${nm}${openAttr}${dis}&gt;&lt;summary class=\"acc__sum${chevCls}\"&gt;${acpgEsc(it)}&lt;span class=\"acc__chev\"&gt;&amp;#8250;&lt;/span&gt;&lt;/summary&gt;&lt;div class=\"acc__body\"&gt;Supporting detail for &amp;ldquo;${acpgEsc(it)}&amp;rdquo; goes here.&lt;/div&gt;&lt;/details&gt;`;\n  });\n  wrap.innerHTML = html;\n  return wrap;\n}\n\nfunction ovAcc({behavior='multi', size='reg', items, name}){\n  const nm = behavior==='single' ? ` name=\"${name||'acc-ov'}\"` : '';\n  return `&lt;div class=\"acc acc--${size}\" style=\"max-width:none\"&gt;${items.map((it,i)=&gt;`&lt;details class=\"acc__item\"${nm}${i===0?' open':''}&gt;&lt;summary class=\"acc__sum\"&gt;${it.t}&lt;span class=\"acc__chev\"&gt;&amp;#8250;&lt;/span&gt;&lt;/summary&gt;&lt;div class=\"acc__body\"&gt;${it.b}&lt;/div&gt;&lt;/details&gt;`).join('')}&lt;/div&gt;`;\n}",
   "usage": {
     "do": [
       "Use for FAQs, optional settings and long secondary content.",
-      "Write headers that describe exactly what’s inside.",
+      "Write headers that describe exactly what's inside.",
       "Default the most useful item open when it helps."
     ],
     "dont": [
-      "Don’t bury content users need on every visit.",
-      "Don’t nest accordions inside accordions.",
-      "Don’t use one for a single item — just show it."
+      "Don't bury content users need on every visit.",
+      "Don't nest accordions inside accordions.",
+      "Don't use one for a single item — just show it."
     ]
   },
-  "contentHash": "ce27b4094162612562e8da073834b2a876248dc6d96daeb8d05567c580f2b5fc"
+  "contentHash": "d065674e00689344e54db8a0a8d2a0ad9486bc2cee9f297b041c7fa5c55278c6",
+  "note": "makeAccEl is the playground builder driven by acpg state; ovAcc is the flexible doc-only builder used for the Overview key-variants/in-context illustrations and Style-tab reference, mirroring Alert's ovAlrt pattern. Accordion has no colour-variant axis, so its one real behavioural axis (single-open vs multiple-open) fills the Key-variants slot instead. acpg (playground state)/getAccCode*/renderAccordion*/accordionTabSwitch are doc-site-only playground plumbing, excluded."
 }
   </pre>
 </details>
+        </div>
+      </div>
+      <div class="sec-hero__preview">
+        <div class="acc acc--reg" style="max-width:none">
+          <details class="acc__item" name="acc-hero-demo" open><summary class="acc__sum">How do payouts work?<span class="acc__chev">&rsaquo;</span></summary><div class="acc__body">Settled funds are paid to your linked account on the next business day.</div></details>
+          <details class="acc__item" name="acc-hero-demo"><summary class="acc__sum">Can I refund a transaction?<span class="acc__chev">&rsaquo;</span></summary><div class="acc__body">Yes &mdash; full or partial refunds can be issued for up to 180 days.</div></details>
+          <details class="acc__item" name="acc-hero-demo"><summary class="acc__sum">Which cards are supported?<span class="acc__chev">&rsaquo;</span></summary><div class="acc__body">All major schemes, including Visa, Mastercard and domestic debit networks.</div></details>
+        </div>
+      </div>
+      </div>
+      <div class="tabs-list sec-tabs" id="acc-tabs-list">
+        <button type="button" class="tab-item on" data-acc-tab="overview" onclick="accordionTabSwitch('overview')"><span class="tab-item__inner"><span class="tab-item__label">Overview</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-acc-tab="style" onclick="accordionTabSwitch('style')"><span class="tab-item__inner"><span class="tab-item__label">Style</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-acc-tab="code" onclick="accordionTabSwitch('code')"><span class="tab-item__inner"><span class="tab-item__label">Code</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-acc-tab="changelog" onclick="accordionTabSwitch('changelog')"><span class="tab-item__inner"><span class="tab-item__label">Changelog</span></span><span class="tab-item__line"></span></button>
+      </div>
+      <div class="tabs-panel on" data-acc-panel="overview">
+        <div id="acc-playground" class="type-sub"></div>
+        <div id="acc-variants" class="type-sub"></div>
+        <div id="acc-insitu" class="type-sub"></div>
+        <div class="type-sub cpg-variants" id="acc-usage">
+          <div class="cpg-section-heading">
+            <div class="cpg-layout__title">Do's and don'ts</div>
+            <div class="cpg-layout__desc">Accordions trade visibility for density. Only fold away content the user won't always need.</div>
+          </div>
+          <div class="cpg-section-block">
+            <div class="sel-usage">
+              <div class="sel-usage__card">
+                <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
+                <ul class="sel-usage__list">
+                  <li>Use for FAQs, optional settings and long secondary content.</li>
+                  <li>Write headers that describe exactly what's inside.</li>
+                  <li>Default the most useful item open when it helps.</li>
+                </ul>
+              </div>
+              <div class="sel-usage__card">
+                <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don't</div>
+                <ul class="sel-usage__list">
+                  <li>Don't bury content users need on every visit.</li>
+                  <li>Don't nest accordions inside accordions.</li>
+                  <li>Don't use one for a single item &mdash; just show it.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tabs-panel" data-acc-panel="style">
+        <div id="acc-reference" class="type-sub spec-panel spec-stack"></div>
+      </div>
+      <div class="tabs-panel" data-acc-panel="code">
+        <div id="acc-code-playground" class="type-sub spec-panel spec-code-playground"></div>
+        <div id="acc-code-tab" class="type-sub spec-panel"></div>
+      </div>
+      <div class="tabs-panel" data-acc-panel="changelog" id="acc-changelog-panel"></div>
     </section>
 
     <!-- ============================================================
@@ -8020,6 +8054,7 @@ function toggleTheme() {
   try { if(typeof renderBshPlayground==='function' && document.getElementById('bsh-playground')) renderBshPlayground(); } catch(e){}
   try { if(typeof renderBshInSitu==='function' && document.getElementById('bsh-insitu')) renderBshInSitu(); } catch(e){}
   try { if(typeof renderBshReference==='function' && document.getElementById('bsh-reference')) renderBshReference(); } catch(e){}
+  try { if(typeof renderAccordionPlayground==='function' && document.getElementById('acc-playground')) renderAccordionPlayground(); } catch(e){}
 }
 
 // Colour view switch (prim / sem)
@@ -13011,6 +13046,452 @@ function alrtTabSwitch(tab){
 }
 
 /* ============================================================
+   ACCORDION — brought to the Pills-page tabbed treatment.
+   Accordion has no colour-variant axis (unlike Pill) — its one
+   real behavioural axis is single-open vs multiple-open, which
+   fills the "Key variants" slot instead. Playground state is
+   named acpg (not a shared ppg/apg) to avoid colliding with the
+   existing .acc* CSS classes and Pills'/Alert's playground names.
+============================================================ */
+const ACC_BEHAVIORS = [
+  {key:'single', label:'Single-open'},
+  {key:'multi',  label:'Multiple-open'},
+];
+
+/* ── ACCORDION PLAYGROUND ── */
+let acpg = { behavior:'multi', size:'reg', iconPos:'trailing', disabledIndex:-1, itemCount:3, items:['How do payouts work?','Can I refund a transaction?','Which cards are supported?','Do you support recurring billing?'], theme:'light' };
+
+function acpgEsc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&#60;').replace(/>/g,'&#62;').replace(/"/g,'&quot;'); }
+
+function makeAccEl(){
+  const wrap = document.createElement('div');
+  wrap.className = `acc acc--${acpg.size}`;
+  wrap.style.setProperty('--cpg-stage-bg', stageBg(acpg.theme));
+  const nm = acpg.behavior==='single' ? ' name="acpg-demo"' : '';
+  let html = '';
+  acpg.items.slice(0, acpg.itemCount).forEach((it, i)=>{
+    const dis = (acpg.disabledIndex===i) ? ' disabled' : '';
+    const openAttr = (i===0 && acpg.disabledIndex!==0) ? ' open' : '';
+    const chevCls = acpg.iconPos==='leading' ? ' acc__sum--lead' : '';
+    html += `<details class="acc__item"${nm}${openAttr}${dis}><summary class="acc__sum${chevCls}">${acpgEsc(it)}<span class="acc__chev">&#8250;</span></summary><div class="acc__body">Supporting detail for &ldquo;${acpgEsc(it)}&rdquo; goes here.</div></details>`;
+  });
+  wrap.innerHTML = html;
+  return wrap;
+}
+
+function getAccCodeHTML(){
+  const nm = acpg.behavior==='single' ? ` <span class="code-attr">name</span>=<span class="code-val">"acc-demo"</span>` : '';
+  const rows = acpg.items.slice(0, acpg.itemCount).map((it,i)=>{
+    const dis = (acpg.disabledIndex===i) ? ` <span class="code-attr">disabled</span>` : '';
+    const openAttr = (i===0 && acpg.disabledIndex!==0) ? ` <span class="code-attr">open</span>` : '';
+    const chevCls = acpg.iconPos==='leading' ? ' acc__sum--lead' : '';
+    return `  <span class="code-kw">&#60;details</span> <span class="code-cls">class</span>=<span class="code-val">"acc__item"</span>${nm}${openAttr}${dis}<span class="code-kw">></span>
+    <span class="code-kw">&#60;summary</span> <span class="code-cls">class</span>=<span class="code-val">"acc__sum${chevCls}"</span><span class="code-kw">></span>${acpgEsc(it)}<span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"acc__chev"</span><span class="code-kw">>&#8250;&#60;/span></span><span class="code-kw">&#60;/summary></span>
+    <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"acc__body"</span><span class="code-kw">></span>Supporting detail&#8230;<span class="code-kw">&#60;/div></span>
+  <span class="code-kw">&#60;/details></span>`;
+  }).join('\n');
+  return `<span class="code-cm">/* Flash &middot; ${cap(acpg.theme)} &middot; ${cap(acpg.size)} &middot; ${acpg.behavior==='single'?'Single-open':'Multiple-open'} accordion */</span>
+<span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"acc acc--${acpg.size}"</span><span class="code-kw">></span>
+${rows}
+<span class="code-kw">&#60;/div></span>`;
+}
+
+const ACCORDION_LANGS = [
+  {key:'html',   label:'HTML / CSS', file:'accordion.html'},
+  {key:'blazor', label:'Blazor',     file:'DsAccordion.razor'},
+  {key:'tsx',    label:'React TSX',  file:'DsAccordion.tsx'},
+];
+let accordionLang = 'html';
+
+function getAccCodeBlazor(){
+  const items = acpg.items.slice(0, acpg.itemCount);
+  const itemsCode = items.map((it,i)=>`    <span class="code-kw">&#60;DsAccordionItem</span> <span class="code-attr">Title</span>=<span class="code-val">"${acpgEsc(it)}"</span>${(acpg.disabledIndex===i)?` <span class="code-attr">Disabled</span>=<span class="code-val">"true"</span>`:''}<span class="code-kw">>Supporting detail&#8230;&#60;/DsAccordionItem></span>`).join('\n');
+  return `<span class="code-cm">@* DsAccordion.razor &mdash; usage *@</span>
+<span class="code-kw">&#60;DsAccordion</span> <span class="code-attr">Behavior</span>=<span class="code-val">"AccordionBehavior.${acpg.behavior==='single'?'Single':'Multiple'}"</span>
+             <span class="code-attr">Size</span>=<span class="code-val">"AccordionSize.${cap(acpg.size)}"</span>
+             <span class="code-attr">IconPosition</span>=<span class="code-val">"AccordionIconPosition.${cap(acpg.iconPos)}"</span><span class="code-kw">></span>
+${itemsCode}
+<span class="code-kw">&#60;/DsAccordion></span>
+
+<span class="code-cm">@* DsAccordion.razor &mdash; component definition *@</span>
+<span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"@CssClass"</span><span class="code-kw">></span>
+  <span class="code-kw">@foreach</span> (var item <span class="code-kw">in</span> Items) {
+    <span class="code-kw">&#60;details</span> <span class="code-cls">class</span>=<span class="code-val">"acc__item"</span> <span class="code-attr">name</span>=<span class="code-val">"@GroupName"</span> <span class="code-attr">disabled</span>=<span class="code-val">"@item.Disabled"</span><span class="code-kw">></span>
+      <span class="code-kw">&#60;summary</span> <span class="code-cls">class</span>=<span class="code-val">"@SummaryClass"</span><span class="code-kw">></span>@item.Title<span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"acc__chev"</span><span class="code-kw">>&#8250;&#60;/span></span><span class="code-kw">&#60;/summary></span>
+      <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"acc__body"</span><span class="code-kw">></span>@item.ChildContent<span class="code-kw">&#60;/div></span>
+    <span class="code-kw">&#60;/details></span>
+  }
+<span class="code-kw">&#60;/div></span>
+
+<span class="code-kw">@code</span> {
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> AccordionBehavior Behavior { get; set; } = AccordionBehavior.Multiple;
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> AccordionSize Size { get; set; } = AccordionSize.Reg;
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> AccordionIconPosition IconPosition { get; set; } = AccordionIconPosition.Trailing;
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> RenderFragment ChildContent { get; set; }
+
+  <span class="code-kw">private</span> <span class="code-cls">string</span> GroupName => Behavior == AccordionBehavior.Single ? <span class="code-val">"acc-group"</span> : <span class="code-kw">null</span>;
+  <span class="code-kw">private</span> <span class="code-cls">string</span> CssClass => $<span class="code-val">"acc acc--{Size.ToString().ToLower()}"</span>;
+  <span class="code-kw">private</span> <span class="code-cls">string</span> SummaryClass => IconPosition == AccordionIconPosition.Leading ? <span class="code-val">"acc__sum acc__sum--lead"</span> : <span class="code-val">"acc__sum"</span>;
+}`;
+}
+
+function getAccCodeTSX(){
+  const items = acpg.items.slice(0, acpg.itemCount);
+  const itemsArr = items.map((it,i)=>`  { title: '${acpgEsc(it).replace(/'/g,"\\'")}', body: 'Supporting detail…'${(acpg.disabledIndex===i)?', disabled: true':''} }`).join(',\n');
+  return `<span class="code-cm">// DsAccordion.tsx</span>
+<span class="code-kw">import</span> React <span class="code-kw">from</span> <span class="code-val">'react'</span>;
+
+<span class="code-kw">type</span> <span class="code-cls">AccordionSize</span> = <span class="code-val">'sm'</span> | <span class="code-val">'reg'</span>;
+<span class="code-kw">type</span> <span class="code-cls">AccordionBehavior</span> = <span class="code-val">'single'</span> | <span class="code-val">'multi'</span>;
+
+<span class="code-kw">interface</span> <span class="code-cls">AccordionItem</span> { title: <span class="code-cls">string</span>; body: <span class="code-cls">string</span>; disabled?: <span class="code-cls">boolean</span>; }
+
+<span class="code-kw">interface</span> <span class="code-cls">DsAccordionProps</span> {
+  items: <span class="code-cls">AccordionItem</span>[];
+  behavior?: <span class="code-cls">AccordionBehavior</span>;
+  size?: <span class="code-cls">AccordionSize</span>;
+  iconPosition?: <span class="code-val">'leading'</span> | <span class="code-val">'trailing'</span>;
+}
+
+<span class="code-kw">export const</span> <span class="code-cls">DsAccordion</span>: React.FC&#60;DsAccordionProps> = ({
+  items,
+  behavior = <span class="code-val">'multi'</span>,
+  size = <span class="code-val">'reg'</span>,
+  iconPosition = <span class="code-val">'trailing'</span>,
+}) => (
+  &#60;div className={\`acc acc--\${size}\`}>
+    {items.map((item, i) => (
+      &#60;details key={i} className=<span class="code-val">"acc__item"</span> name={behavior === <span class="code-val">'single'</span> ? <span class="code-val">'acc-group'</span> : undefined} disabled={item.disabled} open={i === 0 && !item.disabled}>
+        &#60;summary className={\`acc__sum \${iconPosition === '<span class="code-val">leading</span>' ? 'acc__sum--lead' : ''}\`}>{item.title}&#60;span className=<span class="code-val">"acc__chev"</span>>&#8250;&#60;/span>&#60;/summary>
+        &#60;div className=<span class="code-val">"acc__body"</span>>{item.body}&#60;/div>
+      &#60;/details>
+    ))}
+  &#60;/div>
+);
+
+<span class="code-cm">// Usage</span>
+<span class="code-kw">const</span> items: AccordionItem[] = [
+${itemsArr}
+];
+&#60;DsAccordion items={items} behavior=<span class="code-val">"${acpg.behavior}"</span> size=<span class="code-val">"${acpg.size}"</span> iconPosition=<span class="code-val">"${acpg.iconPos}"</span> />`;
+}
+
+function getAccCode(){
+  return accordionLang==='blazor' ? getAccCodeBlazor()
+       : accordionLang==='tsx'    ? getAccCodeTSX()
+       : getAccCodeHTML();
+}
+
+function setAccordionLang(lang){
+  if(!ACCORDION_LANGS.some(l=>l.key===lang)) return;
+  accordionLang = lang;
+  document.querySelectorAll('#acc-code-tab .code-seg__btn').forEach(b=>{
+    const on = b.dataset.lang===lang;
+    b.setAttribute('aria-selected', on ? 'true' : 'false');
+    b.setAttribute('tabindex', on ? '0' : '-1');
+  });
+  const file = document.getElementById('acc-lang-file');
+  const meta = ACCORDION_LANGS.find(l=>l.key===lang);
+  if(file && meta) file.textContent = meta.file;
+  const block = document.getElementById('acpg-code-block');
+  if(block) block.innerHTML = getAccCode();
+}
+
+function accordionLangKeydown(e){
+  const i = ACCORDION_LANGS.findIndex(l=>l.key===accordionLang);
+  let n = i;
+  if(e.key==='ArrowLeft')       n = (i - 1 + ACCORDION_LANGS.length) % ACCORDION_LANGS.length;
+  else if(e.key==='ArrowRight') n = (i + 1) % ACCORDION_LANGS.length;
+  else if(e.key==='Home')       n = 0;
+  else if(e.key==='End')        n = ACCORDION_LANGS.length - 1;
+  else return;
+  e.preventDefault();
+  setAccordionLang(ACCORDION_LANGS[n].key);
+  const btn = document.getElementById('acc-lang-' + ACCORDION_LANGS[n].key);
+  if(btn) btn.focus();
+}
+
+function acpgRefresh(){
+  document.querySelectorAll('.acpg-stage-el').forEach(stage=>{
+    stage.innerHTML = '';
+    stage.appendChild(makeAccEl());
+  });
+  const block = document.getElementById('acpg-code-block');
+  if(block) block.innerHTML = getAccCode();
+}
+
+const ACC_PLAYGROUND_MOUNTS = [
+  {rootId:'acc-playground', idSuffix:'', wrap:true, title:'Try the component', desc:'Adjust the filters to test component states.', headingAbove:'An accordion stacks headers that expand to reveal content, for progressively disclosing long or secondary information.'},
+  {rootId:'acc-code-playground', idSuffix:'-code', style:'code', title:'Playground', desc:'Live demo of the component.'},
+];
+
+function renderAccordionPlayground(){
+  acpg.theme = document.documentElement.getAttribute('data-theme')==='dark' ? 'dark' : 'light';
+  const sbg = stageBg(acpg.theme);
+
+  const behBtns = ACC_BEHAVIORS.map(b=>`<button class="btn-pg__pill${acpg.behavior===b.key?' on':''}" onclick="acpgSet('behavior','${b.key}')">${b.label}</button>`).join('');
+  const szBtns = ['sm','reg'].map(s=>`<button class="btn-pg__pill${acpg.size===s?' on':''}" onclick="acpgSet('size','${s}')">${cap(s)}</button>`).join('');
+  const iconBtns = ['leading','trailing'].map(p=>`<button class="btn-pg__pill${acpg.iconPos===p?' on':''}" onclick="acpgSet('iconPos','${p}')">${cap(p)}</button>`).join('');
+  const cntBtns = [2,3,4].map(n=>`<button class="btn-pg__pill${acpg.itemCount===n?' on':''}" onclick="acpgSet('itemCount','${n}')">${n}</button>`).join('');
+  const disBtns = ['off','on'].map(x=>`<button class="btn-pg__pill${((acpg.disabledIndex>=0)?(x==='on'):(x==='off'))?' on':''}" onclick="acpgSetDisabled('${x}')">${x==='on'?'One disabled':'None disabled'}</button>`).join('');
+  const itemInputs = acpg.items.slice(0, acpg.itemCount).map((it,i)=>`<div class="btn-pg__group"><span class="btn-pg__clabel">Item ${i+1}</span><input class="cpg-label-input acpg-item-input-el" data-idx="${i}" value="${acpgEsc(it)}" maxlength="60" oninput="acpgSetItem(${i}, this.value)"></div>`).join('');
+
+  ACC_PLAYGROUND_MOUNTS.forEach(mount=>{
+    const root = document.getElementById(mount.rootId);
+    if(!root) return;
+    const s = mount.idSuffix;
+    const demo = `
+      <div class="btn-pg">
+        <div class="btn-pg__stage acpg-stage-el" id="acpg-stage${s}" style="background:${sbg};align-items:flex-start"></div>
+        <div class="btn-pg__ctrls">
+          <div class="btn-pg__group"><span class="btn-pg__clabel">Behavior</span><div class="btn-pg__pill-row">${behBtns}</div></div>
+          <div class="btn-pg__group"><span class="btn-pg__clabel">Size</span><div class="btn-pg__pill-row">${szBtns}</div></div>
+          <div class="btn-pg__group"><span class="btn-pg__clabel">Chevron</span><div class="btn-pg__pill-row">${iconBtns}</div></div>
+          <div class="btn-pg__group"><span class="btn-pg__clabel">Items</span><div class="btn-pg__pill-row">${cntBtns}</div></div>
+          <div class="btn-pg__group"><span class="btn-pg__clabel">Disabled</span><div class="btn-pg__pill-row">${disBtns}</div></div>
+          ${mount.wrap ? itemInputs : ''}
+        </div>
+      </div>`;
+
+    if(mount.style==='code'){
+      root.innerHTML = `
+        <div class="type-sub__title">${mount.title}</div>
+        <div class="type-sub__desc">${mount.desc}</div>
+        <div class="cpg-section-outline">${demo}</div>`;
+      return;
+    }
+
+    const inner = `
+      <div class="cpg-layout">
+        <div class="cpg-layout__intro">
+          ${mount.wrap ? `<span class="cpg-cursor-icon">${CPG_CURSOR_ICON_SVG}</span>` : ''}
+          <div class="cpg-layout__title">${mount.title}</div>
+          <div class="cpg-layout__desc">${mount.desc}</div>
+        </div>
+        <div class="cpg-layout__demo">${demo}</div>
+      </div>`;
+    const wrapped = mount.wrap ? `<div class="cpg-section-block">${inner}</div>` : inner;
+    root.innerHTML = (mount.headingAbove ? `<div class="cpg-overview-heading"><span class="cpg-overview-heading__icon">${CPG_INFO_ICON_SVG}</span><span>${mount.headingAbove}</span></div>` : '') + wrapped;
+  });
+
+  acpgRefresh();
+}
+
+function renderAccordionCodeTab(){
+  const root = document.getElementById('acc-code-tab');
+  if(!root) return;
+  root.innerHTML = `
+    <div class="type-sub__title">Code</div>
+    <div class="type-sub__desc">Live snippet matching the current Playground configuration &mdash; switch to Overview to change it.</div>
+    <div class="cpg-section-outline">
+      <div class="code-panel code-panel--bare open">
+        <div class="code-panel__head">
+          <div class="code-seg" role="tablist" aria-label="Code language" onkeydown="accordionLangKeydown(event)">
+            ${ACCORDION_LANGS.map(l=>`<button type="button" role="tab" class="code-seg__btn" id="acc-lang-${l.key}" data-lang="${l.key}" aria-selected="${accordionLang===l.key?'true':'false'}" aria-controls="acpg-code-block" tabindex="${accordionLang===l.key?'0':'-1'}" onclick="setAccordionLang('${l.key}')">${l.label}</button>`).join('')}
+          </div>
+          <span class="code-lang-file" id="acc-lang-file">${(ACCORDION_LANGS.find(l=>l.key===accordionLang)||ACCORDION_LANGS[0]).file}</span>
+          <button class="code-copy-btn" onclick="acpgCopyCode()" id="acpg-copy-btn">Copy</button>
+        </div>
+        <div class="code-body"><div class="code-block" id="acpg-code-block" role="tabpanel" aria-live="polite"></div></div>
+      </div>
+    </div>`;
+}
+
+/* Flexible accordion markup builder for the Overview's illustrative sections
+   (key variants, in-context mockups) — real .acc markup. Doc-site-only
+   helper; makeAccEl remains the canonical playground builder. */
+function ovAcc({behavior='multi', size='reg', items, name}){
+  const nm = behavior==='single' ? ` name="${name||'acc-ov'}"` : '';
+  return `<div class="acc acc--${size}" style="max-width:none">${items.map((it,i)=>`<details class="acc__item"${nm}${i===0?' open':''}><summary class="acc__sum">${it.t}<span class="acc__chev">&#8250;</span></summary><div class="acc__body">${it.b}</div></details>`).join('')}</div>`;
+}
+
+function renderAccordionVariants(){
+  const root = document.getElementById('acc-variants');
+  if(!root) return;
+
+  const cells = [
+    {name:'Single-open', use:'Collapses all other items when one opens. Ideal for FAQs where one answer at a time keeps things tidy.', acc:ovAcc({behavior:'single', name:'acc-kv-single', items:[{t:'How do payouts work?',b:'Settled next business day.'},{t:'Can I refund a transaction?',b:'Yes, within 180 days.'}]})},
+    {name:'Multiple-open', use:"Items open independently, so several can be expanded at once. Use when sections are unrelated.", acc:ovAcc({behavior:'multi', items:[{t:'Business details',b:'Legal entity name and address.'},{t:'Bank account',b:'Where settled funds are deposited.'}]})},
+  ];
+  const cellHTML = cells.map(c=>`
+    <div class="spec-cell">
+      <div class="spec-cell__stage" style="display:block;padding:14px">${c.acc}</div>
+      <div class="spec-cell__name">${c.name}</div>
+      <div class="spec-cell__desc">${c.use}</div>
+    </div>`).join('');
+
+  root.innerHTML = `
+    <div class="cpg-section-heading">
+      <div class="cpg-layout__title">Key variants</div>
+      <div class="cpg-layout__desc">Accordion has no colour-variant axis &mdash; its one real behavioural choice is whether opening an item closes the others.</div>
+    </div>
+    <div class="cpg-section-block">
+      <div class="spec-grid" style="grid-template-columns:repeat(auto-fill,minmax(260px,1fr))">${cellHTML}</div>
+    </div>`;
+}
+
+function renderAccordionInSitu(){
+  const root = document.getElementById('acc-insitu');
+  if(!root) return;
+  const theme = currentTheme();
+  const sbg = stageBg(theme);
+
+  // 1. FAQ list — multiple-open
+  const faqMock = `
+    <div class="spec-mock__stage" style="background:${sbg};padding:12px">
+      ${ovAcc({behavior:'multi', size:'sm', items:[
+        {t:'How do payouts work?', b:'Settled next business day.'},
+        {t:'Can I refund a transaction?', b:'Yes, within 180 days.'},
+        {t:'Which cards are supported?', b:'Visa, Mastercard and domestic debit.'},
+      ]})}
+    </div>
+    <div class="spec-mock__cap"><b>FAQ list</b>Multiple-open, so a reader can compare answers side by side without losing their place.</div>`;
+
+  // 2. Settings/preferences panel — grouped single-open sections
+  const settingsMock = `
+    <div class="spec-mock__stage" style="background:${sbg};padding:12px">
+      ${ovAcc({behavior:'single', name:'acc-is-settings', size:'sm', items:[
+        {t:'Notifications', b:'Email and push preferences.'},
+        {t:'Security', b:'Two-factor authentication and sessions.'},
+        {t:'Billing', b:'Plan, invoices and payment method.'},
+      ]})}
+    </div>
+    <div class="spec-mock__cap"><b>Settings panel</b>Single-open within the group, so switching sections doesn't leave several stacked open.</div>`;
+
+  // 3. Order summary/checkout breakdown — one item expanded by default
+  const orderMock = `
+    <div class="spec-mock__stage" style="background:${sbg};padding:12px">
+      ${ovAcc({behavior:'single', name:'acc-is-order', size:'sm', items:[
+        {t:'Order breakdown (R1,240.00)', b:'Subtotal R1,150.00 + delivery R90.00.'},
+        {t:'Delivery details', b:'Arrives in 2&ndash;3 business days.'},
+      ]})}
+    </div>
+    <div class="spec-mock__cap"><b>Order summary</b>The breakdown starts expanded since it's the detail a shopper checks first.</div>`;
+
+  root.innerHTML = `
+    <div class="cpg-section-heading">
+      <div class="cpg-layout__title">In context</div>
+      <div class="cpg-layout__desc">The same component covers three common jobs &mdash; answering questions, grouping settings, and breaking down a total.</div>
+    </div>
+    <div class="cpg-section-block">
+      <div class="spec-insitu-grid">
+        <div class="spec-mock">${faqMock}</div>
+        <div class="spec-mock">${settingsMock}</div>
+        <div class="spec-mock">${orderMock}</div>
+      </div>
+    </div>`;
+}
+
+function acpgSet(key, val){
+  if(key==='itemCount') acpg.itemCount = Number(val);
+  else acpg[key] = val;
+  renderAccordionPlayground();
+}
+function acpgSetDisabled(val){ acpg.disabledIndex = (val==='on') ? 0 : -1; renderAccordionPlayground(); }
+function acpgSetItem(i, val){ acpg.items[i] = val; acpgRefresh(); }
+function acpgCopyCode(){
+  const b = document.getElementById('acpg-code-block');
+  if(!b) return;
+  navigator.clipboard.writeText(b.innerText||b.textContent).catch(()=>{});
+  const btn = document.getElementById('acpg-copy-btn');
+  if(btn){ btn.textContent = 'Copied!'; setTimeout(()=>btn.textContent='Copy', 2000); }
+}
+
+function renderAccordionReference(){
+  const root = document.getElementById('acc-reference');
+  if(!root) return;
+
+  const theme = currentTheme();
+  const sbg = stageBg(theme);
+
+  /* ---- Anatomy ---- */
+  const heroAcc = `<div class="acc acc--reg" style="max-width:420px"><details class="acc__item" open><summary class="acc__sum">Trigger row<span class="acc__chev">&rsaquo;</span></summary><div class="acc__body">Body panel &mdash; revealed content sits here, hidden until the trigger is activated.</div></details><details class="acc__item"><summary class="acc__sum">Second item<span class="acc__chev">&rsaquo;</span></summary><div class="acc__body">Collapsed by default.</div></details></div>`;
+
+  const parts = [
+    {num:1, name:'Trigger row', note:'The clickable header &mdash; label plus chevron, built on <code>&lt;summary&gt;</code>.', vis:'<span style="font-weight:600;font-size:14px;color:var(--chrome-txt)">Header label</span>'},
+    {num:2, name:'Chevron', note:'Rotates 90&deg; when open. Placed trailing by default, or leading via <code>.acc__sum--lead</code>.', vis:'<span style="font-size:19px;color:var(--chrome-muted)">&rsaquo;</span>'},
+    {num:3, name:'Body panel', note:'Revealed content, hidden until the trigger opens the <code>&lt;details&gt;</code>.', vis:'<span style="font-size:13px;color:var(--chrome-muted)">Body text</span>'},
+    {num:4, name:'Border / divider', note:'Separates stacked items; the outer <code>.acc</code> border frames the whole group.', vis:'<span style="display:block;width:32px;height:0;border-top:1px solid var(--chrome-border)"></span>'},
+  ];
+  const partCards = parts.map(p=>`
+    <div class="spec-part">
+      <div class="spec-part__stage" style="background:${sbg}">${p.vis}</div>
+      <div class="spec-part__body">
+        <div class="spec-part__name"><span class="spec-part__num">${p.num}</span>${p.name}</div>
+        <div class="spec-part__note">${p.note}</div>
+      </div>
+    </div>`).join('');
+
+  /* ---- Size & dimensions ---- */
+  const sizeSpecs = [
+    {key:'sm',  label:'Small',   h:'36px', fs:'12.5px', pad:'9px 14px'},
+    {key:'reg', label:'Regular', h:'44px', fs:'14px',   pad:'15px 18px'},
+  ];
+  const sizeCells = sizeSpecs.map(sz=>`
+    <div class="spec-cell">
+      <div class="spec-cell__stage" style="display:block;padding:14px">${ovAcc({behavior:'multi', size:sz.key, items:[{t:'Trigger row',b:'Body content.'}]})}</div>
+      <div class="spec-cell__name">${sz.label}</div>
+      <div class="spec-cell__desc">Trigger row ${sz.h} min-height, ${sz.fs} label, ${sz.pad} padding.</div>
+    </div>`).join('');
+
+  /* ---- Tokens ---- */
+  const tokRows = [
+    ['--acc-border', '--chrome-border', 'Outer container border and the divider between stacked items.'],
+    ['--acc-bg', '--chrome-bg', 'Container background.'],
+    ['--acc-text', '--chrome-txt', 'Trigger label colour.'],
+    ['--acc-hover-bg', '--chrome-hover', 'Trigger row hover background.'],
+    ['--acc-focus-ring', '--color-input-focus', 'Trigger row focus outline.'],
+  ].map(([tok, sem, desc])=>`
+    <tr>
+      <td class="dd-table__name"><code>${tok}</code></td>
+      <td><code>${sem}</code></td>
+      <td>${desc}</td>
+    </tr>`).join('');
+
+  root.innerHTML = `
+    <div class="type-sub">
+      <div class="type-sub__title">Anatomy</div>
+      <div class="type-sub__desc">An accordion is a bordered stack of collapsible items, each a trigger row paired with a body panel.</div>
+      <div class="cpg-section-outline">
+        <div class="spec-hero" style="background:${sbg}">${heroAcc}</div>
+        <div class="spec-parts">${partCards}</div>
+      </div>
+    </div>
+
+    <div class="type-sub">
+      <div class="type-sub__title">Size &amp; dimensions</div>
+      <div class="type-sub__desc">Two sizes cover most density needs &mdash; <b>Small</b> for dense lists like filters or settings, <b>Regular</b> as the default for FAQs and standalone panels.</div>
+      <div class="cpg-section-outline">
+        <div class="spec-grid" style="grid-template-columns:repeat(auto-fill,minmax(220px,1fr))">${sizeCells}</div>
+      </div>
+    </div>
+
+    <div class="type-sub" style="margin-bottom:0">
+      <div class="type-sub__title">Tokens</div>
+      <div class="type-sub__desc">Accordion has no colour-variant axis, so each part just resolves to one semantic token &mdash; no light/dark-per-variant matrix needed.</div>
+      <div class="cpg-section-outline">
+        <div class="dd-table-wrap"><table class="dd-table" style="min-width:480px">
+          <thead><tr><th>Token</th><th>Resolves to</th><th>Used for</th></tr></thead>
+          <tbody>${tokRows}</tbody>
+        </table></div>
+      </div>
+    </div>`;
+}
+
+try { renderAccordionCodeTab(); } catch(e){ console.error('acc-code-tab',e); }
+try { renderAccordionPlayground(); } catch(e){ console.error('acc-playground',e); }
+try { renderAccordionVariants(); } catch(e){ console.error('acc-variants',e); }
+try { renderAccordionInSitu(); } catch(e){ console.error('acc-insitu',e); }
+try { renderAccordionReference(); } catch(e){ console.error('acc-reference',e); }
+
+function accordionTabSwitch(tab){
+  const nav = document.getElementById('acc-tabs-list');
+  if(!nav) return;
+  nav.querySelectorAll('.tab-item').forEach(btn=>btn.classList.toggle('on', btn.getAttribute('data-acc-tab')===tab));
+  document.querySelectorAll('#s-accordion .tabs-panel[data-acc-panel]').forEach(p=>p.classList.toggle('on', p.getAttribute('data-acc-panel')===tab));
+}
+
+/* ============================================================
    CHECKBOXES & RADIOS — reference grid
 ============================================================ */
 const SEL_SIZES = [
@@ -13079,12 +13560,21 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.66.1';
+const SYSTEM_VERSION = '1.67.0';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.67.0', date:'2026-08-11', author:'Helen', title:'Accordion gets the full Pills-page treatment', changes:[
+        ['changed','Accordion rebuilt from a flat .sec section into a tabbed .sec--tabbed page (Overview / Style / Code / Changelog), matching Pills\' and Alert\'s structure — hero with a mini live preview, sec-tabs bar, and a Changelog tab holding the section\'s auto-injected changelog block'],
+        ['added','Interactive playground (acpg state) with Behavior (Single-open/Multiple-open), Size (Small/Regular), Chevron (Leading/Trailing), item count (2–4) with editable per-item labels, and a disable-one-item toggle, rendered into both an Overview mount and a smaller Code-tab mount from the same shared state'],
+        ['added','"Key variants" grid (renderAccordionVariants) showing Single-open vs Multiple-open — Accordion has no colour-variant axis, so its one real behavioural axis fills that slot instead'],
+        ['added','Three In-context mockups (renderAccordionInSitu): an FAQ list (multiple-open), a settings panel (grouped single-open sections), and an order summary breakdown (single item expanded by default)'],
+        ['added','Style tab: Anatomy (trigger row, chevron, body panel, border/divider), a new Size & dimensions table introducing .acc--sm (36px trigger row) and .acc--reg (44px, default), and a token table introducing --acc-border/--acc-bg/--acc-text/--acc-hover-bg/--acc-focus-ring bound to existing --chrome-*/--color-input-focus semantic tokens — no colour-variant grid, matching Alert\'s "no axis to show" approach where one genuinely doesn\'t exist'],
+        ['added','Code tab gains the full HTML/CSS, Blazor and React TSX segmented language switcher, driven by the same playground state'],
+        ['changed','ai-ctx tab relocated from the end of the section into the new hero\'s sec-header-meta, matching Pills/Alert; status changed from "static" to "js-rendered" and regenerated for the new realClasses/builderFunctions list'],
+      ]},
       {version:'1.66.1', date:'2026-08-11', author:'Helen', title:'Fixed Bottom Sheets\' In-context mockups: squashed sizing, inconsistent framing', changes:[
         ['fixed','The three In-context phone mockups used a squat 230×300 frame with no status bar for the two compact examples and a separate, heavier phone-bezel treatment only on the full-screen one — all three now share one 220×440 phone frame, bezel, and status bar so the set reads as one consistent family'],
         ['fixed','Compact sheets floated over an empty grey frame background with no sense of the screen underneath; added a faint placeholder page (title bar + list rows) behind them so the sheet reads as overlaying real content'],
@@ -14220,7 +14710,19 @@ const CHANGELOG = {
         ['added','Pure-CSS hover/focus tooltip with four placements and an icon-button example'],
       ]},
     ]},
-    {secId:'s-accordion', name:'Accordion', version:'1.0.1', entries:[
+    {secId:'s-accordion', name:'Accordion', version:'1.1.0', entries:[
+      {version:'1.1.0', date:'2026-08-11', author:'Helen', title:'Brought to the Pills-page tabbed treatment', changes:[
+        ['changed','Converted #s-accordion from a flat .sec section to .sec--tabbed (Overview / Style / Code / Changelog), with a two-column hero (title/version/AI-context left, live 3-item .acc preview right)'],
+        ['added','Overview: interactive playground (acpg state) with Behavior (Single-open/Multiple-open), Size (Small/Regular), Chevron (Leading/Trailing), item count (2–4, editable labels) and a disable-one-item toggle, driving a live .acc built by makeAccEl()'],
+        ['added','Overview: "Key variants" grid (renderAccordionVariants) covering Single-open vs Multiple-open — the one real behavioural axis, standing in for Pills\' colour-variant grid which Accordion has no equivalent of'],
+        ['added','Overview: three In-context mockups (renderAccordionInSitu) — FAQ list, settings panel, order summary breakdown'],
+        ['changed','Do/Dont card moved into the Overview tab\'s #acc-usage .cpg-section-block, JS-rendered like Pills/Alert (previously static markup); guidance text unchanged from the original 3 do / 3 dont'],
+        ['added','New .acc--sm (36px trigger row, 12.5px label) and .acc--reg (44px, 14px label, previous default) size classes, applied in the live preview, playground and in-context mockups'],
+        ['added','New --acc-border/--acc-bg/--acc-text/--acc-hover-bg/--acc-focus-ring custom properties on .acc, bound to the existing --chrome-border/--chrome-bg/--chrome-txt/--chrome-hover/--color-input-focus semantic tokens — Accordion previously had zero custom properties'],
+        ['added','Style tab: Anatomy (trigger row, chevron, body panel, border/divider), Size & dimensions table, and a Tokens table documenting the new --acc-* namespace — no colour-variant section, since Accordion has no such axis'],
+        ['added','Code tab: HTML/CSS, Blazor (DsAccordion.razor) and React TSX (DsAccordion.tsx) segmented language switcher, generated from the live playground state'],
+        ['changed','AI context tab regenerated for the new realClasses/builderFunctions list; status changed from "static" to "js-rendered"'],
+      ]},
       {version:'1.0.1', date:'2026-07-29', author:'Mo', title:'AI context tab added', changes:[
         ['added','AI context tab documenting the real, fully static .acc/.acc__*/native-<details> markup, plus its existing "When to use" Do/Dont guidance (3 do / 3 dont)'],
       ]},
@@ -17663,6 +18165,7 @@ try { renderSectionChangelogs(); } catch(e){ console.error('section-changelog',e
   {secId:'s-badges', panelId:'badge-changelog-panel'},
   {secId:'s-alert',  panelId:'alrt-changelog-panel'},
   {secId:'s-drawers', panelId:'bsh-changelog-panel'},
+  {secId:'s-accordion', panelId:'acc-changelog-panel'},
 ].forEach(({secId, panelId})=>{
   try {
     const chlog = document.querySelector(`#${secId} > .sec-chlog`);
