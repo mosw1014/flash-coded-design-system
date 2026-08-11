@@ -1,6 +1,6 @@
 ---
 document: Flash UI Reskin Guide
-version: 2.2.0
+version: 2.3.0
 design_system: https://mosw1014.github.io/flash-coded-design-system/
 purpose: Guide design judgement while the live design system supplies tokens, components and implementation.
 scope: Existing interfaces created with Claude, Replit, Lovable or similar tools.
@@ -200,6 +200,34 @@ A small filter set (one or two simple controls) stays inline beside the results 
 - Keep any already-applied filter visible as a summary or Chip outside the panel, so the current state is legible without opening it.
 - Do not collapse a genuinely small, low-count filter row just to add an interaction step — this rule exists to reduce clutter, not to hide simple controls unnecessarily.
 
+### Progressive disclosure — most forms do not belong on the page
+
+The Complex filters rule above is one case of a broader principle: **a form being present in the original layout is not a reason to render it inline in the reskin.** A dashboard or overview page whose job is *reading* — figures, charts, records, status — should show data, not a wall of stacked data-entry panels. Every always-visible form competes with the page's actual focal point and pushes the real content below the fold.
+
+Judge each form by how often it is used and whether it belongs to this page's task:
+
+- **Frequent, and central to this page's task** — keep it inline (e.g. a quick-add row on a page whose whole job is adding records).
+- **Occasional, or a side task** — collapse it behind a trigger. The trigger is a Button or Link in the region it belongs to; the form itself lives in a Popover, Drawer, Accordion or dialog per Section 8. Typical examples: *invite a teammate, log a call, add an expense, schedule a report, add a tag, bulk update, import data.*
+- **Rare, or account/settings-shaped** — it does not belong on an overview page at all. Link to where it actually lives. Typical examples: *billing contact, change password, notification preferences, currency/locale settings.* These are Settings; a link is the correct representation, not a collapsed panel and certainly not an inline form.
+
+Rules:
+
+- **Do not stack more than one or two inline forms on a reading-oriented page.** If you are laying out a grid of four or more form panels side by side, that layout is the defect — convert all but the most-used one to triggers.
+- **The trigger must name the task, not the mechanism** — "Invite a teammate", not "Open form".
+- **Keep any resulting state visible outside the panel**, the same way an applied filter stays visible as a Chip — e.g. a count of pending invites, the last logged call — so collapsing the form does not hide its outcome.
+- **Preserve the functionality exactly** (Section 1): moving a form behind a trigger changes where it renders, never what it does. Every field, validation rule and submit handler carries over unchanged.
+- **Do not collapse a single small form just to add a click.** As with filters, this rule exists to reduce competing panels, not to bury simple, frequent tasks.
+
+### Field-to-label hierarchy inside a form
+
+A form panel has at least three distinct levels, and they must be visibly different sizes/weights — not three near-identical lines of bold text:
+
+1. **The panel/section heading** (e.g. "Quick add") — a section heading: Black (900), at the section- or component-heading size token.
+2. **Field labels** (e.g. "Product", "Units", "Revenue") — Semibold (650) at a body size token, clearly smaller and lighter than the heading above them.
+3. **Input text and helper text** — Semibold (650) for the value itself, Medium (500) at Body S for helper/caption text.
+
+If the panel heading and its field labels read as the same level — same size, or both bold — the reader cannot tell where the group starts, and the form looks like a list of headings. The heading should be unmistakably dominant over its labels at a glance; if you have to compare them to tell which is which, the gap is too small. A field label is never Black (900), and a panel heading is never merely Semibold.
+
 ### Page header layout
 
 A page's top header area (title plus its supporting controls) has one correct structure: the main page title sits on its own line, and every control that belongs to that header — toggles, filter triggers, tabs, buttons — sits together on a single row **directly under the title**, sharing one horizontal alignment line.
@@ -361,6 +389,17 @@ A form, filter row or panel that mixes Text Inputs, Dropdowns, Search fields and
 - **This produces one shared alignment line**: labels line up with labels, and fields line up with fields, down the group — not a ragged mix of taller/shorter or differently-labelled controls.
 - Different field *types* (Text Input vs. Dropdown vs. Search) are fine to combine — it is the label position and sizing convention that must stay one choice per group, not the component itself.
 
+### Chart sizing and legibility
+
+A chart is only a chart if it can be read. Charts have a **minimum useful size**, and squeezing several into a row of narrow cells — or into a shared panel alongside other charts — produces unreadable axis labels, colliding value labels and sparkline-sized bars that carry no information. This is the most common way a reskin makes a dashboard *worse* while technically using the right component.
+
+- **Give each chart its own cell, sized for the chart — do not pack several charts into one panel.** A row of four charts crammed into a single "Revenue" container is a defect. Lay charts out as peers on the page grid, one per cell, each with its own caption.
+- **Respect a real minimum width.** Below roughly 320–360px a bar or line chart with axis labels stops being legible. On desktop that generally means **at most two charts per row** for anything with a category axis; a single trend chart that carries the page's main story earns a full-width or two-column-wide cell of its own.
+- **Scale down by removing charts, not by shrinking them.** When width is limited (Section 9), stack charts one per row at full width — never keep four abreast at a quarter of the legible size.
+- **A trend line is not a sparkline.** If a trend genuinely matters, give it a real chart cell with labelled axes and value labels. Reserve inline sparklines for dense table rows or stat tiles, where a shape-only impression is the whole intent — and never use one as the page's actual trend chart.
+- **Label density scales with size.** A small chart shows fewer axis ticks and drops per-point value labels rather than overlapping them; do not render every label into a cell too narrow to hold them.
+- **Charts are for comparison, so do not scatter comparable charts across separate panels.** Related charts sitting as peers in one grid, at one size, read as a comparable set; the same charts at different sizes in different containers do not.
+
 ### Icon sourcing
 
 Flash's icon set (`s-icons`) is **Font Awesome Solid** — filled shapes, not outlines. A resolver's
@@ -483,6 +522,15 @@ Before finishing, confirm:
       under the page title, sharing one alignment line — not above or beside the title.
 - [ ] A bloated filter set is collapsed behind a single expandable Filters trigger, with any
       already-applied filter still visible as a summary outside the panel.
+- [ ] Occasional and side-task forms sit behind a named trigger (Popover/Drawer/Accordion/dialog),
+      not inline; account/settings-shaped forms are a link, not a panel. No reading-oriented page
+      renders more than one or two inline forms.
+- [ ] Inside every form, the panel heading is unmistakably dominant over its field labels at a
+      glance — heading Black (900) at a heading size, labels Semibold (650) at a body size. No
+      field label is Black; no panel heading is merely Semibold.
+- [ ] Every chart has its own cell at a legible size — at most two category-axis charts per
+      desktop row, none below ~320–360px wide, and charts stack one-per-row rather than shrinking
+      when width is limited. No row of charts is packed into a single shared panel.
 - [ ] Accent buttons appear only on a page that already has Primary buttons, marking the one main
       action among them; a page with a single button uses Primary, not Accent.
 - [ ] Layout follows the live grid and spacing system.
