@@ -1512,6 +1512,7 @@ body.home .main{max-width:none;margin:0;padding:0}
 .sec--tabbed .spec-mock__filterrow{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:4px}
 .sec--tabbed .spec-mock__label{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--chrome-muted)}
 .sec--tabbed .spec-mock__field{display:flex;flex-wrap:wrap;align-items:center;gap:6px;padding:8px 10px;border:1.5px solid var(--chrome-border);border-radius:10px;background:var(--color-surface-base)}
+.sec--tabbed .spec-mock__field svg{width:16px;height:16px;margin-left:auto;color:var(--chrome-muted);flex-shrink:0}
 .sec--tabbed .spec-mock__caret{width:1.5px;height:18px;background:var(--chrome-txt);opacity:.45}
 .sec--tabbed .spec-usage-demo{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:14px;padding-top:14px;border-top:1px dashed var(--chrome-border)}
 .sec--tabbed .spec-cell{border:1px solid var(--chrome-border);border-radius:12px;overflow:hidden;background:var(--chrome-bg);transition:background .25s,border-color .25s}
@@ -2352,28 +2353,40 @@ body.home .main{max-width:none;margin:0;padding:0}
 .kbd-combo{display:inline-flex;align-items:center;gap:4px}
 .kbd-combo__plus{color:var(--chrome-muted);font-size:11px}
 
-/* ---- Calendar & Date Picker ---- */
+/* ---- Date picker ---- */
 .cal{width:280px;max-width:100%;border:1px solid var(--chrome-border);border-radius:14px;padding:16px;background:var(--chrome-bg)}
 .cal__head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
 .cal__title{font-size:13px;font-weight:700;color:var(--chrome-txt)}
 .cal__nav{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:7px;border:1px solid var(--chrome-border);background:var(--chrome-bg);color:var(--chrome-txt);cursor:pointer;font-size:15px;font-family:inherit;line-height:1}
 .cal__nav:hover{background:var(--chrome-hover)}
-.cal__grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px}
+.cal__grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px 0}
 .cal__dow{font-size:9.5px;font-weight:700;color:var(--chrome-muted);text-align:center;padding:4px 0;text-transform:uppercase}
-.cal__day{aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:12.5px;color:var(--chrome-txt);border:none;background:none;border-radius:8px;cursor:pointer;font-family:inherit;transition:background .12s}
+.cal__day{position:relative;aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:12.5px;color:var(--chrome-txt);border:none;background:none;border-radius:8px;cursor:pointer;font-family:inherit;transition:background .12s}
 .cal__day:hover{background:var(--chrome-hover)}
 .cal__day--muted{color:var(--chrome-muted);opacity:.4;cursor:default}
 .cal__day--muted:hover{background:none}
-.cal__day--today{font-weight:800;box-shadow:inset 0 0 0 1px var(--chrome-border)}
+.cal__day--today::after{content:'';position:absolute;inset:3px;border-radius:6px;box-shadow:inset 0 0 0 1px var(--chrome-border);pointer-events:none}
+.cal__day--today{font-weight:800}
 .cal__day--sel{background:var(--color-btn-s-bg);color:var(--color-btn-s-txt);font-weight:700}
 .cal__day--sel:hover{background:var(--color-btn-s-bg);opacity:.85}
+.cal__day--range-start,.cal__day--range-end{background:var(--color-btn-s-bg);color:var(--color-btn-s-txt);font-weight:700;position:relative;z-index:1}
+.cal__day--range-start{border-radius:8px 0 0 8px}
+.cal__day--range-end{border-radius:0 8px 8px 0}
+.cal__day--range-solo{border-radius:8px}
+.cal__day--range-start:hover,.cal__day--range-end:hover{background:var(--color-btn-s-bg);opacity:.9}
+.cal__day--in-range{background:var(--chrome-hover);border-radius:0;color:var(--chrome-txt)}
+.cal__day--in-range:hover{background:var(--chrome-hover)}
+.cal--disabled{opacity:.5;pointer-events:none}
 .dp{position:relative;display:inline-block}
 .dp__field{display:inline-flex;align-items:center;gap:10px;min-width:220px;padding:10px 14px;border:1.5px solid var(--color-input-border);border-radius:10px;background:var(--color-input-bg);color:var(--chrome-txt);font-size:13px;font-family:inherit;cursor:pointer;text-align:left}
 .dp__field:hover{border-color:var(--color-text-s)}
+.dp__field--disabled{opacity:.5;cursor:not-allowed;pointer-events:none}
 .dp__val{color:var(--chrome-muted);font-weight:500}
+.dp__val--filled{color:var(--chrome-txt)}
 .dp__field svg{width:16px;height:16px;margin-left:auto;color:var(--chrome-muted);flex-shrink:0}
 .dp__pop{position:absolute;top:calc(100% + 6px);left:0;z-index:40;opacity:0;transform:translateY(-6px);pointer-events:none;transition:opacity .15s,transform .15s}
 .dp.is-open .dp__pop{opacity:1;transform:translateY(0);pointer-events:auto}
+.dppg-inline-wrap{display:flex;justify-content:center}
 
 /* ---- Command palette ---- */
 .cmd{width:420px;max-width:100%;border:1px solid var(--chrome-border);border-radius:14px;background:var(--chrome-bg);overflow:hidden;box-shadow:0 14px 36px rgba(0,0,0,.12)}
@@ -7018,63 +7031,31 @@ body.home .main{max-width:none;margin:0;padding:0}
     </section>
 
     <!-- ============================================================
-         CALENDAR & DATE PICKER
+         DATE PICKER
     ============================================================ -->
-    <section class="sec" id="s-calendar">
+    <section class="sec sec--tabbed" id="s-calendar">
+      <div class="sec-hero">
       <div class="sec__head">
-        <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Calendar &amp; Date Picker <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.1</span></h1>
-        <p class="sec__desc">A month-grid calendar for choosing a date, and a compact field that opens it in a popover. Fully interactive &mdash; navigate months and pick a day. The selected day uses the primary (black) style; today is outlined.</p>
-      </div>
-      <div class="type-sub">
-        <div class="type-sub__title">Inline calendar</div>
-        <div class="type-sub__desc">Use the arrows to change month; click a day to select it. Good when the calendar is always on screen &mdash; booking flows, filters.</div>
-        <div class="sg-stage"><div id="cal-inline"></div></div>
-      </div>
-      <div class="type-sub">
-        <div class="type-sub__title">Date picker field</div>
-        <div class="type-sub__desc">A field that shows the chosen date and opens the calendar on click. Picking a day fills the field and closes the popover; click outside or press Escape to dismiss.</div>
-        <div class="sg-stage" style="min-height:360px;align-items:flex-start">
-          <div class="dp" id="dp-demo">
-            <button class="dp__field" type="button"><span class="dp__val">Select a date</span><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="4.5" width="18" height="16" rx="2.5" stroke="currentColor" stroke-width="1.8"/><path d="M3 9h18M8 2.5v4M16 2.5v4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>
-            <div class="dp__pop"></div>
-          </div>
-        </div>
-      </div>
-      <div class="type-sub">
-        <div class="type-sub__title">When to use</div>
-        <div class="type-sub__desc">Pick the form that fits the space: an inline calendar when it&rsquo;s central, a field when date is one input among many.</div>
-        <div class="sel-usage">
-          <div class="sel-usage__card">
-            <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
-            <ul class="sel-usage__list">
-              <li>Use the field in forms; use the inline calendar when picking a date is the main task.</li>
-              <li>Mark today and make the selected date unmistakable.</li>
-              <li>Also accept typed dates for accessibility and speed where you can.</li>
-            </ul>
-          </div>
-          <div class="sel-usage__card">
-            <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don&rsquo;t</div>
-            <ul class="sel-usage__list">
-              <li>Don&rsquo;t use a calendar for far-off dates like birth year &mdash; a select is faster.</li>
-              <li>Don&rsquo;t trap keyboard users &mdash; allow Escape and typed entry.</li>
-              <li>Don&rsquo;t hide which month is shown or which day is selected.</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <details class="ai-ctx">
+        <h1 class="sec__title">Date picker</h1>
+        <div class="sec-header-meta">
+          <span class="comp-ver-badge" style="margin-left:0">v2.0.3</span>
+          <details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-calendar">
 {
   "status": "js-rendered",
   "builderFunctions": [
-    "build",
-    "MONTHS",
-    "DOW"
+    "DP_MONTHS",
+    "DP_DOW",
+    "dpFmt",
+    "dpToday",
+    "dpBuildCalHTML",
+    "dpAttach"
   ],
   "realClasses": [
     ".cal",
+    ".cal--range",
+    ".cal--disabled",
     ".cal__head",
     ".cal__nav",
     ".cal__title",
@@ -7084,29 +7065,88 @@ body.home .main{max-width:none;margin:0;padding:0}
     ".cal__day--muted",
     ".cal__day--today",
     ".cal__day--sel",
+    ".cal__day--range-start",
+    ".cal__day--range-end",
+    ".cal__day--in-range",
     ".dp",
+    ".dp--range",
     ".dp__field",
+    ".dp__field--disabled",
     ".dp__val",
+    ".dp__val--filled",
     ".dp__pop"
   ],
-  "css": "/* ---- Calendar &amp; Date Picker ---- */\n.cal { width:280px;max-width:100%;border:1px solid var(--chrome-border);border-radius:14px;padding:16px;background:var(--chrome-bg) }\n.cal__head { display:flex;align-items:center;justify-content:space-between;margin-bottom:12px }\n.cal__title { font-size:13px;font-weight:700;color:var(--chrome-txt) }\n.cal__nav { display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:7px;border:1px solid var(--chrome-border);background:var(--chrome-bg);color:var(--chrome-txt);cursor:pointer;font-size:15px;font-family:inherit;line-height:1 }\n.cal__nav:hover { background:var(--chrome-hover) }\n.cal__grid { display:grid;grid-template-columns:repeat(7,1fr);gap:2px }\n.cal__dow { font-size:9.5px;font-weight:700;color:var(--chrome-muted);text-align:center;padding:4px 0;text-transform:uppercase }\n.cal__day { aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:12.5px;color:var(--chrome-txt);border:none;background:none;border-radius:8px;cursor:pointer;font-family:inherit;transition:background .12s }\n.cal__day:hover { background:var(--chrome-hover) }\n.cal__day--muted { color:var(--chrome-muted);opacity:.4;cursor:default }\n.cal__day--muted:hover { background:none }\n.cal__day--today { font-weight:800;box-shadow:inset 0 0 0 1px var(--chrome-border) }\n.cal__day--sel { background:var(--color-btn-s-bg);color:var(--color-btn-s-txt);font-weight:700 }\n.cal__day--sel:hover { background:var(--color-btn-s-bg);opacity:.85 }\n.dp { position:relative;display:inline-block }\n.dp__field { display:inline-flex;align-items:center;gap:10px;min-width:220px;padding:10px 14px;border:1.5px solid var(--color-input-border);border-radius:10px;background:var(--color-input-bg);color:var(--chrome-txt);font-size:13px;font-family:inherit;cursor:pointer;text-align:left }\n.dp__field:hover { border-color:var(--color-text-s) }\n.dp__val { color:var(--chrome-muted);font-weight:500 }\n.dp__field svg { width:16px;height:16px;margin-left:auto;color:var(--chrome-muted);flex-shrink:0 }\n.dp__pop { position:absolute;top:calc(100% + 6px);left:0;z-index:40;opacity:0;transform:translateY(-6px);pointer-events:none;transition:opacity .15s,transform .15s }\n.dp.is-open .dp__pop { opacity:1;transform:translateY(0);pointer-events:auto }",
-  "js": "function build(host, onSelect){\n    var now=new Date();\n    var st={y:now.getFullYear(), m:now.getMonth(), sel:null};\n    function render(){\n      var first=new Date(st.y,st.m,1).getDay(), days=new Date(st.y,st.m+1,0).getDate(), prev=new Date(st.y,st.m,0).getDate();\n      var cells='';\n      for(var i=0;i&lt;first;i++){ cells+='&lt;button class=\"cal__day cal__day--muted\" tabindex=\"-1\"&gt;'+(prev-first+1+i)+'&lt;/button&gt;'; }\n      for(var d=1;d&lt;=days;d++){\n        var isT=(st.y===now.getFullYear()&amp;&amp;st.m===now.getMonth()&amp;&amp;d===now.getDate());\n        var isS=(st.sel&amp;&amp;st.sel.y===st.y&amp;&amp;st.sel.m===st.m&amp;&amp;st.sel.d===d);\n        cells+='&lt;button class=\"cal__day'+(isT?' cal__day--today':'')+(isS?' cal__day--sel':'')+'\" data-d=\"'+d+'\"&gt;'+d+'&lt;/button&gt;';\n      }\n      var total=first+days, trail=(7-total%7)%7;\n      for(var t=1;t&lt;=trail;t++){ cells+='&lt;button class=\"cal__day cal__day--muted\" tabindex=\"-1\"&gt;'+t+'&lt;/button&gt;'; }\n      host.innerHTML='&lt;div class=\"cal\"&gt;&lt;div class=\"cal__head\"&gt;'\n        +'&lt;button class=\"cal__nav\" data-nav=\"-1\" aria-label=\"Previous month\"&gt;&amp;lsaquo;&lt;/button&gt;'\n        +'&lt;div class=\"cal__title\"&gt;'+MONTHS[st.m]+' '+st.y+'&lt;/div&gt;'\n        +'&lt;button class=\"cal__nav\" data-nav=\"1\" aria-label=\"Next month\"&gt;&amp;rsaquo;&lt;/button&gt;&lt;/div&gt;'\n        +'&lt;div class=\"cal__grid\"&gt;'+DOW.map(function(x){return '&lt;div class=\"cal__dow\"&gt;'+x+'&lt;/div&gt;';}).join('')+cells+'&lt;/div&gt;&lt;/div&gt;';\n      host.querySelector('[data-nav=\"-1\"]').onclick=function(){ if(--st.m&lt;0){st.m=11;st.y--;} render(); };\n      host.querySelector('[data-nav=\"1\"]').onclick=function(){ if(++st.m&gt;11){st.m=0;st.y++;} render(); };\n      Array.prototype.forEach.call(host.querySelectorAll('[data-d]'),function(b){\n        b.onclick=function(){ st.sel={y:st.y,m:st.m,d:+b.getAttribute('data-d')}; render(); if(onSelect) onSelect(st.sel,MONTHS); };\n      });\n    }\n    render();\n  }\n\nvar MONTHS=['January','February','March','April','May','June','July','August','September','October','November','December'];\n\nvar DOW=['Su','Mo','Tu','We','Th','Fr','Sa'];",
+  "css": "/* ---- Date picker ---- */\n.cal { width:280px;max-width:100%;border:1px solid var(--chrome-border);border-radius:14px;padding:16px;background:var(--chrome-bg) }\n.cal__head { display:flex;align-items:center;justify-content:space-between;margin-bottom:12px }\n.cal__title { font-size:13px;font-weight:700;color:var(--chrome-txt) }\n.cal__nav { display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:7px;border:1px solid var(--chrome-border);background:var(--chrome-bg);color:var(--chrome-txt);cursor:pointer;font-size:15px;font-family:inherit;line-height:1 }\n.cal__nav:hover { background:var(--chrome-hover) }\n.cal__grid { display:grid;grid-template-columns:repeat(7,1fr);gap:2px 0 }\n.cal__dow { font-size:9.5px;font-weight:700;color:var(--chrome-muted);text-align:center;padding:4px 0;text-transform:uppercase }\n.cal__day { position:relative;aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:12.5px;color:var(--chrome-txt);border:none;background:none;border-radius:8px;cursor:pointer;font-family:inherit;transition:background .12s }\n.cal__day:hover { background:var(--chrome-hover) }\n.cal__day--muted { color:var(--chrome-muted);opacity:.4;cursor:default }\n.cal__day--muted:hover { background:none }\n.cal__day--today::after { content:'';position:absolute;inset:3px;border-radius:6px;box-shadow:inset 0 0 0 1px var(--chrome-border);pointer-events:none }\n.cal__day--today { font-weight:800 }\n.cal__day--sel { background:var(--color-btn-s-bg);color:var(--color-btn-s-txt);font-weight:700 }\n.cal__day--sel:hover { background:var(--color-btn-s-bg);opacity:.85 }\n.cal__day--range-start,.cal__day--range-end { background:var(--color-btn-s-bg);color:var(--color-btn-s-txt);font-weight:700;position:relative;z-index:1 }\n.cal__day--range-start { border-radius:8px 0 0 8px }\n.cal__day--range-end { border-radius:0 8px 8px 0 }\n.cal__day--range-start:hover,.cal__day--range-end:hover { background:var(--color-btn-s-bg);opacity:.9 }\n.cal__day--in-range { background:var(--chrome-hover);border-radius:0;color:var(--chrome-txt) }\n.cal__day--in-range:hover { background:var(--chrome-hover) }\n.cal--disabled { opacity:.5;pointer-events:none }\n.dp { position:relative;display:inline-block }\n.dp__field { display:inline-flex;align-items:center;gap:10px;min-width:220px;padding:10px 14px;border:1.5px solid var(--color-input-border);border-radius:10px;background:var(--color-input-bg);color:var(--chrome-txt);font-size:13px;font-family:inherit;cursor:pointer;text-align:left }\n.dp__field:hover { border-color:var(--color-text-s) }\n.dp__field--disabled { opacity:.5;cursor:not-allowed;pointer-events:none }\n.dp__val { color:var(--chrome-muted);font-weight:500 }\n.dp__val--filled { color:var(--chrome-txt) }\n.dp__field svg { width:16px;height:16px;margin-left:auto;color:var(--chrome-muted);flex-shrink:0 }\n.dp__pop { position:absolute;top:calc(100% + 6px);left:0;z-index:40;opacity:0;transform:translateY(-6px);pointer-events:none;transition:opacity .15s,transform .15s }\n.dp.is-open .dp__pop { opacity:1;transform:translateY(0);pointer-events:auto }",
+  "js": "const DP_MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];\n\nconst DP_DOW = ['Su','Mo','Tu','We','Th','Fr','Sa'];\n\nfunction dpFmt(y,m,d){ return d+' '+DP_MONTHS[m].slice(0,3)+' '+y; }\n\nfunction dpToday(){ const n=new Date(); return {y:n.getFullYear(), m:n.getMonth(), d:n.getDate()}; }\n\nfunction dpBuildCalHTML(y, m, opts){\n  opts = opts || {};\n  const mode = opts.mode || 'single';\n  const sel = opts.sel || null;\n  const start = opts.start || null;\n  const end = opts.end || null;\n  const disabled = !!opts.disabled;\n  const today = dpToday();\n  const first = new Date(y,m,1).getDay(), days = new Date(y,m+1,0).getDate(), prev = new Date(y,m,0).getDate();\n  let cells = '';\n  for(let i=0;i&lt;first;i++){ cells += `&lt;button class=\"cal__day cal__day--muted\" tabindex=\"-1\"&gt;${prev-first+1+i}&lt;/button&gt;`; }\n  for(let d=1;d&lt;=days;d++){\n    const isToday = (y===today.y &amp;&amp; m===today.m &amp;&amp; d===today.d);\n    let cls = 'cal__day';\n    if(isToday) cls += ' cal__day--today';\n    if(mode==='range'){\n      if(start &amp;&amp; start.y===y &amp;&amp; start.m===m &amp;&amp; start.d===d) cls += ' cal__day--range-start' + (end ? '' : ' cal__day--range-solo');\n      else if(end &amp;&amp; end.y===y &amp;&amp; end.m===m &amp;&amp; end.d===d) cls += ' cal__day--range-end' + (start ? '' : ' cal__day--range-solo');\n      else if(start &amp;&amp; end){\n        const t = new Date(y,m,d).getTime(), s = new Date(start.y,start.m,start.d).getTime(), e = new Date(end.y,end.m,end.d).getTime();\n        if(t&gt;s &amp;&amp; t&lt;e) cls += ' cal__day--in-range';\n      }\n    } else if(sel &amp;&amp; sel.y===y &amp;&amp; sel.m===m &amp;&amp; sel.d===d){\n      cls += ' cal__day--sel';\n    }\n    cells += `&lt;button class=\"${cls}\" data-d=\"${d}\"${disabled?' disabled tabindex=\"-1\"':''}&gt;${d}&lt;/button&gt;`;\n  }\n  const total = first+days, trail = (7-total%7)%7;\n  for(let t=1;t&lt;=trail;t++){ cells += `&lt;button class=\"cal__day cal__day--muted\" tabindex=\"-1\"&gt;${t}&lt;/button&gt;`; }\n  return `&lt;div class=\"cal${disabled?' cal--disabled':''}\"&gt;\n    &lt;div class=\"cal__head\"&gt;\n      &lt;button class=\"cal__nav\" data-nav=\"-1\" aria-label=\"Previous month\"${disabled?' disabled':''}&gt;&amp;lsaquo;&lt;/button&gt;\n      &lt;div class=\"cal__title\"&gt;${DP_MONTHS[m]} ${y}&lt;/div&gt;\n      &lt;button class=\"cal__nav\" data-nav=\"1\" aria-label=\"Next month\"${disabled?' disabled':''}&gt;&amp;rsaquo;&lt;/button&gt;\n    &lt;/div&gt;\n    &lt;div class=\"cal__grid\"&gt;${DP_DOW.map(x=&gt;`&lt;div class=\"cal__dow\"&gt;${x}&lt;/div&gt;`).join('')}${cells}&lt;/div&gt;\n  &lt;/div&gt;`;\n}\n\nfunction dpAttach(host, onSelect){\n  const cal = host.querySelector('.cal');\n  if(!cal || dppg.state==='disabled') return;\n  const prevBtn = cal.querySelector('[data-nav=\"-1\"]'), nextBtn = cal.querySelector('[data-nav=\"1\"]');\n  if(prevBtn) prevBtn.onclick = ()=&gt;{ if(--dppg.m&lt;0){dppg.m=11;dppg.y--;} dppgRefresh(); };\n  if(nextBtn) nextBtn.onclick = ()=&gt;{ if(++dppg.m&gt;11){dppg.m=0;dppg.y++;} dppgRefresh(); };\n  cal.querySelectorAll('[data-d]').forEach(b=&gt;{\n    b.onclick = ()=&gt;{\n      const d = {y:dppg.y, m:dppg.m, d:+b.getAttribute('data-d')};\n      if(dppg.mode==='range'){\n        if(!dppg.start || (dppg.start &amp;&amp; dppg.end)){ dppg.start = d; dppg.end = null; }\n        else {\n          const t = new Date(d.y,d.m,d.d).getTime(), s = new Date(dppg.start.y,dppg.start.m,dppg.start.d).getTime();\n          if(t &lt; s){ dppg.end = dppg.start; dppg.start = d; } else { dppg.end = d; }\n        }\n      } else {\n        dppg.sel = d;\n      }\n      dppgRefresh();\n      if(onSelect) onSelect();\n    };\n  });\n}",
   "usage": {
     "do": [
       "Use the field in forms; use the inline calendar when picking a date is the main task.",
-      "Mark today and make the selected date unmistakable.",
+      "Mark today and make the selected date (or range) unmistakable.",
+      "In range mode, show both endpoints clearly and shade the days between them.",
       "Also accept typed dates for accessibility and speed where you can."
     ],
     "dont": [
       "Don’t use a calendar for far-off dates like birth year — a select is faster.",
       "Don’t trap keyboard users — allow Escape and typed entry.",
-      "Don’t hide which month is shown or which day is selected."
+      "Don’t hide which month is shown or which day (or range) is selected.",
+      "Don’t default to range mode for a single-date field — it doubles the taps for no reason."
     ]
   },
-  "contentHash": "c34a7d04d47e6b20f12f9245aef1f8d601b7f0e13aa9b5a0ccd8f1c67478baaf"
+  "contentHash": "59ef1ad9431825865a4f3378673449cdd120307c6e336848fbb71a11660dc457"
 }
   </pre>
 </details>
+        </div>
+      </div>
+      <div class="sec-hero__preview"><div class="mk"><div class="dp"><button class="dp__field" type="button"><span class="dp__val dp__val--filled">12 Aug &ndash; 18 Aug</span><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="4.5" width="18" height="16" rx="2.5" stroke="currentColor" stroke-width="1.8"/><path d="M3 9h18M8 2.5v4M16 2.5v4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button></div></div></div>
+      </div>
+      <div class="tabs-list sec-tabs" id="dp-tabs-list">
+        <button type="button" class="tab-item on" data-dp-tab="overview" onclick="dpTabSwitch('overview')"><span class="tab-item__inner"><span class="tab-item__label">Overview</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-dp-tab="style" onclick="dpTabSwitch('style')"><span class="tab-item__inner"><span class="tab-item__label">Style</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-dp-tab="code" onclick="dpTabSwitch('code')"><span class="tab-item__inner"><span class="tab-item__label">Code</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-dp-tab="changelog" onclick="dpTabSwitch('changelog')"><span class="tab-item__inner"><span class="tab-item__label">Changelog</span></span><span class="tab-item__line"></span></button>
+      </div>
+      <div class="tabs-panel on" data-dp-panel="overview">
+        <div id="dp-playground" class="type-sub"></div>
+        <div id="dp-keyvariants" class="type-sub"></div>
+        <div id="dp-insitu" class="type-sub"></div>
+        <div class="type-sub cpg-variants" id="dp-usage">
+          <div class="cpg-section-heading">
+            <div class="cpg-layout__title">When to use which</div>
+            <div class="cpg-layout__desc">Pick the form that fits the space: an inline calendar when choosing a date is the main task, a field when it&rsquo;s one input among many. Switch to range mode when the input needs a start and an end, not a single day.</div>
+          </div>
+          <div class="cpg-section-block">
+            <div class="sel-usage">
+              <div class="sel-usage__card">
+                <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
+                <ul class="sel-usage__list">
+                  <li>Use the field in forms; use the inline calendar when picking a date is the main task.</li>
+                  <li>Mark today and make the selected date (or range) unmistakable.</li>
+                  <li>In range mode, show both endpoints clearly and shade the days between them.</li>
+                  <li>Also accept typed dates for accessibility and speed where you can.</li>
+                </ul>
+              </div>
+              <div class="sel-usage__card">
+                <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don&rsquo;t</div>
+                <ul class="sel-usage__list">
+                  <li>Don&rsquo;t use a calendar for far-off dates like birth year &mdash; a select is faster.</li>
+                  <li>Don&rsquo;t trap keyboard users &mdash; allow Escape and typed entry.</li>
+                  <li>Don&rsquo;t hide which month is shown or which day (or range) is selected.</li>
+                  <li>Don&rsquo;t default to range mode for a single-date field &mdash; it doubles the taps for no reason.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tabs-panel" data-dp-panel="style">
+        <div id="dp-reference" class="type-sub spec-panel spec-stack"></div>
+      </div>
+      <div class="tabs-panel" data-dp-panel="code">
+        <div id="dp-code-playground" class="type-sub spec-panel spec-code-playground"></div>
+        <div id="dp-code-tab" class="type-sub spec-panel"></div>
+      </div>
+      <div class="tabs-panel" data-dp-panel="changelog" id="dp-changelog-panel"></div>
     </section>
 
     <!-- ============================================================
@@ -8141,6 +8181,10 @@ function toggleTheme() {
   try { if(typeof renderBshInSitu==='function' && document.getElementById('bsh-insitu')) renderBshInSitu(); } catch(e){}
   try { if(typeof renderBshReference==='function' && document.getElementById('bsh-reference')) renderBshReference(); } catch(e){}
   try { if(typeof renderAccordionPlayground==='function' && document.getElementById('acc-playground')) renderAccordionPlayground(); } catch(e){}
+  try { if(typeof renderDpPlayground==='function' && document.getElementById('dp-playground')) renderDpPlayground(); } catch(e){}
+  try { if(typeof renderDpKeyVariants==='function' && document.getElementById('dp-keyvariants')) renderDpKeyVariants(); } catch(e){}
+  try { if(typeof renderDpInSitu==='function' && document.getElementById('dp-insitu')) renderDpInSitu(); } catch(e){}
+  try { if(typeof renderDpReference==='function' && document.getElementById('dp-reference')) renderDpReference(); } catch(e){}
 }
 
 // Colour view switch (prim / sem)
@@ -14252,12 +14296,33 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.66.12';
+const SYSTEM_VERSION = '1.67.3';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.67.3', date:'2026-08-11', author:'Helen', title:'Date picker: continuous range shading, rounded today ring, per-part anatomy visuals', changes:[
+        ['fixed','.cal__day--in-range/--range-start/--range-end left visible 2px white gaps between adjacent range days because .cal__grid had a uniform 2px gap on both axes; switched to gap:2px 0 (row gap only) so horizontally adjacent range days now form one continuous shaded strip'],
+        ['fixed','.cal__day--range-start/--range-end now use directional rounding (8px 0 0 8px / 0 8px 8px 0) so the endpoint blends flush into the adjacent square .cal__day--in-range cells instead of leaving a rounded notch; a new .cal__day--range-solo modifier keeps a lone start or end (no counterpart picked yet) fully rounded like a normal single selection'],
+        ['fixed','.cal__day--today used an inset box-shadow that inherited the cell\'s own border-radius, so it rendered with hard square corners whenever today also fell inside a range (border-radius:0). Replaced with an independent ::after ring (its own 6px radius, inset 3px) that stays rounded regardless of the cell\'s state'],
+        ['added','Style tab Anatomy part cards (Nav arrows, Month title, Day grid, Day cell) each get their own mini visual in a .spec-part__stage, matching every other facelifted page — previously text-only'],
+      ]},
+      {version:'1.67.2', date:'2026-08-11', author:'Helen', title:'Fixed Date picker anatomy card padding and sidebar nav position', changes:[
+        ['fixed','Style tab Anatomy part cards (.spec-part__body) had an inline padding-top:0 override copied from a pattern where a .spec-part__stage visual sits above the body; Date picker\'s cards have no stage, so the override left them with no top padding — removed, restoring the default 12px 14px padding on all sides'],
+        ['fixed','Sidebar nav: Date picker was left sorted in its old "Calendar" alphabetical slot (between Buttons and Cards) after the rename — moved to sit between Context Menu and Dropdown'],
+      ]},
+      {version:'1.67.1', date:'2026-08-11', author:'Helen', title:'Fixed styling regressions in the Date picker facelift', changes:[
+        ['fixed','Date picker "In context" mockups (renderDpInSitu): the calendar glyph in the Checkout and Travel date-field mockups rendered at its unconstrained intrinsic SVG size (near full-card) because .spec-mock__field had no icon-sizing rule; added .spec-mock__field svg{width:16px;height:16px} matching .dp__field'],
+        ['fixed','Date picker playground, In-context mockups, Key-variants and Style-tab reference panel did not re-render on the global light/dark toggle (renderDpPlayground/renderDpKeyVariants/renderDpInSitu/renderDpReference were missing from toggleTheme()), leaving their inline-styled stage backgrounds stuck in whichever theme was active on page load'],
+        ['fixed','Style tab token table listed the in-range fill token as var(--color-input-focus); the real .cal__day--in-range rule uses var(--chrome-hover) — table now matches the CSS'],
+      ]},
+      {version:'1.67.0', date:'2026-08-11', author:'Helen', title:'Date picker gets the full Buttons-page treatment, plus range selection', changes:[
+        ['changed','Date picker (#s-calendar) rebuilt into a tabbed Overview / Style / Code / Changelog page, matching Buttons\' structure'],
+        ['added','Real date-range selection (start/end) in both the inline calendar and the date-picker field, via new .cal--range/.dp--range classes and .cal__day--range-start/--range-end/--in-range day states'],
+        ['added','Interactive playground with Form (Inline/Field), Mode (Single date/Range) and State (Default/Disabled) controls, plus three new "In context" mockups (checkout date field, filter-bar inline calendar, travel date-range field)'],
+        ['added','Code tab language switcher matching Buttons\' set (HTML/CSS, Blazor, React TSX)'],
+      ]},
       {version:'1.66.12', date:'2026-08-11', author:'Helen', title:'Buttons Toolbar mockup varies icon-button variants', changes:[
         ['changed','Toolbar mockup icons switched from 3 uniform Secondary buttons to Primary (search), Accent (notification), and Simple (more) — a showcase of variant hierarchy rather than a single repeated style'],
       ]},
@@ -15349,7 +15414,31 @@ const CHANGELOG = {
         ['added','Distribution Charts — carved out of the former combined Charts page into its own section, covering both the single segmented bar and the ranked distribution-bars pattern, with a "When to use" comparing the two'],
       ]},
     ]},
-    {secId:'s-calendar', name:'Calendar & Date Picker', version:'1.0.1', entries:[
+    {secId:'s-calendar', name:'Date picker', version:'2.0.3', entries:[
+      {version:'2.0.3', date:'2026-08-11', author:'Helen', title:'Continuous range shading, rounded today ring, per-part anatomy visuals', changes:[
+        ['fixed','Range days no longer show white gaps between them — .cal__grid dropped its column gap (gap:2px 0) and .cal__day--range-start/--range-end pick up directional rounding so endpoints meet the square .cal__day--in-range cells flush, forming one continuous strip'],
+        ['added','.cal__day--range-solo modifier keeps a lone picked start/end (before its counterpart is chosen) fully rounded instead of looking like a cut-off pill'],
+        ['fixed','.cal__day--today swapped its border-radius-dependent inset box-shadow for an independent ::after ring, so today\'s marker stays rounded even when today falls inside a range (previously square, since --in-range sets border-radius:0 on the cell)'],
+        ['added','Anatomy part cards (Nav arrows, Month title, Day grid, Day cell) each get a real mini visual, matching every other tabbed page\'s Style tab — previously text-only'],
+      ]},
+      {version:'2.0.2', date:'2026-08-11', author:'Helen', title:'Fixed anatomy card padding and sidebar nav position', changes:[
+        ['fixed','Style tab Anatomy part cards had no top padding — an inline padding-top:0 override on .spec-part__body (copied from a pattern where a .spec-part__stage visual sits above the body) left them cramped since Date picker\'s cards have no stage; removed, restoring the default 12px 14px padding'],
+        ['fixed','Sidebar nav position — Date picker was still sorted under its old "Calendar" slot (between Buttons and Cards); moved to sit between Context Menu and Dropdown'],
+      ]},
+      {version:'2.0.1', date:'2026-08-11', author:'Helen', title:'Fixed styling regressions from the facelift', changes:[
+        ['fixed','"In context" mockups: oversized calendar glyph in the Checkout and Travel mockups — .spec-mock__field had no svg sizing rule, so the icon rendered at its unconstrained intrinsic size instead of 16px'],
+        ['fixed','Playground, In-context mockups, Key-variants and the Style-tab reference panel now re-render on the global light/dark toggle (added renderDpPlayground/renderDpKeyVariants/renderDpInSitu/renderDpReference to toggleTheme()) — their inline stage backgrounds previously stayed stuck in the theme active at page load'],
+        ['fixed','Style tab token table: in-range fill token corrected from var(--color-input-focus) to var(--chrome-hover), matching the real .cal__day--in-range rule'],
+      ]},
+      {version:'2.0.0', date:'2026-08-11', author:'Helen', title:'Date picker gets the full Buttons-page treatment, plus range selection', changes:[
+        ['changed','Date picker rebuilt from a flat .sec section into a tabbed .sec--tabbed page (Overview / Style / Code / Changelog), matching Buttons\' structure: hero preview, sec-tabs bar, and a Changelog tab holding the section\'s auto-injected changelog block'],
+        ['added','Date-range selection: .cal__day--range-start, .cal__day--range-end and .cal__day--in-range classes, plus a .cal--range/.dp--range mode built into the shared dpBuildCalHTML/dppg builder so both the inline calendar and the .dp field popover support picking a start and end date, not just a single day'],
+        ['added','Playground (dppg state, synced across #dp-playground and #dp-code-playground) with Form (Inline/Field), Mode (Single date/Range) and State (Default/Disabled) controls, live month nav and day/range select'],
+        ['added','"In context" mockups on Overview (renderDpInSitu): a checkout delivery-date field, a filter-bar inline calendar, and a travel date-range field'],
+        ['added','Style tab: Anatomy (Container/Month nav/Day cell), Form (Inline vs Field), a Day states grid (default/hover/today/selected/disabled/range-start/range-end/in-range), and a token table'],
+        ['added','Code tab: shared .code-seg ARIA-tablist language switcher (HTML/CSS, Blazor, React TSX) with filename hint and keyboard nav, matching the Buttons Code tab\'s language set'],
+        ['changed','Header version badge bumped to v2.0.0 to reflect the range-selection capability and the rebuilt page structure'],
+      ]},
       {version:'1.0.1', date:'2026-07-29', author:'Mo', title:'AI context tab added', changes:[
         ['added','AI context tab documenting the real .cal/.cal__*/.dp/.dp__* structural classes and the build/MONTHS/DOW builder shared by the inline calendar and the date-picker popover, plus its existing "When to use" Do/Dont guidance (3 do / 3 dont)'],
       ]},
@@ -18535,48 +18624,600 @@ function ddTabSwitch(tab){
     if(legEl) Array.prototype.forEach.call(legEl.querySelectorAll('.cht-legend__item'),function(li){ var i=+li.getAttribute('data-i'); li.addEventListener('mouseenter',function(){hot(i);}); li.addEventListener('mouseleave',cool); });
   }
 })();
-/* Calendar & Date Picker */
-(function(){
-  var MONTHS=['January','February','March','April','May','June','July','August','September','October','November','December'];
-  var DOW=['Su','Mo','Tu','We','Th','Fr','Sa'];
-  function build(host, onSelect){
-    var now=new Date();
-    var st={y:now.getFullYear(), m:now.getMonth(), sel:null};
-    function render(){
-      var first=new Date(st.y,st.m,1).getDay(), days=new Date(st.y,st.m+1,0).getDate(), prev=new Date(st.y,st.m,0).getDate();
-      var cells='';
-      for(var i=0;i<first;i++){ cells+='<button class="cal__day cal__day--muted" tabindex="-1">'+(prev-first+1+i)+'</button>'; }
-      for(var d=1;d<=days;d++){
-        var isT=(st.y===now.getFullYear()&&st.m===now.getMonth()&&d===now.getDate());
-        var isS=(st.sel&&st.sel.y===st.y&&st.sel.m===st.m&&st.sel.d===d);
-        cells+='<button class="cal__day'+(isT?' cal__day--today':'')+(isS?' cal__day--sel':'')+'" data-d="'+d+'">'+d+'</button>';
+/* ============================================================
+   DATE PICKER
+   Same tabbed-page treatment as Pills/Buttons (.sec--tabbed):
+   Overview / Style / Code / Changelog, a shared-state playground
+   rendered into multiple mounts, and a three-language code panel.
+   Unlike Pills, the axis isn't colour — it's Form (inline vs field)
+   and Mode (single vs range); a real day-grid replaces swatches.
+============================================================ */
+const DP_MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+const DP_DOW = ['Su','Mo','Tu','We','Th','Fr','Sa'];
+
+function dpEsc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&#60;').replace(/>/g,'&#62;').replace(/"/g,'&quot;'); }
+function dpKey(y,m,d){ return y+'-'+m+'-'+d; }
+function dpFmt(y,m,d){ return d+' '+DP_MONTHS[m].slice(0,3)+' '+y; }
+
+/* ── PLAYGROUND STATE ──
+   form: 'inline' | 'field'   mode: 'single' | 'range'   state: 'default' | 'disabled'
+   single selection lives in dppg.sel; range selection in dppg.start/dppg.end. */
+let dppg = { form:'inline', mode:'single', state:'default', y:new Date().getFullYear(), m:new Date().getMonth(), sel:null, start:null, end:null, open:false, theme:'light' };
+
+function dpToday(){ const n=new Date(); return {y:n.getFullYear(), m:n.getMonth(), d:n.getDate()}; }
+
+/* Builds the real .cal markup for a given y/m against a selection —
+   the single canonical grid builder shared by every mount (playground
+   stage, field popover, in-context mockups, Style-tab anatomy/states). */
+function dpBuildCalHTML(y, m, opts){
+  opts = opts || {};
+  const mode = opts.mode || 'single';
+  const sel = opts.sel || null;
+  const start = opts.start || null;
+  const end = opts.end || null;
+  const disabled = !!opts.disabled;
+  const today = dpToday();
+  const first = new Date(y,m,1).getDay(), days = new Date(y,m+1,0).getDate(), prev = new Date(y,m,0).getDate();
+  let cells = '';
+  for(let i=0;i<first;i++){ cells += `<button class="cal__day cal__day--muted" tabindex="-1">${prev-first+1+i}</button>`; }
+  for(let d=1;d<=days;d++){
+    const isToday = (y===today.y && m===today.m && d===today.d);
+    let cls = 'cal__day';
+    if(isToday) cls += ' cal__day--today';
+    if(mode==='range'){
+      if(start && start.y===y && start.m===m && start.d===d) cls += ' cal__day--range-start' + (end ? '' : ' cal__day--range-solo');
+      else if(end && end.y===y && end.m===m && end.d===d) cls += ' cal__day--range-end' + (start ? '' : ' cal__day--range-solo');
+      else if(start && end){
+        const t = new Date(y,m,d).getTime(), s = new Date(start.y,start.m,start.d).getTime(), e = new Date(end.y,end.m,end.d).getTime();
+        if(t>s && t<e) cls += ' cal__day--in-range';
       }
-      var total=first+days, trail=(7-total%7)%7;
-      for(var t=1;t<=trail;t++){ cells+='<button class="cal__day cal__day--muted" tabindex="-1">'+t+'</button>'; }
-      host.innerHTML='<div class="cal"><div class="cal__head">'
-        +'<button class="cal__nav" data-nav="-1" aria-label="Previous month">&lsaquo;</button>'
-        +'<div class="cal__title">'+MONTHS[st.m]+' '+st.y+'</div>'
-        +'<button class="cal__nav" data-nav="1" aria-label="Next month">&rsaquo;</button></div>'
-        +'<div class="cal__grid">'+DOW.map(function(x){return '<div class="cal__dow">'+x+'</div>';}).join('')+cells+'</div></div>';
-      host.querySelector('[data-nav="-1"]').onclick=function(){ if(--st.m<0){st.m=11;st.y--;} render(); };
-      host.querySelector('[data-nav="1"]').onclick=function(){ if(++st.m>11){st.m=0;st.y++;} render(); };
-      Array.prototype.forEach.call(host.querySelectorAll('[data-d]'),function(b){
-        b.onclick=function(){ st.sel={y:st.y,m:st.m,d:+b.getAttribute('data-d')}; render(); if(onSelect) onSelect(st.sel,MONTHS); };
-      });
+    } else if(sel && sel.y===y && sel.m===m && sel.d===d){
+      cls += ' cal__day--sel';
     }
-    render();
+    cells += `<button class="${cls}" data-d="${d}"${disabled?' disabled tabindex="-1"':''}>${d}</button>`;
   }
-  var inl=document.getElementById('cal-inline'); if(inl) build(inl,null);
-  var dp=document.getElementById('dp-demo');
-  if(dp){
-    var field=dp.querySelector('.dp__field'), val=dp.querySelector('.dp__val'), pop=dp.querySelector('.dp__pop');
-    build(pop,function(s,M){ val.textContent=s.d+' '+M[s.m].slice(0,3)+' '+s.y; val.style.color='var(--chrome-txt)'; dp.classList.remove('is-open'); });
-    field.addEventListener('click',function(e){ e.stopPropagation(); dp.classList.toggle('is-open'); });
-    pop.addEventListener('click',function(e){ e.stopPropagation(); });
-    document.addEventListener('click',function(){ dp.classList.remove('is-open'); });
-    document.addEventListener('keydown',function(e){ if(e.key==='Escape') dp.classList.remove('is-open'); });
+  const total = first+days, trail = (7-total%7)%7;
+  for(let t=1;t<=trail;t++){ cells += `<button class="cal__day cal__day--muted" tabindex="-1">${t}</button>`; }
+  return `<div class="cal${disabled?' cal--disabled':''}">
+    <div class="cal__head">
+      <button class="cal__nav" data-nav="-1" aria-label="Previous month"${disabled?' disabled':''}>&lsaquo;</button>
+      <div class="cal__title">${DP_MONTHS[m]} ${y}</div>
+      <button class="cal__nav" data-nav="1" aria-label="Next month"${disabled?' disabled':''}>&rsaquo;</button>
+    </div>
+    <div class="cal__grid">${DP_DOW.map(x=>`<div class="cal__dow">${x}</div>`).join('')}${cells}</div>
+  </div>`;
+}
+
+/* Attaches month-nav and day-click handlers to a freshly-rendered .cal
+   inside host, wired to the shared dppg state; onSelect fires with the
+   updated selection after every day click (single or range). */
+function dpAttach(host, onSelect){
+  const cal = host.querySelector('.cal');
+  if(!cal || dppg.state==='disabled') return;
+  const prevBtn = cal.querySelector('[data-nav="-1"]'), nextBtn = cal.querySelector('[data-nav="1"]');
+  if(prevBtn) prevBtn.onclick = ()=>{ if(--dppg.m<0){dppg.m=11;dppg.y--;} dppgRefresh(); };
+  if(nextBtn) nextBtn.onclick = ()=>{ if(++dppg.m>11){dppg.m=0;dppg.y++;} dppgRefresh(); };
+  cal.querySelectorAll('[data-d]').forEach(b=>{
+    b.onclick = ()=>{
+      const d = {y:dppg.y, m:dppg.m, d:+b.getAttribute('data-d')};
+      if(dppg.mode==='range'){
+        if(!dppg.start || (dppg.start && dppg.end)){ dppg.start = d; dppg.end = null; }
+        else {
+          const t = new Date(d.y,d.m,d.d).getTime(), s = new Date(dppg.start.y,dppg.start.m,dppg.start.d).getTime();
+          if(t < s){ dppg.end = dppg.start; dppg.start = d; } else { dppg.end = d; }
+        }
+      } else {
+        dppg.sel = d;
+      }
+      dppgRefresh();
+      if(onSelect) onSelect();
+    };
+  });
+}
+
+function dpFieldLabel(){
+  if(dppg.mode==='range'){
+    if(dppg.start && dppg.end) return dpFmt(dppg.start.y,dppg.start.m,dppg.start.d)+' – '+dpFmt(dppg.end.y,dppg.end.m,dppg.end.d);
+    if(dppg.start) return dpFmt(dppg.start.y,dppg.start.m,dppg.start.d)+' – ?';
+    return 'Select a date range';
   }
-})();
+  return dppg.sel ? dpFmt(dppg.sel.y,dppg.sel.m,dppg.sel.d) : 'Select a date';
+}
+
+function dpFieldSVG(){
+  return `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="4.5" width="18" height="16" rx="2.5" stroke="currentColor" stroke-width="1.8"/><path d="M3 9h18M8 2.5v4M16 2.5v4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>`;
+}
+
+function getDpCodeHTML(){
+  const filled = dppg.mode==='range' ? !!(dppg.start||dppg.end) : !!dppg.sel;
+  const label = dpEsc(dpFieldLabel());
+  const disAttr = dppg.state==='disabled' ? ' disabled' : '';
+  if(dppg.form==='field'){
+    return `<span class="code-cm">/* Flash · ${cap(dppg.mode)} · ${cap(dppg.state)} date picker field */</span>
+<span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"dp"</span><span class="code-kw">></span>
+  <span class="code-kw">&#60;button</span> <span class="code-cls">class</span>=<span class="code-val">"dp__field${dppg.state==='disabled'?' dp__field--disabled':''}"</span> <span class="code-attr">type</span>=<span class="code-val">"button"</span>${disAttr}<span class="code-kw">></span>
+    <span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"dp__val${filled?' dp__val--filled':''}"</span><span class="code-kw">></span>${label}<span class="code-kw">&#60;/span></span>
+    <span class="code-cm">&#60;!-- calendar icon svg --></span>
+  <span class="code-kw">&#60;/button></span>
+  <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"dp__pop"</span><span class="code-kw">>&#60;/div></span>
+<span class="code-kw">&#60;/div></span>`;
+  }
+  const cellLine = dppg.mode==='range'
+    ? `<span class="code-cm">&#60;!-- .cal__day--range-start / --range-end mark the endpoints, .cal__day--in-range shades the days between --></span>`
+    : `<span class="code-cm">&#60;!-- the picked day gets .cal__day--sel --></span>`;
+  return `<span class="code-cm">/* Flash · ${cap(dppg.mode)} · ${cap(dppg.state)} inline calendar */</span>
+<span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"cal${dppg.state==='disabled'?' cal--disabled':''}"</span><span class="code-kw">></span>
+  <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"cal__head"</span><span class="code-kw">></span>
+    <span class="code-kw">&#60;button</span> <span class="code-cls">class</span>=<span class="code-val">"cal__nav"</span><span class="code-kw">>&lsaquo;&#60;/button></span>
+    <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"cal__title"</span><span class="code-kw">></span>${DP_MONTHS[dppg.m]} ${dppg.y}<span class="code-kw">&#60;/div></span>
+    <span class="code-kw">&#60;button</span> <span class="code-cls">class</span>=<span class="code-val">"cal__nav"</span><span class="code-kw">>&rsaquo;&#60;/button></span>
+  <span class="code-kw">&#60;/div></span>
+  <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"cal__grid"</span><span class="code-kw">></span>
+    ${cellLine}
+  <span class="code-kw">&#60;/div></span>
+<span class="code-kw">&#60;/div></span>`;
+}
+
+/* ── CODE PANEL LANGUAGES ──
+   HTML/CSS is the source of truth (real .cal/.dp markup). Blazor and
+   React TSX are illustrative wrappers over the same classes and the
+   same start/end model, so Form/Mode stay the only things a consumer ports. */
+const DP_LANGS = [
+  {key:'html',   label:'HTML / CSS', file:'date-picker.html'},
+  {key:'blazor', label:'Blazor',     file:'DsDatePicker.razor'},
+  {key:'tsx',    label:'React TSX',  file:'DsDatePicker.tsx'},
+];
+let dpLang = 'html';
+
+function getDpCodeBlazor(){
+  const modePascal = cap(dppg.mode), formPascal = cap(dppg.form);
+  return `<span class="code-cm">@* DsDatePicker.razor — usage *@</span>
+<span class="code-kw">&#60;DsDatePicker</span> <span class="code-attr">Form</span>=<span class="code-val">"DatePickerForm.${formPascal}"</span>
+                <span class="code-attr">Mode</span>=<span class="code-val">"DatePickerMode.${modePascal}"</span>${dppg.state==='disabled'?`\n                <span class="code-attr">Disabled</span>=<span class="code-val">"true"</span>`:''} <span class="code-kw">/></span>
+
+<span class="code-cm">@* DsDatePicker.razor — component definition (range excerpt) *@</span>
+<span class="code-kw">@code</span> {
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> DatePickerForm Form { get; set; } = DatePickerForm.Inline;
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> DatePickerMode Mode { get; set; } = DatePickerMode.Single;
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> <span class="code-cls">bool</span> Disabled { get; set; }
+
+  <span class="code-kw">private</span> DateTime? _start;
+  <span class="code-kw">private</span> DateTime? _end;
+
+  <span class="code-kw">private void</span> OnDayClick(DateTime day) {
+    <span class="code-kw">if</span> (Mode == DatePickerMode.Single) { _start = day; <span class="code-kw">return</span>; }
+    <span class="code-kw">if</span> (_start <span class="code-kw">is null</span> || _end <span class="code-kw">is not null</span>) { _start = day; _end = <span class="code-kw">null</span>; <span class="code-kw">return</span>; }
+    <span class="code-kw">if</span> (day &#60; _start) { _end = _start; _start = day; } <span class="code-kw">else</span> { _end = day; }
+  }
+
+  <span class="code-cm">// day &#60; _start.Value || (_end.HasValue &amp;&amp; day &#60; _end.Value) -&gt; .cal__day--in-range</span>
+  <span class="code-kw">private</span> <span class="code-cls">bool</span> IsInRange(DateTime day) =>
+    _start <span class="code-kw">is not null</span> &amp;&amp; _end <span class="code-kw">is not null</span> &amp;&amp; day &gt; _start &amp;&amp; day &#60; _end;
+}`;
+}
+
+function getDpCodeTSX(){
+  const label = dpEsc(dpFieldLabel());
+  return `<span class="code-cm">// DsDatePicker.tsx</span>
+<span class="code-kw">import</span> React, { useState } <span class="code-kw">from</span> <span class="code-val">'react'</span>;
+
+<span class="code-kw">type</span> <span class="code-cls">DatePickerForm</span> = <span class="code-val">'inline'</span> | <span class="code-val">'field'</span>;
+<span class="code-kw">type</span> <span class="code-cls">DatePickerMode</span> = <span class="code-val">'single'</span> | <span class="code-val">'range'</span>;
+<span class="code-kw">interface</span> <span class="code-cls">DayCell</span> { y: <span class="code-cls">number</span>; m: <span class="code-cls">number</span>; d: <span class="code-cls">number</span>; }
+
+<span class="code-kw">interface</span> <span class="code-cls">DsDatePickerProps</span> {
+  form?: <span class="code-cls">DatePickerForm</span>;
+  mode?: <span class="code-cls">DatePickerMode</span>;
+  disabled?: <span class="code-cls">boolean</span>;
+}
+
+<span class="code-kw">export const</span> <span class="code-cls">DsDatePicker</span>: React.FC&#60;DsDatePickerProps> = ({
+  form = <span class="code-val">'${dppg.form}'</span>,
+  mode = <span class="code-val">'${dppg.mode}'</span>,
+  disabled = ${dppg.state==='disabled'?'true':'false'},
+}) => {
+  <span class="code-kw">const</span> [start, setStart] = useState&#60;DayCell | <span class="code-kw">null</span>>(<span class="code-kw">null</span>);
+  <span class="code-kw">const</span> [end, setEnd] = useState&#60;DayCell | <span class="code-kw">null</span>>(<span class="code-kw">null</span>);
+
+  <span class="code-kw">const</span> onDayClick = (day: DayCell) => {
+    <span class="code-kw">if</span> (disabled) <span class="code-kw">return</span>;
+    <span class="code-kw">if</span> (mode === <span class="code-val">'single'</span>) { setStart(day); <span class="code-kw">return</span>; }
+    <span class="code-kw">if</span> (!start || end) { setStart(day); setEnd(<span class="code-kw">null</span>); <span class="code-kw">return</span>; }
+    <span class="code-kw">const</span> before = day.y === start.y &amp;&amp; day.m === start.m &amp;&amp; day.d &#60; start.d;
+    <span class="code-kw">if</span> (before) { setEnd(start); setStart(day); } <span class="code-kw">else</span> { setEnd(day); }
+  };
+
+  <span class="code-kw">return</span> (
+    &#60;div className={\`cal\${disabled ? <span class="code-val">' cal--disabled'</span> : <span class="code-val">''</span>}\`}>
+      {<span class="code-cm">/* head: month title + prev/next nav */</span>}
+      &#60;div className=<span class="code-val">"cal__grid"</span>>{<span class="code-cm">/* .cal__day, .cal__day--range-start/--range-end/--in-range per cell */</span>}&#60;/div>
+    &#60;/div>
+  );
+};
+
+<span class="code-cm">// Usage</span>
+&#60;DsDatePicker form=<span class="code-val">"${dppg.form}"</span> mode=<span class="code-val">"${dppg.mode}"</span>${dppg.state==='disabled'?' disabled':''} /> <span class="code-cm">// current field value: "${label}"</span>`;
+}
+
+function getDpCode(){
+  return dpLang==='blazor' ? getDpCodeBlazor()
+       : dpLang==='tsx'    ? getDpCodeTSX()
+       : getDpCodeHTML();
+}
+
+function setDpLang(lang){
+  if(!DP_LANGS.some(l=>l.key===lang)) return;
+  dpLang = lang;
+  document.querySelectorAll('#dp-code-tab .code-seg__btn').forEach(b=>{
+    const on = b.dataset.lang===lang;
+    b.setAttribute('aria-selected', on ? 'true' : 'false');
+    b.setAttribute('tabindex', on ? '0' : '-1');
+  });
+  const file = document.getElementById('dp-lang-file');
+  const meta = DP_LANGS.find(l=>l.key===lang);
+  if(file && meta) file.textContent = meta.file;
+  const block = document.getElementById('dppg-code-block');
+  if(block) block.innerHTML = getDpCode();
+}
+
+function dpLangKeydown(e){
+  const i = DP_LANGS.findIndex(l=>l.key===dpLang);
+  let n = i;
+  if(e.key==='ArrowLeft')       n = (i - 1 + DP_LANGS.length) % DP_LANGS.length;
+  else if(e.key==='ArrowRight') n = (i + 1) % DP_LANGS.length;
+  else if(e.key==='Home')       n = 0;
+  else if(e.key==='End')        n = DP_LANGS.length - 1;
+  else return;
+  e.preventDefault();
+  setDpLang(DP_LANGS[n].key);
+  const btn = document.getElementById('dp-lang-' + DP_LANGS[n].key);
+  if(btn) btn.focus();
+}
+
+/* Date Picker Playground renders into more than one mount (the main
+   Overview demo, and a smaller copy on the Code tab) so both stay in
+   sync with the same shared dppg state. */
+const DP_PLAYGROUND_MOUNTS = [
+  {rootId:'dp-playground', idSuffix:'', wrap:true, title:'Try the component', desc:'Adjust the filters to test component states.', headingAbove:'Use the inline calendar when picking a date is the main task; use the field when a date is one input among several.'},
+  {rootId:'dp-code-playground', idSuffix:'-code', style:'code', title:'Playground', desc:'Live demo of the component.'},
+];
+
+function dppgFieldMarkup(s){
+  const label = dpEsc(dpFieldLabel());
+  const filled = dppg.mode==='range' ? !!(dppg.start||dppg.end) : !!dppg.sel;
+  const disabled = dppg.state==='disabled';
+  return `<div class="dp dppg-dp-el${dppg.open?' is-open':''}" id="dppg-dp${s}">
+    <button class="dp__field${disabled?' dp__field--disabled':''}" type="button"${disabled?' disabled':''}>
+      <span class="dp__val${filled?' dp__val--filled':''}">${label}</span>${dpFieldSVG()}
+    </button>
+    <div class="dp__pop dppg-cal-el" id="dppg-pop${s}"></div>
+  </div>`;
+}
+
+function renderDpPlayground(){
+  dppg.theme = document.documentElement.getAttribute('data-theme')==='dark' ? 'dark' : 'light';
+  const sbg = stageBg(dppg.theme);
+
+  const formBtns  = ['inline','field'].map(x=>`<button class="btn-pg__pill${dppg.form===x?' on':''}" onclick="dppgSet('form','${x}')">${cap(x)}</button>`).join('');
+  const modeBtns  = ['single','range'].map(x=>`<button class="btn-pg__pill${dppg.mode===x?' on':''}" onclick="dppgSet('mode','${x}')">${x==='single'?'Single date':'Date range'}</button>`).join('');
+  const stateBtns = ['default','disabled'].map(x=>`<button class="btn-pg__pill${dppg.state===x?' on':''}" onclick="dppgSet('state','${x}')">${cap(x)}</button>`).join('');
+
+  DP_PLAYGROUND_MOUNTS.forEach(mount=>{
+    const root = document.getElementById(mount.rootId);
+    if(!root) return;
+    const s = mount.idSuffix;
+    const stageInner = dppg.form==='field'
+      ? `<div class="dppg-inline-wrap">${dppgFieldMarkup(s)}</div>`
+      : `<div class="dppg-inline-wrap"><div class="dppg-cal-el" id="dppg-cal${s}"></div></div>`;
+    const demo = `
+      <div class="btn-pg">
+        <div class="btn-pg__stage" id="dppg-stage${s}" style="background:${sbg}">${stageInner}</div>
+        <div class="btn-pg__ctrls">
+          <div class="btn-pg__group"><span class="btn-pg__clabel">Form</span><div class="btn-pg__pill-row">${formBtns}</div></div>
+          <div class="btn-pg__group"><span class="btn-pg__clabel">Mode</span><div class="btn-pg__pill-row">${modeBtns}</div></div>
+          <div class="btn-pg__group"><span class="btn-pg__clabel">State</span><div class="btn-pg__pill-row">${stateBtns}</div></div>
+        </div>
+      </div>`;
+
+    if(mount.style==='code'){
+      root.innerHTML = `
+        <div class="type-sub__title">${mount.title}</div>
+        <div class="type-sub__desc">${mount.desc}</div>
+        <div class="cpg-section-outline">${demo}</div>`;
+      return;
+    }
+
+    const inner = `
+      <div class="cpg-layout">
+        <div class="cpg-layout__intro">
+          ${mount.wrap ? `<span class="cpg-cursor-icon">${CPG_CURSOR_ICON_SVG}</span>` : ''}
+          <div class="cpg-layout__title">${mount.title}</div>
+          <div class="cpg-layout__desc">${mount.desc}</div>
+        </div>
+        <div class="cpg-layout__demo">${demo}</div>
+      </div>`;
+    const wrapped = mount.wrap ? `<div class="cpg-section-block">${inner}</div>` : inner;
+    root.innerHTML = (mount.headingAbove ? `<div class="cpg-overview-heading"><span class="cpg-overview-heading__icon">${CPG_INFO_ICON_SVG}</span><span>${mount.headingAbove}</span></div>` : '') + wrapped;
+  });
+
+  dppgWire();
+  dppgRefresh();
+}
+
+/* Wires each live mount once per render pass: field click opens/closes
+   its popover, calendar cells re-attach on every refresh. */
+function dppgWire(){
+  document.querySelectorAll('.dppg-dp-el').forEach(dp=>{
+    const field = dp.querySelector('.dp__field');
+    if(!field || field.__wired) return;
+    field.__wired = true;
+    field.addEventListener('click', (e)=>{ e.stopPropagation(); if(dppg.state==='disabled') return; dppg.open = !dppg.open; dppgRefresh(); });
+  });
+  if(!document.__dppgDocWired){
+    document.__dppgDocWired = true;
+    document.addEventListener('click', ()=>{ if(dppg.open){ dppg.open=false; dppgRefresh(); } });
+    document.addEventListener('keydown', (e)=>{ if(e.key==='Escape' && dppg.open){ dppg.open=false; dppgRefresh(); } });
+  }
+}
+
+function dppgRefresh(){
+  document.querySelectorAll('.dppg-dp-el').forEach(dp=>{
+    dp.classList.toggle('is-open', dppg.open);
+    const field = dp.querySelector('.dp__field');
+    const val = dp.querySelector('.dp__val');
+    if(field){ field.classList.toggle('dp__field--disabled', dppg.state==='disabled'); field.disabled = dppg.state==='disabled'; }
+    if(val){ val.textContent = dpFieldLabel(); val.classList.toggle('dp__val--filled', dppg.mode==='range' ? !!(dppg.start||dppg.end) : !!dppg.sel); }
+  });
+  document.querySelectorAll('.dppg-cal-el').forEach(host=>{
+    host.innerHTML = dpBuildCalHTML(dppg.y, dppg.m, {mode:dppg.mode, sel:dppg.sel, start:dppg.start, end:dppg.end, disabled:dppg.state==='disabled'});
+    dpAttach(host, ()=>{ if(dppg.mode==='single' && dppg.form==='field'){ dppg.open=false; dppgRefresh(); } });
+  });
+  const block = document.getElementById('dppg-code-block');
+  if(block) block.innerHTML = getDpCode();
+}
+
+function dppgSet(key, val){
+  dppg[key] = val;
+  if(key==='mode'){ dppg.sel=null; dppg.start=null; dppg.end=null; }
+  if(key==='form') dppg.open = false;
+  renderDpPlayground();
+}
+
+function renderDpCodeTab(){
+  const root = document.getElementById('dp-code-tab');
+  if(!root) return;
+  root.innerHTML = `
+    <div class="type-sub__title">Code</div>
+    <div class="type-sub__desc">Live snippet matching the current Playground configuration &mdash; switch to Overview to change it.</div>
+    <div class="cpg-section-outline">
+      <div class="code-panel code-panel--bare open">
+        <div class="code-panel__head">
+          <div class="code-seg" role="tablist" aria-label="Code language" onkeydown="dpLangKeydown(event)">
+            ${DP_LANGS.map(l=>`<button type="button" role="tab" class="code-seg__btn" id="dp-lang-${l.key}" data-lang="${l.key}" aria-selected="${dpLang===l.key?'true':'false'}" aria-controls="dppg-code-block" tabindex="${dpLang===l.key?'0':'-1'}" onclick="setDpLang('${l.key}')">${l.label}</button>`).join('')}
+          </div>
+          <span class="code-lang-file" id="dp-lang-file">${(DP_LANGS.find(l=>l.key===dpLang)||DP_LANGS[0]).file}</span>
+          <button class="code-copy-btn" onclick="dppgCopyCode()" id="dppg-copy-btn">Copy</button>
+        </div>
+        <div class="code-body"><div class="code-block" id="dppg-code-block" role="tabpanel" aria-live="polite"></div></div>
+      </div>
+    </div>`;
+}
+
+function dppgCopyCode(){
+  const b = document.getElementById('dppg-code-block');
+  if(!b) return;
+  navigator.clipboard.writeText(b.innerText||b.textContent).catch(()=>{});
+  const btn = document.getElementById('dppg-copy-btn');
+  if(btn){ btn.textContent = 'Copied!'; setTimeout(()=>btn.textContent='Copy', 2000); }
+}
+
+const DP_KEY_VARIANTS = [
+  {key:'inline', label:'Inline', use:'Always on screen — booking flows, filters, dashboards'},
+  {key:'field',  label:'Field',  use:'A compact trigger that opens the calendar in a popover'},
+];
+
+function renderDpKeyVariants(){
+  const root = document.getElementById('dp-keyvariants');
+  if(!root) return;
+  const theme = currentTheme();
+  const sbg = stageBg(theme);
+  const today = dpToday();
+  const sampleSel = {y:today.y, m:today.m, d:Math.min(today.d+3, new Date(today.y,today.m+1,0).getDate())};
+
+  const inlineCell = `<div class="spec-cell__stage" style="background:${sbg}">${dpBuildCalHTML(today.y, today.m, {mode:'single', sel:sampleSel})}</div>`;
+  const fieldCell = `<div class="spec-cell__stage" style="background:${sbg}"><div class="dp"><button class="dp__field" type="button"><span class="dp__val dp__val--filled">${dpFmt(sampleSel.y,sampleSel.m,sampleSel.d)}</span>${dpFieldSVG()}</button></div></div>`;
+
+  const cells = [
+    {vis:inlineCell, ...DP_KEY_VARIANTS[0]},
+    {vis:fieldCell,  ...DP_KEY_VARIANTS[1]},
+  ].map(v=>`
+    <div class="spec-cell">
+      ${v.vis}
+      <div class="spec-cell__name">${v.label}</div>
+      <div class="spec-cell__desc">${v.use}</div>
+    </div>`).join('');
+
+  root.innerHTML = `
+    <div class="cpg-section-heading">
+      <div class="cpg-layout__title">Key variants</div>
+      <div class="cpg-layout__desc">Two forms of the same day-grid. Pick inline when the calendar is the main task, a field when it's one input among many.</div>
+    </div>
+    <div class="cpg-section-block">
+      <div class="spec-grid" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr))">${cells}</div>
+    </div>`;
+}
+
+function renderDpInSitu(){
+  const root = document.getElementById('dp-insitu');
+  if(!root) return;
+  const theme = currentTheme();
+  const sbg = stageBg(theme);
+  const today = dpToday();
+  const inMonth = new Date(today.y, today.m+1, 0).getDate();
+  const start = {y:today.y, m:today.m, d:Math.min(12, inMonth)};
+  const end = {y:today.y, m:today.m, d:Math.min(18, inMonth)};
+  const single = {y:today.y, m:today.m, d:Math.min(9, inMonth)};
+
+  // 1. Booking/checkout — a single-date field inside a form
+  const checkoutMock = `
+    <div class="spec-mock__stage" style="background:${sbg}">
+      <div class="spec-mock__label">Delivery date</div>
+      <div class="spec-mock__field"><span style="color:var(--chrome-txt);font-weight:600">${dpFmt(single.y,single.m,single.d)}</span>${dpFieldSVG()}</div>
+    </div>
+    <div class="spec-mock__cap"><b>Checkout date field</b>One date, collected alongside other order details.</div>`;
+
+  // 2. Filter bar — inline calendar, single mode, sitting under a filter label
+  const filterMock = `
+    <div class="spec-mock__stage" style="background:${sbg}">
+      <div class="spec-mock__label">Filter by date</div>
+      ${dpBuildCalHTML(today.y, today.m, {mode:'single', sel:single})}
+    </div>
+    <div class="spec-mock__cap"><b>Filter-bar calendar</b>Always visible so the current filter date is never hidden.</div>`;
+
+  // 3. Travel — a range field showing both endpoints
+  const travelMock = `
+    <div class="spec-mock__stage" style="background:${sbg}">
+      <div class="spec-mock__label">Travel dates</div>
+      <div class="spec-mock__field"><span style="color:var(--chrome-txt);font-weight:600">${dpFmt(start.y,start.m,start.d)} – ${dpFmt(end.y,end.m,end.d)}</span>${dpFieldSVG()}</div>
+    </div>
+    <div class="spec-mock__cap"><b>Travel date-range field</b>Start and end share one field once both are picked.</div>`;
+
+  root.innerHTML = `
+    <div class="cpg-section-heading">
+      <div class="cpg-layout__title">In context</div>
+      <div class="cpg-layout__desc">The same day-grid does three everyday jobs &mdash; one date in a form, a live filter, and a start/end range.</div>
+    </div>
+    <div class="cpg-section-block">
+      <div class="spec-insitu-grid">
+        <div class="spec-mock">${checkoutMock}</div>
+        <div class="spec-mock">${filterMock}</div>
+        <div class="spec-mock">${travelMock}</div>
+      </div>
+    </div>`;
+}
+
+function renderDpReference(){
+  const root = document.getElementById('dp-reference');
+  if(!root) return;
+  const theme = currentTheme();
+  const sbg = stageBg(theme);
+  const today = dpToday();
+  const inMonth = new Date(today.y, today.m+1, 0).getDate();
+  const sel = {y:today.y, m:today.m, d:Math.min(today.d+2, inMonth)};
+  const start = {y:today.y, m:today.m, d:Math.min(10, inMonth)};
+  const end = {y:today.y, m:today.m, d:Math.min(16, inMonth)};
+
+  /* ---- Anatomy ---- */
+  const heroCal = dpBuildCalHTML(today.y, today.m, {mode:'range', start, end});
+  const parts = [
+    {num:1, name:'Nav arrows',  note:'Step the visible month back or forward one at a time.',
+     vis:`<div style="display:flex;gap:8px"><button class="cal__nav" tabindex="-1">&lsaquo;</button><button class="cal__nav" tabindex="-1">&rsaquo;</button></div>`},
+    {num:2, name:'Month title', note:'Names the month and year currently on screen.',
+     vis:`<div class="cal__title">August 2026</div>`},
+    {num:3, name:'Day grid',    note:'7-column grid; leading/trailing days from adjacent months are muted and unclickable.',
+     vis:`<div class="cal__grid" style="width:150px">${DP_DOW.map(x=>`<div class="cal__dow">${x}</div>`).join('')}<button class="cal__day cal__day--muted" tabindex="-1">28</button><button class="cal__day cal__day--muted" tabindex="-1">29</button><button class="cal__day cal__day--muted" tabindex="-1">30</button><button class="cal__day cal__day--muted" tabindex="-1">31</button><button class="cal__day" tabindex="-1">1</button><button class="cal__day" tabindex="-1">2</button><button class="cal__day" tabindex="-1">3</button></div>`},
+    {num:4, name:'Day cell',    note:'Today gets an outline; a picked day (or range endpoint) gets the filled style.',
+     vis:`<div style="display:flex;gap:6px"><button class="cal__day cal__day--today" style="width:32px" tabindex="-1">11</button><button class="cal__day cal__day--sel" style="width:32px" tabindex="-1">14</button></div>`},
+  ];
+  const partCards = parts.map(p=>`
+    <div class="spec-part">
+      <div class="spec-part__stage" style="background:${sbg}">${p.vis}</div>
+      <div class="spec-part__body">
+        <div class="spec-part__name"><span class="spec-part__num">${p.num}</span>${p.name}</div>
+        <div class="spec-part__note">${p.note}</div>
+      </div>
+    </div>`).join('');
+
+  /* ---- Size & tokens ---- */
+  const tokRows = [
+    ['Container width', '280px', '.cal'],
+    ['Container radius', '14px', '.cal'],
+    ['Container padding', '16px', '.cal'],
+    ['Day cell shape', 'aspect-ratio 1, 8px radius', '.cal__day'],
+    ['Day font size', '12.5px', '.cal__day'],
+    ['Selected fill', 'var(--color-btn-s-bg)', '.cal__day--sel / --range-start / --range-end'],
+    ['In-range fill', 'var(--chrome-hover)', '.cal__day--in-range'],
+    ['Field min-width', '220px', '.dp__field'],
+    ['Field radius', '10px', '.dp__field'],
+  ].map(r=>`<tr><td class="dd-table__name">${r[0]}</td><td>${r[1]}</td><td><code>${r[2]}</code></td></tr>`).join('');
+
+  /* ---- Variants: inline vs field ---- */
+  const variantCells = [
+    {label:'Inline', vis:dpBuildCalHTML(today.y, today.m, {mode:'single', sel}), note:'Always on screen; no open/close state to manage.'},
+    {label:'Field',  vis:`<div class="dp"><button class="dp__field" type="button"><span class="dp__val dp__val--filled">${dpFmt(sel.y,sel.m,sel.d)}</span>${dpFieldSVG()}</button></div>`, note:'Compact trigger; the same grid opens in a popover on click.'},
+  ].map(v=>`
+    <div class="spec-cell">
+      <div class="spec-cell__stage" style="background:${sbg}">${v.vis}</div>
+      <div class="spec-cell__name">${v.label}</div>
+      <div class="spec-cell__desc">${v.note}</div>
+    </div>`).join('');
+
+  /* ---- Key states ---- */
+  const states = [
+    {name:'Default',      vis:dpBuildCalHTML(today.y, today.m, {mode:'single'})},
+    {name:'Today',        vis:dpBuildCalHTML(today.y, today.m, {mode:'single'})},
+    {name:'Selected',     vis:dpBuildCalHTML(today.y, today.m, {mode:'single', sel})},
+    {name:'Disabled',     vis:dpBuildCalHTML(today.y, today.m, {mode:'single', sel, disabled:true})},
+    {name:'Range start',  vis:dpBuildCalHTML(today.y, today.m, {mode:'range', start})},
+    {name:'In range',     vis:dpBuildCalHTML(today.y, today.m, {mode:'range', start, end})},
+    {name:'Range end',    vis:dpBuildCalHTML(today.y, today.m, {mode:'range', start:null, end})},
+  ];
+  const stateCells = states.map(s=>`
+    <div class="spec-cell">
+      <div class="spec-cell__stage" style="background:${sbg}">${s.vis}</div>
+      <div class="spec-cell__name">${s.name}</div>
+    </div>`).join('');
+
+  root.innerHTML = `
+    <div class="type-sub">
+      <div class="type-sub__title">Anatomy</div>
+      <div class="type-sub__desc">A calendar is a month header with nav arrows plus a 7-column day grid; a field is a compact trigger over the same grid, shown in a popover.</div>
+      <div class="cpg-section-outline">
+        <div class="spec-hero" style="background:${sbg}">${heroCal}</div>
+        <div class="spec-parts">${partCards}</div>
+      </div>
+    </div>
+
+    <div class="type-sub">
+      <div class="type-sub__title">Size &amp; tokens</div>
+      <div class="type-sub__desc">One size for the calendar and one for the field &mdash; there's no size axis here the way Pills or Buttons have.</div>
+      <div class="cpg-section-outline">
+        <div class="dd-table-wrap"><table class="dd-table">
+          <thead><tr><th>Property</th><th>Value</th><th>Class</th></tr></thead>
+          <tbody>${tokRows}</tbody>
+        </table></div>
+      </div>
+    </div>
+
+    <div class="type-sub">
+      <div class="type-sub__title">Variants: inline vs field</div>
+      <div class="type-sub__desc">The primary axis isn't colour &mdash; it's where the grid lives. Both render the identical .cal markup.</div>
+      <div class="cpg-section-outline">
+        <div class="spec-grid" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr))">${variantCells}</div>
+      </div>
+    </div>
+
+    <div class="type-sub" style="margin-bottom:0">
+      <div class="type-sub__title">Key states</div>
+      <div class="type-sub__desc">Default, today, and selected apply to single mode; disabled dims and locks the whole control; range adds a start, an end, and the shaded days between them.</div>
+      <div class="cpg-section-outline">
+        <div class="spec-grid" style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr))">${stateCells}</div>
+      </div>
+    </div>`;
+}
+
+try { renderDpCodeTab();     } catch(e){ console.error('dp-code-tab',e); }
+try { renderDpPlayground();  } catch(e){ console.error('dp-playground',e); }
+try { renderDpKeyVariants(); } catch(e){ console.error('dp-keyvariants',e); }
+try { renderDpInSitu();      } catch(e){ console.error('dp-insitu',e); }
+try { renderDpReference();   } catch(e){ console.error('dp-reference',e); }
+
+function dpTabSwitch(tab){
+  const nav = document.getElementById('dp-tabs-list');
+  if(!nav) return;
+  nav.querySelectorAll('.tab-item').forEach(btn=>btn.classList.toggle('on', btn.getAttribute('data-dp-tab')===tab));
+  document.querySelectorAll('#s-calendar .tabs-panel[data-dp-panel]').forEach(p=>p.classList.toggle('on', p.getAttribute('data-dp-panel')===tab));
+}
 
 /* Command palette */
 (function(){
@@ -18981,6 +19622,7 @@ try { renderSectionChangelogs(); } catch(e){ console.error('section-changelog',e
   {secId:'s-accordion', panelId:'acc-changelog-panel'},
   {secId:'s-breadcrumb', panelId:'bcr-changelog-panel'},
   {secId:'s-buttons', panelId:'btn-changelog-panel'},
+  {secId:'s-calendar', panelId:'dp-changelog-panel'},
 ].forEach(({secId, panelId})=>{
   try {
     const chlog = document.querySelector(`#${secId} > .sec-chlog`);
@@ -19027,7 +19669,6 @@ const NAV = [
       {id:'s-drawers',      label:'Bottom Sheets',       desc:'Panels that slide up from the bottom edge.'},
       {id:'s-breadcrumb',   label:'Breadcrumb',          desc:'Shows the path back through a hierarchy.'},
       {id:'s-buttons',      label:'Buttons',             desc:'Primary, secondary, accent, simple and link.'},
-      {id:'s-calendar',     label:'Calendar',            desc:'Date pickers and month grids.'},
       {label:'Cards', items:[
         {id:'s-cards-basic',       label:'Basic Card',        desc:'Body, title, description and an optional footer.'},
         {id:'s-cards-media',       label:'Media Card',        desc:'A card with an image or thumbnail band.'},
@@ -19046,6 +19687,7 @@ const NAV = [
       {id:'s-selection',    label:'Checkboxes & Radios', desc:'Multi- and single-select controls.'},
       {id:'s-command',      label:'Command',             desc:'Searchable command palette.'},
       {id:'s-context-menu', label:'Context Menu',        desc:'Right-click and overflow action menus.'},
+      {id:'s-calendar',     label:'Date picker',         desc:'Date pickers and month grids.'},
       {id:'s-dropdown',     label:'Dropdown',            desc:'Single- and multi-select menus.'},
       {id:'s-empty-state',  label:'Empty State',         desc:'Muted glyph, explanation and a primary action.'},
       {id:'s-input-otp',    label:'Input OTP',           desc:'One-time passcode entry fields.'},
