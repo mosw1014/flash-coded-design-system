@@ -4201,7 +4201,7 @@ body.home .main{max-width:none;margin:0;padding:0}
       <div class="sec__head">
         <h1 class="sec__title">Bottom Sheets</h1>
         <div class="sec-header-meta">
-          <span class="comp-ver-badge" style="margin-left:0">v1.1.0</span>
+          <span class="comp-ver-badge" style="margin-left:0">v1.1.1</span>
           <details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-drawers">
@@ -13056,12 +13056,17 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.66.0';
+const SYSTEM_VERSION = '1.66.1';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.66.1', date:'2026-08-11', author:'Helen', title:'Fixed Bottom Sheets\' In-context mockups: squashed sizing, inconsistent framing', changes:[
+        ['fixed','The three In-context phone mockups used a squat 230×300 frame with no status bar for the two compact examples and a separate, heavier phone-bezel treatment only on the full-screen one — all three now share one 220×440 phone frame, bezel, and status bar so the set reads as one consistent family'],
+        ['fixed','Compact sheets floated over an empty grey frame background with no sense of the screen underneath; added a faint placeholder page (title bar + list rows) behind them so the sheet reads as overlaying real content'],
+        ['changed','Compact sheet height reduced from 82% to 56% of the frame, matching a realistic bottom-sheet proportion now that the frame is taller'],
+      ]},
       {version:'1.66.0', date:'2026-08-07', author:'Helen', title:'Bottom Sheets gets the full Pills-page treatment', changes:[
         ['changed','Bottom Sheets rebuilt from a flat .sec section into a tabbed .sec--tabbed page (Overview / Style / Code / Changelog), matching Pills\' structure — hero with a mini live preview, sec-tabs bar, and a Changelog tab holding the section\'s auto-injected changelog block'],
         ['added','Interactive playground (bshPg state) with Screen (Compact/Full screen), Back arrow (on/off), Footer layout (Horizontal/Vertical/Mix) and editable Title/Body inputs, rendered into both an Overview mount and a smaller Code-tab mount from the same shared state'],
@@ -14784,7 +14789,12 @@ const CHANGELOG = {
         ['changed','Planned for next session'],
       ]},
     ]},
-    {secId:'s-drawers', name:'Bottom Sheets', version:'1.1.0', entries:[
+    {secId:'s-drawers', name:'Bottom Sheets', version:'1.1.1', entries:[
+      {version:'1.1.1', date:'2026-08-11', author:'Helen', title:'In-context mockups: consistent phone framing, fixed squashed sizing', changes:[
+        ['fixed','bshMockFrame: replaced the squat 230×300 frame (thin card border, no status bar) used for the Filter/sort and Quick actions mockups with the same 220×440 phone bezel, rounded corners, and status bar as the Form/detail mockup — all three now share one frame treatment instead of two conflicting ones'],
+        ['added','bshMockPageBG: faint placeholder page content (title bar + three list rows) rendered behind the two compact sheets, so they read as overlaying a real screen rather than floating over empty grey space'],
+        ['changed','Compact sheet height in the mockups (bshMockSheetHTML) reduced from 82% to 56% of the frame to match a realistic bottom-sheet proportion at the new, taller frame size'],
+      ]},
       {version:'1.1.0', date:'2026-08-07', author:'Helen', title:'Full Pills-page treatment: tabs, playground, In context, Style & Code', changes:[
         ['changed','Page moves from a flat .sec section to the .sec--tabbed convention shared by Pills/Avatar/Alert: a hero with a live preview and Overview / Style / Code / Changelog tabs (bsh-tabs-list, data-bsh-tab, bshTabSwitch)'],
         ['added','Overview playground (bshPg state): Screen (Compact/Full screen), Back arrow toggle, Footer layout (Horizontal/Vertical/Mix), and editable Title/Body text — mounted in both #bsh-playground and the Code tab\'s #bsh-code-playground from one shared state'],
@@ -15525,7 +15535,7 @@ function bshRefreshStage(){
    its own realistic content.
 ============================================================ */
 function bshMockSheetHTML({fullScreen=false, backArrow=false, title, bodyHTML, footerHTML}){
-  return `<div class="bsh-sheet ${fullScreen?'bsh-sheet--full':'bsh-sheet--compact'}" style="position:absolute;${fullScreen?'':'height:82%'}">
+  return `<div class="bsh-sheet ${fullScreen?'bsh-sheet--full':'bsh-sheet--compact'}" style="position:absolute;${fullScreen?'':'height:56%'}">
     ${fullScreen?'':'<div class="bsh-sheet__handle"></div>'}
     <div class="bsh-sheet__header">
       ${backArrow?`<span class="bsh-sheet__back">${bshIconBack(18,'currentColor')}</span>`:''}
@@ -15537,9 +15547,22 @@ function bshMockSheetHTML({fullScreen=false, backArrow=false, title, bodyHTML, f
   </div>`;
 }
 
-function bshMockFrame(innerHTML, theme, isFull){
-  const status = isFull ? `<div class="bsh-phone__status" style="height:20px;padding:0 10px">${bshStatusBarHTML(theme==='dark'?'#fff':'#000')}</div>` : '';
-  return `<div style="position:relative;width:230px;height:300px;margin:0 auto;border-radius:${isFull?'22px':'20px'};overflow:hidden;background:var(--color-surface-n1);border:${isFull?'6px solid var(--chrome-txt)':'1px solid var(--chrome-border)'}">${status}${innerHTML}</div>`;
+function bshMockPageBG(){
+  // Faint placeholder page content behind a compact sheet — so the sheet
+  // reads as sitting over a real screen, not floating in empty space.
+  return `<div style="position:absolute;top:22px;left:0;right:0;bottom:0;padding:16px 14px;display:flex;flex-direction:column;gap:10px;overflow:hidden">
+    <div style="height:12px;width:55%;border-radius:4px;background:var(--chrome-border)"></div>
+    <div style="height:54px;border-radius:10px;background:var(--chrome-border);opacity:.55"></div>
+    <div style="height:54px;border-radius:10px;background:var(--chrome-border);opacity:.55"></div>
+    <div style="height:54px;border-radius:10px;background:var(--chrome-border);opacity:.35"></div>
+  </div>`;
+}
+
+function bshMockFrame(sheetHTML, theme, isFull){
+  const color = theme==='dark' ? '#fff' : '#000';
+  const status = `<div class="bsh-phone__status" style="height:22px;padding:0 14px">${bshStatusBarHTML(color)}</div>`;
+  const bg = isFull ? '' : bshMockPageBG();
+  return `<div style="position:relative;width:220px;height:440px;margin:0 auto;border-radius:32px;overflow:hidden;background:var(--color-surface-n1);border:7px solid var(--chrome-txt);box-shadow:0 14px 30px rgba(0,0,0,.18)">${status}${bg}${sheetHTML}</div>`;
 }
 
 function bshMockOptionRow(label, selected){
@@ -15584,9 +15607,9 @@ function renderBshInSitu(){
     </div>
     <div class="cpg-section-block">
       <div class="spec-insitu-grid">
-        <div class="spec-mock"><div class="spec-mock__stage" style="background:${sbg};padding:0">${filterMock}</div><div class="spec-mock__cap"><b>Filter or sort</b>A compact sheet for picking one option, with a single confirm action.</div></div>
-        <div class="spec-mock"><div class="spec-mock__stage" style="background:${sbg};padding:0">${actionMock}</div><div class="spec-mock__cap"><b>Quick actions</b>Each row is its own action &mdash; no footer needed.</div></div>
-        <div class="spec-mock"><div class="spec-mock__stage" style="background:${sbg};padding:0">${formMock}</div><div class="spec-mock__cap"><b>Form or detail</b>Full screen with a back arrow when a form needs the whole viewport.</div></div>
+        <div class="spec-mock"><div class="spec-mock__stage" style="background:${sbg}">${filterMock}</div><div class="spec-mock__cap"><b>Filter or sort</b>A compact sheet for picking one option, with a single confirm action.</div></div>
+        <div class="spec-mock"><div class="spec-mock__stage" style="background:${sbg}">${actionMock}</div><div class="spec-mock__cap"><b>Quick actions</b>Each row is its own action &mdash; no footer needed.</div></div>
+        <div class="spec-mock"><div class="spec-mock__stage" style="background:${sbg}">${formMock}</div><div class="spec-mock__cap"><b>Form or detail</b>Full screen with a back arrow when a form needs the whole viewport.</div></div>
       </div>
     </div>`;
 
