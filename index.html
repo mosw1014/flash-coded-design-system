@@ -4392,6 +4392,7 @@ body.home .main{max-width:none;margin:0;padding:0}
               <li>Keep exactly one item active, matching the current page.</li>
               <li>Pick one colour context and one size for the whole panel.</li>
               <li>Let it span the full viewport height (100vh) so the account footer pins to the bottom of the screen, not just to the bottom of its content.</li>
+              <li>If space is tight, collapse it to an icon-only rail &mdash; the nav stays on screen and every destination stays reachable, just without its labels.</li>
             </ul>
           </div>
           <div class="sel-usage__card">
@@ -4401,6 +4402,7 @@ body.home .main{max-width:none;margin:0;padding:0}
               <li>Don&rsquo;t mix icon chips and plain-text items in the same list.</li>
               <li>Don&rsquo;t leave more than one item marked active at once.</li>
               <li>Don&rsquo;t constrain the panel to its content height or place it inside a scrolling container &mdash; it should sit fixed against the viewport edge.</li>
+              <li>Don&rsquo;t make the Side Nav dismissible &mdash; it is persistent chrome, so it collapses to an icon-only rail but never hides completely, and never gets a close (×) control.</li>
             </ul>
           </div>
         </div>
@@ -4456,16 +4458,18 @@ body.home .main{max-width:none;margin:0;padding:0}
       "Reserve it for a handful of top-level, persistent destinations.",
       "Keep exactly one item active, matching the current page.",
       "Pick one colour context and one size for the whole panel.",
-      "Let it span the full viewport height (100vh) so the account footer pins to the bottom of the screen, not just to the bottom of its content."
+      "Let it span the full viewport height (100vh) so the account footer pins to the bottom of the screen, not just to the bottom of its content.",
+      "If space is tight, collapse it to an icon-only rail — the nav stays on screen and every destination stays reachable, just without its labels."
     ],
     "dont": [
       "Don’t use Side Nav to switch tabs within a single page — that’s Tabs.",
       "Don’t mix icon chips and plain-text items in the same list.",
       "Don’t leave more than one item marked active at once.",
-      "Don’t constrain the panel to its content height or place it inside a scrolling container — it should sit fixed against the viewport edge."
+      "Don’t constrain the panel to its content height or place it inside a scrolling container — it should sit fixed against the viewport edge.",
+      "Don’t make the Side Nav dismissible — it is persistent chrome, so it collapses to an icon-only rail but never hides completely, and never gets a close (×) control."
     ]
   },
-  "contentHash": "7501eb67b3a3b5fe70ec2936d0b50256697ccf27b11f12edf854679b89121e71"
+  "contentHash": "f2d50f0869054e9ba9747213a293de0295c7b5d94e03c47eb9a43b63fe449453"
 }
   </pre>
 </details>
@@ -13555,12 +13559,15 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.66.5';
+const SYSTEM_VERSION = '1.66.6';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.66.6', date:'2026-08-11', author:'Mo', title:'Side Nav is persistent chrome — collapsible, never dismissible', changes:[
+        ['added','Side Nav Do/Don\'t pair establishing that the panel is persistent chrome: when space is tight it collapses to an icon-only rail (destinations stay reachable, labels drop away) rather than being hidden outright, and it never carries a close (×) control'],
+      ]},
       {version:'1.66.5', date:'2026-08-11', author:'Helen', title:'Accordion In-context mockups reworked around content length', changes:[
         ['changed','Replaced the three usage-based In-context mockups (FAQ list, settings panel, order summary) with two content-length mockups — Short form (one line of supporting detail per item) and Long form (a full paragraph as the expanded content) — so the section demonstrates the body panel handling both, rather than three different real-world placements'],
         ['changed','spec-insitu-grid now supports a 2-column layout via a new .spec-insitu-grid--2 modifier (default remains 3 columns for Pills/Tags/Badges), used for Accordion\'s two mockups'],
@@ -15434,7 +15441,11 @@ const CHANGELOG = {
         ['changed','Planned for a future session'],
       ]},
     ]},
-    {secId:'s-nav', name:'Navigation', version:'1.4.0', entries:[
+    {secId:'s-nav', name:'Navigation', version:'1.5.0', entries:[
+      {version:'1.5.0', date:'2026-08-11', author:'Mo', title:'Side Nav is persistent chrome — collapsible, never dismissible', changes:[
+        ['added','Do rule: when space is tight, collapse Side Nav to an icon-only rail so it stays on screen and every destination stays reachable, just without labels'],
+        ['added','Don\'t rule: Side Nav is never dismissible — it must not be hidden completely and must not carry a close (×) control, since hiding persistent navigation leaves users with no route back'],
+      ]},
       {version:'1.4.0', date:'2026-08-11', author:'Mo', title:'Side Nav now spans the full viewport height', changes:[
         ['added','.snav gains height:100vh (100dvh fallback) so the panel stretches edge-to-edge vertically; .snav__body\'s existing flex:1 + justify-content:space-between now actually pins the account footer to the bottom of the viewport'],
         ['changed','Doc-only demo instances (playground, Nav colour reference, States reference) explicitly override back to height:auto so they keep sizing to their content'],
