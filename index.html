@@ -1657,7 +1657,8 @@ body.home .main{max-width:none;margin:0;padding:0}
 /* ── SPEC TABLE (shared utility — used by Cards, Tables, Navigation, Tabs, Dropdown, Switch, Icons specs, plus the Tables "Reporting variant" demo) ── */
 .dd-table-wrap{border:1px solid var(--chrome-border);border-radius:12px;overflow:hidden;overflow-x:auto}
 .dd-table{width:100%;border-collapse:collapse;font-size:13px;min-width:540px}
-.dd-table thead th{text-align:left;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--chrome-muted);padding:13px 16px;background:var(--chrome-nav);border-bottom:1px solid var(--chrome-border);white-space:nowrap}
+.dd-table thead th{text-align:left;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:#fff;padding:13px 16px;background:#000;border-bottom:1px solid var(--chrome-border);white-space:nowrap}
+.tbl-th-inner{display:inline-flex;align-items:center;gap:6px}
 .dd-table tbody td{padding:13px 16px;border-bottom:1px solid var(--chrome-border);color:var(--chrome-txt);font-weight:500}
 .dd-table tbody tr:last-child td{border-bottom:none}
 .dd-table tbody tr{transition:background .12s}
@@ -1743,7 +1744,11 @@ body.home .main{max-width:none;margin:0;padding:0}
 /* Playground — customise a single Table Row live */
 .tbl-pg{border:1px solid var(--chrome-border);border-radius:14px;overflow:hidden;background:var(--chrome-bg);transition:background .25s}
 .tbl-pg__stage{display:flex;align-items:center;padding:40px;min-height:120px;overflow-x:auto}
-.tbl-pg__stage .tbl-row{flex:1 1 auto;min-width:640px}
+.tbl-pg__stage>.tbl-row{flex:1 1 auto;min-width:640px}
+.tbl-pg__card{flex:1 1 auto;min-width:640px;border:1px solid var(--chrome-border);border-radius:14px;overflow:hidden;overflow-x:auto}
+.tbl-pg__head{display:flex;align-items:center;gap:20px;height:40px;padding:0 14px;background:#000}
+.tbl-pg__head .tbl-head__cell{flex-shrink:0}
+.tbl-pg__card .tbl-row{border-radius:0 0 13px 13px}
 .tbl-pg__ctrls{display:flex;flex-direction:column;gap:16px;padding:20px 22px;background:var(--chrome-nav);border-top:1px solid var(--chrome-border);transition:background .25s}
 .tbl-pg__group{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
 .tbl-pg__clabel{font-size:12px;font-weight:600;color:var(--chrome-muted);white-space:nowrap;width:60px;flex-shrink:0}
@@ -1762,19 +1767,21 @@ body.home .main{max-width:none;margin:0;padding:0}
 /* full table — header + rows */
 .tbl-wrap{border:1px solid var(--chrome-border);border-radius:14px;overflow:hidden;overflow-x:auto}
 .tbl-inner{min-width:900px}
-.tbl-head{display:flex;align-items:center;gap:20px;padding:0 14px;height:44px;background:var(--chrome-nav);border-bottom:1px solid var(--chrome-border)}
-.tbl-head__cell{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--chrome-muted);white-space:nowrap}
+.tbl-head{display:flex;align-items:center;gap:20px;padding:0 14px;height:44px;background:#000;border-bottom:1px solid var(--chrome-border)}
+.tbl-head__cell{display:inline-flex;align-items:center;gap:6px;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:#fff;white-space:nowrap}
+.tbl-sort-icon{width:10px;height:12px;flex-shrink:0;color:#fff}
 .tbl-body .tbl-row{border-radius:0;border-bottom:1px solid var(--chrome-border)}
 .tbl-body .tbl-row:last-child{border-bottom:none}
 /* shared column widths — keep header labels aligned with row cells */
 .tcol-check{flex:0 0 20px}
 .tcol-product{flex:2 1 0;min-width:0;display:flex;align-items:center;gap:12px}
-.tbl-head__cell.tcol-product{gap:0}
+.tbl-head__cell.tcol-product{gap:6px}
 .tcol-ref{flex:1.3 1 0;min-width:0}
 .tcol-date{flex:1.4 1 0;min-width:0}
 .tcol-type{flex:1.2 1 0;min-width:0}
 .tcol-status{flex:0 0 88px}
 .tcol-amt{flex:0 0 96px;text-align:right;font-variant-numeric:tabular-nums;font-weight:700}
+.tbl-head__cell.tcol-amt{justify-content:flex-end}
 /* trailing row actions — hidden until the row is hovered or keyboard-focused.
    :has(:focus-visible), not :focus-within — a plain mouse click leaves the
    checkbox holding focus, which would keep the row "stuck" showing actions. */
@@ -4862,7 +4869,7 @@ body.home .main{max-width:none;margin:0;padding:0}
     <section class="sec" id="s-tables">
       <div class="sec__head">
         <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Tables <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.2.0</span></h1>
+        <h1 class="sec__title">Tables <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.3.0</span></h1>
         <p class="sec__desc">A selectable, row-based <strong>Table Row</strong> for records and transactions. Each row is assembled from cells &mdash; the <strong>List building block</strong> &mdash; starting with a leading checkbox, a product icon and a bold primary label, then any number of data cells, a status tag and optional trailing links. Rows resolve to five states and stack under a select-all header to form a full table. Adapts to light &amp; dark via semantic tokens.</p>
       </div>
 
@@ -4879,13 +4886,13 @@ body.home .main{max-width:none;margin:0;padding:0}
           <div class="tbl-inner">
             <div class="tbl-head">
               <span class="tcol-check"><input type="checkbox" class="fsel__input tbl-check tbl-check--all" aria-label="Select all rows"></span>
-              <span class="tbl-head__cell tcol-product">Product</span>
-              <span class="tbl-head__cell tcol-ref">Reference</span>
-              <span class="tbl-head__cell tcol-date">Date</span>
-              <span class="tbl-head__cell tcol-type">Type</span>
-              <span class="tbl-head__cell tcol-status">Status</span>
-              <span class="tbl-head__cell tcol-amt">Amount</span>
-              <span class="tbl-head__cell tcol-actions">Actions</span>
+              <span class="tbl-head__cell tcol-product">Product<svg class="tbl-sort-icon" viewBox="0 0 10 12" fill="none"><path d="M5 0L8.5 4.5H1.5L5 0Z" fill="currentColor"/><path d="M5 12L1.5 7.5H8.5L5 12Z" fill="currentColor"/></svg></span>
+              <span class="tbl-head__cell tcol-ref">Reference<svg class="tbl-sort-icon" viewBox="0 0 10 12" fill="none"><path d="M5 0L8.5 4.5H1.5L5 0Z" fill="currentColor"/><path d="M5 12L1.5 7.5H8.5L5 12Z" fill="currentColor"/></svg></span>
+              <span class="tbl-head__cell tcol-date">Date<svg class="tbl-sort-icon" viewBox="0 0 10 12" fill="none"><path d="M5 0L8.5 4.5H1.5L5 0Z" fill="currentColor"/><path d="M5 12L1.5 7.5H8.5L5 12Z" fill="currentColor"/></svg></span>
+              <span class="tbl-head__cell tcol-type">Type<svg class="tbl-sort-icon" viewBox="0 0 10 12" fill="none"><path d="M5 0L8.5 4.5H1.5L5 0Z" fill="currentColor"/><path d="M5 12L1.5 7.5H8.5L5 12Z" fill="currentColor"/></svg></span>
+              <span class="tbl-head__cell tcol-status">Status<svg class="tbl-sort-icon" viewBox="0 0 10 12" fill="none"><path d="M5 0L8.5 4.5H1.5L5 0Z" fill="currentColor"/><path d="M5 12L1.5 7.5H8.5L5 12Z" fill="currentColor"/></svg></span>
+              <span class="tbl-head__cell tcol-amt">Amount<svg class="tbl-sort-icon" viewBox="0 0 10 12" fill="none"><path d="M5 0L8.5 4.5H1.5L5 0Z" fill="currentColor"/><path d="M5 12L1.5 7.5H8.5L5 12Z" fill="currentColor"/></svg></span>
+              <span class="tbl-head__cell tcol-actions" aria-label="Actions"></span>
             </div>
             <div class="tbl-body">
               <div class="tbl-row">
@@ -4960,11 +4967,11 @@ body.home .main{max-width:none;margin:0;padding:0}
           <table class="dd-table">
             <thead>
               <tr>
-                <th>Product</th>
-                <th>Category</th>
-                <th class="dd-num">Volume</th>
-                <th class="dd-num">Value</th>
-                <th>Status</th>
+                <th><span class="tbl-th-inner">Product<svg class="tbl-sort-icon" viewBox="0 0 10 12" fill="none"><path d="M5 0L8.5 4.5H1.5L5 0Z" fill="currentColor"/><path d="M5 12L1.5 7.5H8.5L5 12Z" fill="currentColor"/></svg></span></th>
+                <th><span class="tbl-th-inner">Category<svg class="tbl-sort-icon" viewBox="0 0 10 12" fill="none"><path d="M5 0L8.5 4.5H1.5L5 0Z" fill="currentColor"/><path d="M5 12L1.5 7.5H8.5L5 12Z" fill="currentColor"/></svg></span></th>
+                <th class="dd-num"><span class="tbl-th-inner">Volume<svg class="tbl-sort-icon" viewBox="0 0 10 12" fill="none"><path d="M5 0L8.5 4.5H1.5L5 0Z" fill="currentColor"/><path d="M5 12L1.5 7.5H8.5L5 12Z" fill="currentColor"/></svg></span></th>
+                <th class="dd-num"><span class="tbl-th-inner">Value<svg class="tbl-sort-icon" viewBox="0 0 10 12" fill="none"><path d="M5 0L8.5 4.5H1.5L5 0Z" fill="currentColor"/><path d="M5 12L1.5 7.5H8.5L5 12Z" fill="currentColor"/></svg></span></th>
+                <th><span class="tbl-th-inner">Status<svg class="tbl-sort-icon" viewBox="0 0 10 12" fill="none"><path d="M5 0L8.5 4.5H1.5L5 0Z" fill="currentColor"/><path d="M5 12L1.5 7.5H8.5L5 12Z" fill="currentColor"/></svg></span></th>
               </tr>
             </thead>
             <tbody>
@@ -5177,7 +5184,7 @@ body.home .main{max-width:none;margin:0;padding:0}
     ".dd-status",
     ".dd-dot"
   ],
-  "css": "/* dd-num/dd-status/dd-dot are exclusive to the Tables \"Reporting variant\" demo */\n.dd-num { text-align:left;font-variant-numeric:tabular-nums;font-weight:700 }\n.dd-status { display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:600;white-space:nowrap }\n.dd-dot { width:7px;height:7px;border-radius:50%;flex-shrink:0 }\n/* ================================================================\n   TABLES\n================================================================ */\n/* Table row — a selectable record row assembled from cells */\n.tbl-row { --tbl-hover:#f4f4f4; --tbl-checked:#e9f9ea;\n  display:flex;align-items:center;gap:20px;\n  min-height:50px;padding:0 14px;border-radius:8px;\n  background:transparent;color:var(--chrome-txt);\n  transition:background .12s,box-shadow .12s; }\n[data-theme=\"dark\"] .tbl-row { --tbl-hover:rgba(255,255,255,.05);--tbl-checked:rgba(16,197,4,.13) }\n.tbl-row.is-hover,.tbl-row:not(.is-disabled):not(.is-checked):hover { background:var(--tbl-hover) }\n.tbl-row.is-focus { background:var(--chrome-bg);box-shadow:inset 0 0 0 2px var(--chrome-txt) }\n.tbl-row.is-checked { background:var(--tbl-checked) }\n.tbl-row.is-disabled { pointer-events:none }\n/* cells */\n.tbl-cell { font-size:14px;font-weight:500;color:var(--chrome-txt);white-space:nowrap;overflow:hidden;text-overflow:ellipsis }\n.tbl-cell--check { flex:0 0 20px }\n.tbl-cell--name { flex:0 0 92px;font-weight:700 }\n.tbl-cell--col { flex:0 0 116px }\n.tbl-cell--links { margin-left:auto;display:flex;gap:22px }\n.tbl-link { color:var(--color-link);font-weight:700;font-size:14px;text-decoration:none;cursor:pointer;white-space:nowrap }\n.tbl-link:hover { text-decoration:underline }\n/* disabled dims the content */\n.tbl-row.is-disabled .tbl-cell,.tbl-row.is-disabled .tbl-link { color:var(--chrome-muted);opacity:.85 }\n.tbl-row.is-disabled .tbl-pic { filter:grayscale(1);opacity:.5 }\n/* product icon */\n.tbl-pic { width:30px;height:30px;border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#fff;font-weight:900;font-size:15px }\n.tbl-pic svg { width:17px;height:17px;display:block }\n.tbl-pic--1v { background:var(--prim-1v-500) }\n.tbl-pic--gift { background:var(--prim-sup-pink-1) }\n/* status tag */\n.tbl-tag { display:inline-flex;align-items:center;height:22px;padding:0 9px;border-radius:6px;font-size:12px;font-weight:700;white-space:nowrap;line-height:1 }\n.tbl-tag--pending { background:#e6e6e6;color:#414141 }\n.tbl-tag--success { background:#16a220;color:#fff }\n.tbl-tag--failed { background:#eb0029;color:#fff }\n[data-theme=\"dark\"] .tbl-tag--pending { background:rgba(255,255,255,.14);color:#e6e6e6 }\n.tbl-pg__stage .tbl-row { flex:1 1 auto;min-width:640px }\n.tbl-staterow&gt;.tbl-row { flex:1 1 auto }\n/* full table — header + rows */\n.tbl-wrap { border:1px solid var(--chrome-border);border-radius:14px;overflow:hidden;overflow-x:auto }\n.tbl-inner { min-width:900px }\n.tbl-head { display:flex;align-items:center;gap:20px;padding:0 14px;height:44px;background:var(--chrome-nav);border-bottom:1px solid var(--chrome-border) }\n.tbl-head__cell { font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--chrome-muted);white-space:nowrap }\n.tbl-body .tbl-row { border-radius:0;border-bottom:1px solid var(--chrome-border) }\n.tbl-body .tbl-row:last-child { border-bottom:none }\n/* shared column widths — keep header labels aligned with row cells */\n.tcol-check { flex:0 0 20px }\n.tcol-product { flex:2 1 0;min-width:0;display:flex;align-items:center;gap:12px }\n.tbl-head__cell.tcol-product { gap:0 }\n.tcol-ref { flex:1.3 1 0;min-width:0 }\n.tcol-date { flex:1.4 1 0;min-width:0 }\n.tcol-type { flex:1.2 1 0;min-width:0 }\n.tcol-status { flex:0 0 88px }\n.tcol-amt { flex:0 0 96px;text-align:right;font-variant-numeric:tabular-nums;font-weight:700 }\n/* trailing row actions — hidden until the row is hovered or keyboard-focused.\n   :has(:focus-visible), not :focus-within — a plain mouse click leaves the\n   checkbox holding focus, which would keep the row \"stuck\" showing actions. */\n.tcol-actions { flex:0 0 132px;display:flex;justify-content:flex-end;gap:18px;opacity:0;transition:opacity .12s }\n.tbl-body .tbl-row:hover .tcol-actions,.tbl-body .tbl-row.is-hover .tcol-actions,.tbl-body .tbl-row:has(:focus-visible) .tcol-actions { opacity:1 }\n.tbl-head__cell.tcol-actions { opacity:1 }\n/* hover (real + forced .is-hover) */\n.fsel:hover&gt;.fsel__input:not(:disabled),.fsel__input.is-hover:not(:disabled) { border-color:#9a9ea6 }\n.fsel:hover&gt;.fsel__input:checked:not(:disabled),.fsel__input.is-hover:checked:not(:disabled) { border-color:var(--fs-green);filter:brightness(.93) }\n/* focus (real + forced .is-focus) */\n.fsel__input:focus-visible,.fsel__input.is-focus { outline:none;box-shadow:0 0 0 4px var(--fs-ring) }\n.fsel__input:checked:focus-visible,.fsel__input.is-focus:checked { box-shadow:0 0 0 4px rgba(16,197,4,.24) }\n.selref__stage--dark .fsel:hover&gt;.fsel__input:not(:disabled),.selref__stage--dark .fsel__input.is-hover:not(:disabled),[data-theme=\"dark\"] .fsel:hover&gt;.fsel__input:not(:disabled) { border-color:#8b8e97 }",
+  "css": "/* dd-num/dd-status/dd-dot are exclusive to the Tables \"Reporting variant\" demo */\n.dd-num { text-align:left;font-variant-numeric:tabular-nums;font-weight:700 }\n.dd-status { display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:600;white-space:nowrap }\n.dd-dot { width:7px;height:7px;border-radius:50%;flex-shrink:0 }\n/* ================================================================\n   TABLES\n================================================================ */\n/* Table row — a selectable record row assembled from cells */\n.tbl-row { --tbl-hover:#f4f4f4; --tbl-checked:#e9f9ea;\n  display:flex;align-items:center;gap:20px;\n  min-height:50px;padding:0 14px;border-radius:8px;\n  background:transparent;color:var(--chrome-txt);\n  transition:background .12s,box-shadow .12s; }\n[data-theme=\"dark\"] .tbl-row { --tbl-hover:rgba(255,255,255,.05);--tbl-checked:rgba(16,197,4,.13) }\n.tbl-row.is-hover,.tbl-row:not(.is-disabled):not(.is-checked):hover { background:var(--tbl-hover) }\n.tbl-row.is-focus { background:var(--chrome-bg);box-shadow:inset 0 0 0 2px var(--chrome-txt) }\n.tbl-row.is-checked { background:var(--tbl-checked) }\n.tbl-row.is-disabled { pointer-events:none }\n/* cells */\n.tbl-cell { font-size:14px;font-weight:500;color:var(--chrome-txt);white-space:nowrap;overflow:hidden;text-overflow:ellipsis }\n.tbl-cell--check { flex:0 0 20px }\n.tbl-cell--name { flex:0 0 92px;font-weight:700 }\n.tbl-cell--col { flex:0 0 116px }\n.tbl-cell--links { margin-left:auto;display:flex;gap:22px }\n.tbl-link { color:var(--color-link);font-weight:700;font-size:14px;text-decoration:none;cursor:pointer;white-space:nowrap }\n.tbl-link:hover { text-decoration:underline }\n/* disabled dims the content */\n.tbl-row.is-disabled .tbl-cell,.tbl-row.is-disabled .tbl-link { color:var(--chrome-muted);opacity:.85 }\n.tbl-row.is-disabled .tbl-pic { filter:grayscale(1);opacity:.5 }\n/* product icon */\n.tbl-pic { width:30px;height:30px;border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#fff;font-weight:900;font-size:15px }\n.tbl-pic svg { width:17px;height:17px;display:block }\n.tbl-pic--1v { background:var(--prim-1v-500) }\n.tbl-pic--gift { background:var(--prim-sup-pink-1) }\n/* status tag */\n.tbl-tag { display:inline-flex;align-items:center;height:22px;padding:0 9px;border-radius:6px;font-size:12px;font-weight:700;white-space:nowrap;line-height:1 }\n.tbl-tag--pending { background:#e6e6e6;color:#414141 }\n.tbl-tag--success { background:#16a220;color:#fff }\n.tbl-tag--failed { background:#eb0029;color:#fff }\n[data-theme=\"dark\"] .tbl-tag--pending { background:rgba(255,255,255,.14);color:#e6e6e6 }\n.tbl-pg__stage&gt;.tbl-row { flex:1 1 auto;min-width:640px }\n.tbl-pg__head .tbl-head__cell { flex-shrink:0 }\n.tbl-pg__card .tbl-row { border-radius:0 0 13px 13px }\n.tbl-staterow&gt;.tbl-row { flex:1 1 auto }\n/* full table — header + rows */\n.tbl-wrap { border:1px solid var(--chrome-border);border-radius:14px;overflow:hidden;overflow-x:auto }\n.tbl-inner { min-width:900px }\n.tbl-head { display:flex;align-items:center;gap:20px;padding:0 14px;height:44px;background:#000;border-bottom:1px solid var(--chrome-border) }\n.tbl-head__cell { display:inline-flex;align-items:center;gap:6px;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:#fff;white-space:nowrap }\n.tbl-body .tbl-row { border-radius:0;border-bottom:1px solid var(--chrome-border) }\n.tbl-body .tbl-row:last-child { border-bottom:none }\n/* shared column widths — keep header labels aligned with row cells */\n.tcol-check { flex:0 0 20px }\n.tcol-product { flex:2 1 0;min-width:0;display:flex;align-items:center;gap:12px }\n.tbl-head__cell.tcol-product { gap:6px }\n.tcol-ref { flex:1.3 1 0;min-width:0 }\n.tcol-date { flex:1.4 1 0;min-width:0 }\n.tcol-type { flex:1.2 1 0;min-width:0 }\n.tcol-status { flex:0 0 88px }\n.tcol-amt { flex:0 0 96px;text-align:right;font-variant-numeric:tabular-nums;font-weight:700 }\n.tbl-head__cell.tcol-amt { justify-content:flex-end }\n/* trailing row actions — hidden until the row is hovered or keyboard-focused.\n   :has(:focus-visible), not :focus-within — a plain mouse click leaves the\n   checkbox holding focus, which would keep the row \"stuck\" showing actions. */\n.tcol-actions { flex:0 0 132px;display:flex;justify-content:flex-end;gap:18px;opacity:0;transition:opacity .12s }\n.tbl-body .tbl-row:hover .tcol-actions,.tbl-body .tbl-row.is-hover .tcol-actions,.tbl-body .tbl-row:has(:focus-visible) .tcol-actions { opacity:1 }\n.tbl-head__cell.tcol-actions { opacity:1 }\n/* hover (real + forced .is-hover) */\n.fsel:hover&gt;.fsel__input:not(:disabled),.fsel__input.is-hover:not(:disabled) { border-color:#9a9ea6 }\n.fsel:hover&gt;.fsel__input:checked:not(:disabled),.fsel__input.is-hover:checked:not(:disabled) { border-color:var(--fs-green);filter:brightness(.93) }\n/* focus (real + forced .is-focus) */\n.fsel__input:focus-visible,.fsel__input.is-focus { outline:none;box-shadow:0 0 0 4px var(--fs-ring) }\n.fsel__input:checked:focus-visible,.fsel__input.is-focus:checked { box-shadow:0 0 0 4px rgba(16,197,4,.24) }\n.selref__stage--dark .fsel:hover&gt;.fsel__input:not(:disabled),.selref__stage--dark .fsel__input.is-hover:not(:disabled),[data-theme=\"dark\"] .fsel:hover&gt;.fsel__input:not(:disabled) { border-color:#8b8e97 }",
   "usage": {
     "do": [
       "Use a table for lists of like records — transactions, stores, tickets — that users scan and compare.",
@@ -5192,7 +5199,7 @@ body.home .main{max-width:none;margin:0;padding:0}
       "Don’t mix left- and right-alignment for the same column across rows."
     ]
   },
-  "contentHash": "78d2e9b321e64d5d74b4b3531b2f0a624da44605b70dc039a711752a3f5b4304",
+  "contentHash": "c7e50a5260b724afb9d3ec612173c67e7622139ec2edf928f559a665d8f8b591",
   "note": "Static hand-authored markup — the reference table's HTML is written directly in the section, not built by JS (a separate #tbl-playground exists only for a single-row live demo). Five row states: default, hover, focused, checked, disabled. The Reporting variant demo (.dd-num/.dd-status/.dd-dot) was migrated from the retired Data Display section; the .dd-table-wrap/.dd-table/.dd-table__name markup it sits in is a shared spec-table utility reused across many sections and is intentionally excluded from this tab's realClasses."
 }
   </pre>
@@ -6014,74 +6021,25 @@ body.home .main{max-width:none;margin:0;padding:0}
     <!-- ============================================================
          AVATAR
     ============================================================ -->
-    <section class="sec" id="s-avatar">
+    <section class="sec sec--tabbed" id="s-avatar">
+      <div class="sec-hero">
       <div class="sec__head">
-        <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Avatar <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.1.1</span></h1>
-        <p class="sec__desc">A circular representation of a person or entity &mdash; a photo when available, initials or a generic glyph as fallbacks. Five sizes, an optional presence dot, and a stacked group for showing many at once.</p>
-      </div>
-      <div class="type-sub">
-        <div class="type-sub__title">Sizes</div>
-        <div class="type-sub__desc">Five steps from 24px to 72px. Pick one size per context and stay consistent within a list.</div>
-        <div class="sg-stage"><div class="sg-row">
-          <div class="sg-swatch"><span class="sg-swatch__cap">XS</span><span class="avt avt--xs">MO</span></div>
-          <div class="sg-swatch"><span class="sg-swatch__cap">SM</span><span class="avt avt--sm">MO</span></div>
-          <div class="sg-swatch"><span class="sg-swatch__cap">MD</span><span class="avt avt--md">MO</span></div>
-          <div class="sg-swatch"><span class="sg-swatch__cap">LG</span><span class="avt avt--lg">MO</span></div>
-          <div class="sg-swatch"><span class="sg-swatch__cap">XL</span><span class="avt avt--xl">MO</span></div>
-        </div></div>
-      </div>
-      <div class="type-sub">
-        <div class="type-sub__title">Types &amp; presence</div>
-        <div class="type-sub__desc">Photo shows a neutral placeholder illustration until a real image loads; initials or a generic fallback glyph cover the rest. An optional presence dot shows online / offline.</div>
-        <div class="sg-stage"><div class="sg-row">
-          <div class="sg-swatch"><span class="sg-swatch__cap">Photo</span><span class="avt avt--lg avt--photo" aria-label="Photo placeholder"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="8" cy="8" r="2.4" fill="currentColor"/><path d="M2.5 19l5.8-7 3.6 4.3 2.8-3.3 6.8 6h-19z" fill="currentColor"/></svg></span></div>
-          <div class="sg-swatch"><span class="sg-swatch__cap">Initials</span><span class="avt avt--lg">RB</span></div>
-          <div class="sg-swatch"><span class="sg-swatch__cap">Fallback</span><span class="avt avt--lg avt--icon"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="8" r="4" fill="currentColor"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8" fill="currentColor"/></svg></span></div>
-          <div class="sg-swatch"><span class="sg-swatch__cap">Online</span><span class="avt avt--lg">AK<span class="avt__status"></span></span></div>
-          <div class="sg-swatch"><span class="sg-swatch__cap">Offline</span><span class="avt avt--lg">JP<span class="avt__status avt__status--off"></span></span></div>
-        </div></div>
-      </div>
-      <div class="type-sub">
-        <div class="type-sub__title">Group</div>
-        <div class="type-sub__desc">Stack a few avatars to show shared ownership or attendees, capped with a &ldquo;+N&rdquo; count.</div>
-        <div class="sg-stage">
-          <div class="avt-group">
-            <span class="avt avt--md">MO</span>
-            <span class="avt avt--md avt--photo" aria-label="Photo placeholder"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="8" cy="8" r="2.4" fill="currentColor"/><path d="M2.5 19l5.8-7 3.6 4.3 2.8-3.3 6.8 6h-19z" fill="currentColor"/></svg></span>
-            <span class="avt avt--md">RB</span>
-            <span class="avt avt--md">AK</span>
-            <span class="avt-more">+3</span>
-          </div>
-        </div>
-      </div>
-      <div class="type-sub">
-        <div class="type-sub__title">When to use</div>
-        <div class="type-sub__desc">Avatars identify people and entities at a glance. They&rsquo;re identity, not decoration.</div>
-        <div class="sel-usage">
-          <div class="sel-usage__card">
-            <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
-            <ul class="sel-usage__list">
-              <li>Always provide a fallback: initials, then a generic glyph.</li>
-              <li>Keep one avatar size consistent within a given list.</li>
-              <li>Add a presence dot only where online status is meaningful.</li>
-            </ul>
-          </div>
-          <div class="sel-usage__card">
-            <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don&rsquo;t</div>
-            <ul class="sel-usage__list">
-              <li>Don&rsquo;t use avatars for decorative or generic imagery.</li>
-              <li>Don&rsquo;t stretch non-square photos &mdash; always crop to fill.</li>
-              <li>Don&rsquo;t rely on the presence dot&rsquo;s colour alone to convey status.</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <details class="ai-ctx">
+        <h1 class="sec__title">Avatar</h1>
+        <div class="sec-header-meta">
+          <span class="comp-ver-badge" style="margin-left:0">v1.2.0</span>
+<details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-avatar">
 {
-  "status": "static",
+  "status": "js-rendered",
+  "builderFunctions": [
+    "AVT_SIZES",
+    "AVT_TYPES",
+    "avtPhotoSVG",
+    "avtIconSVG",
+    "makeAvatarHTML",
+    "makeAvatarEl"
+  ],
   "realClasses": [
     ".avt",
     ".avt--photo",
@@ -6097,22 +6055,96 @@ body.home .main{max-width:none;margin:0;padding:0}
     ".avt-more"
   ],
   "css": "/* ---- Avatar ---- */\n.avt { display:inline-flex;align-items:center;justify-content:center;border-radius:50%;background:var(--color-surface-n2);color:var(--color-text-2);font-weight:700;flex-shrink:0;position:relative;line-height:1;user-select:none;text-transform:uppercase }\n.avt img { width:100%;height:100%;object-fit:cover;display:block;border-radius:50% }\n.avt--photo { background:var(--color-surface-n1);color:var(--color-text-m) }\n.avt--photo svg { width:60%;height:60% }\n.avt--icon { color:var(--chrome-muted);background:var(--color-surface-n1) }\n.avt--icon svg { width:55%;height:55% }\n.avt--xs { width:24px;height:24px;font-size:9px }\n.avt--sm { width:32px;height:32px;font-size:11px }\n.avt--md { width:40px;height:40px;font-size:14px }\n.avt--lg { width:56px;height:56px;font-size:19px }\n.avt--xl { width:72px;height:72px;font-size:25px }\n.avt__status { position:absolute;bottom:1px;right:1px;width:27%;height:27%;border-radius:50%;border:2px solid var(--chrome-nav);background:var(--color-success-h);box-sizing:border-box }\n.avt__status--off { background:var(--prim-grey-700) }\n.avt-group { display:inline-flex;align-items:center }\n.avt-group &gt; * { border:2px solid var(--chrome-nav);border-radius:50%;margin-left:-11px }\n.avt-group &gt; *:first-child { margin-left:0 }\n.avt-more { display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%;background:var(--color-surface-n2);color:var(--chrome-txt);font-size:12px;font-weight:700;flex-shrink:0 }",
+  "js": "const AVT_SIZES = [\n  {key:'xs', label:'XS', px:24, fs:9},\n  {key:'sm', label:'SM', px:32, fs:11},\n  {key:'md', label:'MD', px:40, fs:14},\n  {key:'lg', label:'LG', px:56, fs:19},\n  {key:'xl', label:'XL', px:72, fs:25},\n];\n\nconst AVT_TYPES = [\n  {key:'photo',    label:'Photo'},\n  {key:'initials', label:'Initials'},\n  {key:'icon',     label:'Icon'},\n];\n\nfunction avtPhotoSVG(){\n  return `&lt;svg viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"&gt;&lt;circle cx=\"8\" cy=\"8\" r=\"2.4\" fill=\"currentColor\"/&gt;&lt;path d=\"M2.5 19l5.8-7 3.6 4.3 2.8-3.3 6.8 6h-19z\" fill=\"currentColor\"/&gt;&lt;/svg&gt;`;\n}\n\nfunction avtIconSVG(){\n  return `&lt;svg viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"&gt;&lt;circle cx=\"12\" cy=\"8\" r=\"4\" fill=\"currentColor\"/&gt;&lt;path d=\"M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8\" fill=\"currentColor\"/&gt;&lt;/svg&gt;`;\n}\n\nfunction makeAvatarHTML(type, sizeKey, initials, presence){\n  const cls = `avt avt--${sizeKey}${type==='photo'?' avt--photo':''}${type==='icon'?' avt--icon':''}`;\n  let inner = '';\n  if(type==='photo') inner = avtPhotoSVG();\n  else if(type==='icon') inner = avtIconSVG();\n  else inner = avtEsc((initials||'JC').slice(0,2).toUpperCase());\n  if(presence &amp;&amp; presence!=='none') inner += `&lt;span class=\"avt__status${presence==='offline'?' avt__status--off':''}\"&gt;&lt;/span&gt;`;\n  const aria = type==='photo' ? ' aria-label=\"Photo placeholder\"' : '';\n  return `&lt;span class=\"${cls}\"${aria}&gt;${inner}&lt;/span&gt;`;\n}\n\nfunction makeAvatarEl(){\n  const av = document.createElement('span');\n  av.className = `avt avt--${avPg.size}${avPg.type==='photo'?' avt--photo':''}${avPg.type==='icon'?' avt--icon':''}`;\n  if(avPg.type==='photo'){ av.innerHTML = avtPhotoSVG(); av.setAttribute('aria-label','Photo placeholder'); }\n  else if(avPg.type==='icon'){ av.innerHTML = avtIconSVG(); }\n  else { av.textContent = (avPg.initials||'JC').slice(0,2).toUpperCase(); }\n  if(avPg.presence &amp;&amp; avPg.presence!=='none'){\n    const dot = document.createElement('span');\n    dot.className = `avt__status${avPg.presence==='offline'?' avt__status--off':''}`;\n    av.appendChild(dot);\n  }\n  return av;\n}",
   "usage": {
     "do": [
       "Always provide a fallback: initials, then a generic glyph.",
       "Keep one avatar size consistent within a given list.",
-      "Add a presence dot only where online status is meaningful."
+      "Add a presence dot only where online status is meaningful.",
+      "Use two letters for initials — first and last, uppercase."
     ],
     "dont": [
-      "Don’t use avatars for decorative or generic imagery.",
-      "Don’t stretch non-square photos — always crop to fill.",
-      "Don’t rely on the presence dot’s colour alone to convey status."
+      "Don't use avatars for decorative or generic imagery.",
+      "Don't stretch non-square photos — always crop to fill.",
+      "Don't rely on the presence dot's colour alone to convey status."
     ]
   },
-  "contentHash": "adc86590acd9f4948dcdff9ab31cad964bc0f8202cfab2b4c9b6fa00dfe02c47"
+  "contentHash": "a98943ed4803825b3c13a1712cfb05b73f4e34197abf740dc5f9101ad24db541",
+  "note": "makeAvatarHTML is the minimal real-markup builder (type+size+initials+presence -&gt; avatar HTML string); makeAvatarEl is the fuller version used by the live playground stage. avPg (playground state, renamed from apg to avoid colliding with Alert's identically-named playground)/getAvatarCode*/renderAvatarPlayground/renderAvatarReference/renderAvatarInSitu/renderAvatarKeyTypes/ovAvatar are doc-site-only playground plumbing, excluded."
 }
   </pre>
 </details>
+        </div>
+      </div>
+      <div class="sec-hero__preview"><div class="mk"><span class="avt avt--sm">JC</span><span class="avt avt--sm avt--photo" aria-label="Photo placeholder"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="8" cy="8" r="2.4" fill="currentColor"/><path d="M2.5 19l5.8-7 3.6 4.3 2.8-3.3 6.8 6h-19z" fill="currentColor"/></svg></span><span class="avt avt--sm">AK<span class="avt__status"></span></span></div></div>
+      </div>
+      <div class="tabs-list sec-tabs" id="avatar-tabs-list">
+        <button type="button" class="tab-item on" data-avatar-tab="overview" onclick="avatarTabSwitch('overview')"><span class="tab-item__inner"><span class="tab-item__label">Overview</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-avatar-tab="style" onclick="avatarTabSwitch('style')"><span class="tab-item__inner"><span class="tab-item__label">Style</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-avatar-tab="code" onclick="avatarTabSwitch('code')"><span class="tab-item__inner"><span class="tab-item__label">Code</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-avatar-tab="changelog" onclick="avatarTabSwitch('changelog')"><span class="tab-item__inner"><span class="tab-item__label">Changelog</span></span><span class="tab-item__line"></span></button>
+      </div>
+      <div class="tabs-panel on" data-avatar-panel="overview">
+        <div id="avatar-playground" class="type-sub"></div>
+        <div id="avatar-keytypes" class="type-sub"></div>
+        <div id="avatar-insitu" class="type-sub"></div>
+        <div class="type-sub">
+          <div class="type-sub__title">Group</div>
+          <div class="type-sub__desc">Stack a few avatars to show shared ownership or attendees, capped with a &ldquo;+N&rdquo; count.</div>
+          <div class="sg-stage">
+            <div class="avt-group">
+              <span class="avt avt--md">JC</span>
+              <span class="avt avt--md avt--photo" aria-label="Photo placeholder"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="8" cy="8" r="2.4" fill="currentColor"/><path d="M2.5 19l5.8-7 3.6 4.3 2.8-3.3 6.8 6h-19z" fill="currentColor"/></svg></span>
+              <span class="avt avt--md">RB</span>
+              <span class="avt avt--md">AK</span>
+              <span class="avt-more">+3</span>
+            </div>
+          </div>
+        </div>
+        <div class="type-sub cpg-variants" id="avatar-usage">
+          <div class="cpg-section-heading">
+            <div class="cpg-layout__title">Do's and don'ts</div>
+            <div class="cpg-layout__desc">A few simple rules that keep avatars readable and identifiable.</div>
+          </div>
+          <div class="cpg-section-block">
+            <div class="sel-usage">
+              <div class="sel-usage__card">
+                <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
+                <ul class="sel-usage__list">
+                  <li>Always provide a fallback: initials, then a generic glyph.</li>
+                  <li>Keep one avatar size consistent within a given list.</li>
+                  <li>Add a presence dot only where online status is meaningful.</li>
+                  <li>Use two letters for initials &mdash; first and last, uppercase.</li>
+                </ul>
+                <div class="spec-usage-demo">
+                  <span class="avt avt--md">JC</span>
+                  <span class="avt avt--md">RB</span>
+                  <span class="avt avt--md">AK</span>
+                </div>
+              </div>
+              <div class="sel-usage__card">
+                <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don't</div>
+                <ul class="sel-usage__list">
+                  <li>Don't use avatars for decorative or generic imagery.</li>
+                  <li>Don't stretch non-square photos &mdash; always crop to fill.</li>
+                  <li>Don't rely on the presence dot's colour alone to convey status.</li>
+                </ul>
+                <div class="spec-usage-demo">
+                  <span class="avt avt--md" style="text-transform:none">Mo O.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tabs-panel" data-avatar-panel="style">
+        <div id="avatar-reference" class="type-sub spec-panel spec-stack"></div>
+      </div>
+      <div class="tabs-panel" data-avatar-panel="code">
+        <div id="avatar-code-playground" class="type-sub spec-panel spec-code-playground"></div>
+        <div id="avatar-code-tab" class="type-sub spec-panel"></div>
+      </div>
+      <div class="tabs-panel" data-avatar-panel="changelog" id="avatar-changelog-panel"></div>
     </section>
 
     <!-- ============================================================
@@ -6431,7 +6463,7 @@ body.home .main{max-width:none;margin:0;padding:0}
               <li>Don&rsquo;t colour series just for decoration &mdash; it implies meaning that isn&rsquo;t there.</li>
               <li>Don&rsquo;t truncate a value axis in a way that exaggerates differences.</li>
               <li>Don&rsquo;t use grey for chart colours &mdash; when representing multiple things (several bars, slices or series), give each its own palette colour instead.</li>
-              <li>Don&rsquo;t lead with red or orange &mdash; they read as error/warning. Only reach for them once other colours are already in use.</li>
+              <li>Don&rsquo;t reach for red or deep orange &mdash; they read as error/warning. Use them very seldom, only once every other chart colour is exhausted.</li>
             </ul>
           </div>
         </div>
@@ -6470,10 +6502,10 @@ body.home .main{max-width:none;margin:0;padding:0}
       "Don’t colour series just for decoration — it implies meaning that isn’t there.",
       "Don’t truncate a value axis in a way that exaggerates differences.",
       "Don’t use grey for chart colours — when representing multiple things (several bars, slices or series), give each its own palette colour instead.",
-      "Don’t lead with red or orange — they read as error/warning. Only reach for them once other colours are already in use."
+      "Don’t reach for red or deep orange — they read as error/warning. Use them very seldom, only once every other chart colour is exhausted."
     ]
   },
-  "contentHash": "815202db2e9e35c78ccf2a2a3700e15cbc6990cdafcf91af369f4cfbfefee20f",
+  "contentHash": "23310b27742b937b0eb469b7198efba6a96a084ad20664df809bd6a01ce0a7aa",
   "note": "Split out of the former combined Charts page (v1.1.0). The bar renderer itself is inline logic inside an anonymous IIFE (keyed off document.getElementById('cht-bar')) rather than a separately named function, so only the shared fmt/mkTip/moveTip helpers are individually extractable by identifier. All series colours ride --c1..--c5 (Flash palette), not hardcoded hex."
 }
   </pre>
@@ -6514,7 +6546,7 @@ body.home .main{max-width:none;margin:0;padding:0}
               <li>Don&rsquo;t use a line chart for discrete, unordered categories &mdash; that&rsquo;s a bar chart.</li>
               <li>Don&rsquo;t fill the area under more than one series &mdash; overlapping fills obscure each other.</li>
               <li>Don&rsquo;t use grey for chart colours &mdash; give each series its own palette colour when plotting more than one.</li>
-              <li>Don&rsquo;t lead with red or orange &mdash; they read as error/warning. Only reach for them once other colours are already in use.</li>
+              <li>Don&rsquo;t reach for red or deep orange &mdash; they read as error/warning. Use them very seldom, only once every other chart colour is exhausted.</li>
             </ul>
           </div>
         </div>
@@ -6556,10 +6588,10 @@ body.home .main{max-width:none;margin:0;padding:0}
       "Don’t use a line chart for discrete, unordered categories — that’s a bar chart.",
       "Don’t fill the area under more than one series — overlapping fills obscure each other.",
       "Don’t use grey for chart colours — give each series its own palette colour when plotting more than one.",
-      "Don’t lead with red or orange — they read as error/warning. Only reach for them once other colours are already in use."
+      "Don’t reach for red or deep orange — they read as error/warning. Use them very seldom, only once every other chart colour is exhausted."
     ]
   },
-  "contentHash": "5bc2b7c85953185a58cb1e441200ee69e92a82f552af85222d32c0d8411c1817",
+  "contentHash": "937ae3c433f41484c38e3bbf0bab2cd6ce23fe12b95f748e903b0f0ed2e1b745",
   "note": "Split out of the former combined Charts page (v1.1.0). fmt/mkTip/moveTip/lineChart are the named builder functions this demo actually calls."
 }
   </pre>
@@ -6597,7 +6629,7 @@ body.home .main{max-width:none;margin:0;padding:0}
               <li>Don&rsquo;t use it to compare two totals side by side &mdash; use bars instead.</li>
               <li>Don&rsquo;t rely on slice angle alone for precision &mdash; pair it with a legend that carries the figures.</li>
               <li>Don&rsquo;t use grey for a slice &mdash; each slice representing a different thing should get its own palette colour.</li>
-              <li>Don&rsquo;t lead with red or orange &mdash; they read as error/warning. Only reach for them once other colours are already in use.</li>
+              <li>Don&rsquo;t reach for red or deep orange &mdash; they read as error/warning. Use them very seldom, only once every other chart colour is exhausted.</li>
             </ul>
           </div>
         </div>
@@ -6638,10 +6670,10 @@ body.home .main{max-width:none;margin:0;padding:0}
       "Don’t use it to compare two totals side by side — use bars instead.",
       "Don’t rely on slice angle alone for precision — pair it with a legend that carries the figures.",
       "Don’t use grey for a slice — each slice representing a different thing should get its own palette colour.",
-      "Don’t lead with red or orange — they read as error/warning. Only reach for them once other colours are already in use."
+      "Don’t reach for red or deep orange — they read as error/warning. Use them very seldom, only once every other chart colour is exhausted."
     ]
   },
-  "contentHash": "2ea0a3019045bb66b114f392ff67363428b1442922a6df036663d0cc1a88dadc",
+  "contentHash": "6ff1323f8d5d563f73daeb1c87f5106015f0edb09e2709605096c3e857816abd",
   "note": "Split out of the former combined Charts page (v1.1.0). The donut renderer itself is inline logic inside an anonymous IIFE (keyed off document.getElementById('cht-donut')) rather than a separately named function, so only the shared fmt/mkTip/moveTip helpers are individually extractable by identifier."
 }
   </pre>
@@ -6807,7 +6839,7 @@ body.home .main{max-width:none;margin:0;padding:0}
               <li>Don&rsquo;t reuse a colour across two unrelated categories in the same chart.</li>
               <li>Don&rsquo;t drop the legend from the segmented bar &mdash; segment width alone isn&rsquo;t precise enough.</li>
               <li>Don&rsquo;t use grey for a segment or row &mdash; each one representing a different category should get its own palette colour.</li>
-              <li>Don&rsquo;t lead with red or orange &mdash; they read as error/warning. Only reach for them once other colours are already in use.</li>
+              <li>Don&rsquo;t reach for red or deep orange &mdash; they read as error/warning. Use them very seldom, only once every other chart colour is exhausted.</li>
             </ul>
           </div>
         </div>
@@ -6851,10 +6883,10 @@ body.home .main{max-width:none;margin:0;padding:0}
       "Don’t reuse a colour across two unrelated categories in the same chart.",
       "Don’t drop the legend from the segmented bar — segment width alone isn’t precise enough.",
       "Don’t use grey for a segment or row — each one representing a different category should get its own palette colour.",
-      "Don’t lead with red or orange — they read as error/warning. Only reach for them once other colours are already in use."
+      "Don’t reach for red or deep orange — they read as error/warning. Use them very seldom, only once every other chart colour is exhausted."
     ]
   },
-  "contentHash": "8529d12449110bdf84795cabb1a4f31045f4d5dd9e9769cf4db8a4aaf0a72c28",
+  "contentHash": "509d3a5232aca79cfcd7e7a3014c312e804acf2d5dbcf6e8dacf0f7e1a7d2c70",
   "note": "Split out of the former combined Charts page (v1.1.0), which also covered Bar/Line/Donut (now s-charts-bar/s-charts-line/s-charts-donut) and Progress meters (now s-charts-meters). Both distribution-bar patterns (.dd-dist*/.dd-break*) are static hand-authored markup, migrated from the retired Data Display section."
 }
   </pre>
@@ -7783,8 +7815,19 @@ function hexToRgba(hex, alpha) {
 // Chart Colours leads with the Flash brand primary green (--prim-green-500,
 // the same hex charts already default to via --c1), then the rest of the
 // Category Colours identity set — its own array, not an alias of CATS, so
-// this addition doesn't spill into the Category Colours family.
-const CHART_COLORS = [['Primary Green', '#10c504'], ...CATS];
+// this addition doesn't spill into the Category Colours family. Reds and the
+// deep, saturated orange (Payments #ed0c40, Voice NFA #c43a3a, Electricity
+// #ff9900 — they read as error/warning) are pushed to the very end of the
+// set, used only once every other colour has been exhausted; order is
+// otherwise unchanged from CATS.
+const CHART_COLORS = [
+  ['Primary Green', '#10c504'], ['Airtime', '#159c5d'], ['Data', '#9840f7'],
+  ['Lotto', '#fdd333'], ['Transfers', '#e43e79'], ['Global', '#3d98ed'],
+  ['Lifestyle', '#25cdb9'], ['RICA', '#008a8c'], ['Entertainment', '#d7285a'],
+  ['Gaming', '#115da5'], ['Shop2Shop', '#001e31'], ['Tap2Pay', '#faa225'],
+  ['Voice OFA', '#5756e9'], ['Electricity', '#ff9900'], ['Payments', '#ed0c40'],
+  ['Voice NFA', '#c43a3a'],
+];
 // Desaturated set is the same hue at reduced opacity — the same default
 // (inactive-state) opacity charts themselves render at before hover
 // (opacity:.25 on .cht__bar/.cht__seg/.cht__line/.cht__dot/.dd-break__seg) —
@@ -7817,7 +7860,7 @@ chartFam.innerHTML = `
   <div class="fam__head">
     <div class="fam__info">
       <div class="fam__name">Chart Colours</div>
-      <div class="fam__desc">The category colour identity set, used as the default series palette for charts and data visualisation.</div>
+      <div class="fam__desc">The category colour identity set, used as the default series palette for charts and data visualisation. Red and deep orange are ordered last &mdash; they read as error/warning, so use them very seldom, only once every other colour here is exhausted.</div>
     </div>
     <div class="fam__badge fam__badge--cat">${CHART_COLORS.length} Colours</div>
   </div>
@@ -7956,6 +7999,10 @@ function toggleTheme() {
   try { if(typeof renderBadgeInSitu==='function' && document.getElementById('badge-insitu')) renderBadgeInSitu(); } catch(e){}
   try { if(typeof renderBadgeReference==='function' && document.getElementById('badge-reference')) renderBadgeReference(); } catch(e){}
   try { if(typeof renderPillReference==='function' && document.getElementById('pill-reference')) renderPillReference(); } catch(e){}
+  try { if(typeof renderAvatarPlayground==='function' && document.getElementById('avatar-playground')) renderAvatarPlayground(); } catch(e){}
+  try { if(typeof renderAvatarKeyTypes==='function' && document.getElementById('avatar-keytypes')) renderAvatarKeyTypes(); } catch(e){}
+  try { if(typeof renderAvatarInSitu==='function' && document.getElementById('avatar-insitu')) renderAvatarInSitu(); } catch(e){}
+  try { if(typeof renderAvatarReference==='function' && document.getElementById('avatar-reference')) renderAvatarReference(); } catch(e){}
   try { if(typeof renderSwitchPlayground==='function' && document.getElementById('sw-playground')) renderSwitchPlayground(); } catch(e){}
   try { if(typeof renderSwitchStates==='function' && document.getElementById('sw-states')) renderSwitchStates(); } catch(e){}
   try { if(typeof renderSwitchInSitu==='function' && document.getElementById('sw-insitu')) renderSwitchInSitu(); } catch(e){}
@@ -10463,6 +10510,533 @@ function pillTabSwitch(tab){
 }
 
 /* ============================================================
+   AVATAR
+   Same tabbed-page treatment as Pills (.sec--tabbed): Overview /
+   Style / Code / Changelog, a shared-state playground rendered
+   into two mounts, and a three-language code panel. Unlike Pills,
+   Avatar has no colour axis and nothing removable/selectable —
+   its controls are Type / Size / Presence, plus an initials input.
+============================================================ */
+const AVT_SIZES = [
+  {key:'xs', label:'XS', px:24, fs:9},
+  {key:'sm', label:'SM', px:32, fs:11},
+  {key:'md', label:'MD', px:40, fs:14},
+  {key:'lg', label:'LG', px:56, fs:19},
+  {key:'xl', label:'XL', px:72, fs:25},
+];
+
+const AVT_TYPES = [
+  {key:'photo',    label:'Photo'},
+  {key:'initials', label:'Initials'},
+  {key:'icon',     label:'Icon'},
+];
+
+function avtEsc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&#60;').replace(/>/g,'&#62;').replace(/"/g,'&quot;'); }
+
+function avtPhotoSVG(){
+  return `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="8" cy="8" r="2.4" fill="currentColor"/><path d="M2.5 19l5.8-7 3.6 4.3 2.8-3.3 6.8 6h-19z" fill="currentColor"/></svg>`;
+}
+function avtIconSVG(){
+  return `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="8" r="4" fill="currentColor"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8" fill="currentColor"/></svg>`;
+}
+
+/* Minimal real-markup builder: type+size+initials+presence -> .avt HTML string. */
+function makeAvatarHTML(type, sizeKey, initials, presence){
+  const cls = `avt avt--${sizeKey}${type==='photo'?' avt--photo':''}${type==='icon'?' avt--icon':''}`;
+  let inner = '';
+  if(type==='photo') inner = avtPhotoSVG();
+  else if(type==='icon') inner = avtIconSVG();
+  else inner = avtEsc((initials||'JC').slice(0,2).toUpperCase());
+  if(presence && presence!=='none') inner += `<span class="avt__status${presence==='offline'?' avt__status--off':''}"></span>`;
+  const aria = type==='photo' ? ' aria-label="Photo placeholder"' : '';
+  return `<span class="${cls}"${aria}>${inner}</span>`;
+}
+
+/* ── AVATAR PLAYGROUND ── */
+let avPg = { type:'initials', size:'md', presence:'none', initials:'JC', theme:'light' };
+
+function makeAvatarEl(){
+  const av = document.createElement('span');
+  av.className = `avt avt--${avPg.size}${avPg.type==='photo'?' avt--photo':''}${avPg.type==='icon'?' avt--icon':''}`;
+  if(avPg.type==='photo'){ av.innerHTML = avtPhotoSVG(); av.setAttribute('aria-label','Photo placeholder'); }
+  else if(avPg.type==='icon'){ av.innerHTML = avtIconSVG(); }
+  else { av.textContent = (avPg.initials||'JC').slice(0,2).toUpperCase(); }
+  if(avPg.presence && avPg.presence!=='none'){
+    const dot = document.createElement('span');
+    dot.className = `avt__status${avPg.presence==='offline'?' avt__status--off':''}`;
+    av.appendChild(dot);
+  }
+  return av;
+}
+
+function getAvatarCodeHTML(){
+  const sz = AVT_SIZES.find(s=>s.key===avPg.size)||AVT_SIZES[2];
+  const cls = `avt avt--${avPg.size}${avPg.type==='photo'?' avt--photo':''}${avPg.type==='icon'?' avt--icon':''}`;
+  const presenceLine = (avPg.presence && avPg.presence!=='none') ? `\n  <span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"avt__status${avPg.presence==='offline'?' avt__status--off':''}"</span><span class="code-kw">>&#60;/span></span>` : '';
+  const inner = avPg.type==='photo' ? `<span class="code-cm">&#60;!-- photo placeholder svg --></span>`
+    : avPg.type==='icon' ? `<span class="code-cm">&#60;!-- generic icon svg --></span>`
+    : avtEsc((avPg.initials||'JC').slice(0,2).toUpperCase());
+  return `<span class="code-cm">/* Flash · ${cap(avPg.theme)} · ${cap(avPg.type)} avatar · ${sz.label} */</span>
+<span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"${cls}"</span><span class="code-kw">></span>${inner}${presenceLine}
+<span class="code-kw">&#60;/span></span>`;
+}
+
+/* ── CODE PANEL LANGUAGES ──
+   HTML/CSS is the source of truth (real .avt markup). Blazor and React TSX
+   are illustrative wrappers over the same classes, so size/type/presence
+   stay the only things a consumer ports. */
+const AVATAR_LANGS = [
+  {key:'html',   label:'HTML / CSS', file:'avatar.html'},
+  {key:'blazor', label:'Blazor',     file:'DsAvatar.razor'},
+  {key:'tsx',    label:'React TSX',  file:'DsAvatar.tsx'},
+];
+let avatarLang = 'html';
+
+function getAvatarCodeBlazor(){
+  const sz = AVT_SIZES.find(s=>s.key===avPg.size)||AVT_SIZES[2];
+  const typePascal = cap(avPg.type);
+  const sizePascal = cap(avPg.size);
+  const initials = avtEsc((avPg.initials||'JC').slice(0,2).toUpperCase());
+  const presenceAttr = (avPg.presence && avPg.presence!=='none') ? `\n        <span class="code-attr">Presence</span>=<span class="code-val">"AvatarPresence.${cap(avPg.presence)}"</span>` : '';
+  return `<span class="code-cm">@* DsAvatar.razor — usage *@</span>
+<span class="code-kw">&#60;DsAvatar</span> <span class="code-attr">Type</span>=<span class="code-val">"AvatarType.${typePascal}"</span>
+         <span class="code-attr">Size</span>=<span class="code-val">"AvatarSize.${sizePascal}"</span>${avPg.type==='initials'?`\n         <span class="code-attr">Initials</span>=<span class="code-val">"${initials}"</span>`:''}${presenceAttr} <span class="code-kw">/></span>
+
+<span class="code-cm">@* DsAvatar.razor — component definition *@</span>
+<span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"@CssClass"</span><span class="code-kw">></span>
+  <span class="code-kw">@if</span> (Type == AvatarType.Photo) { @PhotoContent }
+  <span class="code-kw">else if</span> (Type == AvatarType.Icon) { @IconContent }
+  <span class="code-kw">else</span> { @Initials }
+  <span class="code-kw">@if</span> (Presence != AvatarPresence.None) {
+    <span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"@PresenceClass"</span><span class="code-kw">>&#60;/span></span>
+  }
+<span class="code-kw">&#60;/span></span>
+
+<span class="code-kw">@code</span> {
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> AvatarType Type { get; set; } = AvatarType.Initials;
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> AvatarSize Size { get; set; } = AvatarSize.Md;
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> <span class="code-cls">string</span> Initials { get; set; } = <span class="code-val">"JC"</span>;
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> AvatarPresence Presence { get; set; } = AvatarPresence.None;
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> RenderFragment PhotoContent { get; set; }
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> RenderFragment IconContent { get; set; }
+
+  <span class="code-cm">// avt--xs / avt--sm / avt--md / avt--lg / avt--xl — mapped explicitly</span>
+  <span class="code-kw">private</span> <span class="code-cls">string</span> SizeClass => Size <span class="code-kw">switch</span> {
+    AvatarSize.Xs => <span class="code-val">"xs"</span>, AvatarSize.Sm => <span class="code-val">"sm"</span>, AvatarSize.Lg => <span class="code-val">"lg"</span>, AvatarSize.Xl => <span class="code-val">"xl"</span>, _ => <span class="code-val">"md"</span>
+  };
+
+  <span class="code-kw">private</span> <span class="code-cls">string</span> CssClass =>
+    $<span class="code-val">"avt avt--{SizeClass}"</span> +
+    (Type == AvatarType.Photo ? <span class="code-val">" avt--photo"</span> : <span class="code-val">""</span>) +
+    (Type == AvatarType.Icon  ? <span class="code-val">" avt--icon"</span>  : <span class="code-val">""</span>);
+
+  <span class="code-kw">private</span> <span class="code-cls">string</span> PresenceClass =>
+    <span class="code-val">"avt__status"</span> + (Presence == AvatarPresence.Offline ? <span class="code-val">" avt__status--off"</span> : <span class="code-val">""</span>);
+}`;
+}
+
+function getAvatarCodeTSX(){
+  const initials = avtEsc((avPg.initials||'JC').slice(0,2).toUpperCase());
+  const usageProps = `type=<span class="code-val">"${avPg.type}"</span> size=<span class="code-val">"${avPg.size}"</span>`
+    + (avPg.type==='initials' ? ` initials=<span class="code-val">"${initials}"</span>` : '')
+    + ((avPg.presence && avPg.presence!=='none') ? ` presence=<span class="code-val">"${avPg.presence}"</span>` : '');
+  return `<span class="code-cm">// DsAvatar.tsx</span>
+<span class="code-kw">import</span> React <span class="code-kw">from</span> <span class="code-val">'react'</span>;
+
+<span class="code-kw">type</span> <span class="code-cls">AvatarType</span> = <span class="code-val">'photo'</span> | <span class="code-val">'initials'</span> | <span class="code-val">'icon'</span>;
+<span class="code-kw">type</span> <span class="code-cls">AvatarSize</span> = <span class="code-val">'xs'</span> | <span class="code-val">'sm'</span> | <span class="code-val">'md'</span> | <span class="code-val">'lg'</span> | <span class="code-val">'xl'</span>;
+<span class="code-kw">type</span> <span class="code-cls">AvatarPresence</span> = <span class="code-val">'none'</span> | <span class="code-val">'online'</span> | <span class="code-val">'offline'</span>;
+
+<span class="code-kw">interface</span> <span class="code-cls">DsAvatarProps</span> {
+  type?: <span class="code-cls">AvatarType</span>;
+  size?: <span class="code-cls">AvatarSize</span>;
+  initials?: <span class="code-cls">string</span>;
+  presence?: <span class="code-cls">AvatarPresence</span>;
+  photo?: React.ReactNode;
+  icon?: React.ReactNode;
+}
+
+<span class="code-kw">export const</span> <span class="code-cls">DsAvatar</span>: React.FC&#60;DsAvatarProps> = ({
+  type = <span class="code-val">'initials'</span>,
+  size = <span class="code-val">'md'</span>,
+  initials = <span class="code-val">'JC'</span>,
+  presence = <span class="code-val">'none'</span>,
+  photo,
+  icon,
+}) => {
+  <span class="code-kw">const</span> classes = [
+    <span class="code-val">'avt'</span>,
+    \`avt--\${size}\`,
+    type === <span class="code-val">'photo'</span> &amp;&amp; <span class="code-val">'avt--photo'</span>,
+    type === <span class="code-val">'icon'</span>  &amp;&amp; <span class="code-val">'avt--icon'</span>,
+  ].filter(Boolean).join(<span class="code-val">' '</span>);
+
+  <span class="code-kw">return</span> (
+    &#60;span className={classes}>
+      {type === <span class="code-val">'photo'</span> ? photo : type === <span class="code-val">'icon'</span> ? icon : initials.slice(0, 2).toUpperCase()}
+      {presence !== <span class="code-val">'none'</span> &amp;&amp; (
+        &#60;span className={\`avt__status\${presence === <span class="code-val">'offline'</span> ? <span class="code-val">' avt__status--off'</span> : <span class="code-val">''</span>}\`} />
+      )}
+    &#60;/span>
+  );
+};
+
+<span class="code-cm">// Usage</span>
+&#60;DsAvatar ${usageProps} />`;
+}
+
+function getAvatarCode(){
+  return avatarLang==='blazor' ? getAvatarCodeBlazor()
+       : avatarLang==='tsx'    ? getAvatarCodeTSX()
+       : getAvatarCodeHTML();
+}
+
+function setAvatarLang(lang){
+  if(!AVATAR_LANGS.some(l=>l.key===lang)) return;
+  avatarLang = lang;
+  document.querySelectorAll('#avatar-code-tab .code-seg__btn').forEach(b=>{
+    const on = b.dataset.lang===lang;
+    b.setAttribute('aria-selected', on ? 'true' : 'false');
+    b.setAttribute('tabindex', on ? '0' : '-1');
+  });
+  const file = document.getElementById('avatar-lang-file');
+  const meta = AVATAR_LANGS.find(l=>l.key===lang);
+  if(file && meta) file.textContent = meta.file;
+  const block = document.getElementById('avPg-code-block');
+  if(block) block.innerHTML = getAvatarCode();
+}
+
+/* Arrow-key navigation, per the WAI-ARIA tablist pattern: the segmented
+   control is one tab stop and Left/Right (plus Home/End) move between
+   languages. */
+function avatarLangKeydown(e){
+  const i = AVATAR_LANGS.findIndex(l=>l.key===avatarLang);
+  let n = i;
+  if(e.key==='ArrowLeft')       n = (i - 1 + AVATAR_LANGS.length) % AVATAR_LANGS.length;
+  else if(e.key==='ArrowRight') n = (i + 1) % AVATAR_LANGS.length;
+  else if(e.key==='Home')       n = 0;
+  else if(e.key==='End')        n = AVATAR_LANGS.length - 1;
+  else return;
+  e.preventDefault();
+  setAvatarLang(AVATAR_LANGS[n].key);
+  const btn = document.getElementById('avatar-lang-' + AVATAR_LANGS[n].key);
+  if(btn) btn.focus();
+}
+
+function avPgRefresh(){
+  document.querySelectorAll('.avPg-stage-el').forEach(stage=>{
+    stage.innerHTML = '';
+    stage.appendChild(makeAvatarEl());
+  });
+  document.querySelectorAll('.avPg-initials-input-el').forEach(inp=>{
+    inp.disabled = avPg.type !== 'initials';
+    if(document.activeElement !== inp) inp.value = avPg.initials;
+  });
+  const block = document.getElementById('avPg-code-block');
+  if(block) block.innerHTML = getAvatarCode();
+}
+
+/* Avatar Playground renders into more than one mount (the main Overview
+   demo, and a smaller copy on the Code tab) so both stay in sync with
+   the same shared avPg state. */
+const AVATAR_PLAYGROUND_MOUNTS = [
+  {rootId:'avatar-playground', idSuffix:'', wrap:true, title:'Try the component', desc:'Adjust the controls to test component states.', headingAbove:'Use avatars to identify a person or entity at a glance, with a fallback that always applies.'},
+  {rootId:'avatar-code-playground', idSuffix:'-code', style:'code', title:'Playground', desc:'Live demo of the component.'},
+];
+
+function renderAvatarPlayground(){
+  avPg.theme = document.documentElement.getAttribute('data-theme')==='dark' ? 'dark' : 'light';
+  const sbg = stageBg(avPg.theme);
+
+  const typeBtns = AVT_TYPES.map(t=>`<button class="btn-pg__pill${avPg.type===t.key?' on':''}" onclick="avPgSet('type','${t.key}')">${t.label}</button>`).join('');
+  const szBtns   = AVT_SIZES.map(s=>`<button class="btn-pg__pill${avPg.size===s.key?' on':''}" onclick="avPgSet('size','${s.key}')">${s.label}</button>`).join('');
+  const presBtns = [['none','None'],['online','Online'],['offline','Offline']].map(([k,l])=>`<button class="btn-pg__pill${avPg.presence===k?' on':''}" onclick="avPgSet('presence','${k}')">${l}</button>`).join('');
+
+  AVATAR_PLAYGROUND_MOUNTS.forEach(mount=>{
+    const root = document.getElementById(mount.rootId);
+    if(!root) return;
+    const s = mount.idSuffix;
+    const demo = `
+      <div class="btn-pg">
+        <div class="btn-pg__stage avPg-stage-el" id="avPg-stage${s}" style="background:${sbg}"></div>
+        <div class="btn-pg__ctrls">
+          <div class="btn-pg__group"><span class="btn-pg__clabel">Type</span><div class="btn-pg__pill-row">${typeBtns}</div></div>
+          <div class="btn-pg__group"><span class="btn-pg__clabel">Size</span><div class="btn-pg__pill-row">${szBtns}</div></div>
+          <div class="btn-pg__group"><span class="btn-pg__clabel">Presence</span><div class="btn-pg__pill-row">${presBtns}</div></div>
+          <div class="btn-pg__group"><span class="btn-pg__clabel">Initials</span><input class="cpg-label-input avPg-initials-input-el" id="avPg-initials-input${s}" value="${avtEsc(avPg.initials)}" maxlength="2" oninput="avPgSetInitials(this.value)" placeholder="JC" ${avPg.type!=='initials'?'disabled':''}></div>
+        </div>
+      </div>`;
+
+    if(mount.style==='code'){
+      root.innerHTML = `
+        <div class="type-sub__title">${mount.title}</div>
+        <div class="type-sub__desc">${mount.desc}</div>
+        <div class="cpg-section-outline">${demo}</div>`;
+      return;
+    }
+
+    const inner = `
+      <div class="cpg-layout">
+        <div class="cpg-layout__intro">
+          ${mount.wrap ? `<span class="cpg-cursor-icon">${CPG_CURSOR_ICON_SVG}</span>` : ''}
+          <div class="cpg-layout__title">${mount.title}</div>
+          <div class="cpg-layout__desc">${mount.desc}</div>
+        </div>
+        <div class="cpg-layout__demo">${demo}</div>
+      </div>`;
+    const wrapped = mount.wrap ? `<div class="cpg-section-block">${inner}</div>` : inner;
+    root.innerHTML = (mount.headingAbove ? `<div class="cpg-overview-heading"><span class="cpg-overview-heading__icon">${CPG_INFO_ICON_SVG}</span><span>${mount.headingAbove}</span></div>` : '') + wrapped;
+  });
+
+  avPgRefresh();
+}
+
+function renderAvatarCodeTab(){
+  const root = document.getElementById('avatar-code-tab');
+  if(!root) return;
+  root.innerHTML = `
+    <div class="type-sub__title">Code</div>
+    <div class="type-sub__desc">Live snippet matching the current Playground configuration &mdash; switch to Overview to change it.</div>
+    <div class="cpg-section-outline">
+      <div class="code-panel code-panel--bare open">
+        <div class="code-panel__head">
+          <div class="code-seg" role="tablist" aria-label="Code language" onkeydown="avatarLangKeydown(event)">
+            ${AVATAR_LANGS.map(l=>`<button type="button" role="tab" class="code-seg__btn" id="avatar-lang-${l.key}" data-lang="${l.key}" aria-selected="${avatarLang===l.key?'true':'false'}" aria-controls="avPg-code-block" tabindex="${avatarLang===l.key?'0':'-1'}" onclick="setAvatarLang('${l.key}')">${l.label}</button>`).join('')}
+          </div>
+          <span class="code-lang-file" id="avatar-lang-file">${(AVATAR_LANGS.find(l=>l.key===avatarLang)||AVATAR_LANGS[0]).file}</span>
+          <button class="code-copy-btn" onclick="avPgCopyCode()" id="avPg-copy-btn">Copy</button>
+        </div>
+        <div class="code-body"><div class="code-block" id="avPg-code-block" role="tabpanel" aria-live="polite"></div></div>
+      </div>
+    </div>`;
+}
+
+/* Flexible avatar markup builder for the Overview's illustrative sections
+   (key types, in-context mockups) — real .avt markup with a given
+   type/size/initials/presence. Doc-site-only helper; makeAvatarHTML /
+   makeAvatarEl remain the canonical builders. */
+function ovAvatar({type='initials', size='md', initials='JC', presence='none'}={}){
+  return makeAvatarHTML(type, size, initials, presence);
+}
+
+const KEY_TYPES = [
+  {key:'photo',    name:'Photo',    use:'A real user image exists and has loaded — the strongest identity signal.'},
+  {key:'initials', name:'Initials', use:'The default fallback: two uppercase letters when there is no photo.'},
+  {key:'icon',     name:'Icon',     use:'A generic glyph for system actors or unknown/unassigned entities.'},
+];
+
+function renderAvatarKeyTypes(){
+  const root = document.getElementById('avatar-keytypes');
+  if(!root) return;
+  const theme = currentTheme();
+
+  const cells = KEY_TYPES.map(t=>`
+    <div class="spec-cell">
+      <div class="spec-cell__stage" style="background:${stageBg(theme)}">${ovAvatar({type:t.key, size:'lg', initials:'RB'})}</div>
+      <div class="spec-cell__name">${t.name}</div>
+      <div class="spec-cell__desc">${t.use}</div>
+    </div>`).join('');
+
+  root.innerHTML = `
+    <div class="cpg-section-heading">
+      <div class="cpg-layout__title">Key types</div>
+      <div class="cpg-layout__desc">Three types, one identity marker. Photo when it exists, initials as the default fallback, an icon for anything without a name.</div>
+    </div>
+    <div class="cpg-section-block">
+      <div class="spec-grid">${cells}</div>
+    </div>`;
+}
+
+function renderAvatarInSitu(){
+  const root = document.getElementById('avatar-insitu');
+  if(!root) return;
+  const theme = currentTheme();
+  const sbg = stageBg(theme);
+
+  const bar = w => `<span class="spec-mock__bar" style="width:${w}"></span>`;
+
+  // 1. User list row — avatar + name + role
+  const roleColor = {Admin:{bg:'#0062EB',text:'#ffffff'}, Editor:{bg:'#16A220',text:'#ffffff'}, Viewer:{bg:'#E6E6E6',text:'#646464'}};
+  const rolePill = role => { const c = roleColor[role]; return `<span class="pill pill--sm" style="--pill-bg:${c.bg};--pill-text:${c.text};font-size:11px;padding:0 9px"><span class="pill__label">${role}</span></span>`; };
+  const listRows = [
+    {initials:'JC', name:'Jane Cole',   role:'Admin',  presence:'online'},
+    {initials:'RB', name:'Riley Baker', role:'Editor', presence:'online'},
+    {initials:'AK', name:'Amara Khan',  role:'Viewer', presence:'offline'},
+  ].map(p=>`<div class="spec-mock__row">${ovAvatar({type:'initials', size:'sm', initials:p.initials, presence:p.presence})}<span class="spec-mock__spacer" style="width:10px"></span><span class="spec-mock__label" style="min-width:90px">${p.name}</span>${bar('54px')}<span style="margin-left:auto">${rolePill(p.role)}</span></div>`).join('');
+
+  const listMock = `
+    <div class="spec-mock__stage" style="background:${sbg}">${listRows}</div>
+    <div class="spec-mock__cap"><b>User list row</b>Avatar, name and role in a settings or members list.</div>`;
+
+  // 2. Avatar group / stack — collaborators row
+  const groupMock = `
+    <div class="spec-mock__stage" style="background:${sbg}">
+      <div class="avt-group">
+        ${ovAvatar({type:'initials', size:'sm', initials:'JC', presence:'online'})}
+        ${ovAvatar({type:'photo', size:'sm'})}
+        ${ovAvatar({type:'initials', size:'sm', initials:'AK', presence:'online'})}
+        <span class="avt-more" style="width:32px;height:32px;font-size:11px">+2</span>
+      </div>
+      <div class="spec-mock__row" style="margin-top:8px;align-items:center;gap:6px">${bar('80%')}<span class="pill pill--sm" style="--pill-bg:#16A220;--pill-text:#ffffff;font-size:10.5px;padding:0 8px;flex-shrink:0"><span class="pill__label">3 online</span></span></div>
+    </div>
+    <div class="spec-mock__cap"><b>Avatar group</b>5 people editing this doc, stacked and capped with +N.</div>`;
+
+  // 3. Profile header — large avatar + name/title
+  const profileMock = `
+    <div class="spec-mock__stage" style="background:${sbg}">
+      <div class="spec-mock__row" style="align-items:center">${ovAvatar({type:'initials', size:'xl', initials:'JC', presence:'online'})}<span class="spec-mock__spacer" style="width:14px"></span><div><div class="spec-mock__label" style="font-weight:700">Jane Cole</div><div class="spec-mock__row" style="margin-top:4px;gap:6px;align-items:center"><span class="spec-mock__label" style="color:var(--chrome-muted);font-size:11px">Product Designer</span><span class="pill pill--sm" style="--pill-bg:#0062EB;--pill-text:#ffffff;font-size:10.5px;padding:0 8px"><span class="pill__label">Admin</span></span></div></div></div>
+    </div>
+    <div class="spec-mock__cap"><b>Profile header</b>An XL avatar anchors a profile page's name and title.</div>`;
+
+  root.innerHTML = `
+    <div class="cpg-section-heading">
+      <div class="cpg-layout__title">In context</div>
+      <div class="cpg-layout__desc">The same avatar does three everyday jobs &mdash; a list row, a group stack, and a profile header.</div>
+    </div>
+    <div class="cpg-section-block">
+      <div class="spec-insitu-grid">
+        <div class="spec-mock">${listMock}</div>
+        <div class="spec-mock">${groupMock}</div>
+        <div class="spec-mock">${profileMock}</div>
+      </div>
+    </div>`;
+}
+
+function avPgSet(key, val){
+  avPg[key] = val;
+  renderAvatarPlayground();
+}
+function avPgSetInitials(val){ avPg.initials = val.slice(0,2).toUpperCase(); avPgRefresh(); }
+function avPgReset(){ avPg.type='initials'; avPg.size='md'; avPg.presence='none'; avPg.initials='JC'; renderAvatarPlayground(); }
+function avPgCopyCode(){
+  const b = document.getElementById('avPg-code-block');
+  if(!b) return;
+  navigator.clipboard.writeText(b.innerText||b.textContent).catch(()=>{});
+  const btn = document.getElementById('avPg-copy-btn');
+  if(btn){ btn.textContent = 'Copied!'; setTimeout(()=>btn.textContent='Copy', 2000); }
+}
+
+function renderAvatarReference(){
+  const root = document.getElementById('avatar-reference');
+  if(!root) return;
+
+  const theme = currentTheme();
+  const sbg = stageBg(theme);
+
+  /* ---- Anatomy ---- */
+  const heroAvatar = ovAvatar({type:'initials', size:'xl', initials:'RB', presence:'online'});
+
+  const parts = [
+    {num:1, name:'Container',  note:'Circular surface, 50% radius, coloured by fallback type.', vis:'<span class="avt avt--lg" style="background:var(--color-surface-n2)"></span>'},
+    {num:2, name:'Content',    note:'A photo, two uppercase initials, or a generic glyph — always one of the three.', vis:'<span style="font-weight:700;font-size:19px;color:var(--chrome-txt)">RB</span>'},
+    {num:3, name:'Presence dot', note:'Optional. Bottom-right, bordered to separate it from the avatar.', vis:'<span class="avt avt--lg" style="background:var(--color-surface-n2)"><span class="avt__status"></span></span>'},
+  ];
+  const partCards = parts.map(p=>`
+    <div class="spec-part">
+      <div class="spec-part__stage" style="background:${sbg}">${p.vis}</div>
+      <div class="spec-part__body">
+        <div class="spec-part__name"><span class="spec-part__num">${p.num}</span>${p.name}</div>
+        <div class="spec-part__note">${p.note}</div>
+      </div>
+    </div>`).join('');
+
+  /* ---- Size & dimensions ---- */
+  const sizeDemo = AVT_SIZES.map(sz=>`
+    <div class="spec-size-item">
+      ${ovAvatar({type:'initials', size:sz.key, initials:'JC'})}
+      <span class="spec-size-item__lbl">${sz.px}px</span>
+    </div>`).join('');
+
+  const sizeRows = AVT_SIZES.map(sz=>`
+    <tr>
+      <td class="dd-table__name">${sz.label}</td>
+      <td>${sz.px}px</td>
+      <td>${sz.fs}px</td>
+    </tr>`).join('');
+
+  /* ---- Colour / presence tokens ---- */
+  const tokRows = [
+    {name:'Initials background', tok:'--color-surface-n2', sw:'var(--color-surface-n2)'},
+    {name:'Initials text',       tok:'--color-text-2',     sw:'var(--color-text-2)'},
+    {name:'Photo / icon background', tok:'--color-surface-n1', sw:'var(--color-surface-n1)'},
+    {name:'Icon glyph colour',   tok:'--chrome-muted',     sw:'var(--chrome-muted)'},
+    {name:'Presence — online',  tok:'--color-success-h',  sw:'var(--color-success-h)'},
+    {name:'Presence — offline', tok:'--prim-grey-700',     sw:'var(--prim-grey-700)'},
+  ].map(t=>`
+    <tr>
+      <td class="dd-table__name">${t.name}</td>
+      <td><div class="spec-tok-cell"><span class="spec-tok-sw" style="background:${t.sw}"></span><code>${t.tok}</code></div></td>
+    </tr>`).join('');
+
+  /* ---- States (presence is a genuine, non-removable/selectable state) ---- */
+  const states = [
+    {name:'None',    note:'No presence dot — the default.',       av:ovAvatar({type:'initials', size:'lg', initials:'JC', presence:'none'})},
+    {name:'Online',  note:'Success-coloured dot, bottom-right.',  av:ovAvatar({type:'initials', size:'lg', initials:'JC', presence:'online'})},
+    {name:'Offline', note:'Neutral grey dot, bottom-right.',      av:ovAvatar({type:'initials', size:'lg', initials:'JC', presence:'offline'})},
+  ];
+  const stateCells = states.map(s=>`
+    <div class="spec-cell">
+      <div class="spec-cell__stage" style="background:${sbg}">${s.av}</div>
+      <div class="spec-cell__name">${s.name}</div>
+      <div class="spec-cell__desc">${s.note}</div>
+    </div>`).join('');
+
+  root.innerHTML = `
+    <div class="type-sub">
+      <div class="type-sub__title">Anatomy</div>
+      <div class="type-sub__desc">An avatar is a circular container with photo, initials or icon content, plus an optional presence dot.</div>
+      <div class="cpg-section-outline">
+        <div class="spec-hero" style="background:${sbg}">${heroAvatar}</div>
+        <div class="spec-parts">${partCards}</div>
+      </div>
+    </div>
+
+    <div class="type-sub">
+      <div class="type-sub__title">Size &amp; dimensions</div>
+      <div class="type-sub__desc">Five sizes share one shape; height, width and text scale together. All sizes use a 50% (circular) radius and 700 weight uppercase initials.</div>
+      <div class="cpg-section-outline">
+        <div class="spec-size-demo" style="background:${sbg}">${sizeDemo}</div>
+        <div class="dd-table-wrap"><table class="dd-table">
+          <thead><tr><th>Size</th><th>Dimension</th><th>Text</th></tr></thead>
+          <tbody>${sizeRows}</tbody>
+        </table></div>
+      </div>
+    </div>
+
+    <div class="type-sub">
+      <div class="type-sub__title">Colour &amp; presence tokens</div>
+      <div class="type-sub__desc">Avatar has no colour axis like Pills &mdash; these are the fallback background/text tokens and the two presence-dot colours.</div>
+      <div class="cpg-section-outline">
+        <div class="dd-table-wrap"><table class="dd-table" style="min-width:420px">
+          <thead><tr><th>Token</th><th>Value</th></tr></thead>
+          <tbody>${tokRows}</tbody>
+        </table></div>
+      </div>
+    </div>
+
+    <div class="type-sub" style="margin-bottom:0">
+      <div class="type-sub__title">States</div>
+      <div class="type-sub__desc">The only real Avatar state is presence &mdash; none, online, or offline.</div>
+      <div class="cpg-section-outline">
+        <div class="spec-grid">${stateCells}</div>
+      </div>
+    </div>`;
+}
+
+try { renderAvatarCodeTab(); } catch(e){ console.error('avatar-code-tab',e); }
+try { renderAvatarPlayground(); } catch(e){ console.error('avatar-playground',e); }
+try { renderAvatarKeyTypes(); } catch(e){ console.error('avatar-keytypes',e); }
+try { renderAvatarInSitu(); } catch(e){ console.error('avatar-insitu',e); }
+try { renderAvatarReference(); } catch(e){ console.error('avatar-reference',e); }
+
+function avatarTabSwitch(tab){
+  const nav = document.getElementById('avatar-tabs-list');
+  if(!nav) return;
+  nav.querySelectorAll('.tab-item').forEach(btn=>btn.classList.toggle('on', btn.getAttribute('data-avatar-tab')===tab));
+  document.querySelectorAll('#s-avatar .tabs-panel[data-avatar-panel]').forEach(p=>p.classList.toggle('on', p.getAttribute('data-avatar-panel')===tab));
+}
+
+/* ============================================================
    SWITCH
    Same tabbed-page treatment as Chips & Pills (.sec--tabbed):
    Overview / Style / Code / Changelog, a shared-state playground
@@ -12500,58 +13074,77 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.65.12';
+const SYSTEM_VERSION = '1.65.15';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
-      {version:'1.65.12', date:'2026-08-07', author:'Mo', title:'Side Nav — chevrons now pull from the shared chevron-down icon instead of a hardcoded SVG', changes:[
+      {version:'1.65.15', date:'2026-08-07', author:'Mo', title:'Side Nav — chevrons now pull from the shared chevron-down icon instead of a hardcoded SVG', changes:[
         ['changed','Removed the SNAV_CHEVRON hardcoded stroke SVG (a stand-in added back when ICONS had no chevron); the company selector chevron and the collapsible item chevron now both call iconSvg(\'chevron-down\'), which exists in ICONS as of a recent Icons library update'],
         ['fixed','.snav__selector-chev svg and .snav-item__chev svg switched from fill:none;stroke:currentColor to fill:currentColor;stroke:none to match the solid FA-style glyph iconSvg() now renders'],
       ]},
-      {version:'1.65.11', date:'2026-08-07', author:'Mo', title:'Side Nav (White) — icon chip darkens on row hover', changes:[
+      {version:'1.65.14', date:'2026-08-07', author:'Mo', title:'Side Nav (White) — icon chip darkens on row hover', changes:[
         ['added','New --sn-idle-badge-hover token (falls back to --sn-idle-badge, so Black/Dark green are unaffected) darkens the icon chip when its row is hovered. White: --prim-grey-400 (#DDDDDD), a step darker than the idle --prim-grey-200 (#E6E6E6), still darker than the #ededed hover row'],
       ]},
-      {version:'1.65.10', date:'2026-08-07', author:'Mo', title:'Side Nav (White) — icon chip lightened', changes:[
+      {version:'1.65.13', date:'2026-08-07', author:'Mo', title:'Side Nav (White) — icon chip lightened', changes:[
         ['changed','--sn-idle-badge (White) lightened from --prim-grey-400 (#DDDDDD) to --prim-grey-200 (#E6E6E6) — the Home/Transactions/Payouts/etc. icon chips read less heavy while staying darker than the #ededed hover row and #f8f8f8 selected row'],
       ]},
-      {version:'1.65.9', date:'2026-08-07', author:'Mo', title:'Side Nav (White) — selected state gets its own lighter grey, distinct from hover', changes:[
+      {version:'1.65.12', date:'2026-08-07', author:'Mo', title:'Side Nav (White) — selected state gets its own lighter grey, distinct from hover', changes:[
         ['added','New --sn-active-bg token (defaults to --sn-hover-bg via CSS var fallback, so Black/Dark green are unaffected) lets the persistent selected row use a different grey than the transient hover wash'],
         ['changed','White --sn-active-bg set to --prim-grey-50 (#f8f8f8), clearly lighter than --sn-hover-bg\'s --prim-grey-150 (#ededed) — hovering a different item and the currently-selected item now read as two distinct greys instead of matching'],
       ]},
-      {version:'1.65.8', date:'2026-08-07', author:'Mo', title:'Side Nav — reverted Black to its original green-chip active marker; White-only lighten + List item/row grey consistency', changes:[
+      {version:'1.65.11', date:'2026-08-07', author:'Mo', title:'Side Nav — reverted Black to its original green-chip active marker; White-only lighten + List item/row grey consistency', changes:[
         ['changed','Black (Charcoal) reverted to its pre-feedback active state: a solid brand-green icon chip with no row fill, and --sn-hover-bg back to rgba(255,255,255,.1) — the recent grey-row/green-glyph active treatment and lightness tuning were intended for White only, not Black'],
         ['changed','White --sn-hover-bg lightened again to --prim-grey-150 (#ededed, was #e6e6e6) and --sn-tint (the "List item" selector + company badge background) changed from a green-tinted grey to the same --prim-grey-150 — the selector and the nav hover/active row now share one consistent grey'],
       ]},
-      {version:'1.65.7', date:'2026-08-07', author:'Mo', title:'Side Nav — hover/active row lightened; icon chip now reads as the darker shape in every context', changes:[
+      {version:'1.65.10', date:'2026-08-07', author:'Mo', title:'Side Nav — hover/active row lightened; icon chip now reads as the darker shape in every context', changes:[
         ['changed','--sn-hover-bg flipped from darker-than-chip to lighter-than-chip across all three colour contexts: White #E6E6E6 (was #BDBDBD), Black #8A8A8A (was a dark rgba(255,255,255,.1) wash), Dark green #69927D (was the same dark wash) — the row is now a light highlight and the icon chip consistently reads as the deeper-toned shape sitting on top of it'],
       ]},
-      {version:'1.65.6', date:'2026-08-07', author:'Mo', title:'Side Nav — active state is now a full-row grey fill with a green glyph, not a green chip', changes:[
+      {version:'1.65.9', date:'2026-08-07', author:'Mo', title:'Side Nav — active state is now a full-row grey fill with a green glyph, not a green chip', changes:[
         ['changed','Active/selected nav item no longer turns its icon chip brand-green — the chip stays its idle grey and only the glyph turns green; the row instead gets the same persistent full-width grey fill as hover (was: chip-only, no row fill)'],
         ['fixed','White context\'s hover/active row fill was a semi-transparent black wash that read almost identical to the idle icon chip\'s #DDD grey. --sn-hover-bg (White) is now a solid --prim-grey-600 (#BDBDBD), clearly darker than the chip so the two greys don\'t blend'],
       ]},
-      {version:'1.65.5', date:'2026-08-07', author:'Mo', title:'Side Nav — collapsible nested items with count badges, stronger grey hover states', changes:[
+      {version:'1.65.8', date:'2026-08-07', author:'Mo', title:'Side Nav — collapsible nested items with count badges, stronger grey hover states', changes:[
         ['added','Nav items can now carry a children array (e.g. Transactions → Pending 4 / Completed 128 / Refunded 3) rendered as an indented .snav-sub list with a rotating chevron and .snav-subitem__count badges; click the parent row to expand/collapse (Transactions starts expanded in the live playground)'],
         ['changed','--sn-hover-bg raised from a faint wash (rgba .04/.06) to a clearly visible full-row grey (rgba .07 White, .1 Black/Dark green) across items and the new sub-items'],
       ]},
-      {version:'1.65.4', date:'2026-08-07', author:'Mo', title:'Side Nav — smaller glyphs without shrinking the icon chip/badge cells; user footer now uses the real Avatar component', changes:[
+      {version:'1.65.7', date:'2026-08-07', author:'Mo', title:'Side Nav — smaller glyphs without shrinking the icon chip/badge cells; user footer now uses the real Avatar component', changes:[
         ['changed','Nav item icon chip and the company badge previously sized themselves from padding + glyph, so shrinking the glyph also shrank the chip. Decoupled with a new --sn-chip-size token (fixed 29px Regular / 19px Small) and a fixed 40px/38px company badge box; glyphs render smaller (14px/9px item, 16px badge) while the cells stay the original size'],
         ['changed','User footer badge replaced with the real Avatar component (.avt.avt--xs, initials "MO") instead of a custom --sn-user-badge square with a generic user glyph — removed the now-dead .snav__user-badge CSS and --sn-user-badge/--sn-user-glyph tokens from all three colour contexts'],
       ]},
-      {version:'1.65.3', date:'2026-08-07', author:'Mo', title:'Side Nav — fixed invisible menu/company/footer icons (fill vs. stroke mismatch)', changes:[
+      {version:'1.65.6', date:'2026-08-07', author:'Mo', title:'Side Nav — fixed invisible menu/company/footer icons (fill vs. stroke mismatch)', changes:[
         ['fixed','.snav-item__icon svg, .snav__companybadge svg, .snav__seclink svg and .snav__user-badge svg all forced fill:none;stroke:currentColor, but every icon they render (Home, Transactions, Payouts, Customers, Notifications, Settings, the company store badge, secondary links, user badge) is a solid FA-style filled glyph from the shared ICONS set with no stroke path — so nothing was visible. Switched all four rules to fill:currentColor;stroke:none, matching how the Icons foundation page itself renders .icn svg'],
         ['fixed','Transactions item used icon key \'credit-card\', which doesn\'t exist in ICONS and was silently falling back to the info glyph; swapped to \'receipt\''],
         ['fixed','The company selector\'s chevron used iconSvg(\'chevron-down\'), also not a real ICONS key (same silent info-glyph fallback); replaced with a small hardcoded stroke chevron matching .snav__selector-chev\'s existing stroke-based styling'],
       ]},
-      {version:'1.65.2', date:'2026-08-07', author:'Mo', title:'Side Nav playground — Colour and Size toggle pills gain leading icons', changes:[
+      {version:'1.65.5', date:'2026-08-07', author:'Mo', title:'Side Nav playground — Colour and Size toggle pills gain leading icons', changes:[
         ['added','Colour toggle (Black/White/Dark green) pills now show a small colour swatch matching that context\'s panel background, ahead of the label'],
         ['added','Size toggle (Regular/Small) pills now show a matching outline-square icon sized to hint at the relative panel size'],
       ]},
-      {version:'1.65.1', date:'2026-08-07', author:'Mo', title:'Side Nav — smaller menu icons; Charcoal context recoloured to true black and made the default', changes:[
+      {version:'1.65.4', date:'2026-08-07', author:'Mo', title:'Side Nav — smaller menu icons; Charcoal context recoloured to true black and made the default', changes:[
         ['changed','Nav item icon glyph reduced from 20px to 17px (Regular) and 12px to 11px (Small) — applies across all three colour contexts since size is driven by the shared --sn-glyph token'],
         ['changed','.snav--charcoal background changed from #252525 (--prim-grey-1100) to true black (--prim-black)'],
         ['changed','Playground COLOURS toggle relabelled "Charcoal" to "Black" and reordered first; playground now loads with the Black context selected by default (was White)'],
+      ]},
+      {version:'1.65.3', date:'2026-08-11', author:'Mo', title:'Red and deep orange pushed to the back of the chart palette', changes:[
+        ['changed','CHART_COLORS (the Colours page\'s "Chart Colours" / "Chart Colours — Desaturated" families) reorders Electricity (#ff9900, deep orange), Payments (#ed0c40, red) and Voice NFA (#c43a3a, red) to the last three slots of the 16-colour set — every other colour is exhausted before a chart falls back to one of them, since red/deep orange read as error or urgency'],
+        ['changed','Bar, Line & Area, Donut and Distribution Charts\' existing "Don\'t lead with red or orange" rule reworded to "Don\'t reach for red or deep orange — use them very seldom, only once every other chart colour is exhausted", matching the same seldom-use standard now baked into the palette order'],
+      ]},
+      {version:'1.65.2', date:'2026-08-07', author:'Helen', title:'Avatar gets the full Pills-page treatment', changes:[
+        ['changed','Avatar rebuilt from a static section into a tabbed .sec--tabbed page (Overview / Style / Code / Changelog), matching Pills\' structure — hero with a mini live preview, sec-tabs bar, and a Changelog tab holding the section\'s auto-injected changelog block'],
+        ['added','Interactive playground (apg state) with Type (Photo/Initials/Icon), Size (XS–XL), Presence (None/Online/Offline) and an editable Initials input, rendered into both an Overview mount and a smaller Code-tab mount from the same shared state'],
+        ['added','Key types grid replacing Pills\' colour-variant grid — guidance on when to reach for Photo vs Initials vs Icon'],
+        ['added','Three In-context mockups: a user list row, an avatar group/stack, and a profile header'],
+        ['added','Style tab: anatomy, size table, a colour/presence token table (no colour-variant axis, since Avatar has none), and a genuine presence-only states grid'],
+        ['added','Code tab with HTML/CSS, Blazor and React TSX behind a segmented language switcher, driven by the same playground state'],
+        ['fixed','Style tab\'s anatomy "Presence dot" card rendered the bare .avt__status span outside any sized .avt parent, so its 27%-of-parent width/height had nothing to resolve against and the dot warped — now shown inside an actual .avt avt--lg swatch, matching how the dot really sits'],
+        ['changed','Placeholder person renamed from "Mo Osei" (confusable with the changelog author "Mo") to "Jane Cole" throughout the playground default, In-context mockups, and code samples'],
+      ]},
+      {version:'1.65.1', date:'2026-08-07', author:'Mo', title:'Playground Header toggle (default off); fixed clipped trailing links and a malformed Focused ring', changes:[
+        ['added','New Header toggle in the Playground controls, off by default — the single-row demo now matches its original bare-row presentation unless Header is switched on, at which point it gains the black head + card frame'],
+        ['fixed','.tbl-pg__card only set overflow:hidden, so the trailing links (shown in the Hover state) got clipped off the right edge on narrower viewports instead of being reachable; added overflow-x:auto to match the real Interactive table\'s .tbl-wrap pattern'],
+        ['fixed','The Focused state\'s inset ring looked clipped at the bottom corners because the row had border-radius:0 while its card ancestor clipped to a 14px rounded corner; .tbl-pg__card .tbl-row now carries a matching border-radius:0 0 13px 13px'],
       ]},
       {version:'1.65.0', date:'2026-08-07', author:'Helen', title:'Alert rebuilt with the full Pills-page treatment — tabs, playground, In context, Style & Code', changes:[
         ['changed','Alert moves from a flat single-panel section to the .sec--tabbed convention shared by Pills, Switch, Tags and Badges: a hero with a live preview, and Overview / Style / Code / Changelog tabs'],
@@ -12559,6 +13152,22 @@ const CHANGELOG = {
         ['added','Style tab gains an Anatomy diagram (Icon/Title/Message/Dismiss), a Colour variants grid with a background/icon token table (light + dark hex), and a States grid (Default/Dismissible)'],
         ['added','Code tab gains a live snippet synced to the Playground, with a segmented HTML / Blazor / React TSX switcher'],
         ['changed','Unlike Pills, Alert has no size axis (single size) and no selectable state — those concepts don\'t apply here and were left out of the playground, Style tab and variant grids rather than stubbed in'],
+      ]},
+      {version:'1.64.23', date:'2026-08-07', author:'Mo', title:'Fixed Playground header label misalignment', changes:[
+        ['fixed','Playground header labels (Product/Column/Status) were missing a spacer for the row\'s product picture, so they sat 30px left of the cells they label. Added a dedicated picture-width spacer alongside the checkbox spacer so every header label now lines up exactly with its row cell.'],
+      ]},
+      {version:'1.64.22', date:'2026-08-07', author:'Mo', title:'Playground header moved inside the row card, gains Sorting and Checkbox toggles', changes:[
+        ['changed','The Playground\'s header bar now sits inside the same bordered/rounded card as the single-row demo (.tbl-pg__card wraps .tbl-pg__head + the row), instead of floating above it as a separate full-width bar'],
+        ['added','New Sorting and Checkbox pill toggles in the Playground controls — Sorting shows/hides the sort icons on every header label, Checkbox shows/hides the row\'s leading checkbox and its matching header spacer'],
+      ]},
+      {version:'1.64.21', date:'2026-08-07', author:'Mo', title:'Playground gains a header row; Actions header label removed; Amount header realigned', changes:[
+        ['added','The Tables Playground single-row demo now renders a black header bar above the row (Product/Column x3/Status, each with a sort icon) so the live demo matches the full Interactive table header'],
+        ['removed','The Interactive table header\'s Actions column no longer shows a visible "Actions" label (kept as an aria-label for accessibility) since that column isn\'t sortable'],
+        ['fixed','.tbl-head__cell.tcol-amt now sets justify-content:flex-end so the "Amount" label + sort icon align right, matching the right-aligned numeric values in the column below'],
+      ]},
+      {version:'1.64.20', date:'2026-08-07', author:'Mo', title:'Table headers restyled to black fill with sort icons, matching the Customer Service Portal spec', changes:[
+        ['changed','.tbl-head (Interactive table) and .dd-table thead th (Reporting variant) backgrounds changed from var(--chrome-nav) to a fixed #000 fill, with header label colour changed from var(--chrome-muted) to #fff — matches the Figma "Support table header" component and stays black in both light and dark theme'],
+        ['added','Every sortable header cell in both table variants now shows a white up/down sort icon (.tbl-sort-icon) next to its label; the Interactive table\'s Actions column and checkbox column are left without one since they aren\'t sortable'],
       ]},
       {version:'1.64.19', date:'2026-08-07', author:'Mo', title:'Restored the always-visible chart value labels lost in an earlier merge', changes:[
         ['fixed','Bar chart value labels, Line & Area point labels, and the Donut legend\'s raw figures (all shipped in a since-orphaned PR) had been silently dropped — the PR that added them was based on a branch that merged into main before the PR itself did, so its commit never reached main\'s history. Reapplied all three onto the current file: .cht__val CSS rule, the bar/line renderer text elements, and fmt(x.v) in the donut legend'],
@@ -13369,7 +13978,10 @@ const CHANGELOG = {
     ]
   },
   components: [
-    {secId:'s-charts-bar', name:'Bar Charts', version:'1.4.2', entries:[
+    {secId:'s-charts-bar', name:'Bar Charts', version:'1.4.3', entries:[
+      {version:'1.4.3', date:'2026-08-11', author:'Mo', title:'Don\'t rule strengthened: red/deep orange are last-resort, not just "not first"', changes:[
+        ['changed','"Don\'t lead with red or orange" reworded to "Don\'t reach for red or deep orange — use them very seldom, only once every other chart colour is exhausted", so the rule reads as a last-resort standard rather than just "don\'t go first"'],
+      ]},
       {version:'1.4.2', date:'2026-08-07', author:'Mo', title:'Restored the always-visible value labels above each bar', changes:[
         ['fixed','.cht__val text label above each bar (added in a prior release) had been silently dropped by a later merge — reapplied the CSS rule and the bar renderer\'s text element, restoring the value shown above every bar without needing to hover'],
       ]},
@@ -13408,7 +14020,10 @@ const CHANGELOG = {
         ['added','Interactive inline-SVG bar, line, area and donut charts rendered from data, Flash colour palette, with hover tooltips, dim-the-rest emphasis, donut pop-out and an interactive legend'],
       ]},
     ]},
-    {secId:'s-charts-line', name:'Line & Area Charts', version:'1.1.2', entries:[
+    {secId:'s-charts-line', name:'Line & Area Charts', version:'1.1.3', entries:[
+      {version:'1.1.3', date:'2026-08-11', author:'Mo', title:'Don\'t rule strengthened: red/deep orange are last-resort, not just "not first"', changes:[
+        ['changed','"Don\'t lead with red or orange" reworded to "Don\'t reach for red or deep orange — use them very seldom, only once every other chart colour is exhausted"'],
+      ]},
       {version:'1.1.2', date:'2026-08-07', author:'Mo', title:'Restored the always-visible value labels above each point', changes:[
         ['fixed','lineChart()\'s .cht__val text label above each point (added in a prior release) had been silently dropped by a later merge — reapplied the CSS rule, the padT increase, and the vals text elements, restoring the value shown above every point without needing to hover'],
       ]},
@@ -13427,7 +14042,10 @@ const CHANGELOG = {
         ['added','Line & Area Charts — carved out of the former combined Charts page into its own section, with a "When to use" tailored to trend charts specifically'],
       ]},
     ]},
-    {secId:'s-charts-donut', name:'Donut Charts', version:'1.1.2', entries:[
+    {secId:'s-charts-donut', name:'Donut Charts', version:'1.1.3', entries:[
+      {version:'1.1.3', date:'2026-08-11', author:'Mo', title:'Don\'t rule strengthened: red/deep orange are last-resort, not just "not first"', changes:[
+        ['changed','"Don\'t lead with red or orange" reworded to "Don\'t reach for red or deep orange — use them very seldom, only once every other chart colour is exhausted"'],
+      ]},
       {version:'1.1.2', date:'2026-08-07', author:'Mo', title:'Restored the legend\'s always-visible raw figures', changes:[
         ['fixed','.cht-legend__item\'s fmt(x.v) raw figure (added in a prior release, e.g. "Card · 1.2k · 52%") had been silently dropped by a later merge, leaving only the percentage — reapplied it to the legend\'s innerHTML template'],
       ]},
@@ -13462,7 +14080,10 @@ const CHANGELOG = {
         ['added','Progress Meters — carved out of the former combined Charts page into its own section, with a "When to use" tailored to single-value-against-a-limit meters specifically'],
       ]},
     ]},
-    {secId:'s-charts-distribution', name:'Distribution Charts', version:'1.2.0', entries:[
+    {secId:'s-charts-distribution', name:'Distribution Charts', version:'1.2.1', entries:[
+      {version:'1.2.1', date:'2026-08-11', author:'Mo', title:'Don\'t rule strengthened: red/deep orange are last-resort, not just "not first"', changes:[
+        ['changed','"Don\'t lead with red or orange" reworded to "Don\'t reach for red or deep orange — use them very seldom, only once every other chart colour is exhausted"'],
+      ]},
       {version:'1.2.0', date:'2026-08-07', author:'Mo', title:'Ranked distribution bars now match the Do rule: 25% opacity default, full opacity on hover', changes:[
         ['fixed','.dd-dist__fill (the ranked, one-row-per-category bars) had no opacity treatment — every fill rendered at full saturation with no way to see the desaturated/inactive state the "When to use" Do rule already described. Now defaults to opacity:.25, jumping to opacity:1 when the row is hovered. The segmented bar (.dd-break__seg) already had this treatment from a prior release'],
       ]},
@@ -13658,7 +14279,17 @@ const CHANGELOG = {
         ['added','Single-select segmented control and multi-select formatting toolbar, both interactive'],
       ]},
     ]},
-    {secId:'s-avatar', name:'Avatar', version:'1.1.1', entries:[
+    {secId:'s-avatar', name:'Avatar', version:'1.2.0', entries:[
+      {version:'1.2.0', date:'2026-08-07', author:'Helen', title:'Full Pills-page treatment: tabs, playground, In context, Style & Code', changes:[
+        ['added','Tabbed Overview/Style/Code/Changelog layout matching Pills, with a hero mini preview and .sec-tabs bar'],
+        ['added','Interactive playground with Type/Size/Presence controls and an editable Initials field, with live code generation (HTML/Blazor/TSX)'],
+        ['added','Three In-context mockups: user list row, avatar group/stack, and profile header'],
+        ['added','Key types grid replacing Pills\' colour-variant grid, for Photo/Initials/Icon guidance'],
+        ['added','Style tab: anatomy breakdown, size table, colour/presence token table, and a presence-only states grid (None/Online/Offline)'],
+        ['changed','Do/Dont list grows from 3 do / 3 dont to 4 do / 3 dont, adding a rule to use two uppercase letters for initials'],
+        ['fixed','Anatomy tab\'s "Presence dot" swatch, which rendered warped with no sized parent to resolve its percentage-based width/height against'],
+        ['changed','Placeholder person renamed from "Mo Osei" to "Jane Cole" everywhere, to avoid confusion with changelog author "Mo"'],
+      ]},
       {version:'1.1.1', date:'2026-08-03', author:'Mo', title:'AI context tab added', changes:[
         ['added','AI context tab documenting the real, fully static .avt/.avt--*/.avt__status/.avt-group/.avt-more markup, plus its existing "When to use" Do/Dont guidance (3 do / 3 dont)'],
       ]},
@@ -13758,7 +14389,11 @@ const CHANGELOG = {
         ['added','New "Logos" page under the Brand category listing all 8 Flash logo variations (Primary, White, Monochrome Black, Monochrome White — each horizontal and stacked), each downloadable as a transparent SVG or PNG from assets/logos/'],
       ]},
     ]},
-    {secId:'s-colours', name:'Colours', version:'1.14.0', entries:[
+    {secId:'s-colours', name:'Colours', version:'1.14.1', entries:[
+      {version:'1.14.1', date:'2026-08-11', author:'Mo', title:'Chart Colours reordered so red and deep orange sit last, used only once the rest of the set is exhausted', changes:[
+        ['changed','CHART_COLORS is now its own literal 16-colour order rather than spreading CATS directly: Electricity (#ff9900, deep orange), Payments (#ed0c40, red) and Voice NFA (#c43a3a, red) move to the final three slots so charts/data-viz reach for every other colour first — red and deep orange read as error/urgency, so should be used very seldom. Category Colours (CATS) itself is untouched; only the chart-specific palette order changed. Chart Colours — Desaturated inherits the same order automatically'],
+        ['changed','"Chart Colours" family description on the Colours page updated to state the seldom-use rule for red/deep orange directly'],
+      ]},
       {version:'1.14.0', date:'2026-08-07', author:'Mo', title:'Chart Colours — Desaturated now matches the real chart default of 25% opacity', changes:[
         ['changed','CHART_DESAT_OPACITY moves from 0.45 to 0.25, and the family\'s description updated from "the dim the rest treatment used on chart hover" to describe the actual mechanism: the default, inactive-state opacity charts render at before a bar/slice/point/segment is hovered'],
       ]},
@@ -14412,7 +15047,28 @@ const CHANGELOG = {
         ['added','Empty State section (s-empty-state) — a dashed-border card with a muted glyph, title, short explanation and one primary action, plus When to use guidance'],
       ]},
     ]},
-    {secId:'s-tables', name:'Tables', version:'1.2.0', entries:[
+    {secId:'s-tables', name:'Tables', version:'1.3.4', entries:[
+      {version:'1.3.4', date:'2026-08-07', author:'Mo', title:'Header toggle (default off) for the Playground; fixed clipped links and Focused ring', changes:[
+        ['added','Header toggle in the Playground controls, defaulting to Off — the single-row demo reverts to its original bare-row look unless switched on'],
+        ['fixed','.tbl-pg__card gained overflow-x:auto (matching .tbl-wrap) so the Hover state\'s trailing links scroll into view instead of being clipped by the card\'s overflow:hidden on narrow viewports'],
+        ['fixed','.tbl-pg__card .tbl-row now matches its card ancestor\'s corner radius (0 0 13px 13px) so the Focused state\'s inset ring no longer looks clipped at the bottom corners'],
+      ]},
+      {version:'1.3.3', date:'2026-08-07', author:'Mo', title:'Fixed Playground header label misalignment', changes:[
+        ['fixed','Header labels (Product/Column/Status) in the Playground demo now include a 30px spacer matching the row\'s product picture, in addition to the checkbox spacer — labels were previously offset 30px left of the cells they describe'],
+      ]},
+      {version:'1.3.2', date:'2026-08-07', author:'Mo', title:'Playground header nested inside the row card, plus Sorting/Checkbox toggles', changes:[
+        ['changed','.tbl-pg__head now renders inside .tbl-pg__card together with the row, forming one bordered/rounded card — matching how the real Interactive table pairs its header with its body, instead of a detached bar above the demo'],
+        ['added','Sorting toggle (Playground controls) shows/hides every header sort icon; Checkbox toggle shows/hides the row\'s leading checkbox together with its header spacer'],
+      ]},
+      {version:'1.3.1', date:'2026-08-07', author:'Mo', title:'Playground header row added; Actions label removed; Amount header realigned', changes:[
+        ['added','New .tbl-pg__head bar renders above the Playground\'s single-row demo, giving it a black header with generic column labels + sort icons so it matches the full Interactive table'],
+        ['removed','Visible "Actions" text removed from the Interactive table header (column isn\'t sortable); kept as aria-label for screen readers'],
+        ['fixed','Amount header label + sort icon now right-align via .tbl-head__cell.tcol-amt{justify-content:flex-end}, matching the right-aligned Amount values in the rows below'],
+      ]},
+      {version:'1.3.0', date:'2026-08-07', author:'Mo', title:'Header restyled to black fill with sort icons (Customer Service Portal spec)', changes:[
+        ['changed','Interactive table (.tbl-head) and Reporting variant (.dd-table thead th) header backgrounds changed to a fixed #000 fill with white (#fff) label text, replacing the muted-grey-on-nav-surface style — always black regardless of light/dark theme'],
+        ['added','White up/down sort icon (.tbl-sort-icon) added next to every sortable column label in both table variants'],
+      ]},
       {version:'1.2.0', date:'2026-08-04', author:'Mo', title:'Reporting variant added, migrated from Data Display', changes:[
         ['added','Reporting variant — a denser, plain-table style with an uppercase header, tabular numerics, hover rows and a status dot, alongside the flex-row Table Row'],
       ]},
@@ -15198,7 +15854,7 @@ function renderSectionChangelogs() {
 // state is the single source of truth (Default / Hover / Focused / Checked / Disabled),
 // mirroring the five states in the reference below. Trailing links are a hover-revealed
 // affordance, so they only render in the Hover state — never at rest.
-var tblPg = { product:'1v', status:'pending', state:'default', links:true };
+var tblPg = { product:'1v', status:'pending', state:'default', links:true, sort:true, checkbox:true, header:false };
 var TBL_PG_GIFT_SVG = '<svg viewBox="0 0 24 24" fill="none"><path d="M20 12v8H4v-8M2 7h20v5H2zM12 22V7M12 7S9 2 6.5 4.5 12 7 12 7zM12 7s3-5 5.5-2.5S12 7 12 7z" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"/></svg>';
 
 function tblPgRowHtml(){
@@ -15217,8 +15873,11 @@ function tblPgRowHtml(){
   var linksHtml = (tblPg.links && tblPg.state === 'hover')
     ? '<span class="tbl-cell--links"><a class="tbl-link">Link text</a><a class="tbl-link">Link text</a></span>'
     : '';
+  var checkboxHtml = tblPg.checkbox
+    ? '<input type="checkbox" class="fsel__input tbl-check tbl-cell--check" ' + checkedAttr + ' ' + disabledAttr + ' onchange="tblPgToggleChecked(this)" aria-label="Select row">'
+    : '';
   return '<div class="' + rowCls + '" id="tblpg-row">' +
-    '<input type="checkbox" class="fsel__input tbl-check tbl-cell--check" ' + checkedAttr + ' ' + disabledAttr + ' onchange="tblPgToggleChecked(this)" aria-label="Select row">' +
+    checkboxHtml +
     '<span class="tbl-pic ' + product.cls + '">' + product.inner + '</span>' +
     '<span class="tbl-cell tbl-cell--name">' + product.name + '</span>' +
     '<span class="tbl-cell tbl-cell--col">Lorem ipsum</span>' +
@@ -15246,18 +15905,53 @@ function renderTablesPlayground(){
   var linksBtns =
     '<button type="button" class="tbl-pg__pill' + (!linksOn?' on':'') + '" onclick="tblPgSetLinks(false)">Off</button>' +
     '<button type="button" class="tbl-pg__pill' + (linksOn?' on':'') + '" onclick="tblPgSetLinks(true)">On</button>';
+  var sortOn = tblPg.sort;
+  var sortBtns =
+    '<button type="button" class="tbl-pg__pill' + (!sortOn?' on':'') + '" onclick="tblPgSetBool(\'sort\',false)">Off</button>' +
+    '<button type="button" class="tbl-pg__pill' + (sortOn?' on':'') + '" onclick="tblPgSetBool(\'sort\',true)">On</button>';
+  var checkboxOn = tblPg.checkbox;
+  var checkboxBtns =
+    '<button type="button" class="tbl-pg__pill' + (!checkboxOn?' on':'') + '" onclick="tblPgSetBool(\'checkbox\',false)">Off</button>' +
+    '<button type="button" class="tbl-pg__pill' + (checkboxOn?' on':'') + '" onclick="tblPgSetBool(\'checkbox\',true)">On</button>';
+  var headerOn = tblPg.header;
+  var headerBtns =
+    '<button type="button" class="tbl-pg__pill' + (!headerOn?' on':'') + '" onclick="tblPgSetBool(\'header\',false)">Off</button>' +
+    '<button type="button" class="tbl-pg__pill' + (headerOn?' on':'') + '" onclick="tblPgSetBool(\'header\',true)">On</button>';
   var hint = (tblPg.links && tblPg.state !== 'hover')
     ? '<div class="tbl-pg__hint">Trailing links are revealed on hover &mdash; set State to <strong>Hover</strong> to preview them.</div>'
     : '';
 
+  var sortIcon = sortOn ? '<svg class="tbl-sort-icon" viewBox="0 0 10 12" fill="none"><path d="M5 0L8.5 4.5H1.5L5 0Z" fill="currentColor"/><path d="M5 12L1.5 7.5H8.5L5 12Z" fill="currentColor"/></svg>' : '';
+  // Spacers mirror the row's own leading elements (checkbox, then the product
+  // picture) so the header labels below line up with the row's real cells —
+  // .tbl-pg__head and .tbl-row share the same gap:20px/padding:0 14px.
+  var checkSpacer = checkboxOn ? '<span style="flex:0 0 20px"></span>' : '';
+  var picSpacer = '<span style="flex:0 0 30px"></span>';
+  var stageContent = headerOn
+    ? '<div class="tbl-pg__card">' +
+        '<div class="tbl-pg__head">' +
+          checkSpacer +
+          picSpacer +
+          '<span class="tbl-head__cell" style="flex:0 0 92px">Product' + sortIcon + '</span>' +
+          '<span class="tbl-head__cell" style="flex:0 0 116px">Column' + sortIcon + '</span>' +
+          '<span class="tbl-head__cell" style="flex:0 0 116px">Column' + sortIcon + '</span>' +
+          '<span class="tbl-head__cell" style="flex:0 0 116px">Column' + sortIcon + '</span>' +
+          '<span class="tbl-head__cell">Status' + sortIcon + '</span>' +
+        '</div>' +
+        tblPgRowHtml() +
+      '</div>'
+    : tblPgRowHtml();
   el.innerHTML =
     '<div class="tbl-pg">' +
-      '<div class="tbl-pg__stage">' + tblPgRowHtml() + '</div>' +
+      '<div class="tbl-pg__stage">' + stageContent + '</div>' +
       '<div class="tbl-pg__ctrls">' +
         '<div class="tbl-pg__group"><span class="tbl-pg__clabel">Product</span><div class="tbl-pg__pill-row">' + productBtns + '</div></div>' +
         '<div class="tbl-pg__group"><span class="tbl-pg__clabel">Status</span><div class="tbl-pg__pill-row">' + statusBtns + '</div></div>' +
         '<div class="tbl-pg__group"><span class="tbl-pg__clabel">State</span><div class="tbl-pg__pill-row">' + stateBtns + '</div></div>' +
         '<div class="tbl-pg__group"><span class="tbl-pg__clabel">Links</span><div class="tbl-pg__pill-row">' + linksBtns + '</div></div>' +
+        '<div class="tbl-pg__group"><span class="tbl-pg__clabel">Header</span><div class="tbl-pg__pill-row">' + headerBtns + '</div></div>' +
+        '<div class="tbl-pg__group"><span class="tbl-pg__clabel">Sorting</span><div class="tbl-pg__pill-row">' + sortBtns + '</div></div>' +
+        '<div class="tbl-pg__group"><span class="tbl-pg__clabel">Checkbox</span><div class="tbl-pg__pill-row">' + checkboxBtns + '</div></div>' +
         hint +
       '</div>' +
     '</div>';
@@ -15269,6 +15963,10 @@ function tblPgSet(key, val){
 }
 function tblPgSetLinks(val){
   tblPg.links = val;
+  renderTablesPlayground();
+}
+function tblPgSetBool(key, val){
+  tblPg[key] = val;
   renderTablesPlayground();
 }
 // Clicking the real checkbox maps to the Checked / Default states so the row and the
@@ -16581,6 +17279,7 @@ try { renderSectionChangelogs(); } catch(e){ console.error('section-changelog',e
    instead of leaving it inline above the tabs. */
 [
   {secId:'s-chips',  panelId:'pill-changelog-panel'},
+  {secId:'s-avatar', panelId:'avatar-changelog-panel'},
   {secId:'s-switch', panelId:'sw-changelog-panel'},
   {secId:'s-dropdown', panelId:'dd-changelog-panel'},
   {secId:'s-tags',   panelId:'tag-changelog-panel'},
