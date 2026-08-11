@@ -1,6 +1,6 @@
 ---
 document: Flash UI Reskin Guide
-version: 2.4.0
+version: 2.4.1
 design_system: https://mosw1014.github.io/flash-coded-design-system/
 purpose: Guide design judgement while the live design system supplies tokens, components and implementation.
 scope: Existing interfaces created with Claude, Replit, Lovable or similar tools.
@@ -391,7 +391,7 @@ Side Nav is **persistent chrome, not page content**. It is the user's map of the
 - **The collapsed state keeps the active marker.** An icon-only rail with no visible active item is not a valid collapsed state — the user must still be able to see where they are.
 - **This is the one thing progressive disclosure does not apply to.** The Progressive disclosure rule in Section 5 says to collapse occasional forms and side tasks behind triggers; navigation is the explicit exception. Never treat the nav panel as clutter to be tidied away.
 
-> **Availability:** the live `s-nav` currently ships three colour contexts (White / Charcoal / Dark green) and two sizes (Regular 208px / Small 170px) — it has **no** icon-only rail variant yet. Until it does, treat the rail as a documented gap per Section 2: use the Small size, keep the panel present, and say so in your report rather than inventing a collapsed treatment that doesn't trace back to the live component.
+> **Availability:** the live `s-nav` ships three colour contexts (White / Charcoal / Dark green), two sizes (Regular 208px / Small 170px), and a `.snav--collapsed` icon-only rail (72px Regular / 60px Small) with an edge-docked collapse/expand toggle button — read the component's own live source rather than reconstructing the rail from scratch.
 
 ### Form field consistency
 
