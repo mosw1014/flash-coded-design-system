@@ -2174,8 +2174,10 @@ body.home .main{max-width:none;margin:0;padding:0}
 .sg-iconbtn:hover{opacity:.85}
 /* ---- Breadcrumb ---- */
 .bcr{display:flex;align-items:center;flex-wrap:wrap;gap:5px;font-size:13px}
+.bcr--sm{font-size:12px;gap:4px}
+.bcr--reg{font-size:13px;gap:5px}
 .bcr__link{color:var(--chrome-muted);text-decoration:none;border-radius:5px;padding:2px 6px;transition:color .15s,background .15s}
-.bcr__link:hover{color:var(--chrome-txt);background:var(--chrome-hover)}
+.bcr__link:hover,.bcr__link.is-hover{color:var(--chrome-txt);background:var(--chrome-hover)}
 .bcr__sep{color:var(--chrome-muted);opacity:.55;font-size:15px;line-height:1}
 .bcr__current{color:var(--chrome-txt);font-weight:600;padding:2px 6px}
 .bcr__ellipsis{color:var(--chrome-muted);padding:2px 4px;letter-spacing:1px}
@@ -5205,7 +5207,7 @@ body.home .main{max-width:none;margin:0;padding:0}
     ".dd-status",
     ".dd-dot"
   ],
-  "css": "/* dd-num/dd-status/dd-dot are exclusive to the Tables \"Reporting variant\" demo */\n.dd-num { text-align:left;font-variant-numeric:tabular-nums;font-weight:700 }\n.dd-status { display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:600;white-space:nowrap }\n.dd-dot { width:7px;height:7px;border-radius:50%;flex-shrink:0 }\n/* ================================================================\n   TABLES\n================================================================ */\n/* Table row — a selectable record row assembled from cells */\n.tbl-row { --tbl-hover:#f4f4f4; --tbl-checked:#e9f9ea;\n  display:flex;align-items:center;gap:20px;\n  min-height:50px;padding:0 14px;border-radius:8px;\n  background:transparent;color:var(--chrome-txt);\n  transition:background .12s,box-shadow .12s; }\n[data-theme=\"dark\"] .tbl-row { --tbl-hover:rgba(255,255,255,.05);--tbl-checked:rgba(16,197,4,.13) }\n.tbl-row.is-hover,.tbl-row:not(.is-disabled):not(.is-checked):hover { background:var(--tbl-hover) }\n.tbl-row.is-focus { background:var(--chrome-bg);box-shadow:inset 0 0 0 2px var(--chrome-txt) }\n.tbl-row.is-checked { background:var(--tbl-checked) }\n.tbl-row.is-disabled { pointer-events:none }\n/* cells */\n.tbl-cell { font-size:14px;font-weight:500;color:var(--chrome-txt);white-space:nowrap;overflow:hidden;text-overflow:ellipsis }\n.tbl-cell--check { flex:0 0 20px }\n.tbl-cell--name { flex:0 0 92px;font-weight:700 }\n.tbl-cell--col { flex:0 0 116px }\n.tbl-cell--links { margin-left:auto;display:flex;gap:22px }\n.tbl-link { color:var(--color-link);font-weight:700;font-size:14px;text-decoration:none;cursor:pointer;white-space:nowrap }\n.tbl-link:hover { text-decoration:underline }\n/* disabled dims the content */\n.tbl-row.is-disabled .tbl-cell,.tbl-row.is-disabled .tbl-link { color:var(--chrome-muted);opacity:.85 }\n.tbl-row.is-disabled .tbl-pic { filter:grayscale(1);opacity:.5 }\n/* product icon */\n.tbl-pic { width:30px;height:30px;border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#fff;font-weight:900;font-size:15px }\n.tbl-pic svg { width:17px;height:17px;display:block }\n.tbl-pic--1v { background:var(--prim-1v-500) }\n.tbl-pic--gift { background:var(--prim-sup-pink-1) }\n/* status tag */\n.tbl-tag { display:inline-flex;align-items:center;height:22px;padding:0 9px;border-radius:6px;font-size:12px;font-weight:700;white-space:nowrap;line-height:1 }\n.tbl-tag--pending { background:#e6e6e6;color:#414141 }\n.tbl-tag--success { background:#16a220;color:#fff }\n.tbl-tag--failed { background:#eb0029;color:#fff }\n[data-theme=\"dark\"] .tbl-tag--pending { background:rgba(255,255,255,.14);color:#e6e6e6 }\n.tbl-pg__stage&gt;.tbl-row { flex:1 1 auto;min-width:640px }\n.tbl-pg__head .tbl-head__cell { flex-shrink:0 }\n.tbl-pg__card .tbl-row { border-radius:0 0 13px 13px }\n.tbl-staterow&gt;.tbl-row { flex:1 1 auto }\n/* full table — header + rows */\n.tbl-wrap { border:1px solid var(--chrome-border);border-radius:14px;overflow:hidden;overflow-x:auto }\n.tbl-inner { min-width:900px }\n.tbl-head { display:flex;align-items:center;gap:20px;padding:0 14px;height:44px;background:#000;border-bottom:1px solid var(--chrome-border) }\n.tbl-head__cell { display:inline-flex;align-items:center;gap:6px;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:#fff;white-space:nowrap }\n.tbl-body .tbl-row { border-radius:0;border-bottom:1px solid var(--chrome-border) }\n.tbl-body .tbl-row:last-child { border-bottom:none }\n/* shared column widths — keep header labels aligned with row cells */\n.tcol-check { flex:0 0 20px }\n.tcol-product { flex:2 1 0;min-width:0;display:flex;align-items:center;gap:12px }\n.tbl-head__cell.tcol-product { gap:6px }\n.tcol-ref { flex:1.3 1 0;min-width:0 }\n.tcol-date { flex:1.4 1 0;min-width:0 }\n.tcol-type { flex:1.2 1 0;min-width:0 }\n.tcol-status { flex:0 0 88px }\n.tcol-amt { flex:0 0 96px;text-align:right;font-variant-numeric:tabular-nums;font-weight:700 }\n.tbl-head__cell.tcol-amt { justify-content:flex-end }\n/* trailing row actions — hidden until the row is hovered or keyboard-focused.\n   :has(:focus-visible), not :focus-within — a plain mouse click leaves the\n   checkbox holding focus, which would keep the row \"stuck\" showing actions. */\n.tcol-actions { flex:0 0 132px;display:flex;justify-content:flex-end;gap:18px;opacity:0;transition:opacity .12s }\n.tbl-body .tbl-row:hover .tcol-actions,.tbl-body .tbl-row.is-hover .tcol-actions,.tbl-body .tbl-row:has(:focus-visible) .tcol-actions { opacity:1 }\n.tbl-head__cell.tcol-actions { opacity:1 }\n/* hover (real + forced .is-hover) */\n.fsel:hover&gt;.fsel__input:not(:disabled),.fsel__input.is-hover:not(:disabled) { border-color:#9a9ea6 }\n.fsel:hover&gt;.fsel__input:checked:not(:disabled),.fsel__input.is-hover:checked:not(:disabled) { border-color:var(--fs-green);filter:brightness(.93) }\n/* focus (real + forced .is-focus) */\n.fsel__input:focus-visible,.fsel__input.is-focus { outline:none;box-shadow:0 0 0 4px var(--fs-ring) }\n.fsel__input:checked:focus-visible,.fsel__input.is-focus:checked { box-shadow:0 0 0 4px rgba(16,197,4,.24) }\n.selref__stage--dark .fsel:hover&gt;.fsel__input:not(:disabled),.selref__stage--dark .fsel__input.is-hover:not(:disabled),[data-theme=\"dark\"] .fsel:hover&gt;.fsel__input:not(:disabled) { border-color:#8b8e97 }",
+  "css": "/* dd-num/dd-status/dd-dot are exclusive to the Tables \"Reporting variant\" demo */\n.dd-num { text-align:left;font-variant-numeric:tabular-nums;font-weight:700 }\n.dd-status { display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:600;white-space:nowrap }\n.dd-dot { width:7px;height:7px;border-radius:50%;flex-shrink:0 }\n/* ================================================================\n   TABLES\n================================================================ */\n/* Table row — a selectable record row assembled from cells */\n.tbl-row { --tbl-hover:#f4f4f4; --tbl-checked:#e9f9ea;\n  display:flex;align-items:center;gap:20px;\n  min-height:50px;padding:0 14px;border-radius:8px;\n  background:transparent;color:var(--chrome-txt);\n  transition:background .12s,box-shadow .12s; }\n[data-theme=\"dark\"] .tbl-row { --tbl-hover:rgba(255,255,255,.05);--tbl-checked:rgba(16,197,4,.13) }\n.tbl-row.is-hover,.tbl-row:not(.is-disabled):not(.is-checked):hover { background:var(--tbl-hover) }\n.tbl-row.is-focus { background:var(--chrome-bg);box-shadow:inset 0 0 0 2px var(--chrome-txt) }\n.tbl-row.is-checked { background:var(--tbl-checked) }\n.tbl-row.is-disabled { pointer-events:none }\n/* cells */\n.tbl-cell { font-size:14px;font-weight:500;color:var(--chrome-txt);white-space:nowrap;overflow:hidden;text-overflow:ellipsis }\n.tbl-cell--check { flex:0 0 20px }\n.tbl-cell--name { flex:0 0 92px;font-weight:700 }\n.tbl-cell--col { flex:0 0 116px }\n.tbl-cell--links { margin-left:auto;display:flex;gap:22px }\n.tbl-link { color:var(--color-link);font-weight:700;font-size:14px;text-decoration:none;cursor:pointer;white-space:nowrap }\n.tbl-link:hover { text-decoration:underline }\n/* disabled dims the content */\n.tbl-row.is-disabled .tbl-cell,.tbl-row.is-disabled .tbl-link { color:var(--chrome-muted);opacity:.85 }\n.tbl-row.is-disabled .tbl-pic { filter:grayscale(1);opacity:.5 }\n/* product icon */\n.tbl-pic { width:30px;height:30px;border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#fff;font-weight:900;font-size:15px }\n.tbl-pic svg { width:17px;height:17px;display:block }\n.tbl-pic--1v { background:var(--prim-1v-500) }\n.tbl-pic--gift { background:var(--prim-sup-pink-1) }\n/* status tag */\n.tbl-tag { display:inline-flex;align-items:center;height:22px;padding:0 9px;border-radius:6px;font-size:12px;font-weight:700;white-space:nowrap;line-height:1 }\n.tbl-tag--pending { background:#e6e6e6;color:#414141 }\n.tbl-tag--success { background:#16a220;color:#fff }\n.tbl-tag--failed { background:#eb0029;color:#fff }\n[data-theme=\"dark\"] .tbl-tag--pending { background:rgba(255,255,255,.14);color:#e6e6e6 }\n.tbl-pg__stage&gt;.tbl-row { flex:1 1 auto;min-width:640px }\n.tbl-pg__head .tbl-head__cell { flex-shrink:0 }\n.tbl-pg__card .tbl-row { border-radius:0 0 13px 13px }\n.tbl-staterow&gt;.tbl-row { flex:1 1 auto }\n/* full table — header + rows */\n.tbl-wrap { border:1px solid var(--chrome-border);border-radius:14px;overflow:hidden;overflow-x:auto }\n.tbl-inner { min-width:900px }\n.tbl-head { display:flex;align-items:center;gap:20px;padding:0 14px;height:44px;background:#000;border-bottom:1px solid var(--chrome-border) }\n.tbl-head__cell { display:inline-flex;align-items:center;gap:6px;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:#fff;white-space:nowrap }\n.tbl-body .tbl-row { border-radius:0;border-bottom:1px solid var(--chrome-border) }\n.tbl-body .tbl-row:last-child { border-bottom:none }\n/* shared column widths — keep header labels aligned with row cells */\n.tcol-check { flex:0 0 20px }\n.tcol-product { flex:2 1 0;min-width:0;display:flex;align-items:center;gap:12px }\n.tbl-head__cell.tcol-product { gap:6px }\n.tcol-ref { flex:1.3 1 0;min-width:0 }\n.tcol-date { flex:1.4 1 0;min-width:0 }\n.tcol-type { flex:1.2 1 0;min-width:0 }\n.tcol-status { flex:0 0 88px }\n.tcol-amt { flex:0 0 96px;text-align:right;font-variant-numeric:tabular-nums;font-weight:700 }\n.tbl-head__cell.tcol-amt { justify-content:flex-end }\n/* trailing row actions — hidden until the row is hovered or keyboard-focused.\n   :has(:focus-visible), not :focus-within — a plain mouse click leaves the\n   checkbox holding focus, which would keep the row \"stuck\" showing actions. */\n.tcol-actions { flex:0 0 132px;display:flex;justify-content:flex-end;gap:18px;opacity:0;transition:opacity .12s }\n.tbl-body .tbl-row:hover .tcol-actions,.tbl-body .tbl-row.is-hover .tcol-actions,.tbl-body .tbl-row:has(:focus-visible) .tcol-actions { opacity:1 }\n.tbl-head__cell.tcol-actions { opacity:1 }\n/* hover (real + forced .is-hover) */\n.fsel:hover&gt;.fsel__input:not(:disabled),.fsel__input.is-hover:not(:disabled) { border-color:#9a9ea6 }\n.fsel:hover&gt;.fsel__input:checked:not(:disabled),.fsel__input.is-hover:checked:not(:disabled) { border-color:var(--fs-green);filter:brightness(.93) }\n/* focus (real + forced .is-focus) */\n.fsel__input:focus-visible,.fsel__input.is-focus { outline:none;box-shadow:0 0 0 4px var(--fs-ring) }\n.fsel__input:checked:focus-visible,.fsel__input.is-focus:checked { box-shadow:0 0 0 4px rgba(16,197,4,.24) }\n.selref__stage--dark .fsel:hover&gt;.fsel__input:not(:disabled),.selref__stage--dark .fsel__input.is-hover:not(:disabled),[data-theme=\"dark\"] .fsel:hover&gt;.fsel__input:not(:disabled) { border-color:#8b8e97 }\n.bcr__link:hover,.bcr__link.is-hover { color:var(--chrome-txt);background:var(--chrome-hover) }",
   "usage": {
     "do": [
       "Use a table for lists of like records — transactions, stores, tickets — that users scan and compare.",
@@ -5220,7 +5222,7 @@ body.home .main{max-width:none;margin:0;padding:0}
       "Don’t mix left- and right-alignment for the same column across rows."
     ]
   },
-  "contentHash": "c7e50a5260b724afb9d3ec612173c67e7622139ec2edf928f559a665d8f8b591",
+  "contentHash": "15f99af868c2dc355483e1f4d15da772b2828c6f7643468cd49c23b54e9baabf",
   "note": "Static hand-authored markup — the reference table's HTML is written directly in the section, not built by JS (a separate #tbl-playground exists only for a single-row live demo). Five row states: default, hover, focused, checked, disabled. The Reporting variant demo (.dd-num/.dd-status/.dd-dot) was migrated from the retired Data Display section; the .dd-table-wrap/.dd-table/.dd-table__name markup it sits in is a shared spec-table utility reused across many sections and is intentionally excluded from this tab's realClasses."
 }
   </pre>
@@ -5822,77 +5824,33 @@ body.home .main{max-width:none;margin:0;padding:0}
     <!-- ============================================================
          BREADCRUMB
     ============================================================ -->
-    <section class="sec" id="s-breadcrumb">
+    <section class="sec sec--tabbed" id="s-breadcrumb">
+      <div class="sec-hero">
       <div class="sec__head">
-        <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Breadcrumb <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.1</span></h1>
-        <p class="sec__desc">A trail showing where the current page sits in the hierarchy, and a one-click route back up. Ancestors are muted links; the current page is a non-interactive, weighted label.</p>
-      </div>
-      <div class="type-sub">
-        <div class="type-sub__title">Standard</div>
-        <div class="type-sub__desc">Each level links to its parent; a chevron separates them. The last item is the current page and isn&rsquo;t a link.</div>
-        <div class="sg-stage">
-          <nav class="bcr" aria-label="Breadcrumb">
-            <a class="bcr__link" href="javascript:void(0)">Dashboard</a>
-            <span class="bcr__sep">&rsaquo;</span>
-            <a class="bcr__link" href="javascript:void(0)">Transactions</a>
-            <span class="bcr__sep">&rsaquo;</span>
-            <a class="bcr__link" href="javascript:void(0)">June 2026</a>
-            <span class="bcr__sep">&rsaquo;</span>
-            <span class="bcr__current" aria-current="page">Payout #4821</span>
-          </nav>
-        </div>
-      </div>
-      <div class="type-sub">
-        <div class="type-sub__title">Truncated</div>
-        <div class="type-sub__desc">When a deep path would wrap or crowd the header, collapse the middle into an ellipsis and keep the root and the last step or two.</div>
-        <div class="sg-stage">
-          <nav class="bcr" aria-label="Breadcrumb">
-            <a class="bcr__link" href="javascript:void(0)">Dashboard</a>
-            <span class="bcr__sep">&rsaquo;</span>
-            <span class="bcr__ellipsis" title="Transactions / June 2026">&hellip;</span>
-            <span class="bcr__sep">&rsaquo;</span>
-            <a class="bcr__link" href="javascript:void(0)">June 2026</a>
-            <span class="bcr__sep">&rsaquo;</span>
-            <span class="bcr__current" aria-current="page">Payout #4821</span>
-          </nav>
-        </div>
-      </div>
-      <div class="type-sub">
-        <div class="type-sub__title">When to use</div>
-        <div class="type-sub__desc">Breadcrumbs orient users in deep structures. In a flat app they add clutter without value.</div>
-        <div class="sel-usage">
-          <div class="sel-usage__card">
-            <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
-            <ul class="sel-usage__list">
-              <li>Use in hierarchies three or more levels deep.</li>
-              <li>Make every ancestor a working link; leave the current page plain.</li>
-              <li>Collapse the middle with an ellipsis when space is tight.</li>
-            </ul>
-          </div>
-          <div class="sel-usage__card">
-            <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don&rsquo;t</div>
-            <ul class="sel-usage__list">
-              <li>Don&rsquo;t use breadcrumbs as the primary navigation.</li>
-              <li>Don&rsquo;t add them to flat, one- or two-level structures.</li>
-              <li>Don&rsquo;t link the current page to itself.</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <details class="ai-ctx">
+        <h1 class="sec__title">Breadcrumb</h1>
+        <div class="sec-header-meta">
+          <span class="comp-ver-badge" style="margin-left:0">v1.1.0</span>
+          <details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-breadcrumb">
 {
-  "status": "static",
+  "status": "js-rendered",
+  "builderFunctions": [
+    "BCR_STATES",
+    "ovBcr",
+    "makeBcrEl"
+  ],
   "realClasses": [
     ".bcr",
+    ".bcr--sm",
+    ".bcr--reg",
     ".bcr__link",
     ".bcr__sep",
     ".bcr__current",
     ".bcr__ellipsis"
   ],
-  "css": "/* ---- Breadcrumb ---- */\n.bcr { display:flex;align-items:center;flex-wrap:wrap;gap:5px;font-size:13px }\n.bcr__link { color:var(--chrome-muted);text-decoration:none;border-radius:5px;padding:2px 6px;transition:color .15s,background .15s }\n.bcr__link:hover { color:var(--chrome-txt);background:var(--chrome-hover) }\n.bcr__sep { color:var(--chrome-muted);opacity:.55;font-size:15px;line-height:1 }\n.bcr__current { color:var(--chrome-txt);font-weight:600;padding:2px 6px }\n.bcr__ellipsis { color:var(--chrome-muted);padding:2px 4px;letter-spacing:1px }",
+  "css": "/* ---- Breadcrumb ---- */\n.bcr { display:flex;align-items:center;flex-wrap:wrap;gap:5px;font-size:13px }\n.bcr--sm { font-size:12px;gap:4px }\n.bcr--reg { font-size:13px;gap:5px }\n.bcr__link { color:var(--chrome-muted);text-decoration:none;border-radius:5px;padding:2px 6px;transition:color .15s,background .15s }\n.bcr__link:hover,.bcr__link.is-hover { color:var(--chrome-txt);background:var(--chrome-hover) }\n.bcr__sep { color:var(--chrome-muted);opacity:.55;font-size:15px;line-height:1 }\n.bcr__current { color:var(--chrome-txt);font-weight:600;padding:2px 6px }\n.bcr__ellipsis { color:var(--chrome-muted);padding:2px 4px;letter-spacing:1px }",
+  "js": "const BCR_STATES = [\n  {key:'default',   label:'Default link',        desc:'A muted ancestor link — clickable, routes back up the hierarchy.'},\n  {key:'hover',      label:'Hover',               desc:'Background tint and darker text signal the link is interactive.'},\n  {key:'current',    label:'Current page',        desc:'Non-interactive, weighted label — the last item in the trail is never a link.'},\n  {key:'truncated',  label:'Truncated / ellipsis', desc:'Middle steps collapse into an ellipsis when the trail is too deep to show in full.'},\n];\n\nfunction ovBcr({items, size='reg', ellipsisAt=-1, hoverAt=-1}){\n  const sepHTML = '&lt;span class=\"bcr__sep\"&gt;&amp;#8250;&lt;/span&gt;';\n  const parts = items.map((it,i)=&gt;{\n    if(i===ellipsisAt) return `&lt;span class=\"bcr__ellipsis\" title=\"${it.title||''}\"&gt;&amp;hellip;&lt;/span&gt;`;\n    if(i===items.length-1) return `&lt;span class=\"bcr__current\" aria-current=\"page\"&gt;${it.t}&lt;/span&gt;`;\n    return `&lt;a class=\"bcr__link${i===hoverAt?' is-hover':''}\" href=\"javascript:void(0)\"&gt;${it.t}&lt;/a&gt;`;\n  });\n  return `&lt;nav class=\"bcr bcr--${size}\" aria-label=\"Breadcrumb\" style=\"max-width:none\"&gt;${parts.join(sepHTML)}&lt;/nav&gt;`;\n}\n\nfunction makeBcrEl(){\n  const wrap = document.createElement('nav');\n  wrap.className = `bcr bcr--${bcpg.size}`;\n  wrap.setAttribute('aria-label','Breadcrumb');\n  wrap.style.setProperty('--cpg-stage-bg', stageBg(bcpg.theme));\n  const {items, hiddenTitle} = bcpgVisible();\n  const sepHTML = '&lt;span class=\"bcr__sep\"&gt;&amp;#8250;&lt;/span&gt;';\n  const parts = items.map((it,i)=&gt;{\n    if(it===null) return `&lt;span class=\"bcr__ellipsis\" title=\"${bcpgEsc(hiddenTitle)}\"&gt;&amp;hellip;&lt;/span&gt;`;\n    if(i===items.length-1) return `&lt;span class=\"bcr__current\" aria-current=\"page\"&gt;${bcpgEsc(it)}&lt;/span&gt;`;\n    return `&lt;a class=\"bcr__link\" href=\"javascript:void(0)\"&gt;${bcpgEsc(it)}&lt;/a&gt;`;\n  });\n  wrap.innerHTML = parts.join(sepHTML);\n  return wrap;\n}",
   "usage": {
     "do": [
       "Use in hierarchies three or more levels deep.",
@@ -5900,15 +5858,73 @@ body.home .main{max-width:none;margin:0;padding:0}
       "Collapse the middle with an ellipsis when space is tight."
     ],
     "dont": [
-      "Don’t use breadcrumbs as the primary navigation.",
-      "Don’t add them to flat, one- or two-level structures.",
-      "Don’t link the current page to itself."
+      "Don't use breadcrumbs as the primary navigation.",
+      "Don't add them to flat, one- or two-level structures.",
+      "Don't link the current page to itself."
     ]
   },
-  "contentHash": "22e312cf24757ae4fbbfcb4fc5f1b9d52a141f3770e445039ff15936625d30d1"
+  "contentHash": "3278779f751157a41c94e02e0f20212f5a629cf92844a1cccad2e25fa01c3072",
+  "note": "ovBcr is the flexible doc-only builder used for the Overview key-variants/in-context illustrations and Style-tab reference, mirroring Accordion's ovAcc pattern; makeBcrEl is the playground builder driven by bcpg state. Breadcrumb has no colour-variant axis, so BCR_STATES (default link/hover/current page/truncated) fills the Key-variants/States slot instead. bcpg (playground state)/getBcrCode*/renderBreadcrumb*/breadcrumbTabSwitch are doc-site-only plumbing, excluded."
 }
   </pre>
 </details>
+        </div>
+      </div>
+      <div class="sec-hero__preview">
+        <nav class="bcr bcr--reg" aria-label="Breadcrumb" style="max-width:none">
+          <a class="bcr__link" href="javascript:void(0)">Dashboard</a>
+          <span class="bcr__sep">&rsaquo;</span>
+          <a class="bcr__link" href="javascript:void(0)">Transactions</a>
+          <span class="bcr__sep">&rsaquo;</span>
+          <span class="bcr__current" aria-current="page">June 2026</span>
+        </nav>
+      </div>
+      </div>
+      <div class="tabs-list sec-tabs" id="bcr-tabs-list">
+        <button type="button" class="tab-item on" data-bcr-tab="overview" onclick="breadcrumbTabSwitch('overview')"><span class="tab-item__inner"><span class="tab-item__label">Overview</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-bcr-tab="style" onclick="breadcrumbTabSwitch('style')"><span class="tab-item__inner"><span class="tab-item__label">Style</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-bcr-tab="code" onclick="breadcrumbTabSwitch('code')"><span class="tab-item__inner"><span class="tab-item__label">Code</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-bcr-tab="changelog" onclick="breadcrumbTabSwitch('changelog')"><span class="tab-item__inner"><span class="tab-item__label">Changelog</span></span><span class="tab-item__line"></span></button>
+      </div>
+      <div class="tabs-panel on" data-bcr-panel="overview">
+        <div id="bcr-playground" class="type-sub"></div>
+        <div id="bcr-variants" class="type-sub"></div>
+        <div id="bcr-insitu" class="type-sub"></div>
+        <div class="type-sub cpg-variants" id="bcr-usage">
+          <div class="cpg-section-heading">
+            <div class="cpg-layout__title">Do's and don'ts</div>
+            <div class="cpg-layout__desc">Breadcrumbs orient users in deep structures. In a flat app they add clutter without value.</div>
+          </div>
+          <div class="cpg-section-block">
+            <div class="sel-usage">
+              <div class="sel-usage__card">
+                <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
+                <ul class="sel-usage__list">
+                  <li>Use in hierarchies three or more levels deep.</li>
+                  <li>Make every ancestor a working link; leave the current page plain.</li>
+                  <li>Collapse the middle with an ellipsis when space is tight.</li>
+                </ul>
+              </div>
+              <div class="sel-usage__card">
+                <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don't</div>
+                <ul class="sel-usage__list">
+                  <li>Don't use breadcrumbs as the primary navigation.</li>
+                  <li>Don't add them to flat, one- or two-level structures.</li>
+                  <li>Don't link the current page to itself.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tabs-panel" data-bcr-panel="style">
+        <div id="bcr-reference" class="type-sub spec-panel spec-stack"></div>
+      </div>
+      <div class="tabs-panel" data-bcr-panel="code">
+        <div id="bcr-code-playground" class="type-sub spec-panel spec-code-playground"></div>
+        <div id="bcr-code-tab" class="type-sub spec-panel"></div>
+      </div>
+      <div class="tabs-panel" data-bcr-panel="changelog" id="bcr-changelog-panel"></div>
     </section>
 
     <!-- ============================================================
@@ -13487,6 +13503,471 @@ function accordionTabSwitch(tab){
 }
 
 /* ============================================================
+   BREADCRUMB — Overview/Style/Code/Changelog (Pills-page treatment)
+   Breadcrumb has no colour-variant axis, so — mirroring Accordion —
+   its Key-variants/States slot documents states (default link/hover/
+   current page/truncated) instead of colours. Playground state is
+   named bcpg (not a shared ppg/apg/acpg) to avoid colliding with
+   other components' playground names and the real .bcr* CSS classes.
+============================================================ */
+const BCR_STATES = [
+  {key:'default',   label:'Default link',        desc:'A muted ancestor link — clickable, routes back up the hierarchy.'},
+  {key:'hover',      label:'Hover',               desc:'Background tint and darker text signal the link is interactive.'},
+  {key:'current',    label:'Current page',        desc:'Non-interactive, weighted label — the last item in the trail is never a link.'},
+  {key:'truncated',  label:'Truncated / ellipsis', desc:'Middle steps collapse into an ellipsis when the trail is too deep to show in full.'},
+];
+
+/* Flexible breadcrumb markup builder for the Overview's illustrative
+   sections (key variants/states, in-context mockups) and the Style-tab
+   reference — real .bcr markup. Doc-site-only helper; makeBcrEl remains
+   the canonical playground builder. */
+function ovBcr({items, size='reg', ellipsisAt=-1, hoverAt=-1}){
+  const sepHTML = '<span class="bcr__sep">&#8250;</span>';
+  const parts = items.map((it,i)=>{
+    if(i===ellipsisAt) return `<span class="bcr__ellipsis" title="${it.title||''}">&hellip;</span>`;
+    if(i===items.length-1) return `<span class="bcr__current" aria-current="page">${it.t}</span>`;
+    return `<a class="bcr__link${i===hoverAt?' is-hover':''}" href="javascript:void(0)">${it.t}</a>`;
+  });
+  return `<nav class="bcr bcr--${size}" aria-label="Breadcrumb" style="max-width:none">${parts.join(sepHTML)}</nav>`;
+}
+
+/* ── BREADCRUMB PLAYGROUND ── */
+let bcpg = { depth:3, labels:['Dashboard','Transactions','June 2026','Payout #4821','Line items'], theme:'light', size:'reg' };
+
+function bcpgEsc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&#60;').replace(/>/g,'&#62;').replace(/"/g,'&quot;'); }
+
+/* Depth >3 auto-collapses into root + ellipsis + last two steps — the
+   same shape as the previous static "Truncated" example. There is no
+   manual truncation toggle; this is purely a function of depth. */
+function bcpgVisible(){
+  const items = bcpg.labels.slice(0, bcpg.depth);
+  if(items.length <= 3) return { items, truncated:false, hiddenTitle:'' };
+  return { items: [items[0], null, items[items.length-2], items[items.length-1]], truncated:true, hiddenTitle: items.slice(1, items.length-2).join(' / ') };
+}
+
+function makeBcrEl(){
+  const wrap = document.createElement('nav');
+  wrap.className = `bcr bcr--${bcpg.size}`;
+  wrap.setAttribute('aria-label','Breadcrumb');
+  wrap.style.setProperty('--cpg-stage-bg', stageBg(bcpg.theme));
+  const {items, hiddenTitle} = bcpgVisible();
+  const sepHTML = '<span class="bcr__sep">&#8250;</span>';
+  const parts = items.map((it,i)=>{
+    if(it===null) return `<span class="bcr__ellipsis" title="${bcpgEsc(hiddenTitle)}">&hellip;</span>`;
+    if(i===items.length-1) return `<span class="bcr__current" aria-current="page">${bcpgEsc(it)}</span>`;
+    return `<a class="bcr__link" href="javascript:void(0)">${bcpgEsc(it)}</a>`;
+  });
+  wrap.innerHTML = parts.join(sepHTML);
+  return wrap;
+}
+
+function getBcrCodeHTML(){
+  const {items, truncated, hiddenTitle} = bcpgVisible();
+  const sepRow = `  <span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"bcr__sep"</span><span class="code-kw">>&#8250;&#60;/span></span>`;
+  const rows = items.map((it,i)=>{
+    if(it===null) return `  <span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"bcr__ellipsis"</span> <span class="code-attr">title</span>=<span class="code-val">"${bcpgEsc(hiddenTitle)}"</span><span class="code-kw">>&#8230;&#60;/span></span>`;
+    if(i===items.length-1) return `  <span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"bcr__current"</span> <span class="code-attr">aria-current</span>=<span class="code-val">"page"</span><span class="code-kw">>${bcpgEsc(it)}&#60;/span></span>`;
+    return `  <span class="code-kw">&#60;a</span> <span class="code-cls">class</span>=<span class="code-val">"bcr__link"</span> <span class="code-attr">href</span>=<span class="code-val">"/..."</span><span class="code-kw">>${bcpgEsc(it)}&#60;/a></span>`;
+  }).join(`\n${sepRow}\n`);
+  return `<span class="code-cm">/* Flash &middot; ${cap(bcpg.theme)} &middot; ${cap(bcpg.size)} &middot; ${truncated?'Truncated':'Full'} trail */</span>
+<span class="code-kw">&#60;nav</span> <span class="code-cls">class</span>=<span class="code-val">"bcr bcr--${bcpg.size}"</span> <span class="code-attr">aria-label</span>=<span class="code-val">"Breadcrumb"</span><span class="code-kw">></span>
+${rows}
+<span class="code-kw">&#60;/nav></span>`;
+}
+
+const BREADCRUMB_LANGS = [
+  {key:'html',   label:'HTML / CSS', file:'breadcrumb.html'},
+  {key:'blazor', label:'Blazor',     file:'DsBreadcrumb.razor'},
+  {key:'tsx',    label:'React TSX',  file:'DsBreadcrumb.tsx'},
+];
+let breadcrumbLang = 'html';
+
+function getBcrCodeBlazor(){
+  const items = bcpg.labels.slice(0, bcpg.depth);
+  const itemsCode = items.map((it,i,arr)=>`    <span class="code-kw">&#60;DsBreadcrumbItem</span> <span class="code-attr">Label</span>=<span class="code-val">"${bcpgEsc(it)}"</span>${(i===arr.length-1)?` <span class="code-attr">IsCurrent</span>=<span class="code-val">"true"</span>`:''}<span class="code-kw">/></span>`).join('\n');
+  return `<span class="code-cm">@* DsBreadcrumb.razor &mdash; usage *@</span>
+<span class="code-kw">&#60;DsBreadcrumb</span> <span class="code-attr">Size</span>=<span class="code-val">"BreadcrumbSize.${cap(bcpg.size)}"</span><span class="code-kw">></span>
+${itemsCode}
+<span class="code-kw">&#60;/DsBreadcrumb></span>
+
+<span class="code-cm">@* DsBreadcrumb.razor &mdash; component definition *@</span>
+<span class="code-kw">&#60;nav</span> <span class="code-cls">class</span>=<span class="code-val">"@CssClass"</span> <span class="code-attr">aria-label</span>=<span class="code-val">"Breadcrumb"</span><span class="code-kw">></span>
+  <span class="code-kw">@foreach</span> (var step <span class="code-kw">in</span> VisibleSteps) {
+    <span class="code-kw">if</span> (step.IsEllipsis) {
+      <span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"bcr__ellipsis"</span> <span class="code-attr">title</span>=<span class="code-val">"@step.HiddenTitle"</span><span class="code-kw">>&#8230;&#60;/span></span>
+    } <span class="code-kw">else if</span> (step.IsCurrent) {
+      <span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"bcr__current"</span> <span class="code-attr">aria-current</span>=<span class="code-val">"page"</span><span class="code-kw">>@step.Label&#60;/span></span>
+    } <span class="code-kw">else</span> {
+      <span class="code-kw">&#60;a</span> <span class="code-cls">class</span>=<span class="code-val">"bcr__link"</span> <span class="code-attr">href</span>=<span class="code-val">"@step.Href"</span><span class="code-kw">>@step.Label&#60;/a></span>
+    }
+  }
+<span class="code-kw">&#60;/nav></span>
+
+<span class="code-kw">@code</span> {
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> BreadcrumbSize Size { get; set; } = BreadcrumbSize.Reg;
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> List&#60;BreadcrumbItem> Items { get; set; }
+
+  <span class="code-kw">private</span> <span class="code-cls">string</span> CssClass => $<span class="code-val">"bcr bcr--{Size.ToString().ToLower()}"</span>;
+  <span class="code-kw">private</span> List&#60;BreadcrumbStep> VisibleSteps => BreadcrumbCollapser.Collapse(Items);
+}`;
+}
+
+function getBcrCodeTSX(){
+  const items = bcpg.labels.slice(0, bcpg.depth);
+  const itemsArr = items.map(it=>`  '${bcpgEsc(it).replace(/'/g,"\\'")}'`).join(',\n');
+  return `<span class="code-cm">// DsBreadcrumb.tsx</span>
+<span class="code-kw">import</span> React <span class="code-kw">from</span> <span class="code-val">'react'</span>;
+
+<span class="code-kw">type</span> <span class="code-cls">BreadcrumbSize</span> = <span class="code-val">'sm'</span> | <span class="code-val">'reg'</span>;
+
+<span class="code-kw">interface</span> <span class="code-cls">DsBreadcrumbProps</span> {
+  items: <span class="code-cls">string</span>[];
+  size?: <span class="code-cls">BreadcrumbSize</span>;
+}
+
+<span class="code-kw">export const</span> <span class="code-cls">DsBreadcrumb</span>: React.FC&#60;DsBreadcrumbProps> = ({ items, size = <span class="code-val">'reg'</span> }) => {
+  <span class="code-kw">const</span> visible = items.length > 3
+    ? [items[0], <span class="code-val">null</span>, items[items.length - 2], items[items.length - 1]]
+    : items;
+  <span class="code-kw">return</span> (
+    &#60;nav className={\`bcr bcr--\${size}\`} aria-label=<span class="code-val">"Breadcrumb"</span>>
+      {visible.map((it, i) => (
+        &#60;React.Fragment key={i}>
+          {i > 0 && &#60;span className=<span class="code-val">"bcr__sep"</span>>&#8250;&#60;/span>}
+          {it === <span class="code-val">null</span>
+            ? &#60;span className=<span class="code-val">"bcr__ellipsis"</span>>&#8230;&#60;/span>
+            : i === visible.length - 1
+              ? &#60;span className=<span class="code-val">"bcr__current"</span> aria-current=<span class="code-val">"page"</span>>{it}&#60;/span>
+              : &#60;a className=<span class="code-val">"bcr__link"</span> href=<span class="code-val">"javascript:void(0)"</span>>{it}&#60;/a>}
+        &#60;/React.Fragment>
+      ))}
+    &#60;/nav>
+  );
+};
+
+<span class="code-cm">// Usage</span>
+<span class="code-kw">const</span> items = [
+${itemsArr}
+];
+&#60;DsBreadcrumb items={items} size=<span class="code-val">"${bcpg.size}"</span> />`;
+}
+
+function getBcrCode(){
+  return breadcrumbLang==='blazor' ? getBcrCodeBlazor()
+       : breadcrumbLang==='tsx'    ? getBcrCodeTSX()
+       : getBcrCodeHTML();
+}
+
+function setBreadcrumbLang(lang){
+  if(!BREADCRUMB_LANGS.some(l=>l.key===lang)) return;
+  breadcrumbLang = lang;
+  document.querySelectorAll('#bcr-code-tab .code-seg__btn').forEach(b=>{
+    const on = b.dataset.lang===lang;
+    b.setAttribute('aria-selected', on ? 'true' : 'false');
+    b.setAttribute('tabindex', on ? '0' : '-1');
+  });
+  const file = document.getElementById('bcr-lang-file');
+  const meta = BREADCRUMB_LANGS.find(l=>l.key===lang);
+  if(file && meta) file.textContent = meta.file;
+  const block = document.getElementById('bcpg-code-block');
+  if(block) block.innerHTML = getBcrCode();
+}
+
+function breadcrumbLangKeydown(e){
+  const i = BREADCRUMB_LANGS.findIndex(l=>l.key===breadcrumbLang);
+  let n = i;
+  if(e.key==='ArrowLeft')       n = (i - 1 + BREADCRUMB_LANGS.length) % BREADCRUMB_LANGS.length;
+  else if(e.key==='ArrowRight') n = (i + 1) % BREADCRUMB_LANGS.length;
+  else if(e.key==='Home')       n = 0;
+  else if(e.key==='End')        n = BREADCRUMB_LANGS.length - 1;
+  else return;
+  e.preventDefault();
+  setBreadcrumbLang(BREADCRUMB_LANGS[n].key);
+  const btn = document.getElementById('bcr-lang-' + BREADCRUMB_LANGS[n].key);
+  if(btn) btn.focus();
+}
+
+function bcpgRefresh(){
+  document.querySelectorAll('.bcpg-stage-el').forEach(stage=>{
+    stage.innerHTML = '';
+    stage.appendChild(makeBcrEl());
+  });
+  const block = document.getElementById('bcpg-code-block');
+  if(block) block.innerHTML = getBcrCode();
+}
+
+const BCR_PLAYGROUND_MOUNTS = [
+  {rootId:'bcr-playground', idSuffix:'', wrap:true, title:'Try the component', desc:'Adjust the filters to test component states.', headingAbove:'A breadcrumb shows where the current page sits in the hierarchy, and gives a one-click route back up.'},
+  {rootId:'bcr-code-playground', idSuffix:'-code', style:'code', title:'Playground', desc:'Live demo of the component.'},
+];
+
+function renderBreadcrumbPlayground(){
+  bcpg.theme = document.documentElement.getAttribute('data-theme')==='dark' ? 'dark' : 'light';
+  const sbg = stageBg(bcpg.theme);
+
+  const depthBtns = [2,3,4,5].map(n=>`<button class="btn-pg__pill${bcpg.depth===n?' on':''}" onclick="bcpgSet('depth','${n}')">${n}</button>`).join('');
+  const itemInputs = bcpg.labels.slice(0, bcpg.depth).map((it,i)=>`<div class="btn-pg__group"><span class="btn-pg__clabel">Step ${i+1}</span><input class="cpg-label-input bcpg-item-input-el" data-idx="${i}" value="${bcpgEsc(it)}" maxlength="40" oninput="bcpgSetItem(${i}, this.value)"></div>`).join('');
+
+  BCR_PLAYGROUND_MOUNTS.forEach(mount=>{
+    const root = document.getElementById(mount.rootId);
+    if(!root) return;
+    const s = mount.idSuffix;
+    const demo = `
+      <div class="btn-pg">
+        <div class="btn-pg__stage bcpg-stage-el" id="bcpg-stage${s}" style="background:${sbg};align-items:flex-start"></div>
+        <div class="btn-pg__ctrls">
+          <div class="btn-pg__group"><span class="btn-pg__clabel">Trail depth</span><div class="btn-pg__pill-row">${depthBtns}</div></div>
+          ${mount.wrap ? itemInputs : ''}
+        </div>
+      </div>`;
+
+    if(mount.style==='code'){
+      root.innerHTML = `
+        <div class="type-sub__title">${mount.title}</div>
+        <div class="type-sub__desc">${mount.desc}</div>
+        <div class="cpg-section-outline">${demo}</div>`;
+      return;
+    }
+
+    const inner = `
+      <div class="cpg-layout">
+        <div class="cpg-layout__intro">
+          ${mount.wrap ? `<span class="cpg-cursor-icon">${CPG_CURSOR_ICON_SVG}</span>` : ''}
+          <div class="cpg-layout__title">${mount.title}</div>
+          <div class="cpg-layout__desc">${mount.desc}</div>
+        </div>
+        <div class="cpg-layout__demo">${demo}</div>
+      </div>`;
+    const wrapped = mount.wrap ? `<div class="cpg-section-block">${inner}</div>` : inner;
+    root.innerHTML = (mount.headingAbove ? `<div class="cpg-overview-heading"><span class="cpg-overview-heading__icon">${CPG_INFO_ICON_SVG}</span><span>${mount.headingAbove}</span></div>` : '') + wrapped;
+  });
+
+  bcpgRefresh();
+}
+
+function renderBreadcrumbCodeTab(){
+  const root = document.getElementById('bcr-code-tab');
+  if(!root) return;
+  root.innerHTML = `
+    <div class="type-sub__title">Code</div>
+    <div class="type-sub__desc">Live snippet matching the current Playground configuration &mdash; switch to Overview to change it.</div>
+    <div class="cpg-section-outline">
+      <div class="code-panel code-panel--bare open">
+        <div class="code-panel__head">
+          <div class="code-seg" role="tablist" aria-label="Code language" onkeydown="breadcrumbLangKeydown(event)">
+            ${BREADCRUMB_LANGS.map(l=>`<button type="button" role="tab" class="code-seg__btn" id="bcr-lang-${l.key}" data-lang="${l.key}" aria-selected="${breadcrumbLang===l.key?'true':'false'}" aria-controls="bcpg-code-block" tabindex="${breadcrumbLang===l.key?'0':'-1'}" onclick="setBreadcrumbLang('${l.key}')">${l.label}</button>`).join('')}
+          </div>
+          <span class="code-lang-file" id="bcr-lang-file">${(BREADCRUMB_LANGS.find(l=>l.key===breadcrumbLang)||BREADCRUMB_LANGS[0]).file}</span>
+          <button class="code-copy-btn" onclick="bcpgCopyCode()" id="bcpg-copy-btn">Copy</button>
+        </div>
+        <div class="code-body"><div class="code-block" id="bcpg-code-block" role="tabpanel" aria-live="polite"></div></div>
+      </div>
+    </div>`;
+}
+
+function renderBreadcrumbVariants(){
+  const root = document.getElementById('bcr-variants');
+  if(!root) return;
+
+  const cells = [
+    {name:'Default link', use:BCR_STATES[0].desc, bcr:ovBcr({items:[{t:'Dashboard'},{t:'Transactions'}]})},
+    {name:'Hover', use:BCR_STATES[1].desc, bcr:ovBcr({items:[{t:'Dashboard'},{t:'Transactions'}], hoverAt:0})},
+    {name:'Current page', use:BCR_STATES[2].desc, bcr:ovBcr({items:[{t:'Dashboard'},{t:'Payout #4821'}]})},
+    {name:'Truncated / ellipsis', use:BCR_STATES[3].desc, bcr:ovBcr({items:[{t:'Dashboard'},{t:''},{t:'Payout #4821'}], ellipsisAt:1})},
+  ];
+  const cellHTML = cells.map(c=>`
+    <div class="spec-cell">
+      <div class="spec-cell__stage" style="display:block;padding:14px">${c.bcr}</div>
+      <div class="spec-cell__name">${c.name}</div>
+      <div class="spec-cell__desc">${c.use}</div>
+    </div>`).join('');
+
+  root.innerHTML = `
+    <div class="cpg-section-heading">
+      <div class="cpg-layout__title">Key variants</div>
+      <div class="cpg-layout__desc">Breadcrumb has no colour-variant axis &mdash; these are its real states instead.</div>
+    </div>
+    <div class="cpg-section-block">
+      <div class="spec-grid" style="grid-template-columns:repeat(auto-fill,minmax(220px,1fr))">${cellHTML}</div>
+    </div>`;
+}
+
+function renderBreadcrumbInSitu(){
+  const root = document.getElementById('bcr-insitu');
+  if(!root) return;
+  const theme = currentTheme();
+  const sbg = stageBg(theme);
+
+  // 1. Page header trail — sitting above a page title
+  const headerMock = `
+    <div class="spec-mock__stage" style="background:${sbg};padding:16px">
+      <div style="display:flex;flex-direction:column;gap:8px">
+        ${ovBcr({items:[{t:'Dashboard'},{t:'Settings'}]})}
+        <div style="font-size:20px;font-weight:800;color:var(--chrome-txt)">Settings</div>
+      </div>
+    </div>
+    <div class="spec-mock__cap"><b>Page header trail</b>Sitting directly above the page title &mdash; the most common placement.</div>`;
+
+  // 2. Table/detail drill-down
+  const drilldownMock = `
+    <div class="spec-mock__stage" style="background:${sbg};padding:16px">
+      ${ovBcr({items:[{t:'Transactions'},{t:'June 2026'},{t:'Payout #4821'}]})}
+    </div>
+    <div class="spec-mock__cap"><b>Drill-down</b>Each level of a table-to-detail flow gets its own step, ending on the record you're viewing.</div>`;
+
+  // 3. Truncated trail in a narrow header
+  const narrowMock = `
+    <div class="spec-mock__stage" style="background:${sbg};padding:16px;max-width:220px">
+      ${ovBcr({items:[{t:'Dashboard'},{t:''},{t:'Payout #4821'}], ellipsisAt:1})}
+    </div>
+    <div class="spec-mock__cap"><b>Narrow / mobile header</b>The middle steps collapse into an ellipsis so the trail still fits a cramped width.</div>`;
+
+  root.innerHTML = `
+    <div class="cpg-section-heading">
+      <div class="cpg-layout__title">In context</div>
+      <div class="cpg-layout__desc">The same trail works above a page title, drilling into a record, or squeezed into a narrow header.</div>
+    </div>
+    <div class="cpg-section-block">
+      <div class="spec-insitu-grid">
+        <div class="spec-mock">${headerMock}</div>
+        <div class="spec-mock">${drilldownMock}</div>
+        <div class="spec-mock">${narrowMock}</div>
+      </div>
+    </div>`;
+}
+
+function bcpgSet(key, val){
+  if(key==='depth') bcpg.depth = Number(val);
+  else bcpg[key] = val;
+  renderBreadcrumbPlayground();
+}
+function bcpgSetItem(i, val){ bcpg.labels[i] = val; bcpgRefresh(); }
+function bcpgCopyCode(){
+  const b = document.getElementById('bcpg-code-block');
+  if(!b) return;
+  navigator.clipboard.writeText(b.innerText||b.textContent).catch(()=>{});
+  const btn = document.getElementById('bcpg-copy-btn');
+  if(btn){ btn.textContent = 'Copied!'; setTimeout(()=>btn.textContent='Copy', 2000); }
+}
+
+function renderBreadcrumbReference(){
+  const root = document.getElementById('bcr-reference');
+  if(!root) return;
+
+  const theme = currentTheme();
+  const sbg = stageBg(theme);
+
+  /* ---- Anatomy ---- */
+  const heroBcr = ovBcr({items:[{t:'Dashboard'},{t:''},{t:'Payout #4821'}], ellipsisAt:1});
+
+  const parts = [
+    {num:1, name:'Link', note:'A muted, clickable ancestor step. Routes back up the hierarchy.', vis:`<a class="bcr__link" href="javascript:void(0)" style="pointer-events:none">Dashboard</a>`},
+    {num:2, name:'Separator', note:'A chevron between every step, including before the current page.', vis:`<span class="bcr__sep">&rsaquo;</span>`},
+    {num:3, name:'Current page', note:'Non-interactive, weighted label &mdash; always the last item, never a link.', vis:`<span class="bcr__current">Payout #4821</span>`},
+    {num:4, name:'Ellipsis', note:'Stands in for one or more collapsed middle steps; its title attribute holds what it&rsquo;s hiding.', vis:`<span class="bcr__ellipsis">&hellip;</span>`},
+  ];
+  const partCards = parts.map(p=>`
+    <div class="spec-part">
+      <div class="spec-part__stage" style="background:${sbg}">${p.vis}</div>
+      <div class="spec-part__body">
+        <div class="spec-part__name"><span class="spec-part__num">${p.num}</span>${p.name}</div>
+        <div class="spec-part__note">${p.note}</div>
+      </div>
+    </div>`).join('');
+
+  /* ---- Size & dimensions ---- */
+  const sizeSpecs = [
+    {key:'sm',  label:'Small',   fs:'12px', gap:'4px'},
+    {key:'reg', label:'Regular', fs:'13px', gap:'5px'},
+  ];
+  const sizeCells = sizeSpecs.map(sz=>`
+    <div class="spec-cell">
+      <div class="spec-cell__stage" style="display:block;padding:14px">${ovBcr({items:[{t:'Dashboard'},{t:'Transactions'}], size:sz.key})}</div>
+      <div class="spec-cell__name">${sz.label}</div>
+      <div class="spec-cell__desc">${sz.fs} label, ${sz.gap} gap between steps.</div>
+    </div>`).join('');
+
+  /* ---- States ---- */
+  const stateCells = BCR_STATES.map(st=>{
+    const demo = st.key==='hover'      ? ovBcr({items:[{t:'Dashboard'},{t:'Transactions'}], hoverAt:0})
+      : st.key==='current'   ? ovBcr({items:[{t:'Dashboard'},{t:'Payout #4821'}]})
+      : st.key==='truncated' ? ovBcr({items:[{t:'Dashboard'},{t:''},{t:'Payout #4821'}], ellipsisAt:1})
+      : ovBcr({items:[{t:'Dashboard'},{t:'Transactions'}]});
+    return `
+    <div class="spec-cell">
+      <div class="spec-cell__stage" style="display:block;padding:14px">${demo}</div>
+      <div class="spec-cell__name">${st.label}</div>
+      <div class="spec-cell__desc">${st.desc}</div>
+    </div>`;
+  }).join('');
+
+  /* ---- Tokens ---- */
+  const tokRows = [
+    ['Link colour', '--chrome-muted', 'Default (unvisited) colour for ancestor link steps.'],
+    ['Link hover text', '--chrome-txt', 'Link text colour on hover.'],
+    ['Link hover background', '--chrome-hover', 'Link background tint on hover.'],
+    ['Current-page colour', '--chrome-txt', '700-weight colour for the trail&rsquo;s last, non-interactive step.'],
+    ['Separator colour', '--chrome-muted', 'Chevron between steps, rendered at 55% opacity.'],
+    ['Ellipsis colour', '--chrome-muted', 'Collapsed-step marker colour.'],
+  ].map(([part, tok, desc])=>`
+    <tr>
+      <td class="dd-table__name">${part}</td>
+      <td><code>${tok}</code></td>
+      <td>${desc}</td>
+    </tr>`).join('');
+
+  root.innerHTML = `
+    <div class="type-sub">
+      <div class="type-sub__title">Anatomy</div>
+      <div class="type-sub__desc">A breadcrumb is a flat row of links, chevron separators, and a non-interactive current-page label &mdash; with an ellipsis standing in for collapsed steps when needed.</div>
+      <div class="cpg-section-outline">
+        <div class="spec-hero" style="background:${sbg}">${heroBcr}</div>
+        <div class="spec-parts">${partCards}</div>
+      </div>
+    </div>
+
+    <div class="type-sub">
+      <div class="type-sub__title">Size &amp; dimensions</div>
+      <div class="type-sub__desc"><b>Small</b> for dense chrome like a table toolbar; <b>Regular</b> as the default above a page title.</div>
+      <div class="cpg-section-outline">
+        <div class="spec-grid" style="grid-template-columns:repeat(auto-fill,minmax(220px,1fr))">${sizeCells}</div>
+      </div>
+    </div>
+
+    <div class="type-sub">
+      <div class="type-sub__title">States</div>
+      <div class="type-sub__desc">Breadcrumb has no colour-variant axis &mdash; these are the CSS-level states each part can be in.</div>
+      <div class="cpg-section-outline">
+        <div class="spec-grid" style="grid-template-columns:repeat(auto-fill,minmax(220px,1fr))">${stateCells}</div>
+      </div>
+    </div>
+
+    <div class="type-sub" style="margin-bottom:0">
+      <div class="type-sub__title">Tokens</div>
+      <div class="type-sub__desc">Breadcrumb draws colour straight from the shared chrome tokens rather than its own custom-property namespace.</div>
+      <div class="cpg-section-outline">
+        <div class="dd-table-wrap"><table class="dd-table" style="min-width:480px">
+          <thead><tr><th>Part</th><th>Token</th><th>Used for</th></tr></thead>
+          <tbody>${tokRows}</tbody>
+        </table></div>
+      </div>
+    </div>`;
+}
+
+try { renderBreadcrumbCodeTab(); } catch(e){ console.error('bcr-code-tab',e); }
+try { renderBreadcrumbPlayground(); } catch(e){ console.error('bcr-playground',e); }
+try { renderBreadcrumbVariants(); } catch(e){ console.error('bcr-variants',e); }
+try { renderBreadcrumbInSitu(); } catch(e){ console.error('bcr-insitu',e); }
+try { renderBreadcrumbReference(); } catch(e){ console.error('bcr-reference',e); }
+
+function breadcrumbTabSwitch(tab){
+  const nav = document.getElementById('bcr-tabs-list');
+  if(!nav) return;
+  nav.querySelectorAll('.tab-item').forEach(btn=>btn.classList.toggle('on', btn.getAttribute('data-bcr-tab')===tab));
+  document.querySelectorAll('#s-breadcrumb .tabs-panel[data-bcr-panel]').forEach(p=>p.classList.toggle('on', p.getAttribute('data-bcr-panel')===tab));
+}
+
+/* ============================================================
    CHECKBOXES & RADIOS — reference grid
 ============================================================ */
 const SEL_SIZES = [
@@ -13555,12 +14036,24 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.66.5';
+const SYSTEM_VERSION = '1.66.6';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.66.6', date:'2026-08-11', author:'Helen', title:'Breadcrumb gets the full Pills-page treatment', changes:[
+        ['changed','Breadcrumb rebuilt from a flat .sec section into a tabbed .sec--tabbed page (Overview / Style / Code / Changelog), matching Accordion\'s structure — hero with a live mini trail preview, sec-tabs bar, and a Changelog tab holding the section\'s auto-injected changelog block'],
+        ['added','Interactive playground (bcpg state) with a Trail depth control (2–5 steps) and editable per-step labels, rendered into both an Overview mount and a smaller Code-tab mount from the same shared state via makeBcrEl()'],
+        ['added','Trail depth >3 now auto-collapses into root + ellipsis + last two steps (bcpgVisible()) — the same shape as the previous static "Truncated" example, but driven by depth rather than a manual toggle; no separate truncation or separator-style control was added, per scope'],
+        ['added','"Key variants" grid (renderBreadcrumbVariants) documenting Default link/Hover/Current page/Truncated as BCR_STATES — Breadcrumb has no colour-variant axis, so its one real state axis fills that slot instead, mirroring Accordion\'s Single-open/Multiple-open grid'],
+        ['added','Three In-context mockups (renderBreadcrumbInSitu): a page header trail above a title, a table-to-detail drill-down (Transactions › June 2026 › Payout #4821), and a truncated trail in a narrow/mobile-width header'],
+        ['added','New .bcr--sm (12px label, 4px gap) and .bcr--reg (13px, 5px gap, previous default) size classes, plus a forced .bcr__link.is-hover state class for illustrative hover cards, applied in the playground, variants grid and Style tab'],
+        ['added','Style tab: Anatomy (link, separator, current page, ellipsis), Size & dimensions table, a States grid (token-level detail, distinct from the Overview illustrative cards), and a token table mapping each part to the shared --chrome-* tokens it draws from'],
+        ['added','Code tab: HTML/CSS, Blazor (DsBreadcrumb.razor) and React TSX (DsBreadcrumb.tsx) segmented language switcher (getBcrCode*/setBreadcrumbLang/breadcrumbLangKeydown), generated from the live playground state'],
+        ['changed','Do/Dont card moved into the Overview tab\'s #bcr-usage .cpg-section-block, JS-rendered markup like Accordion/Pills (previously static markup); guidance text unchanged from the original 3 do / 3 dont'],
+        ['changed','AI context tab regenerated via scripts/generate-ai-context-tab.mjs for the new realClasses/builderFunctions list'],
+      ]},
       {version:'1.66.5', date:'2026-08-11', author:'Helen', title:'Accordion In-context mockups reworked around content length', changes:[
         ['changed','Replaced the three usage-based In-context mockups (FAQ list, settings panel, order summary) with two content-length mockups — Short form (one line of supporting detail per item) and Long form (a full paragraph as the expanded content) — so the section demonstrates the body panel handling both, rather than three different real-world placements'],
         ['changed','spec-insitu-grid now supports a 2-column layout via a new .spec-insitu-grid--2 modifier (default remains 3 columns for Pills/Tags/Badges), used for Accordion\'s two mockups'],
@@ -14790,7 +15283,18 @@ const CHANGELOG = {
         ['added','Indeterminate loader in three sizes, plus in-button and inline treatments'],
       ]},
     ]},
-    {secId:'s-breadcrumb', name:'Breadcrumb', version:'1.0.1', entries:[
+    {secId:'s-breadcrumb', name:'Breadcrumb', version:'1.1.0', entries:[
+      {version:'1.1.0', date:'2026-08-11', author:'Helen', title:'Brought to the Pills-page tabbed treatment', changes:[
+        ['changed','Converted #s-breadcrumb from a flat .sec section to .sec--tabbed (Overview / Style / Code / Changelog), with a two-column hero (title/version/AI-context left, live 3-step .bcr preview right)'],
+        ['added','Overview: interactive playground (bcpg state) with a Trail depth control (2–5 steps, editable labels), driving a live .bcr built by makeBcrEl(); depth beyond 3 auto-collapses into an ellipsis rather than exposing a manual truncation toggle'],
+        ['added','Overview: "Key variants" grid (renderBreadcrumbVariants) covering Default link/Hover/Current page/Truncated as BCR_STATES — standing in for a colour-variant grid, which Breadcrumb has no equivalent of'],
+        ['added','Overview: three In-context mockups (renderBreadcrumbInSitu) — page header trail, table drill-down, and a truncated trail in a narrow header'],
+        ['changed','Do/Dont card moved into the Overview tab\'s #bcr-usage .cpg-section-block, JS-rendered like Accordion/Pills (previously static markup); guidance text unchanged from the original 3 do / 3 dont'],
+        ['added','New .bcr--sm (12px label, 4px gap) and .bcr--reg (13px, 5px gap, previous default) size classes, plus a forced .bcr__link.is-hover state class for illustrative hover cards'],
+        ['added','Style tab: Anatomy (link, separator, current page, ellipsis), Size & dimensions table, a States grid, and a token table documenting the shared --chrome-* tokens Breadcrumb resolves colour from — no colour-variant section, since Breadcrumb has no such axis'],
+        ['added','Code tab: HTML/CSS, Blazor (DsBreadcrumb.razor) and React TSX (DsBreadcrumb.tsx) segmented language switcher, generated from the live playground state'],
+        ['changed','AI context tab regenerated for the new realClasses/builderFunctions list'],
+      ]},
       {version:'1.0.1', date:'2026-07-29', author:'Mo', title:'AI context tab added', changes:[
         ['added','AI context tab documenting the real, fully static .bcr/.bcr__* markup, plus its existing "When to use" Do/Dont guidance (3 do / 3 dont)'],
       ]},
@@ -18185,6 +18689,7 @@ try { renderSectionChangelogs(); } catch(e){ console.error('section-changelog',e
   {secId:'s-alert',  panelId:'alrt-changelog-panel'},
   {secId:'s-drawers', panelId:'bsh-changelog-panel'},
   {secId:'s-accordion', panelId:'acc-changelog-panel'},
+  {secId:'s-breadcrumb', panelId:'bcr-changelog-panel'},
 ].forEach(({secId, panelId})=>{
   try {
     const chlog = document.querySelector(`#${secId} > .sec-chlog`);
