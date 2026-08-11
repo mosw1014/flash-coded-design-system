@@ -1,6 +1,6 @@
 ---
 document: Flash UI Reskin Guide
-version: 2.3.0
+version: 2.4.1
 design_system: https://mosw1014.github.io/flash-coded-design-system/
 purpose: Guide design judgement while the live design system supplies tokens, components and implementation.
 scope: Existing interfaces created with Claude, Replit, Lovable or similar tools.
@@ -217,6 +217,7 @@ Rules:
 - **Keep any resulting state visible outside the panel**, the same way an applied filter stays visible as a Chip — e.g. a count of pending invites, the last logged call — so collapsing the form does not hide its outcome.
 - **Preserve the functionality exactly** (Section 1): moving a form behind a trigger changes where it renders, never what it does. Every field, validation rule and submit handler carries over unchanged.
 - **Do not collapse a single small form just to add a click.** As with filters, this rule exists to reduce competing panels, not to bury simple, frequent tasks.
+- **This applies to forms and side tasks, never to navigation.** Persistent chrome — the Side Nav above all — is explicitly out of scope: it collapses to an icon-only rail but is never hidden or dismissed. See "Navigation is persistent" in Section 8.
 
 ### Field-to-label hierarchy inside a form
 
@@ -354,7 +355,7 @@ Read the relevant live component page before implementing any component below.
 | --- | --- | --- |
 | Main action | Buttons `s-buttons` | Primary for the normal main action; Secondary for support; Accent only when Primary buttons already exist on the page and one action needs to stand out among them — never the only button on a page; Simple for low emphasis; Link for inline action |
 | Group one coherent object | Cards `s-cards` | Basic for content, Footer when actions need separation, Media when imagery matters, Interactive only when the whole card has one destination |
-| Persistent app destinations | Navigation `s-nav` | Side Nav for a small set of top-level destinations; one active item; one colour context and size per panel |
+| Persistent app destinations | Navigation `s-nav` | Side Nav for a small set of top-level destinations; one active item; one colour context and size per panel. **Persistent chrome: collapsible to an icon-only rail, never dismissible** — see Navigation is persistent, below |
 | Related views of one object | Tabs `s-tabs` | One active tab; short parallel labels; do not use for unrelated destinations |
 | Two to five modes or options | Toggle Group `s-toggle-group` | Use instead of a dropdown when options benefit from immediate comparison |
 | Five to fifteen known options | Dropdown `s-dropdown` | Single-select by default; multi-select only when multiple answers are valid; use one field style consistently |
@@ -379,6 +380,18 @@ Read the relevant live component page before implementing any component below.
 | Date is the main choice | Calendar `s-calendar` | Inline for date-focused tasks; field pattern inside forms |
 
 If a component is not listed here, inspect its live page and `AI context` before choosing it.
+
+### Navigation is persistent — collapsible, never dismissible
+
+Side Nav is **persistent chrome, not page content**. It is the user's map of the product, so it stays on screen at every viewport width. The only permitted reduction is collapsing it to an **icon-only rail**: labels drop away, every destination stays visible and reachable, and the active item stays marked.
+
+- **Never give the Side Nav a control that hides it completely** — no dismiss, no close, no `display:none` toggle. Hiding the only navigation leaves the user with no route back and no indication of where it went; a collapsed rail always beats an absent panel.
+- **A close (×) icon on navigation is always wrong.** × means "dismiss this thing" and belongs to dialogs, alerts, chips and drawers. A collapse control is directional (a chevron pointing toward the edge it collapses to) or a menu glyph — never ×. If you find yourself reaching for the `close` icon on persistent chrome, that's the bug.
+- **Collapsing is a width response, not a user-cleanup feature.** Follow Section 9: collapse to the rail when width genuinely demands it, and switch to the appropriate mobile navigation pattern at the narrowest widths — where a temporary overlay drawer *is* correct, because it's summoned by a persistent trigger that never disappears.
+- **The collapsed state keeps the active marker.** An icon-only rail with no visible active item is not a valid collapsed state — the user must still be able to see where they are.
+- **This is the one thing progressive disclosure does not apply to.** The Progressive disclosure rule in Section 5 says to collapse occasional forms and side tasks behind triggers; navigation is the explicit exception. Never treat the nav panel as clutter to be tidied away.
+
+> **Availability:** the live `s-nav` ships three colour contexts (White / Charcoal / Dark green), two sizes (Regular 208px / Small 170px), and a `.snav--collapsed` icon-only rail (72px Regular / 60px Small) with an edge-docked collapse/expand toggle button — read the component's own live source rather than reconstructing the rail from scratch.
 
 ### Form field consistency
 
@@ -522,6 +535,9 @@ Before finishing, confirm:
       under the page title, sharing one alignment line — not above or beside the title.
 - [ ] A bloated filter set is collapsed behind a single expandable Filters trigger, with any
       already-applied filter still visible as a summary outside the panel.
+- [ ] The Side Nav is present at every width — collapsed to an icon-only rail where space demands
+      it, never hidden or dismissible, and carrying no close (×) control. Its collapsed state still
+      shows the active item.
 - [ ] Occasional and side-task forms sit behind a named trigger (Popover/Drawer/Accordion/dialog),
       not inline; account/settings-shaped forms are a link, not a panel. No reading-oriented page
       renders more than one or two inline forms.
