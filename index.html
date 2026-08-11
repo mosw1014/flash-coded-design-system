@@ -1501,6 +1501,7 @@ body.home .main{max-width:none;margin:0;padding:0}
 .sec--tabbed .cpg-variants{margin-top:96px}
 .sec--tabbed .spec-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:16px}
 .sec--tabbed .spec-insitu-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.sec--tabbed .spec-insitu-grid--2{grid-template-columns:repeat(2,1fr)}
 .sec--tabbed .spec-mock{border:1px solid var(--chrome-border);border-radius:12px;overflow:hidden;background:var(--chrome-bg);display:flex;flex-direction:column;transition:background .25s,border-color .25s}
 .sec--tabbed .spec-mock__stage{flex:1;padding:22px 20px;display:flex;flex-direction:column;justify-content:center;gap:12px;min-height:150px;transition:background .25s}
 .sec--tabbed .spec-mock__cap{padding:12px 16px;border-top:1px solid var(--chrome-border);font-size:12px;line-height:1.5;color:var(--chrome-muted)}
@@ -5417,7 +5418,7 @@ body.home .main{max-width:none;margin:0;padding:0}
       <div class="sec__head">
         <h1 class="sec__title">Accordion</h1>
         <div class="sec-header-meta">
-          <span class="comp-ver-badge" style="margin-left:0">v1.1.1</span>
+          <span class="comp-ver-badge" style="margin-left:0">v1.2.0</span>
           <details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-accordion">
@@ -13336,8 +13337,8 @@ function renderAccordionInSitu(){
   const theme = currentTheme();
   const sbg = stageBg(theme);
 
-  // 1. FAQ list — multiple-open
-  const faqMock = `
+  // 1. Short form — one line of supporting detail per item
+  const shortMock = `
     <div class="spec-mock__stage" style="background:${sbg};padding:12px">
       ${ovAcc({behavior:'multi', size:'sm', items:[
         {t:'How do payouts work?', b:'Settled next business day.'},
@@ -13345,39 +13346,27 @@ function renderAccordionInSitu(){
         {t:'Which cards are supported?', b:'Visa, Mastercard and domestic debit.'},
       ]})}
     </div>
-    <div class="spec-mock__cap"><b>FAQ list</b>Multiple-open, so a reader can compare answers side by side without losing their place.</div>`;
+    <div class="spec-mock__cap"><b>Short form</b>A single line of supporting detail per item &mdash; the body panel sizes to whatever content it holds.</div>`;
 
-  // 2. Settings/preferences panel — grouped single-open sections
-  const settingsMock = `
+  // 2. Long form — a full paragraph as the expanded content
+  const longMock = `
     <div class="spec-mock__stage" style="background:${sbg};padding:12px">
-      ${ovAcc({behavior:'single', name:'acc-is-settings', size:'sm', items:[
-        {t:'Notifications', b:'Email and push preferences.'},
-        {t:'Security', b:'Two-factor authentication and sessions.'},
-        {t:'Billing', b:'Plan, invoices and payment method.'},
+      ${ovAcc({behavior:'single', name:'acc-is-long', size:'sm', items:[
+        {t:'Refund policy', b:'Refunds are processed to the original payment method within 5&ndash;7 business days of approval. If the original method is no longer available, funds are credited to your Flash wallet instead and can be withdrawn from there. Disputed transactions follow a separate resolution process and may take longer while evidence is reviewed.'},
+        {t:'Chargeback process', b:'Raised automatically once a dispute is logged with the card scheme.'},
       ]})}
     </div>
-    <div class="spec-mock__cap"><b>Settings panel</b>Single-open within the group, so switching sections doesn't leave several stacked open.</div>`;
-
-  // 3. Order summary/checkout breakdown — one item expanded by default
-  const orderMock = `
-    <div class="spec-mock__stage" style="background:${sbg};padding:12px">
-      ${ovAcc({behavior:'single', name:'acc-is-order', size:'sm', items:[
-        {t:'Order breakdown (R1,240.00)', b:'Subtotal R1,150.00 + delivery R90.00.'},
-        {t:'Delivery details', b:'Arrives in 2&ndash;3 business days.'},
-      ]})}
-    </div>
-    <div class="spec-mock__cap"><b>Order summary</b>The breakdown starts expanded since it's the detail a shopper checks first.</div>`;
+    <div class="spec-mock__cap"><b>Long form</b>A full paragraph as the expanded content &mdash; the same item, header and chevron, just more to read once it's open.</div>`;
 
   root.innerHTML = `
     <div class="cpg-section-heading">
       <div class="cpg-layout__title">In context</div>
-      <div class="cpg-layout__desc">The same component covers three common jobs &mdash; answering questions, grouping settings, and breaking down a total.</div>
+      <div class="cpg-layout__desc">The body panel holds a short line or a full paragraph equally well &mdash; it isn't sized for one or the other.</div>
     </div>
     <div class="cpg-section-block">
-      <div class="spec-insitu-grid">
-        <div class="spec-mock">${faqMock}</div>
-        <div class="spec-mock">${settingsMock}</div>
-        <div class="spec-mock">${orderMock}</div>
+      <div class="spec-insitu-grid spec-insitu-grid--2">
+        <div class="spec-mock">${shortMock}</div>
+        <div class="spec-mock">${longMock}</div>
       </div>
     </div>`;
 }
@@ -13560,12 +13549,16 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.67.1';
+const SYSTEM_VERSION = '1.67.2';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.67.2', date:'2026-08-11', author:'Helen', title:'Accordion In-context mockups reworked around content length', changes:[
+        ['changed','Replaced the three usage-based In-context mockups (FAQ list, settings panel, order summary) with two content-length mockups — Short form (one line of supporting detail per item) and Long form (a full paragraph as the expanded content) — so the section demonstrates the body panel handling both, rather than three different real-world placements'],
+        ['changed','spec-insitu-grid now supports a 2-column layout via a new .spec-insitu-grid--2 modifier (default remains 3 columns for Pills/Tags/Badges), used for Accordion\'s two mockups'],
+      ]},
       {version:'1.67.1', date:'2026-08-11', author:'Helen', title:'Fixed Accordion playground width jumping on expand/collapse', changes:[
         ['fixed','.acc had no explicit width (only max-width:620px), so it shrink-wrapped to whichever item text was currently visible — expanding/collapsing an item in the playground made the whole accordion resize. Added width:100% so it fills its container up to max-width consistently regardless of open/closed state'],
       ]},
@@ -14713,7 +14706,11 @@ const CHANGELOG = {
         ['added','Pure-CSS hover/focus tooltip with four placements and an icon-button example'],
       ]},
     ]},
-    {secId:'s-accordion', name:'Accordion', version:'1.1.1', entries:[
+    {secId:'s-accordion', name:'Accordion', version:'1.2.0', entries:[
+      {version:'1.2.0', date:'2026-08-11', author:'Helen', title:'In-context mockups reworked around content length', changes:[
+        ['changed','Replaced the FAQ list / settings panel / order summary mockups with two content-length examples: Short form (one line of supporting detail) and Long form (a full paragraph as the expanded content), so the section shows the body panel handling both'],
+        ['changed','spec-insitu-grid uses a new --2 modifier for a 2-column layout here, instead of the default 3'],
+      ]},
       {version:'1.1.1', date:'2026-08-11', author:'Helen', title:'Fixed playground width jumping on expand/collapse', changes:[
         ['fixed','.acc had no explicit width (only max-width:620px), so it shrink-wrapped to whichever item text was currently visible — collapsing/expanding an item in the playground made the whole accordion resize. Added width:100% so it fills its container up to max-width consistently regardless of open/closed state'],
       ]},
