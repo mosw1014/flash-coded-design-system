@@ -7393,7 +7393,7 @@ body.home .main{max-width:none;margin:0;padding:0}
     ".avt--lg"
   ],
   "css": "/* ---- Avatar ---- */\n.avt { display:inline-flex;align-items:center;justify-content:center;border-radius:50%;background:var(--color-surface-n2);color:var(--color-text-2);font-weight:700;flex-shrink:0;position:relative;line-height:1;user-select:none;text-transform:uppercase }\n.avt img { width:100%;height:100%;object-fit:cover;display:block;border-radius:50% }\n.avt--lg { width:56px;height:56px;font-size:19px }\n/* ---- Hover card ---- */\n.hc { position:relative;display:inline-block }\n.hc__trigger { color:var(--color-link);font-weight:600;cursor:pointer;text-decoration:underline;text-underline-offset:2px;background:none;border:0;font-family:inherit;font-size:inherit;padding:0 }\n.hc__card { position:absolute;top:calc(100% + 8px);left:0;z-index:30;width:268px;background:var(--chrome-bg);border:1px solid var(--chrome-border);border-radius:12px;box-shadow:0 14px 36px rgba(0,0,0,.16);padding:16px;opacity:0;transform:translateY(-6px) scale(.98);transform-origin:top left;pointer-events:none;transition:opacity .18s ease,transform .18s ease }\n.hc:hover .hc__card,.hc:focus-within .hc__card { opacity:1;transform:translateY(0) scale(1);pointer-events:auto;transition-delay:.2s }\n/* .is-open pins the card open — for a programmatic open, and for showing the revealed state statically */\n.hc.is-open .hc__card { opacity:1;transform:translateY(0) scale(1);pointer-events:auto;transition-delay:0s }\n.hc__row { display:flex;gap:12px;align-items:center;margin-bottom:11px }\n.hc__name { font-size:14px;font-weight:800;color:var(--chrome-txt) }\n.hc__handle { font-size:12px;color:var(--chrome-muted) }\n.hc__meta { font-size:12.5px;color:var(--chrome-muted);line-height:1.55 }",
-  "js": "function cardHoverHTML(o){\n  o = o || {};\n  const avatar = o.avatar===false ? '' : `&lt;span class=\"avt avt--lg\"&gt;${cardEsc(o.initials||'RB')}&lt;/span&gt;`;\n  const meta = o.meta ? `&lt;span class=\"hc__meta\"&gt;${cardEsc(o.meta)}&lt;/span&gt;` : '';\n  return `&lt;span class=\"hc${o.open?' is-open':''}\"${o.style?` style=\"${o.style}\"`:''}&gt;\n      &lt;button class=\"hc__trigger\" type=\"button\"&gt;${cardEsc(o.trigger||'@rethabile')}&lt;/button&gt;\n      &lt;span class=\"hc__card\"${o.cardStyle?` style=\"${o.cardStyle}\"`:''}&gt;\n        &lt;span class=\"hc__row\"&gt;${avatar}&lt;span&gt;&lt;span class=\"hc__name\" style=\"display:block\"&gt;${cardEsc(o.name||'Rethabile Beng')}&lt;/span&gt;&lt;span class=\"hc__handle\"&gt;${cardEsc(o.handle||'@rethabile · Finance ops')}&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;\n        ${meta}\n      &lt;/span&gt;\n    &lt;/span&gt;`;\n}",
+  "js": "function cardHoverHTML(o){\n  o = o || {};\n  const avatar = o.avatar===false ? '' : `&lt;span class=\"avt avt--lg\"&gt;${cardEsc(o.initials||'RB')}&lt;/span&gt;`;\n  const meta = o.meta ? `&lt;span class=\"hc__meta\"&gt;${cardEsc(o.meta)}&lt;/span&gt;` : '';\n  const style = o.inert ? `pointer-events:none${o.style?';'+o.style:''}` : o.style;\n  const tabindex = o.inert ? ' tabindex=\"-1\"' : '';\n  return `&lt;span class=\"hc${o.open?' is-open':''}\"${style?` style=\"${style}\"`:''}&gt;\n      &lt;button class=\"hc__trigger\" type=\"button\"${tabindex}&gt;${cardEsc(o.trigger||'@rethabile')}&lt;/button&gt;\n      &lt;span class=\"hc__card\"${o.cardStyle?` style=\"${o.cardStyle}\"`:''}&gt;\n        &lt;span class=\"hc__row\"&gt;${avatar}&lt;span&gt;&lt;span class=\"hc__name\" style=\"display:block\"&gt;${cardEsc(o.name||'Rethabile Beng')}&lt;/span&gt;&lt;span class=\"hc__handle\"&gt;${cardEsc(o.handle||'@rethabile · Finance ops')}&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;\n        ${meta}\n      &lt;/span&gt;\n    &lt;/span&gt;`;\n}",
   "usage": {
     "do": [
       "Preview a person, record or link the user is pointing at.",
@@ -7406,8 +7406,8 @@ body.home .main{max-width:none;margin:0;padding:0}
       "Don’t pack interactive-heavy flows inside — use a popover or page."
     ]
   },
-  "contentHash": "cce585885d3cf97a32ff272d96b662e171e1b2a9316526147add2d7bebd418ce",
-  "note": "Page is now a .sec--tabbed page; demos are built by the shared cardHoverHTML builder — the static HTML is just empty mounts. The reveal itself is pure CSS (:hover/:focus-within with a transition-delay for the short open delay) — no JS; .hc.is-open pins it open for a programmatic open and for documenting the revealed state statically. Moved under the Cards sub-group as its Hover Cards child; id renamed from s-hover-card to s-cards-hover."
+  "contentHash": "eb25586247920d59ec83a3402c5e30e5ea94f694072bf2ceca6290b1cc02255e",
+  "note": "Page is a .sec--tabbed page; demos are built by the shared cardHoverHTML builder — the static HTML is just empty mounts. The reveal itself is pure CSS (:hover/:focus-within with a transition-delay for the short open delay) — no JS; .hc.is-open pins it open for a programmatic open and for documenting the revealed state statically. cardHoverHTML's inert option adds pointer-events:none + tabindex=-1 so a paired 'at rest' example in a docs grid can't be triggered by a real hover and overlap its neighbour. Moved under the Cards sub-group as its Hover Cards child; id renamed from s-hover-card to s-cards-hover."
 }
   </pre>
 </details>
@@ -19403,8 +19403,10 @@ function cardHoverHTML(o){
   o = o || {};
   const avatar = o.avatar===false ? '' : `<span class="avt avt--lg">${cardEsc(o.initials||'RB')}</span>`;
   const meta = o.meta ? `<span class="hc__meta">${cardEsc(o.meta)}</span>` : '';
-  return `<span class="hc${o.open?' is-open':''}"${o.style?` style="${o.style}"`:''}>
-      <button class="hc__trigger" type="button">${cardEsc(o.trigger||'@rethabile')}</button>
+  const style = o.inert ? `pointer-events:none${o.style?';'+o.style:''}` : o.style;
+  const tabindex = o.inert ? ' tabindex="-1"' : '';
+  return `<span class="hc${o.open?' is-open':''}"${style?` style="${style}"`:''}>
+      <button class="hc__trigger" type="button"${tabindex}>${cardEsc(o.trigger||'@rethabile')}</button>
       <span class="hc__card"${o.cardStyle?` style="${o.cardStyle}"`:''}>
         <span class="hc__row">${avatar}<span><span class="hc__name" style="display:block">${cardEsc(o.name||'Rethabile Beng')}</span><span class="hc__handle">${cardEsc(o.handle||'@rethabile · Finance ops')}</span></span></span>
         ${meta}
@@ -20186,7 +20188,7 @@ ${s.desc==='on' ? `        <span class="code-attr">Description</span>=<span clas
       desc:'Two states, and the transition between them is the component. The card is in the DOM the whole time &mdash; opacity, transform and pointer-events are what change.',
       cells(theme, sbg){
         return [
-          {name:'At rest',  desc:'Only the underlined trigger shows. Nothing reserves space.', vis:cardHoverHTML({open:false, meta:'Approves payouts and manages settlement rules.'}), cellStyle:'', stageStyle:''},
+          {name:'At rest',  desc:'Only the underlined trigger shows. Nothing reserves space.', vis:cardHoverHTML({open:false, inert:true, meta:'Approves payouts and manages settlement rules.'}), cellStyle:'', stageStyle:''},
           {name:'Revealed', desc:'Fades and slides in below the trigger after a 200ms delay, so a passing pointer never flashes it.', vis:cardHoverHTML({open:true, meta:'Approves payouts and manages settlement rules.', cardStyle:'position:static;display:block;width:100%;box-shadow:none'}), stageStyle:'display:block;padding:16px'},
         ];
       }
@@ -20256,7 +20258,7 @@ ${s.desc==='on' ? `        <span class="code-attr">Description</span>=<span clas
          desc:'Open and close are pure CSS &mdash; <code>:hover</code> and <code>:focus-within</code> on the wrapper, with a 200ms <code>transition-delay</code> on the way in and none on the way out.',
          cells(){
            return [
-             {name:'At rest',  vis:cardHoverHTML({open:false})},
+             {name:'At rest',  vis:cardHoverHTML({open:false, inert:true})},
              {name:'Revealed', vis:cardHoverHTML({open:true, meta:'Finance ops · Cape Town', cardStyle:'position:static;display:block;width:100%;box-shadow:none'}), stageStyle:'display:block;padding:16px'},
            ];
          }},
