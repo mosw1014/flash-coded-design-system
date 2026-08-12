@@ -4527,6 +4527,7 @@ body.home .main{max-width:none;margin:0;padding:0}
       "Keep exactly one item active, matching the current page.",
       "Pick one colour context and one size for the whole panel.",
       "Let it span the full viewport height (100vh) so the account footer pins to the bottom of the screen, not just to the bottom of its content.",
+      "Keep it sticky against the viewport edge — it must stay in view as the page content scrolls, never scrolling away with it.",
       "If space is tight, collapse it to an icon-only rail — the nav stays on screen and every destination stays reachable, just without its labels."
     ],
     "dont": [
@@ -4537,7 +4538,7 @@ body.home .main{max-width:none;margin:0;padding:0}
       "Don’t make the Side Nav dismissible — it is persistent chrome, so it collapses to an icon-only rail but never hides completely, and never gets a close (&amp;times;) control."
     ]
   },
-  "contentHash": "b113a8a874a3a13231841532aef8b40ec42d7104b4e72813cc83c535dbcbc549",
+  "contentHash": "729bc5e9171a374ef2f64e2bf4d5ab6f387ed2673b8bf43cfb86e6497ea0c088",
   "note": "Company block (badge/title/selector) and Secondary links are each independently optional via navCompanyHtml(enabled)/navAccountHtml(linksEnabled) — the signed-in user + Log out footer always stays. navPg/renderNavPlayground/navPgSet/navTabSwitch/getNavCodeHTML/renderNavCodeTab/renderNavColourRef/renderNavStatesRef are doc-site-only playground plumbing, excluded."
 }
   </pre>
@@ -4573,6 +4574,7 @@ body.home .main{max-width:none;margin:0;padding:0}
                   <li>Keep exactly one item active, matching the current page.</li>
                   <li>Pick one colour context and one size for the whole panel.</li>
                   <li>Let it span the full viewport height (100vh) so the account footer pins to the bottom of the screen, not just to the bottom of its content.</li>
+                  <li>Keep it sticky against the viewport edge &mdash; it must stay in view as the page content scrolls, never scrolling away with it.</li>
                   <li>If space is tight, collapse it to an icon-only rail &mdash; the nav stays on screen and every destination stays reachable, just without its labels.</li>
                 </ul>
               </div>
@@ -14406,12 +14408,15 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.69.0';
+const SYSTEM_VERSION = '1.70.0';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.70.0', date:'2026-08-12', author:'Mo', title:'Side Nav Do’s and don’ts: sticky positioning called out explicitly', changes:[
+        ['added','Side Nav (#s-nav) Do list gains "Keep it sticky against the viewport edge — it must stay in view as the page content scrolls" — makes explicit, as a Do, what the existing "don’t constrain it to a scrolling container" Don’t already implied'],
+      ]},
       {version:'1.69.0', date:'2026-08-12', author:'Mo', title:'Navigation rebuilt as a tabbed page; Company/Secondary links now optional', changes:[
         ['changed','Navigation (#s-nav) restructured from a flat .sec into .sec--tabbed with a .sec-hero (title + live mini preview) and Overview / Style / Code / Changelog tabs, matching Pills/Cards/Avatar'],
         ['changed','The old "Interactive" panel (a bare stage plus three toggle rows) is now a proper "Try the component" playground: .cpg-layout intro/demo columns, a .btn-pg__stage demo and .btn-pg__pill-row controls for Colour, Size and Layout — same visual language as every other tabbed component page, not a bespoke one-off'],
@@ -16473,7 +16478,10 @@ const CHANGELOG = {
         ['changed','Planned for a future session'],
       ]},
     ]},
-    {secId:'s-nav', name:'Navigation', version:'1.7.0', entries:[
+    {secId:'s-nav', name:'Navigation', version:'1.7.1', entries:[
+      {version:'1.7.1', date:'2026-08-12', author:'Mo', title:'Do’s and don’ts: made sticky positioning an explicit Do', changes:[
+        ['added','New Do bullet — "Keep it sticky against the viewport edge — it must stay in view as the page content scrolls, never scrolling away with it" — stating positively what the existing Don’t bullet (no scrolling container) already implied'],
+      ]},
       {version:'1.7.0', date:'2026-08-12', author:'Mo', title:'Nav items restyled: bare icon glyphs, rounded hover/active pill, unified across all colour contexts', changes:[
         ['changed','Nav item icons drop their square chip/badge background entirely — the glyph now sits directly on the row in every state (idle, hover, active), coloured to match'],
         ['changed','.snav-item corner radius increased 6px → 12px so hover/active fills read as a rounded pill'],
