@@ -2556,6 +2556,7 @@ body.home .main{max-width:none;margin:0;padding:0}
   --sn-idle-label:var(--prim-grey-400);            /* #dddddd */
   --sn-active-badge:var(--prim-green-500);--sn-active-glyph:#fff;--sn-active-label:#fff;
   --sn-hover-bg:rgba(255,255,255,.1);
+  --sn-active-bg:rgba(255,255,255,.14);            /* a touch lighter than hover so the persistent selected pill reads distinctly from a transient hover */
   --sn-link:var(--prim-grey-400);                  /* #dddddd */
   --sn-link-glyph:rgba(255,255,255,.22);
   --sn-divider:rgba(255,255,255,.12);
@@ -2573,6 +2574,7 @@ body.home .main{max-width:none;margin:0;padding:0}
   --sn-idle-label:var(--prim-dg-50);                 /* #84a895 */
   --sn-active-badge:var(--prim-green-500);--sn-active-glyph:#fff;--sn-active-label:#fff;
   --sn-hover-bg:var(--prim-dg-100);                  /* #69927d — lighter than the #507e66 idle chip so the chip reads as the darker shape */
+  --sn-active-bg:rgba(255,255,255,.12);              /* a touch lighter than hover so the persistent selected pill reads distinctly from a transient hover */
   --sn-link:var(--prim-grey-400);                    /* #dddddd */
   --sn-link-glyph:rgba(255,255,255,.22);
   --sn-divider:rgba(255,255,255,.12);
@@ -2606,22 +2608,18 @@ body.home .main{max-width:none;margin:0;padding:0}
 .snav__selector-chev svg{width:14px;height:14px;display:block;fill:currentColor;stroke:none}
 /* Nav menu */
 .snav__menu{display:flex;flex-direction:column;gap:4px;align-items:stretch;width:100%}
-.snav-item{display:flex;align-items:center;width:100%;padding:4px 8px;border-radius:6px;cursor:pointer;text-align:left;border:0;background:none;font-family:inherit;transition:background .15s ease}
+.snav-item{display:flex;align-items:center;width:100%;padding:4px 8px;border-radius:12px;cursor:pointer;text-align:left;border:0;background:none;font-family:inherit;transition:background .15s ease}
 .snav-item__inner{display:flex;align-items:center;gap:8px;padding:4px 0;min-width:0}
-.snav-item__icon{width:var(--sn-chip-size);height:var(--sn-chip-size);display:flex;align-items:center;justify-content:center;border-radius:6px;flex-shrink:0;background:var(--sn-idle-badge);transition:background .15s ease}
+.snav-item__icon{width:var(--sn-chip-size);height:var(--sn-chip-size);display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .snav-item__icon svg{width:var(--sn-glyph);height:var(--sn-glyph);display:block;fill:currentColor;stroke:none;color:var(--sn-idle-glyph);transition:color .15s ease}
-.snav-item__title{font-size:var(--sn-label);font-weight:800;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--sn-idle-label);transition:color .15s ease}
+.snav-item__title{font-size:var(--sn-label);font-weight:500;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--sn-idle-label);transition:color .15s ease}
 .snav-item:hover,.snav-item--hover-look{background:var(--sn-hover-bg)}
-.snav-item:hover .snav-item__icon,.snav-item--hover-look .snav-item__icon{background:var(--sn-idle-badge-hover,var(--sn-idle-badge))}
+.snav-item:hover .snav-item__icon svg,.snav-item--hover-look .snav-item__icon svg{color:var(--sn-active-label)}
 .snav-item:hover .snav-item__title,.snav-item--hover-look .snav-item__title{color:var(--sn-active-label)}
 .snav-item.on,.snav-item--active-look{background:var(--sn-active-bg,var(--sn-hover-bg))}
 .snav-item.on .snav-item__icon svg,.snav-item--active-look .snav-item__icon svg{color:var(--sn-active-badge)}
 .snav-item.on .snav-item__title,.snav-item--active-look .snav-item__title{color:var(--sn-active-label)}
 .snav-item:focus-visible,.snav-item--focus-look{outline:2px solid var(--color-brand);outline-offset:-2px}
-/* Black keeps its original active marker (green chip, no row fill) — the grey full-row active look is White-only per design feedback */
-.snav--charcoal .snav-item.on,.snav--charcoal .snav-item--active-look{background:none}
-.snav--charcoal .snav-item.on .snav-item__icon,.snav--charcoal .snav-item--active-look .snav-item__icon{background:var(--sn-active-badge)}
-.snav--charcoal .snav-item.on .snav-item__icon svg,.snav--charcoal .snav-item--active-look .snav-item__icon svg{color:var(--sn-active-glyph)}
 /* Nested / collapsible nav items */
 .snav-item.has-children{justify-content:space-between}
 .snav-item__chev{display:flex;align-items:center;justify-content:center;flex-shrink:0;padding-left:4px;color:var(--sn-idle-glyph)}
@@ -2635,14 +2633,14 @@ body.home .main{max-width:none;margin:0;padding:0}
 .snav--sm .snav-subitem__title{font-size:11px}
 /* Account */
 .snav__account{display:flex;flex-direction:column;gap:6px;width:100%}
-.snav__seclink{display:flex;align-items:center;gap:6px;width:100%;padding:8px;background:none;border:0;cursor:pointer;font-family:inherit;text-align:left}
-.snav__seclink svg{width:13px;height:13px;display:block;fill:currentColor;stroke:none;color:var(--sn-link-glyph);flex-shrink:0}
+.snav__seclink{display:flex;align-items:center;gap:8px;width:100%;padding:4px 8px;background:none;border:0;cursor:pointer;font-family:inherit;text-align:left}
+.snav__seclink-icon{width:var(--sn-chip-size);height:var(--sn-chip-size);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.snav__seclink-icon svg{width:13px;height:13px;display:block;fill:currentColor;stroke:none;color:var(--sn-link-glyph)}
 .snav__seclink span{font-size:13px;font-weight:500;line-height:1.3;color:var(--sn-link)}
 .snav__rule{height:1px;width:100%;margin:9px 0;border:0;background:var(--sn-divider)}
 .snav__user{display:flex;align-items:center;gap:8px;padding:4px 0}
 .snav__user-name{font-size:13px;font-weight:800;line-height:1.25;color:var(--sn-user-name)}
-.snav__logout{display:flex;align-items:center;gap:6px;padding:4px 0;background:none;border:0;cursor:pointer;font-family:inherit;text-align:left;width:100%}
-.snav__logout svg{width:13px;height:13px;display:block;fill:currentColor;stroke:none;color:var(--sn-link-glyph);flex-shrink:0}
+.snav__logout{display:flex;align-items:center;gap:8px;padding:4px 8px;background:none;border:0;cursor:pointer;font-family:inherit;text-align:left;width:100%}
 .snav__logout span{font-size:13px;font-weight:500;line-height:1.3;color:var(--sn-logout)}
 /* Collapse toggle — an inline ghost icon button sitting in the logo row
    next to the wordmark, rather than an edge-docked circle on the panel
@@ -2669,9 +2667,9 @@ body.home .main{max-width:none;margin:0;padding:0}
 .snav--collapsed .snav-item__title,
 .snav--collapsed .snav-item__chev,
 .snav--collapsed .snav-sub,
-.snav--collapsed .snav__seclink span,
+.snav--collapsed .snav__seclink > span:not(.snav__seclink-icon),
 .snav--collapsed .snav__user-name,
-.snav--collapsed .snav__logout span{display:none}
+.snav--collapsed .snav__logout > span:not(.snav__seclink-icon){display:none}
 .snav--collapsed .snav-item{justify-content:center;padding:4px}
 .snav--collapsed .snav-item.has-children{justify-content:center}
 .snav--collapsed .snav-item__inner{gap:0}
@@ -2679,11 +2677,7 @@ body.home .main{max-width:none;margin:0;padding:0}
 .snav--collapsed .snav__logout{justify-content:center;padding:8px 0}
 .snav--collapsed .snav__user{justify-content:center;padding:4px 0}
 /* Demo scaffolding */
-.snav-ctrl-row{display:flex;flex-wrap:wrap;gap:22px;margin-bottom:20px}
-.snav-ctrl{display:flex;align-items:center;gap:10px}
-.snav-ctrl__lbl{font-size:12px;font-weight:600;color:var(--chrome-muted)}
-#snav-play-stage{display:flex;justify-content:center}
-#snav-play-stage .snav{height:auto;min-height:560px}
+.navPg-stage-el .snav{height:auto;min-height:560px}
 .snav-states-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;align-items:start}
 .snav-states-grid .snav{width:100%;height:auto}
 .snav-states-grid--items .snav{gap:4px;height:auto;min-height:0}
@@ -4472,93 +4466,27 @@ body.home .main{max-width:none;margin:0;padding:0}
   </pre>
 </details>
     </section>
-    <section class="sec" id="s-nav">
+    <section class="sec sec--tabbed" id="s-nav">
+      <div class="sec-hero">
       <div class="sec__head">
-        <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Navigation <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.6.1</span></h1>
-        <p class="sec__desc">The primary Side Nav for switching between top-level destinations. The full panel stacks four regions &mdash; a <strong>logo</strong>, a <strong>company</strong> block with an account selector, the <strong>nav menu</strong>, and an <strong>account footer</strong>. Each <strong>Nav item</strong> pairs an icon chip with a single-line label; the active item is marked with brand green &mdash; a full chip in Black, a full-row grey fill with a green glyph in White and Dark green. Works in Regular or Small, across Black, White and Dark green contexts, and can collapse to an icon-only rail via the ghost toggle in the logo row when space is tight &mdash; it is persistent chrome, so it never hides completely.</p>
-      </div>
-      <div class="type-sub">
-        <div class="type-sub__title">Anatomy</div>
-        <div class="type-sub__desc">Top to bottom: <strong>Logo</strong> (Flash wordmark + secondary title) &middot; <strong>Company</strong> (icon badge, company title and an account selector) &middot; <strong>Nav menu</strong> (icon-chip nav items) &middot; <strong>Account</strong> (secondary links, a divider, the signed-in user and log out). The panel spans the full viewport height (100vh); the company block sits at the top and the account footer pins to the bottom of the viewport, not just to the bottom of the content.</div>
-      </div>
-      <div class="type-sub">
-        <div class="type-sub__title">Interactive</div>
-        <div class="type-sub__desc">The complete panel. Click an item to make it active; switch the colour context, size or layout and it re-renders live. Items with children (e.g. Transactions) expand and collapse on click, revealing an indented sub-list with count badges &mdash; unavailable while collapsed, since there's no room for the sub-list. The small ghost toggle next to the wordmark also toggles Collapsed, mirroring the Layout control.</div>
-        <div class="snav-ctrl-row">
-          <div class="snav-ctrl"><span class="snav-ctrl__lbl">Colour</span><div id="snav-colour-toggle"></div></div>
-          <div class="snav-ctrl"><span class="snav-ctrl__lbl">Size</span><div id="snav-size-toggle"></div></div>
-          <div class="snav-ctrl"><span class="snav-ctrl__lbl">Layout</span><div id="snav-layout-toggle"></div></div>
-        </div>
-        <div class="sg-stage" id="snav-play-stage"></div>
-      </div>
-      <div class="type-sub">
-        <div class="type-sub__title">Nav colour</div>
-        <div class="type-sub__desc">Pick the context that matches the surrounding chrome. The active item&rsquo;s icon chip stays brand green in every context &mdash; it&rsquo;s the one consistent marker of &ldquo;you are here.&rdquo;</div>
-        <div class="sg-stage"><div class="snav-states-grid" id="snav-colour-ref"></div></div>
-      </div>
-      <div class="type-sub">
-        <div class="type-sub__title">States</div>
-        <div class="type-sub__desc">A nav item resolves to one of these. <strong>Inactive</strong> is a grey chip with a subtle glyph and subtle label; <strong>Hover</strong> adds a full-row grey wash and lifts the label to primary; <strong>Active</strong> keeps that same full-row grey fill persistently and turns just the glyph brand green, with a primary label &mdash; the chip itself stays its idle grey; <strong>Focused</strong> shows the keyboard ring. Shown on White; Dark green follows the same logic. Black is the exception &mdash; its active marker stays the original solid brand-green chip with no row fill, and can be tried live above.</div>
-        <div class="sg-stage"><div class="snav-states-grid snav-states-grid--items" id="snav-states-ref"></div></div>
-      </div>
-      <div class="type-sub">
-        <div class="type-sub__title">Anatomy &amp; specs</div>
-        <div class="type-sub__desc">Regular mirrors the Figma &ldquo;Large&rdquo; variant; Small mirrors the Figma &ldquo;Small&rdquo; variant.</div>
-        <div class="dd-table-wrap"><table class="dd-table">
-          <thead><tr><th>Property</th><th>Regular</th><th>Small</th><th>Token</th></tr></thead>
-          <tbody>
-            <tr><td class="dd-table__name">Panel width</td><td>208px</td><td>170px</td><td>&mdash;</td></tr>
-            <tr><td class="dd-table__name">Collapsed rail width</td><td colspan="2">72px (Regular) &middot; 60px (Small) &mdash; icon-only; labels, the company selector and nested sub-lists drop away, every icon/badge/active-marker stays</td><td>&mdash;</td></tr>
-            <tr><td class="dd-table__name">Panel height</td><td colspan="2">100vh (100dvh) &mdash; spans the full viewport height; the account footer pins to the bottom via the body's space-between</td><td>&mdash;</td></tr>
-            <tr><td class="dd-table__name">Panel padding</td><td>20px 16px</td><td>10px 10px 15px</td><td>&mdash;</td></tr>
-            <tr><td class="dd-table__name">Corner radius</td><td>12px</td><td>12px</td><td><code>radius-small</code></td></tr>
-            <tr><td class="dd-table__name">Item padding</td><td>4px 8px</td><td>4px 8px &middot; min-height 40px</td><td>radius <code>radius-xsmall</code> 6px</td></tr>
-            <tr><td class="dd-table__name">Icon chip</td><td>29px cell &middot; 14px glyph</td><td>19px cell &middot; 9px glyph</td><td>radius 6px</td></tr>
-            <tr><td class="dd-table__name">Label</td><td>16px / bold</td><td>12px / bold</td><td>Body m / Body xs &mdash; single line</td></tr>
-            <tr><td class="dd-table__name">Idle chip / glyph / label</td><td colspan="2">White: #E6E6E6 chip &middot; #A4A4A4 glyph &middot; #8A8A8A label. Black: #646464 chip &middot; #A4A4A4 glyph &middot; #DDDDDD label</td><td>grey-200 / grey-700 / grey-800</td></tr>
-            <tr><td class="dd-table__name">Active marker</td><td colspan="2">White/Dark green: full-row grey fill, brand-green glyph, chip stays idle grey. Black: solid brand-green chip, no row fill</td><td><code>icon-secondary</code> #10C504</td></tr>
-          </tbody>
-        </table></div>
-      </div>
-      <div class="type-sub">
-        <div class="type-sub__title">When to use</div>
-        <div class="type-sub__desc">Side Nav is for primary, top-level destinations that persist across a session &mdash; not for switching views within one screen.</div>
-        <div class="sel-usage">
-          <div class="sel-usage__card">
-            <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
-            <ul class="sel-usage__list">
-              <li>Reserve it for a handful of top-level, persistent destinations.</li>
-              <li>Keep exactly one item active, matching the current page.</li>
-              <li>Pick one colour context and one size for the whole panel.</li>
-              <li>Let it span the full viewport height (100vh) so the account footer pins to the bottom of the screen, not just to the bottom of its content.</li>
-              <li>If space is tight, collapse it to an icon-only rail &mdash; the nav stays on screen and every destination stays reachable, just without its labels.</li>
-            </ul>
-          </div>
-          <div class="sel-usage__card">
-            <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don&rsquo;t</div>
-            <ul class="sel-usage__list">
-              <li>Don&rsquo;t use Side Nav to switch tabs within a single page &mdash; that&rsquo;s Tabs.</li>
-              <li>Don&rsquo;t mix icon chips and plain-text items in the same list.</li>
-              <li>Don&rsquo;t leave more than one item marked active at once.</li>
-              <li>Don&rsquo;t constrain the panel to its content height or place it inside a scrolling container &mdash; it should sit fixed against the viewport edge.</li>
-              <li>Don&rsquo;t make the Side Nav dismissible &mdash; it is persistent chrome, so it collapses to an icon-only rail but never hides completely, and never gets a close (×) control.</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <details class="ai-ctx">
+        <h1 class="sec__title">Navigation</h1>
+        <div class="sec-header-meta">
+          <span class="comp-ver-badge" style="margin-left:0">v1.8.0</span>
+<details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-nav">
 {
   "status": "js-rendered",
   "builderFunctions": [
-    "itemsHtml",
-    "logoHtml",
-    "companyHtml",
-    "accountHtml",
-    "panelHtml",
-    "ITEMS"
+    "navItemsHtml",
+    "navLogoHtml",
+    "navCompanyHtml",
+    "navAccountHtml",
+    "navPanelHtml",
+    "NAV_ITEMS",
+    "NAV_COLOURS",
+    "NAV_SIZES",
+    "NAV_LAYOUTS"
   ],
   "realClasses": [
     ".snav",
@@ -4585,14 +4513,14 @@ body.home .main{max-width:none;margin:0;padding:0}
     ".snav-item__title",
     ".snav__account",
     ".snav__seclink",
+    ".snav__seclink-icon",
     ".snav__rule",
     ".snav__user",
-    ".snav__user-badge",
     ".snav__user-name",
     ".snav__logout"
   ],
-  "css": "/* ---- Navigation / Side Nav ----\n   Rebuilt to match the Figma SideNav (node 3608:32365): Regular size mirrors the\n   Figma \"Large\" variant exactly; all colour/size differences are driven by --sn-*\n   tokens on the root so the Charcoal / Dark green / Small variants only override\n   tokens, never the child rules. All three colour contexts (White, Charcoal, Dark\n   green) and both sizes (Regular, Small) match their Figma variants. */\n.snav { /* --- White colour context (Figma default) --- */\n  --sn-bg:var(--prim-white);\n  --sn-border:1px solid var(--chrome-border);\n  --sn-shadow:0 0 10px rgba(0,0,0,.06);\n  --sn-logo:var(--prim-black);\n  --sn-title:#2a2a2a;                        /* grey-10 */\n  --sn-tint:var(--prim-grey-150);            /* #ededed — same grey as --sn-hover-bg so List item and the nav row read as one consistent grey */\n  --sn-company-title:var(--prim-black);\n  --sn-company-glyph:var(--prim-grey-900);   /* #646464 */\n  --sn-user-name:var(--prim-grey-900);       /* #646464 */\n  --sn-selector-label:var(--prim-black);\n  --sn-idle-badge:var(--prim-grey-200);      /* #e6e6e6 — lighter than the old #ddd, still darker than the #ededed hover row and #f8f8f8 selected row */\n  --sn-idle-badge-hover:var(--prim-grey-400); /* #dddddd — chip darkens a step on row hover */\n  --sn-idle-glyph:var(--prim-grey-700);      /* #a4a4a4 */\n  --sn-idle-label:var(--prim-grey-800);      /* #8a8a8a */\n  --sn-active-badge:var(--prim-green-500);   /* icon-secondary #10c504 */\n  --sn-active-glyph:var(--prim-white);\n  --sn-active-label:var(--prim-black);\n  --sn-hover-bg:var(--prim-grey-150);        /* #ededed — same grey as --sn-tint (List item), lighter than the #ddd idle chip so the chip reads as the darker shape */\n  --sn-active-bg:var(--prim-grey-50);        /* #f8f8f8 — clearly lighter than hover's #ededed, so the persistent selected state reads distinctly from a transient hover */\n  --sn-link:var(--prim-grey-900);            /* #646464 */\n  --sn-link-glyph:var(--prim-grey-500);      /* #d1d1d1 */\n  --sn-divider:var(--prim-grey-300);\n  --sn-logout:rgba(0,0,0,.5);\n  /* --- Regular (Figma Large) metrics --- */\n  --sn-pad:20px 16px;\n  --sn-radius:12px;\n  --sn-gap:40px;\n  --sn-chip-size:29px;\n  --sn-glyph:14px;\n  --sn-label:16px;\n  --sn-logo-size:30px;\n  --sn-word:22px;\n  display:flex;flex-direction:column;width:208px;max-width:100%;position:relative;\n  height:100vh;height:100dvh;box-sizing:border-box;\n  padding:var(--sn-pad);border-radius:var(--sn-radius);gap:var(--sn-gap);\n  background:var(--sn-bg);border:var(--sn-border);box-shadow:var(--sn-shadow);\n  font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;\n  transition:background .2s }\n.snav--charcoal { /* matched to Figma node 3608:32967; bg overridden to true black per design request */\n  --sn-bg:var(--prim-black);--sn-border:0;--sn-shadow:none;  /* #000 */\n  --sn-logo:#fff;--sn-title:#fff;\n  --sn-tint:var(--prim-grey-1000);                 /* #414141 badge + selector */\n  --sn-company-title:var(--prim-grey-200);         /* #e6e6e6 */\n  --sn-company-glyph:var(--prim-grey-900);         /* #646464 */\n  --sn-user-name:var(--prim-grey-600);             /* #bdbdbd */\n  --sn-selector-label:#fff;\n  --sn-idle-badge:var(--prim-grey-900);            /* #646464 */\n  --sn-idle-glyph:var(--prim-grey-700);            /* #a4a4a4 */\n  --sn-idle-label:var(--prim-grey-400);            /* #dddddd */\n  --sn-active-badge:var(--prim-green-500);--sn-active-glyph:#fff;--sn-active-label:#fff;\n  --sn-hover-bg:rgba(255,255,255,.1);\n  --sn-link:var(--prim-grey-400);                  /* #dddddd */\n  --sn-link-glyph:rgba(255,255,255,.22);\n  --sn-divider:rgba(255,255,255,.12);\n  --sn-logout:var(--prim-grey-400) }\n.snav--darkgreen { /* matched to Figma node 3608:33957 */\n  --sn-bg:#124a40;--sn-border:0;--sn-shadow:none;    /* Primary/Dark green */\n  --sn-logo:#fff;--sn-title:#fff;\n  --sn-tint:#60867f;                                 /* Dark green-4, badge + selector */\n  --sn-company-title:#fff;\n  --sn-company-glyph:var(--prim-grey-500);           /* #d1d1d1 */\n  --sn-user-name:var(--prim-grey-600);               /* #bdbdbd */\n  --sn-selector-label:#fff;\n  --sn-idle-badge:var(--prim-dg-150);                /* #507e66 tertiary-low-contrast-2 */\n  --sn-idle-glyph:var(--prim-dg-50);                 /* #84a895 tertiary-low-contrast-1 */\n  --sn-idle-label:var(--prim-dg-50);                 /* #84a895 */\n  --sn-active-badge:var(--prim-green-500);--sn-active-glyph:#fff;--sn-active-label:#fff;\n  --sn-hover-bg:var(--prim-dg-100);                  /* #69927d — lighter than the #507e66 idle chip so the chip reads as the darker shape */\n  --sn-link:var(--prim-grey-400);                    /* #dddddd */\n  --sn-link-glyph:rgba(255,255,255,.22);\n  --sn-divider:rgba(255,255,255,.12);\n  --sn-logout:var(--prim-grey-400) }\n.snav--sm { width:170px;--sn-pad:10px 10px 15px;--sn-chip-size:19px;--sn-glyph:9px;--sn-label:12px;--sn-logo-size:25px;--sn-word:16px }\n/* Figma node 4465:38905 */\n.snav--sm .snav__logo { gap:8px }\n.snav--sm .snav__subtitle { font-size:12px }\n.snav--sm .snav__companybadge { width:38px;height:38px }\n.snav--sm .snav__companytitle { font-size:12px }\n.snav--sm .snav-item { min-height:40px }\n.snav--sm .snav-item__inner { gap:5px;padding:2px 0 }\n.snav--sm .snav__seclink span,.snav--sm .snav__logout span,.snav--sm .snav__user-name { font-size:12px }\n/* Logo */\n.snav__logo { display:flex;flex-direction:column;gap:12px;padding:0 8px }\n.snav__wordmark { display:flex;align-items:center;gap:7px;height:33px }\n.snav__wordmark svg { width:var(--sn-logo-size);height:var(--sn-logo-size);display:block;flex-shrink:0 }\n.snav__word { font-weight:900;font-size:var(--sn-word);letter-spacing:-.5px;color:var(--sn-logo) }\n.snav__subtitle { font-size:13px;font-weight:800;line-height:1.3;color:var(--sn-title) }\n/* Body fills the column and pushes account info to the bottom */\n.snav__body { flex:1 0 auto;display:flex;flex-direction:column;justify-content:space-between;gap:40px;align-items:center;width:100% }\n.snav__top { display:flex;flex-direction:column;gap:var(--sn-gap);align-items:center;width:100% }\n/* Company */\n.snav__company { display:flex;flex-direction:column;gap:12px;align-items:center;width:100% }\n.snav__companybadge { width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:12px;background:var(--sn-tint) }\n.snav__companybadge svg { width:16px;height:16px;display:block;fill:currentColor;stroke:none;color:var(--sn-company-glyph) }\n.snav__companytitle { font-size:13px;font-weight:800;line-height:1.3;color:var(--sn-company-title) }\n.snav__selector { display:flex;align-items:center;width:176px;max-width:100%;height:44px;padding:0 4px;border-radius:6px;background:var(--sn-tint);border:0;cursor:pointer;font-family:inherit }\n.snav__selector-label { flex:1;min-width:0;padding:4px 12px;text-align:left;font-size:16px;font-weight:500;line-height:1.25;color:var(--sn-selector-label);overflow:hidden;text-overflow:ellipsis;white-space:nowrap }\n.snav__selector-chev { display:flex;align-items:center;justify-content:center;padding:12px;color:var(--sn-selector-label) }\n.snav__selector-chev svg { width:14px;height:14px;display:block;fill:currentColor;stroke:none }\n/* Nav menu */\n.snav__menu { display:flex;flex-direction:column;gap:4px;align-items:stretch;width:100% }\n.snav-item { display:flex;align-items:center;width:100%;padding:4px 8px;border-radius:6px;cursor:pointer;text-align:left;border:0;background:none;font-family:inherit;transition:background .15s ease }\n.snav-item__inner { display:flex;align-items:center;gap:8px;padding:4px 0;min-width:0 }\n.snav-item__icon { width:var(--sn-chip-size);height:var(--sn-chip-size);display:flex;align-items:center;justify-content:center;border-radius:6px;flex-shrink:0;background:var(--sn-idle-badge);transition:background .15s ease }\n.snav-item__icon svg { width:var(--sn-glyph);height:var(--sn-glyph);display:block;fill:currentColor;stroke:none;color:var(--sn-idle-glyph);transition:color .15s ease }\n.snav-item__title { font-size:var(--sn-label);font-weight:800;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--sn-idle-label);transition:color .15s ease }\n.snav-item:hover,.snav-item--hover-look { background:var(--sn-hover-bg) }\n.snav-item:hover .snav-item__icon,.snav-item--hover-look .snav-item__icon { background:var(--sn-idle-badge-hover,var(--sn-idle-badge)) }\n.snav-item:hover .snav-item__title,.snav-item--hover-look .snav-item__title { color:var(--sn-active-label) }\n.snav-item.on,.snav-item--active-look { background:var(--sn-active-bg,var(--sn-hover-bg)) }\n.snav-item.on .snav-item__icon svg,.snav-item--active-look .snav-item__icon svg { color:var(--sn-active-badge) }\n.snav-item.on .snav-item__title,.snav-item--active-look .snav-item__title { color:var(--sn-active-label) }\n.snav-item:focus-visible,.snav-item--focus-look { outline:2px solid var(--color-brand);outline-offset:-2px }\n/* Black keeps its original active marker (green chip, no row fill) — the grey full-row active look is White-only per design feedback */\n.snav--charcoal .snav-item.on,.snav--charcoal .snav-item--active-look { background:none }\n.snav--charcoal .snav-item.on .snav-item__icon,.snav--charcoal .snav-item--active-look .snav-item__icon { background:var(--sn-active-badge) }\n.snav--charcoal .snav-item.on .snav-item__icon svg,.snav--charcoal .snav-item--active-look .snav-item__icon svg { color:var(--sn-active-glyph) }\n/* Nested / collapsible nav items */\n.snav-item.has-children { justify-content:space-between }\n.snav-item.is-open .snav-item__chev svg { transform:rotate(180deg) }\n.snav--sm .snav-subitem__title { font-size:11px }\n/* Account */\n.snav__account { display:flex;flex-direction:column;gap:6px;width:100% }\n.snav__seclink { display:flex;align-items:center;gap:6px;width:100%;padding:8px;background:none;border:0;cursor:pointer;font-family:inherit;text-align:left }\n.snav__seclink svg { width:13px;height:13px;display:block;fill:currentColor;stroke:none;color:var(--sn-link-glyph);flex-shrink:0 }\n.snav__seclink span { font-size:13px;font-weight:500;line-height:1.3;color:var(--sn-link) }\n.snav__rule { height:1px;width:100%;margin:9px 0;border:0;background:var(--sn-divider) }\n.snav__user { display:flex;align-items:center;gap:8px;padding:4px 0 }\n.snav__user-name { font-size:13px;font-weight:800;line-height:1.25;color:var(--sn-user-name) }\n.snav__logout { display:flex;align-items:center;gap:6px;padding:4px 0;background:none;border:0;cursor:pointer;font-family:inherit;text-align:left;width:100% }\n.snav__logout svg { width:13px;height:13px;display:block;fill:currentColor;stroke:none;color:var(--sn-link-glyph);flex-shrink:0 }\n.snav__logout span { font-size:13px;font-weight:500;line-height:1.3;color:var(--sn-logout) }\n.snav--collapsed.snav--sm { width:60px }\n.snav--collapsed .snav__logo { padding:0;align-items:center }\n.snav--collapsed .snav__wordmark { justify-content:center;gap:0 }\n.snav--collapsed .snav__word,\n.snav--collapsed .snav__subtitle,\n.snav--collapsed .snav__companytitle,\n.snav--collapsed .snav__selector,\n.snav--collapsed .snav-item__title,\n.snav--collapsed .snav-item__chev,\n.snav--collapsed .snav-sub,\n.snav--collapsed .snav__seclink span,\n.snav--collapsed .snav__user-name,\n.snav--collapsed .snav__logout span { display:none }\n.snav--collapsed .snav-item { justify-content:center;padding:4px }\n.snav--collapsed .snav-item.has-children { justify-content:center }\n.snav--collapsed .snav-item__inner { gap:0 }\n.snav--collapsed .snav__seclink,\n.snav--collapsed .snav__logout { justify-content:center;padding:8px 0 }\n.snav--collapsed .snav__user { justify-content:center;padding:4px 0 }\n#snav-play-stage .snav { height:auto;min-height:560px }\n.snav-states-grid .snav { width:100%;height:auto }\n.snav-states-grid--items .snav { gap:4px;height:auto;min-height:0 }",
-  "js": "function itemsHtml(items, activeIdx, extraCls, expanded, collapsed){\n    expanded = expanded || {};\n    return items.map(function(it,i){\n      var hasKids = !!(it.children &amp;&amp; it.children.length);\n      var isOpen = hasKids &amp;&amp; !collapsed &amp;&amp; !!expanded[i];\n      var cls='snav-item'+(i===activeIdx?' on':'')+(extraCls&amp;&amp;extraCls[i]?' '+extraCls[i]:'')+(hasKids?' has-children':'')+(isOpen?' is-open':'');\n      var chev = (hasKids &amp;&amp; !collapsed) ? '&lt;span class=\"snav-item__chev\"&gt;'+iconSvg('chevron-down')+'&lt;/span&gt;' : '';\n      var row = '&lt;button type=\"button\" class=\"'+cls+'\" data-i=\"'+i+'\"'+(hasKids?' aria-expanded=\"'+isOpen+'\"':'')+(collapsed?' title=\"'+it.title+'\"':'')+'&gt;'\n        +'&lt;span class=\"snav-item__inner\"&gt;&lt;span class=\"snav-item__icon\"&gt;'+iconSvg(it.icon)+'&lt;/span&gt;'\n        +'&lt;span class=\"snav-item__title\"&gt;'+it.title+'&lt;/span&gt;&lt;/span&gt;'\n        +chev\n        +'&lt;/button&gt;';\n      var sub = (hasKids &amp;&amp; isOpen) ? '&lt;div class=\"snav-sub\"&gt;'+it.children.map(function(c,ci){\n        return '&lt;button type=\"button\" class=\"snav-subitem\" data-parent=\"'+i+'\" data-child=\"'+ci+'\"&gt;'\n          +'&lt;span class=\"snav-subitem__title\"&gt;'+c.title+'&lt;/span&gt;'\n          +(c.count!=null?'&lt;span class=\"snav-subitem__count\"&gt;'+c.count+'&lt;/span&gt;':'')\n          +'&lt;/button&gt;';\n      }).join('')+'&lt;/div&gt;' : '';\n      return row+sub;\n    }).join('');\n  }\n\nfunction logoHtml(collapsed, collapseToggle){\n    var toggle = collapseToggle ? '&lt;button type=\"button\" class=\"snav__collapse-btn\" aria-label=\"'\n      +(collapsed?'Expand':'Collapse')+' navigation\" aria-expanded=\"'+(!collapsed)+'\"&gt;'+SNAV_COLLAPSE_ICON+'&lt;/button&gt;' : '';\n    return '&lt;div class=\"snav__logo\"&gt;&lt;div class=\"snav__logo-row\"&gt;&lt;div class=\"snav__wordmark\"&gt;'+FLASH_MARK+'&lt;span class=\"snav__word\"&gt;flash&lt;/span&gt;&lt;/div&gt;'+toggle+'&lt;/div&gt;'\n      +'&lt;span class=\"snav__subtitle\"&gt;Secondary title&lt;/span&gt;&lt;/div&gt;';\n  }\n\nfunction companyHtml(){\n    return '&lt;div class=\"snav__company\"&gt;'\n      +'&lt;div class=\"snav__companybadge\"&gt;'+iconSvg('store')+'&lt;/div&gt;'\n      +'&lt;span class=\"snav__companytitle\"&gt;Company title&lt;/span&gt;'\n      +'&lt;button type=\"button\" class=\"snav__selector\"&gt;&lt;span class=\"snav__selector-label\"&gt;List item&lt;/span&gt;'\n      +'&lt;span class=\"snav__selector-chev\"&gt;'+iconSvg('chevron-down')+'&lt;/span&gt;&lt;/button&gt;&lt;/div&gt;';\n  }\n\nfunction accountHtml(){\n    return '&lt;div class=\"snav__account\"&gt;'\n      +'&lt;button type=\"button\" class=\"snav__seclink\"&gt;'+iconSvg('link')+'&lt;span&gt;Secondary link&lt;/span&gt;&lt;/button&gt;'\n      +'&lt;button type=\"button\" class=\"snav__seclink\"&gt;'+iconSvg('link')+'&lt;span&gt;Secondary link&lt;/span&gt;&lt;/button&gt;'\n      +'&lt;hr class=\"snav__rule\"&gt;'\n      +'&lt;div class=\"snav__user\"&gt;&lt;span class=\"avt avt--xs\"&gt;MO&lt;/span&gt;&lt;span class=\"snav__user-name\"&gt;User name&lt;/span&gt;&lt;/div&gt;'\n      +'&lt;button type=\"button\" class=\"snav__logout\"&gt;'+SNAV_LOGOUT_ICON+'&lt;span&gt;Log out&lt;/span&gt;&lt;/button&gt;&lt;/div&gt;';\n  }\n\nfunction panelHtml(colour, size, activeIdx, expanded, collapsed, collapseToggle){\n    return '&lt;div class=\"snav snav--'+colour+(size==='sm'?' snav--sm':'')+(collapsed?' snav--collapsed':'')+'\"&gt;'\n      +logoHtml(collapsed, collapseToggle)\n      +'&lt;div class=\"snav__body\"&gt;&lt;div class=\"snav__top\"&gt;'+companyHtml()\n      +'&lt;div class=\"snav__menu\"&gt;'+itemsHtml(ITEMS, activeIdx, null, expanded, collapsed)+'&lt;/div&gt;&lt;/div&gt;'\n      +accountHtml()+'&lt;/div&gt;&lt;/div&gt;';\n  }\n\nvar ITEMS=[\n    {icon:'home', title:'Home'},\n    {icon:'receipt', title:'Transactions', children:[\n      {title:'Pending', count:4},\n      {title:'Completed', count:128},\n      {title:'Refunded', count:3}\n    ]},\n    {icon:'wallet', title:'Payouts'},\n    {icon:'users', title:'Customers'},\n    {icon:'bell', title:'Notifications'},\n    {icon:'settings', title:'Settings'}\n  ];",
+  "css": "/* ---- Navigation / Side Nav ----\n   Rebuilt to match the Figma SideNav (node 3608:32365): Regular size mirrors the\n   Figma \"Large\" variant exactly; all colour/size differences are driven by --sn-*\n   tokens on the root so the Charcoal / Dark green / Small variants only override\n   tokens, never the child rules. All three colour contexts (White, Charcoal, Dark\n   green) and both sizes (Regular, Small) match their Figma variants. */\n.snav { /* --- White colour context (Figma default) --- */\n  --sn-bg:var(--prim-white);\n  --sn-border:1px solid var(--chrome-border);\n  --sn-shadow:0 0 10px rgba(0,0,0,.06);\n  --sn-logo:var(--prim-black);\n  --sn-title:#2a2a2a;                        /* grey-10 */\n  --sn-tint:var(--prim-grey-150);            /* #ededed — same grey as --sn-hover-bg so List item and the nav row read as one consistent grey */\n  --sn-company-title:var(--prim-black);\n  --sn-company-glyph:var(--prim-grey-900);   /* #646464 */\n  --sn-user-name:var(--prim-grey-900);       /* #646464 */\n  --sn-selector-label:var(--prim-black);\n  --sn-idle-badge:var(--prim-grey-200);      /* #e6e6e6 — lighter than the old #ddd, still darker than the #ededed hover row and #f8f8f8 selected row */\n  --sn-idle-badge-hover:var(--prim-grey-400); /* #dddddd — chip darkens a step on row hover */\n  --sn-idle-glyph:var(--prim-grey-700);      /* #a4a4a4 */\n  --sn-idle-label:var(--prim-grey-800);      /* #8a8a8a */\n  --sn-active-badge:var(--prim-green-500);   /* icon-secondary #10c504 */\n  --sn-active-glyph:var(--prim-white);\n  --sn-active-label:var(--prim-black);\n  --sn-hover-bg:var(--prim-grey-150);        /* #ededed — same grey as --sn-tint (List item), lighter than the #ddd idle chip so the chip reads as the darker shape */\n  --sn-active-bg:var(--prim-grey-50);        /* #f8f8f8 — clearly lighter than hover's #ededed, so the persistent selected state reads distinctly from a transient hover */\n  --sn-link:var(--prim-grey-900);            /* #646464 */\n  --sn-link-glyph:var(--prim-grey-500);      /* #d1d1d1 */\n  --sn-divider:var(--prim-grey-300);\n  --sn-logout:rgba(0,0,0,.5);\n  /* --- Regular (Figma Large) metrics --- */\n  --sn-pad:20px 16px;\n  --sn-radius:12px;\n  --sn-gap:40px;\n  --sn-chip-size:29px;\n  --sn-glyph:14px;\n  --sn-label:16px;\n  --sn-logo-size:30px;\n  --sn-word:22px;\n  display:flex;flex-direction:column;width:208px;max-width:100%;position:relative;\n  height:100vh;height:100dvh;box-sizing:border-box;\n  padding:var(--sn-pad);border-radius:var(--sn-radius);gap:var(--sn-gap);\n  background:var(--sn-bg);border:var(--sn-border);box-shadow:var(--sn-shadow);\n  font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;\n  transition:background .2s }\n.snav--charcoal { /* matched to Figma node 3608:32967; bg overridden to true black per design request */\n  --sn-bg:var(--prim-black);--sn-border:0;--sn-shadow:none;  /* #000 */\n  --sn-logo:#fff;--sn-title:#fff;\n  --sn-tint:var(--prim-grey-1000);                 /* #414141 badge + selector */\n  --sn-company-title:var(--prim-grey-200);         /* #e6e6e6 */\n  --sn-company-glyph:var(--prim-grey-900);         /* #646464 */\n  --sn-user-name:var(--prim-grey-600);             /* #bdbdbd */\n  --sn-selector-label:#fff;\n  --sn-idle-badge:var(--prim-grey-900);            /* #646464 */\n  --sn-idle-glyph:var(--prim-grey-700);            /* #a4a4a4 */\n  --sn-idle-label:var(--prim-grey-400);            /* #dddddd */\n  --sn-active-badge:var(--prim-green-500);--sn-active-glyph:#fff;--sn-active-label:#fff;\n  --sn-hover-bg:rgba(255,255,255,.1);\n  --sn-active-bg:rgba(255,255,255,.14);            /* a touch lighter than hover so the persistent selected pill reads distinctly from a transient hover */\n  --sn-link:var(--prim-grey-400);                  /* #dddddd */\n  --sn-link-glyph:rgba(255,255,255,.22);\n  --sn-divider:rgba(255,255,255,.12);\n  --sn-logout:var(--prim-grey-400) }\n.snav--darkgreen { /* matched to Figma node 3608:33957 */\n  --sn-bg:#124a40;--sn-border:0;--sn-shadow:none;    /* Primary/Dark green */\n  --sn-logo:#fff;--sn-title:#fff;\n  --sn-tint:#60867f;                                 /* Dark green-4, badge + selector */\n  --sn-company-title:#fff;\n  --sn-company-glyph:var(--prim-grey-500);           /* #d1d1d1 */\n  --sn-user-name:var(--prim-grey-600);               /* #bdbdbd */\n  --sn-selector-label:#fff;\n  --sn-idle-badge:var(--prim-dg-150);                /* #507e66 tertiary-low-contrast-2 */\n  --sn-idle-glyph:var(--prim-dg-50);                 /* #84a895 tertiary-low-contrast-1 */\n  --sn-idle-label:var(--prim-dg-50);                 /* #84a895 */\n  --sn-active-badge:var(--prim-green-500);--sn-active-glyph:#fff;--sn-active-label:#fff;\n  --sn-hover-bg:var(--prim-dg-100);                  /* #69927d — lighter than the #507e66 idle chip so the chip reads as the darker shape */\n  --sn-active-bg:rgba(255,255,255,.12);              /* a touch lighter than hover so the persistent selected pill reads distinctly from a transient hover */\n  --sn-link:var(--prim-grey-400);                    /* #dddddd */\n  --sn-link-glyph:rgba(255,255,255,.22);\n  --sn-divider:rgba(255,255,255,.12);\n  --sn-logout:var(--prim-grey-400) }\n.snav--sm { width:170px;--sn-pad:10px 10px 15px;--sn-chip-size:19px;--sn-glyph:9px;--sn-label:12px;--sn-logo-size:25px;--sn-word:16px }\n/* Figma node 4465:38905 */\n.snav--sm .snav__logo { gap:8px }\n.snav--sm .snav__subtitle { font-size:12px }\n.snav--sm .snav__companybadge { width:38px;height:38px }\n.snav--sm .snav__companytitle { font-size:12px }\n.snav--sm .snav-item { min-height:40px }\n.snav--sm .snav-item__inner { gap:5px;padding:2px 0 }\n.snav--sm .snav__seclink span,.snav--sm .snav__logout span,.snav--sm .snav__user-name { font-size:12px }\n/* Logo */\n.snav__logo { display:flex;flex-direction:column;gap:12px;padding:0 8px }\n.snav__wordmark { display:flex;align-items:center;gap:7px;height:33px }\n.snav__wordmark svg { width:var(--sn-logo-size);height:var(--sn-logo-size);display:block;flex-shrink:0 }\n.snav__word { font-weight:900;font-size:var(--sn-word);letter-spacing:-.5px;color:var(--sn-logo) }\n.snav__subtitle { font-size:13px;font-weight:800;line-height:1.3;color:var(--sn-title) }\n/* Body fills the column and pushes account info to the bottom */\n.snav__body { flex:1 0 auto;display:flex;flex-direction:column;justify-content:space-between;gap:40px;align-items:center;width:100% }\n.snav__top { display:flex;flex-direction:column;gap:var(--sn-gap);align-items:center;width:100% }\n/* Company */\n.snav__company { display:flex;flex-direction:column;gap:12px;align-items:center;width:100% }\n.snav__companybadge { width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:12px;background:var(--sn-tint) }\n.snav__companybadge svg { width:16px;height:16px;display:block;fill:currentColor;stroke:none;color:var(--sn-company-glyph) }\n.snav__companytitle { font-size:13px;font-weight:800;line-height:1.3;color:var(--sn-company-title) }\n.snav__selector { display:flex;align-items:center;width:176px;max-width:100%;height:44px;padding:0 4px;border-radius:6px;background:var(--sn-tint);border:0;cursor:pointer;font-family:inherit }\n.snav__selector-label { flex:1;min-width:0;padding:4px 12px;text-align:left;font-size:16px;font-weight:500;line-height:1.25;color:var(--sn-selector-label);overflow:hidden;text-overflow:ellipsis;white-space:nowrap }\n.snav__selector-chev { display:flex;align-items:center;justify-content:center;padding:12px;color:var(--sn-selector-label) }\n.snav__selector-chev svg { width:14px;height:14px;display:block;fill:currentColor;stroke:none }\n/* Nav menu */\n.snav__menu { display:flex;flex-direction:column;gap:4px;align-items:stretch;width:100% }\n.snav-item { display:flex;align-items:center;width:100%;padding:4px 8px;border-radius:12px;cursor:pointer;text-align:left;border:0;background:none;font-family:inherit;transition:background .15s ease }\n.snav-item__inner { display:flex;align-items:center;gap:8px;padding:4px 0;min-width:0 }\n.snav-item__icon { width:var(--sn-chip-size);height:var(--sn-chip-size);display:flex;align-items:center;justify-content:center;flex-shrink:0 }\n.snav-item__icon svg { width:var(--sn-glyph);height:var(--sn-glyph);display:block;fill:currentColor;stroke:none;color:var(--sn-idle-glyph);transition:color .15s ease }\n.snav-item__title { font-size:var(--sn-label);font-weight:500;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--sn-idle-label);transition:color .15s ease }\n.snav-item:hover,.snav-item--hover-look { background:var(--sn-hover-bg) }\n.snav-item:hover .snav-item__icon svg,.snav-item--hover-look .snav-item__icon svg { color:var(--sn-active-label) }\n.snav-item:hover .snav-item__title,.snav-item--hover-look .snav-item__title { color:var(--sn-active-label) }\n.snav-item.on,.snav-item--active-look { background:var(--sn-active-bg,var(--sn-hover-bg)) }\n.snav-item.on .snav-item__icon svg,.snav-item--active-look .snav-item__icon svg { color:var(--sn-active-badge) }\n.snav-item.on .snav-item__title,.snav-item--active-look .snav-item__title { color:var(--sn-active-label) }\n.snav-item:focus-visible,.snav-item--focus-look { outline:2px solid var(--color-brand);outline-offset:-2px }\n/* Nested / collapsible nav items */\n.snav-item.has-children { justify-content:space-between }\n.snav-item.is-open .snav-item__chev svg { transform:rotate(180deg) }\n.snav--sm .snav-subitem__title { font-size:11px }\n/* Account */\n.snav__account { display:flex;flex-direction:column;gap:6px;width:100% }\n.snav__seclink { display:flex;align-items:center;gap:8px;width:100%;padding:4px 8px;background:none;border:0;cursor:pointer;font-family:inherit;text-align:left }\n.snav__seclink-icon { width:var(--sn-chip-size);height:var(--sn-chip-size);display:flex;align-items:center;justify-content:center;flex-shrink:0 }\n.snav__seclink-icon svg { width:13px;height:13px;display:block;fill:currentColor;stroke:none;color:var(--sn-link-glyph) }\n.snav__seclink span { font-size:13px;font-weight:500;line-height:1.3;color:var(--sn-link) }\n.snav__rule { height:1px;width:100%;margin:9px 0;border:0;background:var(--sn-divider) }\n.snav__user { display:flex;align-items:center;gap:8px;padding:4px 0 }\n.snav__user-name { font-size:13px;font-weight:800;line-height:1.25;color:var(--sn-user-name) }\n.snav__logout { display:flex;align-items:center;gap:8px;padding:4px 8px;background:none;border:0;cursor:pointer;font-family:inherit;text-align:left;width:100% }\n.snav__logout span { font-size:13px;font-weight:500;line-height:1.3;color:var(--sn-logout) }\n.snav--collapsed.snav--sm { width:60px }\n.snav--collapsed .snav__logo { padding:0;align-items:center }\n.snav--collapsed .snav__wordmark { justify-content:center;gap:0 }\n.snav--collapsed .snav__word,\n.snav--collapsed .snav__subtitle,\n.snav--collapsed .snav__companytitle,\n.snav--collapsed .snav__selector,\n.snav--collapsed .snav-item__title,\n.snav--collapsed .snav-item__chev,\n.snav--collapsed .snav-sub,\n.snav--collapsed .snav__seclink &gt; span:not(.snav__seclink-icon),\n.snav--collapsed .snav__user-name,\n.snav--collapsed .snav__logout &gt; span:not(.snav__seclink-icon) { display:none }\n.snav--collapsed .snav-item { justify-content:center;padding:4px }\n.snav--collapsed .snav-item.has-children { justify-content:center }\n.snav--collapsed .snav-item__inner { gap:0 }\n.snav--collapsed .snav__seclink,\n.snav--collapsed .snav__logout { justify-content:center;padding:8px 0 }\n.snav--collapsed .snav__user { justify-content:center;padding:4px 0 }\n/* Demo scaffolding */\n.navPg-stage-el .snav { height:auto;min-height:560px }\n.snav-states-grid .snav { width:100%;height:auto }\n.snav-states-grid--items .snav { gap:4px;height:auto;min-height:0 }",
+  "js": "function navItemsHtml(items, activeIdx, extraCls, expanded, collapsed){\n  expanded = expanded || {};\n  return items.map(function(it,i){\n    var hasKids = !!(it.children &amp;&amp; it.children.length);\n    var isOpen = hasKids &amp;&amp; !collapsed &amp;&amp; !!expanded[i];\n    var cls='snav-item'+(i===activeIdx?' on':'')+(extraCls&amp;&amp;extraCls[i]?' '+extraCls[i]:'')+(hasKids?' has-children':'')+(isOpen?' is-open':'');\n    var chev = (hasKids &amp;&amp; !collapsed) ? '&lt;span class=\"snav-item__chev\"&gt;'+iconSvg('chevron-down')+'&lt;/span&gt;' : '';\n    var row = '&lt;button type=\"button\" class=\"'+cls+'\" data-i=\"'+i+'\"'+(hasKids?' aria-expanded=\"'+isOpen+'\"':'')+(collapsed?' title=\"'+it.title+'\"':'')+'&gt;'\n      +'&lt;span class=\"snav-item__inner\"&gt;&lt;span class=\"snav-item__icon\"&gt;'+iconSvg(it.icon)+'&lt;/span&gt;'\n      +'&lt;span class=\"snav-item__title\"&gt;'+it.title+'&lt;/span&gt;&lt;/span&gt;'\n      +chev\n      +'&lt;/button&gt;';\n    var sub = (hasKids &amp;&amp; isOpen) ? '&lt;div class=\"snav-sub\"&gt;'+it.children.map(function(c,ci){\n      return '&lt;button type=\"button\" class=\"snav-subitem\" data-parent=\"'+i+'\" data-child=\"'+ci+'\"&gt;'\n        +'&lt;span class=\"snav-subitem__title\"&gt;'+c.title+'&lt;/span&gt;'\n        +(c.count!=null?'&lt;span class=\"snav-subitem__count\"&gt;'+c.count+'&lt;/span&gt;':'')\n        +'&lt;/button&gt;';\n    }).join('')+'&lt;/div&gt;' : '';\n    return row+sub;\n  }).join('');\n}\n\nfunction navLogoHtml(collapsed, collapseToggle){\n  var toggle = collapseToggle ? '&lt;button type=\"button\" class=\"snav__collapse-btn\" aria-label=\"'\n    +(collapsed?'Expand':'Collapse')+' navigation\" aria-expanded=\"'+(!collapsed)+'\"&gt;'+SNAV_COLLAPSE_ICON+'&lt;/button&gt;' : '';\n  return '&lt;div class=\"snav__logo\"&gt;&lt;div class=\"snav__logo-row\"&gt;&lt;div class=\"snav__wordmark\"&gt;'+FLASH_MARK+'&lt;span class=\"snav__word\"&gt;flash&lt;/span&gt;&lt;/div&gt;'+toggle+'&lt;/div&gt;'\n    +'&lt;span class=\"snav__subtitle\"&gt;Secondary title&lt;/span&gt;&lt;/div&gt;';\n}\n\nfunction navCompanyHtml(enabled){\n  if(enabled===false) return '';\n  return '&lt;div class=\"snav__company\"&gt;'\n    +'&lt;div class=\"snav__companybadge\"&gt;'+iconSvg('store')+'&lt;/div&gt;'\n    +'&lt;span class=\"snav__companytitle\"&gt;Company title&lt;/span&gt;'\n    +'&lt;button type=\"button\" class=\"snav__selector\"&gt;&lt;span class=\"snav__selector-label\"&gt;List item&lt;/span&gt;'\n    +'&lt;span class=\"snav__selector-chev\"&gt;'+iconSvg('chevron-down')+'&lt;/span&gt;&lt;/button&gt;&lt;/div&gt;';\n}\n\nfunction navAccountHtml(linksEnabled){\n  var links = linksEnabled===false ? '' :\n    '&lt;button type=\"button\" class=\"snav__seclink\"&gt;&lt;span class=\"snav__seclink-icon\"&gt;'+iconSvg('link')+'&lt;/span&gt;&lt;span&gt;Secondary link&lt;/span&gt;&lt;/button&gt;'\n    +'&lt;button type=\"button\" class=\"snav__seclink\"&gt;&lt;span class=\"snav__seclink-icon\"&gt;'+iconSvg('link')+'&lt;/span&gt;&lt;span&gt;Secondary link&lt;/span&gt;&lt;/button&gt;'\n    +'&lt;hr class=\"snav__rule\"&gt;';\n  return '&lt;div class=\"snav__account\"&gt;'\n    +links\n    +'&lt;div class=\"snav__user\"&gt;&lt;span class=\"avt avt--xs\"&gt;MO&lt;/span&gt;&lt;span class=\"snav__user-name\"&gt;User name&lt;/span&gt;&lt;/div&gt;'\n    +'&lt;button type=\"button\" class=\"snav__logout\"&gt;&lt;span class=\"snav__seclink-icon\"&gt;'+SNAV_LOGOUT_ICON+'&lt;/span&gt;&lt;span&gt;Log out&lt;/span&gt;&lt;/button&gt;&lt;/div&gt;';\n}\n\nfunction navPanelHtml(colour, size, activeIdx, expanded, collapsed, collapseToggle, companyEnabled, linksEnabled){\n  return '&lt;div class=\"snav snav--'+colour+(size==='sm'?' snav--sm':'')+(collapsed?' snav--collapsed':'')+'\"&gt;'\n    +navLogoHtml(collapsed, collapseToggle)\n    +'&lt;div class=\"snav__body\"&gt;&lt;div class=\"snav__top\"&gt;'+navCompanyHtml(companyEnabled)\n    +'&lt;div class=\"snav__menu\"&gt;'+navItemsHtml(NAV_ITEMS, activeIdx, null, expanded, collapsed)+'&lt;/div&gt;&lt;/div&gt;'\n    +navAccountHtml(linksEnabled)+'&lt;/div&gt;&lt;/div&gt;';\n}\n\nconst NAV_ITEMS=[\n  {icon:'home', title:'Home'},\n  {icon:'receipt', title:'Transactions', children:[\n    {title:'Pending', count:4},\n    {title:'Completed', count:128},\n    {title:'Refunded', count:3}\n  ]},\n  {icon:'wallet', title:'Payouts'},\n  {icon:'users', title:'Customers'},\n  {icon:'bell', title:'Notifications'},\n  {icon:'settings', title:'Settings'}\n];\n\nconst NAV_COLOURS=[{key:'charcoal',label:'Black',swatch:'#000'},{key:'white',label:'White',swatch:'#fff'},{key:'darkgreen',label:'Dark green',swatch:'#124a40'}];\n\nconst NAV_SIZES=[{key:'reg',label:'Regular'},{key:'sm',label:'Small'}];\n\nconst NAV_LAYOUTS=[{key:'expanded',label:'Expanded'},{key:'collapsed',label:'Collapsed'}];",
   "usage": {
     "do": [
       "Reserve it for a handful of top-level, persistent destinations.",
@@ -4603,16 +4531,108 @@ body.home .main{max-width:none;margin:0;padding:0}
     ],
     "dont": [
       "Don’t use Side Nav to switch tabs within a single page — that’s Tabs.",
-      "Don’t mix icon chips and plain-text items in the same list.",
+      "Don’t mix icon and plain-text items in the same list.",
       "Don’t leave more than one item marked active at once.",
       "Don’t constrain the panel to its content height or place it inside a scrolling container — it should sit fixed against the viewport edge.",
-      "Don’t make the Side Nav dismissible — it is persistent chrome, so it collapses to an icon-only rail but never hides completely, and never gets a close (×) control."
+      "Don’t make the Side Nav dismissible — it is persistent chrome, so it collapses to an icon-only rail but never hides completely, and never gets a close (&amp;times;) control."
     ]
   },
-  "contentHash": "210316ae5318deb3f2d1cb9dd6d01aa24238893ebe27a90dba2f9ce82c0b4ae1"
+  "contentHash": "b113a8a874a3a13231841532aef8b40ec42d7104b4e72813cc83c535dbcbc549",
+  "note": "Company block (badge/title/selector) and Secondary links are each independently optional via navCompanyHtml(enabled)/navAccountHtml(linksEnabled) — the signed-in user + Log out footer always stays. navPg/renderNavPlayground/navPgSet/navTabSwitch/getNavCodeHTML/renderNavCodeTab/renderNavColourRef/renderNavStatesRef are doc-site-only playground plumbing, excluded."
 }
   </pre>
 </details>
+        </div>
+      </div>
+      <div class="sec-hero__preview"><div class="mk-card" style="width:110px;padding:12px;display:flex;flex-direction:column;gap:8px;background:#000;border-radius:14px">
+        <span class="mk-bar" style="width:70%;background:rgba(255,255,255,.35)"></span>
+        <span class="mk-bar mk-bar--brand" style="width:85%"></span>
+        <span class="mk-bar" style="width:60%;background:rgba(255,255,255,.35)"></span>
+        <span class="mk-bar" style="width:75%;background:rgba(255,255,255,.35)"></span>
+      </div></div>
+      </div>
+      <div class="tabs-list sec-tabs" id="nav-tabs-list">
+        <button type="button" class="tab-item on" data-nav-tab="overview" onclick="navTabSwitch('overview')"><span class="tab-item__inner"><span class="tab-item__label">Overview</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-nav-tab="style" onclick="navTabSwitch('style')"><span class="tab-item__inner"><span class="tab-item__label">Style</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-nav-tab="code" onclick="navTabSwitch('code')"><span class="tab-item__inner"><span class="tab-item__label">Code</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-nav-tab="changelog" onclick="navTabSwitch('changelog')"><span class="tab-item__inner"><span class="tab-item__label">Changelog</span></span><span class="tab-item__line"></span></button>
+      </div>
+      <div class="tabs-panel on" data-nav-panel="overview">
+        <div id="nav-playground" class="type-sub"></div>
+        <div class="type-sub cpg-variants" id="nav-usage">
+          <div class="cpg-section-heading">
+            <div class="cpg-layout__title">Do's and don'ts</div>
+            <div class="cpg-layout__desc">Side Nav is for primary, top-level destinations that persist across a session &mdash; not for switching views within one screen.</div>
+          </div>
+          <div class="cpg-section-block">
+            <div class="sel-usage">
+              <div class="sel-usage__card">
+                <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
+                <ul class="sel-usage__list">
+                  <li>Reserve it for a handful of top-level, persistent destinations.</li>
+                  <li>Keep exactly one item active, matching the current page.</li>
+                  <li>Pick one colour context and one size for the whole panel.</li>
+                  <li>Let it span the full viewport height (100vh) so the account footer pins to the bottom of the screen, not just to the bottom of its content.</li>
+                  <li>If space is tight, collapse it to an icon-only rail &mdash; the nav stays on screen and every destination stays reachable, just without its labels.</li>
+                </ul>
+              </div>
+              <div class="sel-usage__card">
+                <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don&rsquo;t</div>
+                <ul class="sel-usage__list">
+                  <li>Don&rsquo;t use Side Nav to switch tabs within a single page &mdash; that&rsquo;s Tabs.</li>
+                  <li>Don&rsquo;t mix icon and plain-text items in the same list.</li>
+                  <li>Don&rsquo;t leave more than one item marked active at once.</li>
+                  <li>Don&rsquo;t constrain the panel to its content height or place it inside a scrolling container &mdash; it should sit fixed against the viewport edge.</li>
+                  <li>Don&rsquo;t make the Side Nav dismissible &mdash; it is persistent chrome, so it collapses to an icon-only rail but never hides completely, and never gets a close (&times;) control.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tabs-panel" data-nav-panel="style">
+        <div class="spec-panel spec-stack">
+          <div class="type-sub">
+            <div class="type-sub__title">Anatomy</div>
+            <div class="type-sub__desc">Top to bottom: <strong>Logo</strong> (Flash wordmark + secondary title) &middot; <strong>Company</strong> (icon badge, company title and an account selector &mdash; optional) &middot; <strong>Nav menu</strong> (icon-glyph nav items) &middot; <strong>Account</strong> (secondary links &mdash; optional &mdash; a divider, the signed-in user and log out). The panel spans the full viewport height (100vh); the company block sits at the top and the account footer pins to the bottom of the viewport, not just to the bottom of the content.</div>
+          </div>
+          <div class="type-sub">
+            <div class="type-sub__title">Nav colour</div>
+            <div class="type-sub__desc">Pick the context that matches the surrounding chrome. The active item&rsquo;s icon glyph stays brand green in every context &mdash; it&rsquo;s the one consistent marker of &ldquo;you are here.&rdquo;</div>
+            <div class="sg-stage"><div class="snav-states-grid" id="snav-colour-ref"></div></div>
+          </div>
+          <div class="type-sub">
+            <div class="type-sub__title">States</div>
+            <div class="type-sub__desc">A nav item resolves to one of these. <strong>Inactive</strong> is a bare glyph with a subtle colour and subtle label, no chip or row fill; <strong>Hover</strong> adds a full-row grey pill, turns the glyph white and lifts the label to primary; <strong>Active</strong> keeps that same full-row grey pill persistently and turns the glyph brand green, with a primary label; <strong>Focused</strong> shows the keyboard ring. Consistent across Black, White and Dark green.</div>
+            <div class="sg-stage"><div class="snav-states-grid snav-states-grid--items" id="snav-states-ref"></div></div>
+          </div>
+          <div class="type-sub">
+            <div class="type-sub__title">Anatomy &amp; specs</div>
+            <div class="type-sub__desc">Regular mirrors the Figma &ldquo;Large&rdquo; variant; Small mirrors the Figma &ldquo;Small&rdquo; variant.</div>
+            <div class="dd-table-wrap"><table class="dd-table">
+              <thead><tr><th>Property</th><th>Regular</th><th>Small</th><th>Token</th></tr></thead>
+              <tbody>
+                <tr><td class="dd-table__name">Panel width</td><td>208px</td><td>170px</td><td>&mdash;</td></tr>
+                <tr><td class="dd-table__name">Collapsed rail width</td><td colspan="2">72px (Regular) &middot; 60px (Small) &mdash; icon-only; labels, the company selector and nested sub-lists drop away, every icon/badge/active-marker stays</td><td>&mdash;</td></tr>
+                <tr><td class="dd-table__name">Panel height</td><td colspan="2">100vh (100dvh) &mdash; spans the full viewport height; the account footer pins to the bottom via the body's space-between</td><td>&mdash;</td></tr>
+                <tr><td class="dd-table__name">Panel padding</td><td>20px 16px</td><td>10px 10px 15px</td><td>&mdash;</td></tr>
+                <tr><td class="dd-table__name">Corner radius</td><td>12px</td><td>12px</td><td><code>radius-small</code></td></tr>
+                <tr><td class="dd-table__name">Item padding</td><td>4px 8px</td><td>4px 8px &middot; min-height 40px</td><td>radius <code>radius-small</code> 12px</td></tr>
+                <tr><td class="dd-table__name">Icon glyph</td><td>29px cell &middot; 14px glyph, no chip</td><td>19px cell &middot; 9px glyph, no chip</td><td>&mdash;</td></tr>
+                <tr><td class="dd-table__name">Label</td><td>16px / bold</td><td>12px / bold</td><td>Body m / Body xs &mdash; single line</td></tr>
+                <tr><td class="dd-table__name">Idle glyph / label</td><td colspan="2">White: #A4A4A4 glyph &middot; #8A8A8A label. Black: #A4A4A4 glyph &middot; #DDDDDD label</td><td>grey-700 / grey-800</td></tr>
+                <tr><td class="dd-table__name">Active marker</td><td colspan="2">All contexts: full-row grey pill, brand-green glyph, primary label &mdash; consistent across White, Black and Dark green</td><td><code>icon-secondary</code> #10C504</td></tr>
+                <tr><td class="dd-table__name">Optional blocks</td><td colspan="2">Company (badge + title + selector) and Secondary links can each be hidden independently &mdash; the signed-in user and Log out footer always stays</td><td>&mdash;</td></tr>
+              </tbody>
+            </table></div>
+          </div>
+        </div>
+      </div>
+      <div class="tabs-panel" data-nav-panel="code">
+        <div id="nav-code-playground" class="type-sub spec-panel spec-code-playground"></div>
+        <div id="nav-code-tab" class="type-sub spec-panel"></div>
+      </div>
+      <div class="tabs-panel" data-nav-panel="changelog" id="nav-changelog-panel"></div>
     </section>
     <section class="sec" id="s-tabs">
       <div class="sec__head">
@@ -14386,12 +14406,29 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.68.0';
+const SYSTEM_VERSION = '1.69.0';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.69.0', date:'2026-08-12', author:'Mo', title:'Navigation rebuilt as a tabbed page; Company/Secondary links now optional', changes:[
+        ['changed','Navigation (#s-nav) restructured from a flat .sec into .sec--tabbed with a .sec-hero (title + live mini preview) and Overview / Style / Code / Changelog tabs, matching Pills/Cards/Avatar'],
+        ['changed','The old "Interactive" panel (a bare stage plus three toggle rows) is now a proper "Try the component" playground: .cpg-layout intro/demo columns, a .btn-pg__stage demo and .btn-pg__pill-row controls for Colour, Size and Layout — same visual language as every other tabbed component page, not a bespoke one-off'],
+        ['added','Company block (badge, title, account selector) and Secondary links (the two link rows above the divider) can each be shown or hidden independently via new navCompanyHtml(enabled)/navAccountHtml(linksEnabled) params and matching playground toggles; the signed-in user + Log out footer always stays'],
+        ['fixed','Secondary link/Log out rows now wrap their icon in a .snav__seclink-icon box the same width as a nav item\'s icon cell (var(--sn-chip-size)), and use the same 8px gap/padding as .snav-item — previously the icon sat directly against a 13px glyph with a 6px gap, so link labels started to the left of nav item labels instead of sharing one label column'],
+        ['added','Code tab with a live HTML snippet mirroring the current playground configuration (colour/size/collapsed/company/links), a copy button and two synced mounts (Overview stage + Code tab mini stage) sharing one navPg state object — same NAV_PLAYGROUND_MOUNTS pattern as Avatar/Pills'],
+        ['changed','.snav-item__title font-weight reduced from 800 to 500 — labels read as too bold at the previous weight'],
+        ['changed','Playground default state changed to Black, Small, Company hidden, Secondary links hidden — a leaner starting point than the previous Regular/company-shown default'],
+        ['changed','JS promoted from an IIFE-scoped closure to global functions/consts (navPg, navItemsHtml, navCompanyHtml, navAccountHtml, navPanelHtml, navTabSwitch, navPgSet, etc.) — required so the tabbed page\'s inline onclick handlers can reach them, same convention as every other .sec--tabbed component'],
+      ]},
+      {version:'1.68.1', date:'2026-08-12', author:'Mo', title:'Side Nav items lose their icon chip in favour of a rounded hover/active pill', changes:[
+        ['changed','.snav-item__icon no longer has a background badge behind the glyph in any state; the icon now sits bare, coloured directly (idle grey, white on hover, brand green when active) matching new reference art'],
+        ['changed','.snav-item border-radius increased from 6px to 12px so the hover/active row reads as a rounded pill rather than a slightly-rounded rectangle'],
+        ['changed','Hover state now also turns the icon glyph white (previously only the chip background changed on hover; the glyph colour was untouched) via .snav-item:hover .snav-item__icon svg{color:var(--sn-active-label)}'],
+        ['changed','Removed the Black/Charcoal-only override that kept a solid green chip with no row fill as its active marker; Black now follows the same full-row grey pill + green glyph behaviour as White and Dark green, so all three colour contexts are visually consistent'],
+        ['fixed','.snav--charcoal and .snav--darkgreen now declare their own --sn-active-bg (rgba(255,255,255,.14) / .12) — without the old Charcoal override, the active row was silently falling back to White\'s --sn-active-bg (#f8f8f8), rendering a near-white pill behind white active-state text'],
+      ]},
       {version:'1.68.0', date:'2026-08-12', author:'Helen', title:'All five Cards sub-pages rebuilt as tabbed pages, on one shared config-driven builder', changes:[
         ['changed','Basic, Media, Interactive, Stat and Hover Cards each restructured from a flat .sec into .sec--tabbed with a .sec-hero (title + live preview) and Overview / Style / Code / Changelog tabs, matching the Pills/Buttons/Date picker structure end to end'],
         ['added','One shared, config-driven builder set drives all five pages instead of five copied render functions: a CARD_PAGES config array (secId, pfx, controls, stage/keyStates/insitu/style/code) consumed by cardTabSwitch, renderCardPlayground, renderCardKeyStates, renderCardInSitu, renderCardReference and renderCardCodeTab — the generalisation of Pills\' PILL_PLAYGROUND_MOUNTS pattern'],
@@ -16436,7 +16473,14 @@ const CHANGELOG = {
         ['changed','Planned for a future session'],
       ]},
     ]},
-    {secId:'s-nav', name:'Navigation', version:'1.6.1', entries:[
+    {secId:'s-nav', name:'Navigation', version:'1.7.0', entries:[
+      {version:'1.7.0', date:'2026-08-12', author:'Mo', title:'Nav items restyled: bare icon glyphs, rounded hover/active pill, unified across all colour contexts', changes:[
+        ['changed','Nav item icons drop their square chip/badge background entirely — the glyph now sits directly on the row in every state (idle, hover, active), coloured to match'],
+        ['changed','.snav-item corner radius increased 6px → 12px so hover/active fills read as a rounded pill'],
+        ['changed','Hover now turns the icon glyph the context\'s primary label colour (white on Black/Dark green, black on White) in addition to the existing row-fill wash — previously only the chip background changed on hover'],
+        ['changed','Removed Black’s exception active marker (solid green chip, no row fill); Black now shares the same full-row grey pill + brand-green glyph active state as White and Dark green'],
+        ['fixed','Charcoal and Dark green contexts now define their own --sn-active-bg instead of inheriting White’s #f8f8f8, which previously rendered as a near-white active pill behind white text once the Black-only override was removed'],
+      ]},
       {version:'1.6.1', date:'2026-08-12', author:'Mo', title:'Collapse toggle moved inline, ghost-styled', changes:[
         ['changed','Replaced the edge-docked circular .snav__collapse-btn (absolute-positioned, half-overlapping the panel border, with its own background/border/shadow) with an inline ghost icon button inside a new .snav__logo-row, sitting next to the wordmark — quieter and less distracting, since it now reads as part of the header instead of a floating control'],
         ['changed','logoHtml()/panelHtml() updated so the collapse toggle is built into the logo row markup rather than prepended to the panel root; .snav--collapsed .snav__logo-row stacks the logo mark and toggle vertically so it stays centred in the icon-only rail'],
@@ -20931,151 +20975,261 @@ function renderIcons(root){
 })();
 
 /* Navigation / Side Nav — mirrors the Figma SideNav: logo, company info,
-   single-line nav menu and an account footer, driven by --sn-* tokens. */
-(function(){
-  var stage=document.getElementById('snav-play-stage'); if(!stage) return;
-  var FLASH_MARK='<svg viewBox="0 0 96 94" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M95.072 46.934C95.072 56.2167 92.2841 65.2909 87.0608 73.0091C81.8374 80.7274 74.4133 86.743 65.7272 90.2954C57.0412 93.8477 47.4833 94.7771 38.2622 92.9662C29.0411 91.1552 20.571 86.6852 13.923 80.1214C7.27497 73.5575 2.74759 65.1947 0.913407 56.0904C-0.920779 46.9861 0.0206106 37.5492 3.6185 28.9731C7.21638 20.3971 13.3092 13.067 21.1264 7.90979C28.9437 2.75262 38.1343 0 47.536 0C60.1433 0 72.2343 4.9448 81.149 13.7466C90.0638 22.5485 95.072 34.4863 95.072 46.934Z" fill="#1DFA0F"/><path d="M76.1999 39.374C74.4368 38.2722 72.9882 36.7436 71.9919 34.9335C70.9955 33.1234 70.4843 31.0918 70.507 29.0317C71.374 28.8152 72.1838 28.4171 72.8812 27.8642C73.5787 27.3114 74.1474 26.6169 74.5489 25.8278C75.0431 24.9282 75.2296 23.895 75.0809 22.8822C74.9322 21.8693 74.456 20.931 73.7235 20.207C73.676 20.1531 73.6124 20.1155 73.542 20.0996C73.4715 20.0837 73.3977 20.0903 73.3312 20.1184C73.2648 20.1465 73.2091 20.1947 73.1721 20.2561C73.1352 20.3175 73.1189 20.3888 73.1257 20.4599C73.2471 20.9366 73.2691 21.4327 73.1903 21.918C73.1116 22.4033 72.9336 22.8678 72.6674 23.2831C72.4012 23.6985 72.0522 24.056 71.6416 24.334C71.2311 24.612 70.7676 24.8047 70.2792 24.9004C66.3679 25.6207 62.3246 24.9221 58.8934 22.9331C57.0432 21.2469 56.8439 19.2514 58.5234 16.1038C58.5538 16.0408 58.5637 15.9701 58.5518 15.9014C58.5398 15.8327 58.5066 15.7693 58.4566 15.72C58.4067 15.6706 58.3425 15.6378 58.2729 15.626C58.2033 15.6142 58.1317 15.6241 58.0679 15.6541C56.7615 16.1308 55.643 17.0064 54.8752 18.1537C54.1073 19.301 53.73 20.6602 53.7982 22.0338C53.786 23.2948 54.1526 24.5312 54.8518 25.5867C55.5509 26.6422 56.5512 27.4693 57.7263 27.9637C46.9667 31.2519 42.5262 27.2893 30.3149 27.1206C20.153 27.1206 17.7905 35.3552 18.3313 43.9832C18.4805 47.3799 18.8801 50.7613 19.5268 54.1007C20.4854 56.0867 21.0644 58.2305 21.2347 60.4241C21.0072 62.2064 21.0072 64.0098 21.2347 65.792C21.2712 66.0115 21.3712 66.2158 21.5228 66.3804C21.6743 66.5449 21.8708 66.6627 22.0886 66.7195C23.1589 67.0172 24.2917 67.0172 25.3621 66.7195C25.9313 66.5508 26.3583 66.2698 26.2444 65.792C24.9712 61.2766 24.6514 56.551 25.3051 51.9085C25.3186 51.7487 25.3752 51.5954 25.469 51.4644C25.5627 51.3334 25.6903 51.2296 25.8383 51.1636C25.9864 51.0977 26.1497 51.0721 26.3112 51.0894C26.4727 51.1067 26.6265 51.1664 26.7568 51.2621C28.5077 52.3189 30.0905 53.6258 31.4535 55.1405C34.6808 58.855 36.7473 63.4142 37.4026 68.2652C37.4053 68.5711 37.4984 68.8696 37.6702 69.1242C37.8421 69.3787 38.0854 69.5783 38.3704 69.6985C38.9915 69.9404 39.6572 70.0504 40.3242 70.0213C40.9912 69.9923 41.6445 69.8248 42.2416 69.5299C42.4066 69.4513 42.5392 69.3189 42.6169 69.1551C42.6947 68.9913 42.7129 68.806 42.6686 68.6305C41.6438 64.4711 38.285 59.4686 37.9719 55.0843C37.9719 54.1569 38.2281 54.1007 38.9681 54.2131C39.9104 54.3685 40.8607 54.4717 41.8146 54.5222C41.9509 54.5241 42.0851 54.5552 42.208 54.6135C42.3309 54.6717 42.4395 54.7557 42.5262 54.8595C45.9704 59.0189 49.8416 64.8927 49.557 71.0194C49.5525 71.1808 49.5862 71.3411 49.6554 71.4874C49.7246 71.6338 49.8273 71.7622 49.9555 71.8625C51.151 72.8462 51.1795 74.9821 51.3503 76.9494C51.3742 77.1453 51.4499 77.3316 51.5698 77.4894C51.6897 77.6473 51.8496 77.7712 52.0334 77.8487C53.564 78.426 55.2564 78.426 56.787 77.8487C56.9143 77.8051 57.0229 77.7203 57.0952 77.608C57.1676 77.4958 57.1994 77.3627 57.1855 77.2304C56.6162 73.3801 53.542 70.1482 54.3391 64.3868C54.5098 63.1221 55.5061 61.3235 56.1893 58.9908C57.7833 53.37 57.3848 51.7399 59.0357 48.5923C60.032 46.5688 62.3376 43.9551 65.5541 45.7818C67.2867 46.9533 69.3876 47.4719 71.4748 47.2432C72.8978 46.9436 74.1987 46.2334 75.2122 45.2026C76.2258 44.1719 76.9064 42.8671 77.1677 41.4538C77.2649 41.0737 77.2465 40.6737 77.1149 40.3038C76.9833 39.934 76.7442 39.6106 76.4276 39.374" fill="black"/></svg>';
-  /* Flash's own 50-glyph ICONS set (Font Awesome Solid) has no sign-out/exit
-     equivalent, so — same convention already used for FLASH_MARK and the
-     Regular/Small toggle glyphs above — the logout icon and the collapse-
-     toggle chevron are hand-authored inline SVGs local to this component,
-     not entries in the shared ICONS registry. */
-  var SNAV_LOGOUT_ICON='<svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><path d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-96.1-192 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l192 0 0-96.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z"/></svg>';
-  var SNAV_COLLAPSE_ICON='<svg viewBox="0 0 320 512" xmlns="http://www.w3.org/2000/svg"><path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c9.2 9.2 22.9 11.9 34.9 6.9s19.8-16.6 19.8-29.6l0-320c0-12.9-7.8-24.6-19.8-29.6s-25.7-2.2-34.9 6.9l-160 160z"/></svg>';
-  var ITEMS=[
-    {icon:'home', title:'Home'},
-    {icon:'receipt', title:'Transactions', children:[
-      {title:'Pending', count:4},
-      {title:'Completed', count:128},
-      {title:'Refunded', count:3}
-    ]},
-    {icon:'wallet', title:'Payouts'},
-    {icon:'users', title:'Customers'},
-    {icon:'bell', title:'Notifications'},
-    {icon:'settings', title:'Settings'}
-  ];
-  var COLOURS=[{key:'charcoal',label:'Black',swatch:'#000'},{key:'white',label:'White',swatch:'#fff'},{key:'darkgreen',label:'Dark green',swatch:'#124a40'}];
-  var SIZES=[
-    {key:'reg',label:'Regular',icon:'<svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="2" width="12" height="12" rx="2.5" stroke="currentColor" stroke-width="1.6"/></svg>'},
-    {key:'sm',label:'Small',icon:'<svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="4" width="8" height="8" rx="1.8" stroke="currentColor" stroke-width="1.6"/></svg>'}
-  ];
-  var state={colour:'charcoal', size:'reg', active:0, expanded:{1:true}, collapsed:false};
+   single-line nav menu and an account footer, driven by --sn-* tokens. Global
+   (not IIFE-scoped) so the tabbed page's inline onclick handlers — same
+   convention as Avatar/Cards — can reach navPgSet/navTabSwitch etc. */
+const FLASH_MARK='<svg viewBox="0 0 96 94" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M95.072 46.934C95.072 56.2167 92.2841 65.2909 87.0608 73.0091C81.8374 80.7274 74.4133 86.743 65.7272 90.2954C57.0412 93.8477 47.4833 94.7771 38.2622 92.9662C29.0411 91.1552 20.571 86.6852 13.923 80.1214C7.27497 73.5575 2.74759 65.1947 0.913407 56.0904C-0.920779 46.9861 0.0206106 37.5492 3.6185 28.9731C7.21638 20.3971 13.3092 13.067 21.1264 7.90979C28.9437 2.75262 38.1343 0 47.536 0C60.1433 0 72.2343 4.9448 81.149 13.7466C90.0638 22.5485 95.072 34.4863 95.072 46.934Z" fill="#1DFA0F"/><path d="M76.1999 39.374C74.4368 38.2722 72.9882 36.7436 71.9919 34.9335C70.9955 33.1234 70.4843 31.0918 70.507 29.0317C71.374 28.8152 72.1838 28.4171 72.8812 27.8642C73.5787 27.3114 74.1474 26.6169 74.5489 25.8278C75.0431 24.9282 75.2296 23.895 75.0809 22.8822C74.9322 21.8693 74.456 20.931 73.7235 20.207C73.676 20.1531 73.6124 20.1155 73.542 20.0996C73.4715 20.0837 73.3977 20.0903 73.3312 20.1184C73.2648 20.1465 73.2091 20.1947 73.1721 20.2561C73.1352 20.3175 73.1189 20.3888 73.1257 20.4599C73.2471 20.9366 73.2691 21.4327 73.1903 21.918C73.1116 22.4033 72.9336 22.8678 72.6674 23.2831C72.4012 23.6985 72.0522 24.056 71.6416 24.334C71.2311 24.612 70.7676 24.8047 70.2792 24.9004C66.3679 25.6207 62.3246 24.9221 58.8934 22.9331C57.0432 21.2469 56.8439 19.2514 58.5234 16.1038C58.5538 16.0408 58.5637 15.9701 58.5518 15.9014C58.5398 15.8327 58.5066 15.7693 58.4566 15.72C58.4067 15.6706 58.3425 15.6378 58.2729 15.626C58.2033 15.6142 58.1317 15.6241 58.0679 15.6541C56.7615 16.1308 55.643 17.0064 54.8752 18.1537C54.1073 19.301 53.73 20.6602 53.7982 22.0338C53.786 23.2948 54.1526 24.5312 54.8518 25.5867C55.5509 26.6422 56.5512 27.4693 57.7263 27.9637C46.9667 31.2519 42.5262 27.2893 30.3149 27.1206C20.153 27.1206 17.7905 35.3552 18.3313 43.9832C18.4805 47.3799 18.8801 50.7613 19.5268 54.1007C20.4854 56.0867 21.0644 58.2305 21.2347 60.4241C21.0072 62.2064 21.0072 64.0098 21.2347 65.792C21.2712 66.0115 21.3712 66.2158 21.5228 66.3804C21.6743 66.5449 21.8708 66.6627 22.0886 66.7195C23.1589 67.0172 24.2917 67.0172 25.3621 66.7195C25.9313 66.5508 26.3583 66.2698 26.2444 65.792C24.9712 61.2766 24.6514 56.551 25.3051 51.9085C25.3186 51.7487 25.3752 51.5954 25.469 51.4644C25.5627 51.3334 25.6903 51.2296 25.8383 51.1636C25.9864 51.0977 26.1497 51.0721 26.3112 51.0894C26.4727 51.1067 26.6265 51.1664 26.7568 51.2621C28.5077 52.3189 30.0905 53.6258 31.4535 55.1405C34.6808 58.855 36.7473 63.4142 37.4026 68.2652C37.4053 68.5711 37.4984 68.8696 37.6702 69.1242C37.8421 69.3787 38.0854 69.5783 38.3704 69.6985C38.9915 69.9404 39.6572 70.0504 40.3242 70.0213C40.9912 69.9923 41.6445 69.8248 42.2416 69.5299C42.4066 69.4513 42.5392 69.3189 42.6169 69.1551C42.6947 68.9913 42.7129 68.806 42.6686 68.6305C41.6438 64.4711 38.285 59.4686 37.9719 55.0843C37.9719 54.1569 38.2281 54.1007 38.9681 54.2131C39.9104 54.3685 40.8607 54.4717 41.8146 54.5222C41.9509 54.5241 42.0851 54.5552 42.208 54.6135C42.3309 54.6717 42.4395 54.7557 42.5262 54.8595C45.9704 59.0189 49.8416 64.8927 49.557 71.0194C49.5525 71.1808 49.5862 71.3411 49.6554 71.4874C49.7246 71.6338 49.8273 71.7622 49.9555 71.8625C51.151 72.8462 51.1795 74.9821 51.3503 76.9494C51.3742 77.1453 51.4499 77.3316 51.5698 77.4894C51.6897 77.6473 51.8496 77.7712 52.0334 77.8487C53.564 78.426 55.2564 78.426 56.787 77.8487C56.9143 77.8051 57.0229 77.7203 57.0952 77.608C57.1676 77.4958 57.1994 77.3627 57.1855 77.2304C56.6162 73.3801 53.542 70.1482 54.3391 64.3868C54.5098 63.1221 55.5061 61.3235 56.1893 58.9908C57.7833 53.37 57.3848 51.7399 59.0357 48.5923C60.032 46.5688 62.3376 43.9551 65.5541 45.7818C67.2867 46.9533 69.3876 47.4719 71.4748 47.2432C72.8978 46.9436 74.1987 46.2334 75.2122 45.2026C76.2258 44.1719 76.9064 42.8671 77.1677 41.4538C77.2649 41.0737 77.2465 40.6737 77.1149 40.3038C76.9833 39.934 76.7442 39.6106 76.4276 39.374" fill="black"/></svg>';
+/* Flash's own 50-glyph ICONS set (Font Awesome Solid) has no sign-out/exit
+   equivalent, so — same convention already used for FLASH_MARK and the
+   Regular/Small toggle glyphs above — the logout icon and the collapse-
+   toggle chevron are hand-authored inline SVGs local to this component,
+   not entries in the shared ICONS registry. */
+const SNAV_LOGOUT_ICON='<svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><path d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-96.1-192 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l192 0 0-96.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z"/></svg>';
+const SNAV_COLLAPSE_ICON='<svg viewBox="0 0 320 512" xmlns="http://www.w3.org/2000/svg"><path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c9.2 9.2 22.9 11.9 34.9 6.9s19.8-16.6 19.8-29.6l0-320c0-12.9-7.8-24.6-19.8-29.6s-25.7-2.2-34.9 6.9l-160 160z"/></svg>';
+const NAV_ITEMS=[
+  {icon:'home', title:'Home'},
+  {icon:'receipt', title:'Transactions', children:[
+    {title:'Pending', count:4},
+    {title:'Completed', count:128},
+    {title:'Refunded', count:3}
+  ]},
+  {icon:'wallet', title:'Payouts'},
+  {icon:'users', title:'Customers'},
+  {icon:'bell', title:'Notifications'},
+  {icon:'settings', title:'Settings'}
+];
+const NAV_COLOURS=[{key:'charcoal',label:'Black',swatch:'#000'},{key:'white',label:'White',swatch:'#fff'},{key:'darkgreen',label:'Dark green',swatch:'#124a40'}];
+const NAV_SIZES=[{key:'reg',label:'Regular'},{key:'sm',label:'Small'}];
+const NAV_LAYOUTS=[{key:'expanded',label:'Expanded'},{key:'collapsed',label:'Collapsed'}];
+let navPg={colour:'charcoal', size:'sm', active:0, expanded:{1:true}, collapsed:false, company:false, links:false};
 
-  function itemsHtml(items, activeIdx, extraCls, expanded, collapsed){
-    expanded = expanded || {};
-    return items.map(function(it,i){
-      var hasKids = !!(it.children && it.children.length);
-      var isOpen = hasKids && !collapsed && !!expanded[i];
-      var cls='snav-item'+(i===activeIdx?' on':'')+(extraCls&&extraCls[i]?' '+extraCls[i]:'')+(hasKids?' has-children':'')+(isOpen?' is-open':'');
-      var chev = (hasKids && !collapsed) ? '<span class="snav-item__chev">'+iconSvg('chevron-down')+'</span>' : '';
-      var row = '<button type="button" class="'+cls+'" data-i="'+i+'"'+(hasKids?' aria-expanded="'+isOpen+'"':'')+(collapsed?' title="'+it.title+'"':'')+'>'
-        +'<span class="snav-item__inner"><span class="snav-item__icon">'+iconSvg(it.icon)+'</span>'
-        +'<span class="snav-item__title">'+it.title+'</span></span>'
-        +chev
+function navItemsHtml(items, activeIdx, extraCls, expanded, collapsed){
+  expanded = expanded || {};
+  return items.map(function(it,i){
+    var hasKids = !!(it.children && it.children.length);
+    var isOpen = hasKids && !collapsed && !!expanded[i];
+    var cls='snav-item'+(i===activeIdx?' on':'')+(extraCls&&extraCls[i]?' '+extraCls[i]:'')+(hasKids?' has-children':'')+(isOpen?' is-open':'');
+    var chev = (hasKids && !collapsed) ? '<span class="snav-item__chev">'+iconSvg('chevron-down')+'</span>' : '';
+    var row = '<button type="button" class="'+cls+'" data-i="'+i+'"'+(hasKids?' aria-expanded="'+isOpen+'"':'')+(collapsed?' title="'+it.title+'"':'')+'>'
+      +'<span class="snav-item__inner"><span class="snav-item__icon">'+iconSvg(it.icon)+'</span>'
+      +'<span class="snav-item__title">'+it.title+'</span></span>'
+      +chev
+      +'</button>';
+    var sub = (hasKids && isOpen) ? '<div class="snav-sub">'+it.children.map(function(c,ci){
+      return '<button type="button" class="snav-subitem" data-parent="'+i+'" data-child="'+ci+'">'
+        +'<span class="snav-subitem__title">'+c.title+'</span>'
+        +(c.count!=null?'<span class="snav-subitem__count">'+c.count+'</span>':'')
         +'</button>';
-      var sub = (hasKids && isOpen) ? '<div class="snav-sub">'+it.children.map(function(c,ci){
-        return '<button type="button" class="snav-subitem" data-parent="'+i+'" data-child="'+ci+'">'
-          +'<span class="snav-subitem__title">'+c.title+'</span>'
-          +(c.count!=null?'<span class="snav-subitem__count">'+c.count+'</span>':'')
-          +'</button>';
-      }).join('')+'</div>' : '';
-      return row+sub;
-    }).join('');
-  }
-  /* collapsed/collapseToggle: pass a collapse/expand button to render inline
-     in the logo row — false for reference-grid/state-grid instances that
-     don't offer it. */
-  function logoHtml(collapsed, collapseToggle){
-    var toggle = collapseToggle ? '<button type="button" class="snav__collapse-btn" aria-label="'
-      +(collapsed?'Expand':'Collapse')+' navigation" aria-expanded="'+(!collapsed)+'">'+SNAV_COLLAPSE_ICON+'</button>' : '';
-    return '<div class="snav__logo"><div class="snav__logo-row"><div class="snav__wordmark">'+FLASH_MARK+'<span class="snav__word">flash</span></div>'+toggle+'</div>'
-      +'<span class="snav__subtitle">Secondary title</span></div>';
-  }
-  function companyHtml(){
-    return '<div class="snav__company">'
-      +'<div class="snav__companybadge">'+iconSvg('store')+'</div>'
-      +'<span class="snav__companytitle">Company title</span>'
-      +'<button type="button" class="snav__selector"><span class="snav__selector-label">List item</span>'
-      +'<span class="snav__selector-chev">'+iconSvg('chevron-down')+'</span></button></div>';
-  }
-  function accountHtml(){
-    return '<div class="snav__account">'
-      +'<button type="button" class="snav__seclink">'+iconSvg('link')+'<span>Secondary link</span></button>'
-      +'<button type="button" class="snav__seclink">'+iconSvg('link')+'<span>Secondary link</span></button>'
-      +'<hr class="snav__rule">'
-      +'<div class="snav__user"><span class="avt avt--xs">MO</span><span class="snav__user-name">User name</span></div>'
-      +'<button type="button" class="snav__logout">'+SNAV_LOGOUT_ICON+'<span>Log out</span></button></div>';
-  }
-  /* collapseToggle:true renders the collapse/expand button inline in the
-     logo row — pass false for reference-grid/state-grid instances that
-     don't offer it. */
-  function panelHtml(colour, size, activeIdx, expanded, collapsed, collapseToggle){
-    return '<div class="snav snav--'+colour+(size==='sm'?' snav--sm':'')+(collapsed?' snav--collapsed':'')+'">'
-      +logoHtml(collapsed, collapseToggle)
-      +'<div class="snav__body"><div class="snav__top">'+companyHtml()
-      +'<div class="snav__menu">'+itemsHtml(ITEMS, activeIdx, null, expanded, collapsed)+'</div></div>'
-      +accountHtml()+'</div></div>';
-  }
+    }).join('')+'</div>' : '';
+    return row+sub;
+  }).join('');
+}
+/* collapsed/collapseToggle: pass a collapse/expand button to render inline
+   in the logo row — false for reference-grid/state-grid instances that
+   don't offer it. */
+function navLogoHtml(collapsed, collapseToggle){
+  var toggle = collapseToggle ? '<button type="button" class="snav__collapse-btn" aria-label="'
+    +(collapsed?'Expand':'Collapse')+' navigation" aria-expanded="'+(!collapsed)+'">'+SNAV_COLLAPSE_ICON+'</button>' : '';
+  return '<div class="snav__logo"><div class="snav__logo-row"><div class="snav__wordmark">'+FLASH_MARK+'<span class="snav__word">flash</span></div>'+toggle+'</div>'
+    +'<span class="snav__subtitle">Secondary title</span></div>';
+}
+/* enabled=false drops the whole Company block (badge, title, selector
+   dropdown) — an optional unit, since not every product surface needs an
+   account switcher above the nav menu. */
+function navCompanyHtml(enabled){
+  if(enabled===false) return '';
+  return '<div class="snav__company">'
+    +'<div class="snav__companybadge">'+iconSvg('store')+'</div>'
+    +'<span class="snav__companytitle">Company title</span>'
+    +'<button type="button" class="snav__selector"><span class="snav__selector-label">List item</span>'
+    +'<span class="snav__selector-chev">'+iconSvg('chevron-down')+'</span></button></div>';
+}
+/* linksEnabled=false drops just the two Secondary link rows (and the rule
+   above the user block, since it exists to separate the links from the
+   footer) — the signed-in user + Log out footer always stays. */
+function navAccountHtml(linksEnabled){
+  var links = linksEnabled===false ? '' :
+    '<button type="button" class="snav__seclink"><span class="snav__seclink-icon">'+iconSvg('link')+'</span><span>Secondary link</span></button>'
+    +'<button type="button" class="snav__seclink"><span class="snav__seclink-icon">'+iconSvg('link')+'</span><span>Secondary link</span></button>'
+    +'<hr class="snav__rule">';
+  return '<div class="snav__account">'
+    +links
+    +'<div class="snav__user"><span class="avt avt--xs">MO</span><span class="snav__user-name">User name</span></div>'
+    +'<button type="button" class="snav__logout"><span class="snav__seclink-icon">'+SNAV_LOGOUT_ICON+'</span><span>Log out</span></button></div>';
+}
+/* collapseToggle:true renders the collapse/expand button inline in the
+   logo row — pass false for reference-grid/state-grid instances that
+   don't offer it. */
+function navPanelHtml(colour, size, activeIdx, expanded, collapsed, collapseToggle, companyEnabled, linksEnabled){
+  return '<div class="snav snav--'+colour+(size==='sm'?' snav--sm':'')+(collapsed?' snav--collapsed':'')+'">'
+    +navLogoHtml(collapsed, collapseToggle)
+    +'<div class="snav__body"><div class="snav__top">'+navCompanyHtml(companyEnabled)
+    +'<div class="snav__menu">'+navItemsHtml(NAV_ITEMS, activeIdx, null, expanded, collapsed)+'</div></div>'
+    +navAccountHtml(linksEnabled)+'</div></div>';
+}
 
-  function renderPlayground(){
-    stage.innerHTML = panelHtml(state.colour, state.size, state.active, state.expanded, state.collapsed, true);
-    Array.prototype.forEach.call(stage.querySelectorAll('.snav-item'), function(b){
-      b.addEventListener('click', function(){
-        var i=+b.getAttribute('data-i');
-        state.active=i;
-        if(!state.collapsed && ITEMS[i] && ITEMS[i].children && ITEMS[i].children.length) state.expanded[i]=!state.expanded[i];
-        renderPlayground();
-      });
+/* Playground renders into two synced mounts (the main Overview demo, and a
+   smaller copy on the Code tab) sharing one navPg state object — same
+   pattern as Avatar's AVATAR_PLAYGROUND_MOUNTS / Pills' PILL_PLAYGROUND_MOUNTS. */
+const NAV_PLAYGROUND_MOUNTS = [
+  {rootId:'nav-playground', idSuffix:'', wrap:true, title:'Try the component', desc:'Adjust the controls to test colour, size, layout and which optional blocks are shown.', headingAbove:'Side Nav is persistent chrome for switching between top-level destinations.'},
+  {rootId:'nav-code-playground', idSuffix:'-code', style:'code', title:'Playground', desc:'Live demo of the component.'},
+];
+
+function navPgAttachHandlers(stage){
+  Array.prototype.forEach.call(stage.querySelectorAll('.snav-item'), function(b){
+    b.addEventListener('click', function(){
+      var i=+b.getAttribute('data-i');
+      navPg.active=i;
+      if(!navPg.collapsed && NAV_ITEMS[i] && NAV_ITEMS[i].children && NAV_ITEMS[i].children.length) navPg.expanded[i]=!navPg.expanded[i];
+      navPgRefresh();
     });
-    var collapseBtn = stage.querySelector('.snav__collapse-btn');
-    if(collapseBtn) collapseBtn.addEventListener('click', function(){ state.collapsed=!state.collapsed; renderPlayground(); syncLayoutToggle(); });
-  }
-  renderPlayground();
+  });
+  var collapseBtn = stage.querySelector('.snav__collapse-btn');
+  if(collapseBtn) collapseBtn.addEventListener('click', function(){ navPg.collapsed=!navPg.collapsed; renderNavPlayground(); });
+}
 
-  function pillToggle(hostId, options, getActive, onChange){
-    var host=document.getElementById(hostId); if(!host) return;
-    function draw(){
-      host.innerHTML='<div class="tgl">'+options.map(function(o){
-        var lead = o.swatch ? '<span class="tgl__swatch" style="background:'+o.swatch+'"></span>'
-          : o.icon ? '<span class="tgl__icon">'+o.icon+'</span>' : '';
-        return '<button type="button" class="tgl__btn'+(o.key===getActive()?' is-active':'')+'" data-k="'+o.key+'">'+lead+o.label+'</button>';
-      }).join('')+'</div>';
-      Array.prototype.forEach.call(host.querySelectorAll('.tgl__btn'), function(b){
-        b.addEventListener('click', function(){ onChange(b.getAttribute('data-k')); draw(); });
-      });
+function navPgRefresh(){
+  document.querySelectorAll('.navPg-stage-el').forEach(function(stage){
+    stage.innerHTML = navPanelHtml(navPg.colour, navPg.size, navPg.active, navPg.expanded, navPg.collapsed, true, navPg.company, navPg.links);
+    navPgAttachHandlers(stage);
+  });
+  var block = document.getElementById('navPg-code-block');
+  if(block) block.innerHTML = getNavCodeHTML();
+}
+
+function renderNavPlayground(){
+  var sbg = stageBg(currentTheme());
+  var colourBtns = NAV_COLOURS.map(function(c){
+    return '<button class="btn-pg__pill'+(navPg.colour===c.key?' on':'')+'" onclick="navPgSet(\'colour\',\''+c.key+'\')"><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:'+c.swatch+';border:1px solid var(--chrome-border);margin-right:5px;vertical-align:-1px"></span>'+c.label+'</button>';
+  }).join('');
+  var sizeBtns = NAV_SIZES.map(function(s){ return '<button class="btn-pg__pill'+(navPg.size===s.key?' on':'')+'" onclick="navPgSet(\'size\',\''+s.key+'\')">'+s.label+'</button>'; }).join('');
+  var layoutBtns = NAV_LAYOUTS.map(function(l){ return '<button class="btn-pg__pill'+((navPg.collapsed?'collapsed':'expanded')===l.key?' on':'')+'" onclick="navPgSet(\'collapsed\','+(l.key==='collapsed')+')">'+l.label+'</button>'; }).join('');
+  var companyBtns = ['Shown','Hidden'].map(function(l,i){ var v=(i===0); return '<button class="btn-pg__pill'+(navPg.company===v?' on':'')+'" onclick="navPgSet(\'company\','+v+')">'+l+'</button>'; }).join('');
+  var linksBtns = ['Shown','Hidden'].map(function(l,i){ var v=(i===0); return '<button class="btn-pg__pill'+(navPg.links===v?' on':'')+'" onclick="navPgSet(\'links\','+v+')">'+l+'</button>'; }).join('');
+
+  NAV_PLAYGROUND_MOUNTS.forEach(function(mount){
+    var root = document.getElementById(mount.rootId);
+    if(!root) return;
+    var s = mount.idSuffix;
+    var demo = '<div class="btn-pg btn-pg--dd">'
+      +'<div class="btn-pg__stage navPg-stage-el" id="navPg-stage'+s+'" style="background:'+sbg+';align-items:flex-start"></div>'
+      +'<div class="btn-pg__ctrls">'
+        +'<div class="btn-pg__group"><span class="btn-pg__clabel">Colour</span><div class="btn-pg__pill-row">'+colourBtns+'</div></div>'
+        +'<div class="btn-pg__group"><span class="btn-pg__clabel">Size</span><div class="btn-pg__pill-row">'+sizeBtns+'</div></div>'
+        +'<div class="btn-pg__group"><span class="btn-pg__clabel">Layout</span><div class="btn-pg__pill-row">'+layoutBtns+'</div></div>'
+        +'<div class="btn-pg__group"><span class="btn-pg__clabel">Company</span><div class="btn-pg__pill-row">'+companyBtns+'</div></div>'
+        +'<div class="btn-pg__group"><span class="btn-pg__clabel">Links</span><div class="btn-pg__pill-row">'+linksBtns+'</div></div>'
+      +'</div></div>';
+
+    if(mount.style==='code'){
+      root.innerHTML = '<div class="type-sub__title">'+mount.title+'</div>'
+        +'<div class="type-sub__desc">'+mount.desc+'</div>'
+        +'<div class="cpg-section-outline">'+demo+'</div>';
+      return;
     }
-    draw();
-    return draw;
-  }
-  pillToggle('snav-colour-toggle', COLOURS, function(){return state.colour;}, function(k){ state.colour=k; renderPlayground(); });
-  var LAYOUTS=[
-    {key:'expanded', label:'Expanded', icon:'<svg viewBox="0 0 20 16" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="1" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.4"/><line x1="8" y1="1" x2="8" y2="15" stroke="currentColor" stroke-width="1.4"/></svg>'},
-    {key:'collapsed', label:'Collapsed', icon:'<svg viewBox="0 0 20 16" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="1" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.4"/><line x1="6" y1="1" x2="6" y2="15" stroke="currentColor" stroke-width="1.4"/></svg>'}
-  ];
-  var syncLayoutToggle = pillToggle('snav-layout-toggle', LAYOUTS, function(){return state.collapsed?'collapsed':'expanded';}, function(k){ state.collapsed=(k==='collapsed'); renderPlayground(); });
-  pillToggle('snav-size-toggle', SIZES, function(){return state.size;}, function(k){ state.size=k; renderPlayground(); });
 
-  /* Nav colour quick reference — a compact panel (company + items) per context */
+    var inner = '<div class="cpg-layout">'
+      +'<div class="cpg-layout__intro">'
+        +(mount.wrap ? '<span class="cpg-cursor-icon">'+CPG_CURSOR_ICON_SVG+'</span>' : '')
+        +'<div class="cpg-layout__title">'+mount.title+'</div>'
+        +'<div class="cpg-layout__desc">'+mount.desc+'</div>'
+      +'</div>'
+      +'<div class="cpg-layout__demo">'+demo+'</div></div>';
+    var wrapped = mount.wrap ? '<div class="cpg-section-block">'+inner+'</div>' : inner;
+    root.innerHTML = (mount.headingAbove ? '<div class="cpg-overview-heading"><span class="cpg-overview-heading__icon">'+CPG_INFO_ICON_SVG+'</span><span>'+mount.headingAbove+'</span></div>' : '') + wrapped;
+  });
+
+  navPgRefresh();
+}
+
+function navPgSet(key, val){
+  navPg[key] = val;
+  renderNavPlayground();
+}
+
+function getNavCodeHTML(){
+  var lines = [];
+  lines.push('<span class="code-cm">/* Flash · Side Nav · '+cap(navPg.colour==='charcoal'?'black':navPg.colour)+' · '+(navPg.size==='sm'?'Small':'Regular')+(navPg.collapsed?' · Collapsed':'')+' */</span>');
+  lines.push('<span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"snav snav--'+navPg.colour+(navPg.size==='sm'?' snav--sm':'')+(navPg.collapsed?' snav--collapsed':'')+'"</span><span class="code-kw">></span>');
+  lines.push('  <span class="code-cm">&#60;!-- logo --></span>');
+  if(navPg.company!==false){
+    lines.push('  <span class="code-cm">&#60;!-- company: badge, title, account selector --></span>');
+  } else {
+    lines.push('  <span class="code-cm">&#60;!-- company block omitted --></span>');
+  }
+  lines.push('  <span class="code-cm">&#60;!-- nav menu --></span>');
+  if(navPg.links!==false){
+    lines.push('  <span class="code-cm">&#60;!-- account: secondary links, user, log out --></span>');
+  } else {
+    lines.push('  <span class="code-cm">&#60;!-- account: secondary links omitted — user + log out only --></span>');
+  }
+  lines.push('<span class="code-kw">&#60;/div></span>');
+  return lines.join('\n');
+}
+
+const NAV_LANGS = [{key:'html', label:'HTML / CSS', file:'side-nav.html'}];
+let navLang = 'html';
+
+function renderNavCodeTab(){
+  var root = document.getElementById('nav-code-tab');
+  if(!root) return;
+  root.innerHTML = '<div class="type-sub__title">Code</div>'
+    +'<div class="type-sub__desc">Live snippet matching the current Playground configuration &mdash; switch to Overview to change it.</div>'
+    +'<div class="cpg-section-outline"><div class="code-panel code-panel--bare open">'
+      +'<div class="code-panel__head">'
+        +'<div class="code-seg" role="tablist" aria-label="Code language">'
+          +NAV_LANGS.map(function(l){ return '<button type="button" role="tab" class="code-seg__btn" aria-selected="true" aria-controls="navPg-code-block" tabindex="0">'+l.label+'</button>'; }).join('')
+        +'</div>'
+        +'<span class="code-lang-file">'+NAV_LANGS[0].file+'</span>'
+        +'<button class="code-copy-btn" onclick="navPgCopyCode()" id="navPg-copy-btn">Copy</button>'
+      +'</div>'
+      +'<div class="code-body"><div class="code-block" id="navPg-code-block" role="tabpanel" aria-live="polite"></div></div>'
+    +'</div></div>';
+}
+
+function navPgCopyCode(){
+  var b = document.getElementById('navPg-code-block');
+  if(!b) return;
+  navigator.clipboard.writeText(b.innerText||b.textContent).catch(function(){});
+  var btn = document.getElementById('navPg-copy-btn');
+  if(btn){ btn.textContent = 'Copied!'; setTimeout(function(){ btn.textContent='Copy'; }, 2000); }
+}
+
+function navTabSwitch(tab){
+  var nav = document.getElementById('nav-tabs-list');
+  if(!nav) return;
+  nav.querySelectorAll('.tab-item').forEach(function(btn){ btn.classList.toggle('on', btn.getAttribute('data-nav-tab')===tab); });
+  document.querySelectorAll('#s-nav .tabs-panel[data-nav-panel]').forEach(function(p){ p.classList.toggle('on', p.getAttribute('data-nav-panel')===tab); });
+}
+
+/* Nav colour quick reference — a compact panel (company + items) per context */
+function renderNavColourRef(){
   var refEl=document.getElementById('snav-colour-ref');
-  if(refEl){
-    var refItems=ITEMS.slice(0,4);
-    refEl.innerHTML = COLOURS.map(function(c){
-      return '<div><div class="snav-states-cap">'+c.label+'</div>'
-        +'<div class="snav snav--'+c.key+'">'+companyHtml()+'<div class="snav__menu">'+itemsHtml(refItems, 0)+'</div></div></div>';
-    }).join('');
-  }
+  if(!refEl) return;
+  var refItems=NAV_ITEMS.slice(0,4);
+  refEl.innerHTML = NAV_COLOURS.map(function(c){
+    return '<div><div class="snav-states-cap">'+c.label+'</div>'
+      +'<div class="snav snav--'+c.key+'">'+navCompanyHtml(true)+'<div class="snav__menu">'+navItemsHtml(refItems, 0)+'</div></div></div>';
+  }).join('');
+}
 
-  /* States reference (White, Regular) — the nav item on its own */
+/* States reference (White, Regular) — the nav item on its own */
+function renderNavStatesRef(){
   var statesEl=document.getElementById('snav-states-ref');
-  if(statesEl){
-    var one=[ITEMS[0]];
-    statesEl.innerHTML =
-      '<div><div class="snav-states-cap">Inactive</div><div class="snav snav--white"><div class="snav__menu">'+itemsHtml(one,-1)+'</div></div></div>'
-      +'<div><div class="snav-states-cap">Hover</div><div class="snav snav--white"><div class="snav__menu">'+itemsHtml(one,-1,['snav-item--hover-look'])+'</div></div></div>'
-      +'<div><div class="snav-states-cap">Active</div><div class="snav snav--white"><div class="snav__menu">'+itemsHtml(one,0)+'</div></div></div>'
-      +'<div><div class="snav-states-cap">Focused</div><div class="snav snav--white"><div class="snav__menu">'+itemsHtml(one,-1,['snav-item--focus-look'])+'</div></div></div>';
-  }
-})();
+  if(!statesEl) return;
+  var one=[NAV_ITEMS[0]];
+  statesEl.innerHTML =
+    '<div><div class="snav-states-cap">Inactive</div><div class="snav snav--white"><div class="snav__menu">'+navItemsHtml(one,-1)+'</div></div></div>'
+    +'<div><div class="snav-states-cap">Hover</div><div class="snav snav--white"><div class="snav__menu">'+navItemsHtml(one,-1,['snav-item--hover-look'])+'</div></div></div>'
+    +'<div><div class="snav-states-cap">Active</div><div class="snav snav--white"><div class="snav__menu">'+navItemsHtml(one,0)+'</div></div></div>'
+    +'<div><div class="snav-states-cap">Focused</div><div class="snav snav--white"><div class="snav__menu">'+navItemsHtml(one,-1,['snav-item--focus-look'])+'</div></div></div>';
+}
+
+try { renderNavPlayground(); } catch(e){ console.error('nav-playground',e); }
+try { renderNavCodeTab();    } catch(e){ console.error('nav-code-tab',e); }
+try { renderNavColourRef();  } catch(e){ console.error('nav-colour-ref',e); }
+try { renderNavStatesRef();  } catch(e){ console.error('nav-states-ref',e); }
 /* @@SHADCN_JS@@ */
 
 try { renderTablesPlayground(); } catch(e){ console.error('tbl-playground',e); }
@@ -21102,6 +21256,7 @@ try { renderSectionChangelogs(); } catch(e){ console.error('section-changelog',e
   {secId:'s-cards-interactive', panelId:'cinter-changelog-panel'},
   {secId:'s-cards-stat', panelId:'cstat-changelog-panel'},
   {secId:'s-cards-hover', panelId:'chover-changelog-panel'},
+  {secId:'s-nav', panelId:'nav-changelog-panel'},
 ].forEach(({secId, panelId})=>{
   try {
     const chlog = document.querySelector(`#${secId} > .sec-chlog`);
