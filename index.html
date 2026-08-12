@@ -1515,8 +1515,8 @@ body.home .main{max-width:none;margin:0;padding:0}
 .sec--tabbed .spec-mock__field svg{width:16px;height:16px;margin-left:auto;color:var(--chrome-muted);flex-shrink:0}
 .sec--tabbed .spec-mock__caret{width:1.5px;height:18px;background:var(--chrome-txt);opacity:.45}
 .sec--tabbed .spec-usage-demo{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:14px;padding-top:14px;border-top:1px dashed var(--chrome-border)}
-.sec--tabbed .spec-cell{border:1px solid var(--chrome-border);border-radius:12px;overflow:hidden;background:var(--chrome-bg);transition:background .25s,border-color .25s}
-.sec--tabbed .spec-cell__stage{display:flex;align-items:center;justify-content:center;padding:24px 12px;min-height:60px;transition:background .25s}
+.sec--tabbed .spec-cell{display:flex;flex-direction:column;border:1px solid var(--chrome-border);border-radius:12px;overflow:hidden;background:var(--chrome-bg);transition:background .25s,border-color .25s}
+.sec--tabbed .spec-cell__stage{display:flex;align-items:center;justify-content:center;padding:24px 12px;min-height:60px;flex:1 1 auto;transition:background .25s}
 .sec--tabbed .spec-cell__name{padding:10px 12px 0;font-size:13px;font-weight:700;color:var(--chrome-txt);border-top:1px solid var(--chrome-border)}
 .sec--tabbed .spec-cell__desc{padding:2px 12px 12px;font-size:11.5px;color:var(--chrome-muted)}
 .sec--tabbed .sec-header-meta{display:flex;align-items:center;gap:8px;position:relative}
@@ -8339,6 +8339,10 @@ function showSection(id, opts) {
   // Expand the group that holds the section we just opened. Defined further
   // down the file, so guard the init-time call that runs before it exists.
   if (typeof syncNavGroups === 'function') syncNavGroups();
+  // Cards pages equalize .spec-cell__desc heights by measuring the live DOM
+  // (see equalizeSpecCellDesc) — a no-op while the section was hidden, so
+  // redo it now that it's actually visible and laid out.
+  if (target && typeof equalizeSpecCellDesc === 'function') equalizeSpecCellDesc(target);
   // Scroll to top (or restore a remembered position) — the page itself
   // scrolls (window), .main has no overflow of its own. html has
   // scroll-behavior:smooth, so a restore must opt out of the animation.
@@ -20475,8 +20479,25 @@ function renderCardKeyStates(pg){
       <div class="cpg-layout__desc">${pg.keyStates.desc}</div>
     </div>
     <div class="cpg-section-block">
-      <div class="spec-grid" style="grid-template-columns:repeat(auto-fill,minmax(190px,1fr))">${cells}</div>
+      <div class="spec-grid" style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr))">${cells}</div>
     </div>`;
+  equalizeSpecCellDesc(root);
+}
+
+/* Descriptions vary in length, so their wrapped line count varies too —
+   without this, the divider above each caption would land at a different
+   height per cell even though the cells themselves are equal height (the
+   taller/shorter description eats into or gives back space to the stage
+   above it). Pin every .spec-cell__desc in a grid to the tallest one's
+   height so the divider lines up across the row. */
+function equalizeSpecCellDesc(root){
+  root.querySelectorAll('.spec-grid').forEach(grid=>{
+    const descs = [...grid.querySelectorAll('.spec-cell__desc')];
+    if(descs.length < 2) return;
+    descs.forEach(d=>d.style.minHeight='');
+    const max = Math.max(...descs.map(d=>d.getBoundingClientRect().height));
+    descs.forEach(d=>d.style.minHeight = max + 'px');
+  });
 }
 
 /* ── IN-CONTEXT MOCKUPS (Overview) ── */
@@ -20518,7 +20539,7 @@ function renderCardReference(pg){
             <div class="spec-part__note">${p.note}</div>
           </div>
         </div>`).join('')}</div>`;
-    if(b.cells) body += `<div class="spec-grid" style="grid-template-columns:repeat(auto-fill,minmax(190px,1fr))">${
+    if(b.cells) body += `<div class="spec-grid" style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr))">${
       b.cells().map(c=>`
         <div class="spec-cell">
           <div class="spec-cell__stage" style="background:${sbg};${c.stageStyle||''}">${c.vis}</div>
@@ -20623,6 +20644,11 @@ function cardTabSwitch(secId, tab){
   if(!nav) return;
   nav.querySelectorAll('.tab-item').forEach(btn=>btn.classList.toggle('on', btn.getAttribute('data-card-tab')===tab));
   document.querySelectorAll(`#${secId} .tabs-panel[data-card-panel]`).forEach(p=>p.classList.toggle('on', p.getAttribute('data-card-panel')===tab));
+  // Grids rendered while their section/tab was hidden measure 0 height, so
+  // the .spec-cell__desc equalizer (see equalizeSpecCellDesc) is a no-op at
+  // that point — redo it now that the panel is actually visible and laid out.
+  const secEl = document.getElementById(secId);
+  if(secEl) equalizeSpecCellDesc(secEl);
 }
 
 /* ── INIT / THEME RE-RENDER ── */
