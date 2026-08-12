@@ -6637,51 +6637,23 @@ body.home .main{max-width:none;margin:0;padding:0}
     <!-- ============================================================
          CHARTS
     ============================================================ -->
-    <section class="sec" id="s-charts-bar">
+    <section class="sec sec--tabbed" id="s-charts-bar">
+      <div class="sec-hero">
       <div class="sec__head">
-        <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Bar Charts <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.4.2</span></h1>
-        <p class="sec__desc">Compare discrete values across categories. Rendered as inline SVG &mdash; no charting library. Hover a bar to emphasise it and read its value; the rest dim back.</p>
-      </div>
-      <div class="type-sub">
-        <div class="type-sub__title">Bar</div>
-        <div class="type-sub__desc">Hover a bar to emphasise it and read its value; the rest dim back.</div>
-        <div class="sg-stage"><div class="cht"><div class="cht__cap">Monthly volume</div><div class="cht__sub">Transactions per month &middot; 2026</div><div id="cht-bar"></div></div></div>
-      </div>
-      <div class="type-sub">
-        <div class="type-sub__title">When to use</div>
-        <div class="type-sub__desc">Pick the chart type that matches the question: comparison (bar), trend (line/area) or composition (donut). Series and categories use the Flash colour palette (brand green, blue, purple, orange); single-series charts lead with the brand green.</div>
-        <div class="sel-usage">
-          <div class="sel-usage__card">
-            <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
-            <ul class="sel-usage__list">
-              <li>Use bars for comparison, lines for trends, donuts for a few parts of a whole.</li>
-              <li>Label axes; give each category or series its own palette colour, and keep single-series charts to one.</li>
-              <li>Start bar and area value axes at zero.</li>
-              <li>Default to 25% opacity for the inactive state, and full opacity (the saturated colour) for active/hover.</li>
-            </ul>
-          </div>
-          <div class="sel-usage__card">
-            <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don&rsquo;t</div>
-            <ul class="sel-usage__list">
-              <li>Don&rsquo;t use a donut for more than ~5 segments &mdash; a bar reads better.</li>
-              <li>Don&rsquo;t colour series just for decoration &mdash; it implies meaning that isn&rsquo;t there.</li>
-              <li>Don&rsquo;t truncate a value axis in a way that exaggerates differences.</li>
-              <li>Don&rsquo;t use grey for chart colours &mdash; when representing multiple things (several bars, slices or series), give each its own palette colour instead.</li>
-              <li>Don&rsquo;t reach for red or deep orange &mdash; they read as error/warning. Use them very seldom, only once every other chart colour is exhausted.</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <details class="ai-ctx">
+        <h1 class="sec__title">Bar Charts</h1>
+        <div class="sec-header-meta">
+          <span class="comp-ver-badge" style="margin-left:0">v1.5.0</span>
+          Paste this over the existing tab in <section id="s-charts-bar"> (or add it at the end of the section if none exists yet):
+
+<details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-charts-bar">
 {
   "status": "js-rendered",
   "builderFunctions": [
-    "fmt",
-    "mkTip",
-    "moveTip"
+    "chtFmt",
+    "makeBarChartHTML",
+    "bindChartInteractivity"
   ],
   "realClasses": [
     ".cht",
@@ -6689,12 +6661,14 @@ body.home .main{max-width:none;margin:0;padding:0}
     ".cht__sub",
     ".cht__bar",
     ".cht__val",
-    ".cht__hit",
     ".cht__axis",
-    ".cht__tip"
+    ".cht__tip",
+    ".cht-legend",
+    ".cht-legend__item",
+    ".cht-legend__dot"
   ],
-  "css": "/* ---- Chart (Flash palette + interactive) ---- */\n.cht { position:relative;border:1px solid var(--chrome-border);border-radius:14px;padding:20px 22px;background:var(--chrome-bg);width:380px;max-width:100%;\n  --c1:var(--prim-green-500);--c2:var(--prim-sup-blue-1);--c3:var(--prim-sup-purple-4);--c4:var(--prim-sup-pink-1);--c5:var(--prim-sup-orange-1) }\n.cht__cap { font-size:13px;font-weight:700;color:var(--chrome-txt);margin-bottom:2px }\n.cht__sub { font-size:11.5px;color:var(--chrome-muted);margin-bottom:16px }\n.cht svg { display:block;width:100%;height:auto;overflow:visible }\n.cht__bar { fill:var(--c1);opacity:.25;transition:fill .15s,opacity .15s;cursor:pointer }\n.cht__bar.on { opacity:1 }\n.cht svg.is-hot .cht__line { opacity:1 }\n.cht__hit { fill:transparent;cursor:pointer }\n.cht__axis { fill:var(--chrome-muted);font-size:10px;font-family:inherit }\n.cht__val { fill:var(--chrome-txt);font-size:10px;font-weight:700;font-family:inherit }\n.cht__tip { position:absolute;z-index:5;pointer-events:none;background:var(--color-surface-inverse);color:var(--color-text-inv);font-size:11.5px;font-weight:600;padding:5px 9px;border-radius:7px;white-space:nowrap;opacity:0;transform:translate(-50%,-100%);transition:opacity .12s;box-shadow:0 4px 14px rgba(0,0,0,.22) }\n.cht__tip.show { opacity:1 }\n.cht__tip b { font-weight:800 }",
-  "js": "function fmt(n){ return n&gt;=1000 ? (n/1000).toFixed(1).replace(/\\.0$/,'')+'k' : ''+n; }\n\nfunction mkTip(card){ var t=document.createElement('div'); t.className='cht__tip'; card.appendChild(t); return t; }\n\nfunction moveTip(t,card,el,html){ var r=el.getBoundingClientRect(), cr=card.getBoundingClientRect(); t.innerHTML=html; t.style.left=(r.left-cr.left+r.width/2)+'px'; t.style.top=(r.top-cr.top-8)+'px'; t.classList.add('show'); }",
+  "css": "/* ---- Chart (Flash palette + interactive) ---- */\n.cht { position:relative;border:1px solid var(--chrome-border);border-radius:14px;padding:20px 22px;background:var(--chrome-bg);width:380px;max-width:100%;\n  --c1:var(--prim-green-500);--c2:var(--prim-sup-blue-1);--c3:var(--prim-sup-purple-4);--c4:var(--prim-sup-pink-1);--c5:var(--prim-sup-orange-1) }\n.cht__cap { font-size:13px;font-weight:700;color:var(--chrome-txt);margin-bottom:2px }\n.cht__sub { font-size:11.5px;color:var(--chrome-muted);margin-bottom:16px }\n.cht svg { display:block;width:100%;height:auto;overflow:visible }\n.cht__bar { fill:var(--c1);opacity:.25;transition:fill .15s,opacity .15s;cursor:pointer }\n.cht__bar.on { opacity:1 }\n.cht svg.is-hot .cht__line { opacity:1 }\n.cht__axis { fill:var(--chrome-muted);font-size:10px;font-family:inherit }\n.cht__val { fill:var(--chrome-txt);font-size:10px;font-weight:700;font-family:inherit }\n.cht-legend { display:flex;flex-wrap:wrap;gap:8px 14px;margin-top:16px }\n.cht-legend__item { display:inline-flex;align-items:center;gap:7px;font-size:12px;color:var(--chrome-txt);cursor:pointer;padding:2px 5px;border-radius:6px;transition:background .12s }\n.cht-legend__item:hover { background:var(--chrome-hover) }\n.cht-legend__dot { width:10px;height:10px;border-radius:3px;flex-shrink:0 }\n.cht__tip { position:absolute;z-index:5;pointer-events:none;background:var(--color-surface-inverse);color:var(--color-text-inv);font-size:11.5px;font-weight:600;padding:5px 9px;border-radius:7px;white-space:nowrap;opacity:0;transform:translate(-50%,-100%);transition:opacity .12s;box-shadow:0 4px 14px rgba(0,0,0,.22) }\n.cht__tip.show { opacity:1 }\n.cht__tip b { font-weight:800 }",
+  "js": "function chtFmt(n){ return n&gt;=1000 ? (n/1000).toFixed(1).replace(/\\.0$/,'')+'k' : ''+n; }\n\nfunction makeBarChartHTML(data, opts){\n  opts = opts || {};\n  const series = opts.series || 1;\n  const W=340,H=180,padT=20,padB=22,padX=6, cw=W-padX*2, ch=H-padT-padB;\n  const n = data.length;\n  const allVals = series===2 ? data.flatMap(d=&gt;[d.v,d.v2]) : data.map(d=&gt;d.v);\n  const max = Math.max.apply(null, allVals) || 1;\n  const groupGap=10, barGap=series===2?3:0;\n  const bw = series===2 ? ((cw-groupGap*(n-1))/n - barGap)/2 : (cw-groupGap*(n-1))/n;\n  let s='';\n  data.forEach((d,i)=&gt;{\n    const step = series===2 ? bw*2+barGap : bw;\n    const gx = padX + i*(step+groupGap);\n    const bh1 = d.v/max*ch, y1 = padT+ch-bh1;\n    s += `&lt;rect class=\"cht__bar\" data-i=\"${i}\" data-s=\"0\" data-v=\"${chtFmt(d.v)}\" data-label=\"${series===2?'This year &amp;middot; ':''}${cardEsc(d.label)}\" x=\"${gx.toFixed(1)}\" y=\"${y1.toFixed(1)}\" width=\"${bw.toFixed(1)}\" height=\"${bh1.toFixed(1)}\" rx=\"3\" style=\"fill:${CHT_PAL[0]}\"/&gt;`;\n    s += `&lt;text class=\"cht__val\" x=\"${(gx+bw/2).toFixed(1)}\" y=\"${(y1-6).toFixed(1)}\" text-anchor=\"middle\"&gt;${chtFmt(d.v)}&lt;/text&gt;`;\n    if(series===2){\n      const bh2 = d.v2/max*ch, y2 = padT+ch-bh2, x2 = gx+bw+barGap;\n      s += `&lt;rect class=\"cht__bar\" data-i=\"${i}\" data-s=\"1\" data-v=\"${chtFmt(d.v2)}\" data-label=\"Last year &amp;middot; ${cardEsc(d.label)}\" x=\"${x2.toFixed(1)}\" y=\"${y2.toFixed(1)}\" width=\"${bw.toFixed(1)}\" height=\"${bh2.toFixed(1)}\" rx=\"3\" style=\"fill:${CHT_PAL[1]}\"/&gt;`;\n      s += `&lt;text class=\"cht__val\" x=\"${(x2+bw/2).toFixed(1)}\" y=\"${(y2-6).toFixed(1)}\" text-anchor=\"middle\"&gt;${chtFmt(d.v2)}&lt;/text&gt;`;\n    }\n    const lx = gx + (series===2 ? bw+barGap/2 : bw/2);\n    s += `&lt;text class=\"cht__axis\" x=\"${lx.toFixed(1)}\" y=\"${H-7}\" text-anchor=\"middle\"&gt;${cardEsc(d.label)}&lt;/text&gt;`;\n  });\n  const legend = series===2 ? `&lt;div class=\"cht-legend\"&gt;&lt;span class=\"cht-legend__item\"&gt;&lt;span class=\"cht-legend__dot\" style=\"background:${CHT_PAL[0]}\"&gt;&lt;/span&gt;This year&lt;/span&gt;&lt;span class=\"cht-legend__item\"&gt;&lt;span class=\"cht-legend__dot\" style=\"background:${CHT_PAL[1]}\"&gt;&lt;/span&gt;Last year&lt;/span&gt;&lt;/div&gt;` : '';\n  return `&lt;svg viewBox=\"0 0 ${W} ${H}\" role=\"img\" aria-label=\"Bar chart\"&gt;${s}&lt;/svg&gt;${legend}`;\n}\n\nfunction bindChartInteractivity(root){\n  root.querySelectorAll('.cht').forEach(card=&gt;{\n    const svg = card.querySelector('svg');\n    if(!svg) return;\n    const tip = chtMkTip(card);\n    const legend = card.querySelector('.cht-legend');\n    function hot(el){\n      svg.classList.add('is-hot');\n      if(el.classList.contains('cht__seg')){\n        el.classList.add('on');\n        const sw = +el.getAttribute('stroke-width');\n        el.setAttribute('stroke-width', sw+5);\n        const valEl = svg.querySelector('.cht-donut-val'), labEl = svg.querySelector('.cht-donut-lab');\n        if(valEl) valEl.textContent = el.dataset.pct+'%';\n        if(labEl) labEl.textContent = el.dataset.label;\n      } else if(el.classList.contains('cht__hit')){\n        const dots = svg.querySelectorAll(`.cht__dot[data-i=\"${el.dataset.i}\"]`);\n        dots.forEach(d=&gt;{ d.classList.add('on'); d.setAttribute('r','5.5'); });\n        const label = dots[0] ? dots[0].dataset.label : '';\n        const vals = Array.from(dots).map(d=&gt;d.dataset.v).join(' / ');\n        chtMoveTip(tip, card, dots[dots.length-1]||el, `&lt;b&gt;${vals}&lt;/b&gt; &amp;middot; ${label}`);\n      } else {\n        el.classList.add('on');\n        chtMoveTip(tip, card, el, `&lt;b&gt;${el.dataset.v}&lt;/b&gt; &amp;middot; ${el.dataset.label}`);\n      }\n    }\n    function cool(el){\n      svg.classList.remove('is-hot');\n      if(el.classList.contains('cht__seg')){\n        el.classList.remove('on');\n        const sw = +el.getAttribute('stroke-width')-5;\n        el.setAttribute('stroke-width', sw);\n        const valEl = svg.querySelector('.cht-donut-val'), labEl = svg.querySelector('.cht-donut-lab');\n        if(valEl) valEl.textContent = svg.dataset.total;\n        if(labEl) labEl.textContent = svg.dataset.unit;\n      } else if(el.classList.contains('cht__hit')){\n        svg.querySelectorAll(`.cht__dot[data-i=\"${el.dataset.i}\"]`).forEach(d=&gt;{ d.classList.remove('on'); d.setAttribute('r','3.5'); });\n        tip.classList.remove('show');\n      } else {\n        el.classList.remove('on');\n        tip.classList.remove('show');\n      }\n    }\n    svg.querySelectorAll('.cht__bar,.cht__hit,.cht__seg').forEach(el=&gt;{\n      el.addEventListener('mouseenter', ()=&gt;hot(el));\n      el.addEventListener('mouseleave', ()=&gt;cool(el));\n    });\n    if(legend) legend.querySelectorAll('.cht-legend__item[data-i]').forEach(li=&gt;{\n      const seg = svg.querySelector(`.cht__seg[data-i=\"${li.dataset.i}\"]`);\n      if(!seg) return;\n      li.addEventListener('mouseenter', ()=&gt;hot(seg));\n      li.addEventListener('mouseleave', ()=&gt;cool(seg));\n    });\n  });\n}",
   "usage": {
     "do": [
       "Use bars for comparison, lines for trends, donuts for a few parts of a whole.",
@@ -6706,66 +6680,85 @@ body.home .main{max-width:none;margin:0;padding:0}
       "Don’t use a donut for more than ~5 segments — a bar reads better.",
       "Don’t colour series just for decoration — it implies meaning that isn’t there.",
       "Don’t truncate a value axis in a way that exaggerates differences.",
-      "Don’t use grey for chart colours — when representing multiple things (several bars, slices or series), give each its own palette colour instead.",
+      "Don’t use grey for chart colours — give each thing plotted its own palette colour instead.",
       "Don’t reach for red or deep orange — they read as error/warning. Use them very seldom, only once every other chart colour is exhausted."
     ]
   },
-  "contentHash": "23310b27742b937b0eb469b7198efba6a96a084ad20664df809bd6a01ce0a7aa",
-  "note": "Split out of the former combined Charts page (v1.1.0). The bar renderer itself is inline logic inside an anonymous IIFE (keyed off document.getElementById('cht-bar')) rather than a separately named function, so only the shared fmt/mkTip/moveTip helpers are individually extractable by identifier. All series colours ride --c1..--c5 (Flash palette), not hardcoded hex."
+  "contentHash": "cec6102250f3427c75001b9aadc6f3c10d49846beebbe1c8b6ed4e48aa3fd480",
+  "note": "Rebuilt as a .sec--tabbed page (CHART_PAGES config array, generalising CARD_PAGES). makeBarChartHTML(data,{series}) is the real, parameterized bar-chart builder; chtFmt/bindChartInteractivity are shared helpers reused by every chart type in this group. CHART_PAGES/CHART_PG/renderChart*/chartTabSwitch/chartpgSet are doc-site-only playground plumbing, excluded."
 }
   </pre>
 </details>
-    </section>
-
-    <section class="sec" id="s-charts-line">
-      <div class="sec__head">
-        <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Line &amp; Area Charts <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.1.2</span></h1>
-        <p class="sec__desc">Show a trend over a continuous range. The area variant fills beneath the line to emphasise volume.</p>
+        </div>
       </div>
-      <div class="type-sub">
-        <div class="type-sub__title">Line &amp; area</div>
-        <div class="type-sub__desc">Hover a point for its value and label.</div>
-        <div class="sg-stage"><div class="sg-row sg-row--top" style="gap:22px">
-          <div class="cht" style="width:340px"><div class="cht__cap">Active users</div><div class="cht__sub">Line &middot; last 7 weeks</div><div id="cht-line"></div></div>
-          <div class="cht" style="width:340px"><div class="cht__cap">Settled value</div><div class="cht__sub">Area &middot; last 7 weeks</div><div id="cht-area"></div></div>
-        </div></div>
+      <div class="sec-hero__preview"><div class="mk"><div style="display:flex;align-items:flex-end;gap:9px;height:82px"><span class="mk-sq" style="width:18px;height:40%"></span><span class="mk-sq" style="width:18px;height:70%"></span><span class="mk-sq" style="width:18px;height:55%;background:var(--color-brand)"></span><span class="mk-sq" style="width:18px;height:90%"></span><span class="mk-sq" style="width:18px;height:35%"></span></div></div></div>
       </div>
-      <div class="type-sub">
-        <div class="type-sub__title">When to use</div>
-        <div class="type-sub__desc">Reach for a line or area chart when the story is change over time, not a one-off comparison.</div>
-        <div class="sel-usage">
-          <div class="sel-usage__card">
-            <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
-            <ul class="sel-usage__list">
-              <li>Use a line for a trend across a continuous range &mdash; time, distance, sequence.</li>
-              <li>Use the area fill when the volume beneath the line matters, not just its direction.</li>
-              <li>Start the value axis at zero, same as bar charts.</li>
-              <li>Default to 25% opacity for the inactive state, and full opacity (the saturated colour) for active/hover.</li>
-            </ul>
+      <div class="tabs-list sec-tabs" id="cbar-tabs-list">
+        <button type="button" class="tab-item on" data-chart-tab="overview" onclick="chartTabSwitch('s-charts-bar','overview')"><span class="tab-item__inner"><span class="tab-item__label">Overview</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-chart-tab="style" onclick="chartTabSwitch('s-charts-bar','style')"><span class="tab-item__inner"><span class="tab-item__label">Style</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-chart-tab="code" onclick="chartTabSwitch('s-charts-bar','code')"><span class="tab-item__inner"><span class="tab-item__label">Code</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-chart-tab="changelog" onclick="chartTabSwitch('s-charts-bar','changelog')"><span class="tab-item__inner"><span class="tab-item__label">Changelog</span></span><span class="tab-item__line"></span></button>
+      </div>
+      <div class="tabs-panel on" data-chart-panel="overview">
+        <div id="cbar-playground" class="type-sub"></div>
+        <div id="cbar-insitu" class="type-sub"></div>
+        <div class="type-sub cpg-variants" id="cbar-usage">
+          <div class="cpg-section-heading">
+            <div class="cpg-layout__title">Do's and don'ts</div>
+            <div class="cpg-layout__desc">Pick the chart type that matches the question: comparison (bar), trend (line/area) or composition (donut).</div>
           </div>
-          <div class="sel-usage__card">
-            <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don&rsquo;t</div>
-            <ul class="sel-usage__list">
-              <li>Don&rsquo;t plot more than 2&ndash;3 lines on one chart &mdash; it turns into a tangle.</li>
-              <li>Don&rsquo;t use a line chart for discrete, unordered categories &mdash; that&rsquo;s a bar chart.</li>
-              <li>Don&rsquo;t fill the area under more than one series &mdash; overlapping fills obscure each other.</li>
-              <li>Don&rsquo;t use grey for chart colours &mdash; give each series its own palette colour when plotting more than one.</li>
-              <li>Don&rsquo;t reach for red or deep orange &mdash; they read as error/warning. Use them very seldom, only once every other chart colour is exhausted.</li>
-            </ul>
+          <div class="cpg-section-block">
+            <div class="sel-usage">
+              <div class="sel-usage__card">
+                <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
+                <ul class="sel-usage__list">
+                  <li>Use bars for comparison, lines for trends, donuts for a few parts of a whole.</li>
+                  <li>Label axes; give each category or series its own palette colour, and keep single-series charts to one.</li>
+                  <li>Start bar and area value axes at zero.</li>
+                  <li>Default to 25% opacity for the inactive state, and full opacity (the saturated colour) for active/hover.</li>
+                </ul>
+              </div>
+              <div class="sel-usage__card">
+                <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don&rsquo;t</div>
+                <ul class="sel-usage__list">
+                  <li>Don&rsquo;t use a donut for more than ~5 segments &mdash; a bar reads better.</li>
+                  <li>Don&rsquo;t colour series just for decoration &mdash; it implies meaning that isn&rsquo;t there.</li>
+                  <li>Don&rsquo;t truncate a value axis in a way that exaggerates differences.</li>
+                  <li>Don&rsquo;t use grey for chart colours &mdash; give each thing plotted its own palette colour instead.</li>
+                  <li>Don&rsquo;t reach for red or deep orange &mdash; they read as error/warning. Use them very seldom, only once every other chart colour is exhausted.</li>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-      <details class="ai-ctx">
+      <div class="tabs-panel" data-chart-panel="style">
+        <div id="cbar-reference" class="type-sub spec-panel spec-stack"></div>
+      </div>
+      <div class="tabs-panel" data-chart-panel="code">
+        <div id="cbar-code-playground" class="type-sub spec-panel spec-code-playground"></div>
+        <div id="cbar-code-tab" class="type-sub spec-panel"></div>
+      </div>
+      <div class="tabs-panel" data-chart-panel="changelog" id="cbar-changelog-panel"></div>
+    </section>
+
+    <section class="sec sec--tabbed" id="s-charts-line">
+      <div class="sec-hero">
+      <div class="sec__head">
+        <h1 class="sec__title">Line &amp; Area Charts</h1>
+        <div class="sec-header-meta">
+          <span class="comp-ver-badge" style="margin-left:0">v1.2.0</span>
+          Paste this over the existing tab in <section id="s-charts-line"> (or add it at the end of the section if none exists yet):
+
+<details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-charts-line">
 {
   "status": "js-rendered",
   "builderFunctions": [
-    "fmt",
-    "mkTip",
-    "moveTip",
-    "lineChart"
+    "chtFmt",
+    "makeLineChartHTML",
+    "bindChartInteractivity"
   ],
   "realClasses": [
     ".cht",
@@ -6775,12 +6768,15 @@ body.home .main{max-width:none;margin:0;padding:0}
     ".cht__area",
     ".cht__dot",
     ".cht__val",
-    ".cht__hit",
     ".cht__axis",
-    ".cht__tip"
+    ".cht__hit",
+    ".cht__tip",
+    ".cht-legend",
+    ".cht-legend__item",
+    ".cht-legend__dot"
   ],
-  "css": "/* ---- Chart (Flash palette + interactive) ---- */\n.cht { position:relative;border:1px solid var(--chrome-border);border-radius:14px;padding:20px 22px;background:var(--chrome-bg);width:380px;max-width:100%;\n  --c1:var(--prim-green-500);--c2:var(--prim-sup-blue-1);--c3:var(--prim-sup-purple-4);--c4:var(--prim-sup-pink-1);--c5:var(--prim-sup-orange-1) }\n.cht__cap { font-size:13px;font-weight:700;color:var(--chrome-txt);margin-bottom:2px }\n.cht__sub { font-size:11.5px;color:var(--chrome-muted);margin-bottom:16px }\n.cht svg { display:block;width:100%;height:auto;overflow:visible }\n.cht__line { fill:none;stroke:var(--c1);stroke-width:2.5;stroke-linejoin:round;stroke-linecap:round;opacity:.25;transition:opacity .15s }\n.cht svg.is-hot .cht__line { opacity:1 }\n.cht__area { fill:url(#chtAreaGrad) }\n.cht__dot { fill:var(--chrome-bg);stroke:var(--c1);stroke-width:2.5;opacity:.25;transition:fill .12s,opacity .12s }\n.cht__dot.on { fill:var(--c1);opacity:1 }\n.cht__hit { fill:transparent;cursor:pointer }\n.cht__axis { fill:var(--chrome-muted);font-size:10px;font-family:inherit }\n.cht__val { fill:var(--chrome-txt);font-size:10px;font-weight:700;font-family:inherit }\n.cht__tip { position:absolute;z-index:5;pointer-events:none;background:var(--color-surface-inverse);color:var(--color-text-inv);font-size:11.5px;font-weight:600;padding:5px 9px;border-radius:7px;white-space:nowrap;opacity:0;transform:translate(-50%,-100%);transition:opacity .12s;box-shadow:0 4px 14px rgba(0,0,0,.22) }\n.cht__tip.show { opacity:1 }\n.cht__tip b { font-weight:800 }",
-  "js": "function fmt(n){ return n&gt;=1000 ? (n/1000).toFixed(1).replace(/\\.0$/,'')+'k' : ''+n; }\n\nfunction mkTip(card){ var t=document.createElement('div'); t.className='cht__tip'; card.appendChild(t); return t; }\n\nfunction moveTip(t,card,el,html){ var r=el.getBoundingClientRect(), cr=card.getBoundingClientRect(); t.innerHTML=html; t.style.left=(r.left-cr.left+r.width/2)+'px'; t.style.top=(r.top-cr.top-8)+'px'; t.classList.add('show'); }\n\nfunction lineChart(el, data, filled){\n    var card=el.closest('.cht'), tip=mkTip(card);\n    var W=340,H=168,padT=22,padB=22,padX=10, cw=W-padX*2, ch=H-padT-padB;\n    var max=Math.max.apply(null,data.map(function(d){return d.v;})), n=data.length;\n    var xs=function(i){return padX+(n&lt;=1?0:i/(n-1)*cw);}, ys=function(v){return padT+ch-(max?v/max*ch:0);};\n    var defs='', area='';\n    if(filled){\n      defs='&lt;defs&gt;&lt;linearGradient id=\"chtAreaGrad\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"&gt;&lt;stop offset=\"0\" stop-color=\"var(--c1)\" stop-opacity=\"0.32\"/&gt;&lt;stop offset=\"1\" stop-color=\"var(--c1)\" stop-opacity=\"0\"/&gt;&lt;/linearGradient&gt;&lt;/defs&gt;';\n      var d='M '+xs(0).toFixed(1)+','+(padT+ch).toFixed(1);\n      data.forEach(function(dd,i){ d+=' L '+xs(i).toFixed(1)+','+ys(dd.v).toFixed(1); });\n      d+=' L '+xs(n-1).toFixed(1)+','+(padT+ch).toFixed(1)+' Z'; area='&lt;path class=\"cht__area\" d=\"'+d+'\"/&gt;';\n    }\n    var pts=data.map(function(dd,i){return xs(i).toFixed(1)+','+ys(dd.v).toFixed(1);}).join(' ');\n    var dots=data.map(function(dd,i){return '&lt;circle class=\"cht__dot\" data-i=\"'+i+'\" cx=\"'+xs(i).toFixed(1)+'\" cy=\"'+ys(dd.v).toFixed(1)+'\" r=\"3.5\"/&gt;';}).join('');\n    var vals=data.map(function(dd,i){return '&lt;text class=\"cht__val\" x=\"'+xs(i).toFixed(1)+'\" y=\"'+(ys(dd.v)-8).toFixed(1)+'\" text-anchor=\"middle\"&gt;'+fmt(dd.v)+'&lt;/text&gt;';}).join('');\n    var hits=data.map(function(dd,i){ var x0=i===0?0:(xs(i-1)+xs(i))/2, x1=i===n-1?W:(xs(i)+xs(i+1))/2;\n      return '&lt;rect class=\"cht__hit\" data-i=\"'+i+'\" x=\"'+x0.toFixed(1)+'\" y=\"0\" width=\"'+(x1-x0).toFixed(1)+'\" height=\"'+(padT+ch).toFixed(1)+'\"/&gt;'; }).join('');\n    var labs=data.map(function(dd,i){return '&lt;text class=\"cht__axis\" x=\"'+xs(i).toFixed(1)+'\" y=\"'+(H-7)+'\" text-anchor=\"middle\"&gt;'+dd.label+'&lt;/text&gt;';}).join('');\n    el.innerHTML='&lt;svg viewBox=\"0 0 '+W+' '+H+'\" role=\"img\" aria-label=\"Line chart\"&gt;'+defs+area+'&lt;polyline class=\"cht__line\" points=\"'+pts+'\"/&gt;'+dots+vals+labs+hits+'&lt;/svg&gt;';\n    var dotEls=el.querySelectorAll('.cht__dot');\n    Array.prototype.forEach.call(el.querySelectorAll('.cht__hit'),function(h){ var i=+h.getAttribute('data-i'), dot=dotEls[i];\n      h.addEventListener('mouseenter',function(){ dot.classList.add('on'); dot.setAttribute('r','5.5'); moveTip(tip,card,dot,'&lt;b&gt;'+data[i].v+'&lt;/b&gt; &amp;middot; '+data[i].label); });\n      h.addEventListener('mouseleave',function(){ dot.classList.remove('on'); dot.setAttribute('r','3.5'); tip.classList.remove('show'); });\n    });\n  }",
+  "css": "/* ---- Chart (Flash palette + interactive) ---- */\n.cht { position:relative;border:1px solid var(--chrome-border);border-radius:14px;padding:20px 22px;background:var(--chrome-bg);width:380px;max-width:100%;\n  --c1:var(--prim-green-500);--c2:var(--prim-sup-blue-1);--c3:var(--prim-sup-purple-4);--c4:var(--prim-sup-pink-1);--c5:var(--prim-sup-orange-1) }\n.cht__cap { font-size:13px;font-weight:700;color:var(--chrome-txt);margin-bottom:2px }\n.cht__sub { font-size:11.5px;color:var(--chrome-muted);margin-bottom:16px }\n.cht svg { display:block;width:100%;height:auto;overflow:visible }\n.cht__line { fill:none;stroke:var(--c1);stroke-width:2.5;stroke-linejoin:round;stroke-linecap:round;opacity:.25;transition:opacity .15s }\n.cht svg.is-hot .cht__line { opacity:1 }\n.cht__area { fill:url(#chtAreaGrad) }\n.cht__dot { fill:var(--chrome-bg);stroke:var(--c1);stroke-width:2.5;opacity:.25;transition:fill .12s,opacity .12s }\n.cht__dot.on { fill:var(--c1);opacity:1 }\n.cht__hit { fill:transparent;cursor:pointer }\n.cht__axis { fill:var(--chrome-muted);font-size:10px;font-family:inherit }\n.cht__val { fill:var(--chrome-txt);font-size:10px;font-weight:700;font-family:inherit }\n.cht-legend { display:flex;flex-wrap:wrap;gap:8px 14px;margin-top:16px }\n.cht-legend__item { display:inline-flex;align-items:center;gap:7px;font-size:12px;color:var(--chrome-txt);cursor:pointer;padding:2px 5px;border-radius:6px;transition:background .12s }\n.cht-legend__item:hover { background:var(--chrome-hover) }\n.cht-legend__dot { width:10px;height:10px;border-radius:3px;flex-shrink:0 }\n.cht__tip { position:absolute;z-index:5;pointer-events:none;background:var(--color-surface-inverse);color:var(--color-text-inv);font-size:11.5px;font-weight:600;padding:5px 9px;border-radius:7px;white-space:nowrap;opacity:0;transform:translate(-50%,-100%);transition:opacity .12s;box-shadow:0 4px 14px rgba(0,0,0,.22) }\n.cht__tip.show { opacity:1 }\n.cht__tip b { font-weight:800 }",
+  "js": "function chtFmt(n){ return n&gt;=1000 ? (n/1000).toFixed(1).replace(/\\.0$/,'')+'k' : ''+n; }\n\nfunction makeLineChartHTML(dataSets, opts){\n  opts = opts || {};\n  const filled = !!opts.filled;\n  const W=340,H=168,padT=22,padB=22,padX=10, cw=W-padX*2, ch=H-padT-padB;\n  const n = dataSets[0].length;\n  const max = Math.max.apply(null, dataSets.flat().map(d=&gt;d.v)) || 1;\n  const xs = i =&gt; padX + (n&lt;=1?0:i/(n-1)*cw);\n  const ys = v =&gt; padT + ch - (max ? v/max*ch : 0);\n  let defs='', areas='', lines='', dots='', vals='';\n  dataSets.forEach((data,si)=&gt;{\n    const color = CHT_PAL[si];\n    if(filled &amp;&amp; si===0){\n      defs += `&lt;defs&gt;&lt;linearGradient id=\"chtAreaGrad\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"&gt;&lt;stop offset=\"0\" stop-color=\"${color}\" stop-opacity=\"0.32\"/&gt;&lt;stop offset=\"1\" stop-color=\"${color}\" stop-opacity=\"0\"/&gt;&lt;/linearGradient&gt;&lt;/defs&gt;`;\n      let d = 'M '+xs(0).toFixed(1)+','+(padT+ch).toFixed(1);\n      data.forEach((dd,i)=&gt;{ d += ' L '+xs(i).toFixed(1)+','+ys(dd.v).toFixed(1); });\n      d += ' L '+xs(n-1).toFixed(1)+','+(padT+ch).toFixed(1)+' Z';\n      areas += `&lt;path class=\"cht__area\" d=\"${d}\"/&gt;`;\n    }\n    const pts = data.map((dd,i)=&gt;xs(i).toFixed(1)+','+ys(dd.v).toFixed(1)).join(' ');\n    lines += `&lt;polyline class=\"cht__line\" data-s=\"${si}\" points=\"${pts}\" style=\"stroke:${color}\"/&gt;`;\n    dots += data.map((dd,i)=&gt;`&lt;circle class=\"cht__dot\" data-i=\"${i}\" data-s=\"${si}\" data-v=\"${chtFmt(dd.v)}\" data-label=\"${cardEsc(dd.label)}\" cx=\"${xs(i).toFixed(1)}\" cy=\"${ys(dd.v).toFixed(1)}\" r=\"3.5\" style=\"stroke:${color}\"/&gt;`).join('');\n    if(si===0) vals += data.map((dd,i)=&gt;`&lt;text class=\"cht__val\" x=\"${xs(i).toFixed(1)}\" y=\"${(ys(dd.v)-8).toFixed(1)}\" text-anchor=\"middle\"&gt;${chtFmt(dd.v)}&lt;/text&gt;`).join('');\n  });\n  const hits = dataSets[0].map((dd,i)=&gt;{\n    const x0 = i===0 ? 0 : (xs(i-1)+xs(i))/2, x1 = i===n-1 ? W : (xs(i)+xs(i+1))/2;\n    return `&lt;rect class=\"cht__hit\" data-i=\"${i}\" x=\"${x0.toFixed(1)}\" y=\"0\" width=\"${(x1-x0).toFixed(1)}\" height=\"${(padT+ch).toFixed(1)}\"/&gt;`;\n  }).join('');\n  const labs = dataSets[0].map((dd,i)=&gt;`&lt;text class=\"cht__axis\" x=\"${xs(i).toFixed(1)}\" y=\"${H-7}\" text-anchor=\"middle\"&gt;${cardEsc(dd.label)}&lt;/text&gt;`).join('');\n  const legend = dataSets.length&gt;1 ? `&lt;div class=\"cht-legend\"&gt;${dataSets.map((_,si)=&gt;`&lt;span class=\"cht-legend__item\"&gt;&lt;span class=\"cht-legend__dot\" style=\"background:${CHT_PAL[si]}\"&gt;&lt;/span&gt;${si===0?'This year':'Last year'}&lt;/span&gt;`).join('')}&lt;/div&gt;` : '';\n  return `&lt;svg viewBox=\"0 0 ${W} ${H}\" role=\"img\" aria-label=\"Line chart\"&gt;${defs}${areas}${lines}${dots}${vals}${labs}${hits}&lt;/svg&gt;${legend}`;\n}\n\nfunction bindChartInteractivity(root){\n  root.querySelectorAll('.cht').forEach(card=&gt;{\n    const svg = card.querySelector('svg');\n    if(!svg) return;\n    const tip = chtMkTip(card);\n    const legend = card.querySelector('.cht-legend');\n    function hot(el){\n      svg.classList.add('is-hot');\n      if(el.classList.contains('cht__seg')){\n        el.classList.add('on');\n        const sw = +el.getAttribute('stroke-width');\n        el.setAttribute('stroke-width', sw+5);\n        const valEl = svg.querySelector('.cht-donut-val'), labEl = svg.querySelector('.cht-donut-lab');\n        if(valEl) valEl.textContent = el.dataset.pct+'%';\n        if(labEl) labEl.textContent = el.dataset.label;\n      } else if(el.classList.contains('cht__hit')){\n        const dots = svg.querySelectorAll(`.cht__dot[data-i=\"${el.dataset.i}\"]`);\n        dots.forEach(d=&gt;{ d.classList.add('on'); d.setAttribute('r','5.5'); });\n        const label = dots[0] ? dots[0].dataset.label : '';\n        const vals = Array.from(dots).map(d=&gt;d.dataset.v).join(' / ');\n        chtMoveTip(tip, card, dots[dots.length-1]||el, `&lt;b&gt;${vals}&lt;/b&gt; &amp;middot; ${label}`);\n      } else {\n        el.classList.add('on');\n        chtMoveTip(tip, card, el, `&lt;b&gt;${el.dataset.v}&lt;/b&gt; &amp;middot; ${el.dataset.label}`);\n      }\n    }\n    function cool(el){\n      svg.classList.remove('is-hot');\n      if(el.classList.contains('cht__seg')){\n        el.classList.remove('on');\n        const sw = +el.getAttribute('stroke-width')-5;\n        el.setAttribute('stroke-width', sw);\n        const valEl = svg.querySelector('.cht-donut-val'), labEl = svg.querySelector('.cht-donut-lab');\n        if(valEl) valEl.textContent = svg.dataset.total;\n        if(labEl) labEl.textContent = svg.dataset.unit;\n      } else if(el.classList.contains('cht__hit')){\n        svg.querySelectorAll(`.cht__dot[data-i=\"${el.dataset.i}\"]`).forEach(d=&gt;{ d.classList.remove('on'); d.setAttribute('r','3.5'); });\n        tip.classList.remove('show');\n      } else {\n        el.classList.remove('on');\n        tip.classList.remove('show');\n      }\n    }\n    svg.querySelectorAll('.cht__bar,.cht__hit,.cht__seg').forEach(el=&gt;{\n      el.addEventListener('mouseenter', ()=&gt;hot(el));\n      el.addEventListener('mouseleave', ()=&gt;cool(el));\n    });\n    if(legend) legend.querySelectorAll('.cht-legend__item[data-i]').forEach(li=&gt;{\n      const seg = svg.querySelector(`.cht__seg[data-i=\"${li.dataset.i}\"]`);\n      if(!seg) return;\n      li.addEventListener('mouseenter', ()=&gt;hot(seg));\n      li.addEventListener('mouseleave', ()=&gt;cool(seg));\n    });\n  });\n}",
   "usage": {
     "do": [
       "Use a line for a trend across a continuous range — time, distance, sequence.",
@@ -6796,58 +6792,81 @@ body.home .main{max-width:none;margin:0;padding:0}
       "Don’t reach for red or deep orange — they read as error/warning. Use them very seldom, only once every other chart colour is exhausted."
     ]
   },
-  "contentHash": "937ae3c433f41484c38e3bbf0bab2cd6ce23fe12b95f748e903b0f0ed2e1b745",
-  "note": "Split out of the former combined Charts page (v1.1.0). fmt/mkTip/moveTip/lineChart are the named builder functions this demo actually calls."
+  "contentHash": "acc13b503a0827b92ea4e7a8bfc6dcf06597534d0cf129964ce46852a5908359",
+  "note": "Rebuilt as a .sec--tabbed page (CHART_PAGES config array, generalising CARD_PAGES). makeLineChartHTML(dataSets,{filled}) is the real, parameterized line/area builder — dataSets is an array of series, so it also drives the two-series mode; chtFmt/bindChartInteractivity are shared helpers reused by every chart type in this group. CHART_PAGES/CHART_PG/renderChart*/chartTabSwitch/chartpgSet are doc-site-only playground plumbing, excluded."
 }
   </pre>
 </details>
-    </section>
-
-    <section class="sec" id="s-charts-donut">
-      <div class="sec__head">
-        <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Donut Charts <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.1.2</span></h1>
-        <p class="sec__desc">Show parts of a whole. Each slice takes a colour from the Flash palette; hover a slice or its legend entry to pop it out and read its share in the centre.</p>
+        </div>
       </div>
-      <div class="type-sub">
-        <div class="type-sub__title">Donut</div>
-        <div class="type-sub__desc">Hover a slice or its legend entry to pop it out and read its share in the centre.</div>
-        <div class="sg-stage"><div class="cht" style="width:340px"><div class="cht__cap">Payment mix</div><div class="cht__sub">Share of volume by method</div><div id="cht-donut"></div><div class="cht-legend" id="cht-donut-legend"></div></div></div>
+      <div class="sec-hero__preview"><div class="mk"><svg viewBox="0 0 100 50" style="width:78%"><polyline points="2,40 22,28 42,32 62,14 82,20 98,6" fill="none" stroke="var(--color-brand)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
       </div>
-      <div class="type-sub">
-        <div class="type-sub__title">When to use</div>
-        <div class="type-sub__desc">A donut works best for a small number of parts making up a whole.</div>
-        <div class="sel-usage">
-          <div class="sel-usage__card">
-            <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
-            <ul class="sel-usage__list">
-              <li>Use it for composition &mdash; a handful of parts adding up to one total.</li>
-              <li>Sort slices largest to smallest, clockwise from 12 o&rsquo;clock.</li>
-              <li>Show the total or the hovered share in the centre, as in this demo.</li>
-              <li>Give every slice its own palette colour &mdash; default to 25% opacity for the inactive state, and full opacity (the saturated colour) for active/hover.</li>
-            </ul>
+      <div class="tabs-list sec-tabs" id="cline-tabs-list">
+        <button type="button" class="tab-item on" data-chart-tab="overview" onclick="chartTabSwitch('s-charts-line','overview')"><span class="tab-item__inner"><span class="tab-item__label">Overview</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-chart-tab="style" onclick="chartTabSwitch('s-charts-line','style')"><span class="tab-item__inner"><span class="tab-item__label">Style</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-chart-tab="code" onclick="chartTabSwitch('s-charts-line','code')"><span class="tab-item__inner"><span class="tab-item__label">Code</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-chart-tab="changelog" onclick="chartTabSwitch('s-charts-line','changelog')"><span class="tab-item__inner"><span class="tab-item__label">Changelog</span></span><span class="tab-item__line"></span></button>
+      </div>
+      <div class="tabs-panel on" data-chart-panel="overview">
+        <div id="cline-playground" class="type-sub"></div>
+        <div id="cline-insitu" class="type-sub"></div>
+        <div class="type-sub cpg-variants" id="cline-usage">
+          <div class="cpg-section-heading">
+            <div class="cpg-layout__title">Do's and don'ts</div>
+            <div class="cpg-layout__desc">Reach for a line or area chart when the story is change over time, not a one-off comparison.</div>
           </div>
-          <div class="sel-usage__card">
-            <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don&rsquo;t</div>
-            <ul class="sel-usage__list">
-              <li>Don&rsquo;t use a donut for more than ~5 segments &mdash; a bar reads better past that.</li>
-              <li>Don&rsquo;t use it to compare two totals side by side &mdash; use bars instead.</li>
-              <li>Don&rsquo;t rely on slice angle alone for precision &mdash; pair it with a legend that carries the figures.</li>
-              <li>Don&rsquo;t use grey for a slice &mdash; each slice representing a different thing should get its own palette colour.</li>
-              <li>Don&rsquo;t reach for red or deep orange &mdash; they read as error/warning. Use them very seldom, only once every other chart colour is exhausted.</li>
-            </ul>
+          <div class="cpg-section-block">
+            <div class="sel-usage">
+              <div class="sel-usage__card">
+                <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
+                <ul class="sel-usage__list">
+                  <li>Use a line for a trend across a continuous range &mdash; time, distance, sequence.</li>
+                  <li>Use the area fill when the volume beneath the line matters, not just its direction.</li>
+                  <li>Start the value axis at zero, same as bar charts.</li>
+                  <li>Default to 25% opacity for the inactive state, and full opacity (the saturated colour) for active/hover.</li>
+                </ul>
+              </div>
+              <div class="sel-usage__card">
+                <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don&rsquo;t</div>
+                <ul class="sel-usage__list">
+                  <li>Don&rsquo;t plot more than 2&ndash;3 lines on one chart &mdash; it turns into a tangle.</li>
+                  <li>Don&rsquo;t use a line chart for discrete, unordered categories &mdash; that&rsquo;s a bar chart.</li>
+                  <li>Don&rsquo;t fill the area under more than one series &mdash; overlapping fills obscure each other.</li>
+                  <li>Don&rsquo;t use grey for chart colours &mdash; give each series its own palette colour when plotting more than one.</li>
+                  <li>Don&rsquo;t reach for red or deep orange &mdash; they read as error/warning. Use them very seldom, only once every other chart colour is exhausted.</li>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-      <details class="ai-ctx">
+      <div class="tabs-panel" data-chart-panel="style">
+        <div id="cline-reference" class="type-sub spec-panel spec-stack"></div>
+      </div>
+      <div class="tabs-panel" data-chart-panel="code">
+        <div id="cline-code-playground" class="type-sub spec-panel spec-code-playground"></div>
+        <div id="cline-code-tab" class="type-sub spec-panel"></div>
+      </div>
+      <div class="tabs-panel" data-chart-panel="changelog" id="cline-changelog-panel"></div>
+    </section>
+
+    <section class="sec sec--tabbed" id="s-charts-donut">
+      <div class="sec-hero">
+      <div class="sec__head">
+        <h1 class="sec__title">Donut Charts</h1>
+        <div class="sec-header-meta">
+          <span class="comp-ver-badge" style="margin-left:0">v1.2.0</span>
+          Paste this over the existing tab in <section id="s-charts-donut"> (or add it at the end of the section if none exists yet):
+
+<details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-charts-donut">
 {
   "status": "js-rendered",
   "builderFunctions": [
-    "fmt",
-    "mkTip",
-    "moveTip"
+    "chtFmt",
+    "makeDonutChartHTML",
+    "bindChartInteractivity"
   ],
   "realClasses": [
     ".cht",
@@ -6862,7 +6881,7 @@ body.home .main{max-width:none;margin:0;padding:0}
     ".cht__tip"
   ],
   "css": "/* ---- Chart (Flash palette + interactive) ---- */\n.cht { position:relative;border:1px solid var(--chrome-border);border-radius:14px;padding:20px 22px;background:var(--chrome-bg);width:380px;max-width:100%;\n  --c1:var(--prim-green-500);--c2:var(--prim-sup-blue-1);--c3:var(--prim-sup-purple-4);--c4:var(--prim-sup-pink-1);--c5:var(--prim-sup-orange-1) }\n.cht__cap { font-size:13px;font-weight:700;color:var(--chrome-txt);margin-bottom:2px }\n.cht__sub { font-size:11.5px;color:var(--chrome-muted);margin-bottom:16px }\n.cht svg { display:block;width:100%;height:auto;overflow:visible }\n.cht svg.is-hot .cht__line { opacity:1 }\n.cht__seg { transition:opacity .18s,stroke-width .18s;cursor:pointer;opacity:.25 }\n.cht__seg.on { opacity:1 }\n.cht-legend { display:flex;flex-wrap:wrap;gap:8px 14px;margin-top:16px }\n.cht-legend__item { display:inline-flex;align-items:center;gap:7px;font-size:12px;color:var(--chrome-txt);cursor:pointer;padding:2px 5px;border-radius:6px;transition:background .12s }\n.cht-legend__item:hover { background:var(--chrome-hover) }\n.cht-legend__dot { width:10px;height:10px;border-radius:3px;flex-shrink:0 }\n.cht-donut-val { fill:var(--chrome-txt);font-weight:800 }\n.cht-donut-lab { fill:var(--chrome-muted) }\n.cht__tip { position:absolute;z-index:5;pointer-events:none;background:var(--color-surface-inverse);color:var(--color-text-inv);font-size:11.5px;font-weight:600;padding:5px 9px;border-radius:7px;white-space:nowrap;opacity:0;transform:translate(-50%,-100%);transition:opacity .12s;box-shadow:0 4px 14px rgba(0,0,0,.22) }\n.cht__tip.show { opacity:1 }\n.cht__tip b { font-weight:800 }",
-  "js": "function fmt(n){ return n&gt;=1000 ? (n/1000).toFixed(1).replace(/\\.0$/,'')+'k' : ''+n; }\n\nfunction mkTip(card){ var t=document.createElement('div'); t.className='cht__tip'; card.appendChild(t); return t; }\n\nfunction moveTip(t,card,el,html){ var r=el.getBoundingClientRect(), cr=card.getBoundingClientRect(); t.innerHTML=html; t.style.left=(r.left-cr.left+r.width/2)+'px'; t.style.top=(r.top-cr.top-8)+'px'; t.classList.add('show'); }",
+  "js": "function chtFmt(n){ return n&gt;=1000 ? (n/1000).toFixed(1).replace(/\\.0$/,'')+'k' : ''+n; }\n\nfunction makeDonutChartHTML(data, opts){\n  opts = opts || {};\n  const unit = opts.unit || 'txns';\n  const c=90,r=62,sw=24, total=data.reduce((a,x)=&gt;a+x.v,0)||1, circ=2*Math.PI*r;\n  let acc=0, segs='';\n  data.forEach((x,i)=&gt;{\n    const frac = x.v/total, len = frac*circ, off = -acc*circ, pct = Math.round(frac*100);\n    segs += `&lt;circle class=\"cht__seg\" data-i=\"${i}\" data-v=\"${chtFmt(x.v)}\" data-pct=\"${pct}\" data-label=\"${cardEsc(x.label)}\" cx=\"${c}\" cy=\"${c}\" r=\"${r}\" fill=\"none\" style=\"stroke:${CHT_PAL[i%CHT_PAL.length]}\" stroke-width=\"${sw}\" stroke-dasharray=\"${len.toFixed(2)} ${(circ-len).toFixed(2)}\" stroke-dashoffset=\"${off.toFixed(2)}\" transform=\"rotate(-90 ${c} ${c})\"/&gt;`;\n    acc += frac;\n  });\n  const legend = opts.legend===false ? '' : `&lt;div class=\"cht-legend\"&gt;${data.map((x,i)=&gt;`&lt;span class=\"cht-legend__item\" data-i=\"${i}\"&gt;&lt;span class=\"cht-legend__dot\" style=\"background:${CHT_PAL[i%CHT_PAL.length]}\"&gt;&lt;/span&gt;${cardEsc(x.label)} &amp;middot; ${chtFmt(x.v)} &amp;middot; ${Math.round(x.v/total*100)}%&lt;/span&gt;`).join('')}&lt;/div&gt;`;\n  return `&lt;svg viewBox=\"0 0 180 180\" width=\"180\" role=\"img\" aria-label=\"Donut chart\" data-total=\"${chtFmt(total)}\" data-unit=\"${cardEsc(unit)}\"&gt;${segs}&lt;text class=\"cht-donut-val\" x=\"90\" y=\"88\" text-anchor=\"middle\" font-size=\"26\"&gt;${chtFmt(total)}&lt;/text&gt;&lt;text class=\"cht-donut-lab\" x=\"90\" y=\"106\" text-anchor=\"middle\" font-size=\"10\"&gt;${cardEsc(unit)}&lt;/text&gt;&lt;/svg&gt;${legend}`;\n}\n\nfunction bindChartInteractivity(root){\n  root.querySelectorAll('.cht').forEach(card=&gt;{\n    const svg = card.querySelector('svg');\n    if(!svg) return;\n    const tip = chtMkTip(card);\n    const legend = card.querySelector('.cht-legend');\n    function hot(el){\n      svg.classList.add('is-hot');\n      if(el.classList.contains('cht__seg')){\n        el.classList.add('on');\n        const sw = +el.getAttribute('stroke-width');\n        el.setAttribute('stroke-width', sw+5);\n        const valEl = svg.querySelector('.cht-donut-val'), labEl = svg.querySelector('.cht-donut-lab');\n        if(valEl) valEl.textContent = el.dataset.pct+'%';\n        if(labEl) labEl.textContent = el.dataset.label;\n      } else if(el.classList.contains('cht__hit')){\n        const dots = svg.querySelectorAll(`.cht__dot[data-i=\"${el.dataset.i}\"]`);\n        dots.forEach(d=&gt;{ d.classList.add('on'); d.setAttribute('r','5.5'); });\n        const label = dots[0] ? dots[0].dataset.label : '';\n        const vals = Array.from(dots).map(d=&gt;d.dataset.v).join(' / ');\n        chtMoveTip(tip, card, dots[dots.length-1]||el, `&lt;b&gt;${vals}&lt;/b&gt; &amp;middot; ${label}`);\n      } else {\n        el.classList.add('on');\n        chtMoveTip(tip, card, el, `&lt;b&gt;${el.dataset.v}&lt;/b&gt; &amp;middot; ${el.dataset.label}`);\n      }\n    }\n    function cool(el){\n      svg.classList.remove('is-hot');\n      if(el.classList.contains('cht__seg')){\n        el.classList.remove('on');\n        const sw = +el.getAttribute('stroke-width')-5;\n        el.setAttribute('stroke-width', sw);\n        const valEl = svg.querySelector('.cht-donut-val'), labEl = svg.querySelector('.cht-donut-lab');\n        if(valEl) valEl.textContent = svg.dataset.total;\n        if(labEl) labEl.textContent = svg.dataset.unit;\n      } else if(el.classList.contains('cht__hit')){\n        svg.querySelectorAll(`.cht__dot[data-i=\"${el.dataset.i}\"]`).forEach(d=&gt;{ d.classList.remove('on'); d.setAttribute('r','3.5'); });\n        tip.classList.remove('show');\n      } else {\n        el.classList.remove('on');\n        tip.classList.remove('show');\n      }\n    }\n    svg.querySelectorAll('.cht__bar,.cht__hit,.cht__seg').forEach(el=&gt;{\n      el.addEventListener('mouseenter', ()=&gt;hot(el));\n      el.addEventListener('mouseleave', ()=&gt;cool(el));\n    });\n    if(legend) legend.querySelectorAll('.cht-legend__item[data-i]').forEach(li=&gt;{\n      const seg = svg.querySelector(`.cht__seg[data-i=\"${li.dataset.i}\"]`);\n      if(!seg) return;\n      li.addEventListener('mouseenter', ()=&gt;hot(seg));\n      li.addEventListener('mouseleave', ()=&gt;cool(seg));\n    });\n  });\n}",
   "usage": {
     "do": [
       "Use it for composition — a handful of parts adding up to one total.",
@@ -6878,70 +6897,80 @@ body.home .main{max-width:none;margin:0;padding:0}
       "Don’t reach for red or deep orange — they read as error/warning. Use them very seldom, only once every other chart colour is exhausted."
     ]
   },
-  "contentHash": "6ff1323f8d5d563f73daeb1c87f5106015f0edb09e2709605096c3e857816abd",
-  "note": "Split out of the former combined Charts page (v1.1.0). The donut renderer itself is inline logic inside an anonymous IIFE (keyed off document.getElementById('cht-donut')) rather than a separately named function, so only the shared fmt/mkTip/moveTip helpers are individually extractable by identifier."
+  "contentHash": "5483fdcad1a3e1a983b672247d31d9127cfc94b9fc6930a14a3a47c416191708",
+  "note": "Rebuilt as a .sec--tabbed page (CHART_PAGES config array, generalising CARD_PAGES). makeDonutChartHTML(data,{legend,unit}) is the real, parameterized donut builder (variable segment count, legend toggle); chtFmt/bindChartInteractivity are shared helpers reused by every chart type in this group. CHART_PAGES/CHART_PG/renderChart*/chartTabSwitch/chartpgSet are doc-site-only playground plumbing, excluded."
 }
   </pre>
 </details>
+        </div>
+      </div>
+      <div class="sec-hero__preview"><div class="mk"><div style="width:72px;height:72px;border-radius:50%;background:conic-gradient(var(--color-brand) 0 40%,var(--chrome-border) 40% 65%,var(--chrome-muted) 65% 100%)"></div></div></div>
+      </div>
+      <div class="tabs-list sec-tabs" id="cdonut-tabs-list">
+        <button type="button" class="tab-item on" data-chart-tab="overview" onclick="chartTabSwitch('s-charts-donut','overview')"><span class="tab-item__inner"><span class="tab-item__label">Overview</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-chart-tab="style" onclick="chartTabSwitch('s-charts-donut','style')"><span class="tab-item__inner"><span class="tab-item__label">Style</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-chart-tab="code" onclick="chartTabSwitch('s-charts-donut','code')"><span class="tab-item__inner"><span class="tab-item__label">Code</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-chart-tab="changelog" onclick="chartTabSwitch('s-charts-donut','changelog')"><span class="tab-item__inner"><span class="tab-item__label">Changelog</span></span><span class="tab-item__line"></span></button>
+      </div>
+      <div class="tabs-panel on" data-chart-panel="overview">
+        <div id="cdonut-playground" class="type-sub"></div>
+        <div id="cdonut-insitu" class="type-sub"></div>
+        <div class="type-sub cpg-variants" id="cdonut-usage">
+          <div class="cpg-section-heading">
+            <div class="cpg-layout__title">Do's and don'ts</div>
+            <div class="cpg-layout__desc">A donut works best for a small number of parts making up a whole.</div>
+          </div>
+          <div class="cpg-section-block">
+            <div class="sel-usage">
+              <div class="sel-usage__card">
+                <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
+                <ul class="sel-usage__list">
+                  <li>Use it for composition &mdash; a handful of parts adding up to one total.</li>
+                  <li>Sort slices largest to smallest, clockwise from 12 o&rsquo;clock.</li>
+                  <li>Show the total or the hovered share in the centre, as in this demo.</li>
+                  <li>Give every slice its own palette colour &mdash; default to 25% opacity for the inactive state, and full opacity (the saturated colour) for active/hover.</li>
+                </ul>
+              </div>
+              <div class="sel-usage__card">
+                <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don&rsquo;t</div>
+                <ul class="sel-usage__list">
+                  <li>Don&rsquo;t use a donut for more than ~5 segments &mdash; a bar reads better past that.</li>
+                  <li>Don&rsquo;t use it to compare two totals side by side &mdash; use bars instead.</li>
+                  <li>Don&rsquo;t rely on slice angle alone for precision &mdash; pair it with a legend that carries the figures.</li>
+                  <li>Don&rsquo;t use grey for a slice &mdash; each slice representing a different thing should get its own palette colour.</li>
+                  <li>Don&rsquo;t reach for red or deep orange &mdash; they read as error/warning. Use them very seldom, only once every other chart colour is exhausted.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tabs-panel" data-chart-panel="style">
+        <div id="cdonut-reference" class="type-sub spec-panel spec-stack"></div>
+      </div>
+      <div class="tabs-panel" data-chart-panel="code">
+        <div id="cdonut-code-playground" class="type-sub spec-panel spec-code-playground"></div>
+        <div id="cdonut-code-tab" class="type-sub spec-panel"></div>
+      </div>
+      <div class="tabs-panel" data-chart-panel="changelog" id="cdonut-changelog-panel"></div>
     </section>
 
-    <section class="sec" id="s-charts-meters">
+    <section class="sec sec--tabbed" id="s-charts-meters">
+      <div class="sec-hero">
       <div class="sec__head">
-        <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Progress Meters <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.2.0</span></h1>
-        <p class="sec__desc">Labelled bars for quotas, targets and health. The fill uses the brand token by default and switches to Warning / Critical semantics as a value approaches its limit.</p>
-      </div>
-      <div class="type-sub">
-        <div class="type-sub__title">Progress meters</div>
-        <div class="type-sub__desc">Each meter pairs a label and value with a single filled track.</div>
-        <div class="dd-meters">
-          <div class="dd-meter">
-            <div class="dd-meter__top"><span class="dd-meter__label">Monthly GMV target</span><span class="dd-meter__val">R48.2M / R60M · 80%</span></div>
-            <div class="dd-meter__track"><div class="dd-meter__fill" style="width:80%;background:var(--color-brand)"></div></div>
-          </div>
-          <div class="dd-meter">
-            <div class="dd-meter__top"><span class="dd-meter__label">Trader onboarding</span><span class="dd-meter__val">18,930 / 25,000 · 76%</span></div>
-            <div class="dd-meter__track"><div class="dd-meter__fill" style="width:76%;background:var(--color-brand)"></div></div>
-          </div>
-          <div class="dd-meter">
-            <div class="dd-meter__top"><span class="dd-meter__label">Float utilisation</span><span class="dd-meter__val">88%</span></div>
-            <div class="dd-meter__track"><div class="dd-meter__fill" style="width:88%;background:var(--color-warn-h)"></div></div>
-          </div>
-          <div class="dd-meter">
-            <div class="dd-meter__top"><span class="dd-meter__label">API error budget spent</span><span class="dd-meter__val">96%</span></div>
-            <div class="dd-meter__track"><div class="dd-meter__fill" style="width:96%;background:var(--color-crit-h)"></div></div>
-          </div>
-        </div>
-      </div>
-      <div class="type-sub">
-        <div class="type-sub__title">When to use</div>
-        <div class="type-sub__desc">A meter is for one value against one limit &mdash; a quota, a target, a health score.</div>
-        <div class="sel-usage">
-          <div class="sel-usage__card">
-            <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
-            <ul class="sel-usage__list">
-              <li>Use it for a single value tracked against a target or ceiling.</li>
-              <li>Switch the fill to Warning / Critical tokens as the value nears its limit.</li>
-              <li>Label both the raw figures and the percentage, as in this demo.</li>
-              <li>Default to 25% opacity for the track/inactive state, and full opacity (the saturated colour) for the active fill.</li>
-            </ul>
-          </div>
-          <div class="sel-usage__card">
-            <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don&rsquo;t</div>
-            <ul class="sel-usage__list">
-              <li>Don&rsquo;t use a meter to compare unrelated metrics &mdash; that&rsquo;s a stat card row.</li>
-              <li>Don&rsquo;t stack more than 4&ndash;5 meters together &mdash; group or paginate instead.</li>
-              <li>Don&rsquo;t use the Critical colour for a value that isn&rsquo;t actually critical.</li>
-              <li>Don&rsquo;t use grey for a meter fill &mdash; reach for a desaturated primary shade instead.</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <details class="ai-ctx">
+        <h1 class="sec__title">Progress Meters</h1>
+        <div class="sec-header-meta">
+          <span class="comp-ver-badge" style="margin-left:0">v1.3.0</span>
+          Paste this over the existing tab in <section id="s-charts-meters"> (or add it at the end of the section if none exists yet):
+
+<details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-charts-meters">
 {
-  "status": "static",
+  "status": "js-rendered",
+  "builderFunctions": [
+    "makeMeterHTML"
+  ],
   "realClasses": [
     ".dd-meters",
     ".dd-meter",
@@ -6952,6 +6981,7 @@ body.home .main{max-width:none;margin:0;padding:0}
     ".dd-meter__fill"
   ],
   "css": "/* ---- Progress meter / Distribution bars (Charts) ---- */\n.dd-meters { border:1px solid var(--chrome-border);border-radius:12px;padding:22px }\n.dd-meter { margin-bottom:18px }\n.dd-meter:last-child { margin-bottom:0 }\n.dd-meter__top { display:flex;justify-content:space-between;align-items:baseline;margin-bottom:7px }\n.dd-meter__label { font-size:12.5px;font-weight:700;color:var(--chrome-txt) }\n.dd-meter__val { font-size:12px;font-weight:700;color:var(--chrome-muted);font-variant-numeric:tabular-nums }\n.dd-meter__track { height:8px;border-radius:999px;background:var(--chrome-nav);overflow:hidden }\n.dd-meter__fill { height:100%;border-radius:999px;opacity:.25;transition:opacity .15s }\n.dd-meter:hover .dd-meter__fill { opacity:1 }",
+  "js": "function makeMeterHTML(items){\n  return `&lt;div class=\"dd-meters\"&gt;${items.map(m=&gt;`\n      &lt;div class=\"dd-meter\"&gt;\n        &lt;div class=\"dd-meter__top\"&gt;&lt;span class=\"dd-meter__label\"&gt;${cardEsc(m.label)}&lt;/span&gt;&lt;span class=\"dd-meter__val\"&gt;${cardEsc(m.val)}&lt;/span&gt;&lt;/div&gt;\n        &lt;div class=\"dd-meter__track\"&gt;&lt;div class=\"dd-meter__fill\" style=\"width:${m.pct}%;background:${m.color}\"&gt;&lt;/div&gt;&lt;/div&gt;\n      &lt;/div&gt;`).join('')}\n    &lt;/div&gt;`;\n}",
   "usage": {
     "do": [
       "Use it for a single value tracked against a target or ceiling.",
@@ -6966,94 +6996,80 @@ body.home .main{max-width:none;margin:0;padding:0}
       "Don’t use grey for a meter fill — reach for a desaturated primary shade instead."
     ]
   },
-  "contentHash": "3022a0f8a8eb98318464e3701d23131c05955b78bafb290507d9644aa1094ce5",
-  "note": "Split out of the former combined Charts page (v1.1.0). Static hand-authored markup, migrated from the retired Data Display section."
+  "contentHash": "d6bf110c3c48833d3cf2b52998915e344963cba904ce8a488202e5881dca4894",
+  "note": "Rebuilt as a .sec--tabbed page (CHART_PAGES config array, generalising CARD_PAGES). makeMeterHTML(items) is a new builder — this page was 100% hand-authored static markup before this change, with no builder function at all. CHART_PAGES/CHART_PG/renderChart*/chartTabSwitch/chartpgSet are doc-site-only playground plumbing, excluded."
 }
   </pre>
 </details>
+        </div>
+      </div>
+      <div class="sec-hero__preview"><div class="mk"><div style="display:flex;flex-direction:column;gap:9px;width:74%"><span style="height:8px;border-radius:999px;background:var(--chrome-nav);position:relative"><span style="position:absolute;inset:0;width:80%;border-radius:999px;background:var(--color-brand)"></span></span><span style="height:8px;border-radius:999px;background:var(--chrome-nav);position:relative"><span style="position:absolute;inset:0;width:55%;border-radius:999px;background:var(--color-brand)"></span></span></div></div></div>
+      </div>
+      <div class="tabs-list sec-tabs" id="cmeter-tabs-list">
+        <button type="button" class="tab-item on" data-chart-tab="overview" onclick="chartTabSwitch('s-charts-meters','overview')"><span class="tab-item__inner"><span class="tab-item__label">Overview</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-chart-tab="style" onclick="chartTabSwitch('s-charts-meters','style')"><span class="tab-item__inner"><span class="tab-item__label">Style</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-chart-tab="code" onclick="chartTabSwitch('s-charts-meters','code')"><span class="tab-item__inner"><span class="tab-item__label">Code</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-chart-tab="changelog" onclick="chartTabSwitch('s-charts-meters','changelog')"><span class="tab-item__inner"><span class="tab-item__label">Changelog</span></span><span class="tab-item__line"></span></button>
+      </div>
+      <div class="tabs-panel on" data-chart-panel="overview">
+        <div id="cmeter-playground" class="type-sub"></div>
+        <div id="cmeter-insitu" class="type-sub"></div>
+        <div class="type-sub cpg-variants" id="cmeter-usage">
+          <div class="cpg-section-heading">
+            <div class="cpg-layout__title">Do's and don'ts</div>
+            <div class="cpg-layout__desc">A meter is for one value against one limit &mdash; a quota, a target, a health score.</div>
+          </div>
+          <div class="cpg-section-block">
+            <div class="sel-usage">
+              <div class="sel-usage__card">
+                <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
+                <ul class="sel-usage__list">
+                  <li>Use it for a single value tracked against a target or ceiling.</li>
+                  <li>Switch the fill to Warning / Critical tokens as the value nears its limit.</li>
+                  <li>Label both the raw figures and the percentage, as in this demo.</li>
+                  <li>Default to 25% opacity for the track/inactive state, and full opacity (the saturated colour) for the active fill.</li>
+                </ul>
+              </div>
+              <div class="sel-usage__card">
+                <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don&rsquo;t</div>
+                <ul class="sel-usage__list">
+                  <li>Don&rsquo;t use a meter to compare unrelated metrics &mdash; that&rsquo;s a stat card row.</li>
+                  <li>Don&rsquo;t stack more than 4&ndash;5 meters together &mdash; group or paginate instead.</li>
+                  <li>Don&rsquo;t use the Critical colour for a value that isn&rsquo;t actually critical.</li>
+                  <li>Don&rsquo;t use grey for a meter fill &mdash; reach for a desaturated primary shade instead.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tabs-panel" data-chart-panel="style">
+        <div id="cmeter-reference" class="type-sub spec-panel spec-stack"></div>
+      </div>
+      <div class="tabs-panel" data-chart-panel="code">
+        <div id="cmeter-code-playground" class="type-sub spec-panel spec-code-playground"></div>
+        <div id="cmeter-code-tab" class="type-sub spec-panel"></div>
+      </div>
+      <div class="tabs-panel" data-chart-panel="changelog" id="cmeter-changelog-panel"></div>
     </section>
 
-    <section class="sec" id="s-charts-distribution">
+    <section class="sec sec--tabbed" id="s-charts-distribution">
+      <div class="sec-hero">
       <div class="sec__head">
-        <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Distribution Charts <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.2.0</span></h1>
-        <p class="sec__desc">Two ways to split a total across categories: a single segmented bar for a compact overview, or a ranked, one-row-per-category breakdown when each share needs its own line.</p>
-      </div>
-      <div class="type-sub">
-        <div class="type-sub__title">Distribution bar</div>
-        <div class="type-sub__desc">A single segmented bar for showing how a total splits across categories &mdash; product mix, spend by region, storage used. Segments map to semantic tokens and are paired with a legend that carries the exact figures.</div>
-        <div class="dd-break">
-          <div class="dd-break__top"><span class="dd-break__label">GMV by region</span><span class="dd-break__total">R48.2M total</span></div>
-          <div class="dd-break__bar">
-            <div class="dd-break__seg" style="width:38%;background:var(--chrome-accent)" title="Gauteng · 38%"></div>
-            <div class="dd-break__seg" style="width:24%;background:var(--color-success-h)" title="Western Cape · 24%"></div>
-            <div class="dd-break__seg" style="width:21%;background:var(--color-warn-h)" title="KwaZulu-Natal · 21%"></div>
-            <div class="dd-break__seg" style="width:17%;background:var(--chrome-muted)" title="Other regions · 17%"></div>
-          </div>
-          <div class="dd-break__legend">
-            <div class="dd-break__item"><span class="dd-break__swatch" style="background:var(--chrome-accent)"></span><span class="dd-break__k">Gauteng</span><span class="dd-break__v">38% · R18.3M</span></div>
-            <div class="dd-break__item"><span class="dd-break__swatch" style="background:var(--color-success-h)"></span><span class="dd-break__k">Western Cape</span><span class="dd-break__v">24% · R11.6M</span></div>
-            <div class="dd-break__item"><span class="dd-break__swatch" style="background:var(--color-warn-h)"></span><span class="dd-break__k">KwaZulu-Natal</span><span class="dd-break__v">21% · R10.1M</span></div>
-            <div class="dd-break__item"><span class="dd-break__swatch" style="background:var(--chrome-muted)"></span><span class="dd-break__k">Other regions</span><span class="dd-break__v">17% · R8.2M</span></div>
-          </div>
-        </div>
-      </div>
-      <div class="type-sub">
-        <div class="type-sub__title">Distribution bars</div>
-        <div class="type-sub__desc">A ranked share-of-total breakdown for splitting a single metric across categories. Each row carries its own semantic colour, so a legend swatch, bar and percentage stay visually linked. Use it where a full chart would be overkill but a single meter can&rsquo;t show the mix.</div>
-        <div class="dd-dist">
-          <div class="dd-dist__row">
-            <div class="dd-dist__top"><span class="dd-dist__label"><span class="dd-dist__swatch" style="background:var(--chrome-accent)"></span>Airtime &amp; Data</span><span class="dd-dist__val">R14.8M · 42%</span></div>
-            <div class="dd-dist__track"><div class="dd-dist__fill" style="width:42%;background:var(--chrome-accent)"></div></div>
-          </div>
-          <div class="dd-dist__row">
-            <div class="dd-dist__top"><span class="dd-dist__label"><span class="dd-dist__swatch" style="background:var(--color-success-h)"></span>Electricity</span><span class="dd-dist__val">R11.2M · 32%</span></div>
-            <div class="dd-dist__track"><div class="dd-dist__fill" style="width:32%;background:var(--color-success-h)"></div></div>
-          </div>
-          <div class="dd-dist__row">
-            <div class="dd-dist__top"><span class="dd-dist__label"><span class="dd-dist__swatch" style="background:var(--color-warn-h)"></span>1Voucher</span><span class="dd-dist__val">R9.6M · 27%</span></div>
-            <div class="dd-dist__track"><div class="dd-dist__fill" style="width:27%;background:var(--color-warn-h)"></div></div>
-          </div>
-          <div class="dd-dist__row">
-            <div class="dd-dist__top"><span class="dd-dist__label"><span class="dd-dist__swatch" style="background:var(--color-crit-h)"></span>Gaming Vouchers</span><span class="dd-dist__val">R5.5M · 16%</span></div>
-            <div class="dd-dist__track"><div class="dd-dist__fill" style="width:16%;background:var(--color-crit-h)"></div></div>
-          </div>
-          <div class="dd-dist__row">
-            <div class="dd-dist__top"><span class="dd-dist__label"><span class="dd-dist__swatch" style="background:var(--chrome-muted)"></span>Other</span><span class="dd-dist__val">R2.9M · 8%</span></div>
-            <div class="dd-dist__track"><div class="dd-dist__fill" style="width:8%;background:var(--chrome-muted)"></div></div>
-          </div>
-        </div>
-      </div>
-      <div class="type-sub">
-        <div class="type-sub__title">When to use</div>
-        <div class="type-sub__desc">Pick the distribution bar for a compact single-line overview; pick distribution bars when each category needs its own labelled row.</div>
-        <div class="sel-usage">
-          <div class="sel-usage__card">
-            <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
-            <ul class="sel-usage__list">
-              <li>Use the single segmented bar when the overview matters more than reading each figure at a glance.</li>
-              <li>Use ranked bars when every category needs its own precise, legible row.</li>
-              <li>Sort by share, largest first, in both patterns.</li>
-              <li>Give each category its own palette colour &mdash; default to 25% opacity for the inactive state, and full opacity (the saturated colour) for active/hover.</li>
-            </ul>
-          </div>
-          <div class="sel-usage__card">
-            <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don&rsquo;t</div>
-            <ul class="sel-usage__list">
-              <li>Don&rsquo;t use either pattern for more than ~6 categories &mdash; group the tail into &ldquo;Other&rdquo;.</li>
-              <li>Don&rsquo;t reuse a colour across two unrelated categories in the same chart.</li>
-              <li>Don&rsquo;t drop the legend from the segmented bar &mdash; segment width alone isn&rsquo;t precise enough.</li>
-              <li>Don&rsquo;t use grey for a segment or row &mdash; each one representing a different category should get its own palette colour.</li>
-              <li>Don&rsquo;t reach for red or deep orange &mdash; they read as error/warning. Use them very seldom, only once every other chart colour is exhausted.</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <details class="ai-ctx">
+        <h1 class="sec__title">Distribution Charts</h1>
+        <div class="sec-header-meta">
+          <span class="comp-ver-badge" style="margin-left:0">v1.3.0</span>
+          Paste this over the existing tab in <section id="s-charts-distribution"> (or add it at the end of the section if none exists yet):
+
+<details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-charts-distribution">
 {
-  "status": "static",
+  "status": "js-rendered",
+  "builderFunctions": [
+    "makeDistBreakHTML",
+    "makeDistRankedHTML"
+  ],
   "realClasses": [
     ".dd-dist",
     ".dd-dist__row",
@@ -7076,6 +7092,7 @@ body.home .main{max-width:none;margin:0;padding:0}
     ".dd-break__v"
   ],
   "css": ".dd-dist { border:1px solid var(--chrome-border);border-radius:12px;padding:22px }\n.dd-dist__row { margin-bottom:16px }\n.dd-dist__row:last-child { margin-bottom:0 }\n.dd-dist__top { display:flex;justify-content:space-between;align-items:baseline;margin-bottom:7px;gap:12px }\n.dd-dist__label { display:inline-flex;align-items:center;gap:8px;font-size:12.5px;font-weight:700;color:var(--chrome-txt) }\n.dd-dist__swatch { width:9px;height:9px;border-radius:3px;flex-shrink:0 }\n.dd-dist__val { font-size:12px;font-weight:700;color:var(--chrome-muted);font-variant-numeric:tabular-nums;white-space:nowrap }\n.dd-dist__track { height:10px;border-radius:999px;background:var(--chrome-nav);overflow:hidden }\n.dd-dist__fill { height:100%;border-radius:999px;opacity:.25;transition:width .3s,opacity .15s }\n.dd-dist__row:hover .dd-dist__fill { opacity:1 }\n.dd-break { border:1px solid var(--chrome-border);border-radius:12px;padding:22px }\n.dd-break__top { display:flex;justify-content:space-between;align-items:baseline;margin-bottom:11px }\n.dd-break__label { font-size:12.5px;font-weight:700;color:var(--chrome-txt) }\n.dd-break__total { font-size:12px;font-weight:700;color:var(--chrome-muted);font-variant-numeric:tabular-nums }\n.dd-break__bar { display:flex;gap:2px;height:14px;border-radius:999px;overflow:hidden;background:var(--chrome-nav) }\n.dd-break__seg { height:100%;opacity:.25;transition:opacity .15s }\n.dd-break__seg:hover { opacity:1 }\n.dd-break__legend { display:flex;flex-wrap:wrap;gap:12px 22px;margin-top:16px }\n.dd-break__item { display:flex;align-items:center;gap:8px }\n.dd-break__swatch { width:10px;height:10px;border-radius:3px;flex-shrink:0 }\n.dd-break__k { font-size:12.5px;font-weight:700;color:var(--chrome-txt) }\n.dd-break__v { font-size:12px;font-weight:700;color:var(--chrome-muted);font-variant-numeric:tabular-nums }",
+  "js": "function makeDistBreakHTML(label, totalLabel, items){\n  return `&lt;div class=\"dd-break\"&gt;\n      &lt;div class=\"dd-break__top\"&gt;&lt;span class=\"dd-break__label\"&gt;${cardEsc(label)}&lt;/span&gt;&lt;span class=\"dd-break__total\"&gt;${cardEsc(totalLabel)}&lt;/span&gt;&lt;/div&gt;\n      &lt;div class=\"dd-break__bar\"&gt;${items.map(it=&gt;`&lt;div class=\"dd-break__seg\" style=\"width:${it.pct}%;background:${it.color}\" title=\"${cardEsc(it.label)} &amp;middot; ${it.pct}%\"&gt;&lt;/div&gt;`).join('')}&lt;/div&gt;\n      &lt;div class=\"dd-break__legend\"&gt;${items.map(it=&gt;`&lt;div class=\"dd-break__item\"&gt;&lt;span class=\"dd-break__swatch\" style=\"background:${it.color}\"&gt;&lt;/span&gt;&lt;span class=\"dd-break__k\"&gt;${cardEsc(it.label)}&lt;/span&gt;&lt;span class=\"dd-break__v\"&gt;${it.pct}% &amp;middot; ${cardEsc(it.amount)}&lt;/span&gt;&lt;/div&gt;`).join('')}&lt;/div&gt;\n    &lt;/div&gt;`;\n}\n\nfunction makeDistRankedHTML(items){\n  return `&lt;div class=\"dd-dist\"&gt;${items.map(it=&gt;`\n      &lt;div class=\"dd-dist__row\"&gt;\n        &lt;div class=\"dd-dist__top\"&gt;&lt;span class=\"dd-dist__label\"&gt;&lt;span class=\"dd-dist__swatch\" style=\"background:${it.color}\"&gt;&lt;/span&gt;${cardEsc(it.label)}&lt;/span&gt;&lt;span class=\"dd-dist__val\"&gt;${cardEsc(it.amount)} &amp;middot; ${it.pct}%&lt;/span&gt;&lt;/div&gt;\n        &lt;div class=\"dd-dist__track\"&gt;&lt;div class=\"dd-dist__fill\" style=\"width:${it.pct}%;background:${it.color}\"&gt;&lt;/div&gt;&lt;/div&gt;\n      &lt;/div&gt;`).join('')}\n    &lt;/div&gt;`;\n}",
   "usage": {
     "do": [
       "Use the single segmented bar when the overview matters more than reading each figure at a glance.",
@@ -7091,11 +7108,62 @@ body.home .main{max-width:none;margin:0;padding:0}
       "Don’t reach for red or deep orange — they read as error/warning. Use them very seldom, only once every other chart colour is exhausted."
     ]
   },
-  "contentHash": "509d3a5232aca79cfcd7e7a3014c312e804acf2d5dbcf6e8dacf0f7e1a7d2c70",
-  "note": "Split out of the former combined Charts page (v1.1.0), which also covered Bar/Line/Donut (now s-charts-bar/s-charts-line/s-charts-donut) and Progress meters (now s-charts-meters). Both distribution-bar patterns (.dd-dist*/.dd-break*) are static hand-authored markup, migrated from the retired Data Display section."
+  "contentHash": "cde2bb5de0b36c355567eb77da2e644ff74bf5db165c4dfad674797831cddd0e",
+  "note": "Rebuilt as a .sec--tabbed page (CHART_PAGES config array, generalising CARD_PAGES). makeDistBreakHTML (segmented bar) and makeDistRankedHTML (ranked rows) are new builders — this page was 100% hand-authored static markup before this change, with no builder function at all. CHART_PAGES/CHART_PG/renderChart*/chartTabSwitch/chartpgSet are doc-site-only playground plumbing, excluded."
 }
   </pre>
 </details>
+        </div>
+      </div>
+      <div class="sec-hero__preview"><div class="mk"><div style="display:flex;gap:2px;height:14px;width:74%;border-radius:999px;overflow:hidden"><span style="width:38%;background:var(--color-brand)"></span><span style="width:24%;background:var(--chrome-txt)"></span><span style="width:21%;background:var(--chrome-border)"></span><span style="width:17%;background:var(--chrome-muted)"></span></div></div></div>
+      </div>
+      <div class="tabs-list sec-tabs" id="cdist-tabs-list">
+        <button type="button" class="tab-item on" data-chart-tab="overview" onclick="chartTabSwitch('s-charts-distribution','overview')"><span class="tab-item__inner"><span class="tab-item__label">Overview</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-chart-tab="style" onclick="chartTabSwitch('s-charts-distribution','style')"><span class="tab-item__inner"><span class="tab-item__label">Style</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-chart-tab="code" onclick="chartTabSwitch('s-charts-distribution','code')"><span class="tab-item__inner"><span class="tab-item__label">Code</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-chart-tab="changelog" onclick="chartTabSwitch('s-charts-distribution','changelog')"><span class="tab-item__inner"><span class="tab-item__label">Changelog</span></span><span class="tab-item__line"></span></button>
+      </div>
+      <div class="tabs-panel on" data-chart-panel="overview">
+        <div id="cdist-playground" class="type-sub"></div>
+        <div id="cdist-insitu" class="type-sub"></div>
+        <div class="type-sub cpg-variants" id="cdist-usage">
+          <div class="cpg-section-heading">
+            <div class="cpg-layout__title">Do's and don'ts</div>
+            <div class="cpg-layout__desc">Pick the segmented bar for a compact single-line overview; pick ranked bars when each category needs its own labelled row.</div>
+          </div>
+          <div class="cpg-section-block">
+            <div class="sel-usage">
+              <div class="sel-usage__card">
+                <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
+                <ul class="sel-usage__list">
+                  <li>Use the single segmented bar when the overview matters more than reading each figure at a glance.</li>
+                  <li>Use ranked bars when every category needs its own precise, legible row.</li>
+                  <li>Sort by share, largest first, in both patterns.</li>
+                  <li>Give each category its own palette colour &mdash; default to 25% opacity for the inactive state, and full opacity (the saturated colour) for active/hover.</li>
+                </ul>
+              </div>
+              <div class="sel-usage__card">
+                <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don&rsquo;t</div>
+                <ul class="sel-usage__list">
+                  <li>Don&rsquo;t use either pattern for more than ~6 categories &mdash; group the tail into &ldquo;Other&rdquo;.</li>
+                  <li>Don&rsquo;t reuse a colour across two unrelated categories in the same chart.</li>
+                  <li>Don&rsquo;t drop the legend from the segmented bar &mdash; segment width alone isn&rsquo;t precise enough.</li>
+                  <li>Don&rsquo;t use grey for a segment or row &mdash; each one representing a different category should get its own palette colour.</li>
+                  <li>Don&rsquo;t reach for red or deep orange &mdash; they read as error/warning. Use them very seldom, only once every other chart colour is exhausted.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tabs-panel" data-chart-panel="style">
+        <div id="cdist-reference" class="type-sub spec-panel spec-stack"></div>
+      </div>
+      <div class="tabs-panel" data-chart-panel="code">
+        <div id="cdist-code-playground" class="type-sub spec-panel spec-code-playground"></div>
+        <div id="cdist-code-tab" class="type-sub spec-panel"></div>
+      </div>
+      <div class="tabs-panel" data-chart-panel="changelog" id="cdist-changelog-panel"></div>
     </section>
 
     <!-- ============================================================
@@ -8271,6 +8339,8 @@ function toggleTheme() {
   // All five Cards sub-pages re-render through one call — their stage
   // backgrounds are inline-styled per theme, same as Buttons/Pills/Date picker.
   try { if(typeof renderCardPages==='function' && document.getElementById('cbasic-playground')) renderCardPages(); } catch(e){}
+  // Same one-call pattern for the five Charts sub-pages.
+  try { if(typeof renderChartPages==='function' && document.getElementById('cbar-playground')) renderChartPages(); } catch(e){}
 }
 
 // Colour view switch (prim / sem)
@@ -14386,12 +14456,22 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.68.0';
+const SYSTEM_VERSION = '1.69.0';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.69.0', date:'2026-08-12', author:'Helen', title:'All five Charts sub-pages rebuilt as tabbed pages, on one shared config-driven builder', changes:[
+        ['changed','Bar, Line & Area, Donut, Progress Meters and Distribution Charts each restructured from a flat .sec into .sec--tabbed with a .sec-hero (title + live preview) and Overview / Style / Code / Changelog tabs, matching the Cards/Pills/Buttons/Date picker structure end to end'],
+        ['added','One shared, config-driven engine drives all five pages instead of five copied render functions: a CHART_PAGES config array (secId, pfx, controls, dataFor/stage, insitu, style, code) consumed by chartTabSwitch, renderChartPlayground, renderChartInSitu, renderChartReference and renderChartCodeTab — the generalisation of the CARD_PAGES pattern for a component group with no colour axis'],
+        ['added','New parameterized builder functions replace the old one-off static/IIFE renderers: makeBarChartHTML and makeLineChartHTML (both now support single- or two-series data), makeDonutChartHTML (variable segment count), makeMeterHTML and makeDistBreakHTML/makeDistRankedHTML (new — Meters and Distribution had no builder function at all before this, just hand-authored static markup)'],
+        ['added','Each page gets a "Try the component" playground (data-shape controls — category/point/segment count, series count, line vs area, segmented vs ranked — plus the global light/dark toggle), 3 realistic "In context" mockups per chart type (dashboard tile, summary card, report widget), a Style tab (Anatomy, Size & dimensions, Tokens — no colour-variant grid, since every chart pulls from the shared --c1..--c5 palette rather than having a colour axis of its own) and a Code tab with the .code-seg HTML/CSS · Blazor · React TSX switcher'],
+        ['added','bindChartInteractivity() — one generic hover/tooltip binder reading data-v/data-label/data-pct attributes the builder functions already embed, replacing the old per-chart-instance addEventListener wiring so bar/line/donut hover behaviour works identically across the Overview playground, the Style tab hero and every in-context mockup'],
+        ['changed','The five s-charts-* ids added to the .sec--tabbed changelog relocation list, so each page\'s auto-injected version history lands in its own Changelog tab; renderChartPages() added to toggleTheme() so every inline-styled stage background follows the global light/dark toggle'],
+        ['changed','Charts stays a nav sub-group — five children under "Charts", each keeping its own id, MOCKS entry and CHANGELOG.components object'],
+        ['removed','The old standalone IIFE keyed off #cht-bar/#cht-line/#cht-area/#cht-donut (static demo data, no playground) — superseded by CHART_PAGES/renderChartPages'],
+      ]},
       {version:'1.68.0', date:'2026-08-12', author:'Helen', title:'All five Cards sub-pages rebuilt as tabbed pages, on one shared config-driven builder', changes:[
         ['changed','Basic, Media, Interactive, Stat and Hover Cards each restructured from a flat .sec into .sec--tabbed with a .sec-hero (title + live preview) and Overview / Style / Code / Changelog tabs, matching the Pills/Buttons/Date picker structure end to end'],
         ['added','One shared, config-driven builder set drives all five pages instead of five copied render functions: a CARD_PAGES config array (secId, pfx, controls, stage/keyStates/insitu/style/code) consumed by cardTabSwitch, renderCardPlayground, renderCardKeyStates, renderCardInSitu, renderCardReference and renderCardCodeTab — the generalisation of Pills\' PILL_PLAYGROUND_MOUNTS pattern'],
@@ -15395,7 +15475,13 @@ const CHANGELOG = {
     ]
   },
   components: [
-    {secId:'s-charts-bar', name:'Bar Charts', version:'1.4.3', entries:[
+    {secId:'s-charts-bar', name:'Bar Charts', version:'1.5.0', entries:[
+      {version:'1.5.0', date:'2026-08-12', author:'Helen', title:'Rebuilt as a tabbed page with an interactive playground', changes:[
+        ['changed','Restructured from a flat .sec into .sec--tabbed: a .sec-hero (title + live preview), Overview / Style / Code / Changelog tabs'],
+        ['added','New makeBarChartHTML(data,{series}) builder — parameterized categories (2 or 6) and a two-series grouped-bar mode ("This year vs last year") with a legend, replacing the old fixed 7-month static demo'],
+        ['added','"Try the component" playground (Categories: 2/6, Series: Single/grouped), 3 "In context" mockups (revenue dashboard tile, channel-breakdown card, quarterly report widget), a Style tab (Anatomy, Size & dimensions, Tokens) and a Code tab (HTML/CSS · Blazor · React TSX) generated live from the current playground state'],
+        ['changed','Hover/tooltip wiring moved to the shared bindChartInteractivity() (reads data-v/data-label off the markup) instead of a one-off IIFE bound to a single static #cht-bar mount'],
+      ]},
       {version:'1.4.3', date:'2026-08-11', author:'Mo', title:'Don\'t rule strengthened: red/deep orange are last-resort, not just "not first"', changes:[
         ['changed','"Don\'t lead with red or orange" reworded to "Don\'t reach for red or deep orange — use them very seldom, only once every other chart colour is exhausted", so the rule reads as a last-resort standard rather than just "don\'t go first"'],
       ]},
@@ -15437,7 +15523,13 @@ const CHANGELOG = {
         ['added','Interactive inline-SVG bar, line, area and donut charts rendered from data, Flash colour palette, with hover tooltips, dim-the-rest emphasis, donut pop-out and an interactive legend'],
       ]},
     ]},
-    {secId:'s-charts-line', name:'Line & Area Charts', version:'1.1.3', entries:[
+    {secId:'s-charts-line', name:'Line & Area Charts', version:'1.2.0', entries:[
+      {version:'1.2.0', date:'2026-08-12', author:'Helen', title:'Rebuilt as a tabbed page with an interactive playground', changes:[
+        ['changed','Restructured from a flat .sec into .sec--tabbed: a .sec-hero (title + live preview), Overview / Style / Code / Changelog tabs'],
+        ['added','New makeLineChartHTML(dataSets,{filled}) builder — parameterized point count (4 or 7), line vs. area fill, and a two-series mode (fill disabled when plotting two lines, per the existing Don\'t rule)'],
+        ['added','"Try the component" playground (Points: 4/7, Style: Line/Area, Series: Single/two), 3 "In context" mockups (MAU growth trend card, settled-value area widget, year-on-year report), a Style tab (Anatomy, Size & dimensions, Tokens) and a Code tab (HTML/CSS · Blazor · React TSX)'],
+        ['changed','Hover/tooltip wiring moved to the shared bindChartInteractivity(), which now also resolves multi-series hover bands (showing every series\' value for the hovered category) instead of the old single-series-only lineChart() binding'],
+      ]},
       {version:'1.1.3', date:'2026-08-11', author:'Mo', title:'Don\'t rule strengthened: red/deep orange are last-resort, not just "not first"', changes:[
         ['changed','"Don\'t lead with red or orange" reworded to "Don\'t reach for red or deep orange — use them very seldom, only once every other chart colour is exhausted"'],
       ]},
@@ -15459,7 +15551,13 @@ const CHANGELOG = {
         ['added','Line & Area Charts — carved out of the former combined Charts page into its own section, with a "When to use" tailored to trend charts specifically'],
       ]},
     ]},
-    {secId:'s-charts-donut', name:'Donut Charts', version:'1.1.3', entries:[
+    {secId:'s-charts-donut', name:'Donut Charts', version:'1.2.0', entries:[
+      {version:'1.2.0', date:'2026-08-12', author:'Helen', title:'Rebuilt as a tabbed page with an interactive playground', changes:[
+        ['changed','Restructured from a flat .sec into .sec--tabbed: a .sec-hero (title + live preview), Overview / Style / Code / Changelog tabs'],
+        ['added','New makeDonutChartHTML(data,{legend,unit}) builder — parameterized segment count (3/4/5) and a legend visibility toggle, replacing the old fixed 4-slice static demo'],
+        ['added','"Try the component" playground (Segments: 3/4/5, Legend: Show/Hide), 3 "In context" mockups (payment-method widget, device-mix tile with legend hidden, 5-segment spend-breakdown report), a Style tab (Anatomy, Size & dimensions, Tokens) and a Code tab (HTML/CSS · Blazor · React TSX)'],
+        ['changed','Hover/tooltip and centre-label swap wiring moved to the shared bindChartInteractivity() instead of a one-off IIFE bound to a single static #cht-donut mount'],
+      ]},
       {version:'1.1.3', date:'2026-08-11', author:'Mo', title:'Don\'t rule strengthened: red/deep orange are last-resort, not just "not first"', changes:[
         ['changed','"Don\'t lead with red or orange" reworded to "Don\'t reach for red or deep orange — use them very seldom, only once every other chart colour is exhausted"'],
       ]},
@@ -15482,7 +15580,12 @@ const CHANGELOG = {
         ['added','Donut Charts — carved out of the former combined Charts page into its own section, with a "When to use" tailored to composition charts specifically'],
       ]},
     ]},
-    {secId:'s-charts-meters', name:'Progress Meters', version:'1.2.0', entries:[
+    {secId:'s-charts-meters', name:'Progress Meters', version:'1.3.0', entries:[
+      {version:'1.3.0', date:'2026-08-12', author:'Helen', title:'Rebuilt as a tabbed page with an interactive playground', changes:[
+        ['changed','Restructured from a flat .sec into .sec--tabbed: a .sec-hero (title + live preview), Overview / Style / Code / Changelog tabs'],
+        ['added','New makeMeterHTML(items) builder — the page was 100% hand-authored static markup before this with no builder function at all; now parameterized by a Meters count control (2 or 4) that toggles whether the Warning/Critical semantic examples are shown alongside the two brand-fill meters'],
+        ['added','"Try the component" playground (Meters: 2/4), 3 "In context" mockups (quota card, SLA-health widget with a Warning fill, usage-limit banner with a Critical fill), a Style tab (Anatomy, Size & dimensions, Tokens documenting the Normal/Warning/Critical semantic states) and a Code tab (HTML/CSS · Blazor · React TSX)'],
+      ]},
       {version:'1.2.0', date:'2026-08-07', author:'Mo', title:'Meter fills now match the Do rule: 25% opacity default, full opacity on hover', changes:[
         ['fixed','.dd-meter__fill had no opacity treatment — every fill rendered at full saturation with no way to see the desaturated/inactive state the "When to use" Do rule already described. Now defaults to opacity:.25, jumping to opacity:1 when the meter row is hovered'],
       ]},
@@ -15497,7 +15600,12 @@ const CHANGELOG = {
         ['added','Progress Meters — carved out of the former combined Charts page into its own section, with a "When to use" tailored to single-value-against-a-limit meters specifically'],
       ]},
     ]},
-    {secId:'s-charts-distribution', name:'Distribution Charts', version:'1.2.1', entries:[
+    {secId:'s-charts-distribution', name:'Distribution Charts', version:'1.3.0', entries:[
+      {version:'1.3.0', date:'2026-08-12', author:'Helen', title:'Rebuilt as a tabbed page with an interactive playground', changes:[
+        ['changed','Restructured from a flat .sec into .sec--tabbed: a .sec-hero (title + live preview), Overview / Style / Code / Changelog tabs'],
+        ['added','New makeDistBreakHTML(label,totalLabel,items) and makeDistRankedHTML(items) builders — the page was 100% hand-authored static markup before this with no builder function at all; now parameterized by a Pattern control (Segmented bar / Ranked rows) and a Categories control (3 or 5)'],
+        ['added','"Try the component" playground (Pattern: Segmented/Ranked, Categories: 3/5), 3 "In context" mockups (regional-overview tile, category-breakdown report using ranked rows, storage-usage widget using the segmented bar), a Style tab (Anatomy, Size & dimensions, Tokens) and a Code tab (HTML/CSS · Blazor · React TSX) that switches its snippet to match the selected pattern'],
+      ]},
       {version:'1.2.1', date:'2026-08-11', author:'Mo', title:'Don\'t rule strengthened: red/deep orange are last-resort, not just "not first"', changes:[
         ['changed','"Don\'t lead with red or orange" reworded to "Don\'t reach for red or deep orange — use them very seldom, only once every other chart colour is exhausted"'],
       ]},
@@ -18701,84 +18809,6 @@ function ddTabSwitch(tab){
     });
   });
 })();
-/* Charts — interactive inline SVG, Flash palette */
-(function(){
-  function fmt(n){ return n>=1000 ? (n/1000).toFixed(1).replace(/\.0$/,'')+'k' : ''+n; }
-  var PAL=['var(--c1)','var(--c2)','var(--c3)','var(--c4)','var(--c5)'];
-  function mkTip(card){ var t=document.createElement('div'); t.className='cht__tip'; card.appendChild(t); return t; }
-  function moveTip(t,card,el,html){ var r=el.getBoundingClientRect(), cr=card.getBoundingClientRect(); t.innerHTML=html; t.style.left=(r.left-cr.left+r.width/2)+'px'; t.style.top=(r.top-cr.top-8)+'px'; t.classList.add('show'); }
-
-  /* Bar — hover to highlight one bar and dim the rest */
-  var barEl=document.getElementById('cht-bar');
-  if(barEl){
-    var card=barEl.closest('.cht'), tip=mkTip(card);
-    var data=[{label:'Jan',v:42},{label:'Feb',v:55},{label:'Mar',v:48},{label:'Apr',v:63},{label:'May',v:71},{label:'Jun',v:66},{label:'Jul',v:82}];
-    var W=340,H=180,padT=20,padB=22,padX=6, cw=W-padX*2, ch=H-padT-padB;
-    var max=Math.max.apply(null,data.map(function(d){return d.v;})), n=data.length, gap=10, bw=(cw-gap*(n-1))/n, s='';
-    data.forEach(function(d,i){ var bh=max?d.v/max*ch:0, x=padX+i*(bw+gap), y=padT+ch-bh;
-      s+='<rect class="cht__bar" data-i="'+i+'" x="'+x.toFixed(1)+'" y="'+y.toFixed(1)+'" width="'+bw.toFixed(1)+'" height="'+bh.toFixed(1)+'" rx="3"/>';
-      s+='<text class="cht__val" x="'+(x+bw/2).toFixed(1)+'" y="'+(y-6).toFixed(1)+'" text-anchor="middle">'+fmt(d.v)+'</text>';
-      s+='<text class="cht__axis" x="'+(x+bw/2).toFixed(1)+'" y="'+(H-7)+'" text-anchor="middle">'+d.label+'</text>';
-    });
-    barEl.innerHTML='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Bar chart of monthly volume">'+s+'</svg>';
-    var barSvg=barEl.querySelector('svg');
-    Array.prototype.forEach.call(barEl.querySelectorAll('.cht__bar'),function(b){ var i=+b.getAttribute('data-i');
-      b.addEventListener('mouseenter',function(){ barSvg.classList.add('is-hot'); b.classList.add('on'); moveTip(tip,card,b,'<b>'+data[i].v+'</b> &middot; '+data[i].label); });
-      b.addEventListener('mouseleave',function(){ barSvg.classList.remove('is-hot'); b.classList.remove('on'); tip.classList.remove('show'); });
-    });
-  }
-
-  /* Line / Area — hover bands reveal the nearest point */
-  function lineChart(el, data, filled){
-    var card=el.closest('.cht'), tip=mkTip(card);
-    var W=340,H=168,padT=22,padB=22,padX=10, cw=W-padX*2, ch=H-padT-padB;
-    var max=Math.max.apply(null,data.map(function(d){return d.v;})), n=data.length;
-    var xs=function(i){return padX+(n<=1?0:i/(n-1)*cw);}, ys=function(v){return padT+ch-(max?v/max*ch:0);};
-    var defs='', area='';
-    if(filled){
-      defs='<defs><linearGradient id="chtAreaGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="var(--c1)" stop-opacity="0.32"/><stop offset="1" stop-color="var(--c1)" stop-opacity="0"/></linearGradient></defs>';
-      var d='M '+xs(0).toFixed(1)+','+(padT+ch).toFixed(1);
-      data.forEach(function(dd,i){ d+=' L '+xs(i).toFixed(1)+','+ys(dd.v).toFixed(1); });
-      d+=' L '+xs(n-1).toFixed(1)+','+(padT+ch).toFixed(1)+' Z'; area='<path class="cht__area" d="'+d+'"/>';
-    }
-    var pts=data.map(function(dd,i){return xs(i).toFixed(1)+','+ys(dd.v).toFixed(1);}).join(' ');
-    var dots=data.map(function(dd,i){return '<circle class="cht__dot" data-i="'+i+'" cx="'+xs(i).toFixed(1)+'" cy="'+ys(dd.v).toFixed(1)+'" r="3.5"/>';}).join('');
-    var vals=data.map(function(dd,i){return '<text class="cht__val" x="'+xs(i).toFixed(1)+'" y="'+(ys(dd.v)-8).toFixed(1)+'" text-anchor="middle">'+fmt(dd.v)+'</text>';}).join('');
-    var hits=data.map(function(dd,i){ var x0=i===0?0:(xs(i-1)+xs(i))/2, x1=i===n-1?W:(xs(i)+xs(i+1))/2;
-      return '<rect class="cht__hit" data-i="'+i+'" x="'+x0.toFixed(1)+'" y="0" width="'+(x1-x0).toFixed(1)+'" height="'+(padT+ch).toFixed(1)+'"/>'; }).join('');
-    var labs=data.map(function(dd,i){return '<text class="cht__axis" x="'+xs(i).toFixed(1)+'" y="'+(H-7)+'" text-anchor="middle">'+dd.label+'</text>';}).join('');
-    el.innerHTML='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Line chart">'+defs+area+'<polyline class="cht__line" points="'+pts+'"/>'+dots+vals+labs+hits+'</svg>';
-    var dotEls=el.querySelectorAll('.cht__dot');
-    Array.prototype.forEach.call(el.querySelectorAll('.cht__hit'),function(h){ var i=+h.getAttribute('data-i'), dot=dotEls[i];
-      h.addEventListener('mouseenter',function(){ dot.classList.add('on'); dot.setAttribute('r','5.5'); moveTip(tip,card,dot,'<b>'+data[i].v+'</b> &middot; '+data[i].label); });
-      h.addEventListener('mouseleave',function(){ dot.classList.remove('on'); dot.setAttribute('r','3.5'); tip.classList.remove('show'); });
-    });
-  }
-  var lineEl=document.getElementById('cht-line');
-  if(lineEl) lineChart(lineEl,[{label:'W1',v:120},{label:'W2',v:145},{label:'W3',v:132},{label:'W4',v:170},{label:'W5',v:190},{label:'W6',v:210},{label:'W7',v:240}],false);
-  var areaEl=document.getElementById('cht-area');
-  if(areaEl) lineChart(areaEl,[{label:'W1',v:32},{label:'W2',v:40},{label:'W3',v:55},{label:'W4',v:49},{label:'W5',v:70},{label:'W6',v:82},{label:'W7',v:95}],true);
-
-  /* Donut — Flash categorical palette; hover a segment or legend to pop it and show its share in the centre */
-  var donutEl=document.getElementById('cht-donut'), legEl=document.getElementById('cht-donut-legend');
-  if(donutEl){
-    var dd=[{label:'Card',v:1240},{label:'EFT',v:580},{label:'Cash',v:320},{label:'Wallet',v:240}];
-    var c=90,r=62,sw=24,total=dd.reduce(function(a,x){return a+x.v;},0)||1,circ=2*Math.PI*r,acc=0,segs='';
-    dd.forEach(function(x,i){ var frac=x.v/total,len=frac*circ,off=-acc*circ;
-      segs+='<circle class="cht__seg" data-i="'+i+'" cx="'+c+'" cy="'+c+'" r="'+r+'" fill="none" stroke="'+PAL[i%PAL.length]+'" stroke-width="'+sw+'" stroke-dasharray="'+len.toFixed(2)+' '+(circ-len).toFixed(2)+'" stroke-dashoffset="'+off.toFixed(2)+'" transform="rotate(-90 '+c+' '+c+')"/>';
-      acc+=frac;
-    });
-    donutEl.innerHTML='<svg viewBox="0 0 180 180" width="180" role="img" aria-label="Donut chart of payment mix">'+segs
-      +'<text class="cht-donut-val" x="90" y="88" text-anchor="middle" font-size="26">'+fmt(total)+'</text>'
-      +'<text class="cht-donut-lab" x="90" y="106" text-anchor="middle" font-size="10">txns</text></svg>';
-    var dSvg=donutEl.querySelector('svg'), valEl=dSvg.querySelector('.cht-donut-val'), labEl=dSvg.querySelector('.cht-donut-lab'), segEls=dSvg.querySelectorAll('.cht__seg');
-    if(legEl) legEl.innerHTML=dd.map(function(x,i){return '<span class="cht-legend__item" data-i="'+i+'"><span class="cht-legend__dot" style="background:'+PAL[i%PAL.length]+'"></span>'+x.label+' &middot; '+fmt(x.v)+' &middot; '+Math.round(x.v/total*100)+'%</span>';}).join('');
-    function hot(i){ dSvg.classList.add('is-hot'); segEls[i].classList.add('on'); segEls[i].setAttribute('stroke-width',sw+5); valEl.textContent=Math.round(dd[i].v/total*100)+'%'; labEl.textContent=dd[i].label; }
-    function cool(){ dSvg.classList.remove('is-hot'); Array.prototype.forEach.call(segEls,function(s){ s.classList.remove('on'); s.setAttribute('stroke-width',sw); }); valEl.textContent=fmt(total); labEl.textContent='txns'; }
-    Array.prototype.forEach.call(segEls,function(s){ var i=+s.getAttribute('data-i'); s.addEventListener('mouseenter',function(){hot(i);}); s.addEventListener('mouseleave',cool); });
-    if(legEl) Array.prototype.forEach.call(legEl.querySelectorAll('.cht-legend__item'),function(li){ var i=+li.getAttribute('data-i'); li.addEventListener('mouseenter',function(){hot(i);}); li.addEventListener('mouseleave',cool); });
-  }
-})();
 /* ============================================================
    DATE PICKER
    Same tabbed-page treatment as Pills/Buttons (.sec--tabbed):
@@ -20683,6 +20713,951 @@ function renderCardPages(){
 }
 renderCardPages();
 
+/* ============================================================
+   CHARTS — five .sec--tabbed pages (Bar, Line & Area, Donut,
+   Progress Meters, Distribution) sharing one config-driven engine,
+   generalising the CARD_PAGES pattern above. Each config supplies a
+   data-shape playground (stage), an "In context" mock set, a Style
+   tab (anatomy / size / tokens — no colour-variant grid, since every
+   chart pulls from the same shared --c1..--c5 palette rather than
+   having a colour axis of its own) and a three-language Code tab,
+   same machinery as Cards/Pills.
+============================================================ */
+const CHT_PAL = ['var(--c1)','var(--c2)','var(--c3)','var(--c4)','var(--c5)'];
+function chtFmt(n){ return n>=1000 ? (n/1000).toFixed(1).replace(/\.0$/,'')+'k' : ''+n; }
+function chtMkTip(card){
+  let t = card.querySelector(':scope > .cht__tip');
+  if(!t){ t = document.createElement('div'); t.className = 'cht__tip'; card.appendChild(t); }
+  return t;
+}
+function chtMoveTip(t,card,el,html){
+  const r = el.getBoundingClientRect(), cr = card.getBoundingClientRect();
+  t.innerHTML = html;
+  t.style.left = (r.left - cr.left + r.width/2) + 'px';
+  t.style.top = (r.top - cr.top - 8) + 'px';
+  t.classList.add('show');
+}
+
+/* ── BUILDER FUNCTIONS — real, parameterized markup for each chart type ── */
+function makeBarChartHTML(data, opts){
+  opts = opts || {};
+  const series = opts.series || 1;
+  const W=340,H=180,padT=20,padB=22,padX=6, cw=W-padX*2, ch=H-padT-padB;
+  const n = data.length;
+  const allVals = series===2 ? data.flatMap(d=>[d.v,d.v2]) : data.map(d=>d.v);
+  const max = Math.max.apply(null, allVals) || 1;
+  const groupGap=10, barGap=series===2?3:0;
+  const bw = series===2 ? ((cw-groupGap*(n-1))/n - barGap)/2 : (cw-groupGap*(n-1))/n;
+  let s='';
+  data.forEach((d,i)=>{
+    const step = series===2 ? bw*2+barGap : bw;
+    const gx = padX + i*(step+groupGap);
+    const bh1 = d.v/max*ch, y1 = padT+ch-bh1;
+    s += `<rect class="cht__bar" data-i="${i}" data-s="0" data-v="${chtFmt(d.v)}" data-label="${series===2?'This year &middot; ':''}${cardEsc(d.label)}" x="${gx.toFixed(1)}" y="${y1.toFixed(1)}" width="${bw.toFixed(1)}" height="${bh1.toFixed(1)}" rx="3" style="fill:${CHT_PAL[0]}"/>`;
+    s += `<text class="cht__val" x="${(gx+bw/2).toFixed(1)}" y="${(y1-6).toFixed(1)}" text-anchor="middle">${chtFmt(d.v)}</text>`;
+    if(series===2){
+      const bh2 = d.v2/max*ch, y2 = padT+ch-bh2, x2 = gx+bw+barGap;
+      s += `<rect class="cht__bar" data-i="${i}" data-s="1" data-v="${chtFmt(d.v2)}" data-label="Last year &middot; ${cardEsc(d.label)}" x="${x2.toFixed(1)}" y="${y2.toFixed(1)}" width="${bw.toFixed(1)}" height="${bh2.toFixed(1)}" rx="3" style="fill:${CHT_PAL[1]}"/>`;
+      s += `<text class="cht__val" x="${(x2+bw/2).toFixed(1)}" y="${(y2-6).toFixed(1)}" text-anchor="middle">${chtFmt(d.v2)}</text>`;
+    }
+    const lx = gx + (series===2 ? bw+barGap/2 : bw/2);
+    s += `<text class="cht__axis" x="${lx.toFixed(1)}" y="${H-7}" text-anchor="middle">${cardEsc(d.label)}</text>`;
+  });
+  const legend = series===2 ? `<div class="cht-legend"><span class="cht-legend__item"><span class="cht-legend__dot" style="background:${CHT_PAL[0]}"></span>This year</span><span class="cht-legend__item"><span class="cht-legend__dot" style="background:${CHT_PAL[1]}"></span>Last year</span></div>` : '';
+  return `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Bar chart">${s}</svg>${legend}`;
+}
+
+function makeLineChartHTML(dataSets, opts){
+  opts = opts || {};
+  const filled = !!opts.filled;
+  const W=340,H=168,padT=22,padB=22,padX=10, cw=W-padX*2, ch=H-padT-padB;
+  const n = dataSets[0].length;
+  const max = Math.max.apply(null, dataSets.flat().map(d=>d.v)) || 1;
+  const xs = i => padX + (n<=1?0:i/(n-1)*cw);
+  const ys = v => padT + ch - (max ? v/max*ch : 0);
+  let defs='', areas='', lines='', dots='', vals='';
+  dataSets.forEach((data,si)=>{
+    const color = CHT_PAL[si];
+    if(filled && si===0){
+      defs += `<defs><linearGradient id="chtAreaGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${color}" stop-opacity="0.32"/><stop offset="1" stop-color="${color}" stop-opacity="0"/></linearGradient></defs>`;
+      let d = 'M '+xs(0).toFixed(1)+','+(padT+ch).toFixed(1);
+      data.forEach((dd,i)=>{ d += ' L '+xs(i).toFixed(1)+','+ys(dd.v).toFixed(1); });
+      d += ' L '+xs(n-1).toFixed(1)+','+(padT+ch).toFixed(1)+' Z';
+      areas += `<path class="cht__area" d="${d}"/>`;
+    }
+    const pts = data.map((dd,i)=>xs(i).toFixed(1)+','+ys(dd.v).toFixed(1)).join(' ');
+    lines += `<polyline class="cht__line" data-s="${si}" points="${pts}" style="stroke:${color}"/>`;
+    dots += data.map((dd,i)=>`<circle class="cht__dot" data-i="${i}" data-s="${si}" data-v="${chtFmt(dd.v)}" data-label="${cardEsc(dd.label)}" cx="${xs(i).toFixed(1)}" cy="${ys(dd.v).toFixed(1)}" r="3.5" style="stroke:${color}"/>`).join('');
+    if(si===0) vals += data.map((dd,i)=>`<text class="cht__val" x="${xs(i).toFixed(1)}" y="${(ys(dd.v)-8).toFixed(1)}" text-anchor="middle">${chtFmt(dd.v)}</text>`).join('');
+  });
+  const hits = dataSets[0].map((dd,i)=>{
+    const x0 = i===0 ? 0 : (xs(i-1)+xs(i))/2, x1 = i===n-1 ? W : (xs(i)+xs(i+1))/2;
+    return `<rect class="cht__hit" data-i="${i}" x="${x0.toFixed(1)}" y="0" width="${(x1-x0).toFixed(1)}" height="${(padT+ch).toFixed(1)}"/>`;
+  }).join('');
+  const labs = dataSets[0].map((dd,i)=>`<text class="cht__axis" x="${xs(i).toFixed(1)}" y="${H-7}" text-anchor="middle">${cardEsc(dd.label)}</text>`).join('');
+  const legend = dataSets.length>1 ? `<div class="cht-legend">${dataSets.map((_,si)=>`<span class="cht-legend__item"><span class="cht-legend__dot" style="background:${CHT_PAL[si]}"></span>${si===0?'This year':'Last year'}</span>`).join('')}</div>` : '';
+  return `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Line chart">${defs}${areas}${lines}${dots}${vals}${labs}${hits}</svg>${legend}`;
+}
+
+function makeDonutChartHTML(data, opts){
+  opts = opts || {};
+  const unit = opts.unit || 'txns';
+  const c=90,r=62,sw=24, total=data.reduce((a,x)=>a+x.v,0)||1, circ=2*Math.PI*r;
+  let acc=0, segs='';
+  data.forEach((x,i)=>{
+    const frac = x.v/total, len = frac*circ, off = -acc*circ, pct = Math.round(frac*100);
+    segs += `<circle class="cht__seg" data-i="${i}" data-v="${chtFmt(x.v)}" data-pct="${pct}" data-label="${cardEsc(x.label)}" cx="${c}" cy="${c}" r="${r}" fill="none" style="stroke:${CHT_PAL[i%CHT_PAL.length]}" stroke-width="${sw}" stroke-dasharray="${len.toFixed(2)} ${(circ-len).toFixed(2)}" stroke-dashoffset="${off.toFixed(2)}" transform="rotate(-90 ${c} ${c})"/>`;
+    acc += frac;
+  });
+  const legend = opts.legend===false ? '' : `<div class="cht-legend">${data.map((x,i)=>`<span class="cht-legend__item" data-i="${i}"><span class="cht-legend__dot" style="background:${CHT_PAL[i%CHT_PAL.length]}"></span>${cardEsc(x.label)} &middot; ${chtFmt(x.v)} &middot; ${Math.round(x.v/total*100)}%</span>`).join('')}</div>`;
+  return `<svg viewBox="0 0 180 180" width="180" role="img" aria-label="Donut chart" data-total="${chtFmt(total)}" data-unit="${cardEsc(unit)}">${segs}<text class="cht-donut-val" x="90" y="88" text-anchor="middle" font-size="26">${chtFmt(total)}</text><text class="cht-donut-lab" x="90" y="106" text-anchor="middle" font-size="10">${cardEsc(unit)}</text></svg>${legend}`;
+}
+
+function makeMeterHTML(items){
+  return `<div class="dd-meters">${items.map(m=>`
+      <div class="dd-meter">
+        <div class="dd-meter__top"><span class="dd-meter__label">${cardEsc(m.label)}</span><span class="dd-meter__val">${cardEsc(m.val)}</span></div>
+        <div class="dd-meter__track"><div class="dd-meter__fill" style="width:${m.pct}%;background:${m.color}"></div></div>
+      </div>`).join('')}
+    </div>`;
+}
+
+function makeDistBreakHTML(label, totalLabel, items){
+  return `<div class="dd-break">
+      <div class="dd-break__top"><span class="dd-break__label">${cardEsc(label)}</span><span class="dd-break__total">${cardEsc(totalLabel)}</span></div>
+      <div class="dd-break__bar">${items.map(it=>`<div class="dd-break__seg" style="width:${it.pct}%;background:${it.color}" title="${cardEsc(it.label)} &middot; ${it.pct}%"></div>`).join('')}</div>
+      <div class="dd-break__legend">${items.map(it=>`<div class="dd-break__item"><span class="dd-break__swatch" style="background:${it.color}"></span><span class="dd-break__k">${cardEsc(it.label)}</span><span class="dd-break__v">${it.pct}% &middot; ${cardEsc(it.amount)}</span></div>`).join('')}</div>
+    </div>`;
+}
+
+function makeDistRankedHTML(items){
+  return `<div class="dd-dist">${items.map(it=>`
+      <div class="dd-dist__row">
+        <div class="dd-dist__top"><span class="dd-dist__label"><span class="dd-dist__swatch" style="background:${it.color}"></span>${cardEsc(it.label)}</span><span class="dd-dist__val">${cardEsc(it.amount)} &middot; ${it.pct}%</span></div>
+        <div class="dd-dist__track"><div class="dd-dist__fill" style="width:${it.pct}%;background:${it.color}"></div></div>
+      </div>`).join('')}
+    </div>`;
+}
+
+/* ── GENERIC HOVER BINDING — reads data-v/data-label/data-pct off the
+   markup the builder functions above already embed, so one function
+   wires up bar, line and donut hover/tooltip behaviour without needing
+   the raw dataset passed back in. Meters/Distribution rely on plain
+   CSS :hover (see .dd-meter:hover/.dd-dist__row:hover/.dd-break__seg:hover)
+   and need no JS. ── */
+function bindChartInteractivity(root){
+  root.querySelectorAll('.cht').forEach(card=>{
+    const svg = card.querySelector('svg');
+    if(!svg) return;
+    const tip = chtMkTip(card);
+    const legend = card.querySelector('.cht-legend');
+    function hot(el){
+      svg.classList.add('is-hot');
+      if(el.classList.contains('cht__seg')){
+        el.classList.add('on');
+        const sw = +el.getAttribute('stroke-width');
+        el.setAttribute('stroke-width', sw+5);
+        const valEl = svg.querySelector('.cht-donut-val'), labEl = svg.querySelector('.cht-donut-lab');
+        if(valEl) valEl.textContent = el.dataset.pct+'%';
+        if(labEl) labEl.textContent = el.dataset.label;
+      } else if(el.classList.contains('cht__hit')){
+        const dots = svg.querySelectorAll(`.cht__dot[data-i="${el.dataset.i}"]`);
+        dots.forEach(d=>{ d.classList.add('on'); d.setAttribute('r','5.5'); });
+        const label = dots[0] ? dots[0].dataset.label : '';
+        const vals = Array.from(dots).map(d=>d.dataset.v).join(' / ');
+        chtMoveTip(tip, card, dots[dots.length-1]||el, `<b>${vals}</b> &middot; ${label}`);
+      } else {
+        el.classList.add('on');
+        chtMoveTip(tip, card, el, `<b>${el.dataset.v}</b> &middot; ${el.dataset.label}`);
+      }
+    }
+    function cool(el){
+      svg.classList.remove('is-hot');
+      if(el.classList.contains('cht__seg')){
+        el.classList.remove('on');
+        const sw = +el.getAttribute('stroke-width')-5;
+        el.setAttribute('stroke-width', sw);
+        const valEl = svg.querySelector('.cht-donut-val'), labEl = svg.querySelector('.cht-donut-lab');
+        if(valEl) valEl.textContent = svg.dataset.total;
+        if(labEl) labEl.textContent = svg.dataset.unit;
+      } else if(el.classList.contains('cht__hit')){
+        svg.querySelectorAll(`.cht__dot[data-i="${el.dataset.i}"]`).forEach(d=>{ d.classList.remove('on'); d.setAttribute('r','3.5'); });
+        tip.classList.remove('show');
+      } else {
+        el.classList.remove('on');
+        tip.classList.remove('show');
+      }
+    }
+    svg.querySelectorAll('.cht__bar,.cht__hit,.cht__seg').forEach(el=>{
+      el.addEventListener('mouseenter', ()=>hot(el));
+      el.addEventListener('mouseleave', ()=>cool(el));
+    });
+    if(legend) legend.querySelectorAll('.cht-legend__item[data-i]').forEach(li=>{
+      const seg = svg.querySelector(`.cht__seg[data-i="${li.dataset.i}"]`);
+      if(!seg) return;
+      li.addEventListener('mouseenter', ()=>hot(seg));
+      li.addEventListener('mouseleave', ()=>cool(seg));
+    });
+  });
+}
+
+/* Shared token rows — every chart part rides the same --c1..--c5 palette
+   and chrome tokens; only the geometry differs per chart type. */
+const CHT_PAL_TOKEN_ROWS = [
+  ['Series 1 / single-series','--c1','<code>var(--prim-green-500)</code>'],
+  ['Series 2','--c2','<code>var(--prim-sup-blue-1)</code>'],
+  ['Series 3','--c3','<code>var(--prim-sup-purple-4)</code>'],
+  ['Series 4','--c4','<code>var(--prim-sup-pink-1)</code>'],
+  ['Series 5','--c5','<code>var(--prim-sup-orange-1)</code>'],
+  ['Inactive opacity','25%','&mdash;'],
+  ['Active / hover opacity','100%','&mdash;'],
+];
+
+/* ── PER-PAGE CONFIG ── */
+const CHART_PAGES = [
+  {
+    secId:'s-charts-bar', pfx:'cbar',
+    langFiles:{html:'bar-chart.html', blazor:'DsBarChart.razor', tsx:'DsBarChart.tsx'},
+    headingAbove:'Compare discrete values across categories &mdash; monthly volume, spend by product, one metric per region.',
+    state:{cats:'6', series:'1'},
+    controls:[
+      {key:'cats',   label:'Categories', opts:[{v:'2',l:'2'},{v:'6',l:'6'}]},
+      {key:'series', label:'Series',     opts:[{v:'1',l:'Single'},{v:'2',l:'This year vs last year'}]},
+    ],
+    dataFor(s){
+      const all = [{label:'Jan',v:42,v2:35},{label:'Feb',v:55,v2:44},{label:'Mar',v:48,v2:50},{label:'Apr',v:63,v2:58},{label:'May',v:71,v2:60},{label:'Jun',v:66,v2:69},{label:'Jul',v:82,v2:74}];
+      const n = s.cats==='2' ? 2 : 6;
+      return all.slice(0, n);
+    },
+    stage(s){
+      const data = this.dataFor(s);
+      return `<div class="cht" data-cht-mount="bar"><div class="cht__cap">Monthly volume</div><div class="cht__sub">Transactions per month &middot; 2026</div>${makeBarChartHTML(data, {series:+s.series})}</div>`;
+    },
+    bind(el){ bindChartInteractivity(el); },
+    insitu:{
+      desc:'A bar compares discrete amounts side by side &mdash; a dashboard tile, a monthly-volume card, a spend-by-category widget.',
+      cols:3,
+      mocks(theme, sbg){
+        return [
+          {html:`<div class="spec-mock__stage" style="background:${sbg}">
+              <div class="cht" style="width:100%"><div class="cht__cap">Monthly revenue</div><div class="cht__sub">GMV &middot; last 6 months</div>${makeBarChartHTML([{label:'Feb',v:31},{label:'Mar',v:38},{label:'Apr',v:35},{label:'May',v:44},{label:'Jun',v:41},{label:'Jul',v:52}])}</div>
+            </div>
+            <div class="spec-mock__cap"><b>Revenue dashboard tile</b>One value per month, the current one hovered to read exactly.</div>`},
+          {html:`<div class="spec-mock__stage" style="background:${sbg}">
+              <div class="cht" style="width:100%"><div class="cht__cap">Top-up channels</div><div class="cht__sub">Volume by channel &middot; this week</div>${makeBarChartHTML([{label:'App',v:920},{label:'USSD',v:640},{label:'Web',v:410},{label:'Agent',v:280}])}</div>
+            </div>
+            <div class="spec-mock__cap"><b>Channel breakdown card</b>Four categories, sorted highest to lowest.</div>`},
+          {html:`<div class="spec-mock__stage" style="background:${sbg}">
+              <div class="cht" style="width:100%"><div class="cht__cap">Trader signups</div><div class="cht__sub">This year vs last year</div>${makeBarChartHTML([{label:'Q1',v:1200,v2:980},{label:'Q2',v:1450,v2:1180},{label:'Q3',v:1690,v2:1400},{label:'Q4',v:1820,v2:1600}], {series:2})}</div>
+            </div>
+            <div class="spec-mock__cap"><b>Quarterly report widget</b>A second series compares against the prior year.</div>`},
+        ];
+      }
+    },
+    style(theme, sbg){
+      return [
+        {title:'Anatomy',
+         desc:'A bar chart is a card holding a caption, a subtitle and an SVG plot. Each bar is one category; a value label sits above it and a tooltip appears on hover.',
+         hero:`<div class="cht" style="width:auto"><div class="cht__cap">Monthly volume</div><div class="cht__sub">Transactions per month</div>${makeBarChartHTML([{label:'Jan',v:42},{label:'Feb',v:55},{label:'Mar',v:48},{label:'Apr',v:63}])}</div>`,
+         parts:[
+           {name:'Bar', note:'<code>.cht__bar</code> &mdash; one rect per category, 25% opacity at rest, full opacity and the caret cursor on hover.', vis:'<span style="width:16px;height:44px;border-radius:3px;background:var(--prim-green-500)"></span>'},
+           {name:'Value label', note:'<code>.cht__val</code> &mdash; the exact figure, shown above every bar at all times, not just on hover.', vis:'<span style="font-size:11px;font-weight:700;color:var(--chrome-txt)">82</span>'},
+           {name:'Axis label', note:'<code>.cht__axis</code> &mdash; the category name, centred under its bar.', vis:'<span style="font-size:10px;color:var(--chrome-muted)">Jul</span>'},
+           {name:'Tooltip', note:'<code>.cht__tip</code> &mdash; an inverse-surface popover following the hovered bar.', vis:'<span style="background:var(--color-surface-inverse);color:var(--color-text-inv);font-size:11px;font-weight:600;padding:4px 8px;border-radius:6px">82</span>'},
+         ]},
+        {title:'Size &amp; dimensions',
+         desc:'The chart card sizes to its container up to a comfortable default width; the plot itself is a fixed-viewBox SVG that scales to fit.',
+         table:cardTokenTable(['Measure','Value','Notes'], [
+           ['Card width','380px','<code>max-width:100%</code>'],
+           ['Card padding','20px 22px','&mdash;'],
+           ['Plot viewBox','340 &times; 180','Scales with the card'],
+           ['Bar corner radius','3px','&mdash;'],
+         ])},
+        {title:'Tokens',
+         desc:'Bars pull their colour from the shared chart palette, not a colour axis of their own &mdash; a single-series chart always leads with Series 1 (brand green).',
+         table:cardTokenTable(['Part','Token','Value'], CHT_PAL_TOKEN_ROWS)},
+      ];
+    },
+    code:{
+      html(s){
+        return `<span class="code-cm">&#60;!-- Bar chart &mdash; ${s.cats} categories, ${s.series==='2'?'two series':'single series'} --></span>
+<span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"cht"</span><span class="code-kw">></span>
+  <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"cht__cap"</span><span class="code-kw">></span>Monthly volume<span class="code-kw">&#60;/div></span>
+  <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"cht__sub"</span><span class="code-kw">></span>Transactions per month<span class="code-kw">&#60;/div></span>
+  <span class="code-kw">&#60;svg</span> <span class="code-cls">viewBox</span>=<span class="code-val">"0 0 340 180"</span><span class="code-kw">></span>
+    <span class="code-kw">&#60;rect</span> <span class="code-cls">class</span>=<span class="code-val">"cht__bar"</span> <span class="code-cls">style</span>=<span class="code-val">"fill:var(--c1)"</span> ... <span class="code-kw">/></span>${s.series==='2' ? `\n    <span class="code-kw">&#60;rect</span> <span class="code-cls">class</span>=<span class="code-val">"cht__bar"</span> <span class="code-cls">style</span>=<span class="code-val">"fill:var(--c2)"</span> ... <span class="code-kw">/></span>` : ''}
+  <span class="code-kw">&#60;/svg></span>${s.series==='2' ? `\n  <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"cht-legend"</span><span class="code-kw">>...&#60;/div></span>` : ''}
+<span class="code-kw">&#60;/div></span>
+
+<span class="code-cm">/* CSS */</span>
+<span class="code-cls">.cht__bar</span> { fill: <span class="code-val">var(--c1)</span>; opacity: <span class="code-val">.25</span>; transition: opacity <span class="code-val">.15s</span>; cursor: <span class="code-val">pointer</span>; }
+<span class="code-cls">.cht__bar.on</span> { opacity: <span class="code-val">1</span>; }`;
+      },
+      blazor(s){
+        return `<span class="code-cm">@* DsBarChart.razor — usage *@</span>
+<span class="code-kw">&#60;DsBarChart</span>
+    <span class="code-attr">Data</span>=<span class="code-val">"monthlyVolume"</span>
+    <span class="code-attr">Series</span>=<span class="code-val">"${s.series}"</span><span class="code-kw">/></span>
+
+<span class="code-kw">@code</span> {
+  [Parameter] <span class="code-kw">public</span> <span class="code-cls">List&#60;BarPoint></span> Data { get; set; } = <span class="code-kw">new</span>();
+  [Parameter] <span class="code-kw">public int</span> Series { get; set; } = <span class="code-val">${s.series}</span>;
+}`;
+      },
+      tsx(s){
+        return `<span class="code-cm">// DsBarChart.tsx</span>
+<span class="code-kw">type</span> <span class="code-cls">BarPoint</span> = { label: <span class="code-cls">string</span>; v: <span class="code-cls">number</span>; v2?: <span class="code-cls">number</span> };
+
+<span class="code-kw">export function</span> <span class="code-cls">DsBarChart</span>({ data, series = <span class="code-val">${s.series}</span> }: { data: <span class="code-cls">BarPoint</span>[]; series?: <span class="code-cls">1</span> | <span class="code-cls">2</span> }) {
+  <span class="code-kw">return</span> <span class="code-kw">&#60;div</span> <span class="code-cls">className</span>=<span class="code-val">"cht"</span><span class="code-kw">>...&#60;/div></span>;
+}
+
+<span class="code-cm">// Current playground configuration</span>
+<span class="code-kw">&#60;DsBarChart</span> <span class="code-attr">data</span>={monthlyVolume} <span class="code-attr">series</span>={${s.series}} <span class="code-kw">/></span>`;
+      }
+    }
+  },
+
+  {
+    secId:'s-charts-line', pfx:'cline',
+    langFiles:{html:'line-chart.html', blazor:'DsLineChart.razor', tsx:'DsLineChart.tsx'},
+    headingAbove:'Show change over a continuous range &mdash; a growth trend, active users over time, settled value week on week.',
+    state:{points:'7', fill:'off', series:'1'},
+    controls:[
+      {key:'points', label:'Points', opts:[{v:'4',l:'4'},{v:'7',l:'7'}]},
+      {key:'fill',   label:'Style',  opts:[{v:'off',l:'Line'},{v:'on',l:'Area'}]},
+      {key:'series', label:'Series', opts:[{v:'1',l:'Single'},{v:'2',l:'This year vs last year'}]},
+    ],
+    dataFor(s){
+      const labels = ['W1','W2','W3','W4','W5','W6','W7'];
+      const s1 = [120,145,132,170,190,210,240], s2 = [100,120,128,140,150,165,190];
+      const n = s.points==='4' ? 4 : 7;
+      const d1 = labels.slice(0,n).map((l,i)=>({label:l, v:s1[i]}));
+      const d2 = labels.slice(0,n).map((l,i)=>({label:l, v:s2[i]}));
+      return s.series==='2' ? [d1,d2] : [d1];
+    },
+    stage(s){
+      const sets = this.dataFor(s);
+      return `<div class="cht" data-cht-mount="line"><div class="cht__cap">Active users</div><div class="cht__sub">${s.fill==='on'?'Area':'Line'} &middot; last ${s.points} weeks</div>${makeLineChartHTML(sets, {filled:s.fill==='on' && s.series==='1'})}</div>`;
+    },
+    bind(el){ bindChartInteractivity(el); },
+    insitu:{
+      desc:'A line or area shows the direction of a metric over time &mdash; a growth-trend card, an activity sparkline, a settled-value widget.',
+      cols:3,
+      mocks(theme, sbg){
+        return [
+          {html:`<div class="spec-mock__stage" style="background:${sbg}">
+              <div class="cht" style="width:100%"><div class="cht__cap">MAU growth</div><div class="cht__sub">Last 7 weeks</div>${makeLineChartHTML([[{label:'W1',v:12400},{label:'W2',v:13100},{label:'W3',v:12900},{label:'W4',v:14200},{label:'W5',v:15100},{label:'W6',v:15800},{label:'W7',v:16700}]])}</div>
+            </div>
+            <div class="spec-mock__cap"><b>Growth trend card</b>A single line, no fill, when only direction matters.</div>`},
+          {html:`<div class="spec-mock__stage" style="background:${sbg}">
+              <div class="cht" style="width:100%"><div class="cht__cap">Settled value</div><div class="cht__sub">Daily &middot; this week</div>${makeLineChartHTML([[{label:'Mon',v:32},{label:'Tue',v:40},{label:'Wed',v:55},{label:'Thu',v:49},{label:'Fri',v:70}]], {filled:true})}</div>
+            </div>
+            <div class="spec-mock__cap"><b>Settled value widget</b>The area fill shows volume, not just direction.</div>`},
+          {html:`<div class="spec-mock__stage" style="background:${sbg}">
+              <div class="cht" style="width:100%"><div class="cht__cap">Float balance</div><div class="cht__sub">This year vs last year</div>${makeLineChartHTML([[{label:'Q1',v:210},{label:'Q2',v:240},{label:'Q3',v:265},{label:'Q4',v:300}],[{label:'Q1',v:180},{label:'Q2',v:200},{label:'Q3',v:225},{label:'Q4',v:250}]])}</div>
+            </div>
+            <div class="spec-mock__cap"><b>Year-on-year report</b>Two lines, no fill, so both stay legible.</div>`},
+        ];
+      }
+    },
+    style(theme, sbg){
+      return [
+        {title:'Anatomy',
+         desc:'A line chart plots one polyline through a set of points; the area variant fills beneath it with a fading gradient of the same colour.',
+         hero:`<div class="cht" style="width:auto"><div class="cht__cap">Active users</div><div class="cht__sub">Area &middot; last 5 weeks</div>${makeLineChartHTML([[{label:'W1',v:32},{label:'W2',v:40},{label:'W3',v:55},{label:'W4',v:49},{label:'W5',v:70}]], {filled:true})}</div>`,
+         parts:[
+           {name:'Line', note:'<code>.cht__line</code> &mdash; a 2.5px stroke through every point, 25% opacity at rest.', vis:'<svg viewBox="0 0 60 24" style="width:60px"><polyline points="2,20 20,10 38,14 58,4" fill="none" stroke="var(--prim-green-500)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>'},
+           {name:'Area fill', note:'<code>.cht__area</code> &mdash; a gradient from 32% opacity to transparent, used on at most one series.', vis:'<span style="width:60px;height:22px;background:linear-gradient(180deg,var(--prim-green-500),transparent);opacity:.4;border-radius:3px"></span>'},
+           {name:'Point', note:'<code>.cht__dot</code> &mdash; a hollow circle that fills solid and grows on hover.', vis:'<span style="width:9px;height:9px;border-radius:50%;border:2.5px solid var(--prim-green-500);background:var(--chrome-bg)"></span>'},
+           {name:'Value &amp; axis label', note:'<code>.cht__val</code> / <code>.cht__axis</code> &mdash; the figure above the first series, the label below every point.', vis:'<span style="display:flex;flex-direction:column;align-items:center;gap:2px"><span style="font-size:11px;font-weight:700;color:var(--chrome-txt)">240</span><span style="font-size:10px;color:var(--chrome-muted)">W7</span></span>'},
+           {name:'Tooltip', note:'<code>.cht__tip</code> &mdash; follows the nearest point inside an invisible hover band per category.', vis:'<span style="background:var(--color-surface-inverse);color:var(--color-text-inv);font-size:11px;font-weight:600;padding:4px 8px;border-radius:6px">240</span>'},
+         ]},
+        {title:'Size &amp; dimensions',
+         desc:'Same card shell as the bar chart, with a slightly shorter plot to leave room for the point labels above the line.',
+         table:cardTokenTable(['Measure','Value','Notes'], [
+           ['Card width','380px','<code>max-width:100%</code>'],
+           ['Plot viewBox','340 &times; 168','Scales with the card'],
+           ['Line weight','2.5px','&mdash;'],
+           ['Point radius','3.5px default, 5.5px on hover','&mdash;'],
+         ])},
+        {title:'Tokens',
+         desc:'Lines and area fills pull from the same shared palette as every other chart &mdash; a single line always leads with Series 1.',
+         table:cardTokenTable(['Part','Token','Value'], CHT_PAL_TOKEN_ROWS)},
+      ];
+    },
+    code:{
+      html(s){
+        return `<span class="code-cm">&#60;!-- ${s.fill==='on'?'Area':'Line'} chart &mdash; ${s.points} points, ${s.series==='2'?'two series':'single series'} --></span>
+<span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"cht"</span><span class="code-kw">></span>
+  <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"cht__cap"</span><span class="code-kw">></span>Active users<span class="code-kw">&#60;/div></span>
+  <span class="code-kw">&#60;svg</span> <span class="code-cls">viewBox</span>=<span class="code-val">"0 0 340 168"</span><span class="code-kw">></span>${s.fill==='on' ? `\n    <span class="code-kw">&#60;path</span> <span class="code-cls">class</span>=<span class="code-val">"cht__area"</span> ... <span class="code-kw">/></span>` : ''}
+    <span class="code-kw">&#60;polyline</span> <span class="code-cls">class</span>=<span class="code-val">"cht__line"</span> <span class="code-cls">style</span>=<span class="code-val">"stroke:var(--c1)"</span> ... <span class="code-kw">/></span>${s.series==='2' ? `\n    <span class="code-kw">&#60;polyline</span> <span class="code-cls">class</span>=<span class="code-val">"cht__line"</span> <span class="code-cls">style</span>=<span class="code-val">"stroke:var(--c2)"</span> ... <span class="code-kw">/></span>` : ''}
+  <span class="code-kw">&#60;/svg></span>
+<span class="code-kw">&#60;/div></span>
+
+<span class="code-cm">/* CSS */</span>
+<span class="code-cls">.cht__line</span> { fill: <span class="code-val">none</span>; stroke-width: <span class="code-val">2.5</span>; opacity: <span class="code-val">.25</span>; }
+<span class="code-cls">.cht__area</span> { fill: <span class="code-val">url(#chtAreaGrad)</span>; }`;
+      },
+      blazor(s){
+        return `<span class="code-cm">@* DsLineChart.razor — usage *@</span>
+<span class="code-kw">&#60;DsLineChart</span>
+    <span class="code-attr">Data</span>=<span class="code-val">"activeUsers"</span>
+    <span class="code-attr">Filled</span>=<span class="code-val">"${s.fill==='on'?'true':'false'}"</span>
+    <span class="code-attr">Series</span>=<span class="code-val">"${s.series}"</span><span class="code-kw">/></span>
+
+<span class="code-kw">@code</span> {
+  [Parameter] <span class="code-kw">public</span> <span class="code-cls">List&#60;LinePoint></span> Data { get; set; } = <span class="code-kw">new</span>();
+  [Parameter] <span class="code-kw">public bool</span> Filled { get; set; } = <span class="code-kw">${s.fill==='on'?'true':'false'}</span>;
+}`;
+      },
+      tsx(s){
+        return `<span class="code-cm">// DsLineChart.tsx</span>
+<span class="code-kw">type</span> <span class="code-cls">LinePoint</span> = { label: <span class="code-cls">string</span>; v: <span class="code-cls">number</span> };
+
+<span class="code-kw">export function</span> <span class="code-cls">DsLineChart</span>({ data, filled = <span class="code-val">${s.fill==='on'?'true':'false'}</span> }: { data: <span class="code-cls">LinePoint</span>[]; filled?: <span class="code-cls">boolean</span> }) {
+  <span class="code-kw">return</span> <span class="code-kw">&#60;div</span> <span class="code-cls">className</span>=<span class="code-val">"cht"</span><span class="code-kw">>...&#60;/div></span>;
+}
+
+<span class="code-cm">// Current playground configuration</span>
+<span class="code-kw">&#60;DsLineChart</span> <span class="code-attr">data</span>={activeUsers} <span class="code-attr">filled</span>={${s.fill==='on'}} <span class="code-kw">/></span>`;
+      }
+    }
+  },
+
+  {
+    secId:'s-charts-donut', pfx:'cdonut',
+    langFiles:{html:'donut-chart.html', blazor:'DsDonutChart.razor', tsx:'DsDonutChart.tsx'},
+    headingAbove:'Show parts of a whole &mdash; a payment-method mix, a small handful of categories that add up to one total.',
+    state:{cats:'4', legend:'on'},
+    controls:[
+      {key:'cats',   label:'Segments', opts:[{v:'3',l:'3'},{v:'4',l:'4'},{v:'5',l:'5'}]},
+      {key:'legend', label:'Legend',   opts:[{v:'on',l:'Show'},{v:'off',l:'Hide'}]},
+    ],
+    dataFor(s){
+      const all = [{label:'Card',v:1240},{label:'EFT',v:580},{label:'Cash',v:320},{label:'Wallet',v:240},{label:'Voucher',v:120}];
+      return all.slice(0, +s.cats);
+    },
+    stage(s){
+      const data = this.dataFor(s);
+      return `<div class="cht" style="width:340px" data-cht-mount="donut"><div class="cht__cap">Payment mix</div><div class="cht__sub">Share of volume by method</div>${makeDonutChartHTML(data, {legend:s.legend==='on'})}</div>`;
+    },
+    bind(el){ bindChartInteractivity(el); },
+    insitu:{
+      desc:'A donut works best for a small number of parts making up one total &mdash; a payment-method widget, a device-mix tile, a spend-by-category card.',
+      cols:3,
+      mocks(theme, sbg){
+        return [
+          {html:`<div class="spec-mock__stage" style="background:${sbg}">
+              <div class="cht" style="width:100%"><div class="cht__cap">Payment methods</div><div class="cht__sub">This month</div>${makeDonutChartHTML([{label:'Card',v:620},{label:'EFT',v:290},{label:'Cash',v:140}], {unit:'txns'})}</div>
+            </div>
+            <div class="spec-mock__cap"><b>Payment-method widget</b>Three parts, sorted largest first.</div>`},
+          {html:`<div class="spec-mock__stage" style="background:${sbg}">
+              <div class="cht" style="width:100%"><div class="cht__cap">Device mix</div><div class="cht__sub">Active sessions</div>${makeDonutChartHTML([{label:'Android',v:840},{label:'iOS',v:410},{label:'Web',v:180},{label:'USSD',v:90}], {unit:'sessions', legend:false})}</div>
+            </div>
+            <div class="spec-mock__cap"><b>Device breakdown tile</b>Legend hidden where the card is too small to hold it.</div>`},
+          {html:`<div class="spec-mock__stage" style="background:${sbg}">
+              <div class="cht" style="width:100%"><div class="cht__cap">Spend by category</div><div class="cht__sub">Wallet spend, this week</div>${makeDonutChartHTML([{label:'Airtime',v:410},{label:'Bills',v:260},{label:'Vouchers',v:150},{label:'Transfers',v:90},{label:'Other',v:40}], {unit:'R'})}</div>
+            </div>
+            <div class="spec-mock__cap"><b>Spend-breakdown report</b>Five segments &mdash; the practical ceiling before a bar reads better.</div>`},
+        ];
+      }
+    },
+    style(theme, sbg){
+      return [
+        {title:'Anatomy',
+         desc:'A donut is a ring of stroked arcs around a centred total. Hovering a slice or its legend entry pops the arc and swaps the centre label to that slice&rsquo;s share.',
+         hero:`<div class="cht" style="width:auto">${makeDonutChartHTML([{label:'Card',v:1240},{label:'EFT',v:580},{label:'Cash',v:320},{label:'Wallet',v:240}])}</div>`,
+         parts:[
+           {name:'Segment', note:'<code>.cht__seg</code> &mdash; a stroked arc, 25% opacity at rest, full opacity and a thicker stroke on hover.', vis:'<svg viewBox="0 0 24 24" style="width:26px"><circle cx="12" cy="12" r="9" fill="none" stroke="var(--prim-green-500)" stroke-width="4" stroke-dasharray="30 26"/></svg>'},
+           {name:'Centre value &amp; label', note:'<code>.cht-donut-val</code> / <code>.cht-donut-lab</code> &mdash; the total at rest; swaps to the hovered slice&rsquo;s share and name.', vis:'<span style="display:flex;flex-direction:column;align-items:center"><span style="font-size:16px;font-weight:800;color:var(--chrome-txt)">2.4k</span><span style="font-size:9px;color:var(--chrome-muted)">txns</span></span>'},
+           {name:'Legend', note:'<code>.cht-legend</code> &mdash; one entry per slice, carrying the exact figure and percentage; hovering an entry pops its slice.', vis:'<span class="cht-legend__item" style="display:inline-flex;align-items:center;gap:6px;font-size:11px;color:var(--chrome-txt)"><span style="width:9px;height:9px;border-radius:3px;background:var(--prim-green-500)"></span>Card &middot; 52%</span>'},
+         ]},
+        {title:'Size &amp; dimensions',
+         desc:'The ring keeps a fixed diameter and stroke width regardless of segment count, so adding a slice never changes the chart&rsquo;s footprint.',
+         table:cardTokenTable(['Measure','Value','Notes'], [
+           ['Diameter','180px','Fixed'],
+           ['Stroke width','24px','25px on hover'],
+           ['Radius','62px','&mdash;'],
+           ['Practical segment ceiling','~5','More reads better as a bar chart'],
+         ])},
+        {title:'Tokens',
+         desc:'Each slice takes the next colour in the shared chart palette, in the order the data is given.',
+         table:cardTokenTable(['Part','Token','Value'], CHT_PAL_TOKEN_ROWS)},
+      ];
+    },
+    code:{
+      html(s){
+        return `<span class="code-cm">&#60;!-- Donut chart &mdash; ${s.cats} segments${s.legend==='off'?', no legend':''} --></span>
+<span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"cht"</span><span class="code-kw">></span>
+  <span class="code-kw">&#60;svg</span> <span class="code-cls">viewBox</span>=<span class="code-val">"0 0 180 180"</span><span class="code-kw">></span>
+    <span class="code-kw">&#60;circle</span> <span class="code-cls">class</span>=<span class="code-val">"cht__seg"</span> <span class="code-cls">style</span>=<span class="code-val">"stroke:var(--c1)"</span> <span class="code-cls">stroke-dasharray</span>=<span class="code-val">"... "</span> <span class="code-kw">/></span>
+    <span class="code-cm">&#60;!-- one &#60;circle> per segment, next palette colour --></span>
+    <span class="code-kw">&#60;text</span> <span class="code-cls">class</span>=<span class="code-val">"cht-donut-val"</span><span class="code-kw">></span>2.4k<span class="code-kw">&#60;/text></span>
+  <span class="code-kw">&#60;/svg></span>${s.legend==='on' ? `\n  <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"cht-legend"</span><span class="code-kw">>...&#60;/div></span>` : ''}
+<span class="code-kw">&#60;/div></span>`;
+      },
+      blazor(s){
+        return `<span class="code-cm">@* DsDonutChart.razor — usage *@</span>
+<span class="code-kw">&#60;DsDonutChart</span>
+    <span class="code-attr">Data</span>=<span class="code-val">"paymentMix"</span>
+    <span class="code-attr">ShowLegend</span>=<span class="code-val">"${s.legend==='on'?'true':'false'}"</span><span class="code-kw">/></span>
+
+<span class="code-kw">@code</span> {
+  [Parameter] <span class="code-kw">public</span> <span class="code-cls">List&#60;DonutSlice></span> Data { get; set; } = <span class="code-kw">new</span>();
+  [Parameter] <span class="code-kw">public bool</span> ShowLegend { get; set; } = <span class="code-kw">true</span>;
+}`;
+      },
+      tsx(s){
+        return `<span class="code-cm">// DsDonutChart.tsx</span>
+<span class="code-kw">type</span> <span class="code-cls">DonutSlice</span> = { label: <span class="code-cls">string</span>; v: <span class="code-cls">number</span> };
+
+<span class="code-kw">export function</span> <span class="code-cls">DsDonutChart</span>({ data, showLegend = <span class="code-val">${s.legend==='on'}</span> }: { data: <span class="code-cls">DonutSlice</span>[]; showLegend?: <span class="code-cls">boolean</span> }) {
+  <span class="code-kw">return</span> <span class="code-kw">&#60;div</span> <span class="code-cls">className</span>=<span class="code-val">"cht"</span><span class="code-kw">>...&#60;/div></span>;
+}
+
+<span class="code-cm">// Current playground configuration</span>
+<span class="code-kw">&#60;DsDonutChart</span> <span class="code-attr">data</span>={paymentMix} <span class="code-attr">showLegend</span>={${s.legend==='on'}} <span class="code-kw">/></span>`;
+      }
+    }
+  },
+
+  {
+    secId:'s-charts-meters', pfx:'cmeter',
+    langFiles:{html:'progress-meters.html', blazor:'DsProgressMeter.razor', tsx:'DsProgressMeter.tsx'},
+    headingAbove:'Track a single value against a target or ceiling &mdash; a quota, an SLA, a usage limit that switches colour as it&rsquo;s approached.',
+    state:{count:'4'},
+    controls:[
+      {key:'count', label:'Meters', opts:[{v:'2',l:'2'},{v:'4',l:'4'}]},
+    ],
+    dataFor(s){
+      const all = [
+        {label:'Monthly GMV target', val:'R48.2M / R60M · 80%', pct:80, color:'var(--color-brand)'},
+        {label:'Trader onboarding',  val:'18,930 / 25,000 · 76%', pct:76, color:'var(--color-brand)'},
+        {label:'Float utilisation',  val:'88%', pct:88, color:'var(--color-warn-h)'},
+        {label:'API error budget spent', val:'96%', pct:96, color:'var(--color-crit-h)'},
+      ];
+      return s.count==='2' ? all.slice(0,2) : all;
+    },
+    stage(s){
+      return `<div class="chpg-meter-wrap" style="width:100%;max-width:380px">${makeMeterHTML(this.dataFor(s))}</div>`;
+    },
+    insitu:{
+      desc:'A meter tracks one value against one limit &mdash; a quota card, an SLA-health tile, a usage-cap widget.',
+      cols:3,
+      mocks(theme, sbg){
+        return [
+          {html:`<div class="spec-mock__stage" style="background:${sbg}">${makeMeterHTML([{label:'Monthly quota',val:'820 / 1,000 · 82%',pct:82,color:'var(--color-brand)'}])}</div>
+            <div class="spec-mock__cap"><b>Quota card</b>One value, one limit, nothing else competing for attention.</div>`},
+          {html:`<div class="spec-mock__stage" style="background:${sbg}">${makeMeterHTML([{label:'API uptime SLA',val:'99.2%',pct:99,color:'var(--color-brand)'},{label:'Error budget',val:'91%',pct:91,color:'var(--color-warn-h)'}])}</div>
+            <div class="spec-mock__cap"><b>SLA health widget</b>Warning colour kicks in as the budget nears its limit.</div>`},
+          {html:`<div class="spec-mock__stage" style="background:${sbg}">${makeMeterHTML([{label:'Storage used',val:'94.6 / 100GB · 95%',pct:95,color:'var(--color-crit-h)'}])}</div>
+            <div class="spec-mock__cap"><b>Usage-limit banner</b>Critical colour signals action is needed now.</div>`},
+        ];
+      }
+    },
+    style(theme, sbg){
+      return [
+        {title:'Anatomy',
+         desc:'A meter pairs a label and a value above a single filled track. The fill defaults to the brand token and switches to Warning or Critical as the value nears its limit.',
+         hero:`<div style="width:100%;max-width:340px">${makeMeterHTML([{label:'Monthly GMV target',val:'R48.2M / R60M · 80%',pct:80,color:'var(--color-brand)'}])}</div>`,
+         parts:[
+           {name:'Label', note:'<code>.dd-meter__label</code> &mdash; 12.5px / 700, what the meter is measuring.', vis:'<span style="font-size:12.5px;font-weight:700;color:var(--chrome-txt)">Float utilisation</span>'},
+           {name:'Value', note:'<code>.dd-meter__val</code> &mdash; the raw figures and/or the percentage, right-aligned against the label.', vis:'<span style="font-size:12px;font-weight:700;color:var(--chrome-muted)">88%</span>'},
+           {name:'Track', note:'<code>.dd-meter__track</code> &mdash; an 8px pill, the full-width base the fill sits on.', vis:'<span style="width:64px;height:8px;border-radius:999px;background:var(--chrome-nav);display:block"></span>'},
+           {name:'Fill', note:'<code>.dd-meter__fill</code> &mdash; the filled portion; colour switches by semantic state (brand / warning / critical).', vis:'<span style="width:64px;height:8px;border-radius:999px;background:var(--chrome-nav);display:block;position:relative"><span style="position:absolute;inset:0;width:70%;border-radius:999px;background:var(--color-warn-h)"></span></span>'},
+         ]},
+        {title:'Size &amp; dimensions',
+         desc:'Meters stack vertically inside one bordered card, each with its own 8px track.',
+         table:cardTokenTable(['Measure','Value','Notes'], [
+           ['Card padding','22px','&mdash;'],
+           ['Track height','8px','999px radius'],
+           ['Gap between meters','18px','&mdash;'],
+           ['Practical ceiling','~4&ndash;5 meters','Group or paginate past that'],
+         ])},
+        {title:'Tokens',
+         desc:'Fill colour is semantic, not palette-based: brand by default, moving to Warning and then Critical as a value approaches its limit.',
+         table:cardTokenTable(['State','Token','Typical range'], [
+           ['Normal','<code>color-brand</code>','Below the warning threshold'],
+           ['Warning','<code>color-warn-h</code>','Approaching the limit'],
+           ['Critical','<code>color-crit-h</code>','At or past the limit'],
+           ['Track (inactive)','<code>chrome-nav</code>','&mdash;'],
+         ])},
+      ];
+    },
+    code:{
+      html(s){
+        return `<span class="code-cm">&#60;!-- Progress meters &mdash; ${s.count} meters --></span>
+<span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"dd-meters"</span><span class="code-kw">></span>
+  <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"dd-meter"</span><span class="code-kw">></span>
+    <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"dd-meter__top"</span><span class="code-kw">></span>
+      <span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"dd-meter__label"</span><span class="code-kw">></span>Float utilisation<span class="code-kw">&#60;/span></span>
+      <span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"dd-meter__val"</span><span class="code-kw">></span>88%<span class="code-kw">&#60;/span></span>
+    <span class="code-kw">&#60;/div></span>
+    <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"dd-meter__track"</span><span class="code-kw">></span>
+      <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"dd-meter__fill"</span> <span class="code-cls">style</span>=<span class="code-val">"width:88%;background:var(--color-warn-h)"</span><span class="code-kw">>&#60;/div></span>
+    <span class="code-kw">&#60;/div></span>
+  <span class="code-kw">&#60;/div></span>
+  <span class="code-cm">&#60;!-- repeat per meter --></span>
+<span class="code-kw">&#60;/div></span>`;
+      },
+      blazor(s){
+        return `<span class="code-cm">@* DsProgressMeter.razor — usage *@</span>
+<span class="code-kw">&#60;DsProgressMeters</span> <span class="code-attr">Items</span>=<span class="code-val">"meters"</span> <span class="code-kw">/></span>
+
+<span class="code-kw">@code</span> {
+  [Parameter] <span class="code-kw">public</span> <span class="code-cls">List&#60;MeterItem></span> Items { get; set; } = <span class="code-kw">new</span>();
+}
+<span class="code-cm">// MeterItem { string Label; string Value; int Pct; string ColorToken; }</span>
+<span class="code-cm">// ColorToken resolves to Brand below the warning threshold, Warning, then Critical.</span>`;
+      },
+      tsx(s){
+        return `<span class="code-cm">// DsProgressMeter.tsx</span>
+<span class="code-kw">type</span> <span class="code-cls">MeterItem</span> = { label: <span class="code-cls">string</span>; value: <span class="code-cls">string</span>; pct: <span class="code-cls">number</span>; color: <span class="code-cls">string</span> };
+
+<span class="code-kw">export function</span> <span class="code-cls">DsProgressMeters</span>({ items }: { items: <span class="code-cls">MeterItem</span>[] }) {
+  <span class="code-kw">return</span> <span class="code-kw">&#60;div</span> <span class="code-cls">className</span>=<span class="code-val">"dd-meters"</span><span class="code-kw">>...&#60;/div></span>;
+}
+
+<span class="code-cm">// Current playground configuration — ${s.count} meters</span>
+<span class="code-kw">&#60;DsProgressMeters</span> <span class="code-attr">items</span>={meters} <span class="code-kw">/></span>`;
+      }
+    }
+  },
+
+  {
+    secId:'s-charts-distribution', pfx:'cdist',
+    langFiles:{html:'distribution-chart.html', blazor:'DsDistribution.razor', tsx:'DsDistribution.tsx'},
+    headingAbove:'Split a total across categories &mdash; a compact single-line overview, or a ranked breakdown when every share needs its own row.',
+    state:{pattern:'segmented', cats:'4'},
+    controls:[
+      {key:'pattern', label:'Pattern',    opts:[{v:'segmented',l:'Segmented bar'},{v:'ranked',l:'Ranked rows'}]},
+      {key:'cats',    label:'Categories', opts:[{v:'3',l:'3'},{v:'5',l:'5'}]},
+    ],
+    dataFor(s){
+      const all = [
+        {label:'Airtime & Data', pct:42, amount:'R14.8M', color:'var(--chrome-accent)'},
+        {label:'Electricity',    pct:32, amount:'R11.2M', color:'var(--color-success-h)'},
+        {label:'1Voucher',       pct:27, amount:'R9.6M',  color:'var(--color-warn-h)'},
+        {label:'Gaming Vouchers',pct:16, amount:'R5.5M',  color:'var(--color-crit-h)'},
+        {label:'Other',          pct:8,  amount:'R2.9M',  color:'var(--chrome-muted)'},
+      ];
+      return all.slice(0, +s.cats);
+    },
+    stage(s){
+      const items = this.dataFor(s);
+      return s.pattern==='segmented'
+        ? makeDistBreakHTML('GMV by category', 'R48.2M total', items)
+        : makeDistRankedHTML(items);
+    },
+    insitu:{
+      desc:'The segmented bar gives a compact overview; ranked rows give each category its own precise, legible line &mdash; a category-breakdown report row either way.',
+      cols:3,
+      mocks(theme, sbg){
+        return [
+          {html:`<div class="spec-mock__stage" style="background:${sbg}">${makeDistBreakHTML('GMV by region', 'R48.2M total', [{label:'Gauteng',pct:38,amount:'R18.3M',color:'var(--chrome-accent)'},{label:'Western Cape',pct:24,amount:'R11.6M',color:'var(--color-success-h)'},{label:'KwaZulu-Natal',pct:21,amount:'R10.1M',color:'var(--color-warn-h)'},{label:'Other regions',pct:17,amount:'R8.2M',color:'var(--chrome-muted)'}])}</div>
+            <div class="spec-mock__cap"><b>Regional overview tile</b>One glance at the mix, backed by a legend with the exact figures.</div>`},
+          {html:`<div class="spec-mock__stage" style="background:${sbg}">${makeDistRankedHTML([{label:'Airtime & Data',pct:42,amount:'R14.8M',color:'var(--chrome-accent)'},{label:'Electricity',pct:32,amount:'R11.2M',color:'var(--color-success-h)'},{label:'1Voucher',pct:27,amount:'R9.6M',color:'var(--color-warn-h)'}])}</div>
+            <div class="spec-mock__cap"><b>Category breakdown report</b>Each row reads on its own, no legend needed.</div>`},
+          {html:`<div class="spec-mock__stage" style="background:${sbg}">${makeDistBreakHTML('Storage used', '128GB total', [{label:'Media',pct:54,amount:'69GB',color:'var(--chrome-accent)'},{label:'Documents',pct:29,amount:'37GB',color:'var(--color-success-h)'},{label:'Other',pct:17,amount:'22GB',color:'var(--chrome-muted)'}])}</div>
+            <div class="spec-mock__cap"><b>Storage-usage widget</b>A single bar is enough when the overview matters more than each figure.</div>`},
+        ];
+      }
+    },
+    style(theme, sbg){
+      return [
+        {title:'Anatomy',
+         desc:'Both patterns share the same parts &mdash; a coloured swatch, a label, a percentage, and a track. The segmented bar packs every category into one row; ranked rows give each its own.',
+         hero:makeDistBreakHTML('GMV by category', 'R48.2M total', [{label:'Airtime & Data',pct:42,amount:'R14.8M',color:'var(--chrome-accent)'},{label:'Electricity',pct:32,amount:'R11.2M',color:'var(--color-success-h)'},{label:'1Voucher',pct:27,amount:'R9.6M',color:'var(--color-warn-h)'}]),
+         parts:[
+           {name:'Segment / swatch', note:'<code>.dd-break__seg</code> / <code>.dd-dist__swatch</code> &mdash; each category&rsquo;s own palette colour, linking the bar, row and legend.', vis:'<span style="width:14px;height:14px;border-radius:3px;background:var(--chrome-accent)"></span>'},
+           {name:'Legend / row label', note:'<code>.dd-break__item</code> / <code>.dd-dist__label</code> &mdash; the category name paired with its swatch.', vis:'<span style="font-size:12.5px;font-weight:700;color:var(--chrome-txt)">Electricity</span>'},
+           {name:'Track', note:'<code>.dd-break__bar</code> / <code>.dd-dist__track</code> &mdash; the full-width base each segment or fill sits on.', vis:'<span style="width:64px;height:10px;border-radius:999px;background:var(--chrome-nav);display:block"></span>'},
+           {name:'Value', note:'<code>.dd-break__v</code> / <code>.dd-dist__val</code> &mdash; percentage and the exact amount together.', vis:'<span style="font-size:12px;font-weight:700;color:var(--chrome-muted)">32% &middot; R11.2M</span>'},
+         ]},
+        {title:'Size &amp; dimensions',
+         desc:'Both patterns share the same 22px card padding; only the track height and per-row spacing differ.',
+         table:cardTokenTable(['Measure','Value','Notes'], [
+           ['Card padding','22px','Both patterns'],
+           ['Segmented bar height','14px','999px radius, 2px gap between segments'],
+           ['Ranked row track height','10px','999px radius'],
+           ['Practical ceiling','~6 categories','Group the tail into &ldquo;Other&rdquo;'],
+         ])},
+        {title:'Tokens',
+         desc:'Each category gets its own palette colour &mdash; the same shared chart palette used by every other chart type on this page group.',
+         table:cardTokenTable(['Part','Token','Value'], CHT_PAL_TOKEN_ROWS)},
+      ];
+    },
+    code:{
+      html(s){
+        return s.pattern==='segmented' ? `<span class="code-cm">&#60;!-- Segmented distribution bar &mdash; ${s.cats} categories --></span>
+<span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"dd-break"</span><span class="code-kw">></span>
+  <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"dd-break__bar"</span><span class="code-kw">></span>
+    <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"dd-break__seg"</span> <span class="code-cls">style</span>=<span class="code-val">"width:42%;background:var(--chrome-accent)"</span><span class="code-kw">>&#60;/div></span>
+    <span class="code-cm">&#60;!-- one segment per category --></span>
+  <span class="code-kw">&#60;/div></span>
+  <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"dd-break__legend"</span><span class="code-kw">>...&#60;/div></span>
+<span class="code-kw">&#60;/div></span>` : `<span class="code-cm">&#60;!-- Ranked distribution rows &mdash; ${s.cats} categories --></span>
+<span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"dd-dist"</span><span class="code-kw">></span>
+  <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"dd-dist__row"</span><span class="code-kw">></span>
+    <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"dd-dist__track"</span><span class="code-kw">></span>
+      <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"dd-dist__fill"</span> <span class="code-cls">style</span>=<span class="code-val">"width:42%;background:var(--chrome-accent)"</span><span class="code-kw">>&#60;/div></span>
+    <span class="code-kw">&#60;/div></span>
+  <span class="code-kw">&#60;/div></span>
+  <span class="code-cm">&#60;!-- repeat per category --></span>
+<span class="code-kw">&#60;/div></span>`;
+      },
+      blazor(s){
+        return `<span class="code-cm">@* DsDistribution.razor — usage *@</span>
+<span class="code-kw">&#60;DsDistribution</span>
+    <span class="code-attr">Items</span>=<span class="code-val">"gmvByCategory"</span>
+    <span class="code-attr">Pattern</span>=<span class="code-val">"${s.pattern==='segmented'?'DistributionPattern.Segmented':'DistributionPattern.Ranked'}"</span><span class="code-kw">/></span>
+
+<span class="code-kw">@code</span> {
+  [Parameter] <span class="code-kw">public</span> <span class="code-cls">List&#60;DistributionItem></span> Items { get; set; } = <span class="code-kw">new</span>();
+  [Parameter] <span class="code-kw">public</span> <span class="code-cls">DistributionPattern</span> Pattern { get; set; }
+}`;
+      },
+      tsx(s){
+        return `<span class="code-cm">// DsDistribution.tsx</span>
+<span class="code-kw">type</span> <span class="code-cls">DistributionItem</span> = { label: <span class="code-cls">string</span>; pct: <span class="code-cls">number</span>; amount: <span class="code-cls">string</span>; color: <span class="code-cls">string</span> };
+
+<span class="code-kw">export function</span> <span class="code-cls">DsDistribution</span>({ items, pattern }: { items: <span class="code-cls">DistributionItem</span>[]; pattern: <span class="code-val">'segmented'</span> | <span class="code-val">'ranked'</span> }) {
+  <span class="code-kw">return</span> pattern === <span class="code-val">'segmented'</span>
+    ? <span class="code-kw">&#60;div</span> <span class="code-cls">className</span>=<span class="code-val">"dd-break"</span><span class="code-kw">>...&#60;/div></span>
+    : <span class="code-kw">&#60;div</span> <span class="code-cls">className</span>=<span class="code-val">"dd-dist"</span><span class="code-kw">>...&#60;/div></span>;
+}
+
+<span class="code-cm">// Current playground configuration</span>
+<span class="code-kw">&#60;DsDistribution</span> <span class="code-attr">items</span>={gmvByCategory} <span class="code-attr">pattern</span>=<span class="code-val">"${s.pattern}"</span> <span class="code-kw">/></span>`;
+      }
+    }
+  },
+];
+
+const CHART_PG = {};
+CHART_PAGES.forEach(pg=>{ CHART_PG[pg.secId] = Object.assign({}, pg.state); });
+
+function chartPage(secId){ return CHART_PAGES.find(p=>p.secId===secId); }
+
+/* ── PLAYGROUND (same two-mount pattern as Cards/Pills) ── */
+function chartPlaygroundMounts(pg){
+  return [
+    {rootId:pg.pfx+'-playground', wrap:true, title:'Try the component', desc:'Adjust the controls to test component states.', headingAbove:pg.headingAbove},
+    {rootId:pg.pfx+'-code-playground', style:'code', title:'Playground', desc:'Live demo of the component.'},
+  ];
+}
+
+function renderChartPlayground(pg){
+  const theme = currentTheme(), sbg = stageBg(theme);
+  const s = CHART_PG[pg.secId];
+
+  const groups = pg.controls.map(c=>`
+        <div class="btn-pg__group"><span class="btn-pg__clabel">${c.label}</span><div class="btn-pg__pill-row">${
+          c.opts.map(o=>`<button class="btn-pg__pill${s[c.key]===o.v?' on':''}" onclick="chartpgSet('${pg.secId}','${c.key}','${o.v}')">${o.l}</button>`).join('')
+        }</div></div>`).join('');
+
+  chartPlaygroundMounts(pg).forEach(mount=>{
+    const root = document.getElementById(mount.rootId);
+    if(!root) return;
+    const demo = `
+      <div class="btn-pg btn-pg--dd">
+        <div class="btn-pg__stage chartpg-stage-${pg.pfx}" style="background:${sbg}"></div>
+        <div class="btn-pg__ctrls">${groups}
+        </div>
+      </div>`;
+
+    if(mount.style==='code'){
+      root.innerHTML = `
+        <div class="type-sub__title">${mount.title}</div>
+        <div class="type-sub__desc">${mount.desc}</div>
+        <div class="cpg-section-outline">${demo}</div>`;
+      return;
+    }
+
+    const inner = `
+      <div class="cpg-layout">
+        <div class="cpg-layout__intro">
+          <span class="cpg-cursor-icon">${CPG_CURSOR_ICON_SVG}</span>
+          <div class="cpg-layout__title">${mount.title}</div>
+          <div class="cpg-layout__desc">${mount.desc}</div>
+        </div>
+        <div class="cpg-layout__demo">${demo}</div>
+      </div>`;
+    root.innerHTML = (mount.headingAbove ? `<div class="cpg-overview-heading"><span class="cpg-overview-heading__icon">${CPG_INFO_ICON_SVG}</span><span>${mount.headingAbove}</span></div>` : '') + `<div class="cpg-section-block">${inner}</div>`;
+  });
+
+  chartpgRefresh(pg);
+}
+
+function chartpgRefresh(pg){
+  const s = CHART_PG[pg.secId];
+  const html = pg.stage(s);
+  document.querySelectorAll('.chartpg-stage-' + pg.pfx).forEach(stage=>{
+    stage.innerHTML = html;
+    if(pg.bind) pg.bind(stage, s);
+  });
+  const block = document.getElementById(pg.pfx + '-code-block');
+  if(block) block.innerHTML = getChartCode(pg);
+}
+
+function chartpgSet(secId, key, val){
+  const pg = chartPage(secId);
+  if(!pg) return;
+  CHART_PG[secId][key] = val;
+  renderChartPlayground(pg);
+}
+
+/* ── IN-CONTEXT MOCKUPS (Overview) ── */
+function renderChartInSitu(pg){
+  const root = document.getElementById(pg.pfx + '-insitu');
+  if(!root || !pg.insitu) return;
+  const theme = currentTheme(), sbg = stageBg(theme);
+  const mocks = pg.insitu.mocks(theme, sbg).map(m=>`<div class="spec-mock"${m.style?` style="${m.style}"`:''}>${m.html}</div>`).join('');
+
+  root.innerHTML = `
+    <div class="cpg-section-heading">
+      <div class="cpg-layout__title">In context</div>
+      <div class="cpg-layout__desc">${pg.insitu.desc}</div>
+    </div>
+    <div class="cpg-section-block">
+      <div class="spec-insitu-grid${pg.insitu.cols===2?' spec-insitu-grid--2':''}">${mocks}</div>
+    </div>`;
+  bindChartInteractivity(root);
+}
+
+/* ── STYLE TAB ── */
+function renderChartReference(pg){
+  const root = document.getElementById(pg.pfx + '-reference');
+  if(!root) return;
+  const theme = currentTheme(), sbg = stageBg(theme);
+
+  const blocks = pg.style(theme, sbg).map((b, bi, arr)=>{
+    let body = '';
+    if(b.hero) body += `<div class="spec-hero" style="background:${sbg}">${b.hero}</div>`;
+    if(b.parts) body += `<div class="spec-parts">${b.parts.map((p,i)=>`
+        <div class="spec-part">
+          <div class="spec-part__stage" style="background:${sbg}">${p.vis}</div>
+          <div class="spec-part__body">
+            <div class="spec-part__name"><span class="spec-part__num">${i+1}</span>${p.name}</div>
+            <div class="spec-part__note">${p.note}</div>
+          </div>
+        </div>`).join('')}</div>`;
+    if(b.table) body += b.table;
+
+    return `
+    <div class="type-sub"${bi===arr.length-1?' style="margin-bottom:0"':''}>
+      <div class="type-sub__title">${b.title}</div>
+      <div class="type-sub__desc">${b.desc}</div>
+      <div class="cpg-section-outline">${body}</div>
+    </div>`;
+  }).join('');
+
+  root.innerHTML = blocks;
+  bindChartInteractivity(root);
+}
+
+/* ── CODE TAB ── */
+const CHART_LANGS = [
+  {key:'html',   label:'HTML / CSS'},
+  {key:'blazor', label:'Blazor'},
+  {key:'tsx',    label:'React TSX'},
+];
+const chartLang = {};
+CHART_PAGES.forEach(pg=>{ chartLang[pg.secId] = 'html'; });
+
+function getChartCode(pg){
+  const s = CHART_PG[pg.secId];
+  const lang = chartLang[pg.secId] || 'html';
+  const fn = pg.code[lang] || pg.code.html;
+  return fn(s);
+}
+
+function renderChartCodeTab(pg){
+  const root = document.getElementById(pg.pfx + '-code-tab');
+  if(!root) return;
+  const lang = chartLang[pg.secId] || 'html';
+  root.innerHTML = `
+    <div class="type-sub__title">Code</div>
+    <div class="type-sub__desc">Live snippet matching the current Playground configuration &mdash; switch to Overview to change it.</div>
+    <div class="cpg-section-outline">
+      <div class="code-panel code-panel--bare open">
+        <div class="code-panel__head">
+          <div class="code-seg" role="tablist" aria-label="Code language" onkeydown="chartLangKeydown(event,'${pg.secId}')">
+            ${CHART_LANGS.map(l=>`<button type="button" role="tab" class="code-seg__btn" id="${pg.pfx}-lang-${l.key}" data-lang="${l.key}" aria-selected="${lang===l.key?'true':'false'}" aria-controls="${pg.pfx}-code-block" tabindex="${lang===l.key?'0':'-1'}" onclick="setChartLang('${pg.secId}','${l.key}')">${l.label}</button>`).join('')}
+          </div>
+          <span class="code-lang-file" id="${pg.pfx}-lang-file">${pg.langFiles[lang]}</span>
+          <button class="code-copy-btn" onclick="chartCopyCode('${pg.secId}')" id="${pg.pfx}-copy-btn">Copy</button>
+        </div>
+        <div class="code-body"><div class="code-block" id="${pg.pfx}-code-block" role="tabpanel" aria-live="polite"></div></div>
+      </div>
+    </div>`;
+}
+
+function setChartLang(secId, lang){
+  const pg = chartPage(secId);
+  if(!pg || !CHART_LANGS.some(l=>l.key===lang)) return;
+  chartLang[secId] = lang;
+  document.querySelectorAll(`#${pg.pfx}-code-tab .code-seg__btn`).forEach(b=>{
+    const on = b.dataset.lang===lang;
+    b.setAttribute('aria-selected', on ? 'true' : 'false');
+    b.setAttribute('tabindex', on ? '0' : '-1');
+  });
+  const file = document.getElementById(pg.pfx + '-lang-file');
+  if(file) file.textContent = pg.langFiles[lang];
+  const block = document.getElementById(pg.pfx + '-code-block');
+  if(block) block.innerHTML = getChartCode(pg);
+}
+
+function chartLangKeydown(e, secId){
+  const i = CHART_LANGS.findIndex(l=>l.key===(chartLang[secId]||'html'));
+  let n = i;
+  if(e.key==='ArrowLeft')       n = (i - 1 + CHART_LANGS.length) % CHART_LANGS.length;
+  else if(e.key==='ArrowRight') n = (i + 1) % CHART_LANGS.length;
+  else if(e.key==='Home')       n = 0;
+  else if(e.key==='End')        n = CHART_LANGS.length - 1;
+  else return;
+  e.preventDefault();
+  setChartLang(secId, CHART_LANGS[n].key);
+  const pg = chartPage(secId);
+  const btn = pg && document.getElementById(pg.pfx + '-lang-' + CHART_LANGS[n].key);
+  if(btn) btn.focus();
+}
+
+function chartCopyCode(secId){
+  const pg = chartPage(secId);
+  if(!pg) return;
+  const b = document.getElementById(pg.pfx + '-code-block');
+  if(!b) return;
+  navigator.clipboard.writeText(b.innerText||b.textContent).catch(()=>{});
+  const btn = document.getElementById(pg.pfx + '-copy-btn');
+  if(btn){ btn.textContent = 'Copied!'; setTimeout(()=>btn.textContent='Copy', 2000); }
+}
+
+/* ── TAB SWITCH ── */
+function chartTabSwitch(secId, tab){
+  const pg = chartPage(secId);
+  if(!pg) return;
+  const nav = document.getElementById(pg.pfx + '-tabs-list');
+  if(!nav) return;
+  nav.querySelectorAll('.tab-item').forEach(btn=>btn.classList.toggle('on', btn.getAttribute('data-chart-tab')===tab));
+  document.querySelectorAll(`#${secId} .tabs-panel[data-chart-panel]`).forEach(p=>p.classList.toggle('on', p.getAttribute('data-chart-panel')===tab));
+}
+
+/* ── INIT / THEME RE-RENDER ── */
+function renderChartPages(){
+  CHART_PAGES.forEach(pg=>{
+    try { renderChartCodeTab(pg);   } catch(e){ console.error(pg.pfx+'-code-tab',e); }
+    try { renderChartPlayground(pg);} catch(e){ console.error(pg.pfx+'-playground',e); }
+    try { renderChartInSitu(pg);    } catch(e){ console.error(pg.pfx+'-insitu',e); }
+    try { renderChartReference(pg); } catch(e){ console.error(pg.pfx+'-reference',e); }
+  });
+}
+renderChartPages();
+
+
+
 function dpTabSwitch(tab){
   const nav = document.getElementById('dp-tabs-list');
   if(!nav) return;
@@ -21102,6 +22077,11 @@ try { renderSectionChangelogs(); } catch(e){ console.error('section-changelog',e
   {secId:'s-cards-interactive', panelId:'cinter-changelog-panel'},
   {secId:'s-cards-stat', panelId:'cstat-changelog-panel'},
   {secId:'s-cards-hover', panelId:'chover-changelog-panel'},
+  {secId:'s-charts-bar', panelId:'cbar-changelog-panel'},
+  {secId:'s-charts-line', panelId:'cline-changelog-panel'},
+  {secId:'s-charts-donut', panelId:'cdonut-changelog-panel'},
+  {secId:'s-charts-meters', panelId:'cmeter-changelog-panel'},
+  {secId:'s-charts-distribution', panelId:'cdist-changelog-panel'},
 ].forEach(({secId, panelId})=>{
   try {
     const chlog = document.querySelector(`#${secId} > .sec-chlog`);
