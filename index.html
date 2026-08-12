@@ -895,7 +895,13 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;font-feature-
 
 /* Playground */
 .btn-pg{border:1px solid var(--chrome-border);border-radius:12px;overflow:hidden}
+/* overflow:visible so a floating element (a dropdown panel, a pinned-open
+   hover card) isn't clipped — but that also stops the parent's rounded
+   corners from clipping the stage/ctrls backgrounds, leaving square corners
+   poking past the rounded border. Round the outer children to match. */
 .btn-pg--dd{overflow:visible}
+.btn-pg--dd > *:first-child{border-radius:11px 11px 0 0}
+.btn-pg--dd > *:last-child{border-radius:0 0 11px 11px}
 .btn-pg__stage{display:flex;align-items:center;justify-content:center;min-height:220px;padding:56px 40px;transition:background .25s}
 .btn-pg__ctrls{display:flex;flex-direction:column;gap:16px;padding:20px 22px;background:var(--chrome-nav);border-top:1px solid var(--chrome-border);transition:background .25s}
 .btn-pg__group{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
@@ -1515,8 +1521,8 @@ body.home .main{max-width:none;margin:0;padding:0}
 .sec--tabbed .spec-mock__field svg{width:16px;height:16px;margin-left:auto;color:var(--chrome-muted);flex-shrink:0}
 .sec--tabbed .spec-mock__caret{width:1.5px;height:18px;background:var(--chrome-txt);opacity:.45}
 .sec--tabbed .spec-usage-demo{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:14px;padding-top:14px;border-top:1px dashed var(--chrome-border)}
-.sec--tabbed .spec-cell{border:1px solid var(--chrome-border);border-radius:12px;overflow:hidden;background:var(--chrome-bg);transition:background .25s,border-color .25s}
-.sec--tabbed .spec-cell__stage{display:flex;align-items:center;justify-content:center;padding:24px 12px;min-height:60px;transition:background .25s}
+.sec--tabbed .spec-cell{display:flex;flex-direction:column;border:1px solid var(--chrome-border);border-radius:12px;overflow:hidden;background:var(--chrome-bg);transition:background .25s,border-color .25s}
+.sec--tabbed .spec-cell__stage{display:flex;align-items:center;justify-content:center;padding:24px 12px;min-height:60px;flex:1 1 auto;transition:background .25s}
 .sec--tabbed .spec-cell__name{padding:10px 12px 0;font-size:13px;font-weight:700;color:var(--chrome-txt);border-top:1px solid var(--chrome-border)}
 .sec--tabbed .spec-cell__desc{padding:2px 12px 12px;font-size:11.5px;color:var(--chrome-muted)}
 .sec--tabbed .sec-header-meta{display:flex;align-items:center;gap:8px;position:relative}
@@ -2270,6 +2276,12 @@ body.home .main{max-width:none;margin:0;padding:0}
 .card__foot--end{justify-content:flex-end}
 .card--interactive{cursor:pointer}
 .card--interactive:hover{border-color:var(--color-text-s);box-shadow:0 8px 24px rgba(0,0,0,.10);transform:translateY(-2px)}
+.card--interactive:active{border-color:var(--color-text-s);box-shadow:0 2px 8px rgba(0,0,0,.10);transform:translateY(0) scale(.99)}
+.card--interactive:focus-visible{outline:none;border-color:var(--color-text-s);box-shadow:0 0 0 3px var(--color-input-focus)}
+/* Force states — static previews of the interactive card's real hover/focus/pressed treatment */
+.card.f-hover{border-color:var(--color-text-s);box-shadow:0 8px 24px rgba(0,0,0,.10);transform:translateY(-2px)}
+.card.f-focus{border-color:var(--color-text-s);box-shadow:0 0 0 3px var(--color-input-focus)}
+.card.f-press{border-color:var(--color-text-s);box-shadow:0 2px 8px rgba(0,0,0,.10);transform:translateY(0) scale(.99)}
 .card-btn{background:var(--color-btn-s-bg);color:var(--color-btn-s-txt);border:0;border-radius:8px;padding:8px 16px;font-size:13px;font-weight:700;font-family:inherit;cursor:pointer;transition:opacity .15s}
 .card-btn:hover{opacity:.85}
 .card-btn--ghost{background:transparent;color:var(--chrome-txt);border:1px solid var(--chrome-border)}
@@ -2280,6 +2292,7 @@ body.home .main{max-width:none;margin:0;padding:0}
 @media(max-width:480px){.dd-stats{grid-template-columns:1fr}}
 .dd-stat{border:1px solid var(--chrome-border);border-radius:14px;padding:18px 18px 16px;background:var(--chrome-bg);transition:border-color .2s,transform .2s}
 .dd-stat:hover{border-color:var(--chrome-accent);transform:translateY(-2px)}
+.dd-stat.f-hover{border-color:var(--chrome-accent);transform:translateY(-2px)}
 .dd-stat__label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--chrome-muted);margin-bottom:10px}
 .dd-stat__value{font-size:30px;font-weight:800;line-height:1;color:var(--chrome-txt);letter-spacing:-1px;font-variant-numeric:tabular-nums}
 .dd-stat__foot{display:flex;align-items:center;gap:8px;margin-top:11px;font-size:12px}
@@ -2419,6 +2432,8 @@ body.home .main{max-width:none;margin:0;padding:0}
 .hc__trigger{color:var(--color-link);font-weight:600;cursor:pointer;text-decoration:underline;text-underline-offset:2px;background:none;border:0;font-family:inherit;font-size:inherit;padding:0}
 .hc__card{position:absolute;top:calc(100% + 8px);left:0;z-index:30;width:268px;background:var(--chrome-bg);border:1px solid var(--chrome-border);border-radius:12px;box-shadow:0 14px 36px rgba(0,0,0,.16);padding:16px;opacity:0;transform:translateY(-6px) scale(.98);transform-origin:top left;pointer-events:none;transition:opacity .18s ease,transform .18s ease}
 .hc:hover .hc__card,.hc:focus-within .hc__card{opacity:1;transform:translateY(0) scale(1);pointer-events:auto;transition-delay:.2s}
+/* .is-open pins the card open — for a programmatic open, and for showing the revealed state statically */
+.hc.is-open .hc__card{opacity:1;transform:translateY(0) scale(1);pointer-events:auto;transition-delay:0s}
 .hc__row{display:flex;gap:12px;align-items:center;margin-bottom:11px}
 .hc__name{font-size:14px;font-weight:800;color:var(--chrome-txt)}
 .hc__handle{font-size:12px;color:var(--chrome-muted)}
@@ -3945,77 +3960,23 @@ body.home .main{max-width:none;margin:0;padding:0}
       </div>
       <div class="tabs-panel" data-pill-panel="changelog" id="pill-changelog-panel"></div>
     </section>
-    <section class="sec" id="s-cards-basic">
+    <section class="sec sec--tabbed" id="s-cards-basic">
+      <div class="sec-hero">
       <div class="sec__head">
-        <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Basic Cards <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.2.0</span></h1>
-        <p class="sec__desc">A surface that groups related content and actions into a single unit — a body (title, description, content) and an optional footer for actions. Built on Flash surface and border tokens, so it adapts to light &amp; dark.</p>
-      </div>
-      <div class="type-sub">
-        <div class="type-sub__title">Anatomy</div>
-        <div class="type-sub__desc">A basic card is a body with a title and description. Add a footer for actions &mdash; use only what each card needs.</div>
-        <div class="sg-stage"><div class="card-grid">
-          <div class="card">
-            <div class="card__body">
-              <div class="card__title">Basic card</div>
-              <div class="card__desc">Just a body with a title and a short description. The simplest, most common shape.</div>
-            </div>
-          </div>
-          <div class="card">
-            <div class="card__body">
-              <div class="card__title">With footer</div>
-              <div class="card__desc">A footer separates primary and secondary actions from the content above.</div>
-            </div>
-            <div class="card__foot card__foot--end">
-              <button class="card-btn card-btn--ghost" type="button">Cancel</button>
-              <button class="card-btn" type="button">Save</button>
-            </div>
-          </div>
-        </div></div>
-      </div>
-      <div class="type-sub">
-        <div class="type-sub__title">Specs</div>
-        <div class="type-sub__desc">Shared measurements and the tokens behind the surface &mdash; the same base applies to every card variant in this group (Media, Interactive, Stat, Hover).</div>
-        <div class="dd-table-wrap"><table class="dd-table">
-          <thead><tr><th>Property</th><th>Value</th><th>Token</th></tr></thead>
-          <tbody>
-            <tr><td class="dd-table__name">Corner radius</td><td>14px</td><td>&mdash;</td></tr>
-            <tr><td class="dd-table__name">Border</td><td>1px</td><td><code>chrome-border</code></td></tr>
-            <tr><td class="dd-table__name">Surface</td><td>Base background</td><td><code>chrome-bg</code></td></tr>
-            <tr><td class="dd-table__name">Body padding</td><td>18px</td><td>spacing-225</td></tr>
-            <tr><td class="dd-table__name">Footer action</td><td colspan="2">Primary (black) button</td></tr>
-          </tbody>
-        </table></div>
-      </div>
-      <div class="type-sub">
-        <div class="type-sub__title">When to use</div>
-        <div class="type-sub__desc">A card groups one coherent thing. If content isn&rsquo;t related, don&rsquo;t box it together.</div>
-        <div class="sel-usage">
-          <div class="sel-usage__card">
-            <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
-            <ul class="sel-usage__list">
-              <li>Group a single, self-contained subject &mdash; one product, one summary, one record.</li>
-              <li>Keep one clear primary action per card, in the footer.</li>
-              <li>Reach for Media, Interactive, Stat or Hover Cards for those specific jobs &mdash; this basic shape is the default for everything else.</li>
-            </ul>
-          </div>
-          <div class="sel-usage__card">
-            <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don&rsquo;t</div>
-            <ul class="sel-usage__list">
-              <li>Don&rsquo;t cram unrelated content into one card to save space.</li>
-              <li>Don&rsquo;t nest cards inside cards &mdash; flatten the hierarchy.</li>
-              <li>Don&rsquo;t put several competing primary actions in one footer.</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <details class="ai-ctx">
+        <h1 class="sec__title">Basic Cards</h1>
+        <div class="sec-header-meta">
+          <span class="comp-ver-badge" style="margin-left:0">v1.3.0</span>
+          <details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-cards-basic">
 {
-  "status": "static",
+  "status": "js-rendered",
+  "builderFunctions": [
+    "cardHTML"
+  ],
   "realClasses": [
     ".card",
+    ".card-grid",
     ".card__body",
     ".card__title",
     ".card__desc",
@@ -4024,7 +3985,8 @@ body.home .main{max-width:none;margin:0;padding:0}
     ".card-btn",
     ".card-btn--ghost"
   ],
-  "css": ".card { background:var(--chrome-bg);border:1px solid var(--chrome-border);border-radius:14px;overflow:hidden;width:300px;max-width:100%;transition:background .25s,border-color .15s,box-shadow .15s,transform .15s;display:flex;flex-direction:column }\n.card__body { padding:18px;flex:1 }\n.card__title { font-size:15px;font-weight:800;color:var(--chrome-txt);margin-bottom:5px }\n.card__desc { font-size:13px;line-height:1.55;color:var(--chrome-muted) }\n.card__body p { font-size:13px;line-height:1.6;color:var(--chrome-txt);margin-top:12px }\n.card__foot { display:flex;gap:10px;align-items:center;padding:14px 18px;border-top:1px solid var(--chrome-border) }\n.card__foot--end { justify-content:flex-end }\n.card-btn { background:var(--color-btn-s-bg);color:var(--color-btn-s-txt);border:0;border-radius:8px;padding:8px 16px;font-size:13px;font-weight:700;font-family:inherit;cursor:pointer;transition:opacity .15s }\n.card-btn:hover { opacity:.85 }\n.card-btn--ghost { background:transparent;color:var(--chrome-txt);border:1px solid var(--chrome-border) }\n.card-btn--ghost:hover { opacity:1;background:var(--chrome-hover) }",
+  "css": "/* ---- Card ---- */\n.card-grid { display:flex;flex-wrap:wrap;gap:20px }\n.card { background:var(--chrome-bg);border:1px solid var(--chrome-border);border-radius:14px;overflow:hidden;width:300px;max-width:100%;transition:background .25s,border-color .15s,box-shadow .15s,transform .15s;display:flex;flex-direction:column }\n.card__body { padding:18px;flex:1 }\n.card__title { font-size:15px;font-weight:800;color:var(--chrome-txt);margin-bottom:5px }\n.card__desc { font-size:13px;line-height:1.55;color:var(--chrome-muted) }\n.card__body p { font-size:13px;line-height:1.6;color:var(--chrome-txt);margin-top:12px }\n.card__foot { display:flex;gap:10px;align-items:center;padding:14px 18px;border-top:1px solid var(--chrome-border) }\n.card__foot--end { justify-content:flex-end }\n/* Force states — static previews of the interactive card's real hover/focus/pressed treatment */\n.card.f-hover { border-color:var(--color-text-s);box-shadow:0 8px 24px rgba(0,0,0,.10);transform:translateY(-2px) }\n.card.f-focus { border-color:var(--color-text-s);box-shadow:0 0 0 3px var(--color-input-focus) }\n.card.f-press { border-color:var(--color-text-s);box-shadow:0 2px 8px rgba(0,0,0,.10);transform:translateY(0) scale(.99) }\n.card-btn { background:var(--color-btn-s-bg);color:var(--color-btn-s-txt);border:0;border-radius:8px;padding:8px 16px;font-size:13px;font-weight:700;font-family:inherit;cursor:pointer;transition:opacity .15s }\n.card-btn:hover { opacity:.85 }\n.card-btn--ghost { background:transparent;color:var(--chrome-txt);border:1px solid var(--chrome-border) }\n.card-btn--ghost:hover { opacity:1;background:var(--chrome-hover) }",
+  "js": "function cardHTML(o){\n  o = o || {};\n  const cls = ['card'];\n  if(o.interactive) cls.push('card--interactive');\n  if(o.force) cls.push('f-' + o.force);\n  const attrs = o.interactive ? ' tabindex=\"0\" role=\"button\"' : '';\n  let html = '';\n  if(o.media) html += `&lt;div class=\"card__media\"${o.mediaStyle?` style=\"${o.mediaStyle}\"`:''}&gt;&lt;/div&gt;`;\n  let body = '';\n  if(o.title) body += `&lt;div class=\"card__title\"&gt;${cardEsc(o.title)}&lt;/div&gt;`;\n  if(o.desc)  body += `&lt;div class=\"card__desc\"&gt;${cardEsc(o.desc)}&lt;/div&gt;`;\n  html += `&lt;div class=\"card__body\"&gt;${body}&lt;/div&gt;`;\n  if(o.foot){\n    const ghost = o.ghost ? `&lt;button class=\"card-btn card-btn--ghost\" type=\"button\" tabindex=\"-1\"&gt;${cardEsc(o.ghostLabel||'Cancel')}&lt;/button&gt;` : '';\n    html += `&lt;div class=\"card__foot card__foot--end\"&gt;${ghost}&lt;button class=\"card-btn\" type=\"button\" tabindex=\"-1\"&gt;${cardEsc(o.actionLabel||'Save')}&lt;/button&gt;&lt;/div&gt;`;\n  }\n  return `&lt;div class=\"${cls.join(' ')}\"${attrs} style=\"${o.style||''}\"&gt;${html}&lt;/div&gt;`;\n}",
   "usage": {
     "do": [
       "Group a single, self-contained subject — one product, one summary, one record.",
@@ -4037,67 +3999,90 @@ body.home .main{max-width:none;margin:0;padding:0}
       "Don’t put several competing primary actions in one footer."
     ]
   },
-  "contentHash": "a20999f39b47041d7169c305d677a96552bf1e5ffe38e4b149e07907573b23d0",
-  "note": "Split out of the former combined Cards page (v1.1.0), which also covered Media/Interactive/Stat variants (now s-cards-media/s-cards-interactive/s-cards-stat)."
+  "contentHash": "f5e77761c6ed7dcefc333052920f02c6aa6f0c6a35f5dc2ab4e2948aef5dc007",
+  "note": "Page is now a .sec--tabbed Overview/Style/Code/Changelog page whose demos are all built by the shared cardHTML builder — the static HTML is just empty mounts (#cbasic-playground/-keystates/-insitu/-reference/-code-tab). cardHTML is the canonical real-markup builder shared by every Cards sub-page; CARD_PAGES / CARD_PG / renderCardPlayground / renderCardKeyStates / renderCardInSitu / renderCardReference / renderCardCodeTab / cardTabSwitch are doc-site-only playground plumbing, excluded. This page's token table is the shared card surface base — the same base applies to every card variant in this group (Media, Interactive, Stat, Hover)."
 }
   </pre>
 </details>
-    </section>
-
-    <section class="sec" id="s-cards-media">
-      <div class="sec__head">
-        <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Media Cards <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.0</span></h1>
-        <p class="sec__desc">A card with an image or thumbnail band flush at the top, above the body &mdash; for products, articles and previews.</p>
+        </div>
       </div>
-      <div class="type-sub">
-        <div class="type-sub__title">Media band</div>
-        <div class="type-sub__desc">The media band sits flush at the top with no padding; the body below keeps the standard card padding.</div>
-        <div class="sg-stage"><div class="card-grid">
-          <div class="card">
-            <div class="card__media"></div>
-            <div class="card__body">
-              <div class="card__title">Media card</div>
-              <div class="card__desc">An image or thumbnail band above the body, useful for products, articles and previews.</div>
+      <div class="sec-hero__preview"><div class="mk"><div class="mk-card" style="width:60%;overflow:hidden"><div style="padding:11px;display:flex;flex-direction:column;gap:7px"><span class="mk-bar mk-bar--txt" style="width:70%"></span><span class="mk-bar" style="width:95%"></span><span class="mk-bar" style="width:50%"></span></div></div></div></div>
+      </div>
+      <div class="tabs-list sec-tabs" id="cbasic-tabs-list">
+        <button type="button" class="tab-item on" data-card-tab="overview" onclick="cardTabSwitch('s-cards-basic','overview')"><span class="tab-item__inner"><span class="tab-item__label">Overview</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-card-tab="style" onclick="cardTabSwitch('s-cards-basic','style')"><span class="tab-item__inner"><span class="tab-item__label">Style</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-card-tab="code" onclick="cardTabSwitch('s-cards-basic','code')"><span class="tab-item__inner"><span class="tab-item__label">Code</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-card-tab="changelog" onclick="cardTabSwitch('s-cards-basic','changelog')"><span class="tab-item__inner"><span class="tab-item__label">Changelog</span></span><span class="tab-item__line"></span></button>
+      </div>
+      <div class="tabs-panel on" data-card-panel="overview">
+        <div id="cbasic-playground" class="type-sub"></div>
+        <div id="cbasic-keystates" class="type-sub"></div>
+        <div id="cbasic-insitu" class="type-sub"></div>
+        <div class="type-sub cpg-variants" id="cbasic-usage">
+          <div class="cpg-section-heading">
+            <div class="cpg-layout__title">Do's and don'ts</div>
+            <div class="cpg-layout__desc">A card groups one coherent thing. If content isn&rsquo;t related, don&rsquo;t box it together.</div>
+          </div>
+          <div class="cpg-section-block">
+            <div class="sel-usage">
+              <div class="sel-usage__card">
+                <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
+                <ul class="sel-usage__list">
+                  <li>Group a single, self-contained subject &mdash; one product, one summary, one record.</li>
+                  <li>Keep one clear primary action per card, in the footer.</li>
+                  <li>Reach for Media, Interactive, Stat or Hover Cards for those specific jobs &mdash; this basic shape is the default for everything else.</li>
+                </ul>
+                <div class="spec-usage-demo"><div class="card" style="width:100%"><div class="card__body"><div class="card__title">Payout summary</div><div class="card__desc">One subject, one card.</div></div><div class="card__foot card__foot--end"><button class="card-btn card-btn--ghost" type="button" tabindex="-1">Cancel</button><button class="card-btn" type="button" tabindex="-1">Save</button></div></div></div>
+              </div>
+              <div class="sel-usage__card">
+                <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don&rsquo;t</div>
+                <ul class="sel-usage__list">
+                  <li>Don&rsquo;t cram unrelated content into one card to save space.</li>
+                  <li>Don&rsquo;t nest cards inside cards &mdash; flatten the hierarchy.</li>
+                  <li>Don&rsquo;t put several competing primary actions in one footer.</li>
+                </ul>
+                <div class="spec-usage-demo"><div class="card" style="width:100%"><div class="card__body"><div class="card__title">Payouts, devices and team settings</div><div class="card__desc">Three unrelated things sharing one surface.</div></div><div class="card__foot card__foot--end"><button class="card-btn" type="button" tabindex="-1">Save</button><button class="card-btn" type="button" tabindex="-1">Publish</button><button class="card-btn" type="button" tabindex="-1">Delete</button></div></div></div>
+              </div>
             </div>
-          </div>
-        </div></div>
-      </div>
-      <div class="type-sub">
-        <div class="type-sub__title">When to use</div>
-        <div class="type-sub__desc">Use a media band when the card genuinely has imagery to show &mdash; not as decoration.</div>
-        <div class="sel-usage">
-          <div class="sel-usage__card">
-            <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
-            <ul class="sel-usage__list">
-              <li>Use the media band for a real product shot, thumbnail or preview image.</li>
-              <li>Keep the aspect ratio consistent across a grid of media cards.</li>
-              <li>Pair with a short title and description &mdash; let the image carry the visual weight.</li>
-            </ul>
-          </div>
-          <div class="sel-usage__card">
-            <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don&rsquo;t</div>
-            <ul class="sel-usage__list">
-              <li>Don&rsquo;t add a media band with no real image just to make a card feel richer.</li>
-              <li>Don&rsquo;t mix media and non-media cards in the same grid row.</li>
-              <li>Don&rsquo;t crop the image so tightly the subject is unclear.</li>
-            </ul>
           </div>
         </div>
       </div>
-      <details class="ai-ctx">
+      <div class="tabs-panel" data-card-panel="style">
+        <div id="cbasic-reference" class="type-sub spec-panel spec-stack"></div>
+      </div>
+      <div class="tabs-panel" data-card-panel="code">
+        <div id="cbasic-code-playground" class="type-sub spec-panel spec-code-playground"></div>
+        <div id="cbasic-code-tab" class="type-sub spec-panel"></div>
+      </div>
+      <div class="tabs-panel" data-card-panel="changelog" id="cbasic-changelog-panel"></div>
+    </section>
+
+    <section class="sec sec--tabbed" id="s-cards-media">
+      <div class="sec-hero">
+      <div class="sec__head">
+        <h1 class="sec__title">Media Cards</h1>
+        <div class="sec-header-meta">
+          <span class="comp-ver-badge" style="margin-left:0">v1.1.0</span>
+          <details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-cards-media">
 {
-  "status": "static",
+  "status": "js-rendered",
+  "builderFunctions": [
+    "cardHTML"
+  ],
   "realClasses": [
     ".card",
     ".card__media",
     ".card__body",
     ".card__title",
-    ".card__desc"
+    ".card__desc",
+    ".card__foot",
+    ".card__foot--end",
+    ".card-btn"
   ],
-  "css": ".card { background:var(--chrome-bg);border:1px solid var(--chrome-border);border-radius:14px;overflow:hidden;width:300px;max-width:100%;transition:background .25s,border-color .15s,box-shadow .15s,transform .15s;display:flex;flex-direction:column }\n.card__media { height:132px;background:linear-gradient(135deg,var(--prim-grey-700),var(--prim-grey-1000));flex-shrink:0 }\n.card__body { padding:18px;flex:1 }\n.card__title { font-size:15px;font-weight:800;color:var(--chrome-txt);margin-bottom:5px }\n.card__desc { font-size:13px;line-height:1.55;color:var(--chrome-muted) }\n.card__body p { font-size:13px;line-height:1.6;color:var(--chrome-txt);margin-top:12px }",
+  "css": ".card { background:var(--chrome-bg);border:1px solid var(--chrome-border);border-radius:14px;overflow:hidden;width:300px;max-width:100%;transition:background .25s,border-color .15s,box-shadow .15s,transform .15s;display:flex;flex-direction:column }\n.card__media { height:132px;background:linear-gradient(135deg,var(--prim-grey-700),var(--prim-grey-1000));flex-shrink:0 }\n.card__body { padding:18px;flex:1 }\n.card__title { font-size:15px;font-weight:800;color:var(--chrome-txt);margin-bottom:5px }\n.card__desc { font-size:13px;line-height:1.55;color:var(--chrome-muted) }\n.card__body p { font-size:13px;line-height:1.6;color:var(--chrome-txt);margin-top:12px }\n.card__foot { display:flex;gap:10px;align-items:center;padding:14px 18px;border-top:1px solid var(--chrome-border) }\n.card__foot--end { justify-content:flex-end }\n/* Force states — static previews of the interactive card's real hover/focus/pressed treatment */\n.card.f-hover { border-color:var(--color-text-s);box-shadow:0 8px 24px rgba(0,0,0,.10);transform:translateY(-2px) }\n.card.f-focus { border-color:var(--color-text-s);box-shadow:0 0 0 3px var(--color-input-focus) }\n.card.f-press { border-color:var(--color-text-s);box-shadow:0 2px 8px rgba(0,0,0,.10);transform:translateY(0) scale(.99) }\n.card-btn { background:var(--color-btn-s-bg);color:var(--color-btn-s-txt);border:0;border-radius:8px;padding:8px 16px;font-size:13px;font-weight:700;font-family:inherit;cursor:pointer;transition:opacity .15s }\n.card-btn:hover { opacity:.85 }",
+  "js": "function cardHTML(o){\n  o = o || {};\n  const cls = ['card'];\n  if(o.interactive) cls.push('card--interactive');\n  if(o.force) cls.push('f-' + o.force);\n  const attrs = o.interactive ? ' tabindex=\"0\" role=\"button\"' : '';\n  let html = '';\n  if(o.media) html += `&lt;div class=\"card__media\"${o.mediaStyle?` style=\"${o.mediaStyle}\"`:''}&gt;&lt;/div&gt;`;\n  let body = '';\n  if(o.title) body += `&lt;div class=\"card__title\"&gt;${cardEsc(o.title)}&lt;/div&gt;`;\n  if(o.desc)  body += `&lt;div class=\"card__desc\"&gt;${cardEsc(o.desc)}&lt;/div&gt;`;\n  html += `&lt;div class=\"card__body\"&gt;${body}&lt;/div&gt;`;\n  if(o.foot){\n    const ghost = o.ghost ? `&lt;button class=\"card-btn card-btn--ghost\" type=\"button\" tabindex=\"-1\"&gt;${cardEsc(o.ghostLabel||'Cancel')}&lt;/button&gt;` : '';\n    html += `&lt;div class=\"card__foot card__foot--end\"&gt;${ghost}&lt;button class=\"card-btn\" type=\"button\" tabindex=\"-1\"&gt;${cardEsc(o.actionLabel||'Save')}&lt;/button&gt;&lt;/div&gt;`;\n  }\n  return `&lt;div class=\"${cls.join(' ')}\"${attrs} style=\"${o.style||''}\"&gt;${html}&lt;/div&gt;`;\n}",
   "usage": {
     "do": [
       "Use the media band for a real product shot, thumbnail or preview image.",
@@ -4110,58 +4095,78 @@ body.home .main{max-width:none;margin:0;padding:0}
       "Don’t crop the image so tightly the subject is unclear."
     ]
   },
-  "contentHash": "85436120c1ecd05df930853c2a97d73689df94f3c47f18a721d667d59673bded",
-  "note": "Split out of the former combined Cards page (v1.1.0). .card__media is a plain gradient placeholder in this demo — a real integration substitutes an actual image."
+  "contentHash": "163c3e5b5683c7a81a3ff86416bdba6daa22a3cd86f2ea7fb42daa4c20bccedc",
+  "note": "Page is now a .sec--tabbed page; demos are built by the shared cardHTML builder (media:true adds .card__media) — the static HTML is just empty mounts. .card__media is a plain gradient placeholder in this demo; a real integration substitutes an actual image and keeps everything else. Split out of the former combined Cards page (v1.1.0)."
 }
   </pre>
 </details>
-    </section>
-
-    <section class="sec" id="s-cards-interactive">
-      <div class="sec__head">
-        <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Interactive Cards <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.0</span></h1>
-        <p class="sec__desc">A card that lifts on hover and makes the whole surface a single clickable target &mdash; use it when the entire card links somewhere.</p>
+        </div>
       </div>
-      <div class="type-sub">
-        <div class="type-sub__title">Interactive</div>
-        <div class="type-sub__desc">Hover me. The whole card is one clickable target with a subtle lift and shadow.</div>
-        <div class="sg-stage"><div class="card-grid">
-          <div class="card card--interactive" tabindex="0" role="button">
-            <div class="card__body">
-              <div class="card__title">Interactive card &rarr;</div>
-              <div class="card__desc">Hover me. The whole card is one clickable target with a subtle lift and shadow.</div>
+      <div class="sec-hero__preview"><div class="mk"><div class="mk-card" style="width:60%;overflow:hidden"><div style="height:46px;background:var(--chrome-border)"></div><div style="padding:11px;display:flex;flex-direction:column;gap:7px"><span class="mk-bar mk-bar--txt" style="width:70%"></span><span class="mk-bar" style="width:95%"></span></div></div></div></div>
+      </div>
+      <div class="tabs-list sec-tabs" id="cmedia-tabs-list">
+        <button type="button" class="tab-item on" data-card-tab="overview" onclick="cardTabSwitch('s-cards-media','overview')"><span class="tab-item__inner"><span class="tab-item__label">Overview</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-card-tab="style" onclick="cardTabSwitch('s-cards-media','style')"><span class="tab-item__inner"><span class="tab-item__label">Style</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-card-tab="code" onclick="cardTabSwitch('s-cards-media','code')"><span class="tab-item__inner"><span class="tab-item__label">Code</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-card-tab="changelog" onclick="cardTabSwitch('s-cards-media','changelog')"><span class="tab-item__inner"><span class="tab-item__label">Changelog</span></span><span class="tab-item__line"></span></button>
+      </div>
+      <div class="tabs-panel on" data-card-panel="overview">
+        <div id="cmedia-playground" class="type-sub"></div>
+        <div id="cmedia-keystates" class="type-sub"></div>
+        <div id="cmedia-insitu" class="type-sub"></div>
+        <div class="type-sub cpg-variants" id="cmedia-usage">
+          <div class="cpg-section-heading">
+            <div class="cpg-layout__title">Do's and don'ts</div>
+            <div class="cpg-layout__desc">Use a media band when the card genuinely has imagery to show &mdash; not as decoration.</div>
+          </div>
+          <div class="cpg-section-block">
+            <div class="sel-usage">
+              <div class="sel-usage__card">
+                <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
+                <ul class="sel-usage__list">
+                  <li>Use the media band for a real product shot, thumbnail or preview image.</li>
+                  <li>Keep the aspect ratio consistent across a grid of media cards.</li>
+                  <li>Pair with a short title and description &mdash; let the image carry the visual weight.</li>
+                </ul>
+                <div class="spec-usage-demo"><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%"><div class="card" style="width:100%"><div class="card__media" style="height:40px"></div><div class="card__body"><div class="card__title">Data 1GB</div></div></div><div class="card" style="width:100%"><div class="card__media" style="height:40px"></div><div class="card__body"><div class="card__title">Data 5GB</div></div></div></div></div>
+              </div>
+              <div class="sel-usage__card">
+                <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don&rsquo;t</div>
+                <ul class="sel-usage__list">
+                  <li>Don&rsquo;t add a media band with no real image just to make a card feel richer.</li>
+                  <li>Don&rsquo;t mix media and non-media cards in the same grid row.</li>
+                  <li>Don&rsquo;t crop the image so tightly the subject is unclear.</li>
+                </ul>
+                <div class="spec-usage-demo"><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%"><div class="card" style="width:100%"><div class="card__media" style="height:40px"></div><div class="card__body"><div class="card__title">Data 1GB</div></div></div><div class="card" style="width:100%"><div class="card__body"><div class="card__title">Data 5GB</div><div class="card__desc">No band.</div></div></div></div></div>
+              </div>
             </div>
-          </div>
-        </div></div>
-      </div>
-      <div class="type-sub">
-        <div class="type-sub__title">When to use</div>
-        <div class="type-sub__desc">Only make the whole card clickable when it has exactly one destination.</div>
-        <div class="sel-usage">
-          <div class="sel-usage__card">
-            <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
-            <ul class="sel-usage__list">
-              <li>Use it when tapping anywhere on the card should go to one place.</li>
-              <li>Give it <code>role="button"</code> and <code>tabindex="0"</code> so it&rsquo;s keyboard-reachable, as in this demo.</li>
-              <li>Keep the hover lift subtle &mdash; it&rsquo;s a hint, not the headline.</li>
-            </ul>
-          </div>
-          <div class="sel-usage__card">
-            <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don&rsquo;t</div>
-            <ul class="sel-usage__list">
-              <li>Don&rsquo;t make a card interactive if it also contains its own buttons or links &mdash; that&rsquo;s a click-target conflict.</li>
-              <li>Don&rsquo;t use it for a card that&rsquo;s purely informational.</li>
-              <li>Don&rsquo;t rely on hover alone &mdash; make sure focus and touch both work.</li>
-            </ul>
           </div>
         </div>
       </div>
-      <details class="ai-ctx">
+      <div class="tabs-panel" data-card-panel="style">
+        <div id="cmedia-reference" class="type-sub spec-panel spec-stack"></div>
+      </div>
+      <div class="tabs-panel" data-card-panel="code">
+        <div id="cmedia-code-playground" class="type-sub spec-panel spec-code-playground"></div>
+        <div id="cmedia-code-tab" class="type-sub spec-panel"></div>
+      </div>
+      <div class="tabs-panel" data-card-panel="changelog" id="cmedia-changelog-panel"></div>
+    </section>
+
+    <section class="sec sec--tabbed" id="s-cards-interactive">
+      <div class="sec-hero">
+      <div class="sec__head">
+        <h1 class="sec__title">Interactive Cards</h1>
+        <div class="sec-header-meta">
+          <span class="comp-ver-badge" style="margin-left:0">v1.1.0</span>
+          <details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-cards-interactive">
 {
-  "status": "static",
+  "status": "js-rendered",
+  "builderFunctions": [
+    "cardHTML"
+  ],
   "realClasses": [
     ".card",
     ".card--interactive",
@@ -4169,7 +4174,8 @@ body.home .main{max-width:none;margin:0;padding:0}
     ".card__title",
     ".card__desc"
   ],
-  "css": ".card { background:var(--chrome-bg);border:1px solid var(--chrome-border);border-radius:14px;overflow:hidden;width:300px;max-width:100%;transition:background .25s,border-color .15s,box-shadow .15s,transform .15s;display:flex;flex-direction:column }\n.card__body { padding:18px;flex:1 }\n.card__title { font-size:15px;font-weight:800;color:var(--chrome-txt);margin-bottom:5px }\n.card__desc { font-size:13px;line-height:1.55;color:var(--chrome-muted) }\n.card__body p { font-size:13px;line-height:1.6;color:var(--chrome-txt);margin-top:12px }\n.card--interactive { cursor:pointer }\n.card--interactive:hover { border-color:var(--color-text-s);box-shadow:0 8px 24px rgba(0,0,0,.10);transform:translateY(-2px) }",
+  "css": ".card { background:var(--chrome-bg);border:1px solid var(--chrome-border);border-radius:14px;overflow:hidden;width:300px;max-width:100%;transition:background .25s,border-color .15s,box-shadow .15s,transform .15s;display:flex;flex-direction:column }\n.card__body { padding:18px;flex:1 }\n.card__title { font-size:15px;font-weight:800;color:var(--chrome-txt);margin-bottom:5px }\n.card__desc { font-size:13px;line-height:1.55;color:var(--chrome-muted) }\n.card__body p { font-size:13px;line-height:1.6;color:var(--chrome-txt);margin-top:12px }\n.card--interactive { cursor:pointer }\n.card--interactive:hover { border-color:var(--color-text-s);box-shadow:0 8px 24px rgba(0,0,0,.10);transform:translateY(-2px) }\n.card--interactive:active { border-color:var(--color-text-s);box-shadow:0 2px 8px rgba(0,0,0,.10);transform:translateY(0) scale(.99) }\n.card--interactive:focus-visible { outline:none;border-color:var(--color-text-s);box-shadow:0 0 0 3px var(--color-input-focus) }\n/* Force states — static previews of the interactive card's real hover/focus/pressed treatment */\n.card.f-hover { border-color:var(--color-text-s);box-shadow:0 8px 24px rgba(0,0,0,.10);transform:translateY(-2px) }\n.card.f-focus { border-color:var(--color-text-s);box-shadow:0 0 0 3px var(--color-input-focus) }\n.card.f-press { border-color:var(--color-text-s);box-shadow:0 2px 8px rgba(0,0,0,.10);transform:translateY(0) scale(.99) }",
+  "js": "function cardHTML(o){\n  o = o || {};\n  const cls = ['card'];\n  if(o.interactive) cls.push('card--interactive');\n  if(o.force) cls.push('f-' + o.force);\n  const attrs = o.interactive ? ' tabindex=\"0\" role=\"button\"' : '';\n  let html = '';\n  if(o.media) html += `&lt;div class=\"card__media\"${o.mediaStyle?` style=\"${o.mediaStyle}\"`:''}&gt;&lt;/div&gt;`;\n  let body = '';\n  if(o.title) body += `&lt;div class=\"card__title\"&gt;${cardEsc(o.title)}&lt;/div&gt;`;\n  if(o.desc)  body += `&lt;div class=\"card__desc\"&gt;${cardEsc(o.desc)}&lt;/div&gt;`;\n  html += `&lt;div class=\"card__body\"&gt;${body}&lt;/div&gt;`;\n  if(o.foot){\n    const ghost = o.ghost ? `&lt;button class=\"card-btn card-btn--ghost\" type=\"button\" tabindex=\"-1\"&gt;${cardEsc(o.ghostLabel||'Cancel')}&lt;/button&gt;` : '';\n    html += `&lt;div class=\"card__foot card__foot--end\"&gt;${ghost}&lt;button class=\"card-btn\" type=\"button\" tabindex=\"-1\"&gt;${cardEsc(o.actionLabel||'Save')}&lt;/button&gt;&lt;/div&gt;`;\n  }\n  return `&lt;div class=\"${cls.join(' ')}\"${attrs} style=\"${o.style||''}\"&gt;${html}&lt;/div&gt;`;\n}",
   "usage": {
     "do": [
       "Use it when tapping anywhere on the card should go to one place.",
@@ -4182,72 +4188,78 @@ body.home .main{max-width:none;margin:0;padding:0}
       "Don’t rely on hover alone — make sure focus and touch both work."
     ]
   },
-  "contentHash": "60df90c00cde16f0b98e6e6df94ae917b4be440978344c03b23547984c6542fb",
-  "note": "Split out of the former combined Cards page (v1.1.0). No JS involved — role/tabindex are static attributes and the hover lift is pure CSS."
+  "contentHash": "30a9c8d32ddc5474e7b47915777b5ef70f83af3c65dcc08b256bcefdc32a376b",
+  "note": "Page is now a .sec--tabbed page; demos are built by the shared cardHTML builder (interactive:true adds .card--interactive plus role=button/tabindex=0) — the static HTML is just empty mounts. Hover, active and focus-visible are pure CSS; .card.f-hover/.f-focus/.f-press are documentation-only forced-state classes (same idea as .ds-btn's) used to show those states statically, not something to ship. Split out of the former combined Cards page (v1.1.0)."
 }
   </pre>
 </details>
+        </div>
+      </div>
+      <div class="sec-hero__preview"><div class="mk"><div class="mk-card" style="width:60%;overflow:hidden;box-shadow:0 8px 20px rgba(0,0,0,.10)"><div style="padding:11px;display:flex;flex-direction:column;gap:7px"><span class="mk-bar mk-bar--txt" style="width:70%"></span><span class="mk-bar" style="width:95%"></span></div></div></div></div>
+      </div>
+      <div class="tabs-list sec-tabs" id="cinter-tabs-list">
+        <button type="button" class="tab-item on" data-card-tab="overview" onclick="cardTabSwitch('s-cards-interactive','overview')"><span class="tab-item__inner"><span class="tab-item__label">Overview</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-card-tab="style" onclick="cardTabSwitch('s-cards-interactive','style')"><span class="tab-item__inner"><span class="tab-item__label">Style</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-card-tab="code" onclick="cardTabSwitch('s-cards-interactive','code')"><span class="tab-item__inner"><span class="tab-item__label">Code</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-card-tab="changelog" onclick="cardTabSwitch('s-cards-interactive','changelog')"><span class="tab-item__inner"><span class="tab-item__label">Changelog</span></span><span class="tab-item__line"></span></button>
+      </div>
+      <div class="tabs-panel on" data-card-panel="overview">
+        <div id="cinter-playground" class="type-sub"></div>
+        <div id="cinter-keystates" class="type-sub"></div>
+        <div id="cinter-insitu" class="type-sub"></div>
+        <div class="type-sub cpg-variants" id="cinter-usage">
+          <div class="cpg-section-heading">
+            <div class="cpg-layout__title">Do's and don'ts</div>
+            <div class="cpg-layout__desc">Only make the whole card clickable when it has exactly one destination.</div>
+          </div>
+          <div class="cpg-section-block">
+            <div class="sel-usage">
+              <div class="sel-usage__card">
+                <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
+                <ul class="sel-usage__list">
+                  <li>Use it when tapping anywhere on the card should go to one place.</li>
+                  <li>Give it <code>role="button"</code> and <code>tabindex="0"</code> so it&rsquo;s keyboard-reachable, as in this demo.</li>
+                  <li>Keep the hover lift subtle &mdash; it&rsquo;s a hint, not the headline.</li>
+                </ul>
+                <div class="spec-usage-demo"><div class="card card--interactive f-focus" tabindex="-1" role="button" style="width:100%"><div class="card__body"><div class="card__title">Transactions &rarr;</div><div class="card__desc">One destination, reachable by keyboard.</div></div></div></div>
+              </div>
+              <div class="sel-usage__card">
+                <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don&rsquo;t</div>
+                <ul class="sel-usage__list">
+                  <li>Don&rsquo;t make a card interactive if it also contains its own buttons or links &mdash; that&rsquo;s a click-target conflict.</li>
+                  <li>Don&rsquo;t use it for a card that&rsquo;s purely informational.</li>
+                  <li>Don&rsquo;t rely on hover alone &mdash; make sure focus and touch both work.</li>
+                </ul>
+                <div class="spec-usage-demo"><div class="card card--interactive" tabindex="-1" role="button" style="width:100%"><div class="card__body"><div class="card__title">Transactions &rarr;</div><div class="card__desc">Two competing targets.</div></div><div class="card__foot card__foot--end"><button class="card-btn card-btn--ghost" type="button" tabindex="-1">Export</button><button class="card-btn" type="button" tabindex="-1">Open</button></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tabs-panel" data-card-panel="style">
+        <div id="cinter-reference" class="type-sub spec-panel spec-stack"></div>
+      </div>
+      <div class="tabs-panel" data-card-panel="code">
+        <div id="cinter-code-playground" class="type-sub spec-panel spec-code-playground"></div>
+        <div id="cinter-code-tab" class="type-sub spec-panel"></div>
+      </div>
+      <div class="tabs-panel" data-card-panel="changelog" id="cinter-changelog-panel"></div>
     </section>
 
-    <section class="sec" id="s-cards-stat">
+    <section class="sec sec--tabbed" id="s-cards-stat">
+      <div class="sec-hero">
       <div class="sec__head">
-        <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Stat Cards <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.0</span></h1>
-        <p class="sec__desc">A card variant for headline KPIs &mdash; label, value and trend delta. Deltas use the Success / Critical semantic tokens so direction reads at a glance.</p>
-      </div>
-      <div class="type-sub">
-        <div class="type-sub__title">Stat tiles</div>
-        <div class="type-sub__desc">Each tile pairs a label with a large value and an optional trend delta.</div>
-        <div class="dd-stats">
-          <div class="dd-stat">
-            <div class="dd-stat__label">Transactions</div>
-            <div class="dd-stat__value">2.4M</div>
-            <div class="dd-stat__foot"><span class="dd-delta dd-delta--up">▲ 12.8%</span><span class="dd-stat__sub">vs last week</span></div>
-          </div>
-          <div class="dd-stat">
-            <div class="dd-stat__label">Gross value</div>
-            <div class="dd-stat__value">R48.2M</div>
-            <div class="dd-stat__foot"><span class="dd-delta dd-delta--up">▲ 6.1%</span><span class="dd-stat__sub">vs last week</span></div>
-          </div>
-          <div class="dd-stat">
-            <div class="dd-stat__label">Active traders</div>
-            <div class="dd-stat__value">18,930</div>
-            <div class="dd-stat__foot"><span class="dd-delta dd-delta--down">▼ 2.3%</span><span class="dd-stat__sub">vs last week</span></div>
-          </div>
-          <div class="dd-stat">
-            <div class="dd-stat__label">Platform uptime</div>
-            <div class="dd-stat__value">99.98%</div>
-            <div class="dd-stat__foot"><span class="dd-stat__sub">Last 30 days</span></div>
-          </div>
-        </div>
-      </div>
-      <div class="type-sub">
-        <div class="type-sub__title">When to use</div>
-        <div class="type-sub__desc">Stat cards headline a dashboard&rsquo;s key numbers &mdash; keep them to the metrics that matter most.</div>
-        <div class="sel-usage">
-          <div class="sel-usage__card">
-            <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
-            <ul class="sel-usage__list">
-              <li>Lead with the number &mdash; label above, value large, delta below.</li>
-              <li>Use the Success / Critical delta tokens so direction reads without reading the number.</li>
-              <li>Group 3&ndash;4 related stats in a row; more than that, use a table.</li>
-            </ul>
-          </div>
-          <div class="sel-usage__card">
-            <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don&rsquo;t</div>
-            <ul class="sel-usage__list">
-              <li>Don&rsquo;t add a delta with no real comparison period behind it.</li>
-              <li>Don&rsquo;t mix currencies or units in the same row without labelling them.</li>
-              <li>Don&rsquo;t use a stat card for a value that changes on every render &mdash; it invites misreading.</li>
-            </ul>
-          </div>
-        </div>
-      </div>
+        <h1 class="sec__title">Stat Cards</h1>
+        <div class="sec-header-meta">
+          <span class="comp-ver-badge" style="margin-left:0">v1.1.0</span>
           <details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-cards-stat">
 {
-  "status": "static",
+  "status": "js-rendered",
+  "builderFunctions": [
+    "cardStatHTML"
+  ],
   "realClasses": [
     ".dd-stats",
     ".dd-stat",
@@ -4259,7 +4271,8 @@ body.home .main{max-width:none;margin:0;padding:0}
     ".dd-delta--up",
     ".dd-delta--down"
   ],
-  "css": "/* ---- Stat tile (Cards variant) ---- */\n.dd-stats { display:grid;grid-template-columns:repeat(4,1fr);gap:14px }\n.dd-stats { grid-template-columns:1fr 1fr }\n.dd-stat { border:1px solid var(--chrome-border);border-radius:14px;padding:18px 18px 16px;background:var(--chrome-bg);transition:border-color .2s,transform .2s }\n.dd-stat:hover { border-color:var(--chrome-accent);transform:translateY(-2px) }\n.dd-stat__label { font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--chrome-muted);margin-bottom:10px }\n.dd-stat__value { font-size:30px;font-weight:800;line-height:1;color:var(--chrome-txt);letter-spacing:-1px;font-variant-numeric:tabular-nums }\n.dd-stat__foot { display:flex;align-items:center;gap:8px;margin-top:11px;font-size:12px }\n.dd-stat__sub { color:var(--chrome-muted);font-weight:500 }\n.dd-delta { display:inline-flex;align-items:center;gap:3px;padding:2px 7px;border-radius:999px;font-size:11px;font-weight:700;white-space:nowrap }\n.dd-delta--up { color:var(--color-success-h);background:var(--color-success-l) }\n.dd-delta--down { color:var(--color-crit-h);background:var(--color-crit-l) }",
+  "css": "/* ---- Stat tile (Cards variant) ---- */\n.dd-stats { display:grid;grid-template-columns:repeat(4,1fr);gap:14px }\n.dd-stats { grid-template-columns:1fr 1fr }\n.dd-stat { border:1px solid var(--chrome-border);border-radius:14px;padding:18px 18px 16px;background:var(--chrome-bg);transition:border-color .2s,transform .2s }\n.dd-stat:hover { border-color:var(--chrome-accent);transform:translateY(-2px) }\n.dd-stat.f-hover { border-color:var(--chrome-accent);transform:translateY(-2px) }\n.dd-stat__label { font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--chrome-muted);margin-bottom:10px }\n.dd-stat__value { font-size:30px;font-weight:800;line-height:1;color:var(--chrome-txt);letter-spacing:-1px;font-variant-numeric:tabular-nums }\n.dd-stat__foot { display:flex;align-items:center;gap:8px;margin-top:11px;font-size:12px }\n.dd-stat__sub { color:var(--chrome-muted);font-weight:500 }\n.dd-delta { display:inline-flex;align-items:center;gap:3px;padding:2px 7px;border-radius:999px;font-size:11px;font-weight:700;white-space:nowrap }\n.dd-delta--up { color:var(--color-success-h);background:var(--color-success-l) }\n.dd-delta--down { color:var(--color-crit-h);background:var(--color-crit-l) }",
+  "js": "function cardStatHTML(o){\n  o = o || {};\n  const cls = ['dd-stat'];\n  if(o.force) cls.push('f-' + o.force);\n  const delta = o.trend==='up'   ? `&lt;span class=\"dd-delta dd-delta--up\"&gt;&amp;#9650; ${cardEsc(o.deltaLabel||'12.8%')}&lt;/span&gt;`\n              : o.trend==='down' ? `&lt;span class=\"dd-delta dd-delta--down\"&gt;&amp;#9660; ${cardEsc(o.deltaLabel||'2.3%')}&lt;/span&gt;` : '';\n  const sub = o.sub ? `&lt;span class=\"dd-stat__sub\"&gt;${cardEsc(o.sub)}&lt;/span&gt;` : '';\n  const foot = (delta || sub) ? `&lt;div class=\"dd-stat__foot\"&gt;${delta}${sub}&lt;/div&gt;` : '';\n  return `&lt;div class=\"${cls.join(' ')}\" style=\"${o.style||''}\"&gt;\n      &lt;div class=\"dd-stat__label\"&gt;${cardEsc(o.label||'Transactions')}&lt;/div&gt;\n      &lt;div class=\"dd-stat__value\"&gt;${cardEsc(o.value||'2.4M')}&lt;/div&gt;\n      ${foot}\n    &lt;/div&gt;`;\n}",
   "usage": {
     "do": [
       "Lead with the number — label above, value large, delta below.",
@@ -4272,11 +4285,62 @@ body.home .main{max-width:none;margin:0;padding:0}
       "Don’t use a stat card for a value that changes on every render — it invites misreading."
     ]
   },
-  "contentHash": "7dd96cca82a0c4b83f516bedc905c7d8b286c68465bb16536f18fcf989c3570c",
-  "note": "Split out of the former combined Cards page (v1.1.0). .dd-stat* classes are shared with the Tables Reporting variant / Charts meters+distribution / Lists / Pills filter-pills demos, each documented in that section's own tab."
+  "contentHash": "ebdc2de40817361cb91eb7b836555a897065b97a9a5b1cc132da8cd55239f550",
+  "note": "Page is now a .sec--tabbed page; demos are built by the shared cardStatHTML builder — the static HTML is just empty mounts. .dd-stat.f-hover is a documentation-only forced-state class used to show the hover treatment statically. .dd-stat* classes are shared with the Tables Reporting variant / Charts meters+distribution / Lists demos, each documented in that section's own tab. Split out of the former combined Cards page (v1.1.0)."
 }
   </pre>
 </details>
+        </div>
+      </div>
+      <div class="sec-hero__preview"><div class="mk"><div class="mk-card" style="width:60%;padding:12px;display:flex;flex-direction:column;gap:8px"><span class="mk-bar" style="width:44%;height:7px"></span><span style="font-size:22px;font-weight:800;color:var(--chrome-txt)">2.4M</span></div></div></div>
+      </div>
+      <div class="tabs-list sec-tabs" id="cstat-tabs-list">
+        <button type="button" class="tab-item on" data-card-tab="overview" onclick="cardTabSwitch('s-cards-stat','overview')"><span class="tab-item__inner"><span class="tab-item__label">Overview</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-card-tab="style" onclick="cardTabSwitch('s-cards-stat','style')"><span class="tab-item__inner"><span class="tab-item__label">Style</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-card-tab="code" onclick="cardTabSwitch('s-cards-stat','code')"><span class="tab-item__inner"><span class="tab-item__label">Code</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-card-tab="changelog" onclick="cardTabSwitch('s-cards-stat','changelog')"><span class="tab-item__inner"><span class="tab-item__label">Changelog</span></span><span class="tab-item__line"></span></button>
+      </div>
+      <div class="tabs-panel on" data-card-panel="overview">
+        <div id="cstat-playground" class="type-sub"></div>
+        <div id="cstat-keystates" class="type-sub"></div>
+        <div id="cstat-insitu" class="type-sub"></div>
+        <div class="type-sub cpg-variants" id="cstat-usage">
+          <div class="cpg-section-heading">
+            <div class="cpg-layout__title">Do's and don'ts</div>
+            <div class="cpg-layout__desc">Stat cards headline a dashboard&rsquo;s key numbers &mdash; keep them to the metrics that matter most.</div>
+          </div>
+          <div class="cpg-section-block">
+            <div class="sel-usage">
+              <div class="sel-usage__card">
+                <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
+                <ul class="sel-usage__list">
+                  <li>Lead with the number &mdash; label above, value large, delta below.</li>
+                  <li>Use the Success / Critical delta tokens so direction reads without reading the number.</li>
+                  <li>Group 3&ndash;4 related stats in a row; more than that, use a table.</li>
+                </ul>
+                <div class="spec-usage-demo"><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%"><div class="dd-stat" style="padding:12px"><div class="dd-stat__label">Transactions</div><div class="dd-stat__value" style="font-size:22px">2.4M</div><div class="dd-stat__foot"><span class="dd-delta dd-delta--up">&#9650; 12.8%</span><span class="dd-stat__sub">vs last week</span></div></div><div class="dd-stat" style="padding:12px"><div class="dd-stat__label">Traders</div><div class="dd-stat__value" style="font-size:22px">18,930</div><div class="dd-stat__foot"><span class="dd-delta dd-delta--down">&#9660; 2.3%</span><span class="dd-stat__sub">vs last week</span></div></div></div></div>
+              </div>
+              <div class="sel-usage__card">
+                <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don&rsquo;t</div>
+                <ul class="sel-usage__list">
+                  <li>Don&rsquo;t add a delta with no real comparison period behind it.</li>
+                  <li>Don&rsquo;t mix currencies or units in the same row without labelling them.</li>
+                  <li>Don&rsquo;t use a stat card for a value that changes on every render &mdash; it invites misreading.</li>
+                </ul>
+                <div class="spec-usage-demo"><div class="dd-stat" style="padding:12px;width:100%"><div class="dd-stat__label">Revenue</div><div class="dd-stat__value" style="font-size:22px">R48.2M</div><div class="dd-stat__foot"><span class="dd-delta dd-delta--up">&#9650; 6.1%</span></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tabs-panel" data-card-panel="style">
+        <div id="cstat-reference" class="type-sub spec-panel spec-stack"></div>
+      </div>
+      <div class="tabs-panel" data-card-panel="code">
+        <div id="cstat-code-playground" class="type-sub spec-panel spec-code-playground"></div>
+        <div id="cstat-code-tab" class="type-sub spec-panel"></div>
+      </div>
+      <div class="tabs-panel" data-card-panel="changelog" id="cstat-changelog-panel"></div>
     </section>
     <section class="sec" id="s-modals"><div class="sec__head"><div class="sec__eye">Components</div><h1 class="sec__title">Modals &amp; Dialogs</h1></div><div class="coming">Coming in a future session</div>
       <details class="ai-ctx">
@@ -7311,57 +7375,20 @@ body.home .main{max-width:none;margin:0;padding:0}
     <!-- ============================================================
          HOVER CARD
     ============================================================ -->
-    <section class="sec" id="s-cards-hover">
+    <section class="sec sec--tabbed" id="s-cards-hover">
+      <div class="sec-hero">
       <div class="sec__head">
-        <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Hover Cards <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.2</span></h1>
-        <p class="sec__desc">A rich preview that appears when a user hovers or focuses a reference &mdash; a person, entity or link &mdash; without navigating away. Like a tooltip, but for structured content rather than a one-line hint.</p>
-      </div>
-      <div class="type-sub">
-        <div class="type-sub__title">Interactive</div>
-        <div class="type-sub__desc">Hover (or tab to) the highlighted name. The card fades in after a short delay so it doesn&rsquo;t flicker on passing hovers.</div>
-        <div class="sg-stage" style="min-height:220px;align-items:flex-start">
-          <p style="font-size:14px;line-height:1.7;color:var(--chrome-txt);max-width:440px">Last settlement was approved by
-            <span class="hc">
-              <button class="hc__trigger" type="button">@rethabile</button>
-              <span class="hc__card">
-                <span class="hc__row">
-                  <span class="avt avt--lg">RB</span>
-                  <span><span class="hc__name" style="display:block">Rethabile Beng</span><span class="hc__handle">@rethabile &middot; Finance ops</span></span>
-                </span>
-                <span class="hc__meta">Approves payouts and manages settlement rules. Joined March 2024 &middot; Cape Town.</span>
-              </span>
-            </span>
-            earlier today.</p>
-        </div>
-      </div>
-      <div class="type-sub">
-        <div class="type-sub__title">When to use</div>
-        <div class="type-sub__desc">Hover cards enrich a reference in place. They&rsquo;re optional context &mdash; never the only way to see the information.</div>
-        <div class="sel-usage">
-          <div class="sel-usage__card">
-            <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
-            <ul class="sel-usage__list">
-              <li>Preview a person, record or link the user is pointing at.</li>
-              <li>Delay the open slightly so it doesn&rsquo;t flash on pass-through.</li>
-              <li>Keep the content scannable &mdash; a few lines, not a page.</li>
-            </ul>
-          </div>
-          <div class="sel-usage__card">
-            <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don&rsquo;t</div>
-            <ul class="sel-usage__list">
-              <li>Don&rsquo;t put essential info only in a hover card &mdash; touch users miss it.</li>
-              <li>Don&rsquo;t use one for a plain text hint &mdash; that&rsquo;s a tooltip.</li>
-              <li>Don&rsquo;t pack interactive-heavy flows inside &mdash; use a popover or page.</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <details class="ai-ctx">
+        <h1 class="sec__title">Hover Cards</h1>
+        <div class="sec-header-meta">
+          <span class="comp-ver-badge" style="margin-left:0">v1.1.0</span>
+          <details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-cards-hover">
 {
-  "status": "static",
+  "status": "js-rendered",
+  "builderFunctions": [
+    "cardHoverHTML"
+  ],
   "realClasses": [
     ".hc",
     ".hc__trigger",
@@ -7373,7 +7400,8 @@ body.home .main{max-width:none;margin:0;padding:0}
     ".avt",
     ".avt--lg"
   ],
-  "css": "/* ---- Avatar ---- */\n.avt { display:inline-flex;align-items:center;justify-content:center;border-radius:50%;background:var(--color-surface-n2);color:var(--color-text-2);font-weight:700;flex-shrink:0;position:relative;line-height:1;user-select:none;text-transform:uppercase }\n.avt img { width:100%;height:100%;object-fit:cover;display:block;border-radius:50% }\n.avt--lg { width:56px;height:56px;font-size:19px }\n/* ---- Hover card ---- */\n.hc { position:relative;display:inline-block }\n.hc__trigger { color:var(--color-link);font-weight:600;cursor:pointer;text-decoration:underline;text-underline-offset:2px;background:none;border:0;font-family:inherit;font-size:inherit;padding:0 }\n.hc__card { position:absolute;top:calc(100% + 8px);left:0;z-index:30;width:268px;background:var(--chrome-bg);border:1px solid var(--chrome-border);border-radius:12px;box-shadow:0 14px 36px rgba(0,0,0,.16);padding:16px;opacity:0;transform:translateY(-6px) scale(.98);transform-origin:top left;pointer-events:none;transition:opacity .18s ease,transform .18s ease }\n.hc:hover .hc__card,.hc:focus-within .hc__card { opacity:1;transform:translateY(0) scale(1);pointer-events:auto;transition-delay:.2s }\n.hc__row { display:flex;gap:12px;align-items:center;margin-bottom:11px }\n.hc__name { font-size:14px;font-weight:800;color:var(--chrome-txt) }\n.hc__handle { font-size:12px;color:var(--chrome-muted) }\n.hc__meta { font-size:12.5px;color:var(--chrome-muted);line-height:1.55 }",
+  "css": "/* ---- Avatar ---- */\n.avt { display:inline-flex;align-items:center;justify-content:center;border-radius:50%;background:var(--color-surface-n2);color:var(--color-text-2);font-weight:700;flex-shrink:0;position:relative;line-height:1;user-select:none;text-transform:uppercase }\n.avt img { width:100%;height:100%;object-fit:cover;display:block;border-radius:50% }\n.avt--lg { width:56px;height:56px;font-size:19px }\n/* ---- Hover card ---- */\n.hc { position:relative;display:inline-block }\n.hc__trigger { color:var(--color-link);font-weight:600;cursor:pointer;text-decoration:underline;text-underline-offset:2px;background:none;border:0;font-family:inherit;font-size:inherit;padding:0 }\n.hc__card { position:absolute;top:calc(100% + 8px);left:0;z-index:30;width:268px;background:var(--chrome-bg);border:1px solid var(--chrome-border);border-radius:12px;box-shadow:0 14px 36px rgba(0,0,0,.16);padding:16px;opacity:0;transform:translateY(-6px) scale(.98);transform-origin:top left;pointer-events:none;transition:opacity .18s ease,transform .18s ease }\n.hc:hover .hc__card,.hc:focus-within .hc__card { opacity:1;transform:translateY(0) scale(1);pointer-events:auto;transition-delay:.2s }\n/* .is-open pins the card open — for a programmatic open, and for showing the revealed state statically */\n.hc.is-open .hc__card { opacity:1;transform:translateY(0) scale(1);pointer-events:auto;transition-delay:0s }\n.hc__row { display:flex;gap:12px;align-items:center;margin-bottom:11px }\n.hc__name { font-size:14px;font-weight:800;color:var(--chrome-txt) }\n.hc__handle { font-size:12px;color:var(--chrome-muted) }\n.hc__meta { font-size:12.5px;color:var(--chrome-muted);line-height:1.55 }",
+  "js": "function cardHoverHTML(o){\n  o = o || {};\n  const avatar = o.avatar===false ? '' : `&lt;span class=\"avt avt--lg\"&gt;${cardEsc(o.initials||'RB')}&lt;/span&gt;`;\n  const meta = o.meta ? `&lt;span class=\"hc__meta\"&gt;${cardEsc(o.meta)}&lt;/span&gt;` : '';\n  const style = o.inert ? `pointer-events:none${o.style?';'+o.style:''}` : o.style;\n  const tabindex = o.inert ? ' tabindex=\"-1\"' : '';\n  return `&lt;span class=\"hc${o.open?' is-open':''}\"${style?` style=\"${style}\"`:''}&gt;\n      &lt;button class=\"hc__trigger\" type=\"button\"${tabindex}&gt;${cardEsc(o.trigger||'@rethabile')}&lt;/button&gt;\n      &lt;span class=\"hc__card\"${o.cardStyle?` style=\"${o.cardStyle}\"`:''}&gt;\n        &lt;span class=\"hc__row\"&gt;${avatar}&lt;span&gt;&lt;span class=\"hc__name\" style=\"display:block\"&gt;${cardEsc(o.name||'Rethabile Beng')}&lt;/span&gt;&lt;span class=\"hc__handle\"&gt;${cardEsc(o.handle||'@rethabile · Finance ops')}&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;\n        ${meta}\n      &lt;/span&gt;\n    &lt;/span&gt;`;\n}",
   "usage": {
     "do": [
       "Preview a person, record or link the user is pointing at.",
@@ -7386,11 +7414,62 @@ body.home .main{max-width:none;margin:0;padding:0}
       "Don’t pack interactive-heavy flows inside — use a popover or page."
     ]
   },
-  "contentHash": "0aeee7f04096159279b15f2956f154d827ca53fd505ad63ec7f06cfa452dcc7a",
-  "note": "Reveal is pure CSS (:hover/:focus-within with a transition-delay for the short open delay) — no JS at all involved. Moved under the new Cards sub-group as its Hover Cards child; id renamed from s-hover-card to s-cards-hover."
+  "contentHash": "eb25586247920d59ec83a3402c5e30e5ea94f694072bf2ceca6290b1cc02255e",
+  "note": "Page is a .sec--tabbed page; demos are built by the shared cardHoverHTML builder — the static HTML is just empty mounts. The reveal itself is pure CSS (:hover/:focus-within with a transition-delay for the short open delay) — no JS; .hc.is-open pins it open for a programmatic open and for documenting the revealed state statically. cardHoverHTML's inert option adds pointer-events:none + tabindex=-1 so a paired 'at rest' example in a docs grid can't be triggered by a real hover and overlap its neighbour. Moved under the Cards sub-group as its Hover Cards child; id renamed from s-hover-card to s-cards-hover."
 }
   </pre>
 </details>
+        </div>
+      </div>
+      <div class="sec-hero__preview"><div class="mk"><div class="mk-card" style="width:72%;padding:12px;display:flex;gap:10px"><span class="mk-circle" style="width:38px;height:38px;background:var(--color-brand)"></span><div style="flex:1;display:flex;flex-direction:column;gap:6px"><span class="mk-bar mk-bar--txt" style="width:55%"></span><span class="mk-bar" style="width:90%"></span><span class="mk-bar" style="width:75%"></span></div></div></div></div>
+      </div>
+      <div class="tabs-list sec-tabs" id="chover-tabs-list">
+        <button type="button" class="tab-item on" data-card-tab="overview" onclick="cardTabSwitch('s-cards-hover','overview')"><span class="tab-item__inner"><span class="tab-item__label">Overview</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-card-tab="style" onclick="cardTabSwitch('s-cards-hover','style')"><span class="tab-item__inner"><span class="tab-item__label">Style</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-card-tab="code" onclick="cardTabSwitch('s-cards-hover','code')"><span class="tab-item__inner"><span class="tab-item__label">Code</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-card-tab="changelog" onclick="cardTabSwitch('s-cards-hover','changelog')"><span class="tab-item__inner"><span class="tab-item__label">Changelog</span></span><span class="tab-item__line"></span></button>
+      </div>
+      <div class="tabs-panel on" data-card-panel="overview">
+        <div id="chover-playground" class="type-sub"></div>
+        <div id="chover-keystates" class="type-sub"></div>
+        <div id="chover-insitu" class="type-sub"></div>
+        <div class="type-sub cpg-variants" id="chover-usage">
+          <div class="cpg-section-heading">
+            <div class="cpg-layout__title">Do's and don'ts</div>
+            <div class="cpg-layout__desc">Hover cards enrich a reference in place. They&rsquo;re optional context &mdash; never the only way to see the information.</div>
+          </div>
+          <div class="cpg-section-block">
+            <div class="sel-usage">
+              <div class="sel-usage__card">
+                <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
+                <ul class="sel-usage__list">
+                  <li>Preview a person, record or link the user is pointing at.</li>
+                  <li>Delay the open slightly so it doesn&rsquo;t flash on pass-through.</li>
+                  <li>Keep the content scannable &mdash; a few lines, not a page.</li>
+                </ul>
+                <div class="spec-usage-demo"><div style="width:100%"><span class="hc is-open"><button class="hc__trigger" type="button" tabindex="-1">@rethabile</button><span class="hc__card" style="position:static;display:block;width:100%;box-shadow:none"><span class="hc__row"><span class="avt" style="width:34px;height:34px;font-size:13px">RB</span><span><span class="hc__name" style="display:block">Rethabile Beng</span><span class="hc__handle">@rethabile &middot; Finance ops</span></span></span><span class="hc__meta">Approves payouts and manages settlement rules.</span></span></span></div></div>
+              </div>
+              <div class="sel-usage__card">
+                <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don&rsquo;t</div>
+                <ul class="sel-usage__list">
+                  <li>Don&rsquo;t put essential info only in a hover card &mdash; touch users miss it.</li>
+                  <li>Don&rsquo;t use one for a plain text hint &mdash; that&rsquo;s a tooltip.</li>
+                  <li>Don&rsquo;t pack interactive-heavy flows inside &mdash; use a popover or page.</li>
+                </ul>
+                <div class="spec-usage-demo"><div style="width:100%"><span class="hc is-open"><button class="hc__trigger" type="button" tabindex="-1">Fees</button><span class="hc__card" style="position:static;display:block;width:100%;box-shadow:none"><span class="hc__meta">1.5%</span></span></span></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tabs-panel" data-card-panel="style">
+        <div id="chover-reference" class="type-sub spec-panel spec-stack"></div>
+      </div>
+      <div class="tabs-panel" data-card-panel="code">
+        <div id="chover-code-playground" class="type-sub spec-panel spec-code-playground"></div>
+        <div id="chover-code-tab" class="type-sub spec-panel"></div>
+      </div>
+      <div class="tabs-panel" data-card-panel="changelog" id="chover-changelog-panel"></div>
     </section>
 
     <!-- ============================================================
@@ -8187,6 +8266,9 @@ function toggleTheme() {
   try { if(typeof renderDpKeyVariants==='function' && document.getElementById('dp-keyvariants')) renderDpKeyVariants(); } catch(e){}
   try { if(typeof renderDpInSitu==='function' && document.getElementById('dp-insitu')) renderDpInSitu(); } catch(e){}
   try { if(typeof renderDpReference==='function' && document.getElementById('dp-reference')) renderDpReference(); } catch(e){}
+  // All five Cards sub-pages re-render through one call — their stage
+  // backgrounds are inline-styled per theme, same as Buttons/Pills/Date picker.
+  try { if(typeof renderCardPages==='function' && document.getElementById('cbasic-playground')) renderCardPages(); } catch(e){}
 }
 
 // Colour view switch (prim / sem)
@@ -8265,6 +8347,10 @@ function showSection(id, opts) {
   // Expand the group that holds the section we just opened. Defined further
   // down the file, so guard the init-time call that runs before it exists.
   if (typeof syncNavGroups === 'function') syncNavGroups();
+  // Cards pages equalize .spec-cell__desc heights by measuring the live DOM
+  // (see equalizeSpecCellDesc) — a no-op while the section was hidden, so
+  // redo it now that it's actually visible and laid out.
+  if (target && typeof equalizeSpecCellDesc === 'function') equalizeSpecCellDesc(target);
   // Scroll to top (or restore a remembered position) — the page itself
   // scrolls (window), .main has no overflow of its own. html has
   // scroll-behavior:smooth, so a restore must opt out of the animation.
@@ -14298,18 +14384,28 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.67.5';
+const SYSTEM_VERSION = '1.68.1';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
-      {version:'1.67.5', date:'2026-08-12', author:'Mo', title:'Side Nav items lose their icon chip in favour of a rounded hover/active pill', changes:[
+      {version:'1.68.1', date:'2026-08-12', author:'Mo', title:'Side Nav items lose their icon chip in favour of a rounded hover/active pill', changes:[
         ['changed','.snav-item__icon no longer has a background badge behind the glyph in any state; the icon now sits bare, coloured directly (idle grey, white on hover, brand green when active) matching new reference art'],
         ['changed','.snav-item border-radius increased from 6px to 12px so the hover/active row reads as a rounded pill rather than a slightly-rounded rectangle'],
         ['changed','Hover state now also turns the icon glyph white (previously only the chip background changed on hover; the glyph colour was untouched) via .snav-item:hover .snav-item__icon svg{color:var(--sn-active-label)}'],
         ['changed','Removed the Black/Charcoal-only override that kept a solid green chip with no row fill as its active marker; Black now follows the same full-row grey pill + green glyph behaviour as White and Dark green, so all three colour contexts are visually consistent'],
         ['fixed','.snav--charcoal and .snav--darkgreen now declare their own --sn-active-bg (rgba(255,255,255,.14) / .12) — without the old Charcoal override, the active row was silently falling back to White\'s --sn-active-bg (#f8f8f8), rendering a near-white pill behind white active-state text'],
+      ]},
+      {version:'1.68.0', date:'2026-08-12', author:'Helen', title:'All five Cards sub-pages rebuilt as tabbed pages, on one shared config-driven builder', changes:[
+        ['changed','Basic, Media, Interactive, Stat and Hover Cards each restructured from a flat .sec into .sec--tabbed with a .sec-hero (title + live preview) and Overview / Style / Code / Changelog tabs, matching the Pills/Buttons/Date picker structure end to end'],
+        ['added','One shared, config-driven builder set drives all five pages instead of five copied render functions: a CARD_PAGES config array (secId, pfx, controls, stage/keyStates/insitu/style/code) consumed by cardTabSwitch, renderCardPlayground, renderCardKeyStates, renderCardInSitu, renderCardReference and renderCardCodeTab — the generalisation of Pills\' PILL_PLAYGROUND_MOUNTS pattern'],
+        ['added','Real-markup builders cardHTML (.card/.card__media/.card__body/.card__title/.card__desc/.card__foot/.card-btn), cardStatHTML (.dd-stat*/.dd-delta*) and cardHoverHTML (.hc*), shared by every playground, key-states grid, in-context mockup and anatomy visual on the five pages'],
+        ['added','Each page gets a "Try the component" playground with two synced mounts (Overview + Code tab) over one shared CARD_PG state object, a key states/configurations grid, 2\u20133 in-context mockups, a Style tab (anatomy, size & dimensions, tokens, states where the variant has them) and a Code tab with the .code-seg HTML/CSS \u00b7 Blazor \u00b7 React TSX switcher'],
+        ['added','.card--interactive:active and :focus-visible \u2014 the Do\'s already told implementers to give an interactive card role="button" and tabindex="0", but no visible focus treatment existed for keyboard users; plus .card.f-hover/.f-focus/.f-press and .dd-stat.f-hover forced-state classes so the States sections can show those treatments statically, mirroring .ds-btn\'s force-state classes'],
+        ['added','.hc.is-open pins a hover card open \u2014 needed to document the revealed state statically, and useful for a programmatic open'],
+        ['changed','The five s-cards-* ids added to the .sec--tabbed changelog relocation list, so each page\'s auto-injected version history lands in its own Changelog tab; renderCardPages() added to toggleTheme() so every inline-styled stage background follows the global light/dark toggle'],
+        ['changed','Cards stays a nav sub-group \u2014 five children under "Cards", each keeping its own id, MOCKS entry and CHANGELOG.components object'],
       ]},
       {version:'1.67.4', date:'2026-08-12', author:'Mo', title:'Side Nav collapse toggle moved inline, ghost-styled', changes:[
         ['changed','.snav__collapse-btn is no longer an edge-docked circular button half-overlapping the panel border; it now sits inline in a new .snav__logo-row next to the wordmark, styled as a borderless ghost icon button (transparent at rest, --sn-hover-bg tint on hover) so it reads as part of the header instead of a floating control'],
@@ -15475,7 +15571,17 @@ const CHANGELOG = {
         ['added','Right-click menu positioned at the pointer, with a destructive item, dismissing on outside-click, scroll or Escape'],
       ]},
     ]},
-    {secId:'s-cards-hover', name:'Hover Cards', version:'1.0.2', entries:[
+    {secId:'s-cards-hover', name:'Hover Cards', version:'1.1.0', entries:[
+      {version:'1.1.0', date:'2026-08-12', author:'Helen', title:'Rebuilt as a tabbed page, matching Pills/Buttons\' structure', changes:[
+        ['changed','Section restructured from a flat .sec into .sec--tabbed with a .sec-hero and Overview / Style / Code / Changelog tabs (cardTabSwitch(\'s-cards-hover\', tab))'],
+        ['added','.hc.is-open pins the card open, so the revealed state can be documented statically instead of only existing under a live pointer \u2014 and so a consumer can open one programmatically'],
+        ['added','"Try the component" playground with Reveal (at rest/revealed), Avatar and Meta toggles and a Trigger field, on the overflow-visible .btn-pg--dd stage so the floating card is not clipped'],
+        ['added','"Key states" grid (at rest, revealed) and two "In context" mockups (mention in a thread, table reference)'],
+        ['added','Style tab: numbered Anatomy parts (.hc wrapper, .hc__trigger, .hc__card, identity row, .hc__meta), a Size & dimensions table (268px card, 8px offset, 56px avatar), a token table including the float shadow and z-index, and a States grid documenting the 200ms open delay'],
+        ['added','Code tab with the .code-seg HTML/CSS \u00b7 Blazor \u00b7 React TSX switcher, each version making the point that the reveal is CSS-only with no JS'],
+        ['changed','Existing Do/Don\'t guidance re-platformed under a "Do\'s and don\'ts" heading, text unchanged, with .spec-usage-demo visuals contrasting a scannable preview against a one-line hint that should have been a tooltip'],
+      ]},
+
       {version:'1.0.2', date:'2026-08-04', author:'Mo', title:'Moved under the new Cards sub-group as its Hover Cards child', changes:[
         ['changed','Was a standalone top-level "Hover Card" nav entry; now lives as the "Hover Cards" child inside the new Cards sub-group, alongside Basic/Media/Interactive/Stat. Section id renamed from s-hover-card to s-cards-hover'],
       ]},
@@ -16222,7 +16328,16 @@ const CHANGELOG = {
         ['added','Light & dark mode reference grid, shown side by side'],
       ]},
     ]},
-    {secId:'s-cards-basic', name:'Basic Cards', version:'1.2.0', entries:[
+    {secId:'s-cards-basic', name:'Basic Cards', version:'1.3.0', entries:[
+      {version:'1.3.0', date:'2026-08-12', author:'Helen', title:'Rebuilt as a tabbed page, matching Pills/Buttons\' structure', changes:[
+        ['changed','Section restructured from a flat .sec into .sec--tabbed with a .sec-hero (title + live preview) and Overview / Style / Code / Changelog tabs (cardTabSwitch(\'s-cards-basic\', tab))'],
+        ['added','"Try the component" playground with Description / Footer / Secondary toggles and a Title field, rendered into two synced mounts (#cbasic-playground on Overview, #cbasic-code-playground on Code) over one shared CARD_PG state \u2014 the generalised form of Pills\' PILL_PLAYGROUND_MOUNTS'],
+        ['added','"Key configurations" grid (title only, title + description, with footer, single action) replacing the old static Anatomy .card-grid, and three "In context" mockups (settings list, confirmation, summary panel)'],
+        ['added','Style tab: numbered Anatomy parts (.card, .card__body, .card__title, .card__desc, .card__foot), a Size & dimensions table, and the shared surface token table \u2014 the old inline "Specs" .dd-table content, now generated'],
+        ['added','Code tab with the .code-seg HTML/CSS \u00b7 Blazor \u00b7 React TSX switcher, generated live from the current playground configuration'],
+        ['changed','The existing "When to use" Do/Don\'t guidance moves under a "Do\'s and don\'ts" heading, text unchanged, each side now carrying a .spec-usage-demo mini visual'],
+      ]},
+
       {version:'1.2.0', date:'2026-08-04', author:'Mo', title:'Cards split into one section per card type, each with its own nav sub-group entry', changes:[
         ['changed','The single combined Cards page is now 5 sections — Basic (this one), Media, Interactive, Stat and Hover — each with its own id, heading, demo and "When to use". Basic keeps the shared Specs table and the general Cards "When to use" guidance, since it\'s the entry point into the new sub-group'],
       ]},
@@ -16236,17 +16351,45 @@ const CHANGELOG = {
         ['added','Card surface — basic, with footer actions (primary black), media band and interactive/hoverable variants, plus specs and usage guidance'],
       ]},
     ]},
-    {secId:'s-cards-media', name:'Media Cards', version:'1.0.0', entries:[
+    {secId:'s-cards-media', name:'Media Cards', version:'1.1.0', entries:[
+      {version:'1.1.0', date:'2026-08-12', author:'Helen', title:'Rebuilt as a tabbed page, matching Pills/Buttons\' structure', changes:[
+        ['changed','Section restructured from a flat .sec into .sec--tabbed with a .sec-hero and Overview / Style / Code / Changelog tabs (cardTabSwitch(\'s-cards-media\', tab))'],
+        ['added','"Try the component" playground with Media band / Description / Footer toggles and a Title field, in two synced mounts (#cmedia-playground, #cmedia-code-playground)'],
+        ['added','"Key configurations" grid (band + title, band + description, band + footer, no band) and two "In context" mockups (product grid, article preview) on the .spec-insitu-grid--2 two-column layout'],
+        ['added','Style tab: Anatomy parts calling out .card__media as the one part a media card adds, a Size & dimensions table (132px fixed band height, 0 band padding), and a token table noting the gradient is a placeholder for a real image'],
+        ['added','Code tab with the .code-seg HTML/CSS \u00b7 Blazor \u00b7 React TSX switcher, showing how to swap the gradient for a background image'],
+        ['changed','Existing Do/Don\'t guidance re-platformed under a "Do\'s and don\'ts" heading, text unchanged, with .spec-usage-demo visuals contrasting a consistent band grid against a mixed row'],
+      ]},
+
       {version:'1.0.0', date:'2026-08-04', author:'Mo', title:'Split out of Cards as its own section', changes:[
         ['added','Media Cards — carved out of the former combined Cards page into its own section, with a "When to use" tailored to the media band specifically'],
       ]},
     ]},
-    {secId:'s-cards-interactive', name:'Interactive Cards', version:'1.0.0', entries:[
+    {secId:'s-cards-interactive', name:'Interactive Cards', version:'1.1.0', entries:[
+      {version:'1.1.0', date:'2026-08-12', author:'Helen', title:'Rebuilt as a tabbed page, matching Pills/Buttons\' structure', changes:[
+        ['changed','Section restructured from a flat .sec into .sec--tabbed with a .sec-hero and Overview / Style / Code / Changelog tabs (cardTabSwitch(\'s-cards-interactive\', tab))'],
+        ['added','.card--interactive:focus-visible \u2014 a 3px color-input-focus ring. The page already told implementers to add role="button" and tabindex="0", but there was no visible focus treatment for the keyboard users that enabled; .card--interactive:active added for a real pressed treatment'],
+        ['added','.card.f-hover / .f-focus / .f-press forced-state classes (mirroring .ds-btn\'s) so hover, focus and pressed can be shown statically side by side'],
+        ['added','"Try the component" playground with a State picker (default/hover/focused/pressed), Description and Affordance toggles and a Title field; a "Key states" grid across the same four states; two "In context" mockups (navigation tiles, option picker)'],
+        ['added','Style tab: Anatomy parts (including role/tabindex as a real part of the component), a States grid, and a token table listing the hover border, shadow, lift and focus ring'],
+        ['added','Code tab with the .code-seg HTML/CSS \u00b7 Blazor \u00b7 React TSX switcher \u2014 every variant handles Enter and Space, not just click'],
+        ['changed','Existing Do/Don\'t guidance re-platformed under a "Do\'s and don\'ts" heading, text unchanged, with .spec-usage-demo visuals showing the click-target conflict a nested footer creates'],
+      ]},
+
       {version:'1.0.0', date:'2026-08-04', author:'Mo', title:'Split out of Cards as its own section', changes:[
         ['added','Interactive Cards — carved out of the former combined Cards page into its own section, with a "When to use" tailored to whole-card click targets specifically'],
       ]},
     ]},
-    {secId:'s-cards-stat', name:'Stat Cards', version:'1.0.0', entries:[
+    {secId:'s-cards-stat', name:'Stat Cards', version:'1.1.0', entries:[
+      {version:'1.1.0', date:'2026-08-12', author:'Helen', title:'Rebuilt as a tabbed page, matching Pills/Buttons\' structure', changes:[
+        ['changed','Section restructured from a flat .sec into .sec--tabbed with a .sec-hero and Overview / Style / Code / Changelog tabs (cardTabSwitch(\'s-cards-stat\', tab))'],
+        ['added','.dd-stat.f-hover forced-state class, so the tile\'s real accent-border-plus-lift hover treatment can be shown statically'],
+        ['added','"Try the component" playground with Trend (up/down/none), Comparison and State controls and a Value field; a "Key configurations" grid (upward delta, downward delta, no delta, value only); three "In context" mockups (dashboard KPI row, headline above a chart, single headline)'],
+        ['added','Style tab: numbered Anatomy parts (.dd-stat__label, __value, .dd-delta, .dd-stat__sub), a Size & dimensions table including the 4 \u2192 2 \u2192 1 column grid breakpoints, a token table with Success/Critical delta swatches, and a States grid'],
+        ['added','Code tab with the .code-seg HTML/CSS \u00b7 Blazor \u00b7 React TSX switcher, generated from the current configuration'],
+        ['changed','Existing Do/Don\'t guidance re-platformed under a "Do\'s and don\'ts" heading, text unchanged, with .spec-usage-demo visuals contrasting a labelled comparison against a bare delta'],
+      ]},
+
       {version:'1.0.0', date:'2026-08-04', author:'Mo', title:'Split out of Cards as its own section', changes:[
         ['added','Stat Cards — carved out of the former combined Cards page into its own section, with a "When to use" tailored to headline KPI tiles specifically'],
       ]},
@@ -19236,6 +19379,1322 @@ try { renderDpKeyVariants(); } catch(e){ console.error('dp-keyvariants',e); }
 try { renderDpInSitu();      } catch(e){ console.error('dp-insitu',e); }
 try { renderDpReference();   } catch(e){ console.error('dp-reference',e); }
 
+/* ================================================================
+   CARDS — one shared, config-driven builder set for all five
+   Cards sub-pages (Basic, Media, Interactive, Stat, Hover).
+   Each page is a .sec--tabbed section with the same Overview /
+   Style / Code / Changelog structure as Pills and Buttons; the
+   only per-page thing is its CARD_PAGES entry. Same idea as
+   PILL_PLAYGROUND_MOUNTS, generalised one level further so the
+   render functions themselves are shared rather than copied.
+================================================================ */
+function cardEsc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&#60;').replace(/>/g,'&#62;').replace(/"/g,'&quot;'); }
+
+/* Real .card markup builder — covers every part the Cards group
+   actually has (media band, body, title, description, footer with
+   a primary and an optional ghost action) plus the interactive
+   modifier and its documentation-only forced state classes. */
+function cardHTML(o){
+  o = o || {};
+  const cls = ['card'];
+  if(o.interactive) cls.push('card--interactive');
+  if(o.force) cls.push('f-' + o.force);
+  const attrs = o.interactive ? ' tabindex="0" role="button"' : '';
+  let html = '';
+  if(o.media) html += `<div class="card__media"${o.mediaStyle?` style="${o.mediaStyle}"`:''}></div>`;
+  let body = '';
+  if(o.title) body += `<div class="card__title">${cardEsc(o.title)}</div>`;
+  if(o.desc)  body += `<div class="card__desc">${cardEsc(o.desc)}</div>`;
+  html += `<div class="card__body">${body}</div>`;
+  if(o.foot){
+    const ghost = o.ghost ? `<button class="card-btn card-btn--ghost" type="button" tabindex="-1">${cardEsc(o.ghostLabel||'Cancel')}</button>` : '';
+    html += `<div class="card__foot card__foot--end">${ghost}<button class="card-btn" type="button" tabindex="-1">${cardEsc(o.actionLabel||'Save')}</button></div>`;
+  }
+  return `<div class="${cls.join(' ')}"${attrs} style="${o.style||''}">${html}</div>`;
+}
+
+/* Real .dd-stat markup builder — label, value, and a footer that
+   holds an optional trend delta and an optional comparison line. */
+function cardStatHTML(o){
+  o = o || {};
+  const cls = ['dd-stat'];
+  if(o.force) cls.push('f-' + o.force);
+  const delta = o.trend==='up'   ? `<span class="dd-delta dd-delta--up">&#9650; ${cardEsc(o.deltaLabel||'12.8%')}</span>`
+              : o.trend==='down' ? `<span class="dd-delta dd-delta--down">&#9660; ${cardEsc(o.deltaLabel||'2.3%')}</span>` : '';
+  const sub = o.sub ? `<span class="dd-stat__sub">${cardEsc(o.sub)}</span>` : '';
+  const foot = (delta || sub) ? `<div class="dd-stat__foot">${delta}${sub}</div>` : '';
+  return `<div class="${cls.join(' ')}" style="${o.style||''}">
+      <div class="dd-stat__label">${cardEsc(o.label||'Transactions')}</div>
+      <div class="dd-stat__value">${cardEsc(o.value||'2.4M')}</div>
+      ${foot}
+    </div>`;
+}
+
+/* Real .hc markup builder — an inline trigger plus the preview card
+   it reveals. `open` adds .is-open, which pins the card open for a
+   static screenshot the way :hover/:focus-within does at runtime. */
+function cardHoverHTML(o){
+  o = o || {};
+  const avatar = o.avatar===false ? '' : `<span class="avt avt--lg">${cardEsc(o.initials||'RB')}</span>`;
+  const meta = o.meta ? `<span class="hc__meta">${cardEsc(o.meta)}</span>` : '';
+  const style = o.inert ? `pointer-events:none${o.style?';'+o.style:''}` : o.style;
+  const tabindex = o.inert ? ' tabindex="-1"' : '';
+  return `<span class="hc${o.open?' is-open':''}"${style?` style="${style}"`:''}>
+      <button class="hc__trigger" type="button"${tabindex}>${cardEsc(o.trigger||'@rethabile')}</button>
+      <span class="hc__card"${o.cardStyle?` style="${o.cardStyle}"`:''}>
+        <span class="hc__row">${avatar}<span><span class="hc__name" style="display:block">${cardEsc(o.name||'Rethabile Beng')}</span><span class="hc__handle">${cardEsc(o.handle||'@rethabile · Finance ops')}</span></span></span>
+        ${meta}
+      </span>
+    </span>`;
+}
+
+/* Shared surface tokens — identical for Basic, Media and Interactive,
+   which are the same surface with one part added or one modifier on. */
+const CARD_BASE_TOKEN_HEAD = ['Property','Value','Token'];
+const CARD_BASE_TOKEN_ROWS = [
+  ['Corner radius','14px','&mdash;'],
+  ['Border','1px solid','<code>chrome-border</code>'],
+  ['Surface','Base background','<code>chrome-bg</code>'],
+  ['Body padding','18px','<code>spacing-225</code>'],
+  ['Title','15px / 800','<code>chrome-txt</code>'],
+  ['Description','13px / 1.55','<code>chrome-muted</code>'],
+];
+const CARD_FOOT_TOKEN_ROWS = [
+  ['Footer padding','14px 18px','&mdash;'],
+  ['Footer divider','1px top border','<code>chrome-border</code>'],
+  ['Primary action','Filled button','<code>color-btn-s-bg</code>'],
+  ['Secondary action','Ghost button, 1px border','<code>chrome-border</code>'],
+];
+
+function cardTokenTable(head, rows, minWidth){
+  return `<div class="dd-table-wrap"><table class="dd-table"${minWidth?` style="min-width:${minWidth}"`:''}>
+      <thead><tr>${head.map(h=>`<th>${h}</th>`).join('')}</tr></thead>
+      <tbody>${rows.map(r=>`<tr><td class="dd-table__name">${r[0]}</td>${r.slice(1).map(c=>`<td>${c}</td>`).join('')}</tr>`).join('')}</tbody>
+    </table></div>`;
+}
+
+/* ── PER-PAGE CONFIG ──
+   secId/pfx drive every mount id and every DOM query, so adding a
+   sixth card variant is a new entry here and nothing else. */
+const CARD_PAGES = [
+  {
+    secId:'s-cards-basic', pfx:'cbasic',
+    langFiles:{html:'card.html', blazor:'DsCard.razor', tsx:'DsCard.tsx'},
+    headingAbove:'Use a basic card to group one self-contained subject &mdash; a summary, a record, a setting &mdash; and give it at most one primary action.',
+    state:{title:'Payout summary', desc:'on', foot:'actions', ghost:'on'},
+    controls:[
+      {key:'desc',  label:'Description', opts:[{v:'on',l:'Show'},{v:'off',l:'Hide'}]},
+      {key:'foot',  label:'Footer',      opts:[{v:'none',l:'None'},{v:'actions',l:'Actions'}]},
+      {key:'ghost', label:'Secondary',   opts:[{v:'on',l:'Ghost + filled'},{v:'off',l:'Filled only'}]},
+    ],
+    textControl:{key:'title', label:'Title', placeholder:'Payout summary', max:28},
+    stage(s){
+      return cardHTML({
+        title:s.title||'Payout summary',
+        desc:s.desc==='on' ? 'Settled to your bank account, less fees, for the period shown.' : '',
+        foot:s.foot==='actions', ghost:s.ghost==='on',
+        ghostLabel:'Cancel', actionLabel:'Save'
+      });
+    },
+    keyStates:{
+      title:'Key configurations',
+      desc:'One surface, four shapes. Add a description and a footer only when the card genuinely has them &mdash; every part is optional except the body.',
+      cells(theme, sbg){
+        const w = 'width:100%';
+        return [
+          {name:'Title only',        desc:'The minimum card: a body with one line of content.', vis:cardHTML({title:'Basic card', style:w})},
+          {name:'Title + description', desc:'The default shape for most content.', vis:cardHTML({title:'Basic card', desc:'A short line of supporting detail.', style:w})},
+          {name:'With footer',       desc:'A ghost secondary beside a filled primary.', vis:cardHTML({title:'With footer', desc:'Actions sit below a divider.', foot:true, ghost:true, style:w})},
+          {name:'Single action',     desc:'Drop the ghost button when there is no alternative to offer.', vis:cardHTML({title:'One action', desc:'Nothing to cancel.', foot:true, ghost:false, actionLabel:'Done', style:w})},
+        ];
+      }
+    },
+    insitu:{
+      desc:'The same card groups a settings block, closes out a confirmation, and carries a read-only summary.',
+      cols:3,
+      mocks(theme, sbg, bar){
+        const w = 'width:100%';
+        return [
+          {html:`<div class="spec-mock__stage" style="background:${sbg}">
+              <div style="display:flex;flex-direction:column;gap:10px">
+                ${cardHTML({title:'Notifications', desc:'Email and push alerts.', style:w})}
+                ${cardHTML({title:'Security', desc:'Password and two-factor.', style:w})}
+              </div>
+            </div>
+            <div class="spec-mock__cap"><b>Settings list</b>One card per setting group keeps unrelated options apart.</div>`},
+          {html:`<div class="spec-mock__stage" style="background:${sbg}">
+              ${cardHTML({title:'Confirm payout', desc:'R48,200 will be sent to Absa ••4471.', foot:true, ghost:true, actionLabel:'Confirm', style:w})}
+            </div>
+            <div class="spec-mock__cap"><b>Confirmation</b>The footer holds the commit action and its way out.</div>`},
+          {html:`<div class="spec-mock__stage" style="background:${sbg}">
+              <div class="card" style="width:100%">
+                <div class="card__body">
+                  <div class="card__title">This week</div>
+                  <div style="display:flex;flex-direction:column;gap:9px;margin-top:12px">
+                    <div class="spec-mock__row">${bar('58%')}<span class="spec-mock__spacer"></span>${bar('26px')}</div>
+                    <div class="spec-mock__row">${bar('44%')}<span class="spec-mock__spacer"></span>${bar('34px')}</div>
+                    <div class="spec-mock__row">${bar('66%')}<span class="spec-mock__spacer"></span>${bar('22px')}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="spec-mock__cap"><b>Summary panel</b>A card with no footer reads as information, not a prompt.</div>`},
+        ];
+      }
+    },
+    style(theme, sbg){
+      return [
+        {title:'Anatomy',
+         desc:'A card is a bordered surface holding a body. The title, description and footer are each optional &mdash; only the body is structural.',
+         hero:cardHTML({title:'Payout summary', desc:'Settled to your bank account, less fees, for the period shown.', foot:true, ghost:true}),
+         parts:[
+           {name:'Container', note:'<code>.card</code> &mdash; 14px radius, 1px border, base surface, clipped so children sit flush to the corners.', vis:`<span style="width:64px;height:38px;border-radius:9px;border:2px dashed var(--chrome-muted);opacity:.65"></span>`},
+           {name:'Body',      note:'<code>.card__body</code> &mdash; 18px padding on all four sides, and the flexible part that absorbs extra height.', vis:`<span style="width:64px;height:38px;border-radius:9px;border:1px solid var(--chrome-border);display:flex;padding:6px;box-sizing:border-box"><span style="flex:1;border-radius:5px;border:1.5px dashed var(--chrome-muted);opacity:.6"></span></span>`},
+           {name:'Title',     note:'<code>.card__title</code> &mdash; 15px / 800. Identical across every card in the group, so peers never look ranked.', vis:'<span style="font-weight:800;font-size:15px;color:var(--chrome-txt)">Card title</span>'},
+           {name:'Description', note:'<code>.card__desc</code> &mdash; 13px / 1.55 in muted text, for one or two supporting lines.', vis:'<span style="font-size:13px;line-height:1.55;color:var(--chrome-muted)">Supporting line</span>'},
+           {name:'Footer',    note:'<code>.card__foot</code> &mdash; a divided action row; <code>.card__foot--end</code> right-aligns it.', vis:`<span style="display:flex;gap:7px"><span class="card-btn card-btn--ghost" style="padding:5px 10px;font-size:11px">Cancel</span><span class="card-btn" style="padding:5px 10px;font-size:11px">Save</span></span>`},
+         ]},
+        {title:'Size &amp; dimensions',
+         desc:'A card is 300px wide by default and capped at 100% of its container, so a grid of cards can size itself. Height is content-driven.',
+         table:cardTokenTable(['Measure','Value','Notes'], [
+           ['Default width','300px','<code>max-width:100%</code> lets a narrower column win'],
+           ['Body padding','18px','All four sides'],
+           ['Footer padding','14px 18px','Tighter vertically than the body'],
+           ['Title &rarr; description','5px','<code>margin-bottom</code> on the title'],
+           ['Grid gap','20px','<code>.card-grid</code>, wrapping flex row'],
+         ])},
+        {title:'Tokens',
+         desc:'Every colour comes from a chrome or button token, so the card follows the light/dark toggle with no per-theme overrides. The same base applies to Media, Interactive, Stat and Hover Cards.',
+         table:cardTokenTable(CARD_BASE_TOKEN_HEAD, CARD_BASE_TOKEN_ROWS.concat(CARD_FOOT_TOKEN_ROWS))},
+      ];
+    },
+    code:{
+      html(s){
+        const descLine = s.desc==='on' ? `\n    <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"card__desc"</span><span class="code-kw">></span>Settled to your bank account.<span class="code-kw">&#60;/div></span>` : '';
+        const footBlock = s.foot==='actions'
+          ? `\n  <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"card__foot card__foot--end"</span><span class="code-kw">></span>${s.ghost==='on' ? `\n    <span class="code-kw">&#60;button</span> <span class="code-cls">class</span>=<span class="code-val">"card-btn card-btn--ghost"</span><span class="code-kw">></span>Cancel<span class="code-kw">&#60;/button></span>` : ''}\n    <span class="code-kw">&#60;button</span> <span class="code-cls">class</span>=<span class="code-val">"card-btn"</span><span class="code-kw">></span>Save<span class="code-kw">&#60;/button></span>\n  <span class="code-kw">&#60;/div></span>`
+          : '';
+        return `<span class="code-cm">&#60;!-- Basic card --></span>
+<span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"card"</span><span class="code-kw">></span>
+  <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"card__body"</span><span class="code-kw">></span>
+    <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"card__title"</span><span class="code-kw">></span>${cardEsc(s.title||'Payout summary')}<span class="code-kw">&#60;/div></span>${descLine}
+  <span class="code-kw">&#60;/div></span>${footBlock}
+<span class="code-kw">&#60;/div></span>
+
+<span class="code-cm">/* CSS — tokens only, no per-theme overrides */</span>
+<span class="code-cls">.card</span> {
+  background: <span class="code-val">var(--chrome-bg)</span>;
+  border: <span class="code-val">1px solid var(--chrome-border)</span>;
+  border-radius: <span class="code-val">14px</span>;
+  overflow: <span class="code-val">hidden</span>;
+  width: <span class="code-val">300px</span>;
+  max-width: <span class="code-val">100%</span>;
+}
+<span class="code-cls">.card__body</span> { padding: <span class="code-val">18px</span>; flex: <span class="code-val">1</span>; }
+<span class="code-cls">.card__foot</span> { padding: <span class="code-val">14px 18px</span>; border-top: <span class="code-val">1px solid var(--chrome-border)</span>; }`;
+      },
+      blazor(s){
+        return `<span class="code-cm">@* DsCard.razor — usage *@</span>
+<span class="code-kw">&#60;DsCard</span> <span class="code-attr">Title</span>=<span class="code-val">"${cardEsc(s.title||'Payout summary')}"</span>
+${s.desc==='on' ? `        <span class="code-attr">Description</span>=<span class="code-val">"Settled to your bank account."</span>\n` : ''}        <span class="code-attr">ShowFooter</span>=<span class="code-val">"${s.foot==='actions'?'true':'false'}"</span>
+        <span class="code-attr">ShowSecondary</span>=<span class="code-val">"${s.ghost==='on'?'true':'false'}"</span><span class="code-kw">/></span>
+
+<span class="code-cm">@* DsCard.razor — implementation *@</span>
+<span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"card"</span><span class="code-kw">></span>
+  <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"card__body"</span><span class="code-kw">></span>
+    <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"card__title"</span><span class="code-kw">></span>@Title<span class="code-kw">&#60;/div></span>
+    @if (!string.IsNullOrEmpty(Description))
+    {
+      <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"card__desc"</span><span class="code-kw">></span>@Description<span class="code-kw">&#60;/div></span>
+    }
+  <span class="code-kw">&#60;/div></span>
+  @if (ShowFooter)
+  {
+    <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"card__foot card__foot--end"</span><span class="code-kw">></span>
+      @if (ShowSecondary)
+      {
+        <span class="code-kw">&#60;button</span> <span class="code-cls">class</span>=<span class="code-val">"card-btn card-btn--ghost"</span><span class="code-kw">></span>Cancel<span class="code-kw">&#60;/button></span>
+      }
+      <span class="code-kw">&#60;button</span> <span class="code-cls">class</span>=<span class="code-val">"card-btn"</span><span class="code-kw">></span>Save<span class="code-kw">&#60;/button></span>
+    <span class="code-kw">&#60;/div></span>
+  }
+<span class="code-kw">&#60;/div></span>
+
+<span class="code-kw">@code</span> {
+  [Parameter] <span class="code-kw">public string</span> Title { get; set; } = <span class="code-val">""</span>;
+  [Parameter] <span class="code-kw">public string?</span> Description { get; set; }
+  [Parameter] <span class="code-kw">public bool</span> ShowFooter { get; set; }
+  [Parameter] <span class="code-kw">public bool</span> ShowSecondary { get; set; } = <span class="code-kw">true</span>;
+}`;
+      },
+      tsx(s){
+        return `<span class="code-cm">// DsCard.tsx</span>
+<span class="code-kw">type</span> <span class="code-cls">DsCardProps</span> = {
+  title: <span class="code-cls">string</span>;
+  description?: <span class="code-cls">string</span>;
+  footer?: <span class="code-cls">React.ReactNode</span>;
+};
+
+<span class="code-kw">export function</span> <span class="code-cls">DsCard</span>({ title, description, footer }: <span class="code-cls">DsCardProps</span>) {
+  <span class="code-kw">return</span> (
+    <span class="code-kw">&#60;div</span> <span class="code-cls">className</span>=<span class="code-val">"card"</span><span class="code-kw">></span>
+      <span class="code-kw">&#60;div</span> <span class="code-cls">className</span>=<span class="code-val">"card__body"</span><span class="code-kw">></span>
+        <span class="code-kw">&#60;div</span> <span class="code-cls">className</span>=<span class="code-val">"card__title"</span><span class="code-kw">></span>{title}<span class="code-kw">&#60;/div></span>
+        {description && <span class="code-kw">&#60;div</span> <span class="code-cls">className</span>=<span class="code-val">"card__desc"</span><span class="code-kw">></span>{description}<span class="code-kw">&#60;/div></span>}
+      <span class="code-kw">&#60;/div></span>
+      {footer && <span class="code-kw">&#60;div</span> <span class="code-cls">className</span>=<span class="code-val">"card__foot card__foot--end"</span><span class="code-kw">></span>{footer}<span class="code-kw">&#60;/div></span>}
+    <span class="code-kw">&#60;/div></span>
+  );
+}
+
+<span class="code-cm">// Current playground configuration</span>
+<span class="code-kw">&#60;DsCard</span>
+  <span class="code-attr">title</span>=<span class="code-val">"${cardEsc(s.title||'Payout summary')}"</span>${s.desc==='on' ? `\n  <span class="code-attr">description</span>=<span class="code-val">"Settled to your bank account."</span>` : ''}${s.foot==='actions' ? `\n  <span class="code-attr">footer</span>={&#60;>${s.ghost==='on'?`<span class="code-kw">&#60;button</span> <span class="code-cls">className</span>=<span class="code-val">"card-btn card-btn--ghost"</span><span class="code-kw">></span>Cancel<span class="code-kw">&#60;/button></span>`:''}<span class="code-kw">&#60;button</span> <span class="code-cls">className</span>=<span class="code-val">"card-btn"</span><span class="code-kw">></span>Save<span class="code-kw">&#60;/button></span>&#60;/>}` : ''}
+<span class="code-kw">/></span>`;
+      }
+    }
+  },
+
+  {
+    secId:'s-cards-media', pfx:'cmedia',
+    langFiles:{html:'media-card.html', blazor:'DsMediaCard.razor', tsx:'DsMediaCard.tsx'},
+    headingAbove:'Use a media card when the card has a real image to show &mdash; a product shot, a thumbnail, an article preview &mdash; not to make a plain card look richer.',
+    state:{title:'Airtime bundles', media:'on', desc:'on', foot:'none'},
+    controls:[
+      {key:'media', label:'Media band', opts:[{v:'on',l:'With band'},{v:'off',l:'No band'}]},
+      {key:'desc',  label:'Description', opts:[{v:'on',l:'Show'},{v:'off',l:'Hide'}]},
+      {key:'foot',  label:'Footer',      opts:[{v:'none',l:'None'},{v:'actions',l:'Actions'}]},
+    ],
+    textControl:{key:'title', label:'Title', placeholder:'Airtime bundles', max:28},
+    stage(s){
+      return cardHTML({
+        media:s.media==='on',
+        title:s.title||'Airtime bundles',
+        desc:s.desc==='on' ? 'Prepaid data and voice bundles from every major network.' : '',
+        foot:s.foot==='actions', ghost:false, actionLabel:'View'
+      });
+    },
+    keyStates:{
+      title:'Key configurations',
+      desc:'The band is the only thing a media card adds. Everything below it behaves exactly like a basic card, so the two can share a layout as long as they do not share a row.',
+      cells(theme, sbg){
+        const w = 'width:100%';
+        return [
+          {name:'Band + title',       desc:'Image carries the weight; one line names it.', vis:cardHTML({media:true, title:'Media card', style:w, mediaStyle:'height:64px'})},
+          {name:'Band + description', desc:'The default shape for a feed or product grid.', vis:cardHTML({media:true, title:'Media card', desc:'One supporting line.', style:w, mediaStyle:'height:56px'})},
+          {name:'Band + footer',      desc:'Add a footer when the card has its own action.', vis:cardHTML({media:true, title:'Media card', foot:true, ghost:false, actionLabel:'View', style:w, mediaStyle:'height:48px'})},
+          {name:'No band',            desc:'Drop the band rather than filling it with a placeholder &mdash; that is just a basic card.', vis:cardHTML({title:'No image yet', desc:'Use a basic card instead.', style:w})},
+        ];
+      }
+    },
+    insitu:{
+      desc:'A consistent band ratio is what makes a row of media cards scan as a set.',
+      cols:2,
+      mocks(theme, sbg, bar){
+        const w = 'width:100%';
+        return [
+          {html:`<div class="spec-mock__stage" style="background:${sbg}">
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+                ${cardHTML({media:true, title:'Data 1GB', style:w, mediaStyle:'height:44px'})}
+                ${cardHTML({media:true, title:'Data 5GB', style:w, mediaStyle:'height:44px'})}
+              </div>
+            </div>
+            <div class="spec-mock__cap"><b>Product grid</b>Every band is the same height, so the titles line up.</div>`},
+          {html:`<div class="spec-mock__stage" style="background:${sbg}">
+              ${cardHTML({media:true, title:'Settlement changes in July', desc:'What is moving, and when it takes effect.', foot:true, ghost:false, actionLabel:'Read', style:w, mediaStyle:'height:52px'})}
+            </div>
+            <div class="spec-mock__cap"><b>Article preview</b>Band, headline, standfirst, and one way in.</div>`},
+        ];
+      }
+    },
+    style(theme, sbg){
+      return [
+        {title:'Anatomy',
+         desc:'A media card is a basic card with one part added above the body: a full-bleed band that sits flush to the container edge and takes no padding of its own.',
+         hero:cardHTML({media:true, title:'Airtime bundles', desc:'Prepaid data and voice bundles from every major network.'}),
+         parts:[
+           {name:'Container', note:'<code>.card</code> &mdash; <code>overflow:hidden</code> is what clips the band to the 14px corner radius.', vis:`<span style="width:64px;height:38px;border-radius:9px;border:2px dashed var(--chrome-muted);opacity:.65"></span>`},
+           {name:'Media band', note:'<code>.card__media</code> &mdash; 132px tall, flush at the top, <code>flex-shrink:0</code> so it never compresses. A gradient stands in for the real image here.', vis:`<span style="width:64px;height:34px;border-radius:8px;background:linear-gradient(135deg,var(--prim-grey-700),var(--prim-grey-1000))"></span>`},
+           {name:'Body',      note:'<code>.card__body</code> &mdash; keeps the standard 18px padding, so text never touches the band.', vis:`<span style="width:64px;height:38px;border-radius:9px;background:var(--color-surface-n2)"></span>`},
+           {name:'Title',     note:'<code>.card__title</code> &mdash; 15px / 800, the same as every other card in the group.', vis:'<span style="font-weight:800;font-size:15px;color:var(--chrome-txt)">Card title</span>'},
+         ]},
+        {title:'Size &amp; dimensions',
+         desc:'The band has a fixed height rather than an aspect ratio, which is what keeps a wrapping grid of cards aligned at different widths.',
+         table:cardTokenTable(['Measure','Value','Notes'], [
+           ['Band height','132px','Fixed; not a ratio'],
+           ['Band padding','0','Full-bleed to the container edge'],
+           ['Card width','300px','<code>max-width:100%</code>'],
+           ['Body padding','18px','Unchanged from a basic card'],
+         ])},
+        {title:'Tokens',
+         desc:'The band ships as a grey gradient placeholder; a real integration replaces it with an image and keeps everything else.',
+         table:cardTokenTable(CARD_BASE_TOKEN_HEAD, CARD_BASE_TOKEN_ROWS.concat([
+           ['Band placeholder','135&deg; gradient','<code>prim-grey-700</code> &rarr; <code>prim-grey-1000</code>'],
+         ]))},
+      ];
+    },
+    code:{
+      html(s){
+        const mediaLine = s.media==='on' ? `\n  <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"card__media"</span><span class="code-kw">>&#60;/div></span>` : '';
+        const descLine = s.desc==='on' ? `\n    <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"card__desc"</span><span class="code-kw">></span>Prepaid data and voice bundles.<span class="code-kw">&#60;/div></span>` : '';
+        const footBlock = s.foot==='actions' ? `\n  <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"card__foot card__foot--end"</span><span class="code-kw">></span>\n    <span class="code-kw">&#60;button</span> <span class="code-cls">class</span>=<span class="code-val">"card-btn"</span><span class="code-kw">></span>View<span class="code-kw">&#60;/button></span>\n  <span class="code-kw">&#60;/div></span>` : '';
+        return `<span class="code-cm">&#60;!-- Media card --></span>
+<span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"card"</span><span class="code-kw">></span>${mediaLine}
+  <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"card__body"</span><span class="code-kw">></span>
+    <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"card__title"</span><span class="code-kw">></span>${cardEsc(s.title||'Airtime bundles')}<span class="code-kw">&#60;/div></span>${descLine}
+  <span class="code-kw">&#60;/div></span>${footBlock}
+<span class="code-kw">&#60;/div></span>
+
+<span class="code-cm">/* CSS — swap the gradient for a real image */</span>
+<span class="code-cls">.card__media</span> {
+  height: <span class="code-val">132px</span>;
+  flex-shrink: <span class="code-val">0</span>;
+  background: <span class="code-val">linear-gradient(135deg, var(--prim-grey-700), var(--prim-grey-1000))</span>;
+}`;
+      },
+      blazor(s){
+        return `<span class="code-cm">@* DsMediaCard.razor — usage *@</span>
+<span class="code-kw">&#60;DsMediaCard</span> <span class="code-attr">Title</span>=<span class="code-val">"${cardEsc(s.title||'Airtime bundles')}"</span>
+             <span class="code-attr">ImageUrl</span>=<span class="code-val">"${s.media==='on'?'/img/bundles.jpg':''}"</span>
+             <span class="code-attr">ShowFooter</span>=<span class="code-val">"${s.foot==='actions'?'true':'false'}"</span><span class="code-kw">/></span>
+
+<span class="code-cm">@* DsMediaCard.razor — implementation *@</span>
+<span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"card"</span><span class="code-kw">></span>
+  @if (!string.IsNullOrEmpty(ImageUrl))
+  {
+    <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"card__media"</span> <span class="code-attr">style</span>=<span class="code-val">"@($"background-image:url({ImageUrl});background-size:cover")"</span><span class="code-kw">>&#60;/div></span>
+  }
+  <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"card__body"</span><span class="code-kw">></span>
+    <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"card__title"</span><span class="code-kw">></span>@Title<span class="code-kw">&#60;/div></span>
+  <span class="code-kw">&#60;/div></span>
+<span class="code-kw">&#60;/div></span>
+
+<span class="code-kw">@code</span> {
+  [Parameter] <span class="code-kw">public string</span> Title { get; set; } = <span class="code-val">""</span>;
+  [Parameter] <span class="code-kw">public string?</span> ImageUrl { get; set; }
+  [Parameter] <span class="code-kw">public bool</span> ShowFooter { get; set; }
+}`;
+      },
+      tsx(s){
+        return `<span class="code-cm">// DsMediaCard.tsx</span>
+<span class="code-kw">type</span> <span class="code-cls">DsMediaCardProps</span> = {
+  title: <span class="code-cls">string</span>;
+  imageUrl?: <span class="code-cls">string</span>;
+  description?: <span class="code-cls">string</span>;
+};
+
+<span class="code-kw">export function</span> <span class="code-cls">DsMediaCard</span>({ title, imageUrl, description }: <span class="code-cls">DsMediaCardProps</span>) {
+  <span class="code-kw">return</span> (
+    <span class="code-kw">&#60;div</span> <span class="code-cls">className</span>=<span class="code-val">"card"</span><span class="code-kw">></span>
+      {imageUrl && (
+        <span class="code-kw">&#60;div</span>
+          <span class="code-cls">className</span>=<span class="code-val">"card__media"</span>
+          <span class="code-attr">style</span>={{ backgroundImage: <span class="code-val">\`url(\${imageUrl})\`</span>, backgroundSize: <span class="code-val">"cover"</span> }}
+        <span class="code-kw">/></span>
+      )}
+      <span class="code-kw">&#60;div</span> <span class="code-cls">className</span>=<span class="code-val">"card__body"</span><span class="code-kw">></span>
+        <span class="code-kw">&#60;div</span> <span class="code-cls">className</span>=<span class="code-val">"card__title"</span><span class="code-kw">></span>{title}<span class="code-kw">&#60;/div></span>
+        {description && <span class="code-kw">&#60;div</span> <span class="code-cls">className</span>=<span class="code-val">"card__desc"</span><span class="code-kw">></span>{description}<span class="code-kw">&#60;/div></span>}
+      <span class="code-kw">&#60;/div></span>
+    <span class="code-kw">&#60;/div></span>
+  );
+}
+
+<span class="code-cm">// Current playground configuration</span>
+<span class="code-kw">&#60;DsMediaCard</span> <span class="code-attr">title</span>=<span class="code-val">"${cardEsc(s.title||'Airtime bundles')}"</span>${s.media==='on' ? ` <span class="code-attr">imageUrl</span>=<span class="code-val">"/img/bundles.jpg"</span>` : ''} <span class="code-kw">/></span>`;
+      }
+    }
+  },
+
+  {
+    secId:'s-cards-interactive', pfx:'cinter',
+    langFiles:{html:'interactive-card.html', blazor:'DsInteractiveCard.razor', tsx:'DsInteractiveCard.tsx'},
+    headingAbove:'Use an interactive card when the whole surface goes to exactly one place &mdash; and put no other buttons or links inside it.',
+    state:{title:'Transactions', force:'none', desc:'on', arrow:'on'},
+    controls:[
+      {key:'force', label:'State',       opts:[{v:'none',l:'Default'},{v:'hover',l:'Hover'},{v:'focus',l:'Focused'},{v:'press',l:'Pressed'}]},
+      {key:'desc',  label:'Description', opts:[{v:'on',l:'Show'},{v:'off',l:'Hide'}]},
+      {key:'arrow', label:'Affordance',  opts:[{v:'on',l:'Arrow'},{v:'off',l:'None'}]},
+    ],
+    textControl:{key:'title', label:'Title', placeholder:'Transactions', max:28},
+    stage(s){
+      return cardHTML({
+        interactive:true,
+        force:s.force==='none' ? '' : s.force,
+        title:(s.title||'Transactions') + (s.arrow==='on' ? ' →' : ''),
+        desc:s.desc==='on' ? 'Every payment taken across all your devices.' : ''
+      });
+    },
+    keyStates:{
+      title:'Key states',
+      desc:'An interactive card has no colour variants &mdash; what changes is its response to the pointer and the keyboard. Hover and focus must both land somewhere visible.',
+      cells(theme, sbg){
+        const w = 'width:100%';
+        return [
+          {name:'Default', desc:'Identical to a basic card at rest.', vis:cardHTML({interactive:true, title:'Transactions →', style:w})},
+          {name:'Hover',   desc:'2px lift, stronger border, soft shadow.', vis:cardHTML({interactive:true, force:'hover', title:'Transactions →', style:w})},
+          {name:'Focused', desc:'A ring for keyboard users &mdash; never hover alone.', vis:cardHTML({interactive:true, force:'focus', title:'Transactions →', style:w})},
+          {name:'Pressed', desc:'Settles back down and tightens slightly.', vis:cardHTML({interactive:true, force:'press', title:'Transactions →', style:w})},
+        ];
+      }
+    },
+    insitu:{
+      desc:'Interactive cards work where a card and a link are the same thing: a tile that navigates, or a choice that commits.',
+      cols:2,
+      mocks(theme, sbg, bar){
+        const w = 'width:100%';
+        return [
+          {html:`<div class="spec-mock__stage" style="background:${sbg}">
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+                ${cardHTML({interactive:true, title:'Payouts →', style:w})}
+                ${cardHTML({interactive:true, force:'hover', title:'Devices →', style:w})}
+                ${cardHTML({interactive:true, title:'Reports →', style:w})}
+                ${cardHTML({interactive:true, title:'Settings →', style:w})}
+              </div>
+            </div>
+            <div class="spec-mock__cap"><b>Navigation tiles</b>Each tile is one destination, so the whole card can be the target.</div>`},
+          {html:`<div class="spec-mock__stage" style="background:${sbg}">
+              <div style="display:flex;flex-direction:column;gap:10px">
+                ${cardHTML({interactive:true, force:'focus', title:'Instant payout', desc:'Arrives today, 1.5% fee.', style:w})}
+                ${cardHTML({interactive:true, title:'Standard payout', desc:'Arrives in 2 days, free.', style:w})}
+              </div>
+            </div>
+            <div class="spec-mock__cap"><b>Option picker</b>Whole-card targets make a choice easy to hit &mdash; and easy to tab through.</div>`},
+        ];
+      }
+    },
+    style(theme, sbg){
+      return [
+        {title:'Anatomy',
+         desc:'The parts are a basic card&rsquo;s. What <code>.card--interactive</code> adds is behaviour: a pointer cursor, a lift on hover, and the <code>role</code>/<code>tabindex</code> pair that makes the surface a real control.',
+         hero:cardHTML({interactive:true, title:'Transactions →', desc:'Every payment taken across all your devices.'}),
+         parts:[
+           {name:'Container', note:'<code>.card.card--interactive</code> &mdash; the click target is the whole element, not a child link.', vis:`<span style="width:64px;height:38px;border-radius:9px;border:2px dashed var(--chrome-muted);opacity:.65"></span>`},
+           {name:'Role',      note:'<code>role="button"</code> and <code>tabindex="0"</code> &mdash; without both, the card is unreachable by keyboard.', vis:'<span style="font-family:\'SF Mono\',Consolas,monospace;font-size:11px;color:var(--chrome-txt)">role="button"</span>'},
+           {name:'Title',     note:'<code>.card__title</code> &mdash; carries the destination. A trailing arrow is a convention, not a separate part.', vis:'<span style="font-weight:800;font-size:15px;color:var(--chrome-txt)">Title &rarr;</span>'},
+           {name:'Description', note:'<code>.card__desc</code> &mdash; optional. Keep it short; the card is a link, not a page.', vis:'<span style="font-size:13px;line-height:1.55;color:var(--chrome-muted)">Supporting line</span>'},
+         ]},
+        {title:'States',
+         desc:'Hover is a hint, not the headline &mdash; a 2px lift and a border change. Focus is a separate, always-visible ring, because hover never reaches a keyboard or a touchscreen.',
+         cells(){
+           const w = 'width:100%';
+           return [
+             {name:'Default', vis:cardHTML({interactive:true, title:'Default →', style:w})},
+             {name:'Hover',   vis:cardHTML({interactive:true, force:'hover', title:'Hover →', style:w})},
+             {name:'Focused', vis:cardHTML({interactive:true, force:'focus', title:'Focused →', style:w})},
+             {name:'Pressed', vis:cardHTML({interactive:true, force:'press', title:'Pressed →', style:w})},
+           ];
+         }},
+        {title:'Tokens',
+         desc:'Only the interaction treatment is new; the resting surface is the shared card base.',
+         table:cardTokenTable(CARD_BASE_TOKEN_HEAD, CARD_BASE_TOKEN_ROWS.concat([
+           ['Hover border','1px solid','<code>color-text-s</code>'],
+           ['Hover shadow','0 8px 24px rgba(0,0,0,.10)','&mdash;'],
+           ['Hover lift','translateY(-2px)','&mdash;'],
+           ['Focus ring','3px','<code>color-input-focus</code>'],
+           ['Transition','.15s','border, shadow and transform'],
+         ]))},
+      ];
+    },
+    code:{
+      html(s){
+        const arrow = s.arrow==='on' ? ' &rarr;' : '';
+        const descLine = s.desc==='on' ? `\n    <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"card__desc"</span><span class="code-kw">></span>Every payment taken across all your devices.<span class="code-kw">&#60;/div></span>` : '';
+        return `<span class="code-cm">&#60;!-- Interactive card — one destination, no nested links --></span>
+<span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"card card--interactive"</span> <span class="code-attr">role</span>=<span class="code-val">"button"</span> <span class="code-attr">tabindex</span>=<span class="code-val">"0"</span><span class="code-kw">></span>
+  <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"card__body"</span><span class="code-kw">></span>
+    <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"card__title"</span><span class="code-kw">></span>${cardEsc(s.title||'Transactions')}${arrow}<span class="code-kw">&#60;/div></span>${descLine}
+  <span class="code-kw">&#60;/div></span>
+<span class="code-kw">&#60;/div></span>
+
+<span class="code-cm">/* CSS */</span>
+<span class="code-cls">.card--interactive</span> { cursor: <span class="code-val">pointer</span>; }
+<span class="code-cls">.card--interactive:hover</span> {
+  border-color: <span class="code-val">var(--color-text-s)</span>;
+  box-shadow: <span class="code-val">0 8px 24px rgba(0,0,0,.10)</span>;
+  transform: <span class="code-val">translateY(-2px)</span>;
+}
+<span class="code-cls">.card--interactive:focus-visible</span> {
+  outline: <span class="code-val">none</span>;
+  box-shadow: <span class="code-val">0 0 0 3px var(--color-input-focus)</span>;
+}`;
+      },
+      blazor(s){
+        return `<span class="code-cm">@* DsInteractiveCard.razor — usage *@</span>
+<span class="code-kw">&#60;DsInteractiveCard</span> <span class="code-attr">Title</span>=<span class="code-val">"${cardEsc(s.title||'Transactions')}"</span>
+                   <span class="code-attr">Href</span>=<span class="code-val">"/transactions"</span><span class="code-kw">/></span>
+
+<span class="code-cm">@* DsInteractiveCard.razor — implementation *@</span>
+<span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"card card--interactive"</span>
+     <span class="code-attr">role</span>=<span class="code-val">"button"</span> <span class="code-attr">tabindex</span>=<span class="code-val">"0"</span>
+     <span class="code-attr">@onclick</span>=<span class="code-val">"Go"</span> <span class="code-attr">@onkeydown</span>=<span class="code-val">"OnKey"</span><span class="code-kw">></span>
+  <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"card__body"</span><span class="code-kw">></span>
+    <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"card__title"</span><span class="code-kw">></span>@Title &rarr;<span class="code-kw">&#60;/div></span>
+  <span class="code-kw">&#60;/div></span>
+<span class="code-kw">&#60;/div></span>
+
+<span class="code-kw">@code</span> {
+  [Parameter] <span class="code-kw">public string</span> Title { get; set; } = <span class="code-val">""</span>;
+  [Parameter] <span class="code-kw">public string</span> Href { get; set; } = <span class="code-val">"/"</span>;
+  [Inject] <span class="code-kw">private</span> NavigationManager Nav { get; set; } = <span class="code-kw">default</span>!;
+
+  <span class="code-kw">private void</span> Go() => Nav.NavigateTo(Href);
+
+  <span class="code-cm">// Enter and Space must both activate it, like a real button</span>
+  <span class="code-kw">private void</span> OnKey(KeyboardEventArgs e)
+  {
+    <span class="code-kw">if</span> (e.Key == <span class="code-val">"Enter"</span> || e.Key == <span class="code-val">" "</span>) Go();
+  }
+}`;
+      },
+      tsx(s){
+        return `<span class="code-cm">// DsInteractiveCard.tsx</span>
+<span class="code-kw">type</span> <span class="code-cls">DsInteractiveCardProps</span> = {
+  title: <span class="code-cls">string</span>;
+  description?: <span class="code-cls">string</span>;
+  onActivate: () => <span class="code-cls">void</span>;
+};
+
+<span class="code-kw">export function</span> <span class="code-cls">DsInteractiveCard</span>({ title, description, onActivate }: <span class="code-cls">DsInteractiveCardProps</span>) {
+  <span class="code-kw">return</span> (
+    <span class="code-kw">&#60;div</span>
+      <span class="code-cls">className</span>=<span class="code-val">"card card--interactive"</span>
+      <span class="code-attr">role</span>=<span class="code-val">"button"</span>
+      <span class="code-attr">tabIndex</span>={<span class="code-val">0</span>}
+      <span class="code-attr">onClick</span>={onActivate}
+      <span class="code-attr">onKeyDown</span>={(e) => {
+        <span class="code-cm">// Enter and Space, so it behaves like the button it claims to be</span>
+        <span class="code-kw">if</span> (e.key === <span class="code-val">"Enter"</span> || e.key === <span class="code-val">" "</span>) {
+          e.preventDefault();
+          onActivate();
+        }
+      }}
+    <span class="code-kw">></span>
+      <span class="code-kw">&#60;div</span> <span class="code-cls">className</span>=<span class="code-val">"card__body"</span><span class="code-kw">></span>
+        <span class="code-kw">&#60;div</span> <span class="code-cls">className</span>=<span class="code-val">"card__title"</span><span class="code-kw">></span>{title} &rarr;<span class="code-kw">&#60;/div></span>
+        {description && <span class="code-kw">&#60;div</span> <span class="code-cls">className</span>=<span class="code-val">"card__desc"</span><span class="code-kw">></span>{description}<span class="code-kw">&#60;/div></span>}
+      <span class="code-kw">&#60;/div></span>
+    <span class="code-kw">&#60;/div></span>
+  );
+}
+
+<span class="code-cm">// Current playground configuration</span>
+<span class="code-kw">&#60;DsInteractiveCard</span> <span class="code-attr">title</span>=<span class="code-val">"${cardEsc(s.title||'Transactions')}"</span>${s.desc==='on' ? ` <span class="code-attr">description</span>=<span class="code-val">"Every payment taken."</span>` : ''} <span class="code-attr">onActivate</span>={go} <span class="code-kw">/></span>`;
+      }
+    }
+  },
+
+  {
+    secId:'s-cards-stat', pfx:'cstat',
+    langFiles:{html:'stat-card.html', blazor:'DsStatCard.razor', tsx:'DsStatCard.tsx'},
+    headingAbove:'Use a stat card to headline one number. Lead with the value, and only add a delta when there is a real comparison period behind it.',
+    state:{label:'Transactions', value:'2.4M', trend:'up', sub:'on'},
+    controls:[
+      {key:'trend', label:'Trend',      opts:[{v:'up',l:'Up'},{v:'down',l:'Down'},{v:'none',l:'None'}]},
+      {key:'sub',   label:'Comparison', opts:[{v:'on',l:'Show'},{v:'off',l:'Hide'}]},
+      {key:'force', label:'State',      opts:[{v:'none',l:'Default'},{v:'hover',l:'Hover'}]},
+    ],
+    textControl:{key:'value', label:'Value', placeholder:'2.4M', max:12},
+    stage(s){
+      return cardStatHTML({
+        label:s.label||'Transactions',
+        value:s.value||'2.4M',
+        trend:s.trend,
+        sub:s.sub==='on' ? 'vs last week' : '',
+        force:(!s.force || s.force==='none') ? '' : s.force,
+        style:'width:240px'
+      });
+    },
+    keyStates:{
+      title:'Key configurations',
+      desc:'The label and value are always present. The footer is what varies &mdash; a delta, a comparison line, both, or neither.',
+      cells(theme, sbg){
+        return [
+          {name:'Upward delta',   desc:'Success tokens; direction reads before the number does.', vis:cardStatHTML({label:'Transactions', value:'2.4M', trend:'up', sub:'vs last week'})},
+          {name:'Downward delta', desc:'Critical tokens &mdash; down is not automatically bad, but it is always worth noticing.', vis:cardStatHTML({label:'Active traders', value:'18,930', trend:'down', deltaLabel:'2.3%', sub:'vs last week'})},
+          {name:'No delta',       desc:'A period label with no comparison, when there is nothing meaningful to compare against.', vis:cardStatHTML({label:'Platform uptime', value:'99.98%', trend:'none', sub:'Last 30 days'})},
+          {name:'Value only',     desc:'No footer at all. Use it when the number needs no framing.', vis:cardStatHTML({label:'Open disputes', value:'7', trend:'none', sub:''})},
+        ];
+      }
+    },
+    insitu:{
+      desc:'Stat cards belong at the top of a dashboard, in a row of three or four. Past that, a table reads faster.',
+      cols:3,
+      mocks(theme, sbg, bar){
+        const cell = (o)=>cardStatHTML(Object.assign({style:'padding:12px 12px 11px'}, o));
+        const small = 'font-size:18px';
+        return [
+          {html:`<div class="spec-mock__stage" style="background:${sbg}">
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+                ${cell({label:'Volume', value:'2.4M', trend:'up', sub:''})}
+                ${cell({label:'Value', value:'R48M', trend:'up', deltaLabel:'6.1%', sub:''})}
+                ${cell({label:'Traders', value:'18.9k', trend:'down', sub:''})}
+                ${cell({label:'Uptime', value:'99.9%', trend:'none', sub:''})}
+              </div>
+            </div>
+            <div class="spec-mock__cap"><b>Dashboard KPI row</b>Four related metrics, one unit each, read left to right.</div>`},
+          {html:`<div class="spec-mock__stage" style="background:${sbg}">
+              ${cell({label:'Gross value', value:'R48.2M', trend:'up', deltaLabel:'6.1%', sub:'vs last week'})}
+              <div class="spec-mock__row" style="align-items:flex-end;gap:6px;height:44px">
+                <span class="spec-mock__bar" style="width:14px;height:40%;border-radius:4px"></span>
+                <span class="spec-mock__bar" style="width:14px;height:62%;border-radius:4px"></span>
+                <span class="spec-mock__bar" style="width:14px;height:48%;border-radius:4px"></span>
+                <span class="spec-mock__bar" style="width:14px;height:88%;border-radius:4px"></span>
+                <span class="spec-mock__bar" style="width:14px;height:70%;border-radius:4px"></span>
+              </div>
+            </div>
+            <div class="spec-mock__cap"><b>Headline above a chart</b>The stat states the number; the chart shows how it got there.</div>`},
+          {html:`<div class="spec-mock__stage" style="background:${sbg}">
+              ${cell({label:'Settlement due', value:'R1.2M', trend:'none', sub:'Tomorrow, 09:00'})}
+              <div class="spec-mock__row">${bar('72%')}</div>
+              <div class="spec-mock__row">${bar('54%')}</div>
+            </div>
+            <div class="spec-mock__cap"><b>Single headline</b>One stat can anchor a panel on its own, with no row to join.</div>`},
+        ];
+      }
+    },
+    style(theme, sbg){
+      const tok = (name, hex) => `<div class="spec-tok-cell"><span class="spec-tok-sw" style="background:var(${hex})"></span><code>${name}</code></div>`;
+      return [
+        {title:'Anatomy',
+         desc:'Four parts, top to bottom, in a fixed reading order: what it measures, the number, then how it moved and against what.',
+         hero:cardStatHTML({label:'Gross value', value:'R48.2M', trend:'up', deltaLabel:'6.1%', sub:'vs last week', style:'width:260px'}),
+         parts:[
+           {name:'Container', note:'<code>.dd-stat</code> &mdash; 14px radius, 1px border, 18px padding. Same surface as <code>.card</code>, its own class because the internal rhythm differs.', vis:`<span style="width:64px;height:38px;border-radius:9px;border:2px dashed var(--chrome-muted);opacity:.65"></span>`},
+           {name:'Label',     note:'<code>.dd-stat__label</code> &mdash; 11px / 700, uppercase, .6px tracking. Names the metric without competing with the value.', vis:'<span style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--chrome-muted)">Transactions</span>'},
+           {name:'Value',     note:'<code>.dd-stat__value</code> &mdash; 30px / 800, tabular numerals so a row of stats stays aligned as figures change.', vis:'<span style="font-size:26px;font-weight:800;letter-spacing:-1px;color:var(--chrome-txt);font-variant-numeric:tabular-nums">2.4M</span>'},
+           {name:'Delta',     note:'<code>.dd-delta--up</code> / <code>--down</code> &mdash; a pill carrying direction in colour as well as a glyph.', vis:'<span class="dd-delta dd-delta--up">&#9650; 12.8%</span>'},
+           {name:'Comparison', note:'<code>.dd-stat__sub</code> &mdash; names the period the delta is measured against. Without it, a delta means nothing.', vis:'<span style="font-size:12px;color:var(--chrome-muted);font-weight:500">vs last week</span>'},
+         ]},
+        {title:'Size &amp; dimensions',
+         desc:'Stat cards are grid items, not fixed-width surfaces &mdash; four across on a wide screen, two on a tablet, one on a phone.',
+         table:cardTokenTable(['Measure','Value','Notes'], [
+           ['Padding','18px 18px 16px','Slightly tighter at the bottom'],
+           ['Label &rarr; value','10px','<code>margin-bottom</code> on the label'],
+           ['Value &rarr; footer','11px','<code>margin-top</code> on the footer'],
+           ['Value size','30px / 800','<code>letter-spacing:-1px</code>, tabular numerals'],
+           ['Grid','4 &rarr; 2 &rarr; 1 columns','Breaks at 820px and 480px'],
+           ['Grid gap','14px','<code>.dd-stats</code>'],
+         ])},
+        {title:'Tokens',
+         desc:'Delta colour is the one place a stat card carries meaning in colour, and it comes straight from the Success and Critical semantic pairs.',
+         table:cardTokenTable(['Part','Role','Token'], [
+           ['Surface','Background','<code>chrome-bg</code>'],
+           ['Border','1px, default','<code>chrome-border</code>'],
+           ['Border','1px, hover','<code>chrome-accent</code>'],
+           ['Label','Muted text','<code>chrome-muted</code>'],
+           ['Value','Primary text','<code>chrome-txt</code>'],
+           ['Delta up','Text / fill', tok('color-success-h','--color-success-h') + tok('color-success-l','--color-success-l')],
+           ['Delta down','Text / fill', tok('color-crit-h','--color-crit-h') + tok('color-crit-l','--color-crit-l')],
+         ], '520px')},
+        {title:'States',
+         desc:'A stat tile is not a control, but it does respond to the pointer &mdash; an accent border and a 2px lift, signalling that the number is drillable.',
+         cells(){
+           return [
+             {name:'Default', vis:cardStatHTML({label:'Transactions', value:'2.4M', trend:'up', sub:''})},
+             {name:'Hover',   vis:cardStatHTML({label:'Transactions', value:'2.4M', trend:'up', sub:'', force:'hover'})},
+           ];
+         }},
+      ];
+    },
+    code:{
+      html(s){
+        const delta = s.trend==='up'   ? `\n    <span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"dd-delta dd-delta--up"</span><span class="code-kw">></span>&#9650; 12.8%<span class="code-kw">&#60;/span></span>`
+                    : s.trend==='down' ? `\n    <span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"dd-delta dd-delta--down"</span><span class="code-kw">></span>&#9660; 2.3%<span class="code-kw">&#60;/span></span>` : '';
+        const sub = s.sub==='on' ? `\n    <span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"dd-stat__sub"</span><span class="code-kw">></span>vs last week<span class="code-kw">&#60;/span></span>` : '';
+        const foot = (delta||sub) ? `\n  <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"dd-stat__foot"</span><span class="code-kw">></span>${delta}${sub}\n  <span class="code-kw">&#60;/div></span>` : '';
+        return `<span class="code-cm">&#60;!-- Stat card --></span>
+<span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"dd-stats"</span><span class="code-kw">></span>
+  <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"dd-stat"</span><span class="code-kw">></span>
+  <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"dd-stat__label"</span><span class="code-kw">></span>${cardEsc(s.label||'Transactions')}<span class="code-kw">&#60;/div></span>
+  <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"dd-stat__value"</span><span class="code-kw">></span>${cardEsc(s.value||'2.4M')}<span class="code-kw">&#60;/div></span>${foot}
+  <span class="code-kw">&#60;/div></span>
+<span class="code-kw">&#60;/div></span>
+
+<span class="code-cm">/* CSS — tabular numerals keep a row aligned as figures change */</span>
+<span class="code-cls">.dd-stat__value</span> {
+  font-size: <span class="code-val">30px</span>;
+  font-weight: <span class="code-val">800</span>;
+  letter-spacing: <span class="code-val">-1px</span>;
+  font-variant-numeric: <span class="code-val">tabular-nums</span>;
+}
+<span class="code-cls">.dd-delta--up</span>   { color: <span class="code-val">var(--color-success-h)</span>; background: <span class="code-val">var(--color-success-l)</span>; }
+<span class="code-cls">.dd-delta--down</span> { color: <span class="code-val">var(--color-crit-h)</span>;    background: <span class="code-val">var(--color-crit-l)</span>; }`;
+      },
+      blazor(s){
+        return `<span class="code-cm">@* DsStatCard.razor — usage *@</span>
+<span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"dd-stats"</span><span class="code-kw">></span>
+  <span class="code-kw">&#60;DsStatCard</span> <span class="code-attr">Label</span>=<span class="code-val">"${cardEsc(s.label||'Transactions')}"</span>
+               <span class="code-attr">Value</span>=<span class="code-val">"${cardEsc(s.value||'2.4M')}"</span>
+               <span class="code-attr">Trend</span>=<span class="code-val">"StatTrend.${s.trend==='up'?'Up':s.trend==='down'?'Down':'None'}"</span>
+               <span class="code-attr">Comparison</span>=<span class="code-val">"${s.sub==='on'?'vs last week':''}"</span><span class="code-kw">/></span>
+<span class="code-kw">&#60;/div></span>
+
+<span class="code-cm">@* DsStatCard.razor — implementation *@</span>
+<span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"dd-stat"</span><span class="code-kw">></span>
+  <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"dd-stat__label"</span><span class="code-kw">></span>@Label<span class="code-kw">&#60;/div></span>
+  <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"dd-stat__value"</span><span class="code-kw">></span>@Value<span class="code-kw">&#60;/div></span>
+  @if (Trend != StatTrend.None || !string.IsNullOrEmpty(Comparison))
+  {
+    <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"dd-stat__foot"</span><span class="code-kw">></span>
+      @if (Trend != StatTrend.None)
+      {
+        <span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"@($"dd-delta dd-delta--{(Trend == StatTrend.Up ? "up" : "down")}")"</span><span class="code-kw">></span>
+          @(Trend == StatTrend.Up ? "&#9650;" : "&#9660;") @DeltaLabel
+        <span class="code-kw">&#60;/span></span>
+      }
+      @if (!string.IsNullOrEmpty(Comparison))
+      {
+        <span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"dd-stat__sub"</span><span class="code-kw">></span>@Comparison<span class="code-kw">&#60;/span></span>
+      }
+    <span class="code-kw">&#60;/div></span>
+  }
+<span class="code-kw">&#60;/div></span>
+
+<span class="code-kw">@code</span> {
+  <span class="code-kw">public enum</span> StatTrend { None, Up, Down }
+  [Parameter] <span class="code-kw">public string</span> Label { get; set; } = <span class="code-val">""</span>;
+  [Parameter] <span class="code-kw">public string</span> Value { get; set; } = <span class="code-val">""</span>;
+  [Parameter] <span class="code-kw">public StatTrend</span> Trend { get; set; } = StatTrend.None;
+  [Parameter] <span class="code-kw">public string?</span> DeltaLabel { get; set; }
+  [Parameter] <span class="code-kw">public string?</span> Comparison { get; set; }
+}`;
+      },
+      tsx(s){
+        return `<span class="code-cm">// DsStatCard.tsx</span>
+<span class="code-kw">type</span> <span class="code-cls">DsStatCardProps</span> = {
+  label: <span class="code-cls">string</span>;
+  value: <span class="code-cls">string</span>;
+  trend?: <span class="code-val">"up"</span> | <span class="code-val">"down"</span>;
+  deltaLabel?: <span class="code-cls">string</span>;
+  comparison?: <span class="code-cls">string</span>;
+};
+
+<span class="code-kw">export function</span> <span class="code-cls">DsStatCard</span>({ label, value, trend, deltaLabel, comparison }: <span class="code-cls">DsStatCardProps</span>) {
+  <span class="code-kw">const</span> hasFoot = Boolean(trend || comparison);
+  <span class="code-kw">return</span> (
+    <span class="code-kw">&#60;div</span> <span class="code-cls">className</span>=<span class="code-val">"dd-stat"</span><span class="code-kw">></span>
+      <span class="code-kw">&#60;div</span> <span class="code-cls">className</span>=<span class="code-val">"dd-stat__label"</span><span class="code-kw">></span>{label}<span class="code-kw">&#60;/div></span>
+      <span class="code-kw">&#60;div</span> <span class="code-cls">className</span>=<span class="code-val">"dd-stat__value"</span><span class="code-kw">></span>{value}<span class="code-kw">&#60;/div></span>
+      {hasFoot && (
+        <span class="code-kw">&#60;div</span> <span class="code-cls">className</span>=<span class="code-val">"dd-stat__foot"</span><span class="code-kw">></span>
+          {trend && (
+            <span class="code-kw">&#60;span</span> <span class="code-cls">className</span>={<span class="code-val">\`dd-delta dd-delta--\${trend}\`</span>}<span class="code-kw">></span>
+              {trend === <span class="code-val">"up"</span> ? <span class="code-val">"&#9650;"</span> : <span class="code-val">"&#9660;"</span>} {deltaLabel}
+            <span class="code-kw">&#60;/span></span>
+          )}
+          {comparison && <span class="code-kw">&#60;span</span> <span class="code-cls">className</span>=<span class="code-val">"dd-stat__sub"</span><span class="code-kw">></span>{comparison}<span class="code-kw">&#60;/span></span>}
+        <span class="code-kw">&#60;/div></span>
+      )}
+    <span class="code-kw">&#60;/div></span>
+  );
+}
+
+<span class="code-cm">// Current playground configuration</span>
+<span class="code-kw">&#60;DsStatCard</span>
+  <span class="code-attr">label</span>=<span class="code-val">"${cardEsc(s.label||'Transactions')}"</span>
+  <span class="code-attr">value</span>=<span class="code-val">"${cardEsc(s.value||'2.4M')}"</span>${s.trend!=='none' ? `\n  <span class="code-attr">trend</span>=<span class="code-val">"${s.trend}"</span>\n  <span class="code-attr">deltaLabel</span>=<span class="code-val">"${s.trend==='up'?'12.8%':'2.3%'}"</span>` : ''}${s.sub==='on' ? `\n  <span class="code-attr">comparison</span>=<span class="code-val">"vs last week"</span>` : ''}
+<span class="code-kw">/></span>`;
+      }
+    }
+  },
+
+  {
+    secId:'s-cards-hover', pfx:'chover',
+    langFiles:{html:'hover-card.html', blazor:'DsHoverCard.razor', tsx:'DsHoverCard.tsx'},
+    headingAbove:'Use a hover card to preview the thing a reference points at, without navigating away. It is always extra context &mdash; never the only route to the information.',
+    state:{trigger:'@rethabile', reveal:'closed', meta:'on', avatar:'on'},
+    controls:[
+      {key:'reveal', label:'Reveal', opts:[{v:'closed',l:'At rest'},{v:'open',l:'Revealed'}]},
+      {key:'avatar', label:'Avatar', opts:[{v:'on',l:'Show'},{v:'off',l:'Hide'}]},
+      {key:'meta',   label:'Meta',   opts:[{v:'on',l:'Show'},{v:'off',l:'Hide'}]},
+    ],
+    textControl:{key:'trigger', label:'Trigger', placeholder:'@rethabile', max:20},
+    playgroundStageStyle:'min-height:280px;align-items:flex-start;padding-top:48px',
+    stage(s){
+      return `<span style="font-size:14px;line-height:1.7;color:var(--chrome-txt)">Approved by ${cardHoverHTML({
+        open:s.reveal==='open',
+        trigger:s.trigger||'@rethabile',
+        avatar:s.avatar!=='off',
+        meta:s.meta==='on' ? 'Approves payouts and manages settlement rules. Joined March 2024 · Cape Town.' : ''
+      })} earlier today.</span>`;
+    },
+    keyStates:{
+      title:'Key states',
+      desc:'Two states, and the transition between them is the component. The card is in the DOM the whole time &mdash; opacity, transform and pointer-events are what change.',
+      cells(theme, sbg){
+        return [
+          {name:'At rest',  desc:'Only the underlined trigger shows. Nothing reserves space.', vis:cardHoverHTML({open:false, inert:true, meta:'Approves payouts and manages settlement rules.'}), cellStyle:'', stageStyle:''},
+          {name:'Revealed', desc:'Fades and slides in below the trigger after a 200ms delay, so a passing pointer never flashes it.', vis:cardHoverHTML({open:true, meta:'Approves payouts and manages settlement rules.', cardStyle:'position:static;display:block;width:100%;box-shadow:none'}), stageStyle:'display:block;padding:16px'},
+        ];
+      }
+    },
+    insitu:{
+      desc:'A hover card enriches a name already on screen. It works wherever a reference is too short to explain itself.',
+      cols:2,
+      mocks(theme, sbg, bar){
+        return [
+          {style:'overflow:visible', html:`<div class="spec-mock__stage" style="background:${sbg}">
+              <div style="display:flex;gap:10px">
+                <span class="avt" style="width:28px;height:28px;font-size:11px">TM</span>
+                <div style="flex:1;font-size:12.5px;line-height:1.6;color:var(--chrome-txt)">
+                  Handing this to ${cardHoverHTML({trigger:'@rethabile', meta:'Finance ops · Cape Town'})} &mdash; she owns the settlement rules.
+                </div>
+              </div>
+              <div class="spec-mock__row">${bar('84%')}</div>
+            </div>
+            <div class="spec-mock__cap"><b>Mention in a thread</b>Who is being tagged, answered without leaving the conversation.</div>`},
+          {style:'overflow:visible', html:`<div class="spec-mock__stage" style="background:${sbg}">
+              <div class="spec-mock__label">Approver</div>
+              <div style="font-size:12.5px;line-height:1.9;color:var(--chrome-txt)">
+                <div>${cardHoverHTML({trigger:'@rethabile', meta:'Finance ops'})}</div>
+                <div>${cardHoverHTML({trigger:'@thabo', name:'Thabo Mokoena', handle:'@thabo · Risk', initials:'TM', meta:'Risk review'})}</div>
+              </div>
+            </div>
+            <div class="spec-mock__cap"><b>Table reference</b>A narrow column keeps its handles; the detail lives in the preview.</div>`},
+        ];
+      }
+    },
+    style(theme, sbg){
+      return [
+        {title:'Anatomy',
+         desc:'An inline trigger and the floating card it owns. The card is anchored to the trigger, not to the viewport, so it travels with the text it belongs to.',
+         hero:`<span style="font-size:14px;line-height:1.7;color:var(--chrome-txt)">Approved by ${cardHoverHTML({open:false, meta:'Approves payouts and manages settlement rules. Joined March 2024 · Cape Town.'})} earlier today.</span>`,
+         parts:[
+           {name:'Wrapper',  note:'<code>.hc</code> &mdash; <code>position:relative;display:inline-block</code>. The positioning context for the card, and the element the hover and focus tests run against.', vis:`<span style="width:64px;height:26px;border-radius:7px;border:2px dashed var(--chrome-muted);opacity:.65"></span>`},
+           {name:'Trigger',  note:'<code>.hc__trigger</code> &mdash; a real <code>&#60;button&#62;</code>, styled as a link, so it is focusable without extra attributes.', vis:'<span class="hc__trigger" style="pointer-events:none">@rethabile</span>'},
+           {name:'Card',     note:'<code>.hc__card</code> &mdash; 268px wide, 12px radius, absolutely positioned 8px below the trigger and left-aligned to it.', vis:`<span style="width:64px;height:36px;border-radius:8px;background:var(--chrome-bg);border:1px solid var(--chrome-border);box-shadow:0 6px 16px rgba(0,0,0,.16)"></span>`},
+           {name:'Identity row', note:'<code>.hc__row</code> with <code>.avt--lg</code>, <code>.hc__name</code> and <code>.hc__handle</code> &mdash; who this is, in one line.', vis:`<span style="display:flex;gap:7px;align-items:center"><span class="avt" style="width:26px;height:26px;font-size:10px">RB</span><span><span class="hc__name" style="display:block;font-size:11px">Rethabile</span><span class="hc__handle" style="font-size:9.5px">@rethabile</span></span></span>`},
+           {name:'Meta',     note:'<code>.hc__meta</code> &mdash; 12.5px / 1.55 muted text, a couple of lines at most. If it needs more, it needs a page.', vis:'<span style="font-size:11px;line-height:1.5;color:var(--chrome-muted);text-align:center">Approves payouts and<br>manages settlement rules.</span>'},
+         ]},
+        {title:'Size &amp; dimensions',
+         desc:'The card has a fixed width and a fixed offset, so it lands in the same place relative to every trigger regardless of how long the trigger text is.',
+         table:cardTokenTable(['Measure','Value','Notes'], [
+           ['Card width','268px','Fixed'],
+           ['Card padding','16px','All four sides'],
+           ['Corner radius','12px','2px tighter than <code>.card</code>'],
+           ['Offset','8px','<code>top:calc(100% + 8px)</code>, left-aligned'],
+           ['Avatar','56px','<code>.avt--lg</code>'],
+           ['Row &rarr; meta','11px','<code>margin-bottom</code> on the row'],
+         ])},
+        {title:'Tokens',
+         desc:'The card floats, so it carries a shadow the flat card variants do not. Everything else is the same surface pair.',
+         table:cardTokenTable(CARD_BASE_TOKEN_HEAD, [
+           ['Corner radius','12px','&mdash;'],
+           ['Border','1px solid','<code>chrome-border</code>'],
+           ['Surface','Base background','<code>chrome-bg</code>'],
+           ['Shadow','0 14px 36px rgba(0,0,0,.16)','&mdash;'],
+           ['Trigger','600 weight, underlined','<code>color-link</code>'],
+           ['Name','14px / 800','<code>chrome-txt</code>'],
+           ['Handle','12px','<code>chrome-muted</code>'],
+           ['Meta','12.5px / 1.55','<code>chrome-muted</code>'],
+           ['Stacking','<code>z-index:30</code>','Above content, below modals'],
+         ])},
+        {title:'States',
+         desc:'Open and close are pure CSS &mdash; <code>:hover</code> and <code>:focus-within</code> on the wrapper, with a 200ms <code>transition-delay</code> on the way in and none on the way out.',
+         cells(){
+           return [
+             {name:'At rest',  vis:cardHoverHTML({open:false, inert:true})},
+             {name:'Revealed', vis:cardHoverHTML({open:true, meta:'Finance ops · Cape Town', cardStyle:'position:static;display:block;width:100%;box-shadow:none'}), stageStyle:'display:block;padding:16px'},
+           ];
+         }},
+      ];
+    },
+    code:{
+      html(s){
+        const avatar = s.avatar!=='off' ? `\n      <span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"avt avt--lg"</span><span class="code-kw">></span>RB<span class="code-kw">&#60;/span></span>` : '';
+        const meta = s.meta==='on' ? `\n    <span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"hc__meta"</span><span class="code-kw">></span>Approves payouts and manages settlement rules.<span class="code-kw">&#60;/span></span>` : '';
+        return `<span class="code-cm">&#60;!-- Hover card — reveal is CSS only, no JS --></span>
+<span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"hc"</span><span class="code-kw">></span>
+  <span class="code-kw">&#60;button</span> <span class="code-cls">class</span>=<span class="code-val">"hc__trigger"</span> <span class="code-attr">type</span>=<span class="code-val">"button"</span><span class="code-kw">></span>${cardEsc(s.trigger||'@rethabile')}<span class="code-kw">&#60;/button></span>
+  <span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"hc__card"</span><span class="code-kw">></span>
+    <span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"hc__row"</span><span class="code-kw">></span>${avatar}
+      <span class="code-kw">&#60;span</span><span class="code-kw">></span>
+        <span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"hc__name"</span><span class="code-kw">></span>Rethabile Beng<span class="code-kw">&#60;/span></span>
+        <span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"hc__handle"</span><span class="code-kw">></span>@rethabile &middot; Finance ops<span class="code-kw">&#60;/span></span>
+      <span class="code-kw">&#60;/span></span>
+    <span class="code-kw">&#60;/span></span>${meta}
+  <span class="code-kw">&#60;/span></span>
+<span class="code-kw">&#60;/span></span>
+
+<span class="code-cm">/* CSS — the delay is what stops a passing pointer flashing the card */</span>
+<span class="code-cls">.hc__card</span> {
+  position: <span class="code-val">absolute</span>;
+  top: <span class="code-val">calc(100% + 8px)</span>;
+  left: <span class="code-val">0</span>;
+  width: <span class="code-val">268px</span>;
+  opacity: <span class="code-val">0</span>;
+  transform: <span class="code-val">translateY(-6px) scale(.98)</span>;
+  pointer-events: <span class="code-val">none</span>;
+  transition: <span class="code-val">opacity .18s ease, transform .18s ease</span>;
+}
+<span class="code-cls">.hc:hover .hc__card</span>,
+<span class="code-cls">.hc:focus-within .hc__card</span> {
+  opacity: <span class="code-val">1</span>;
+  transform: <span class="code-val">translateY(0) scale(1)</span>;
+  pointer-events: <span class="code-val">auto</span>;
+  transition-delay: <span class="code-val">.2s</span>;
+}`;
+      },
+      blazor(s){
+        return `<span class="code-cm">@* DsHoverCard.razor — usage *@</span>
+Approved by <span class="code-kw">&#60;DsHoverCard</span> <span class="code-attr">Trigger</span>=<span class="code-val">"${cardEsc(s.trigger||'@rethabile')}"</span>
+                         <span class="code-attr">Name</span>=<span class="code-val">"Rethabile Beng"</span>
+                         <span class="code-attr">Handle</span>=<span class="code-val">"@rethabile · Finance ops"</span>
+                         <span class="code-attr">Initials</span>=<span class="code-val">"RB"</span><span class="code-kw">/></span> earlier today.
+
+<span class="code-cm">@* DsHoverCard.razor — implementation. No JS: the reveal is :hover/:focus-within. *@</span>
+<span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"hc"</span><span class="code-kw">></span>
+  <span class="code-kw">&#60;button</span> <span class="code-cls">class</span>=<span class="code-val">"hc__trigger"</span> <span class="code-attr">type</span>=<span class="code-val">"button"</span><span class="code-kw">></span>@Trigger<span class="code-kw">&#60;/button></span>
+  <span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"hc__card"</span><span class="code-kw">></span>
+    <span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"hc__row"</span><span class="code-kw">></span>
+      <span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"avt avt--lg"</span><span class="code-kw">></span>@Initials<span class="code-kw">&#60;/span></span>
+      <span class="code-kw">&#60;span</span><span class="code-kw">></span>
+        <span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"hc__name"</span><span class="code-kw">></span>@Name<span class="code-kw">&#60;/span></span>
+        <span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"hc__handle"</span><span class="code-kw">></span>@Handle<span class="code-kw">&#60;/span></span>
+      <span class="code-kw">&#60;/span></span>
+    <span class="code-kw">&#60;/span></span>
+    @if (!string.IsNullOrEmpty(Meta))
+    {
+      <span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"hc__meta"</span><span class="code-kw">></span>@Meta<span class="code-kw">&#60;/span></span>
+    }
+  <span class="code-kw">&#60;/span></span>
+<span class="code-kw">&#60;/span></span>
+
+<span class="code-kw">@code</span> {
+  [Parameter] <span class="code-kw">public string</span> Trigger { get; set; } = <span class="code-val">""</span>;
+  [Parameter] <span class="code-kw">public string</span> Name { get; set; } = <span class="code-val">""</span>;
+  [Parameter] <span class="code-kw">public string</span> Handle { get; set; } = <span class="code-val">""</span>;
+  [Parameter] <span class="code-kw">public string</span> Initials { get; set; } = <span class="code-val">""</span>;
+  [Parameter] <span class="code-kw">public string?</span> Meta { get; set; }
+}`;
+      },
+      tsx(s){
+        return `<span class="code-cm">// DsHoverCard.tsx — no state, no effects; CSS owns the reveal</span>
+<span class="code-kw">type</span> <span class="code-cls">DsHoverCardProps</span> = {
+  trigger: <span class="code-cls">string</span>;
+  name: <span class="code-cls">string</span>;
+  handle: <span class="code-cls">string</span>;
+  initials: <span class="code-cls">string</span>;
+  meta?: <span class="code-cls">string</span>;
+};
+
+<span class="code-kw">export function</span> <span class="code-cls">DsHoverCard</span>({ trigger, name, handle, initials, meta }: <span class="code-cls">DsHoverCardProps</span>) {
+  <span class="code-kw">return</span> (
+    <span class="code-kw">&#60;span</span> <span class="code-cls">className</span>=<span class="code-val">"hc"</span><span class="code-kw">></span>
+      <span class="code-kw">&#60;button</span> <span class="code-cls">className</span>=<span class="code-val">"hc__trigger"</span> <span class="code-attr">type</span>=<span class="code-val">"button"</span><span class="code-kw">></span>{trigger}<span class="code-kw">&#60;/button></span>
+      <span class="code-kw">&#60;span</span> <span class="code-cls">className</span>=<span class="code-val">"hc__card"</span><span class="code-kw">></span>
+        <span class="code-kw">&#60;span</span> <span class="code-cls">className</span>=<span class="code-val">"hc__row"</span><span class="code-kw">></span>
+          <span class="code-kw">&#60;span</span> <span class="code-cls">className</span>=<span class="code-val">"avt avt--lg"</span><span class="code-kw">></span>{initials}<span class="code-kw">&#60;/span></span>
+          <span class="code-kw">&#60;span</span><span class="code-kw">></span>
+            <span class="code-kw">&#60;span</span> <span class="code-cls">className</span>=<span class="code-val">"hc__name"</span><span class="code-kw">></span>{name}<span class="code-kw">&#60;/span></span>
+            <span class="code-kw">&#60;span</span> <span class="code-cls">className</span>=<span class="code-val">"hc__handle"</span><span class="code-kw">></span>{handle}<span class="code-kw">&#60;/span></span>
+          <span class="code-kw">&#60;/span></span>
+        <span class="code-kw">&#60;/span></span>
+        {meta && <span class="code-kw">&#60;span</span> <span class="code-cls">className</span>=<span class="code-val">"hc__meta"</span><span class="code-kw">></span>{meta}<span class="code-kw">&#60;/span></span>}
+      <span class="code-kw">&#60;/span></span>
+    <span class="code-kw">&#60;/span></span>
+  );
+}
+
+<span class="code-cm">// Current playground configuration</span>
+<span class="code-kw">&#60;DsHoverCard</span>
+  <span class="code-attr">trigger</span>=<span class="code-val">"${cardEsc(s.trigger||'@rethabile')}"</span>
+  <span class="code-attr">name</span>=<span class="code-val">"Rethabile Beng"</span>
+  <span class="code-attr">handle</span>=<span class="code-val">"@rethabile · Finance ops"</span>
+  <span class="code-attr">initials</span>=<span class="code-val">"RB"</span>${s.meta==='on' ? `\n  <span class="code-attr">meta</span>=<span class="code-val">"Approves payouts and manages settlement rules."</span>` : ''}
+<span class="code-kw">/></span>`;
+      }
+    }
+  },
+];
+
+/* Playground state, one object per page, seeded from each page's config. */
+const CARD_PG = {};
+CARD_PAGES.forEach(pg=>{ CARD_PG[pg.secId] = Object.assign({}, pg.state); });
+
+function cardPage(secId){ return CARD_PAGES.find(p=>p.secId===secId); }
+
+/* ── PLAYGROUND ──
+   Same two-mount pattern as PILL_PLAYGROUND_MOUNTS / BTN_PLAYGROUND_MOUNTS:
+   the Overview demo and the smaller Code-tab copy share one state object. */
+function cardPlaygroundMounts(pg){
+  return [
+    {rootId:pg.pfx+'-playground', idSuffix:'', wrap:true, title:'Try the component', desc:'Adjust the controls to test component states.', headingAbove:pg.headingAbove},
+    {rootId:pg.pfx+'-code-playground', idSuffix:'-code', style:'code', title:'Playground', desc:'Live demo of the component.'},
+  ];
+}
+
+function renderCardPlayground(pg){
+  const theme = currentTheme(), sbg = stageBg(theme);
+  const s = CARD_PG[pg.secId];
+
+  const groups = pg.controls.map(c=>`
+        <div class="btn-pg__group"><span class="btn-pg__clabel">${c.label}</span><div class="btn-pg__pill-row">${
+          c.opts.map(o=>`<button class="btn-pg__pill${s[c.key]===o.v?' on':''}" onclick="cardpgSet('${pg.secId}','${c.key}','${o.v}')">${o.l}</button>`).join('')
+        }</div></div>`).join('');
+  const textGroup = pg.textControl ? `
+        <div class="btn-pg__group"><span class="btn-pg__clabel">${pg.textControl.label}</span><input class="cpg-label-input" value="${cardEsc(s[pg.textControl.key]||'')}" maxlength="${pg.textControl.max}" placeholder="${cardEsc(pg.textControl.placeholder)}" oninput="cardpgSetText('${pg.secId}','${pg.textControl.key}',this.value)"></div>` : '';
+
+  cardPlaygroundMounts(pg).forEach(mount=>{
+    const root = document.getElementById(mount.rootId);
+    if(!root) return;
+    const demo = `
+      <div class="btn-pg btn-pg--dd">
+        <div class="btn-pg__stage cardpg-stage-${pg.pfx}" style="background:${sbg};${pg.playgroundStageStyle||''}"></div>
+        <div class="btn-pg__ctrls">${groups}${textGroup}
+        </div>
+      </div>`;
+
+    if(mount.style==='code'){
+      root.innerHTML = `
+        <div class="type-sub__title">${mount.title}</div>
+        <div class="type-sub__desc">${mount.desc}</div>
+        <div class="cpg-section-outline">${demo}</div>`;
+      return;
+    }
+
+    const inner = `
+      <div class="cpg-layout">
+        <div class="cpg-layout__intro">
+          ${mount.wrap ? `<span class="cpg-cursor-icon">${CPG_CURSOR_ICON_SVG}</span>` : ''}
+          <div class="cpg-layout__title">${mount.title}</div>
+          <div class="cpg-layout__desc">${mount.desc}</div>
+        </div>
+        <div class="cpg-layout__demo">${demo}</div>
+      </div>`;
+    const wrapped = mount.wrap ? `<div class="cpg-section-block">${inner}</div>` : inner;
+    root.innerHTML = (mount.headingAbove ? `<div class="cpg-overview-heading"><span class="cpg-overview-heading__icon">${CPG_INFO_ICON_SVG}</span><span>${mount.headingAbove}</span></div>` : '') + wrapped;
+  });
+
+  cardpgRefresh(pg);
+}
+
+function cardpgRefresh(pg){
+  const s = CARD_PG[pg.secId];
+  const html = pg.stage(s);
+  document.querySelectorAll('.cardpg-stage-' + pg.pfx).forEach(stage=>{ stage.innerHTML = html; });
+  const block = document.getElementById(pg.pfx + '-code-block');
+  if(block) block.innerHTML = getCardCode(pg);
+}
+
+function cardpgSet(secId, key, val){
+  const pg = cardPage(secId);
+  if(!pg) return;
+  CARD_PG[secId][key] = val;
+  renderCardPlayground(pg);
+}
+
+/* Text inputs refresh only the stage, so the field keeps focus as you type. */
+function cardpgSetText(secId, key, val){
+  const pg = cardPage(secId);
+  if(!pg) return;
+  CARD_PG[secId][key] = val;
+  cardpgRefresh(pg);
+}
+
+/* ── KEY STATES / CONFIGURATIONS (Overview) ── */
+function renderCardKeyStates(pg){
+  const root = document.getElementById(pg.pfx + '-keystates');
+  if(!root || !pg.keyStates) return;
+  const theme = currentTheme(), sbg = stageBg(theme);
+  const cells = pg.keyStates.cells(theme, sbg).map(c=>`
+    <div class="spec-cell"${c.cellStyle!==undefined ? ` style="${c.cellStyle}"` : ''}>
+      <div class="spec-cell__stage" style="background:${sbg};${c.stageStyle||''}">${c.vis}</div>
+      <div class="spec-cell__name">${c.name}</div>
+      ${c.desc ? `<div class="spec-cell__desc">${c.desc}</div>` : ''}
+    </div>`).join('');
+
+  root.innerHTML = `
+    <div class="cpg-section-heading">
+      <div class="cpg-layout__title">${pg.keyStates.title}</div>
+      <div class="cpg-layout__desc">${pg.keyStates.desc}</div>
+    </div>
+    <div class="cpg-section-block">
+      <div class="spec-grid" style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr))">${cells}</div>
+    </div>`;
+  equalizeSpecCellDesc(root);
+}
+
+/* Descriptions vary in length, so their wrapped line count varies too —
+   without this, the divider above each caption would land at a different
+   height per cell even though the cells themselves are equal height (the
+   taller/shorter description eats into or gives back space to the stage
+   above it). Pin every .spec-cell__desc in a grid to the tallest one's
+   height so the divider lines up across the row. */
+function equalizeSpecCellDesc(root){
+  root.querySelectorAll('.spec-grid').forEach(grid=>{
+    const descs = [...grid.querySelectorAll('.spec-cell__desc')];
+    if(descs.length < 2) return;
+    descs.forEach(d=>d.style.minHeight='');
+    const max = Math.max(...descs.map(d=>d.getBoundingClientRect().height));
+    descs.forEach(d=>d.style.minHeight = max + 'px');
+  });
+}
+
+/* ── IN-CONTEXT MOCKUPS (Overview) ── */
+function renderCardInSitu(pg){
+  const root = document.getElementById(pg.pfx + '-insitu');
+  if(!root || !pg.insitu) return;
+  const theme = currentTheme(), sbg = stageBg(theme);
+  const bar = w => `<span class="spec-mock__bar" style="width:${w}"></span>`;
+  const mocks = pg.insitu.mocks(theme, sbg, bar).map(m=>`<div class="spec-mock"${m.style?` style="${m.style}"`:''}>${m.html}</div>`).join('');
+
+  root.innerHTML = `
+    <div class="cpg-section-heading">
+      <div class="cpg-layout__title">In context</div>
+      <div class="cpg-layout__desc">${pg.insitu.desc}</div>
+    </div>
+    <div class="cpg-section-block">
+      <div class="spec-insitu-grid${pg.insitu.cols===2?' spec-insitu-grid--2':''}">${mocks}</div>
+    </div>`;
+}
+
+/* ── STYLE TAB ──
+   Each page's style() returns an ordered list of blocks. A block carries a
+   hero + numbered parts (anatomy), a table, a states grid, or any combination
+   — whatever that variant genuinely has. Nothing is emitted for a concept a
+   variant doesn't have, rather than emitted empty. */
+function renderCardReference(pg){
+  const root = document.getElementById(pg.pfx + '-reference');
+  if(!root) return;
+  const theme = currentTheme(), sbg = stageBg(theme);
+
+  const blocks = pg.style(theme, sbg).map((b, bi, arr)=>{
+    let body = '';
+    if(b.hero) body += `<div class="spec-hero" style="background:${sbg}">${b.hero}</div>`;
+    if(b.parts) body += `<div class="spec-parts">${b.parts.map((p,i)=>`
+        <div class="spec-part">
+          <div class="spec-part__stage" style="background:${sbg}">${p.vis}</div>
+          <div class="spec-part__body">
+            <div class="spec-part__name"><span class="spec-part__num">${i+1}</span>${p.name}</div>
+            <div class="spec-part__note">${p.note}</div>
+          </div>
+        </div>`).join('')}</div>`;
+    if(b.cells) body += `<div class="spec-grid" style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr))">${
+      b.cells().map(c=>`
+        <div class="spec-cell">
+          <div class="spec-cell__stage" style="background:${sbg};${c.stageStyle||''}">${c.vis}</div>
+          <div class="spec-cell__name">${c.name}</div>
+        </div>`).join('')
+    }</div>`;
+    if(b.table) body += b.table;
+
+    return `
+    <div class="type-sub"${bi===arr.length-1?' style="margin-bottom:0"':''}>
+      <div class="type-sub__title">${b.title}</div>
+      <div class="type-sub__desc">${b.desc}</div>
+      <div class="cpg-section-outline">${body}</div>
+    </div>`;
+  }).join('');
+
+  root.innerHTML = blocks;
+}
+
+/* ── CODE TAB — the same .code-seg ARIA tablist as Pills and Buttons ── */
+const CARD_LANGS = [
+  {key:'html',   label:'HTML / CSS'},
+  {key:'blazor', label:'Blazor'},
+  {key:'tsx',    label:'React TSX'},
+];
+const cardLang = {};
+CARD_PAGES.forEach(pg=>{ cardLang[pg.secId] = 'html'; });
+
+function getCardCode(pg){
+  const s = CARD_PG[pg.secId];
+  const lang = cardLang[pg.secId] || 'html';
+  const fn = pg.code[lang] || pg.code.html;
+  return fn(s);
+}
+
+function renderCardCodeTab(pg){
+  const root = document.getElementById(pg.pfx + '-code-tab');
+  if(!root) return;
+  const lang = cardLang[pg.secId] || 'html';
+  root.innerHTML = `
+    <div class="type-sub__title">Code</div>
+    <div class="type-sub__desc">Live snippet matching the current Playground configuration &mdash; switch to Overview to change it.</div>
+    <div class="cpg-section-outline">
+      <div class="code-panel code-panel--bare open">
+        <div class="code-panel__head">
+          <div class="code-seg" role="tablist" aria-label="Code language" onkeydown="cardLangKeydown(event,'${pg.secId}')">
+            ${CARD_LANGS.map(l=>`<button type="button" role="tab" class="code-seg__btn" id="${pg.pfx}-lang-${l.key}" data-lang="${l.key}" aria-selected="${lang===l.key?'true':'false'}" aria-controls="${pg.pfx}-code-block" tabindex="${lang===l.key?'0':'-1'}" onclick="setCardLang('${pg.secId}','${l.key}')">${l.label}</button>`).join('')}
+          </div>
+          <span class="code-lang-file" id="${pg.pfx}-lang-file">${pg.langFiles[lang]}</span>
+          <button class="code-copy-btn" onclick="cardCopyCode('${pg.secId}')" id="${pg.pfx}-copy-btn">Copy</button>
+        </div>
+        <div class="code-body"><div class="code-block" id="${pg.pfx}-code-block" role="tabpanel" aria-live="polite"></div></div>
+      </div>
+    </div>`;
+}
+
+function setCardLang(secId, lang){
+  const pg = cardPage(secId);
+  if(!pg || !CARD_LANGS.some(l=>l.key===lang)) return;
+  cardLang[secId] = lang;
+  document.querySelectorAll(`#${pg.pfx}-code-tab .code-seg__btn`).forEach(b=>{
+    const on = b.dataset.lang===lang;
+    b.setAttribute('aria-selected', on ? 'true' : 'false');
+    b.setAttribute('tabindex', on ? '0' : '-1');
+  });
+  const file = document.getElementById(pg.pfx + '-lang-file');
+  if(file) file.textContent = pg.langFiles[lang];
+  const block = document.getElementById(pg.pfx + '-code-block');
+  if(block) block.innerHTML = getCardCode(pg);
+}
+
+function cardLangKeydown(e, secId){
+  const i = CARD_LANGS.findIndex(l=>l.key===(cardLang[secId]||'html'));
+  let n = i;
+  if(e.key==='ArrowLeft')       n = (i - 1 + CARD_LANGS.length) % CARD_LANGS.length;
+  else if(e.key==='ArrowRight') n = (i + 1) % CARD_LANGS.length;
+  else if(e.key==='Home')       n = 0;
+  else if(e.key==='End')        n = CARD_LANGS.length - 1;
+  else return;
+  e.preventDefault();
+  setCardLang(secId, CARD_LANGS[n].key);
+  const pg = cardPage(secId);
+  const btn = pg && document.getElementById(pg.pfx + '-lang-' + CARD_LANGS[n].key);
+  if(btn) btn.focus();
+}
+
+function cardCopyCode(secId){
+  const pg = cardPage(secId);
+  if(!pg) return;
+  const b = document.getElementById(pg.pfx + '-code-block');
+  if(!b) return;
+  navigator.clipboard.writeText(b.innerText||b.textContent).catch(()=>{});
+  const btn = document.getElementById(pg.pfx + '-copy-btn');
+  if(btn){ btn.textContent = 'Copied!'; setTimeout(()=>btn.textContent='Copy', 2000); }
+}
+
+/* ── TAB SWITCH — one function for all five pages, scoped by secId ── */
+function cardTabSwitch(secId, tab){
+  const pg = cardPage(secId);
+  if(!pg) return;
+  const nav = document.getElementById(pg.pfx + '-tabs-list');
+  if(!nav) return;
+  nav.querySelectorAll('.tab-item').forEach(btn=>btn.classList.toggle('on', btn.getAttribute('data-card-tab')===tab));
+  document.querySelectorAll(`#${secId} .tabs-panel[data-card-panel]`).forEach(p=>p.classList.toggle('on', p.getAttribute('data-card-panel')===tab));
+  // Grids rendered while their section/tab was hidden measure 0 height, so
+  // the .spec-cell__desc equalizer (see equalizeSpecCellDesc) is a no-op at
+  // that point — redo it now that the panel is actually visible and laid out.
+  const secEl = document.getElementById(secId);
+  if(secEl) equalizeSpecCellDesc(secEl);
+}
+
+/* ── INIT / THEME RE-RENDER ── */
+function renderCardPages(){
+  CARD_PAGES.forEach(pg=>{
+    try { renderCardCodeTab(pg);   } catch(e){ console.error(pg.pfx+'-code-tab',e); }
+    try { renderCardPlayground(pg);} catch(e){ console.error(pg.pfx+'-playground',e); }
+    try { renderCardKeyStates(pg); } catch(e){ console.error(pg.pfx+'-keystates',e); }
+    try { renderCardInSitu(pg);    } catch(e){ console.error(pg.pfx+'-insitu',e); }
+    try { renderCardReference(pg); } catch(e){ console.error(pg.pfx+'-reference',e); }
+  });
+}
+renderCardPages();
+
 function dpTabSwitch(tab){
   const nav = document.getElementById('dp-tabs-list');
   if(!nav) return;
@@ -19650,6 +21109,11 @@ try { renderSectionChangelogs(); } catch(e){ console.error('section-changelog',e
   {secId:'s-breadcrumb', panelId:'bcr-changelog-panel'},
   {secId:'s-buttons', panelId:'btn-changelog-panel'},
   {secId:'s-calendar', panelId:'dp-changelog-panel'},
+  {secId:'s-cards-basic', panelId:'cbasic-changelog-panel'},
+  {secId:'s-cards-media', panelId:'cmedia-changelog-panel'},
+  {secId:'s-cards-interactive', panelId:'cinter-changelog-panel'},
+  {secId:'s-cards-stat', panelId:'cstat-changelog-panel'},
+  {secId:'s-cards-hover', panelId:'chover-changelog-panel'},
 ].forEach(({secId, panelId})=>{
   try {
     const chlog = document.querySelector(`#${secId} > .sec-chlog`);
