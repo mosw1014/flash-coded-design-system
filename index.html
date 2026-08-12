@@ -895,7 +895,13 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;font-feature-
 
 /* Playground */
 .btn-pg{border:1px solid var(--chrome-border);border-radius:12px;overflow:hidden}
+/* overflow:visible so a floating element (a dropdown panel, a pinned-open
+   hover card) isn't clipped — but that also stops the parent's rounded
+   corners from clipping the stage/ctrls backgrounds, leaving square corners
+   poking past the rounded border. Round the outer children to match. */
 .btn-pg--dd{overflow:visible}
+.btn-pg--dd > *:first-child{border-radius:11px 11px 0 0}
+.btn-pg--dd > *:last-child{border-radius:0 0 11px 11px}
 .btn-pg__stage{display:flex;align-items:center;justify-content:center;min-height:220px;padding:56px 40px;transition:background .25s}
 .btn-pg__ctrls{display:flex;flex-direction:column;gap:16px;padding:20px 22px;background:var(--chrome-nav);border-top:1px solid var(--chrome-border);transition:background .25s}
 .btn-pg__group{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
