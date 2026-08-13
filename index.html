@@ -2361,11 +2361,6 @@ body.home .main{max-width:none;margin:0;padding:0}
 .dd-break__k{font-size:12.5px;font-weight:700;color:var(--chrome-txt)}
 .dd-break__v{font-size:12px;font-weight:700;color:var(--chrome-muted);font-variant-numeric:tabular-nums}
 
-/* ---- Kbd (shared: used by Command & Context Menu too) ---- */
-.kbd{display:inline-flex;align-items:center;justify-content:center;min-width:20px;height:20px;padding:0 6px;font-family:'SF Mono',ui-monospace,monospace;font-size:11px;font-weight:600;color:var(--chrome-txt);background:var(--color-surface-n1);border:1px solid var(--chrome-border);border-bottom-width:2px;border-radius:6px;line-height:1}
-.kbd-combo{display:inline-flex;align-items:center;gap:4px}
-.kbd-combo__plus{color:var(--chrome-muted);font-size:11px}
-
 /* ---- Date picker ---- */
 .cal{width:280px;max-width:100%;border:1px solid var(--chrome-border);border-radius:14px;padding:16px;background:var(--chrome-bg)}
 .cal__head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
@@ -2401,31 +2396,6 @@ body.home .main{max-width:none;margin:0;padding:0}
 .dp.is-open .dp__pop{opacity:1;transform:translateY(0);pointer-events:auto}
 .dppg-inline-wrap{display:flex;justify-content:center}
 
-/* ---- Command palette ---- */
-.cmd{width:420px;max-width:100%;border:1px solid var(--chrome-border);border-radius:14px;background:var(--chrome-bg);overflow:hidden;box-shadow:0 14px 36px rgba(0,0,0,.12)}
-.cmd__search{display:flex;align-items:center;gap:10px;padding:13px 16px;border-bottom:1px solid var(--chrome-border)}
-.cmd__search svg{width:16px;height:16px;color:var(--chrome-muted);flex-shrink:0}
-.cmd__input{flex:1;border:0;background:none;outline:none;font-family:inherit;font-size:14px;color:var(--chrome-txt);min-width:0}
-.cmd__input::placeholder{color:var(--chrome-muted)}
-.cmd__list{max-height:264px;overflow-y:auto;padding:6px}
-.cmd__glabel{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--chrome-muted);padding:10px 10px 4px}
-.cmd__item{display:flex;align-items:center;gap:11px;padding:9px 10px;border-radius:8px;font-size:13.5px;color:var(--chrome-txt);cursor:pointer}
-.cmd__item.is-active,.cmd__item:hover{background:var(--chrome-hover)}
-.cmd__ico{width:16px;text-align:center;color:var(--chrome-muted);flex-shrink:0}
-.cmd__item .kbd{margin-left:auto}
-.cmd__empty{padding:28px;text-align:center;font-size:13px;color:var(--chrome-muted)}
-
-/* ---- Context menu ---- */
-.ctx-target{display:flex;align-items:center;justify-content:center;min-height:130px;border:1.5px dashed var(--chrome-border);border-radius:12px;color:var(--chrome-muted);font-size:13px;user-select:none;text-align:center;padding:20px;cursor:context-menu}
-.ctx-menu{position:fixed;z-index:60;min-width:196px;background:var(--chrome-bg);border:1px solid var(--chrome-border);border-radius:10px;box-shadow:0 12px 32px rgba(0,0,0,.18);padding:6px;display:none}
-.ctx-menu.is-open{display:block}
-.ctx-item{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:7px;font-size:13px;color:var(--chrome-txt);cursor:pointer}
-.ctx-item:hover{background:var(--chrome-hover)}
-.ctx-item .cmd__ico,.ctx-item .ctx-ico{width:16px;text-align:center;color:var(--chrome-muted);flex-shrink:0}
-.ctx-item--danger{color:var(--color-crit-h)}
-.ctx-item--danger .ctx-ico{color:var(--color-crit-h)}
-.ctx-item .kbd{margin-left:auto}
-.ctx-sep{height:1px;background:var(--chrome-border);margin:5px 4px}
 
 /* ---- Hover card ---- */
 .hc{position:relative;display:inline-block}
@@ -7298,163 +7268,6 @@ body.home .main{max-width:none;margin:0;padding:0}
     </section>
 
     <!-- ============================================================
-         COMMAND PALETTE
-    ============================================================ -->
-    <section class="sec" id="s-command">
-      <div class="sec__head">
-        <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Command <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.1</span></h1>
-        <p class="sec__desc">A searchable command palette for jumping to actions and destinations fast. Type to filter; use &uarr; &darr; to move and Enter to run. Typically summoned with a shortcut like <span class="kbd-combo"><span class="kbd">&#8984;</span><span class="kbd-combo__plus">+</span><span class="kbd">K</span></span>.</p>
-      </div>
-      <div class="type-sub">
-        <div class="type-sub__title">Interactive</div>
-        <div class="type-sub__desc">Start typing to filter across groups. The highlighted row follows your arrow keys; Enter would run it.</div>
-        <div class="sg-stage" style="align-items:flex-start"><div class="cmd" id="cmd-demo"></div></div>
-      </div>
-      <div class="type-sub">
-        <div class="type-sub__title">When to use</div>
-        <div class="type-sub__desc">A command palette rewards frequent, keyboard-driven users. It complements visible navigation &mdash; it doesn&rsquo;t replace it.</div>
-        <div class="sel-usage">
-          <div class="sel-usage__card">
-            <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
-            <ul class="sel-usage__list">
-              <li>Aggregate common actions and destinations behind one search.</li>
-              <li>Support full keyboard use and show shortcuts inline.</li>
-              <li>Group results and show a clear empty state.</li>
-            </ul>
-          </div>
-          <div class="sel-usage__card">
-            <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don&rsquo;t</div>
-            <ul class="sel-usage__list">
-              <li>Don&rsquo;t make it the only way to reach a feature.</li>
-              <li>Don&rsquo;t dump every action in with no grouping or ranking.</li>
-              <li>Don&rsquo;t hide it with no discoverable shortcut or entry point.</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <details class="ai-ctx">
-  <summary>AI context</summary>
-  <pre data-ai-context="s-command">
-{
-  "status": "js-rendered",
-  "builderFunctions": [
-    "CMD",
-    "draw",
-    "hi"
-  ],
-  "realClasses": [
-    ".cmd",
-    ".cmd__search",
-    ".cmd__input",
-    ".cmd__list",
-    ".cmd__glabel",
-    ".cmd__item",
-    ".cmd__ico",
-    ".cmd__empty",
-    ".kbd"
-  ],
-  "css": "/* ---- Kbd (shared: used by Command &amp; Context Menu too) ---- */\n.kbd { display:inline-flex;align-items:center;justify-content:center;min-width:20px;height:20px;padding:0 6px;font-family:'SF Mono',ui-monospace,monospace;font-size:11px;font-weight:600;color:var(--chrome-txt);background:var(--color-surface-n1);border:1px solid var(--chrome-border);border-bottom-width:2px;border-radius:6px;line-height:1 }\n/* ---- Command palette ---- */\n.cmd { width:420px;max-width:100%;border:1px solid var(--chrome-border);border-radius:14px;background:var(--chrome-bg);overflow:hidden;box-shadow:0 14px 36px rgba(0,0,0,.12) }\n.cmd__search { display:flex;align-items:center;gap:10px;padding:13px 16px;border-bottom:1px solid var(--chrome-border) }\n.cmd__search svg { width:16px;height:16px;color:var(--chrome-muted);flex-shrink:0 }\n.cmd__input { flex:1;border:0;background:none;outline:none;font-family:inherit;font-size:14px;color:var(--chrome-txt);min-width:0 }\n.cmd__input::placeholder { color:var(--chrome-muted) }\n.cmd__list { max-height:264px;overflow-y:auto;padding:6px }\n.cmd__glabel { font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--chrome-muted);padding:10px 10px 4px }\n.cmd__item { display:flex;align-items:center;gap:11px;padding:9px 10px;border-radius:8px;font-size:13.5px;color:var(--chrome-txt);cursor:pointer }\n.cmd__item.is-active,.cmd__item:hover { background:var(--chrome-hover) }\n.cmd__ico { width:16px;text-align:center;color:var(--chrome-muted);flex-shrink:0 }\n.cmd__item .kbd { margin-left:auto }\n.cmd__empty { padding:28px;text-align:center;font-size:13px;color:var(--chrome-muted) }\n.ctx-item .cmd__ico,.ctx-item .ctx-ico { width:16px;text-align:center;color:var(--chrome-muted);flex-shrink:0 }\n.ctx-item .kbd { margin-left:auto }",
-  "js": "var CMD=[\n    {group:'Navigation', items:[{ico:'⌂',label:'Go to Dashboard',kbd:'G D'},{ico:'⇄',label:'Go to Transactions',kbd:'G T'},{ico:'↑',label:'Go to Payouts'}]},\n    {group:'Actions', items:[{ico:'＋',label:'New payment link',kbd:'N'},{ico:'↓',label:'Export to CSV'},{ico:'⟳',label:'Refresh data',kbd:'R'}]},\n    {group:'Settings', items:[{ico:'☾',label:'Toggle dark mode'},{ico:'⚙',label:'Open settings',kbd:','}]}\n  ];\n\nfunction draw(){\n    var q=input.value.toLowerCase().trim(), html='', count=0;\n    CMD.forEach(function(g){\n      var m=g.items.filter(function(it){return it.label.toLowerCase().indexOf(q)&gt;=0;});\n      if(!m.length) return;\n      html+='&lt;div class=\"cmd__glabel\"&gt;'+g.group+'&lt;/div&gt;';\n      m.forEach(function(it){ html+='&lt;div class=\"cmd__item\" data-i=\"'+(count++)+'\"&gt;&lt;span class=\"cmd__ico\"&gt;'+it.ico+'&lt;/span&gt;'+it.label+(it.kbd?'&lt;span class=\"kbd\"&gt;'+it.kbd+'&lt;/span&gt;':'')+'&lt;/div&gt;'; });\n    });\n    listEl.innerHTML=count?html:'&lt;div class=\"cmd__empty\"&gt;No results found&lt;/div&gt;';\n    items=Array.prototype.slice.call(listEl.querySelectorAll('.cmd__item'));\n    active=count?0:-1; hi();\n    items.forEach(function(el){ el.addEventListener('mousemove',function(){ active=+el.getAttribute('data-i'); hi(); }); });\n  }\n\nfunction hi(){ items.forEach(function(el,i){ el.classList.toggle('is-active', i===active); }); if(active&gt;=0&amp;&amp;items[active]) items[active].scrollIntoView({block:'nearest'}); }",
-  "usage": {
-    "do": [
-      "Aggregate common actions and destinations behind one search.",
-      "Support full keyboard use and show shortcuts inline.",
-      "Group results and show a clear empty state."
-    ],
-    "dont": [
-      "Don’t make it the only way to reach a feature.",
-      "Don’t dump every action in with no grouping or ranking.",
-      "Don’t hide it with no discoverable shortcut or entry point."
-    ]
-  },
-  "contentHash": "faf9b4c0c730111c3f97e6c89f6221df04bb52c04dfbb2400cc2d1650991d4b0",
-  "note": "Shares .kbd with Context Menu (see s-context-menu's tab) and Kbd (s-kbd); its own CSS here is what Command specifically references."
-}
-  </pre>
-</details>
-    </section>
-
-    <!-- ============================================================
-         CONTEXT MENU
-    ============================================================ -->
-    <section class="sec" id="s-context-menu">
-      <div class="sec__head">
-        <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Context Menu <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.1</span></h1>
-        <p class="sec__desc">A menu of actions relevant to a specific element, opened by right-click. It appears at the pointer and dismisses on outside-click, scroll or Escape.</p>
-      </div>
-      <div class="type-sub">
-        <div class="type-sub__title">Interactive</div>
-        <div class="type-sub__desc">Right-click (or two-finger tap) inside the area below to open the menu at your pointer.</div>
-        <div class="sg-stage">
-          <div class="ctx-target" id="ctx-target" style="width:100%">Right-click anywhere in this area</div>
-          <div class="ctx-menu" id="ctx-menu">
-            <div class="ctx-item"><span class="ctx-ico">&#8663;</span>Open<span class="kbd">&crarr;</span></div>
-            <div class="ctx-item"><span class="ctx-ico">&#10697;</span>Duplicate</div>
-            <div class="ctx-item"><span class="ctx-ico">&#9998;</span>Rename<span class="kbd">F2</span></div>
-            <div class="ctx-sep"></div>
-            <div class="ctx-item ctx-item--danger"><span class="ctx-ico">&times;</span>Delete<span class="kbd">&#8998;</span></div>
-          </div>
-        </div>
-      </div>
-      <div class="type-sub">
-        <div class="type-sub__title">When to use</div>
-        <div class="type-sub__desc">Context menus offer power-user shortcuts. Because they&rsquo;re hidden until right-click, never make them the only path to an action.</div>
-        <div class="sel-usage">
-          <div class="sel-usage__card">
-            <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
-            <ul class="sel-usage__list">
-              <li>Offer actions specific to the right-clicked item.</li>
-              <li>Group related actions and separate destructive ones.</li>
-              <li>Mirror every item in a visible menu or toolbar too.</li>
-            </ul>
-          </div>
-          <div class="sel-usage__card">
-            <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don&rsquo;t</div>
-            <ul class="sel-usage__list">
-              <li>Don&rsquo;t hide essential actions only behind right-click.</li>
-              <li>Don&rsquo;t overload it with dozens of items.</li>
-              <li>Don&rsquo;t place a destructive action where users expect a safe one.</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <details class="ai-ctx">
-  <summary>AI context</summary>
-  <pre data-ai-context="s-context-menu">
-{
-  "status": "static",
-  "realClasses": [
-    ".ctx-target",
-    ".ctx-menu",
-    ".ctx-item",
-    ".ctx-item--danger",
-    ".ctx-ico",
-    ".ctx-sep",
-    ".kbd"
-  ],
-  "css": "/* ---- Kbd (shared: used by Command &amp; Context Menu too) ---- */\n.kbd { display:inline-flex;align-items:center;justify-content:center;min-width:20px;height:20px;padding:0 6px;font-family:'SF Mono',ui-monospace,monospace;font-size:11px;font-weight:600;color:var(--chrome-txt);background:var(--color-surface-n1);border:1px solid var(--chrome-border);border-bottom-width:2px;border-radius:6px;line-height:1 }\n.cmd__item .kbd { margin-left:auto }\n/* ---- Context menu ---- */\n.ctx-target { display:flex;align-items:center;justify-content:center;min-height:130px;border:1.5px dashed var(--chrome-border);border-radius:12px;color:var(--chrome-muted);font-size:13px;user-select:none;text-align:center;padding:20px;cursor:context-menu }\n.ctx-menu { position:fixed;z-index:60;min-width:196px;background:var(--chrome-bg);border:1px solid var(--chrome-border);border-radius:10px;box-shadow:0 12px 32px rgba(0,0,0,.18);padding:6px;display:none }\n.ctx-menu.is-open { display:block }\n.ctx-item { display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:7px;font-size:13px;color:var(--chrome-txt);cursor:pointer }\n.ctx-item:hover { background:var(--chrome-hover) }\n.ctx-item .cmd__ico,.ctx-item .ctx-ico { width:16px;text-align:center;color:var(--chrome-muted);flex-shrink:0 }\n.ctx-item--danger { color:var(--color-crit-h) }\n.ctx-item--danger .ctx-ico { color:var(--color-crit-h) }\n.ctx-item .kbd { margin-left:auto }\n.ctx-sep { height:1px;background:var(--chrome-border);margin:5px 4px }",
-  "usage": {
-    "do": [
-      "Offer actions specific to the right-clicked item.",
-      "Group related actions and separate destructive ones.",
-      "Mirror every item in a visible menu or toolbar too."
-    ],
-    "dont": [
-      "Don’t hide essential actions only behind right-click.",
-      "Don’t overload it with dozens of items.",
-      "Don’t place a destructive action where users expect a safe one."
-    ]
-  },
-  "contentHash": "5369c4ecb8a01b161aa54814b4be4c8515eb868698612dda29af670a48150ad2",
-  "note": "Markup is fully static; JS positions the existing #ctx-menu on contextmenu and closes it on click/scroll/resize/Escape — no markup builder to extract."
-}
-  </pre>
-</details>
-    </section>
-
-    <!-- ============================================================
          HOVER CARD
     ============================================================ -->
     <section class="sec sec--tabbed" id="s-cards-hover">
@@ -7631,89 +7444,6 @@ body.home .main{max-width:none;margin:0;padding:0}
     ]
   },
   "contentHash": "802166a5c2ecc81cac4d9965be0aa5b614e2c41b3d819898cf6cb47886c70fd6"
-}
-  </pre>
-</details>
-    </section>
-
-    <!-- ============================================================
-         KBD
-    ============================================================ -->
-    <section class="sec" id="s-kbd">
-      <div class="sec__head">
-        <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Keyboard Shortcuts <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.2</span></h1>
-        <p class="sec__desc">A small key-cap for representing keyboard input &mdash; single keys or shortcut combinations. Monospaced, with a subtle bottom edge so it reads as a physical key.</p>
-      </div>
-      <div class="type-sub">
-        <div class="type-sub__title">Single keys</div>
-        <div class="type-sub__desc">One glyph per cap. Use the platform symbols where they help.</div>
-        <div class="sg-stage"><div class="sg-row" style="gap:10px">
-          <span class="kbd">&#8984;</span><span class="kbd">&#8679;</span><span class="kbd">&#8997;</span><span class="kbd">Ctrl</span><span class="kbd">Esc</span><span class="kbd">&crarr;</span><span class="kbd">&#9003;</span><span class="kbd">K</span>
-        </div></div>
-      </div>
-      <div class="type-sub">
-        <div class="type-sub__title">Combinations</div>
-        <div class="type-sub__desc">Chain caps with a thin plus to show a chord.</div>
-        <div class="sg-stage"><div class="sg-row" style="gap:22px">
-          <span class="kbd-combo"><span class="kbd">&#8984;</span><span class="kbd-combo__plus">+</span><span class="kbd">K</span></span>
-          <span class="kbd-combo"><span class="kbd">&#8984;</span><span class="kbd-combo__plus">+</span><span class="kbd">&#8679;</span><span class="kbd-combo__plus">+</span><span class="kbd">P</span></span>
-          <span class="kbd-combo"><span class="kbd">Ctrl</span><span class="kbd-combo__plus">+</span><span class="kbd">C</span></span>
-        </div></div>
-      </div>
-      <div class="type-sub">
-        <div class="type-sub__title">In context</div>
-        <div class="type-sub__desc">Inline within running text, at the size of the surrounding copy.</div>
-        <div class="sg-stage" style="display:block">
-          <p style="font-size:14px;color:var(--chrome-txt);line-height:1.7">Press <span class="kbd-combo"><span class="kbd">&#8984;</span><span class="kbd-combo__plus">+</span><span class="kbd">K</span></span> to open the command palette, or <span class="kbd">/</span> to jump straight to search.</p>
-        </div>
-      </div>
-      <div class="type-sub">
-        <div class="type-sub__title">When to use</div>
-        <div class="type-sub__desc">Kbd shows the user which keys to press. It&rsquo;s documentation, not a button &mdash; don&rsquo;t make it clickable.</div>
-        <div class="sel-usage">
-          <div class="sel-usage__card">
-            <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
-            <ul class="sel-usage__list">
-              <li>Show shortcuts in menus, tooltips and the command palette.</li>
-              <li>Use recognised symbols and keep one glyph per cap.</li>
-              <li>Match the key labels to the user&rsquo;s platform where you can.</li>
-            </ul>
-          </div>
-          <div class="sel-usage__card">
-            <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don&rsquo;t</div>
-            <ul class="sel-usage__list">
-              <li>Don&rsquo;t style buttons as key-caps &mdash; Kbd isn&rsquo;t interactive.</li>
-              <li>Don&rsquo;t cram a whole chord into one cap &mdash; chain separate caps.</li>
-              <li>Don&rsquo;t invent symbols; use the platform&rsquo;s standard ones.</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <details class="ai-ctx">
-  <summary>AI context</summary>
-  <pre data-ai-context="s-kbd">
-{
-  "status": "static",
-  "realClasses": [
-    ".kbd",
-    ".kbd-combo",
-    ".kbd-combo__plus"
-  ],
-  "css": "/* ---- Kbd (shared: used by Command &amp; Context Menu too) ---- */\n.kbd { display:inline-flex;align-items:center;justify-content:center;min-width:20px;height:20px;padding:0 6px;font-family:'SF Mono',ui-monospace,monospace;font-size:11px;font-weight:600;color:var(--chrome-txt);background:var(--color-surface-n1);border:1px solid var(--chrome-border);border-bottom-width:2px;border-radius:6px;line-height:1 }\n.kbd-combo { display:inline-flex;align-items:center;gap:4px }\n.kbd-combo__plus { color:var(--chrome-muted);font-size:11px }\n.cmd__item .kbd { margin-left:auto }\n.ctx-item .kbd { margin-left:auto }",
-  "usage": {
-    "do": [
-      "Show shortcuts in menus, tooltips and the command palette.",
-      "Use recognised symbols and keep one glyph per cap.",
-      "Match the key labels to the user’s platform where you can."
-    ],
-    "dont": [
-      "Don’t style buttons as key-caps — Kbd isn’t interactive.",
-      "Don’t cram a whole chord into one cap — chain separate caps.",
-      "Don’t invent symbols; use the platform’s standard ones."
-    ]
-  },
-  "contentHash": "27dabfd322431851046555d2671a351acf507bf1dbe6963b8faf007029d03225"
 }
   </pre>
 </details>
@@ -14468,17 +14198,22 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.72.0';
+const SYSTEM_VERSION = '1.73.0';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
-      {version:'1.72.0', date:'2026-08-12', author:'Mo', title:'Icons rebuilt on Material Symbols, replacing Font Awesome', changes:[
+      {version:'1.73.0', date:'2026-08-12', author:'Mo', title:'Icons rebuilt on Material Symbols, replacing Font Awesome', changes:[
         ['changed','All 66 icons in the shared ICONS registry (Icons library + every sidebar/nav item that reads from it) swapped from Font Awesome 6 Solid/Outline paths to Google Material Symbols Rounded — fill 1 (Solid) / fill 0 (Outline), weight 500, grade 0, optical size 24. The cow glyph (Flash’s own bull mark, not an FA icon) was left untouched'],
         ['changed','Side nav’s hand-authored logout and collapse-chevron icons (SNAV_LOGOUT_ICON/SNAV_COLLAPSE_ICON) restyled to matching Material Symbols glyphs (logout, chevron_left) so they stay visually consistent with the rest of the now-Material icon set'],
         ['changed','Icons section attribution, anatomy table (Source/Grid rows) and section registry description updated from Font Awesome/CC BY 4.0 to Material Symbols/Apache License 2.0'],
         ['changed','TI_ICONS (Text Inputs’ own icon picker) and other bespoke local SVGs (table sort carets, spinner, chart art, pill/dropdown chevrons, WhatsApp/Rand/flag glyphs, etc.) were never Font Awesome to begin with, so were intentionally left as-is — out of scope for this swap'],
+      ]},
+      {version:'1.72.0', date:'2026-08-12', author:'Helen', title:'Removed Command, Context Menu and Keyboard Shortcuts pages', changes:[
+        ['removed','Command palette component (s-command) — nav entry, .cmd/.cmd__*/.cmd__glabel/.cmd__item/.cmd__ico/.cmd__empty CSS, the #cmd-demo search/filter/keyboard-nav IIFE, its sidebar mockup and its CHANGELOG.components entry'],
+        ['removed','Context Menu component (s-context-menu) — nav entry, .ctx-target/.ctx-menu/.ctx-item/.ctx-sep CSS, the #ctx-target/#ctx-menu right-click positioning IIFE, its sidebar mockup and its CHANGELOG.components entry'],
+        ['removed','Keyboard Shortcuts component (s-kbd) — nav entry, .kbd/.kbd-combo/.kbd-combo__plus CSS (previously shared by Command and Context Menu, now unused and removed with it), its sidebar mockup and its CHANGELOG.components entry'],
       ]},
       {version:'1.71.0', date:'2026-08-12', author:'Helen', title:'All five Charts sub-pages rebuilt as tabbed pages, on one shared config-driven builder', changes:[
         ['changed','Bar, Line & Area, Donut, Progress Meters and Distribution Charts each restructured from a flat .sec into .sec--tabbed with a .sec-hero (title + live preview) and Overview / Style / Code / Changelog tabs, matching the Cards/Pills/Buttons/Date picker structure end to end'],
@@ -15696,22 +15431,6 @@ const CHANGELOG = {
         ['added','Interactive month-grid calendar (month nav, today marker, day select) and a date-picker field that opens it in a popover'],
       ]},
     ]},
-    {secId:'s-command', name:'Command', version:'1.0.1', entries:[
-      {version:'1.0.1', date:'2026-07-29', author:'Mo', title:'AI context tab added', changes:[
-        ['added','AI context tab documenting the real .cmd/.cmd__*/.kbd structural classes and the CMD/draw/hi builders, plus its existing "When to use" Do/Dont guidance (3 do / 3 dont); notes .kbd is shared with Context Menu'],
-      ]},
-      {version:'1.0.0', date:'2026-07-09', author:'Mo', title:'Initial release', changes:[
-        ['added','Searchable command palette with grouped results, live filtering, arrow-key navigation, inline shortcuts and an empty state'],
-      ]},
-    ]},
-    {secId:'s-context-menu', name:'Context Menu', version:'1.0.1', entries:[
-      {version:'1.0.1', date:'2026-07-29', author:'Mo', title:'AI context tab added', changes:[
-        ['added','AI context tab documenting the real, fully static .ctx-target/.ctx-menu/.ctx-item/.kbd markup, plus its existing "When to use" Do/Dont guidance (3 do / 3 dont)'],
-      ]},
-      {version:'1.0.0', date:'2026-07-09', author:'Mo', title:'Initial release', changes:[
-        ['added','Right-click menu positioned at the pointer, with a destructive item, dismissing on outside-click, scroll or Escape'],
-      ]},
-    ]},
     {secId:'s-cards-hover', name:'Hover Cards', version:'1.1.0', entries:[
       {version:'1.1.0', date:'2026-08-12', author:'Helen', title:'Rebuilt as a tabbed page, matching Pills/Buttons\' structure', changes:[
         ['changed','Section restructured from a flat .sec into .sec--tabbed with a .sec-hero and Overview / Style / Code / Changelog tabs (cardTabSwitch(\'s-cards-hover\', tab))'],
@@ -15739,17 +15458,6 @@ const CHANGELOG = {
       ]},
       {version:'1.0.0', date:'2026-07-09', author:'Mo', title:'Initial release', changes:[
         ['added','Horizontal, vertical and labelled hairline dividers on the border token'],
-      ]},
-    ]},
-    {secId:'s-kbd', name:'Keyboard Shortcuts', version:'1.0.2', entries:[
-      {version:'1.0.2', date:'2026-08-03', author:'Mo', title:'AI context tab added', changes:[
-        ['added','AI context tab documenting the real .kbd/.kbd-combo/.kbd-combo__plus markup (shared with Command and Context Menu), plus its existing "When to use" Do/Dont guidance (3 do / 3 dont)'],
-      ]},
-      {version:'1.0.1', date:'2026-07-22', author:'Mo', title:'Renamed from "Kbd" to "Keyboard Shortcuts"', changes:[
-        ['changed','Nav label and section title renamed from "Kbd" to the friendlier "Keyboard Shortcuts" — the CSS class name (.kbd) is unchanged'],
-      ]},
-      {version:'1.0.0', date:'2026-07-09', author:'Mo', title:'Initial release', changes:[
-        ['added','Keyboard key-caps for single keys and chained shortcut combinations'],
       ]},
     ]},
     {secId:'s-carousel', name:'Carousel', version:'1.0.1', entries:[
@@ -21721,57 +21429,6 @@ function dpTabSwitch(tab){
   document.querySelectorAll('#s-calendar .tabs-panel[data-dp-panel]').forEach(p=>p.classList.toggle('on', p.getAttribute('data-dp-panel')===tab));
 }
 
-/* Command palette */
-(function(){
-  var host=document.getElementById('cmd-demo'); if(!host) return;
-  var CMD=[
-    {group:'Navigation', items:[{ico:'⌂',label:'Go to Dashboard',kbd:'G D'},{ico:'⇄',label:'Go to Transactions',kbd:'G T'},{ico:'↑',label:'Go to Payouts'}]},
-    {group:'Actions', items:[{ico:'＋',label:'New payment link',kbd:'N'},{ico:'↓',label:'Export to CSV'},{ico:'⟳',label:'Refresh data',kbd:'R'}]},
-    {group:'Settings', items:[{ico:'☾',label:'Toggle dark mode'},{ico:'⚙',label:'Open settings',kbd:','}]}
-  ];
-  host.innerHTML='<div class="cmd__search"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.8"/><path d="M20 20l-3.5-3.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>'
-    +'<input class="cmd__input" type="text" placeholder="Type a command or search…" aria-label="Command palette"></div><div class="cmd__list"></div>';
-  var input=host.querySelector('.cmd__input'), listEl=host.querySelector('.cmd__list'), items=[], active=-1;
-  function hi(){ items.forEach(function(el,i){ el.classList.toggle('is-active', i===active); }); if(active>=0&&items[active]) items[active].scrollIntoView({block:'nearest'}); }
-  function draw(){
-    var q=input.value.toLowerCase().trim(), html='', count=0;
-    CMD.forEach(function(g){
-      var m=g.items.filter(function(it){return it.label.toLowerCase().indexOf(q)>=0;});
-      if(!m.length) return;
-      html+='<div class="cmd__glabel">'+g.group+'</div>';
-      m.forEach(function(it){ html+='<div class="cmd__item" data-i="'+(count++)+'"><span class="cmd__ico">'+it.ico+'</span>'+it.label+(it.kbd?'<span class="kbd">'+it.kbd+'</span>':'')+'</div>'; });
-    });
-    listEl.innerHTML=count?html:'<div class="cmd__empty">No results found</div>';
-    items=Array.prototype.slice.call(listEl.querySelectorAll('.cmd__item'));
-    active=count?0:-1; hi();
-    items.forEach(function(el){ el.addEventListener('mousemove',function(){ active=+el.getAttribute('data-i'); hi(); }); });
-  }
-  input.addEventListener('input',draw);
-  input.addEventListener('keydown',function(e){
-    if(e.key==='ArrowDown'){ e.preventDefault(); if(items.length){ active=(active+1)%items.length; hi(); } }
-    else if(e.key==='ArrowUp'){ e.preventDefault(); if(items.length){ active=(active-1+items.length)%items.length; hi(); } }
-    else if(e.key==='Enter'){ e.preventDefault(); if(items[active]) items[active].classList.add('is-active'); }
-  });
-  draw();
-})();
-
-/* Context menu */
-(function(){
-  var t=document.getElementById('ctx-target'), m=document.getElementById('ctx-menu'); if(!t||!m) return;
-  function close(){ m.classList.remove('is-open'); }
-  t.addEventListener('contextmenu',function(e){
-    e.preventDefault();
-    m.classList.add('is-open');
-    var mw=m.offsetWidth, mh=m.offsetHeight, x=e.clientX, y=e.clientY;
-    if(x+mw>innerWidth-8) x=innerWidth-mw-8;
-    if(y+mh>innerHeight-8) y=innerHeight-mh-8;
-    m.style.left=x+'px'; m.style.top=y+'px';
-  });
-  document.addEventListener('click',close);
-  document.addEventListener('scroll',close,true);
-  window.addEventListener('resize',close);
-  document.addEventListener('keydown',function(e){ if(e.key==='Escape') close(); });
-})();
 /* Carousel */
 (function(){
   var car=document.getElementById('car-demo'); if(!car) return;
@@ -22311,13 +21968,10 @@ const NAV = [
         {id:'s-charts-distribution', label:'Distribution Chart',    desc:'Split a total across categories.'},
       ]},
       {id:'s-selection',    label:'Checkboxes & Radios', desc:'Multi- and single-select controls.'},
-      {id:'s-command',      label:'Command',             desc:'Searchable command palette.'},
-      {id:'s-context-menu', label:'Context Menu',        desc:'Right-click and overflow action menus.'},
       {id:'s-calendar',     label:'Date picker',         desc:'Date pickers and month grids.'},
       {id:'s-dropdown',     label:'Dropdown',            desc:'Single- and multi-select menus.'},
       {id:'s-empty-state',  label:'Empty State',         desc:'Muted glyph, explanation and a primary action.'},
       {id:'s-input-otp',    label:'Input OTP',           desc:'One-time passcode entry fields.'},
-      {id:'s-kbd',          label:'Keyboard Shortcuts',  desc:'Keycaps and shortcut hints.'},
       {id:'s-lists',        label:'Lists',               desc:'Key-value lists and activity timelines.'},
       {id:'s-modals',       label:'Modals', tag:'Coming soon',  desc:'Focused dialogs and confirmations.'},
       {id:'s-nav',          label:'Navigation',          desc:'Side navigation and menu systems.'},
@@ -22373,12 +22027,9 @@ const MOCKS = {
   's-charts-distribution': '<div style="display:flex;gap:2px;height:14px;width:74%;border-radius:999px;overflow:hidden"><span style="width:38%;background:var(--color-brand)"></span><span style="width:24%;background:var(--chrome-txt)"></span><span style="width:21%;background:var(--chrome-border)"></span><span style="width:17%;background:var(--chrome-muted)"></span></div>',
   's-selection': '<div class="mk"><span class="mk-check"><svg viewBox="0 0 24 24"><path d="M4 12.5l5.5 5.5L20 6.5"/></svg></span><span class="mk-radio"></span></div>',
   's-chips': '<div class="mk"><span class="mk-chip"><span class="mk-dot"></span>Active</span><span class="mk-chip">Label</span><span class="mk-chip">Filter</span></div>',
-  's-command': '<div class="mk-card" style="width:80%;padding:11px 13px;display:flex;align-items:center;gap:9px"><span class="mk-glyph" style="width:16px;height:16px;color:var(--chrome-muted)">'+iconSvg('search')+'</span><span class="mk-bar" style="flex:1"></span><span class="mk-key">⌘K</span></div>',
-  's-context-menu': '<div class="mk-card" style="width:60%;padding:7px"><div style="display:flex;flex-direction:column;gap:3px">'+['70%','90%','55%'].map(function(w,i){return '<span style="display:flex;align-items:center;gap:8px;padding:7px 9px;border-radius:6px;'+(i===1?'background:var(--chrome-hover)':'')+'"><span class="mk-bar" style="width:'+w+'"></span></span>';}).join('')+'</div></div>',
   's-dropdown': '<div class="mk mk-col" style="gap:7px"><div class="mk-card" style="width:70%;padding:9px 12px;display:flex;justify-content:space-between;align-items:center"><span class="mk-bar" style="width:55px"></span><span style="color:var(--chrome-muted)">▾</span></div><div class="mk-card" style="width:70%;padding:6px"><div style="display:flex;flex-direction:column;gap:4px"><span style="padding:6px 8px;border-radius:5px;background:var(--chrome-hover)"><span class="mk-bar" style="width:70%"></span></span><span style="padding:6px 8px;display:block"><span class="mk-bar" style="width:50%"></span></span></div></div></div>',
   's-empty-state': '<div class="mk-card" style="width:56%;padding:18px 12px;display:flex;flex-direction:column;align-items:center;gap:8px;border-style:dashed"><span class="mk-circle" style="width:26px;height:26px;background:var(--chrome-border)"></span><span class="mk-bar mk-bar--txt" style="width:70%"></span><span class="mk-bar" style="width:50%"></span></div>',
   's-input-otp': '<div class="mk-otp"><span class="on">4</span><span class="on">2</span><span></span><span></span></div>',
-  's-kbd': '<div class="mk"><span class="mk-key">⌘</span><span style="color:var(--chrome-muted);font-weight:800">+</span><span class="mk-key">K</span></div>',
   's-lists': '<div class="mk-card" style="width:62%;padding:11px;display:flex;flex-direction:column;gap:8px">'+['48%','62%','40%'].map(function(w){return '<div style="display:flex;justify-content:space-between;gap:10px"><span class="mk-bar" style="width:34%"></span><span class="mk-bar mk-bar--txt" style="width:'+w+'"></span></div>';}).join('')+'</div>',
   's-nav': '<div class="mk-card" style="width:58%;padding:9px"><div style="display:flex;flex-direction:column;gap:4px">'+[0,1,2,3].map(function(i){return '<span style="display:flex;align-items:center;gap:9px;padding:7px 8px;border-radius:6px;'+(i===1?'background:var(--chrome-hover)':'')+'"><span class="mk-sq" style="width:14px;height:14px;'+(i===1?'background:var(--color-brand)':'')+'"></span><span class="mk-bar" style="flex:1"></span></span>';}).join('')+'</div></div>',
   's-pagination': '<div class="mk"><span class="mk-key" style="border-bottom-width:1px">‹</span><span class="mk-key" style="border-bottom-width:1px;background:var(--chrome-txt);color:var(--chrome-bg);border-color:var(--chrome-txt)">1</span><span class="mk-key" style="border-bottom-width:1px">2</span><span class="mk-key" style="border-bottom-width:1px">3</span><span class="mk-key" style="border-bottom-width:1px">›</span></div>',
