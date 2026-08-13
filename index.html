@@ -4950,53 +4950,21 @@ body.home .main{max-width:none;margin:0;padding:0}
   </pre>
 </details>
     </section>
-    <section class="sec" id="s-empty-state">
+    <section class="sec sec--tabbed" id="s-empty-state">
+      <div class="sec-hero">
       <div class="sec__head">
-        <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Empty State <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.0</span></h1>
-        <p class="sec__desc">Shown when a table, list or view has no rows to display. Pairs a muted glyph with a plain-language explanation and a single primary action to move the user forward.</p>
-      </div>
-
-      <div class="type-sub">
-        <div class="type-sub__title">Empty state</div>
-        <div class="type-sub__desc">A dashed-border card centring a muted glyph, a title, a short explanation and one primary action.</div>
-        <div class="dd-empty">
-          <div class="dd-empty__icon">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M4 7h16M4 12h16M4 17h9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-          </div>
-          <div class="dd-empty__title">No transactions match these filters</div>
-          <div class="dd-empty__desc">Nothing was recorded for the selected region and date range. Try widening the range or clearing the region filter.</div>
-          <button class="dd-empty__action" type="button">Clear filters</button>
-        </div>
-      </div>
-
-      <div class="type-sub">
-        <div class="type-sub__title">When to use</div>
-        <div class="type-sub__desc">An empty state replaces a table, list or grid only when it has zero items &mdash; it&rsquo;s a moment, not a decoration.</div>
-        <div class="sel-usage">
-          <div class="sel-usage__card">
-            <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
-            <ul class="sel-usage__list">
-              <li>Always give an empty state a plain-language reason for why there&rsquo;s nothing to show.</li>
-              <li>Include a single primary action when there&rsquo;s an obvious next step &mdash; clear a filter, create the first record.</li>
-              <li>Keep the glyph muted and simple; it should support the message, not compete with it.</li>
-            </ul>
-          </div>
-          <div class="sel-usage__card">
-            <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don&rsquo;t</div>
-            <ul class="sel-usage__list">
-              <li>Don&rsquo;t leave an empty state blank or purely decorative &mdash; it should always explain what happened and what to do next.</li>
-              <li>Don&rsquo;t use an empty state for a loading moment &mdash; that&rsquo;s a skeleton loader.</li>
-              <li>Don&rsquo;t stack more than one primary action &mdash; move secondary options into a link or menu.</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <details class="ai-ctx">
+        <h1 class="sec__title">Empty State</h1>
+        <div class="sec-header-meta">
+          <span class="comp-ver-badge" style="margin-left:0">v1.1.0</span>
+<details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-empty-state">
 {
-  "status": "static",
+  "status": "js-rendered",
+  "builderFunctions": [
+    "esBuildHTML",
+    "ES_LANGS"
+  ],
   "realClasses": [
     ".dd-empty",
     ".dd-empty__icon",
@@ -5005,23 +4973,73 @@ body.home .main{max-width:none;margin:0;padding:0}
     ".dd-empty__action"
   ],
   "css": "/* ── EMPTY STATE ── */\n.dd-empty { border:1.5px dashed var(--chrome-border);border-radius:12px;padding:40px 24px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px }\n.dd-empty__icon { width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:var(--chrome-nav);color:var(--chrome-muted) }\n.dd-empty__title { font-size:14px;font-weight:800;color:var(--chrome-txt) }\n.dd-empty__desc { font-size:12.5px;color:var(--chrome-muted);max-width:340px;line-height:1.55 }\n.dd-empty__action { margin-top:6px;font-family:inherit;font-size:12.5px;font-weight:700;color:#fff;background:#000;border:none;border-radius:8px;padding:9px 16px;cursor:pointer;transition:background .15s }\n.dd-empty__action:hover { background:#252525 }\n[data-theme=\"dark\"] .dd-empty__action { background:#fff;color:#000 }\n[data-theme=\"dark\"] .dd-empty__action:hover { background:#f0f0f0 }",
+  "js": "function esBuildHTML(state){\n  const iconHTML = state.icon ? `&lt;div class=\"dd-empty__icon\"&gt;&lt;svg width=\"22\" height=\"22\" viewBox=\"0 0 24 24\" fill=\"none\"&gt;&lt;path d=\"M4 7h16M4 12h16M4 17h9\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\"/&gt;&lt;/svg&gt;&lt;/div&gt;` : '';\n  const descHTML = state.desc ? `&lt;div class=\"dd-empty__desc\"&gt;${ppgEsc(state.desc)}&lt;/div&gt;` : '';\n  const actionHTML = state.action ? `&lt;button class=\"dd-empty__action\" type=\"button\"&gt;Clear filters&lt;/button&gt;` : '';\n  return `&lt;div class=\"dd-empty\"&gt;${iconHTML}&lt;div class=\"dd-empty__title\"&gt;${ppgEsc(state.title || 'No results')}&lt;/div&gt;${descHTML}${actionHTML}&lt;/div&gt;`;\n}\n\nconst ES_LANGS = [\n  {key:'html',   label:'HTML / CSS', file:'empty-state.html'},\n  {key:'blazor', label:'Blazor',     file:'DsEmptyState.razor'},\n  {key:'tsx',    label:'React TSX',  file:'DsEmptyState.tsx'},\n];",
   "usage": {
     "do": [
-      "Always give an empty state a plain-language reason for why there’s nothing to show.",
-      "Include a single primary action when there’s an obvious next step — clear a filter, create the first record.",
+      "Always give an empty state a plain-language reason for why there's nothing to show.",
+      "Include a single primary action when there's an obvious next step — clear a filter, create the first record.",
       "Keep the glyph muted and simple; it should support the message, not compete with it."
     ],
     "dont": [
-      "Don’t leave an empty state blank or purely decorative — it should always explain what happened and what to do next.",
-      "Don’t use an empty state for a loading moment — that’s a skeleton loader.",
-      "Don’t stack more than one primary action — move secondary options into a link or menu."
+      "Don't leave an empty state blank or purely decorative — it should always explain what happened and what to do next.",
+      "Don't use an empty state for a loading moment — that's a skeleton loader.",
+      "Don't stack more than one primary action — move secondary options into a link or menu."
     ]
   },
-  "contentHash": "cb8c2d800416cb326cdb2f4fbdf21565c7de4dd32491e240f24615fc294d7ee9",
-  "note": "Split out of the Lists section (2026-08-04), which itself was split from the retired Data Display section — now its own top-level component. Fully static hand-authored markup; the icon is an inline SVG, not from the Icons library."
+  "contentHash": "4dc2e15417771ceeeef7553ea90a738864b0545bd188a9be5cd8212f9d31c32e",
+  "note": "esBuildHTML is the real minimal markup builder driving the Overview playground and Code tab; renderEs*/esState/getEsCode*/ES_LANGS are doc-site-only playground plumbing except ES_LANGS which lists the Code tab's language config. Icon glyph is an inline SVG, not from the Icons library."
 }
   </pre>
 </details>
+        </div>
+      </div>
+      <div class="sec-hero__preview"><div class="mk-card" style="width:56%;padding:18px 12px;display:flex;flex-direction:column;align-items:center;gap:8px;border-style:dashed"><span class="mk-circle" style="width:26px;height:26px;background:var(--chrome-border)"></span><span class="mk-bar mk-bar--txt" style="width:70%"></span><span class="mk-bar" style="width:50%"></span></div></div>
+      </div>
+      <div class="tabs-list sec-tabs" id="es-tabs-list">
+        <button type="button" class="tab-item on" data-es-tab="overview" onclick="esTabSwitch('overview')"><span class="tab-item__inner"><span class="tab-item__label">Overview</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-es-tab="style" onclick="esTabSwitch('style')"><span class="tab-item__inner"><span class="tab-item__label">Style</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-es-tab="code" onclick="esTabSwitch('code')"><span class="tab-item__inner"><span class="tab-item__label">Code</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-es-tab="changelog" onclick="esTabSwitch('changelog')"><span class="tab-item__inner"><span class="tab-item__label">Changelog</span></span><span class="tab-item__line"></span></button>
+      </div>
+      <div class="tabs-panel on" data-es-panel="overview">
+        <div id="es-playground" class="type-sub"></div>
+        <div id="es-keyvariants" class="type-sub"></div>
+        <div id="es-insitu" class="type-sub"></div>
+        <div class="type-sub cpg-variants" id="es-usage">
+          <div class="cpg-section-heading">
+            <div class="cpg-layout__title">Do's and don'ts</div>
+            <div class="cpg-layout__desc">An empty state replaces a table, list or grid only when it has zero items &mdash; it's a moment, not a decoration.</div>
+          </div>
+          <div class="cpg-section-block">
+            <div class="sel-usage">
+              <div class="sel-usage__card">
+                <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
+                <ul class="sel-usage__list">
+                  <li>Always give an empty state a plain-language reason for why there's nothing to show.</li>
+                  <li>Include a single primary action when there's an obvious next step &mdash; clear a filter, create the first record.</li>
+                  <li>Keep the glyph muted and simple; it should support the message, not compete with it.</li>
+                </ul>
+              </div>
+              <div class="sel-usage__card">
+                <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don't</div>
+                <ul class="sel-usage__list">
+                  <li>Don't leave an empty state blank or purely decorative &mdash; it should always explain what happened and what to do next.</li>
+                  <li>Don't use an empty state for a loading moment &mdash; that's a skeleton loader.</li>
+                  <li>Don't stack more than one primary action &mdash; move secondary options into a link or menu.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tabs-panel" data-es-panel="style">
+        <div id="es-reference" class="type-sub spec-panel spec-stack"></div>
+      </div>
+      <div class="tabs-panel" data-es-panel="code">
+        <div id="es-code-playground" class="type-sub spec-panel spec-code-playground"></div>
+        <div id="es-code-tab" class="type-sub spec-panel"></div>
+      </div>
+      <div class="tabs-panel" data-es-panel="changelog" id="es-changelog-panel"></div>
     </section>
     <section class="sec" id="s-tables">
       <div class="sec__head">
@@ -6529,75 +6547,21 @@ body.home .main{max-width:none;margin:0;padding:0}
     <!-- ============================================================
          INPUT OTP
     ============================================================ -->
-    <section class="sec" id="s-input-otp">
+    <section class="sec sec--tabbed" id="s-input-otp">
+      <div class="sec-hero">
       <div class="sec__head">
-        <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Input OTP <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.1</span></h1>
-        <p class="sec__desc">A segmented field for one-time passcodes &mdash; SMS, email or authenticator 2FA. Each digit gets its own box; typing auto-advances, Backspace steps back, and a pasted code fills every box at once.</p>
-      </div>
-      <div class="type-sub">
-        <div class="type-sub__title">Six digit</div>
-        <div class="type-sub__desc">The default for most verification codes. Type a digit to advance; try pasting a 6-digit number into the first box.</div>
-        <div class="sg-stage"><div class="otp" data-otp>
-          <input class="otp__box" inputmode="numeric" maxlength="1" placeholder=" " aria-label="Digit 1">
-          <input class="otp__box" inputmode="numeric" maxlength="1" placeholder=" " aria-label="Digit 2">
-          <input class="otp__box" inputmode="numeric" maxlength="1" placeholder=" " aria-label="Digit 3">
-          <input class="otp__box" inputmode="numeric" maxlength="1" placeholder=" " aria-label="Digit 4">
-          <input class="otp__box" inputmode="numeric" maxlength="1" placeholder=" " aria-label="Digit 5">
-          <input class="otp__box" inputmode="numeric" maxlength="1" placeholder=" " aria-label="Digit 6">
-        </div></div>
-      </div>
-      <div class="type-sub">
-        <div class="type-sub__title">Four digit, grouped</div>
-        <div class="type-sub__desc">A shorter PIN, split into two pairs with a separator for readability.</div>
-        <div class="sg-stage"><div class="otp" data-otp>
-          <input class="otp__box" inputmode="numeric" maxlength="1" placeholder=" " aria-label="Digit 1">
-          <input class="otp__box" inputmode="numeric" maxlength="1" placeholder=" " aria-label="Digit 2">
-          <span class="otp__sep">&ndash;</span>
-          <input class="otp__box" inputmode="numeric" maxlength="1" placeholder=" " aria-label="Digit 3">
-          <input class="otp__box" inputmode="numeric" maxlength="1" placeholder=" " aria-label="Digit 4">
-        </div></div>
-      </div>
-      <div class="type-sub">
-        <div class="type-sub__title">Error</div>
-        <div class="type-sub__desc">On an invalid or expired code, mark the whole group and explain what to do next below it.</div>
-        <div class="sg-stage" style="display:block">
-          <div class="otp otp--error" data-otp>
-            <input class="otp__box" inputmode="numeric" maxlength="1" placeholder=" " value="4" aria-label="Digit 1">
-            <input class="otp__box" inputmode="numeric" maxlength="1" placeholder=" " value="8" aria-label="Digit 2">
-            <input class="otp__box" inputmode="numeric" maxlength="1" placeholder=" " value="1" aria-label="Digit 3">
-            <input class="otp__box" inputmode="numeric" maxlength="1" placeholder=" " value="5" aria-label="Digit 4">
-          </div>
-          <div class="otp-msg otp-msg--err">That code isn&rsquo;t right &mdash; check it and try again.</div>
-        </div>
-      </div>
-      <div class="type-sub">
-        <div class="type-sub__title">When to use</div>
-        <div class="type-sub__desc">Use an OTP field for short, fixed-length codes the user transcribes once &mdash; not for regular data entry.</div>
-        <div class="sel-usage">
-          <div class="sel-usage__card">
-            <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
-            <ul class="sel-usage__list">
-              <li>Use for SMS / email verification and 2FA codes.</li>
-              <li>Support paste and auto-advance so entry is effortless.</li>
-              <li>Use <code>inputmode="numeric"</code> to bring up the number pad on mobile.</li>
-            </ul>
-          </div>
-          <div class="sel-usage__card">
-            <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don&rsquo;t</div>
-            <ul class="sel-usage__list">
-              <li>Don&rsquo;t use segmented boxes for ordinary or variable-length input.</li>
-              <li>Don&rsquo;t use it for long secrets or passwords &mdash; use a password field.</li>
-              <li>Don&rsquo;t block pasting &mdash; it&rsquo;s how most people enter codes.</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <details class="ai-ctx">
+        <h1 class="sec__title">Input OTP</h1>
+        <div class="sec-header-meta">
+          <span class="comp-ver-badge" style="margin-left:0">v1.1.0</span>
+          <details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-input-otp">
 {
-  "status": "static",
+  "status": "js-rendered",
+  "builderFunctions": [
+    "otpBuildHTML",
+    "OTP_LANGS"
+  ],
   "realClasses": [
     ".otp",
     ".otp__box",
@@ -6607,6 +6571,7 @@ body.home .main{max-width:none;margin:0;padding:0}
     ".otp-msg--err"
   ],
   "css": "/* ---- Input OTP ---- */\n.otp { display:inline-flex;gap:9px;align-items:center }\n.otp__box { width:44px;height:52px;text-align:center;font-size:20px;font-weight:700;font-family:inherit;color:var(--chrome-txt);background:var(--color-input-bg);border:1.5px solid var(--color-input-border);border-radius:10px;outline:none;transition:border-color .15s,box-shadow .15s;caret-color:var(--color-input-focus) }\n.otp__box:focus { border-color:var(--color-input-focus);box-shadow:0 0 0 3px var(--color-surface-n2) }\n.otp__box:not(:placeholder-shown) { border-color:var(--color-text-s) }\n.otp__sep { color:var(--chrome-muted);font-size:20px;font-weight:700 }\n.otp--error .otp__box { border-color:var(--color-crit-h) }\n.otp--error .otp__box:focus { box-shadow:0 0 0 3px rgba(235,0,41,.16) }\n.otp-msg { font-size:12px;margin-top:10px }\n.otp-msg--err { color:var(--color-crit-h);font-weight:600 }",
+  "js": "function otpBuildHTML(state){\n  const digits = state.digits;\n  const mid = Math.floor(digits / 2);\n  let boxes = '';\n  for(let i=0;i&lt;digits;i++){\n    if(state.grouped &amp;&amp; i===mid &amp;&amp; i&gt;0) boxes += `&lt;span class=\"otp__sep\"&gt;&amp;ndash;&lt;/span&gt;`;\n    const v = ppgEsc((state.value||'').charAt(i) || '');\n    boxes += `&lt;input class=\"otp__box\" inputmode=\"numeric\" maxlength=\"1\" placeholder=\" \" value=\"${v}\" aria-label=\"Digit ${i+1}\" data-i=\"${i}\"&gt;`;\n  }\n  const groupCls = state.error ? ' otp--error' : '';\n  const msg = state.error ? `&lt;div class=\"otp-msg otp-msg--err\"&gt;That code isn&amp;rsquo;t right &amp;mdash; check it and try again.&lt;/div&gt;` : '';\n  return `&lt;div class=\"otp${groupCls}\" data-otp&gt;${boxes}&lt;/div&gt;${msg}`;\n}\n\nconst OTP_LANGS = [\n  {key:'html',   label:'HTML / CSS', file:'input-otp.html'},\n  {key:'blazor', label:'Blazor',     file:'DsInputOtp.razor'},\n  {key:'tsx',    label:'React TSX',  file:'DsInputOtp.tsx'},\n];",
   "usage": {
     "do": [
       "Use for SMS / email verification and 2FA codes.",
@@ -6614,16 +6579,65 @@ body.home .main{max-width:none;margin:0;padding:0}
       "Use inputmode=\"numeric\" to bring up the number pad on mobile."
     ],
     "dont": [
-      "Don’t use segmented boxes for ordinary or variable-length input.",
-      "Don’t use it for long secrets or passwords — use a password field.",
-      "Don’t block pasting — it’s how most people enter codes."
+      "Don't use segmented boxes for ordinary or variable-length input.",
+      "Don't use it for long secrets or passwords — use a password field.",
+      "Don't block pasting — it's how most people enter codes."
     ]
   },
-  "contentHash": "0772fd06b379d5cf6621a44f50feca0439779b08442c56aa1671e6f5c2e4d3e2",
-  "note": "Markup is fully static; a small generic JS wiring block (anonymous IIFE keyed off [data-otp], no named builder function) auto-advances focus on digit entry, steps back on Backspace/ArrowLeft, moves forward on ArrowRight, and on paste strips non-digits and fans a pasted code out across every box in the group."
+  "contentHash": "e60e78e09226148a0d127f30f3f3986f7a7ae60cc0589f8e5ca90b864dee8049",
+  "note": "otpBuildHTML is the real minimal markup builder driving the Overview playground and Code tab; renderOtp*/otpPg/getOtpCode*/OTP_LANGS are doc-site-only playground plumbing except OTP_LANGS which lists the Code tab's language config. Auto-advance/backspace/arrow/paste wiring is generic input handling, not a markup builder."
 }
   </pre>
 </details>
+        </div>
+      </div>
+      <div class="sec-hero__preview"><div class="mk-otp"><span class="on">4</span><span class="on">2</span><span></span><span></span></div></div>
+      </div>
+      <div class="tabs-list sec-tabs" id="otp-tabs-list">
+        <button type="button" class="tab-item on" data-otp-tab="overview" onclick="otpTabSwitch('overview')"><span class="tab-item__inner"><span class="tab-item__label">Overview</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-otp-tab="style" onclick="otpTabSwitch('style')"><span class="tab-item__inner"><span class="tab-item__label">Style</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-otp-tab="code" onclick="otpTabSwitch('code')"><span class="tab-item__inner"><span class="tab-item__label">Code</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-otp-tab="changelog" onclick="otpTabSwitch('changelog')"><span class="tab-item__inner"><span class="tab-item__label">Changelog</span></span><span class="tab-item__line"></span></button>
+      </div>
+      <div class="tabs-panel on" data-otp-panel="overview">
+        <div id="otp-playground" class="type-sub"></div>
+        <div id="otp-keyvariants" class="type-sub"></div>
+        <div id="otp-insitu" class="type-sub"></div>
+        <div class="type-sub cpg-variants" id="otp-usage">
+          <div class="cpg-section-heading">
+            <div class="cpg-layout__title">Do's and don'ts</div>
+            <div class="cpg-layout__desc">Use an OTP field for short, fixed-length codes the user transcribes once &mdash; not for regular data entry.</div>
+          </div>
+          <div class="cpg-section-block">
+            <div class="sel-usage">
+              <div class="sel-usage__card">
+                <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
+                <ul class="sel-usage__list">
+                  <li>Use for SMS / email verification and 2FA codes.</li>
+                  <li>Support paste and auto-advance so entry is effortless.</li>
+                  <li>Use <code>inputmode="numeric"</code> to bring up the number pad on mobile.</li>
+                </ul>
+              </div>
+              <div class="sel-usage__card">
+                <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don't</div>
+                <ul class="sel-usage__list">
+                  <li>Don't use segmented boxes for ordinary or variable-length input.</li>
+                  <li>Don't use it for long secrets or passwords &mdash; use a password field.</li>
+                  <li>Don't block pasting &mdash; it's how most people enter codes.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tabs-panel" data-otp-panel="style">
+        <div id="otp-reference" class="type-sub spec-panel spec-stack"></div>
+      </div>
+      <div class="tabs-panel" data-otp-panel="code">
+        <div id="otp-code-playground" class="type-sub spec-panel spec-code-playground"></div>
+        <div id="otp-code-tab" class="type-sub spec-panel"></div>
+      </div>
+      <div class="tabs-panel" data-otp-panel="changelog" id="otp-changelog-panel"></div>
     </section>
 
     <!-- ============================================================
@@ -7452,56 +7466,22 @@ body.home .main{max-width:none;margin:0;padding:0}
     <!-- ============================================================
          CAROUSEL
     ============================================================ -->
-    <section class="sec" id="s-carousel">
+    <section class="sec sec--tabbed" id="s-carousel">
+      <div class="sec-hero">
       <div class="sec__head">
-        <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Carousel <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.1</span></h1>
-        <p class="sec__desc">A horizontally scrollable, snapping set of slides for browsing a small collection &mdash; features, images, onboarding steps. Drag/swipe, use the arrows, or jump with the dots.</p>
-      </div>
-      <div class="type-sub">
-        <div class="type-sub__title">Interactive</div>
-        <div class="type-sub__desc">Swipe or use the arrows; the active dot elongates to show position. Slides snap into place.</div>
-        <div class="sg-stage" style="justify-content:center">
-          <div class="car" id="car-demo">
-            <button class="car__arrow car__arrow--prev" type="button" aria-label="Previous slide">&lsaquo;</button>
-            <button class="car__arrow car__arrow--next" type="button" aria-label="Next slide">&rsaquo;</button>
-            <div class="car__track">
-              <div class="car__slide">Instant payouts</div>
-              <div class="car__slide">Tap to pay</div>
-              <div class="car__slide">Fraud protection</div>
-              <div class="car__slide">Same-day settlement</div>
-            </div>
-            <div class="car__dots"></div>
-          </div>
-        </div>
-      </div>
-      <div class="type-sub">
-        <div class="type-sub__title">When to use</div>
-        <div class="type-sub__desc">Carousels suit small, browsable sets where each slide stands alone. They hide content behind interaction, so don&rsquo;t bury anything essential.</div>
-        <div class="sel-usage">
-          <div class="sel-usage__card">
-            <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
-            <ul class="sel-usage__list">
-              <li>Use for a handful of equally-weighted, self-contained slides.</li>
-              <li>Show position with dots and offer arrows plus swipe.</li>
-              <li>Keep each slide understandable on its own.</li>
-            </ul>
-          </div>
-          <div class="sel-usage__card">
-            <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don&rsquo;t</div>
-            <ul class="sel-usage__list">
-              <li>Don&rsquo;t hide critical content or primary actions in later slides.</li>
-              <li>Don&rsquo;t auto-advance without a pause control &mdash; it fights the reader.</li>
-              <li>Don&rsquo;t use a carousel where a simple list would show everything at once.</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <details class="ai-ctx">
+        <h1 class="sec__title">Carousel</h1>
+        <div class="sec-header-meta">
+          <span class="comp-ver-badge" style="margin-left:0">v1.1.0</span>
+          <details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-carousel">
 {
-  "status": "static",
+  "status": "js-rendered",
+  "builderFunctions": [
+    "CAR_SLIDE_LABELS",
+    "CAR_COUNTS",
+    "carBuildHTML"
+  ],
   "realClasses": [
     ".car",
     ".car__arrow",
@@ -7513,6 +7493,7 @@ body.home .main{max-width:none;margin:0;padding:0}
     ".car__dot"
   ],
   "css": "/* ---- Carousel ---- */\n.car { position:relative;width:440px;max-width:100% }\n.car__track { display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;scrollbar-width:none;border-radius:14px }\n.car__track::-webkit-scrollbar { display:none }\n.car__slide { flex:0 0 100%;scroll-snap-align:center;min-height:196px;border-radius:14px;display:flex;align-items:flex-end;padding:20px;color:#fff;font-weight:800;font-size:17px;background:linear-gradient(135deg,var(--prim-grey-600),var(--prim-grey-1100)) }\n.car__slide:nth-child(2) { background:linear-gradient(135deg,var(--prim-gb-300),var(--prim-gb-700)) }\n.car__slide:nth-child(3) { background:linear-gradient(135deg,var(--prim-grey-800),var(--prim-dg-700)) }\n.car__slide:nth-child(4) { background:linear-gradient(135deg,var(--prim-gb-200),var(--prim-gb-600)) }\n.car__arrow { position:absolute;top:98px;transform:translateY(-50%);width:34px;height:34px;border-radius:50%;background:var(--color-btn-s-bg);color:var(--color-btn-s-txt);border:0;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;font-family:inherit;box-shadow:0 2px 10px rgba(0,0,0,.25);z-index:2;transition:opacity .15s }\n.car__arrow:hover { opacity:.85 }\n.car__arrow--prev { left:10px }\n.car__arrow--next { right:10px }\n.car__dots { display:flex;gap:7px;justify-content:center;margin-top:14px }\n.car__dot { width:7px;height:7px;border-radius:50%;background:var(--color-surface-n3);border:0;cursor:pointer;padding:0;transition:width .2s,background .2s }\n.car__dot.is-active { background:var(--color-surface-inverse);width:20px;border-radius:4px }",
+  "js": "const CAR_SLIDE_LABELS = ['Instant payouts', 'Tap to pay', 'Fraud protection', 'Same-day settlement', 'Zero setup fees'];\n\nconst CAR_COUNTS = [2, 3, 4, 5];\n\nfunction carBuildHTML(state, idAttr){\n  const labels = CAR_SLIDE_LABELS.slice(0, state.count);\n  const arrowsHTML = state.arrows\n    ? `&lt;button class=\"car__arrow car__arrow--prev\" type=\"button\" aria-label=\"Previous slide\"&gt;&amp;lsaquo;&lt;/button&gt;&lt;button class=\"car__arrow car__arrow--next\" type=\"button\" aria-label=\"Next slide\"&gt;&amp;rsaquo;&lt;/button&gt;`\n    : '';\n  const slidesHTML = labels.map(l=&gt;`&lt;div class=\"car__slide\"&gt;${l}&lt;/div&gt;`).join('');\n  let dotsHTML = '';\n  if(state.dots){\n    let dh = '';\n    for(let i=0;i&lt;labels.length;i++) dh += `&lt;button class=\"car__dot${i===state.active?' is-active':''}\" data-i=\"${i}\" aria-label=\"Go to slide ${i+1}\"&gt;&lt;/button&gt;`;\n    dotsHTML = `&lt;div class=\"car__dots\"&gt;${dh}&lt;/div&gt;`;\n  }\n  return `&lt;div class=\"car\"${idAttr ? ` id=\"${idAttr}\"` : ''}&gt;${arrowsHTML}&lt;div class=\"car__track\"&gt;${slidesHTML}&lt;/div&gt;${dotsHTML}&lt;/div&gt;`;\n}",
   "usage": {
     "do": [
       "Use for a handful of equally-weighted, self-contained slides.",
@@ -7520,16 +7501,65 @@ body.home .main{max-width:none;margin:0;padding:0}
       "Keep each slide understandable on its own."
     ],
     "dont": [
-      "Don’t hide critical content or primary actions in later slides.",
-      "Don’t auto-advance without a pause control — it fights the reader.",
-      "Don’t use a carousel where a simple list would show everything at once."
+      "Don't hide critical content or primary actions in later slides.",
+      "Don't auto-advance without a pause control — it fights the reader.",
+      "Don't use a carousel where a simple list would show everything at once."
     ]
   },
-  "contentHash": "7fd6b022053a4c68646b11cec1cc8b6a31805b7d23b459a219b3aa893a14a5b7",
-  "note": "Slide/track/arrow markup is static; only the .car__dot buttons are generated by an inline string-concatenation loop inside an anonymous IIFE (no separately named builder function/const to extract — update()/go() just toggle .is-active and scroll, they don't build markup)."
+  "contentHash": "a31442e88afd2658564941d8897455f2e4edfde268aa969eaba8ff5adc6e45e2",
+  "note": "carBuildHTML is the canonical real-markup builder (count/arrows/dots/active -&gt; .car HTML string); carState/carAttach/renderCarPlayground/renderCarKeyVariants/renderCarInSitu/renderCarReference/getCarCode*/renderCarCodeTab/carTabSwitch are doc-site-only playground plumbing, excluded. Do/Dont guidance is the original 'When to use' copy, unchanged."
 }
   </pre>
 </details>
+        </div>
+      </div>
+      <div class="sec-hero__preview"><div style="display:flex;flex-direction:column;align-items:center;gap:10px"><div style="display:flex;gap:8px;align-items:center"><span class="mk-sq" style="width:32px;height:52px;opacity:.4"></span><span class="mk-sq" style="width:64px;height:60px;background:var(--color-brand)"></span><span class="mk-sq" style="width:32px;height:52px;opacity:.4"></span></div><div style="display:flex;gap:5px"><span class="mk-dot"></span><span class="mk-dot" style="background:var(--chrome-border)"></span><span class="mk-dot" style="background:var(--chrome-border)"></span></div></div></div>
+      </div>
+      <div class="tabs-list sec-tabs" id="car-tabs-list">
+        <button type="button" class="tab-item on" data-car-tab="overview" onclick="carTabSwitch('overview')"><span class="tab-item__inner"><span class="tab-item__label">Overview</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-car-tab="style" onclick="carTabSwitch('style')"><span class="tab-item__inner"><span class="tab-item__label">Style</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-car-tab="code" onclick="carTabSwitch('code')"><span class="tab-item__inner"><span class="tab-item__label">Code</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-car-tab="changelog" onclick="carTabSwitch('changelog')"><span class="tab-item__inner"><span class="tab-item__label">Changelog</span></span><span class="tab-item__line"></span></button>
+      </div>
+      <div class="tabs-panel on" data-car-panel="overview">
+        <div id="car-playground" class="type-sub"></div>
+        <div id="car-keyvariants" class="type-sub"></div>
+        <div id="car-insitu" class="type-sub"></div>
+        <div class="type-sub cpg-variants" id="car-usage">
+          <div class="cpg-section-heading">
+            <div class="cpg-layout__title">Do's and don'ts</div>
+            <div class="cpg-layout__desc">Carousels suit small, browsable sets where each slide stands alone. They hide content behind interaction, so don't bury anything essential.</div>
+          </div>
+          <div class="cpg-section-block">
+            <div class="sel-usage">
+              <div class="sel-usage__card">
+                <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
+                <ul class="sel-usage__list">
+                  <li>Use for a handful of equally-weighted, self-contained slides.</li>
+                  <li>Show position with dots and offer arrows plus swipe.</li>
+                  <li>Keep each slide understandable on its own.</li>
+                </ul>
+              </div>
+              <div class="sel-usage__card">
+                <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don't</div>
+                <ul class="sel-usage__list">
+                  <li>Don't hide critical content or primary actions in later slides.</li>
+                  <li>Don't auto-advance without a pause control &mdash; it fights the reader.</li>
+                  <li>Don't use a carousel where a simple list would show everything at once.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tabs-panel" data-car-panel="style">
+        <div id="car-reference" class="type-sub spec-panel spec-stack"></div>
+      </div>
+      <div class="tabs-panel" data-car-panel="code">
+        <div id="car-code-playground" class="type-sub spec-panel spec-code-playground"></div>
+        <div id="car-code-tab" class="type-sub spec-panel"></div>
+      </div>
+      <div class="tabs-panel" data-car-panel="changelog" id="car-changelog-panel"></div>
     </section>
 
     <!-- @@SHADCN_SECTIONS@@ -->
@@ -8083,6 +8113,9 @@ function toggleTheme() {
   try { if(typeof renderCardPages==='function' && document.getElementById('cbasic-playground')) renderCardPages(); } catch(e){}
   // Same one-call pattern for the five Charts sub-pages.
   try { if(typeof renderChartPages==='function' && document.getElementById('cbar-playground')) renderChartPages(); } catch(e){}
+  try { if(typeof renderCarPages==='function' && document.getElementById('car-playground')) renderCarPages(); } catch(e){}
+  try { if(typeof renderEsPages==='function' && document.getElementById('es-playground')) renderEsPages(); } catch(e){}
+  try { if(typeof renderOtpPages==='function' && document.getElementById('otp-playground')) renderOtpPages(); } catch(e){}
 }
 
 // Colour view switch (prim / sem)
@@ -10727,11 +10760,81 @@ try { renderPillVariants(); } catch(e){ console.error('pill-variants',e); }
 try { renderPillInSitu(); } catch(e){ console.error('pill-insitu',e); }
 try { renderPillReference(); } catch(e){ console.error('pill-reference',e); }
 
-function pillTabSwitch(tab){
-  const nav = document.getElementById('pill-tabs-list');
+/* Generic .sec--tabbed tab-switch helper — toggles the "on" class on the
+   matching tab-item in `navId`'s tab strip and the matching panel (found via
+   `panelAttr`) inside `secId`. Any tabbed section can call this instead of
+   hardcoding its own section id/attribute names, as Pills' pillTabSwitch
+   used to (below is now a thin delegation to this). */
+function secTabSwitch(secId, navId, tabAttr, panelAttr, tab){
+  const nav = document.getElementById(navId);
   if(!nav) return;
-  nav.querySelectorAll('.tab-item').forEach(btn=>btn.classList.toggle('on', btn.getAttribute('data-pill-tab')===tab));
-  document.querySelectorAll('#s-chips .tabs-panel[data-pill-panel]').forEach(p=>p.classList.toggle('on', p.getAttribute('data-pill-panel')===tab));
+  nav.querySelectorAll('.tab-item').forEach(btn=>btn.classList.toggle('on', btn.getAttribute(tabAttr)===tab));
+  document.querySelectorAll(`#${secId} .tabs-panel[${panelAttr}]`).forEach(p=>p.classList.toggle('on', p.getAttribute(panelAttr)===tab));
+}
+
+/* Generic code-tab renderer for a segmented HTML/CSS · Blazor · React TSX
+   (or however many) language switcher, driven by a small config object a
+   component's own LANGS array + getCode()/setLang() functions plug into.
+   Extracted so Empty State and Input OTP (later passes) can reuse it
+   instead of each hand-copying renderPillCodeTab. cfg shape:
+   { rootId, idPrefix, langs:[{key,label,file}], getCurrentLang(), blockId,
+     setLangFnName, keydownFnName, copyFnName, title, desc } */
+function renderLangCodeTab(cfg){
+  const root = document.getElementById(cfg.rootId);
+  if(!root) return;
+  const cur = cfg.getCurrentLang();
+  root.innerHTML = `
+    <div class="type-sub__title">${cfg.title || 'Code'}</div>
+    <div class="type-sub__desc">${cfg.desc || 'Live snippet matching the current Playground configuration &mdash; switch to Overview to change it.'}</div>
+    <div class="cpg-section-outline">
+      <div class="code-panel code-panel--bare open">
+        <div class="code-panel__head">
+          <div class="code-seg" role="tablist" aria-label="Code language" onkeydown="${cfg.keydownFnName}(event)">
+            ${cfg.langs.map(l=>`<button type="button" role="tab" class="code-seg__btn" id="${cfg.idPrefix}-lang-${l.key}" data-lang="${l.key}" aria-selected="${cur===l.key?'true':'false'}" aria-controls="${cfg.blockId}" tabindex="${cur===l.key?'0':'-1'}" onclick="${cfg.setLangFnName}('${l.key}')">${l.label}</button>`).join('')}
+          </div>
+          <span class="code-lang-file" id="${cfg.idPrefix}-lang-file">${(cfg.langs.find(l=>l.key===cur)||cfg.langs[0]).file}</span>
+          <button class="code-copy-btn" onclick="${cfg.copyFnName}()" id="${cfg.idPrefix}-copy-btn">Copy</button>
+        </div>
+        <div class="code-body"><div class="code-block" id="${cfg.blockId}" role="tabpanel" aria-live="polite"></div></div>
+      </div>
+    </div>`;
+}
+
+/* Generic set-language + arrow-key (WAI-ARIA tablist) handling for the
+   segmented switcher rendered by renderLangCodeTab above. cfg additionally
+   needs { setLang(lang), getCode() }. A component's own setXLang(lang) /
+   xLangKeydown(e) stay as thin named wrappers (onclick/onkeydown need a
+   global function name), calling these with their own cfg + lang/event. */
+function langSwitchSet(cfg, lang){
+  if(!cfg.langs.some(l=>l.key===lang)) return;
+  cfg.setLang(lang);
+  document.querySelectorAll(`#${cfg.rootId} .code-seg__btn`).forEach(b=>{
+    const on = b.dataset.lang===lang;
+    b.setAttribute('aria-selected', on ? 'true' : 'false');
+    b.setAttribute('tabindex', on ? '0' : '-1');
+  });
+  const file = document.getElementById(`${cfg.idPrefix}-lang-file`);
+  const meta = cfg.langs.find(l=>l.key===lang);
+  if(file && meta) file.textContent = meta.file;
+  const block = document.getElementById(cfg.blockId);
+  if(block) block.innerHTML = cfg.getCode();
+}
+function langSwitchKeydown(cfg, e){
+  const i = cfg.langs.findIndex(l=>l.key===cfg.getCurrentLang());
+  let n = i;
+  if(e.key==='ArrowLeft')       n = (i - 1 + cfg.langs.length) % cfg.langs.length;
+  else if(e.key==='ArrowRight') n = (i + 1) % cfg.langs.length;
+  else if(e.key==='Home')       n = 0;
+  else if(e.key==='End')        n = cfg.langs.length - 1;
+  else return;
+  e.preventDefault();
+  langSwitchSet(cfg, cfg.langs[n].key);
+  const btn = document.getElementById(`${cfg.idPrefix}-lang-${cfg.langs[n].key}`);
+  if(btn) btn.focus();
+}
+
+function pillTabSwitch(tab){
+  secTabSwitch('s-chips', 'pill-tabs-list', 'data-pill-tab', 'data-pill-panel', tab);
 }
 
 /* ============================================================
@@ -14198,12 +14301,27 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.72.0';
+const SYSTEM_VERSION = '1.74.0';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.74.0', date:'2026-08-13', author:'Helen', title:'Empty State and Input OTP rebuilt as tabbed pages (Overview / Style / Code / Changelog)', changes:[
+        ['changed','Empty State (#s-empty-state) and Input OTP (#s-input-otp) restructured from flat .sec pages into .sec--tabbed with a .sec-hero (title + version badge + AI-context tab + live preview) and Overview / Style / Code / Changelog tabs, matching Pills/Carousel'],
+        ['added','Empty State playground (esState: icon on/off, title text, description text, action on/off) rendered into two synced mounts via esBuildHTML(); Key variants (with/without icon, with/without action) and three in-context mockups (empty inbox, empty search results, empty table) via renderEsKeyVariants()/renderEsInSitu()'],
+        ['added','Input OTP playground (otpPg: digit count 4/6, grouped separator on/off, error state on/off, typed value) rendered into two synced mounts via otpBuildHTML(); Key variants (4-digit / 6-digit / grouped / error) and two in-context mockups (login 2FA, payment verification) via renderOtpKeyVariants()/renderOtpInSitu()'],
+        ['added','Style tab Anatomy + Tokens tables for both components (Empty State: icon/title/desc/action parts and --chrome-border/--chrome-nav/--chrome-muted/--chrome-txt tokens; Input OTP: box/separator/error-message parts and --color-input-bg/--color-input-border/--color-input-focus/--color-crit-h tokens), plus Code tabs with HTML/CSS · Blazor · React TSX segmented switchers (DsEmptyState.*, DsInputOtp.*) built on the shared renderLangCodeTab()/langSwitchSet()/langSwitchKeydown() helpers'],
+        ['changed','#s-empty-state and #s-input-otp added to the .sec--tabbed changelog relocation list and to toggleTheme()\'s re-render list (renderEsPages/renderOtpPages), matching every other tabbed component page'],
+      ]},
+      {version:'1.73.0', date:'2026-08-13', author:'Helen', title:'Carousel rebuilt as a tabbed page (Overview / Style / Code / Changelog)', changes:[
+        ['changed','Carousel (#s-carousel) restructured from a flat .sec into .sec--tabbed with a .sec-hero (title + version badge + AI-context tab + live preview) and Overview / Style / Code / Changelog tabs, matching Pills/Cards/Buttons/Navigation'],
+        ['added','A "Try the component" playground (carState: slide count 2–5, arrows on/off, dots on/off, active-slide jump) rendered into two synced mounts (#car-playground on Overview, #car-code-playground on Code) sharing one carState object, plus a Style-tab Anatomy (Arrow / Track / Slide / Dots) and a Tokens table for the real var(--color-btn-s-bg/--color-btn-s-txt/--color-surface-n3/--color-surface-inverse) custom props .car reads for colour — no size table, since .car has only one fixed size'],
+        ['added','Key variants (Arrows+Dots / Dots only / Arrows only) and three in-context mockups (promo banner, product gallery, onboarding walkthrough) via new renderCarKeyVariants()/renderCarInSitu(), same pattern as Pills\' key-variants/in-context sections'],
+        ['added','Code tab with an HTML/CSS · Blazor (DsCarousel.razor) · React TSX (DsCarousel.tsx) segmented switcher, driven by carState, built on two new generic helpers — renderLangCodeTab()/langSwitchSet()/langSwitchKeydown() — extracted from Pills\' renderPillCodeTab so future components (Empty State, Input OTP) can plug in their own LANGS config instead of copying it'],
+        ['added','secTabSwitch(secId, navId, tabAttr, panelAttr, tab) — a generic .sec--tabbed tab-switch helper extracted from pillTabSwitch (now a thin delegation to it), so new tabbed sections no longer need to hardcode their own scope'],
+        ['changed','#s-carousel added to the .sec--tabbed changelog relocation list (car-changelog-panel) and to toggleTheme()\'s re-render list (renderCarPages), matching every other tabbed component page'],
+      ]},
       {version:'1.72.0', date:'2026-08-12', author:'Helen', title:'Removed Command, Context Menu and Keyboard Shortcuts pages', changes:[
         ['removed','Command palette component (s-command) — nav entry, .cmd/.cmd__*/.cmd__glabel/.cmd__item/.cmd__ico/.cmd__empty CSS, the #cmd-demo search/filter/keyboard-nav IIFE, its sidebar mockup and its CHANGELOG.components entry'],
         ['removed','Context Menu component (s-context-menu) — nav entry, .ctx-target/.ctx-menu/.ctx-item/.ctx-sep CSS, the #ctx-target/#ctx-menu right-click positioning IIFE, its sidebar mockup and its CHANGELOG.components entry'],
@@ -15454,7 +15572,15 @@ const CHANGELOG = {
         ['added','Horizontal, vertical and labelled hairline dividers on the border token'],
       ]},
     ]},
-    {secId:'s-carousel', name:'Carousel', version:'1.0.1', entries:[
+    {secId:'s-carousel', name:'Carousel', version:'1.1.0', entries:[
+      {version:'1.1.0', date:'2026-08-13', author:'Helen', title:'Rebuilt as a tabbed page with a real Playground, Style and Code tabs', changes:[
+        ['changed','Page restructured from a flat .sec (a single static demo + "When to use" list) into .sec--tabbed with Overview / Style / Code / Changelog tabs and a .sec-hero header (title, version badge, AI-context tab, live mini preview)'],
+        ['added','carState-driven Playground (slide count 2–5, arrows on/off, dots on/off, active-slide control) rendered into synced Overview and Code-tab mounts via renderCarPlayground()/carSet(); the real .car/.car__arrow/.car__track/.car__slide/.car__dots markup is now built by one shared carBuildHTML() instead of a fixed 4-slide static demo'],
+        ['added','Key variants grid (Arrows+Dots, Dots only, Arrows only) and three in-context mockups (promo banner carousel, product image gallery, onboarding walkthrough) on the Overview tab'],
+        ['added','Style tab: Anatomy (Arrow / Track / Slide / Dots parts) and a Tokens table listing the real var(--color-btn-s-bg/--color-btn-s-txt/--color-surface-n3/--color-surface-inverse) custom properties .car reads; no size table added, since .car has only one fixed width/height'],
+        ['added','Code tab with an HTML/CSS · Blazor · React TSX segmented switcher (getCarCodeHTML/getCarCodeBlazor/getCarCodeTSX), synced to carState, built on the new generic renderLangCodeTab/langSwitchSet/langSwitchKeydown helpers shared with future tabbed components'],
+        ['removed','The old standalone #car-demo IIFE with hand-authored 4-slide static markup — superseded by carState/carBuildHTML/carAttach'],
+      ]},
       {version:'1.0.1', date:'2026-07-29', author:'Mo', title:'AI context tab added', changes:[
         ['added','AI context tab documenting the real .car/.car__arrow/.car__track/.car__slide/.car__dots/.car__dot markup, plus its existing "When to use" Do/Dont guidance (3 do / 3 dont); notes the dot buttons are generated by an inline loop with no separately named builder to extract'],
       ]},
@@ -15646,7 +15772,16 @@ const CHANGELOG = {
         ['added','Click-anchored floating panel with interactive contents; outside-click and Escape to dismiss'],
       ]},
     ]},
-    {secId:'s-input-otp', name:'Input OTP', version:'1.0.1', entries:[
+    {secId:'s-input-otp', name:'Input OTP', version:'1.1.0', entries:[
+      {version:'1.1.0', date:'2026-08-13', author:'Helen', title:'Rebuilt as a tabbed page with a real Playground, Style and Code tabs', changes:[
+        ['changed','Page restructured from a flat .sec (three static demos + "When to use" list) into .sec--tabbed with Overview / Style / Code / Changelog tabs and a .sec-hero header (title, version badge, AI-context tab, live mini preview)'],
+        ['added','otpPg-driven Playground (digit count 4/6, grouped separator on/off, error state on/off, a live value input reflecting typed digits) rendered into synced Overview and Code-tab mounts via renderOtpPlayground()/otpSet()/otpSetValue(); the real .otp/.otp__box/.otp__sep/.otp--error/.otp-msg markup is now built by one shared otpBuildHTML() instead of three fixed static demos'],
+        ['added','otpAttach() generalises the original static auto-advance/backspace/arrow-key/paste-to-fill wiring to run against otpPg instead of a fixed box count, keeping otpPg.value (and the Code tab / value input) in sync as the user types'],
+        ['added','Key variants grid (6-digit, 4-digit, Grouped, Error) and three in-context mockups (login 2FA, payment verification PIN, expired-code error) on the Overview tab'],
+        ['added','Style tab: Anatomy (Box / Separator / Error message parts) and a Tokens table listing the real var(--color-input-bg/--color-input-border/--color-input-focus/--color-surface-n2/--color-text-s/--color-crit-h/--chrome-txt/--chrome-muted) custom properties .otp reads; no size table added, since .otp__box has one fixed size across 4- and 6-digit layouts'],
+        ['added','Code tab with an HTML/CSS · Blazor (DsInputOtp.razor) · React TSX (DsInputOtp.tsx) segmented switcher, synced to otpPg, built on the shared generic renderLangCodeTab/langSwitchSet/langSwitchKeydown helpers introduced for Carousel'],
+        ['removed','The three old standalone static demos (six digit / four digit grouped / error) — superseded by otpPg/otpBuildHTML/otpAttach'],
+      ]},
       {version:'1.0.1', date:'2026-08-03', author:'Mo', title:'AI context tab added', changes:[
         ['added','AI context tab documenting the real, fully static .otp/.otp__*/.otp-msg markup, plus its existing "When to use" Do/Dont guidance (3 do / 3 dont); notes the auto-advance/paste JS is generic input wiring, not a markup builder'],
       ]},
@@ -16473,7 +16608,15 @@ const CHANGELOG = {
         ['added','Empty state — muted glyph, plain-language explanation and a single primary action'],
       ]},
     ]},
-    {secId:'s-empty-state', name:'Empty State', version:'1.0.0', entries:[
+    {secId:'s-empty-state', name:'Empty State', version:'1.1.0', entries:[
+      {version:'1.1.0', date:'2026-08-13', author:'Helen', title:'Rebuilt as a tabbed page with a real Playground, Style and Code tabs', changes:[
+        ['changed','Page restructured from a flat .sec (a single static card + "When to use" list) into .sec--tabbed with Overview / Style / Code / Changelog tabs and a .sec-hero header (title, version badge, AI-context tab, live mini preview)'],
+        ['added','esState-driven Playground (icon on/off, action on/off, editable title and description text inputs) rendered into synced Overview and Code-tab mounts via renderEsPlayground()/esSet()/esSetField(); the real .dd-empty/.dd-empty__icon/__title/__desc/__action markup is now built by one shared esBuildHTML() instead of a fixed static card'],
+        ['added','Key variants grid (Icon + Action, Icon only, Action only, Text only) and three in-context mockups (empty inbox, empty search results, empty table) on the Overview tab'],
+        ['added','Style tab: Anatomy (Icon / Title / Description / Action parts) and a Tokens table listing the real var(--chrome-border/--chrome-nav/--chrome-muted/--chrome-txt) custom properties .dd-empty reads; no size table added, since .dd-empty has one fixed size'],
+        ['added','Code tab with an HTML/CSS · Blazor (DsEmptyState.razor) · React TSX (DsEmptyState.tsx) segmented switcher, synced to esState, built on the shared generic renderLangCodeTab/langSwitchSet/langSwitchKeydown helpers introduced for Carousel'],
+        ['removed','The old standalone static .dd-empty demo card — superseded by esState/esBuildHTML'],
+      ]},
       {version:'1.0.0', date:'2026-08-04', author:'Mo', title:'Initial release — split out of Lists into its own section', changes:[
         ['added','Empty State section (s-empty-state) — a dashed-border card with a muted glyph, title, short explanation and one primary action, plus When to use guidance'],
       ]},
@@ -21415,21 +21558,1074 @@ function dpTabSwitch(tab){
   document.querySelectorAll('#s-calendar .tabs-panel[data-dp-panel]').forEach(p=>p.classList.toggle('on', p.getAttribute('data-dp-panel')===tab));
 }
 
-/* Carousel */
-(function(){
-  var car=document.getElementById('car-demo'); if(!car) return;
-  var track=car.querySelector('.car__track'), slides=car.querySelectorAll('.car__slide'), dotsWrap=car.querySelector('.car__dots');
-  var n=slides.length, idx=0, GAP=14, dh='';
-  for(var i=0;i<n;i++) dh+='<button class="car__dot'+(i===0?' is-active':'')+'" data-i="'+i+'" aria-label="Go to slide '+(i+1)+'"></button>';
-  dotsWrap.innerHTML=dh;
-  var dots=dotsWrap.querySelectorAll('.car__dot');
-  function update(){ Array.prototype.forEach.call(dots,function(d,i){ d.classList.toggle('is-active',i===idx); }); }
-  function go(i){ idx=Math.max(0,Math.min(n-1,i)); track.scrollTo({left:idx*(track.clientWidth+GAP),behavior:'smooth'}); update(); }
-  car.querySelector('.car__arrow--prev').addEventListener('click',function(){ go(idx-1); });
-  car.querySelector('.car__arrow--next').addEventListener('click',function(){ go(idx+1); });
-  Array.prototype.forEach.call(dots,function(d){ d.addEventListener('click',function(){ go(+d.getAttribute('data-i')); }); });
-  var tmr; track.addEventListener('scroll',function(){ clearTimeout(tmr); tmr=setTimeout(function(){ var w=track.clientWidth+GAP; if(w>1){ idx=Math.round(track.scrollLeft/w); update(); } },110); });
-})();
+/* ============================================================
+   CAROUSEL
+   .sec--tabbed page, same shape as Pills: a shared state object
+   (carState) drives two synced playground mounts, a Style tab
+   built from the same real .car markup, and a Code tab using the
+   generic renderLangCodeTab/langSwitchSet/langSwitchKeydown helpers.
+============================================================ */
+const CAR_SLIDE_LABELS = ['Instant payouts', 'Tap to pay', 'Fraud protection', 'Same-day settlement', 'Zero setup fees'];
+const CAR_COUNTS = [2, 3, 4, 5];
+
+let carState = { count: 4, arrows: true, dots: true, active: 0, theme: 'light' };
+
+/* Canonical real-markup builder — same .car/.car__arrow/.car__track/
+   .car__slide/.car__dots/.car__dot classes as the original static demo,
+   just parameterised over slide count / arrows / dots / active index so
+   the Playground, Style-tab anatomy and Code tab all share one source. */
+function carBuildHTML(state, idAttr){
+  const labels = CAR_SLIDE_LABELS.slice(0, state.count);
+  const arrowsHTML = state.arrows
+    ? `<button class="car__arrow car__arrow--prev" type="button" aria-label="Previous slide">&lsaquo;</button><button class="car__arrow car__arrow--next" type="button" aria-label="Next slide">&rsaquo;</button>`
+    : '';
+  const slidesHTML = labels.map(l=>`<div class="car__slide">${l}</div>`).join('');
+  let dotsHTML = '';
+  if(state.dots){
+    let dh = '';
+    for(let i=0;i<labels.length;i++) dh += `<button class="car__dot${i===state.active?' is-active':''}" data-i="${i}" aria-label="Go to slide ${i+1}"></button>`;
+    dotsHTML = `<div class="car__dots">${dh}</div>`;
+  }
+  return `<div class="car"${idAttr ? ` id="${idAttr}"` : ''}>${arrowsHTML}<div class="car__track">${slidesHTML}</div>${dotsHTML}</div>`;
+}
+
+/* Wires up drag/swipe scroll-snap, arrow clicks and dot clicks on a freshly
+   rendered .car root — mirrors the original static demo's IIFE, generalised
+   to run against carState instead of a fixed 4-slide DOM. */
+function carAttach(root){
+  const car = root.querySelector('.car');
+  if(!car) return;
+  const track = car.querySelector('.car__track');
+  const dots = car.querySelectorAll('.car__dot');
+  const GAP = 14;
+  const n = car.querySelectorAll('.car__slide').length;
+  function go(i){
+    carState.active = Math.max(0, Math.min(n-1, i));
+    track.scrollTo({left: carState.active*(track.clientWidth+GAP), behavior:'smooth'});
+    carRefresh();
+  }
+  const prev = car.querySelector('.car__arrow--prev'), next = car.querySelector('.car__arrow--next');
+  if(prev) prev.onclick = ()=>go(carState.active-1);
+  if(next) next.onclick = ()=>go(carState.active+1);
+  dots.forEach(d=>{ d.onclick = ()=>go(+d.getAttribute('data-i')); });
+  let tmr;
+  track.addEventListener('scroll', ()=>{
+    clearTimeout(tmr);
+    tmr = setTimeout(()=>{
+      const w = track.clientWidth+GAP;
+      if(w>1){ carState.active = Math.round(track.scrollLeft/w); carSyncDots(); }
+    }, 110);
+  });
+}
+function carSyncDots(){
+  document.querySelectorAll('.car-stage-el .car__dot').forEach(d=>{
+    d.classList.toggle('is-active', +d.getAttribute('data-i')===carState.active);
+  });
+}
+
+const CAR_PLAYGROUND_MOUNTS = [
+  {rootId:'car-playground', idSuffix:'', wrap:true, title:'Try the component', desc:'Adjust the filters to test component states.', headingAbove:'Use a carousel to browse a small, self-contained set of slides — features, promos, or onboarding steps.'},
+  {rootId:'car-code-playground', idSuffix:'-code', style:'code', title:'Playground', desc:'Live demo of the component.'},
+];
+
+function renderCarPlayground(){
+  carState.theme = currentTheme();
+  const sbg = stageBg(carState.theme);
+
+  const countBtns = CAR_COUNTS.map(c=>`<button class="btn-pg__pill${carState.count===c?' on':''}" onclick="carSet('count',${c})">${c} slides</button>`).join('');
+  const arrowBtns = ['off','on'].map(x=>`<button class="btn-pg__pill${(carState.arrows?(x==='on'):(x==='off'))?' on':''}" onclick="carSet('arrows','${x}')">${x==='on'?'Arrows on':'Arrows off'}</button>`).join('');
+  const dotBtns = ['off','on'].map(x=>`<button class="btn-pg__pill${(carState.dots?(x==='on'):(x==='off'))?' on':''}" onclick="carSet('dots','${x}')">${x==='on'?'Dots on':'Dots off'}</button>`).join('');
+  const activeBtns = Array.from({length: carState.count}).map((_,i)=>`<button class="btn-pg__pill${carState.active===i?' on':''}" onclick="carSet('active',${i})">Slide ${i+1}</button>`).join('');
+
+  CAR_PLAYGROUND_MOUNTS.forEach(mount=>{
+    const root = document.getElementById(mount.rootId);
+    if(!root) return;
+    const s = mount.idSuffix;
+    const demo = `
+      <div class="btn-pg">
+        <div class="btn-pg__stage car-stage-el" id="car-stage${s}" style="background:${sbg}">${carBuildHTML(carState, 'car-demo'+s)}</div>
+        <div class="btn-pg__ctrls">
+          <div class="btn-pg__group"><span class="btn-pg__clabel">Slide count</span><div class="btn-pg__pill-row">${countBtns}</div></div>
+          <div class="btn-pg__group"><span class="btn-pg__clabel">Arrows</span><div class="btn-pg__pill-row">${arrowBtns}</div></div>
+          <div class="btn-pg__group"><span class="btn-pg__clabel">Dots</span><div class="btn-pg__pill-row">${dotBtns}</div></div>
+          <div class="btn-pg__group"><span class="btn-pg__clabel">Active slide</span><div class="btn-pg__pill-row">${activeBtns}</div></div>
+        </div>
+      </div>`;
+
+    if(mount.style==='code'){
+      root.innerHTML = `
+        <div class="type-sub__title">${mount.title}</div>
+        <div class="type-sub__desc">${mount.desc}</div>
+        <div class="cpg-section-outline">${demo}</div>`;
+    } else {
+      const inner = `
+        <div class="cpg-layout">
+          <div class="cpg-layout__intro">
+            <span class="cpg-cursor-icon">${CPG_CURSOR_ICON_SVG}</span>
+            <div class="cpg-layout__title">${mount.title}</div>
+            <div class="cpg-layout__desc">${mount.desc}</div>
+          </div>
+          <div class="cpg-layout__demo">${demo}</div>
+        </div>`;
+      root.innerHTML = `<div class="cpg-overview-heading"><span class="cpg-overview-heading__icon">${CPG_INFO_ICON_SVG}</span><span>${mount.headingAbove}</span></div><div class="cpg-section-block">${inner}</div>`;
+    }
+    carAttach(root);
+  });
+}
+function carRefresh(){ renderCarPlayground(); const block = document.getElementById('car-code-block'); if(block) block.innerHTML = getCarCode(); }
+function carSet(key, val){
+  if(key==='arrows') carState.arrows = (val==='on');
+  else if(key==='dots') carState.dots = (val==='on');
+  else if(key==='count'){ carState.count = val; if(carState.active > val-1) carState.active = 0; }
+  else carState[key] = val;
+  renderCarPlayground();
+  const block = document.getElementById('car-code-block');
+  if(block) block.innerHTML = getCarCode();
+}
+
+const CAR_KEY_VARIANTS = [
+  {arrows:true,  dots:true,  name:'Arrows + Dots', use:'Full navigation — the default for most carousels.'},
+  {arrows:false, dots:true,  name:'Dots only',      use:'Swipe/touch-first surfaces where arrows would crowd the layout.'},
+  {arrows:true,  dots:false, name:'Arrows only',    use:'Longer sets where a dot per slide would get unreadable.'},
+];
+function renderCarKeyVariants(){
+  const root = document.getElementById('car-keyvariants');
+  if(!root) return;
+  const theme = currentTheme(), sbg = stageBg(theme);
+  const cells = CAR_KEY_VARIANTS.map(v=>`
+    <div class="spec-cell">
+      <div class="spec-cell__stage" style="background:${sbg}">${carBuildHTML({count:3, arrows:v.arrows, dots:v.dots, active:0})}</div>
+      <div class="spec-cell__name">${v.name}</div>
+      <div class="spec-cell__desc">${v.use}</div>
+    </div>`).join('');
+  root.innerHTML = `
+    <div class="cpg-section-heading">
+      <div class="cpg-layout__title">Key variants</div>
+      <div class="cpg-layout__desc">Arrows and dots are independent — turn either off for a lighter control set.</div>
+    </div>
+    <div class="cpg-section-block">
+      <div class="spec-grid">${cells}</div>
+    </div>`;
+}
+
+function renderCarInSitu(){
+  const root = document.getElementById('car-insitu');
+  if(!root) return;
+  const theme = currentTheme(), sbg = stageBg(theme);
+
+  const promoMock = `
+    <div class="spec-mock__stage" style="background:${sbg}">${carBuildHTML({count:3, arrows:true, dots:true, active:0})}</div>
+    <div class="spec-mock__cap"><b>Promo banner</b>Rotating offers at the top of a home feed.</div>`;
+
+  const galleryMock = `
+    <div class="spec-mock__stage" style="background:${sbg}">${carBuildHTML({count:4, arrows:true, dots:false, active:0})}</div>
+    <div class="spec-mock__cap"><b>Product gallery</b>Arrows step through images one at a time; no dots needed at this length.</div>`;
+
+  const onboardMock = `
+    <div class="spec-mock__stage" style="background:${sbg}">${carBuildHTML({count:3, arrows:false, dots:true, active:1})}</div>
+    <div class="spec-mock__cap"><b>Onboarding walkthrough</b>Swipe-only steps; dots show progress without arrow clutter.</div>`;
+
+  root.innerHTML = `
+    <div class="cpg-section-heading">
+      <div class="cpg-layout__title">In context</div>
+      <div class="cpg-layout__desc">The same carousel does three everyday jobs &mdash; a promo banner, a product gallery, and an onboarding flow.</div>
+    </div>
+    <div class="cpg-section-block">
+      <div class="spec-insitu-grid">
+        <div class="spec-mock">${promoMock}</div>
+        <div class="spec-mock">${galleryMock}</div>
+        <div class="spec-mock">${onboardMock}</div>
+      </div>
+    </div>`;
+}
+
+const CAR_TOKENS = [
+  {token: '--color-btn-s-bg', use: 'Arrow button background'},
+  {token: '--color-btn-s-txt', use: 'Arrow glyph colour'},
+  {token: '--color-surface-n3', use: 'Inactive dot fill'},
+  {token: '--color-surface-inverse', use: 'Active dot fill'},
+];
+
+function renderCarReference(){
+  const root = document.getElementById('car-reference');
+  if(!root) return;
+  const theme = currentTheme(), sbg = stageBg(theme);
+
+  /* ---- Anatomy ---- */
+  const heroCar = carBuildHTML({count:3, arrows:true, dots:true, active:0}, 'car-anatomy-hero');
+  const parts = [
+    {num:1, name:'Arrow',  note:'Circular prev/next buttons, absolutely positioned over the track. Optional.', vis:`<button class="car__arrow" type="button" style="position:static;transform:none">&rsaquo;</button>`},
+    {num:2, name:'Track',  note:'Horizontally scrollable, snap-to-slide container. Drag or swipe to move between slides.', vis:`<div class="car__track" style="width:120px;height:60px;pointer-events:none"><div class="car__slide" style="min-height:60px;font-size:11px">Track</div></div>`},
+    {num:3, name:'Slide',  note:'One flex-basis:100% item per entry; content and background are up to the consumer.', vis:`<div class="car__slide" style="min-height:60px;width:100px;font-size:11px">Slide</div>`},
+    {num:4, name:'Dots',   note:'One dot per slide; the active dot elongates to a pill shape. Optional.', vis:`<div class="car__dots" style="margin-top:0">${['is-active','',''].map((c,i)=>`<button class="car__dot ${c}" style="position:static"></button>`).join('')}</div>`},
+  ];
+  const partCards = parts.map(p=>`
+    <div class="spec-part">
+      <div class="spec-part__stage" style="background:${sbg}">${p.vis}</div>
+      <div class="spec-part__body">
+        <div class="spec-part__name"><span class="spec-part__num">${p.num}</span>${p.name}</div>
+        <div class="spec-part__note">${p.note}</div>
+      </div>
+    </div>`).join('');
+
+  /* ---- Tokens ---- */
+  const tokRows = CAR_TOKENS.map(t=>`
+    <tr>
+      <td class="dd-table__name"><code>${t.token}</code></td>
+      <td>${t.use}</td>
+    </tr>`).join('');
+
+  root.innerHTML = `
+    <div class="type-sub">
+      <div class="type-sub__title">Anatomy</div>
+      <div class="type-sub__desc">A carousel is a scroll-snap track of slides, with optional arrow buttons and position dots layered on top.</div>
+      <div class="cpg-section-outline">
+        <div class="spec-hero" style="background:${sbg}">${heroCar}</div>
+        <div class="spec-parts">${partCards}</div>
+      </div>
+    </div>
+
+    <div class="type-sub" style="margin-bottom:0">
+      <div class="type-sub__title">Tokens</div>
+      <div class="type-sub__desc">Carousel has one fixed size — no size axis to document. These are the real custom properties its CSS reads for colour.</div>
+      <div class="cpg-section-outline">
+        <div class="dd-table-wrap"><table class="dd-table">
+          <thead><tr><th>Token</th><th>Used for</th></tr></thead>
+          <tbody>${tokRows}</tbody>
+        </table></div>
+      </div>
+    </div>`;
+  carAttach(root);
+}
+
+/* ── CODE PANEL LANGUAGES ── */
+const CAR_LANGS = [
+  {key:'html',   label:'HTML / CSS', file:'carousel.html'},
+  {key:'blazor', label:'Blazor',     file:'DsCarousel.razor'},
+  {key:'tsx',    label:'React TSX',  file:'DsCarousel.tsx'},
+];
+let carLang = 'html';
+
+function getCarCodeHTML(){
+  const labels = CAR_SLIDE_LABELS.slice(0, carState.count);
+  const slideLines = labels.map(()=>`  <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"car__slide"</span><span class="code-kw">>...&#60;/div></span>`).join('\n');
+  const arrowLines = carState.arrows ? `\n  <span class="code-kw">&#60;button</span> <span class="code-cls">class</span>=<span class="code-val">"car__arrow car__arrow--prev"</span><span class="code-kw">>&#60;/button></span>\n  <span class="code-kw">&#60;button</span> <span class="code-cls">class</span>=<span class="code-val">"car__arrow car__arrow--next"</span><span class="code-kw">>&#60;/button></span>` : '';
+  const dotsLines = carState.dots ? `\n  <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"car__dots"</span><span class="code-kw">>...&#60;/div></span>` : '';
+  return `<span class="code-cm">/* Flash · ${labels.length}-slide carousel${carState.arrows?' · arrows':''}${carState.dots?' · dots':''} */</span>
+<span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"car"</span><span class="code-kw">></span>${arrowLines}
+  <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"car__track"</span><span class="code-kw">></span>
+${slideLines}
+  <span class="code-kw">&#60;/div></span>${dotsLines}
+<span class="code-kw">&#60;/div></span>`;
+}
+
+function getCarCodeBlazor(){
+  return `<span class="code-cm">@* DsCarousel.razor — usage *@</span>
+<span class="code-kw">&#60;DsCarousel</span> <span class="code-attr">Slides</span>=<span class="code-val">"slides"</span>
+             <span class="code-attr">ShowArrows</span>=<span class="code-val">"${carState.arrows}"</span>
+             <span class="code-attr">ShowDots</span>=<span class="code-val">"${carState.dots}"</span>
+             <span class="code-attr">ActiveIndex</span>=<span class="code-val">"${carState.active}"</span> <span class="code-kw">/></span>
+
+<span class="code-cm">@* DsCarousel.razor — component definition *@</span>
+<span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"car"</span><span class="code-kw">></span>
+  <span class="code-kw">@if</span> (ShowArrows) {
+    <span class="code-kw">&#60;button</span> <span class="code-cls">class</span>=<span class="code-val">"car__arrow car__arrow--prev"</span> <span class="code-attr">@onclick</span>=<span class="code-val">"() => Go(_active - 1)"</span><span class="code-kw">>&#60;/button></span>
+    <span class="code-kw">&#60;button</span> <span class="code-cls">class</span>=<span class="code-val">"car__arrow car__arrow--next"</span> <span class="code-attr">@onclick</span>=<span class="code-val">"() => Go(_active + 1)"</span><span class="code-kw">>&#60;/button></span>
+  }
+  <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"car__track"</span><span class="code-kw">></span>
+    <span class="code-kw">@foreach</span> (<span class="code-kw">var</span> slide <span class="code-kw">in</span> Slides) {
+      <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"car__slide"</span><span class="code-kw">>@slide&#60;/div></span>
+    }
+  <span class="code-kw">&#60;/div></span>
+  <span class="code-kw">@if</span> (ShowDots) {
+    <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"car__dots"</span><span class="code-kw">></span>
+      <span class="code-kw">@for</span> (<span class="code-cls">int</span> i = 0; i &#60; Slides.Count; i++) {
+        <span class="code-kw">&#60;button</span> <span class="code-cls">class</span>=<span class="code-val">"@(i == _active ? "car__dot is-active" : "car__dot")"</span> <span class="code-attr">@onclick</span>=<span class="code-val">"() => Go(i)"</span><span class="code-kw">>&#60;/button></span>
+      }
+    <span class="code-kw">&#60;/div></span>
+  }
+<span class="code-kw">&#60;/div></span>
+
+<span class="code-kw">@code</span> {
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> List&#60;<span class="code-cls">string</span>> Slides { get; set; } = <span class="code-kw">new</span>();
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> <span class="code-cls">bool</span> ShowArrows { get; set; } = <span class="code-kw">true</span>;
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> <span class="code-cls">bool</span> ShowDots { get; set; } = <span class="code-kw">true</span>;
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> <span class="code-cls">int</span> ActiveIndex { get; set; }
+
+  <span class="code-kw">private</span> <span class="code-cls">int</span> _active;
+  <span class="code-kw">protected override void</span> OnParametersSet() => _active = ActiveIndex;
+  <span class="code-kw">private void</span> Go(<span class="code-cls">int</span> i) => _active = Math.Clamp(i, 0, Slides.Count - 1);
+}`;
+}
+
+function getCarCodeTSX(){
+  return `<span class="code-cm">// DsCarousel.tsx</span>
+<span class="code-kw">import</span> React, { useState, useRef } <span class="code-kw">from</span> <span class="code-val">'react'</span>;
+
+<span class="code-kw">interface</span> <span class="code-cls">DsCarouselProps</span> {
+  slides: React.ReactNode[];
+  showArrows?: <span class="code-cls">boolean</span>;
+  showDots?: <span class="code-cls">boolean</span>;
+}
+
+<span class="code-kw">export const</span> <span class="code-cls">DsCarousel</span>: React.FC&#60;DsCarouselProps> = ({
+  slides,
+  showArrows = <span class="code-kw">${carState.arrows}</span>,
+  showDots = <span class="code-kw">${carState.dots}</span>,
+}) => {
+  <span class="code-kw">const</span> [active, setActive] = useState(${carState.active});
+  <span class="code-kw">const</span> trackRef = useRef&#60;HTMLDivElement>(<span class="code-kw">null</span>);
+
+  <span class="code-kw">const</span> go = (i: <span class="code-cls">number</span>) => {
+    <span class="code-kw">const</span> next = Math.max(0, Math.min(slides.length - 1, i));
+    setActive(next);
+    trackRef.current?.scrollTo({ left: next * trackRef.current.clientWidth, behavior: <span class="code-val">'smooth'</span> });
+  };
+
+  <span class="code-kw">return</span> (
+    &#60;div className=<span class="code-val">"car"</span>>
+      {showArrows &amp;&amp; (&#60;>
+        &#60;button className=<span class="code-val">"car__arrow car__arrow--prev"</span> onClick={() => go(active - 1)} />
+        &#60;button className=<span class="code-val">"car__arrow car__arrow--next"</span> onClick={() => go(active + 1)} />
+      &#60;/>)}
+      &#60;div className=<span class="code-val">"car__track"</span> ref={trackRef}>
+        {slides.map((s, i) => &#60;div key={i} className=<span class="code-val">"car__slide"</span>>{s}&#60;/div>)}
+      &#60;/div>
+      {showDots &amp;&amp; (
+        &#60;div className=<span class="code-val">"car__dots"</span>>
+          {slides.map((_, i) => (
+            &#60;button key={i} className={i === active ? <span class="code-val">'car__dot is-active'</span> : <span class="code-val">'car__dot'</span>} onClick={() => go(i)} />
+          ))}
+        &#60;/div>
+      )}
+    &#60;/div>
+  );
+};</span>`;
+}
+
+function getCarCode(){
+  return carLang==='blazor' ? getCarCodeBlazor()
+       : carLang==='tsx'    ? getCarCodeTSX()
+       : getCarCodeHTML();
+}
+
+const CAR_CODE_TAB_CFG = {
+  rootId: 'car-code-tab', idPrefix: 'car', langs: CAR_LANGS,
+  getCurrentLang: ()=>carLang, blockId: 'car-code-block',
+  setLangFnName: 'setCarLang', keydownFnName: 'carLangKeydown', copyFnName: 'carCopyCode',
+};
+function setCarLang(lang){ langSwitchSet({...CAR_CODE_TAB_CFG, setLang:(l)=>{carLang=l;}, getCode:getCarCode}, lang); }
+function carLangKeydown(e){ langSwitchKeydown({...CAR_CODE_TAB_CFG, setLang:(l)=>{carLang=l;}, getCode:getCarCode}, e); }
+function carCopyCode(){
+  const b = document.getElementById('car-code-block');
+  if(!b) return;
+  navigator.clipboard.writeText(b.innerText||b.textContent).catch(()=>{});
+  const btn = document.getElementById('car-copy-btn');
+  if(btn){ btn.textContent = 'Copied!'; setTimeout(()=>btn.textContent='Copy', 2000); }
+}
+function renderCarCodeTab(){
+  renderLangCodeTab({...CAR_CODE_TAB_CFG, title:'Code', desc:'Live snippet matching the current Playground configuration &mdash; switch to Overview to change it.'});
+  const block = document.getElementById('car-code-block');
+  if(block) block.innerHTML = getCarCode();
+}
+
+function carTabSwitch(tab){
+  secTabSwitch('s-carousel', 'car-tabs-list', 'data-car-tab', 'data-car-panel', tab);
+}
+
+function renderCarPages(){
+  try { renderCarCodeTab();     } catch(e){ console.error('car-code-tab', e); }
+  try { renderCarPlayground();  } catch(e){ console.error('car-playground', e); }
+  try { renderCarKeyVariants(); } catch(e){ console.error('car-keyvariants', e); }
+  try { renderCarInSitu();      } catch(e){ console.error('car-insitu', e); }
+  try { renderCarReference();   } catch(e){ console.error('car-reference', e); }
+}
+renderCarPages();
+
+/* ============================================================
+   EMPTY STATE
+   .sec--tabbed page, same shape as Carousel/Pills: a shared state
+   object (esState) drives two synced playground mounts, a Style tab
+   built from the same real .dd-empty markup, and a Code tab using
+   the generic renderLangCodeTab/langSwitchSet/langSwitchKeydown
+   helpers. Structural variant axis (icon/action on or off) replaces
+   Pills' colour axis, since Empty State has no colour variants.
+============================================================ */
+let esState = { icon: true, title: 'No transactions match these filters', desc: 'Nothing was recorded for the selected region and date range. Try widening the range or clearing the region filter.', action: true };
+
+/* Canonical real-markup builder — same .dd-empty/.dd-empty__icon/__title/
+   __desc/__action classes as the original static demo, parameterised over
+   icon/title/desc/action so the Playground, Style-tab anatomy and Code
+   tab all share one source. */
+function esBuildHTML(state){
+  const iconHTML = state.icon ? `<div class="dd-empty__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M4 7h16M4 12h16M4 17h9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>` : '';
+  const descHTML = state.desc ? `<div class="dd-empty__desc">${ppgEsc(state.desc)}</div>` : '';
+  const actionHTML = state.action ? `<button class="dd-empty__action" type="button">Clear filters</button>` : '';
+  return `<div class="dd-empty">${iconHTML}<div class="dd-empty__title">${ppgEsc(state.title || 'No results')}</div>${descHTML}${actionHTML}</div>`;
+}
+
+const ES_PLAYGROUND_MOUNTS = [
+  {rootId:'es-playground', idSuffix:'', wrap:true, title:'Try the component', desc:'Adjust the icon, copy and action to test component states.', headingAbove:'Use an Empty State when a table, list or view has zero rows to show.'},
+  {rootId:'es-code-playground', idSuffix:'-code', style:'code', title:'Playground', desc:'Live demo of the component.'},
+];
+
+function renderEsPlayground(){
+  const iconBtns = ['off','on'].map(x=>`<button class="btn-pg__pill${(esState.icon?(x==='on'):(x==='off'))?' on':''}" onclick="esSet('icon','${x}')">${x==='on'?'With icon':'No icon'}</button>`).join('');
+  const actionBtns = ['off','on'].map(x=>`<button class="btn-pg__pill${(esState.action?(x==='on'):(x==='off'))?' on':''}" onclick="esSet('action','${x}')">${x==='on'?'With action':'No action'}</button>`).join('');
+
+  ES_PLAYGROUND_MOUNTS.forEach(mount=>{
+    const root = document.getElementById(mount.rootId);
+    if(!root) return;
+    const s = mount.idSuffix;
+    const demo = `
+      <div class="btn-pg">
+        <div class="btn-pg__stage es-stage-el" id="es-stage${s}">${esBuildHTML(esState)}</div>
+        <div class="btn-pg__ctrls">
+          <div class="btn-pg__group"><span class="btn-pg__clabel">Icon</span><div class="btn-pg__pill-row">${iconBtns}</div></div>
+          <div class="btn-pg__group"><span class="btn-pg__clabel">Action</span><div class="btn-pg__pill-row">${actionBtns}</div></div>
+          <div class="btn-pg__group"><span class="btn-pg__clabel">Title</span><input class="cpg-label-input es-title-input-el" id="es-title-input${s}" value="${ppgEsc(esState.title)}" maxlength="60" oninput="esSetField('title', this.value)" placeholder="Title"></div>
+          <div class="btn-pg__group"><span class="btn-pg__clabel">Description</span><input class="cpg-label-input es-desc-input-el" id="es-desc-input${s}" value="${ppgEsc(esState.desc)}" maxlength="140" oninput="esSetField('desc', this.value)" placeholder="Description"></div>
+        </div>
+      </div>`;
+
+    if(mount.style==='code'){
+      root.innerHTML = `
+        <div class="type-sub__title">${mount.title}</div>
+        <div class="type-sub__desc">${mount.desc}</div>
+        <div class="cpg-section-outline">${demo}</div>`;
+    } else {
+      const inner = `
+        <div class="cpg-layout">
+          <div class="cpg-layout__intro">
+            <span class="cpg-cursor-icon">${CPG_CURSOR_ICON_SVG}</span>
+            <div class="cpg-layout__title">${mount.title}</div>
+            <div class="cpg-layout__desc">${mount.desc}</div>
+          </div>
+          <div class="cpg-layout__demo">${demo}</div>
+        </div>`;
+      root.innerHTML = `<div class="cpg-overview-heading"><span class="cpg-overview-heading__icon">${CPG_INFO_ICON_SVG}</span><span>${mount.headingAbove}</span></div><div class="cpg-section-block">${inner}</div>`;
+    }
+  });
+}
+function esRefresh(){
+  renderEsPlayground();
+  const block = document.getElementById('es-code-block');
+  if(block) block.innerHTML = getEsCode();
+}
+function esSet(key, val){
+  if(key==='icon') esState.icon = (val==='on');
+  else if(key==='action') esState.action = (val==='on');
+  esRefresh();
+}
+function esSetField(key, val){
+  esState[key] = val;
+  document.querySelectorAll('.es-stage-el').forEach(stage=>{ stage.innerHTML = esBuildHTML(esState); });
+  const block = document.getElementById('es-code-block');
+  if(block) block.innerHTML = getEsCode();
+}
+
+const ES_KEY_VARIANTS = [
+  {icon:true,  action:true,  name:'Icon + Action', use:'Default — a reason and a clear next step.'},
+  {icon:true,  action:false, name:'Icon only',      use:'Informational moments with no obvious next action.'},
+  {icon:false, action:true,  name:'Action only',    use:'Text-first messaging that still needs a way forward.'},
+  {icon:false, action:false, name:'Text only',      use:'Minimal, low-emphasis placeholder inside a small card.'},
+];
+function renderEsKeyVariants(){
+  const root = document.getElementById('es-keyvariants');
+  if(!root) return;
+  const cells = ES_KEY_VARIANTS.map(v=>`
+    <div class="spec-cell">
+      <div class="spec-cell__stage">${esBuildHTML({icon:v.icon, action:v.action, title:'No results found', desc:(v.icon||v.action)?'Try adjusting your filters or search.':''})}</div>
+      <div class="spec-cell__name">${v.name}</div>
+      <div class="spec-cell__desc">${v.use}</div>
+    </div>`).join('');
+  root.innerHTML = `
+    <div class="cpg-section-heading">
+      <div class="cpg-layout__title">Key variants</div>
+      <div class="cpg-layout__desc">Icon and action are independent — turn either off for a lighter composition.</div>
+    </div>
+    <div class="cpg-section-block">
+      <div class="spec-grid">${cells}</div>
+    </div>`;
+}
+
+function renderEsInSitu(){
+  const root = document.getElementById('es-insitu');
+  if(!root) return;
+
+  const inboxMock = `
+    <div class="spec-mock__stage">${esBuildHTML({icon:true, action:false, title:'Inbox zero', desc:'No new messages right now.'})}</div>
+    <div class="spec-mock__cap"><b>Empty inbox</b>Nothing to action — the icon and copy confirm the empty state is expected.</div>`;
+
+  const searchMock = `
+    <div class="spec-mock__stage">${esBuildHTML({icon:true, action:true, title:'No results for &ldquo;settlement&rdquo;', desc:'Check the spelling or try a different search term.'})}</div>
+    <div class="spec-mock__cap"><b>Empty search results</b>Explains why nothing matched and offers a way to recover.</div>`;
+
+  const tableMock = `
+    <div class="spec-mock__stage">${esBuildHTML({icon:true, action:true, title:'No team members yet', desc:'Invite someone to get started.'})}</div>
+    <div class="spec-mock__cap"><b>Empty table</b>First-run state before any rows exist, with the primary next step.</div>`;
+
+  root.innerHTML = `
+    <div class="cpg-section-heading">
+      <div class="cpg-layout__title">In context</div>
+      <div class="cpg-layout__desc">The same card explains three different kinds of &ldquo;nothing here.&rdquo;</div>
+    </div>
+    <div class="cpg-section-block">
+      <div class="spec-insitu-grid">
+        <div class="spec-mock">${inboxMock}</div>
+        <div class="spec-mock">${searchMock}</div>
+        <div class="spec-mock">${tableMock}</div>
+      </div>
+    </div>`;
+}
+
+const ES_TOKENS = [
+  {token:'--chrome-border', use:'Dashed card border'},
+  {token:'--chrome-nav',    use:'Icon square background'},
+  {token:'--chrome-muted',  use:'Icon colour / description text'},
+  {token:'--chrome-txt',    use:'Title colour'},
+];
+
+function renderEsReference(){
+  const root = document.getElementById('es-reference');
+  if(!root) return;
+
+  const heroEs = esBuildHTML({icon:true, action:true, title:'No transactions match these filters', desc:'Nothing was recorded for the selected region and date range.'});
+  const parts = [
+    {num:1, name:'Icon',        note:'Optional muted glyph in a tinted 44&times;44px square.', vis:`<div class="dd-empty__icon" style="position:static"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M4 7h16M4 12h16M4 17h9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>`},
+    {num:2, name:'Title',       note:'One short line stating what is missing.', vis:`<div class="dd-empty__title">Title</div>`},
+    {num:3, name:'Description', note:'A sentence explaining why, capped at 340px wide.', vis:`<div class="dd-empty__desc" style="max-width:160px">Short explanation text.</div>`},
+    {num:4, name:'Action',      note:'Optional single primary button for the obvious next step.', vis:`<button class="dd-empty__action" type="button">Action</button>`},
+  ];
+  const partCards = parts.map(p=>`
+    <div class="spec-part">
+      <div class="spec-part__stage">${p.vis}</div>
+      <div class="spec-part__body">
+        <div class="spec-part__name"><span class="spec-part__num">${p.num}</span>${p.name}</div>
+        <div class="spec-part__note">${p.note}</div>
+      </div>
+    </div>`).join('');
+
+  const tokRows = ES_TOKENS.map(t=>`
+    <tr>
+      <td class="dd-table__name"><code>${t.token}</code></td>
+      <td>${t.use}</td>
+    </tr>`).join('');
+
+  root.innerHTML = `
+    <div class="type-sub">
+      <div class="type-sub__title">Anatomy</div>
+      <div class="type-sub__desc">A dashed-border card centring an optional icon, a title, a description and an optional action.</div>
+      <div class="cpg-section-outline">
+        <div class="spec-hero">${heroEs}</div>
+        <div class="spec-parts">${partCards}</div>
+      </div>
+    </div>
+
+    <div class="type-sub" style="margin-bottom:0">
+      <div class="type-sub__title">Tokens</div>
+      <div class="type-sub__desc">Empty State has one fixed size &mdash; no size axis to document. These are the real custom properties its CSS reads.</div>
+      <div class="cpg-section-outline">
+        <div class="dd-table-wrap"><table class="dd-table">
+          <thead><tr><th>Token</th><th>Used for</th></tr></thead>
+          <tbody>${tokRows}</tbody>
+        </table></div>
+      </div>
+    </div>`;
+}
+
+/* ── CODE PANEL LANGUAGES ── */
+const ES_LANGS = [
+  {key:'html',   label:'HTML / CSS', file:'empty-state.html'},
+  {key:'blazor', label:'Blazor',     file:'DsEmptyState.razor'},
+  {key:'tsx',    label:'React TSX',  file:'DsEmptyState.tsx'},
+];
+let esLang = 'html';
+
+function getEsCodeHTML(){
+  const title = ppgEsc(esState.title || 'No results');
+  const desc = esState.desc ? ppgEsc(esState.desc) : '';
+  return `<span class="code-cm">/* Flash · Empty State${esState.icon?' · icon':''}${esState.action?' · action':''} */</span>
+<span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"dd-empty"</span><span class="code-kw">></span>
+  ${esState.icon?`<span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"dd-empty__icon"</span><span class="code-kw">>...&#60;/div></span>\n  `:''}<span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"dd-empty__title"</span><span class="code-kw">></span>${title}<span class="code-kw">&#60;/div></span>
+  ${desc?`<span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"dd-empty__desc"</span><span class="code-kw">></span>${desc}<span class="code-kw">&#60;/div></span>\n  `:''}${esState.action?`<span class="code-kw">&#60;button</span> <span class="code-cls">class</span>=<span class="code-val">"dd-empty__action"</span><span class="code-kw">></span>Clear filters<span class="code-kw">&#60;/button></span>`:''}
+<span class="code-kw">&#60;/div></span>`;
+}
+
+function getEsCodeBlazor(){
+  const title = ppgEsc(esState.title || 'No results');
+  const desc = esState.desc ? ppgEsc(esState.desc) : '';
+  return `<span class="code-cm">@* DsEmptyState.razor — usage *@</span>
+<span class="code-kw">&#60;DsEmptyState</span> <span class="code-attr">Title</span>=<span class="code-val">"${title}"</span>
+               <span class="code-attr">Description</span>=<span class="code-val">"${desc}"</span>
+               <span class="code-attr">ShowIcon</span>=<span class="code-val">"${esState.icon}"</span>
+               <span class="code-attr">ShowAction</span>=<span class="code-val">"${esState.action}"</span> <span class="code-kw">/></span>
+
+<span class="code-cm">@* DsEmptyState.razor — component definition *@</span>
+<span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"dd-empty"</span><span class="code-kw">></span>
+  <span class="code-kw">@if</span> (ShowIcon) { <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"dd-empty__icon"</span><span class="code-kw">></span>@IconContent<span class="code-kw">&#60;/div></span> }
+  <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"dd-empty__title"</span><span class="code-kw">></span>@Title<span class="code-kw">&#60;/div></span>
+  <span class="code-kw">@if</span> (!<span class="code-cls">string</span>.IsNullOrEmpty(Description)) { <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"dd-empty__desc"</span><span class="code-kw">></span>@Description<span class="code-kw">&#60;/div></span> }
+  <span class="code-kw">@if</span> (ShowAction) { <span class="code-kw">&#60;button</span> <span class="code-cls">class</span>=<span class="code-val">"dd-empty__action"</span> <span class="code-attr">@onclick</span>=<span class="code-val">"OnAction"</span><span class="code-kw">></span>@ActionLabel<span class="code-kw">&#60;/button></span> }
+<span class="code-kw">&#60;/div></span>
+
+<span class="code-kw">@code</span> {
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> <span class="code-cls">string</span> Title { get; set; } = <span class="code-val">""</span>;
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> <span class="code-cls">string</span>? Description { get; set; }
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> <span class="code-cls">bool</span> ShowIcon { get; set; } = <span class="code-kw">true</span>;
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> <span class="code-cls">bool</span> ShowAction { get; set; } = <span class="code-kw">true</span>;
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> <span class="code-cls">string</span> ActionLabel { get; set; } = <span class="code-val">"Clear filters"</span>;
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> RenderFragment? IconContent { get; set; }
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> EventCallback OnAction { get; set; }
+}`;
+}
+
+function getEsCodeTSX(){
+  const title = ppgEsc(esState.title || 'No results');
+  const desc = esState.desc ? ppgEsc(esState.desc) : '';
+  return `<span class="code-cm">// DsEmptyState.tsx</span>
+<span class="code-kw">import</span> React <span class="code-kw">from</span> <span class="code-val">'react'</span>;
+
+<span class="code-kw">interface</span> <span class="code-cls">DsEmptyStateProps</span> {
+  title: <span class="code-cls">string</span>;
+  description?: <span class="code-cls">string</span>;
+  icon?: React.ReactNode;
+  actionLabel?: <span class="code-cls">string</span>;
+  onAction?: () => <span class="code-cls">void</span>;
+}
+
+<span class="code-kw">export const</span> <span class="code-cls">DsEmptyState</span>: React.FC&#60;DsEmptyStateProps> = ({ title, description, icon, actionLabel, onAction }) => (
+  &#60;div className=<span class="code-val">"dd-empty"</span>>
+    {icon &amp;&amp; &#60;div className=<span class="code-val">"dd-empty__icon"</span>>{icon}&#60;/div>}
+    &#60;div className=<span class="code-val">"dd-empty__title"</span>>{title}&#60;/div>
+    {description &amp;&amp; &#60;div className=<span class="code-val">"dd-empty__desc"</span>>{description}&#60;/div>}
+    {actionLabel &amp;&amp; &#60;button className=<span class="code-val">"dd-empty__action"</span> onClick={onAction}>{actionLabel}&#60;/button>}
+  &#60;/div>
+);
+
+<span class="code-cm">// Usage</span>
+&#60;DsEmptyState title=<span class="code-val">"${title}"</span> description=<span class="code-val">"${desc}"</span>${esState.action?' actionLabel="Clear filters"':''} /></span>`;
+}
+
+function getEsCode(){
+  return esLang==='blazor' ? getEsCodeBlazor()
+       : esLang==='tsx'    ? getEsCodeTSX()
+       : getEsCodeHTML();
+}
+
+const ES_CODE_TAB_CFG = {
+  rootId: 'es-code-tab', idPrefix: 'es', langs: ES_LANGS,
+  getCurrentLang: ()=>esLang, blockId: 'es-code-block',
+  setLangFnName: 'setEsLang', keydownFnName: 'esLangKeydown', copyFnName: 'esCopyCode',
+};
+function setEsLang(lang){ langSwitchSet({...ES_CODE_TAB_CFG, setLang:(l)=>{esLang=l;}, getCode:getEsCode}, lang); }
+function esLangKeydown(e){ langSwitchKeydown({...ES_CODE_TAB_CFG, setLang:(l)=>{esLang=l;}, getCode:getEsCode}, e); }
+function esCopyCode(){
+  const b = document.getElementById('es-code-block');
+  if(!b) return;
+  navigator.clipboard.writeText(b.innerText||b.textContent).catch(()=>{});
+  const btn = document.getElementById('es-copy-btn');
+  if(btn){ btn.textContent = 'Copied!'; setTimeout(()=>btn.textContent='Copy', 2000); }
+}
+function renderEsCodeTab(){
+  renderLangCodeTab({...ES_CODE_TAB_CFG, title:'Code', desc:'Live snippet matching the current Playground configuration &mdash; switch to Overview to change it.'});
+  const block = document.getElementById('es-code-block');
+  if(block) block.innerHTML = getEsCode();
+}
+
+function esTabSwitch(tab){
+  secTabSwitch('s-empty-state', 'es-tabs-list', 'data-es-tab', 'data-es-panel', tab);
+}
+
+function renderEsPages(){
+  try { renderEsCodeTab();     } catch(e){ console.error('es-code-tab', e); }
+  try { renderEsPlayground();  } catch(e){ console.error('es-playground', e); }
+  try { renderEsKeyVariants(); } catch(e){ console.error('es-keyvariants', e); }
+  try { renderEsInSitu();      } catch(e){ console.error('es-insitu', e); }
+  try { renderEsReference();   } catch(e){ console.error('es-reference', e); }
+}
+renderEsPages();
+
+/* ============================================================
+   INPUT OTP
+   .sec--tabbed page, same shape as Carousel/Empty State: a shared
+   state object (otpPg) drives two synced playground mounts, a Style
+   tab built from the same real .otp markup, and a Code tab using
+   the generic renderLangCodeTab/langSwitchSet/langSwitchKeydown
+   helpers. Structural variant axis (digit count / grouping / error)
+   replaces Pills' colour axis, since Input OTP has no colour
+   variants. Named otpPg (not otpState) to avoid any confusion with
+   the real, doc-site-unrelated `.otp` component classes it renders.
+============================================================ */
+let otpPg = { digits: 6, grouped: false, error: false, value: '' };
+
+/* Canonical real-markup builder — same .otp/.otp__box/.otp__sep/
+   .otp--error/.otp-msg/.otp-msg--err classes as the original static
+   demos, parameterised over digit count/grouping/error/value so the
+   Playground, Style-tab anatomy and Code tab all share one source. */
+function otpBuildHTML(state){
+  const digits = state.digits;
+  const mid = Math.floor(digits / 2);
+  let boxes = '';
+  for(let i=0;i<digits;i++){
+    if(state.grouped && i===mid && i>0) boxes += `<span class="otp__sep">&ndash;</span>`;
+    const v = ppgEsc((state.value||'').charAt(i) || '');
+    boxes += `<input class="otp__box" inputmode="numeric" maxlength="1" placeholder=" " value="${v}" aria-label="Digit ${i+1}" data-i="${i}">`;
+  }
+  const groupCls = state.error ? ' otp--error' : '';
+  const msg = state.error ? `<div class="otp-msg otp-msg--err">That code isn&rsquo;t right &mdash; check it and try again.</div>` : '';
+  return `<div class="otp${groupCls}" data-otp>${boxes}</div>${msg}`;
+}
+
+/* Wires up auto-advance, backspace/arrow-key navigation and paste-to-fill
+   on a freshly rendered .otp root — mirrors the original static demos'
+   generic IIFE, generalised to run against otpPg instead of a fixed set
+   of boxes, and to keep otpPg.value in sync for the Code tab / value input. */
+function otpAttach(root){
+  const boxes = Array.from(root.querySelectorAll('.otp__box'));
+  boxes.forEach((b, i)=>{
+    b.oninput = ()=>{
+      b.value = b.value.replace(/\D/g,'').slice(0,1);
+      const chars = (otpPg.value||'').split('');
+      chars[i] = b.value;
+      otpPg.value = chars.join('').slice(0, otpPg.digits);
+      if(b.value && boxes[i+1]) boxes[i+1].focus();
+      otpSyncValueInput();
+    };
+    b.onkeydown = (e)=>{
+      if(e.key==='Backspace' && !b.value && boxes[i-1]) boxes[i-1].focus();
+      else if(e.key==='ArrowLeft' && boxes[i-1]) boxes[i-1].focus();
+      else if(e.key==='ArrowRight' && boxes[i+1]) boxes[i+1].focus();
+    };
+    b.onpaste = (e)=>{
+      e.preventDefault();
+      const text = (e.clipboardData || window.clipboardData).getData('text').replace(/\D/g,'');
+      otpPg.value = text.slice(0, otpPg.digits);
+      otpRefresh();
+    };
+  });
+}
+function otpSyncValueInput(){
+  document.querySelectorAll('.otp-value-input-el').forEach(inp=>{
+    if(document.activeElement !== inp) inp.value = otpPg.value;
+  });
+  const block = document.getElementById('otp-code-block');
+  if(block) block.innerHTML = getOtpCode();
+}
+
+const OTP_PLAYGROUND_MOUNTS = [
+  {rootId:'otp-playground', idSuffix:'', wrap:true, title:'Try the component', desc:'Adjust digit count, grouping and error state to test component states.', headingAbove:'Use Input OTP for short, fixed-length verification codes &mdash; SMS, email or authenticator 2FA.'},
+  {rootId:'otp-code-playground', idSuffix:'-code', style:'code', title:'Playground', desc:'Live demo of the component.'},
+];
+
+function renderOtpPlayground(){
+  const digitBtns = [4,6].map(n=>`<button class="btn-pg__pill${otpPg.digits===n?' on':''}" onclick="otpSet('digits',${n})">${n}-digit</button>`).join('');
+  const groupBtns = ['off','on'].map(x=>`<button class="btn-pg__pill${(otpPg.grouped?(x==='on'):(x==='off'))?' on':''}" onclick="otpSet('grouped','${x}')">${x==='on'?'Grouped':'Ungrouped'}</button>`).join('');
+  const errBtns = ['off','on'].map(x=>`<button class="btn-pg__pill${(otpPg.error?(x==='on'):(x==='off'))?' on':''}" onclick="otpSet('error','${x}')">${x==='on'?'Error':'Default'}</button>`).join('');
+
+  OTP_PLAYGROUND_MOUNTS.forEach(mount=>{
+    const root = document.getElementById(mount.rootId);
+    if(!root) return;
+    const s = mount.idSuffix;
+    const demo = `
+      <div class="btn-pg">
+        <div class="btn-pg__stage otp-stage-el" id="otp-stage${s}">${otpBuildHTML(otpPg)}</div>
+        <div class="btn-pg__ctrls">
+          <div class="btn-pg__group"><span class="btn-pg__clabel">Digits</span><div class="btn-pg__pill-row">${digitBtns}</div></div>
+          <div class="btn-pg__group"><span class="btn-pg__clabel">Separator</span><div class="btn-pg__pill-row">${groupBtns}</div></div>
+          <div class="btn-pg__group"><span class="btn-pg__clabel">State</span><div class="btn-pg__pill-row">${errBtns}</div></div>
+          <div class="btn-pg__group"><span class="btn-pg__clabel">Value</span><input class="cpg-label-input otp-value-input-el" id="otp-value-input${s}" value="${ppgEsc(otpPg.value)}" maxlength="6" inputmode="numeric" oninput="otpSetValue(this.value)" placeholder="Digits"></div>
+        </div>
+      </div>`;
+
+    if(mount.style==='code'){
+      root.innerHTML = `
+        <div class="type-sub__title">${mount.title}</div>
+        <div class="type-sub__desc">${mount.desc}</div>
+        <div class="cpg-section-outline">${demo}</div>`;
+    } else {
+      const inner = `
+        <div class="cpg-layout">
+          <div class="cpg-layout__intro">
+            <span class="cpg-cursor-icon">${CPG_CURSOR_ICON_SVG}</span>
+            <div class="cpg-layout__title">${mount.title}</div>
+            <div class="cpg-layout__desc">${mount.desc}</div>
+          </div>
+          <div class="cpg-layout__demo">${demo}</div>
+        </div>`;
+      root.innerHTML = `<div class="cpg-overview-heading"><span class="cpg-overview-heading__icon">${CPG_INFO_ICON_SVG}</span><span>${mount.headingAbove}</span></div><div class="cpg-section-block">${inner}</div>`;
+    }
+
+    const stage = document.getElementById('otp-stage'+s);
+    if(stage) otpAttach(stage);
+  });
+}
+function otpRefresh(){
+  renderOtpPlayground();
+  const block = document.getElementById('otp-code-block');
+  if(block) block.innerHTML = getOtpCode();
+}
+function otpSet(key, val){
+  if(key==='grouped') otpPg.grouped = (val==='on');
+  else if(key==='error') otpPg.error = (val==='on');
+  else otpPg[key] = val;
+  otpPg.value = (otpPg.value||'').slice(0, otpPg.digits);
+  otpRefresh();
+}
+function otpSetValue(val){
+  otpPg.value = val.replace(/\D/g,'').slice(0, otpPg.digits);
+  otpRefresh();
+}
+
+const OTP_KEY_VARIANTS = [
+  {digits:6, grouped:false, error:false, name:'6-digit',  use:'Default for SMS/email verification codes.'},
+  {digits:4, grouped:false, error:false, name:'4-digit',  use:'Shorter PINs.'},
+  {digits:4, grouped:true,  error:false, name:'Grouped',  use:'Split into pairs for readability.'},
+  {digits:4, grouped:false, error:true,  name:'Error',    use:'Invalid or expired code.'},
+];
+function renderOtpKeyVariants(){
+  const root = document.getElementById('otp-keyvariants');
+  if(!root) return;
+  const cells = OTP_KEY_VARIANTS.map(v=>`
+    <div class="spec-cell">
+      <div class="spec-cell__stage">${otpBuildHTML({digits:v.digits, grouped:v.grouped, error:v.error, value:v.error?'4815':''})}</div>
+      <div class="spec-cell__name">${v.name}</div>
+      <div class="spec-cell__desc">${v.use}</div>
+    </div>`).join('');
+  root.innerHTML = `
+    <div class="cpg-section-heading">
+      <div class="cpg-layout__title">Key variants</div>
+      <div class="cpg-layout__desc">Four common configurations, built from the same box and separator markup.</div>
+    </div>
+    <div class="cpg-section-block">
+      <div class="spec-grid">${cells}</div>
+    </div>`;
+}
+
+function renderOtpInSitu(){
+  const root = document.getElementById('otp-insitu');
+  if(!root) return;
+
+  const loginMock = `
+    <div class="spec-mock__stage">
+      <div class="spec-mock__label">Enter the 6-digit code we sent you</div>
+      ${otpBuildHTML({digits:6, grouped:false, error:false, value:'482'})}
+    </div>
+    <div class="spec-mock__cap"><b>Login 2FA</b>Second factor after a password, sent by SMS.</div>`;
+
+  const paymentMock = `
+    <div class="spec-mock__stage">
+      <div class="spec-mock__label">Confirm payment &mdash; enter your PIN</div>
+      ${otpBuildHTML({digits:4, grouped:true, error:false, value:'12'})}
+    </div>
+    <div class="spec-mock__cap"><b>Payment verification</b>A short, grouped PIN to authorise a transaction.</div>`;
+
+  const errorMock = `
+    <div class="spec-mock__stage">
+      <div class="spec-mock__label">Enter the code from your authenticator app</div>
+      ${otpBuildHTML({digits:4, grouped:false, error:true, value:'4815'})}
+    </div>
+    <div class="spec-mock__cap"><b>Expired code</b>The error state explains what to do next.</div>`;
+
+  root.innerHTML = `
+    <div class="cpg-section-heading">
+      <div class="cpg-layout__title">In context</div>
+      <div class="cpg-layout__desc">The same segmented field verifies identity in three everyday flows.</div>
+    </div>
+    <div class="cpg-section-block">
+      <div class="spec-insitu-grid">
+        <div class="spec-mock">${loginMock}</div>
+        <div class="spec-mock">${paymentMock}</div>
+        <div class="spec-mock">${errorMock}</div>
+      </div>
+    </div>`;
+}
+
+const OTP_TOKENS = [
+  {token:'--color-input-bg',     use:'Box background'},
+  {token:'--color-input-border', use:'Box border'},
+  {token:'--color-input-focus',  use:'Focus border / caret colour'},
+  {token:'--color-surface-n2',   use:'Focus ring'},
+  {token:'--color-text-s',       use:'Filled box border'},
+  {token:'--color-crit-h',       use:'Error border, ring and message text'},
+  {token:'--chrome-txt',         use:'Digit colour'},
+  {token:'--chrome-muted',       use:'Separator colour'},
+];
+
+function renderOtpReference(){
+  const root = document.getElementById('otp-reference');
+  if(!root) return;
+
+  const heroOtp = otpBuildHTML({digits:6, grouped:false, error:false, value:''});
+  const parts = [
+    {num:1, name:'Box',           note:'One input per digit; numeric keypad on mobile via inputmode="numeric".', vis:`<input class="otp__box" style="position:static" maxlength="1" placeholder=" " readonly>`},
+    {num:2, name:'Separator',     note:'Optional visual break between groups (e.g. 2+2 digits).', vis:`<span class="otp__sep">&ndash;</span>`},
+    {num:3, name:'Error message', note:'Shown below the group when the whole code is invalid or expired.', vis:`<div class="otp-msg otp-msg--err" style="margin-top:0">Invalid code</div>`},
+  ];
+  const partCards = parts.map(p=>`
+    <div class="spec-part">
+      <div class="spec-part__stage">${p.vis}</div>
+      <div class="spec-part__body">
+        <div class="spec-part__name"><span class="spec-part__num">${p.num}</span>${p.name}</div>
+        <div class="spec-part__note">${p.note}</div>
+      </div>
+    </div>`).join('');
+
+  const tokRows = OTP_TOKENS.map(t=>`
+    <tr>
+      <td class="dd-table__name"><code>${t.token}</code></td>
+      <td>${t.use}</td>
+    </tr>`).join('');
+
+  root.innerHTML = `
+    <div class="type-sub">
+      <div class="type-sub__title">Anatomy</div>
+      <div class="type-sub__desc">Input OTP is a row of single-digit boxes, with an optional separator and error message.</div>
+      <div class="cpg-section-outline">
+        <div class="spec-hero">${heroOtp}</div>
+        <div class="spec-parts">${partCards}</div>
+      </div>
+    </div>
+
+    <div class="type-sub" style="margin-bottom:0">
+      <div class="type-sub__title">Tokens</div>
+      <div class="type-sub__desc">Input OTP has one fixed box size &mdash; no size axis to document &mdash; across both 4- and 6-digit layouts.</div>
+      <div class="cpg-section-outline">
+        <div class="dd-table-wrap"><table class="dd-table">
+          <thead><tr><th>Token</th><th>Used for</th></tr></thead>
+          <tbody>${tokRows}</tbody>
+        </table></div>
+      </div>
+    </div>`;
+
+  const stage = root.querySelector('.spec-hero');
+  if(stage) otpAttach(stage);
+}
+
+/* ── CODE PANEL LANGUAGES ── */
+const OTP_LANGS = [
+  {key:'html',   label:'HTML / CSS', file:'input-otp.html'},
+  {key:'blazor', label:'Blazor',     file:'DsInputOtp.razor'},
+  {key:'tsx',    label:'React TSX',  file:'DsInputOtp.tsx'},
+];
+let otpLangSel = 'html';
+
+function getOtpCodeHTML(){
+  return `<span class="code-cm">/* Flash · Input OTP · ${otpPg.digits}-digit${otpPg.grouped?', grouped':''}${otpPg.error?', error':''} */</span>
+<span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"otp${otpPg.error?' otp--error':''}"</span> <span class="code-attr">data-otp</span><span class="code-kw">></span>
+  <span class="code-cm">&#60;!-- ${otpPg.digits} × &#60;input class="otp__box">${otpPg.grouped?', with a .otp__sep in the middle':''} --></span>
+<span class="code-kw">&#60;/div></span>${otpPg.error?`\n<span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"otp-msg otp-msg--err"</span><span class="code-kw">></span>That code isn't right &mdash; check it and try again.<span class="code-kw">&#60;/div></span>`:''}`;
+}
+
+function getOtpCodeBlazor(){
+  return `<span class="code-cm">@* DsInputOtp.razor — usage *@</span>
+<span class="code-kw">&#60;DsInputOtp</span> <span class="code-attr">Digits</span>=<span class="code-val">"${otpPg.digits}"</span>
+             <span class="code-attr">Grouped</span>=<span class="code-val">"${otpPg.grouped}"</span>
+             <span class="code-attr">HasError</span>=<span class="code-val">"${otpPg.error}"</span>
+             <span class="code-attr">@bind-Value</span>=<span class="code-val">"code"</span> <span class="code-kw">/></span>
+
+<span class="code-cm">@* DsInputOtp.razor — component definition *@</span>
+<span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"@($"otp{(HasError ? " otp--error" : "")}")"</span><span class="code-kw">></span>
+  <span class="code-kw">@for</span> (<span class="code-cls">int</span> i = 0; i &#60; Digits; i++) {
+    <span class="code-kw">@if</span> (Grouped &amp;&amp; i == Digits / 2 &amp;&amp; i > 0) { <span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"otp__sep"</span><span class="code-kw">>–&#60;/span></span> }
+    <span class="code-kw">&#60;input</span> <span class="code-cls">class</span>=<span class="code-val">"otp__box"</span> <span class="code-attr">inputmode</span>=<span class="code-val">"numeric"</span> <span class="code-attr">maxlength</span>=<span class="code-val">"1"</span> <span class="code-kw">/></span>
+  }
+<span class="code-kw">&#60;/div></span>
+<span class="code-kw">@if</span> (HasError) { <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"otp-msg otp-msg--err"</span><span class="code-kw">></span>That code isn't right — check it and try again.<span class="code-kw">&#60;/div></span> }
+
+<span class="code-kw">@code</span> {
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> <span class="code-cls">int</span> Digits { get; set; } = 6;
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> <span class="code-cls">bool</span> Grouped { get; set; }
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> <span class="code-cls">bool</span> HasError { get; set; }
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> <span class="code-cls">string</span> Value { get; set; } = <span class="code-val">""</span>;
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> EventCallback&#60;<span class="code-cls">string</span>> ValueChanged { get; set; }
+}`;
+}
+
+function getOtpCodeTSX(){
+  return `<span class="code-cm">// DsInputOtp.tsx</span>
+<span class="code-kw">import</span> React, { useState } <span class="code-kw">from</span> <span class="code-val">'react'</span>;
+
+<span class="code-kw">interface</span> <span class="code-cls">DsInputOtpProps</span> {
+  digits?: <span class="code-cls">number</span>;
+  grouped?: <span class="code-cls">boolean</span>;
+  hasError?: <span class="code-cls">boolean</span>;
+  onChange?: (value: <span class="code-cls">string</span>) => <span class="code-cls">void</span>;
+}
+
+<span class="code-kw">export const</span> <span class="code-cls">DsInputOtp</span>: React.FC&#60;DsInputOtpProps> = ({ digits = 6, grouped = <span class="code-kw">false</span>, hasError = <span class="code-kw">false</span>, onChange }) => {
+  <span class="code-kw">const</span> [value, setValue] = useState(<span class="code-val">''</span>);
+  <span class="code-kw">const</span> mid = Math.floor(digits / 2);
+
+  <span class="code-kw">return</span> (
+    &#60;>
+      &#60;div className={\`otp\${hasError ? <span class="code-val">' otp--error'</span> : <span class="code-val">''</span>}\`} data-otp>
+        {Array.from({ length: digits }).map((_, i) => (
+          &#60;React.Fragment key={i}>
+            {grouped &amp;&amp; i === mid &amp;&amp; i > 0 &amp;&amp; &#60;span className=<span class="code-val">"otp__sep"</span>>–&#60;/span>}
+            &#60;input
+              className=<span class="code-val">"otp__box"</span>
+              inputMode=<span class="code-val">"numeric"</span>
+              maxLength={1}
+              value={value[i] ?? <span class="code-val">''</span>}
+              onChange={(e) => {
+                <span class="code-kw">const</span> next = value.split(<span class="code-val">''</span>);
+                next[i] = e.target.value.replace(/\\D/g, <span class="code-val">''</span>);
+                <span class="code-kw">const</span> joined = next.join(<span class="code-val">''</span>).slice(0, digits);
+                setValue(joined);
+                onChange?.(joined);
+              }}
+            />
+          &#60;/React.Fragment>
+        ))}
+      &#60;/div>
+      {hasError &amp;&amp; &#60;div className=<span class="code-val">"otp-msg otp-msg--err"</span>>That code isn't right — check it and try again.&#60;/div>}
+    &#60;/>
+  );
+};
+
+<span class="code-cm">// Usage</span>
+&#60;DsInputOtp digits={${otpPg.digits}} grouped={${otpPg.grouped}} hasError={${otpPg.error}} /></span>`;
+}
+
+function getOtpCode(){
+  return otpLangSel==='blazor' ? getOtpCodeBlazor()
+       : otpLangSel==='tsx'    ? getOtpCodeTSX()
+       : getOtpCodeHTML();
+}
+
+const OTP_CODE_TAB_CFG = {
+  rootId: 'otp-code-tab', idPrefix: 'otp', langs: OTP_LANGS,
+  getCurrentLang: ()=>otpLangSel, blockId: 'otp-code-block',
+  setLangFnName: 'setOtpLang', keydownFnName: 'otpLangKeydown', copyFnName: 'otpCopyCode',
+};
+function setOtpLang(lang){ langSwitchSet({...OTP_CODE_TAB_CFG, setLang:(l)=>{otpLangSel=l;}, getCode:getOtpCode}, lang); }
+function otpLangKeydown(e){ langSwitchKeydown({...OTP_CODE_TAB_CFG, setLang:(l)=>{otpLangSel=l;}, getCode:getOtpCode}, e); }
+function otpCopyCode(){
+  const b = document.getElementById('otp-code-block');
+  if(!b) return;
+  navigator.clipboard.writeText(b.innerText||b.textContent).catch(()=>{});
+  const btn = document.getElementById('otp-copy-btn');
+  if(btn){ btn.textContent = 'Copied!'; setTimeout(()=>btn.textContent='Copy', 2000); }
+}
+function renderOtpCodeTab(){
+  renderLangCodeTab({...OTP_CODE_TAB_CFG, title:'Code', desc:'Live snippet matching the current Playground configuration &mdash; switch to Overview to change it.'});
+  const block = document.getElementById('otp-code-block');
+  if(block) block.innerHTML = getOtpCode();
+}
+
+function otpTabSwitch(tab){
+  secTabSwitch('s-input-otp', 'otp-tabs-list', 'data-otp-tab', 'data-otp-panel', tab);
+}
+
+function renderOtpPages(){
+  try { renderOtpCodeTab();     } catch(e){ console.error('otp-code-tab', e); }
+  try { renderOtpPlayground();  } catch(e){ console.error('otp-playground', e); }
+  try { renderOtpKeyVariants(); } catch(e){ console.error('otp-keyvariants', e); }
+  try { renderOtpInSitu();      } catch(e){ console.error('otp-insitu', e); }
+  try { renderOtpReference();   } catch(e){ console.error('otp-reference', e); }
+}
+renderOtpPages();
 /* Icons — shared SVG icon system (used by the Icons gallery and Navigation) */
 const ICONS = {
   home: {vb:'0 0 576 512', d:'<path d="M575.8 255.5c0 18-15 32.1-32 32.1l-32 0 .7 160.2c0 2.7-.2 5.4-.5 8.1l0 16.2c0 22.1-17.9 40-40 40l-16 0c-1.1 0-2.2 0-3.3-.1c-1.4 .1-2.8 .1-4.2 .1L416 512l-24 0c-22.1 0-40-17.9-40-40l0-24 0-64c0-17.7-14.3-32-32-32l-64 0c-17.7 0-32 14.3-32 32l0 64 0 24c0 22.1-17.9 40-40 40l-24 0-31.9 0c-1.5 0-3-.1-4.5-.2c-1.2 .1-2.4 .2-3.6 .2l-16 0c-22.1 0-40-17.9-40-40l0-112c0-.9 0-1.9 .1-2.8l0-69.7-32 0c-18 0-32-14-32-32.1c0-9 3-17 10-24L266.4 8c7-7 15-8 22-8s15 2 21 7L564.8 231.5c8 7 12 15 11 24z"/>'},
@@ -21892,6 +23088,9 @@ try { renderSectionChangelogs(); } catch(e){ console.error('section-changelog',e
   {secId:'s-charts-meters', panelId:'cmeter-changelog-panel'},
   {secId:'s-charts-distribution', panelId:'cdist-changelog-panel'},
   {secId:'s-nav', panelId:'nav-changelog-panel'},
+  {secId:'s-carousel', panelId:'car-changelog-panel'},
+  {secId:'s-empty-state', panelId:'es-changelog-panel'},
+  {secId:'s-input-otp', panelId:'otp-changelog-panel'},
 ].forEach(({secId, panelId})=>{
   try {
     const chlog = document.querySelector(`#${secId} > .sec-chlog`);
