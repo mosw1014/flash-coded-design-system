@@ -200,6 +200,8 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;font-feature-
 .bar__nav a.on{color:var(--chrome-accent);background:rgba(255,255,255,.07)}
 .bar__toggle{display:flex;align-items:center;gap:7px;cursor:pointer;border:none;background:rgba(255,255,255,.07);border-radius:20px;padding:5px 11px 5px 8px;color:rgba(255,255,255,.65);font-family:inherit;font-size:11px;font-weight:500;transition:background .15s}
 .bar__toggle:hover{background:rgba(255,255,255,.12)}
+.bar__feedback{display:flex;align-items:center;gap:6px;cursor:pointer;background:rgba(255,255,255,.07);border-radius:20px;padding:6px 12px;color:rgba(255,255,255,.65);font-family:inherit;font-size:11px;font-weight:500;text-decoration:none;white-space:nowrap;margin-right:10px;transition:background .15s}
+.bar__feedback:hover{background:rgba(255,255,255,.12)}
 .tk{width:26px;height:15px;border-radius:8px;background:rgba(255,255,255,.2);position:relative;transition:background .2s;flex-shrink:0}
 [data-theme="dark"] .tk{background:var(--chrome-accent)}
 .tk__k{width:11px;height:11px;border-radius:50%;background:#fff;position:absolute;top:2px;left:2px;transition:transform .2s}
@@ -2676,6 +2678,10 @@ body.home .main{max-width:none;margin:0;padding:0}
     <div class="bar__search-results" id="nav-search-results" hidden></div>
   </div>
   <div class="bar__sp"></div>
+  <a class="bar__feedback" href="https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=I1DsSEhbpEuDfMviorgn_sjCCYT7iaRFuCqvxO5X6jtURDI2T1BRRkk5OExCUDQ0SkdZQkVKRzhEWS4u" target="_blank" rel="noopener noreferrer">
+    <svg width="14" height="14" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="m231.87-231.87-82.44 82.44q-21.63 21.63-49.59 9.77-27.97-11.86-27.97-42.36v-615.11q0-37.78 26.61-64.39t64.39-26.61h634.26q37.78 0 64.39 26.61t26.61 64.39v474.26q0 37.78-26.61 64.39t-64.39 26.61H231.87Zm-34-91h599.26v-474.26H162.87v508.5l35-34.24Zm-35 0v-474.26 474.26Z"/></svg>
+    Give feedback
+  </a>
   <button class="bar__toggle" onclick="toggleTheme()">
     <div class="tk"><div class="tk__k"></div></div>
     <span id="theme-lbl">&#9728; Light</span>
@@ -14198,12 +14204,15 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.73.0';
+const SYSTEM_VERSION = '1.74.0';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.74.0', date:'2026-08-17', author:'Mo', title:'Added a "Give feedback" link to the top navbar', changes:[
+        ['added','New .bar__feedback link in the header (.bar__inner), between the search field and the theme toggle — pairs the shared ICONS registry\'s outline "comment" glyph with "Give feedback" text and opens the team\'s Microsoft Forms feedback form in a new tab'],
+      ]},
       {version:'1.73.0', date:'2026-08-12', author:'Mo', title:'Icons rebuilt on Material Symbols, replacing Font Awesome', changes:[
         ['changed','All 66 icons in the shared ICONS registry (Icons library + every sidebar/nav item that reads from it) swapped from Font Awesome 6 Solid/Outline paths to Google Material Symbols Rounded — fill 1 (Solid) / fill 0 (Outline), weight 500, grade 0, optical size 24. The cow glyph (Flash’s own bull mark, not an FA icon) was left untouched'],
         ['changed','Side nav’s hand-authored logout and collapse-chevron icons (SNAV_LOGOUT_ICON/SNAV_COLLAPSE_ICON) restyled to matching Material Symbols glyphs (logout, chevron_left) so they stay visually consistent with the rest of the now-Material icon set'],
