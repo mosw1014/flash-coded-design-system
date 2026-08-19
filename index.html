@@ -4887,53 +4887,23 @@ body.home .main{max-width:none;margin:0;padding:0}
   </pre>
 </details>
     </section>
-    <section class="sec" id="s-empty-state">
+    <section class="sec sec--tabbed" id="s-empty-state">
+      <div class="sec-hero">
       <div class="sec__head">
-        <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Empty State <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.0</span></h1>
-        <p class="sec__desc">Shown when a table, list or view has no rows to display. Pairs a muted glyph with a plain-language explanation and a single primary action to move the user forward.</p>
-      </div>
-
-      <div class="type-sub">
-        <div class="type-sub__title">Empty state</div>
-        <div class="type-sub__desc">A dashed-border card centring a muted glyph, a title, a short explanation and one primary action.</div>
-        <div class="dd-empty">
-          <div class="dd-empty__icon">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M4 7h16M4 12h16M4 17h9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-          </div>
-          <div class="dd-empty__title">No transactions match these filters</div>
-          <div class="dd-empty__desc">Nothing was recorded for the selected region and date range. Try widening the range or clearing the region filter.</div>
-          <button class="dd-empty__action" type="button">Clear filters</button>
-        </div>
-      </div>
-
-      <div class="type-sub">
-        <div class="type-sub__title">When to use</div>
-        <div class="type-sub__desc">An empty state replaces a table, list or grid only when it has zero items &mdash; it&rsquo;s a moment, not a decoration.</div>
-        <div class="sel-usage">
-          <div class="sel-usage__card">
-            <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
-            <ul class="sel-usage__list">
-              <li>Always give an empty state a plain-language reason for why there&rsquo;s nothing to show.</li>
-              <li>Include a single primary action when there&rsquo;s an obvious next step &mdash; clear a filter, create the first record.</li>
-              <li>Keep the glyph muted and simple; it should support the message, not compete with it.</li>
-            </ul>
-          </div>
-          <div class="sel-usage__card">
-            <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don&rsquo;t</div>
-            <ul class="sel-usage__list">
-              <li>Don&rsquo;t leave an empty state blank or purely decorative &mdash; it should always explain what happened and what to do next.</li>
-              <li>Don&rsquo;t use an empty state for a loading moment &mdash; that&rsquo;s a skeleton loader.</li>
-              <li>Don&rsquo;t stack more than one primary action &mdash; move secondary options into a link or menu.</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <details class="ai-ctx">
+        <h1 class="sec__title">Empty State</h1>
+        <div class="sec-header-meta">
+          <span class="comp-ver-badge" style="margin-left:0">v2.0.0</span>
+          <details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-empty-state">
 {
-  "status": "static",
+  "status": "js-rendered",
+  "builderFunctions": [
+    "ES_SCENARIOS",
+    "esIconSVG",
+    "makeEmptyStateHTML",
+    "makeEmptyStateEl"
+  ],
   "realClasses": [
     ".dd-empty",
     ".dd-empty__icon",
@@ -4942,6 +4912,7 @@ body.home .main{max-width:none;margin:0;padding:0}
     ".dd-empty__action"
   ],
   "css": "/* ── EMPTY STATE ── */\n.dd-empty { border:1.5px dashed var(--chrome-border);border-radius:12px;padding:40px 24px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px }\n.dd-empty__icon { width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:var(--chrome-nav);color:var(--chrome-muted) }\n.dd-empty__title { font-size:14px;font-weight:800;color:var(--chrome-txt) }\n.dd-empty__desc { font-size:12.5px;color:var(--chrome-muted);max-width:340px;line-height:1.55 }\n.dd-empty__action { margin-top:6px;font-family:inherit;font-size:12.5px;font-weight:700;color:#fff;background:#000;border:none;border-radius:8px;padding:9px 16px;cursor:pointer;transition:background .15s }\n.dd-empty__action:hover { background:#252525 }\n[data-theme=\"dark\"] .dd-empty__action { background:#fff;color:#000 }\n[data-theme=\"dark\"] .dd-empty__action:hover { background:#f0f0f0 }",
+  "js": "const ES_SCENARIOS = [\n  {key:'no-data',       label:'No data yet',       icon:'list',   title:'No transactions yet',                     desc:'Once a transaction is recorded, it will show up here.',                                  action:'Create manually'},\n  {key:'no-results',    label:'No search results', icon:'search', title:'No results for &amp;ldquo;gauteng&amp;rdquo;',    desc:'Try a different spelling, or clear the search.',                                          action:'Clear search'},\n  {key:'filtered-zero', label:'Filtered to zero',  icon:'filter', title:'No transactions match these filters',    desc:'Nothing was recorded for the selected region and date range.',                            action:'Clear filters'},\n  {key:'error',         label:'Error loading',     icon:'error',  title:'Couldn&amp;rsquo;t load this data',           desc:'Something went wrong on our end. Try again in a moment.',                                 action:'Retry'},\n];\n\nfunction esIconSVG(key, size){\n  const s = size||22;\n  const paths = {\n    list:   '&lt;path d=\"M4 7h16M4 12h16M4 17h9\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\"/&gt;',\n    search: '&lt;circle cx=\"10.5\" cy=\"10.5\" r=\"6.5\" stroke=\"currentColor\" stroke-width=\"2\"/&gt;&lt;path d=\"M20 20l-4.35-4.35\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\"/&gt;',\n    filter: '&lt;path d=\"M3 5h18M6 12h12M10 19h4\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\"/&gt;',\n    error:  '&lt;circle cx=\"12\" cy=\"12\" r=\"9\" stroke=\"currentColor\" stroke-width=\"2\"/&gt;&lt;path d=\"M12 8v5\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\"/&gt;&lt;circle cx=\"12\" cy=\"16\" r=\"1.1\" fill=\"currentColor\"/&gt;',\n  };\n  return `&lt;svg width=\"${s}\" height=\"${s}\" viewBox=\"0 0 24 24\" fill=\"none\"&gt;${paths[key]||paths.list}&lt;/svg&gt;`;\n}\n\nfunction makeEmptyStateHTML(iconKey, title, desc, actionLabel){\n  const iconBlock = iconKey ? `&lt;div class=\"dd-empty__icon\"&gt;${esIconSVG(iconKey)}&lt;/div&gt;` : '';\n  const actionBlock = actionLabel ? `&lt;button class=\"dd-empty__action\" type=\"button\"&gt;${esEsc(actionLabel)}&lt;/button&gt;` : '';\n  return `&lt;div class=\"dd-empty\"&gt;${iconBlock}&lt;div class=\"dd-empty__title\"&gt;${title}&lt;/div&gt;&lt;div class=\"dd-empty__desc\"&gt;${desc}&lt;/div&gt;${actionBlock}&lt;/div&gt;`;\n}\n\nfunction makeEmptyStateEl(){\n  const wrap = document.createElement('div');\n  wrap.className = 'dd-empty';\n  let inner = '';\n  if(esg.icon) inner += `&lt;div class=\"dd-empty__icon\"&gt;${esIconSVG('filter')}&lt;/div&gt;`;\n  inner += `&lt;div class=\"dd-empty__title\"&gt;${esEsc(esg.title||'No data yet')}&lt;/div&gt;`;\n  inner += `&lt;div class=\"dd-empty__desc\"&gt;${esEsc(esg.desc||'')}&lt;/div&gt;`;\n  wrap.innerHTML = inner;\n  if(esg.actionOn){\n    const btn = document.createElement('button');\n    btn.className = 'dd-empty__action'; btn.type = 'button';\n    btn.textContent = esg.actionLabel||'Action';\n    wrap.appendChild(btn);\n  }\n  return wrap;\n}",
   "usage": {
     "do": [
       "Always give an empty state a plain-language reason for why there’s nothing to show.",
@@ -4949,16 +4920,81 @@ body.home .main{max-width:none;margin:0;padding:0}
       "Keep the glyph muted and simple; it should support the message, not compete with it."
     ],
     "dont": [
-      "Don’t leave an empty state blank or purely decorative — it should always explain what happened and what to do next.",
-      "Don’t use an empty state for a loading moment — that’s a skeleton loader.",
-      "Don’t stack more than one primary action — move secondary options into a link or menu."
+      "Don't leave an empty state blank or purely decorative — it should always explain what happened and what to do next.",
+      "Don't use an empty state for a loading moment — that's a skeleton loader.",
+      "Don't stack more than one primary action — move secondary options into a link or menu."
     ]
   },
-  "contentHash": "cb8c2d800416cb326cdb2f4fbdf21565c7de4dd32491e240f24615fc294d7ee9",
-  "note": "Split out of the Lists section (2026-08-04), which itself was split from the retired Data Display section — now its own top-level component. Fully static hand-authored markup; the icon is an inline SVG, not from the Icons library."
+  "contentHash": "e873c4af10694eac4898a0bafd58b3925ce4e8e5c2002d55e5f53512d686fae2",
+  "note": "makeEmptyStateHTML is the minimal real-markup builder (icon+title+desc+action -&gt; .dd-empty HTML string); makeEmptyStateEl is the fuller playground version reading shared esg state. ES_SCENARIOS drives the Overview tab's Key scenarios showcase (no colour/size axis exists for this component, unlike Pills). esgRefresh/getEmptyStateCodeHTML/renderEmptyStatePlayground/renderEmptyStateReference/renderEmptyStateInSitu are doc-site-only playground plumbing, excluded."
 }
   </pre>
 </details>
+        </div>
+      </div>
+      <div class="sec-hero__preview"><div class="mk"><div class="mk-card" style="width:64%;overflow:hidden;padding:18px 12px;display:flex;flex-direction:column;align-items:center;gap:6px;border-style:dashed"><span style="width:26px;height:26px;border-radius:8px;background:var(--chrome-hover);display:flex;align-items:center;justify-content:center;color:var(--chrome-muted)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M4 7h16M4 12h16M4 17h9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span><span class="mk-bar mk-bar--txt" style="width:70%"></span><span class="mk-bar" style="width:85%"></span></div></div></div>
+      </div>
+      <div class="tabs-list sec-tabs" id="es-tabs-list">
+        <button type="button" class="tab-item on" data-es-tab="overview" onclick="esTabSwitch('overview')"><span class="tab-item__inner"><span class="tab-item__label">Overview</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-es-tab="style" onclick="esTabSwitch('style')"><span class="tab-item__inner"><span class="tab-item__label">Style</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-es-tab="code" onclick="esTabSwitch('code')"><span class="tab-item__inner"><span class="tab-item__label">Code</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-es-tab="changelog" onclick="esTabSwitch('changelog')"><span class="tab-item__inner"><span class="tab-item__label">Changelog</span></span><span class="tab-item__line"></span></button>
+      </div>
+      <div class="tabs-panel on" data-es-panel="overview">
+        <div id="es-playground" class="type-sub"></div>
+        <div id="es-scenarios" class="type-sub"></div>
+        <div id="es-insitu" class="type-sub"></div>
+        <div class="type-sub cpg-variants" id="es-usage">
+          <div class="cpg-section-heading">
+            <div class="cpg-layout__title">Do's and don'ts</div>
+            <div class="cpg-layout__desc">An empty state replaces a table, list or grid only when it has zero items &mdash; it's a moment, not a decoration.</div>
+          </div>
+          <div class="cpg-section-block">
+            <div class="sel-usage">
+              <div class="sel-usage__card">
+                <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
+                <ul class="sel-usage__list">
+                  <li>Always give an empty state a plain-language reason for why there&rsquo;s nothing to show.</li>
+                  <li>Include a single primary action when there&rsquo;s an obvious next step &mdash; clear a filter, create the first record.</li>
+                  <li>Keep the glyph muted and simple; it should support the message, not compete with it.</li>
+                </ul>
+                <div class="spec-usage-demo" style="gap:10px">
+                  <div class="dd-empty" style="padding:20px 16px;gap:6px">
+                    <div class="dd-empty__icon" style="width:32px;height:32px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 7h16M4 12h16M4 17h9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
+                    <div class="dd-empty__title" style="font-size:12.5px">No invoices yet</div>
+                    <div class="dd-empty__desc" style="font-size:11px">Invoices you create will show up here.</div>
+                    <button class="dd-empty__action" style="font-size:11px;padding:6px 12px" type="button">Create invoice</button>
+                  </div>
+                </div>
+              </div>
+              <div class="sel-usage__card">
+                <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don't</div>
+                <ul class="sel-usage__list">
+                  <li>Don't leave an empty state blank or purely decorative &mdash; it should always explain what happened and what to do next.</li>
+                  <li>Don't use an empty state for a loading moment &mdash; that's a skeleton loader.</li>
+                  <li>Don't stack more than one primary action &mdash; move secondary options into a link or menu.</li>
+                </ul>
+                <div class="spec-usage-demo" style="gap:10px">
+                  <div class="dd-empty" style="padding:20px 16px;gap:6px">
+                    <div class="dd-empty__title" style="font-size:12.5px">Nothing here</div>
+                    <button class="dd-empty__action" style="font-size:11px;padding:6px 12px" type="button">Retry</button>
+                    <button class="dd-empty__action" style="font-size:11px;padding:6px 12px" type="button">Import</button>
+                    <button class="dd-empty__action" style="font-size:11px;padding:6px 12px" type="button">Contact support</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tabs-panel" data-es-panel="style">
+        <div id="es-reference" class="type-sub spec-panel spec-stack"></div>
+      </div>
+      <div class="tabs-panel" data-es-panel="code">
+        <div id="es-code-playground" class="type-sub spec-panel spec-code-playground"></div>
+        <div id="es-code-tab" class="type-sub spec-panel"></div>
+      </div>
+      <div class="tabs-panel" data-es-panel="changelog" id="es-changelog-panel"></div>
     </section>
     <section class="sec" id="s-tables">
       <div class="sec__head">
@@ -8019,6 +8055,10 @@ function toggleTheme() {
   try { if(typeof renderBadgeInSitu==='function' && document.getElementById('badge-insitu')) renderBadgeInSitu(); } catch(e){}
   try { if(typeof renderBadgeReference==='function' && document.getElementById('badge-reference')) renderBadgeReference(); } catch(e){}
   try { if(typeof renderPillReference==='function' && document.getElementById('pill-reference')) renderPillReference(); } catch(e){}
+  try { if(typeof renderEmptyStatePlayground==='function' && document.getElementById('es-playground')) renderEmptyStatePlayground(); } catch(e){}
+  try { if(typeof renderEmptyStateScenarios==='function' && document.getElementById('es-scenarios')) renderEmptyStateScenarios(); } catch(e){}
+  try { if(typeof renderEmptyStateInSitu==='function' && document.getElementById('es-insitu')) renderEmptyStateInSitu(); } catch(e){}
+  try { if(typeof renderEmptyStateReference==='function' && document.getElementById('es-reference')) renderEmptyStateReference(); } catch(e){}
   try { if(typeof renderAvatarPlayground==='function' && document.getElementById('avatar-playground')) renderAvatarPlayground(); } catch(e){}
   try { if(typeof renderAvatarKeyTypes==='function' && document.getElementById('avatar-keytypes')) renderAvatarKeyTypes(); } catch(e){}
   try { if(typeof renderAvatarInSitu==='function' && document.getElementById('avatar-insitu')) renderAvatarInSitu(); } catch(e){}
@@ -10696,6 +10736,453 @@ function pillTabSwitch(tab){
   if(!nav) return;
   nav.querySelectorAll('.tab-item').forEach(btn=>btn.classList.toggle('on', btn.getAttribute('data-pill-tab')===tab));
   document.querySelectorAll('#s-chips .tabs-panel[data-pill-panel]').forEach(p=>p.classList.toggle('on', p.getAttribute('data-pill-panel')===tab));
+}
+
+/* ============================================================
+   EMPTY STATE
+   Same tabbed-page treatment as Pills (.sec--tabbed): Overview /
+   Style / Code / Changelog, a shared-state playground rendered
+   into two mounts, and a three-language code panel. Empty State
+   has no colour or size axis, so "Key variants" is replaced by
+   "Key scenarios" — four common reasons a view has zero rows,
+   each with its own icon/title/desc rather than a colour swatch.
+============================================================ */
+const ES_SCENARIOS = [
+  {key:'no-data',       label:'No data yet',       icon:'list',   title:'No transactions yet',                     desc:'Once a transaction is recorded, it will show up here.',                                  action:'Create manually'},
+  {key:'no-results',    label:'No search results', icon:'search', title:'No results for &ldquo;gauteng&rdquo;',    desc:'Try a different spelling, or clear the search.',                                          action:'Clear search'},
+  {key:'filtered-zero', label:'Filtered to zero',  icon:'filter', title:'No transactions match these filters',    desc:'Nothing was recorded for the selected region and date range.',                            action:'Clear filters'},
+  {key:'error',         label:'Error loading',     icon:'error',  title:'Couldn&rsquo;t load this data',           desc:'Something went wrong on our end. Try again in a moment.',                                 action:'Retry'},
+];
+
+function esEsc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&#60;').replace(/>/g,'&#62;').replace(/"/g,'&quot;'); }
+
+/* Icon glyph library for the empty-state icon slot — plain inline SVG,
+   not sourced from the Icons library (matches the original hand-authored glyph). */
+function esIconSVG(key, size){
+  const s = size||22;
+  const paths = {
+    list:   '<path d="M4 7h16M4 12h16M4 17h9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>',
+    search: '<circle cx="10.5" cy="10.5" r="6.5" stroke="currentColor" stroke-width="2"/><path d="M20 20l-4.35-4.35" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>',
+    filter: '<path d="M3 5h18M6 12h12M10 19h4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>',
+    error:  '<circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M12 8v5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="16" r="1.1" fill="currentColor"/>',
+  };
+  return `<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none">${paths[key]||paths.list}</svg>`;
+}
+
+/* Minimal real-markup builder: icon+title+desc+action -> .dd-empty HTML string. */
+function makeEmptyStateHTML(iconKey, title, desc, actionLabel){
+  const iconBlock = iconKey ? `<div class="dd-empty__icon">${esIconSVG(iconKey)}</div>` : '';
+  const actionBlock = actionLabel ? `<button class="dd-empty__action" type="button">${esEsc(actionLabel)}</button>` : '';
+  return `<div class="dd-empty">${iconBlock}<div class="dd-empty__title">${title}</div><div class="dd-empty__desc">${desc}</div>${actionBlock}</div>`;
+}
+
+/* ── EMPTY STATE PLAYGROUND ── */
+let esg = { icon:true, title:'No transactions match these filters', desc:'Nothing was recorded for the selected region and date range. Try widening the range or clearing the region filter.', actionOn:true, actionLabel:'Clear filters', dismissed:false, theme:'light' };
+
+function makeEmptyStateEl(){
+  const wrap = document.createElement('div');
+  wrap.className = 'dd-empty';
+  let inner = '';
+  if(esg.icon) inner += `<div class="dd-empty__icon">${esIconSVG('filter')}</div>`;
+  inner += `<div class="dd-empty__title">${esEsc(esg.title||'No data yet')}</div>`;
+  inner += `<div class="dd-empty__desc">${esEsc(esg.desc||'')}</div>`;
+  wrap.innerHTML = inner;
+  if(esg.actionOn){
+    const btn = document.createElement('button');
+    btn.className = 'dd-empty__action'; btn.type = 'button';
+    btn.textContent = esg.actionLabel||'Action';
+    wrap.appendChild(btn);
+  }
+  return wrap;
+}
+
+function getEmptyStateCodeHTML(){
+  const iconLine = esg.icon ? `\n  <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"dd-empty__icon"</span><span class="code-kw">>&#60;svg ...>&#60;/svg>&#60;/div></span>` : '';
+  const actionLine = esg.actionOn ? `\n  <span class="code-kw">&#60;button</span> <span class="code-cls">class</span>=<span class="code-val">"dd-empty__action"</span> <span class="code-attr">type</span>=<span class="code-val">"button"</span><span class="code-kw">></span>${esEsc(esg.actionLabel||'Action')}<span class="code-kw">&#60;/button></span>` : '';
+  return `<span class="code-cm">/* Flash · ${cap(esg.theme)} · Empty state */</span>
+<span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"dd-empty"</span><span class="code-kw">></span>${iconLine}
+  <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"dd-empty__title"</span><span class="code-kw">></span>${esEsc(esg.title||'')}<span class="code-kw">&#60;/div></span>
+  <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"dd-empty__desc"</span><span class="code-kw">></span>${esEsc(esg.desc||'')}<span class="code-kw">&#60;/div></span>${actionLine}
+<span class="code-kw">&#60;/div></span>`;
+}
+
+/* ── CODE PANEL LANGUAGES ──
+   HTML/CSS is the source of truth (real .dd-empty markup). Blazor and React
+   TSX are illustrative wrappers over the same classes, so the icon/title/
+   desc/action strings stay the only things a consumer ports. */
+const ES_LANGS = [
+  {key:'html',   label:'HTML / CSS', file:'empty-state.html'},
+  {key:'blazor', label:'Blazor',     file:'DsEmptyState.razor'},
+  {key:'tsx',    label:'React TSX',  file:'DsEmptyState.tsx'},
+];
+let esLang = 'html';
+
+function getEmptyStateCodeBlazor(){
+  const opt = esg.icon ? `\n        <span class="code-attr">ShowIcon</span>=<span class="code-val">"true"</span>` : '';
+  const actionOpt = esg.actionOn ? `\n        <span class="code-attr">ActionLabel</span>=<span class="code-val">"${esEsc(esg.actionLabel||'Action')}"</span> <span class="code-attr">OnAction</span>=<span class="code-val">"HandleAction"</span>` : '';
+  return `<span class="code-cm">@* DsEmptyState.razor — usage *@</span>
+<span class="code-kw">&#60;DsEmptyState</span> <span class="code-attr">Title</span>=<span class="code-val">"${esEsc(esg.title||'')}"</span>
+              <span class="code-attr">Description</span>=<span class="code-val">"${esEsc(esg.desc||'')}"</span>${opt}${actionOpt} <span class="code-kw">/></span>
+
+<span class="code-cm">@* DsEmptyState.razor — component definition *@</span>
+<span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"dd-empty"</span><span class="code-kw">></span>
+  <span class="code-kw">@if</span> (ShowIcon) {
+    <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"dd-empty__icon"</span><span class="code-kw">>@IconContent&#60;/div></span>
+  }
+  <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"dd-empty__title"</span><span class="code-kw">></span>@Title<span class="code-kw">&#60;/div></span>
+  <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"dd-empty__desc"</span><span class="code-kw">></span>@Description<span class="code-kw">&#60;/div></span>
+  <span class="code-kw">@if</span> (!<span class="code-cls">string</span>.IsNullOrEmpty(ActionLabel)) {
+    <span class="code-kw">&#60;button</span> <span class="code-cls">class</span>=<span class="code-val">"dd-empty__action"</span> <span class="code-attr">type</span>=<span class="code-val">"button"</span> <span class="code-attr">@onclick</span>=<span class="code-val">"OnAction"</span><span class="code-kw">></span>@ActionLabel<span class="code-kw">&#60;/button></span>
+  }
+<span class="code-kw">&#60;/div></span>
+
+<span class="code-kw">@code</span> {
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> <span class="code-cls">string</span> Title { get; set; } = <span class="code-val">""</span>;
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> <span class="code-cls">string</span> Description { get; set; } = <span class="code-val">""</span>;
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> <span class="code-cls">bool</span> ShowIcon { get; set; }
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> <span class="code-cls">string</span>? ActionLabel { get; set; }
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> RenderFragment IconContent { get; set; }
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> EventCallback OnAction { get; set; }
+}`;
+}
+
+function getEmptyStateCodeTSX(){
+  const usageProps = `title=<span class="code-val">"${esEsc(esg.title||'')}"</span> description=<span class="code-val">"${esEsc(esg.desc||'')}"</span>`
+    + (esg.icon?' showIcon':'') + (esg.actionOn?` actionLabel=<span class="code-val">"${esEsc(esg.actionLabel||'Action')}"</span> onAction={handleAction}`:'');
+  return `<span class="code-cm">// DsEmptyState.tsx</span>
+<span class="code-kw">import</span> React <span class="code-kw">from</span> <span class="code-val">'react'</span>;
+
+<span class="code-kw">interface</span> <span class="code-cls">DsEmptyStateProps</span> {
+  title: <span class="code-cls">string</span>;
+  description: <span class="code-cls">string</span>;
+  icon?: React.ReactNode;
+  actionLabel?: <span class="code-cls">string</span>;
+  onAction?: () => <span class="code-cls">void</span>;
+}
+
+<span class="code-kw">export const</span> <span class="code-cls">DsEmptyState</span>: React.FC&#60;DsEmptyStateProps> = ({
+  title,
+  description,
+  icon,
+  actionLabel,
+  onAction,
+}) => (
+  &#60;div className=<span class="code-val">"dd-empty"</span>>
+    {icon &amp;&amp; &#60;div className=<span class="code-val">"dd-empty__icon"</span>>{icon}&#60;/div>}
+    &#60;div className=<span class="code-val">"dd-empty__title"</span>>{title}&#60;/div>
+    &#60;div className=<span class="code-val">"dd-empty__desc"</span>>{description}&#60;/div>
+    {actionLabel &amp;&amp; (
+      &#60;button className=<span class="code-val">"dd-empty__action"</span> type=<span class="code-val">"button"</span> onClick={onAction}>
+        {actionLabel}
+      &#60;/button>
+    )}
+  &#60;/div>
+);
+
+<span class="code-cm">// Usage</span>
+&#60;DsEmptyState ${usageProps} />`;
+}
+
+function getEmptyStateCode(){
+  return esLang==='blazor' ? getEmptyStateCodeBlazor()
+       : esLang==='tsx'    ? getEmptyStateCodeTSX()
+       : getEmptyStateCodeHTML();
+}
+
+function setEsLang(lang){
+  if(!ES_LANGS.some(l=>l.key===lang)) return;
+  esLang = lang;
+  document.querySelectorAll('#es-code-tab .code-seg__btn').forEach(b=>{
+    const on = b.dataset.lang===lang;
+    b.setAttribute('aria-selected', on ? 'true' : 'false');
+    b.setAttribute('tabindex', on ? '0' : '-1');
+  });
+  const file = document.getElementById('es-lang-file');
+  const meta = ES_LANGS.find(l=>l.key===lang);
+  if(file && meta) file.textContent = meta.file;
+  const block = document.getElementById('esg-code-block');
+  if(block) block.innerHTML = getEmptyStateCode();
+}
+
+function esLangKeydown(e){
+  const i = ES_LANGS.findIndex(l=>l.key===esLang);
+  let n = i;
+  if(e.key==='ArrowLeft')       n = (i - 1 + ES_LANGS.length) % ES_LANGS.length;
+  else if(e.key==='ArrowRight') n = (i + 1) % ES_LANGS.length;
+  else if(e.key==='Home')       n = 0;
+  else if(e.key==='End')        n = ES_LANGS.length - 1;
+  else return;
+  e.preventDefault();
+  setEsLang(ES_LANGS[n].key);
+  const btn = document.getElementById('es-lang-' + ES_LANGS[n].key);
+  if(btn) btn.focus();
+}
+
+function esgRefresh(){
+  document.querySelectorAll('.esg-stage-el').forEach(stage=>{
+    stage.innerHTML = '';
+    if(esg.dismissed){
+      stage.innerHTML = `<button class="cpg-reset" onclick="esgReset()">↺&nbsp;&nbsp;Bring it back</button>`;
+    } else {
+      stage.appendChild(makeEmptyStateEl());
+    }
+  });
+  document.querySelectorAll('.esg-title-input-el').forEach(inp=>{ if(document.activeElement !== inp) inp.value = esg.title; });
+  document.querySelectorAll('.esg-desc-input-el').forEach(inp=>{ if(document.activeElement !== inp) inp.value = esg.desc; });
+  document.querySelectorAll('.esg-action-input-el').forEach(inp=>{ if(document.activeElement !== inp) inp.value = esg.actionLabel; });
+  const block = document.getElementById('esg-code-block');
+  if(block) block.innerHTML = getEmptyStateCode();
+}
+
+/* Empty State Playground renders into more than one mount (the main
+   Overview demo, and a smaller copy on the Code tab) so both stay in
+   sync with the same shared esg state — same pattern as Pills' ppg. */
+const ES_PLAYGROUND_MOUNTS = [
+  {rootId:'es-playground', idSuffix:'', wrap:true, title:'Try the component', desc:'Adjust the filters to test component states.', headingAbove:'Use an empty state whenever a table, list or view has zero rows to show.'},
+  {rootId:'es-code-playground', idSuffix:'-code', style:'code', title:'Playground', desc:'Live demo of the component.'},
+];
+
+function renderEmptyStatePlayground(){
+  esg.theme = document.documentElement.getAttribute('data-theme')==='dark' ? 'dark' : 'light';
+  const sbg = stageBg(esg.theme);
+
+  const iconBtns = ['off','on'].map(x=>`<button class="btn-pg__pill${(esg.icon?(x==='on'):(x==='off'))?' on':''}" onclick="esgSet('icon','${x}')">${x==='on'?'With icon':'No icon'}</button>`).join('');
+  const actionBtns = ['off','on'].map(x=>`<button class="btn-pg__pill${(esg.actionOn?(x==='on'):(x==='off'))?' on':''}" onclick="esgSet('actionOn','${x}')">${x==='on'?'With action':'No action'}</button>`).join('');
+
+  ES_PLAYGROUND_MOUNTS.forEach(mount=>{
+    const root = document.getElementById(mount.rootId);
+    if(!root) return;
+    const s = mount.idSuffix;
+    const demo = `
+      <div class="btn-pg">
+        <div class="btn-pg__stage esg-stage-el" id="esg-stage${s}" style="background:${sbg}"></div>
+        <div class="btn-pg__ctrls">
+          <div class="btn-pg__group"><span class="btn-pg__clabel">Icon</span><div class="btn-pg__pill-row">${iconBtns}</div></div>
+          <div class="btn-pg__group"><span class="btn-pg__clabel">Action</span><div class="btn-pg__pill-row">${actionBtns}</div></div>
+          <div class="btn-pg__group"><span class="btn-pg__clabel">Title</span><input class="cpg-label-input esg-title-input-el" id="esg-title-input${s}" value="${esEsc(esg.title)}" maxlength="64" oninput="esgSetField('title', this.value)" placeholder="Title"></div>
+          <div class="btn-pg__group"><span class="btn-pg__clabel">Description</span><input class="cpg-label-input esg-desc-input-el" id="esg-desc-input${s}" value="${esEsc(esg.desc)}" maxlength="160" oninput="esgSetField('desc', this.value)" placeholder="Description"></div>
+          <div class="btn-pg__group"><span class="btn-pg__clabel">Action label</span><input class="cpg-label-input esg-action-input-el" id="esg-action-input${s}" value="${esEsc(esg.actionLabel)}" maxlength="24" oninput="esgSetField('actionLabel', this.value)" placeholder="Action"${esg.actionOn?'':' disabled'}></div>
+        </div>
+      </div>`;
+
+    if(mount.style==='code'){
+      root.innerHTML = `
+        <div class="type-sub__title">${mount.title}</div>
+        <div class="type-sub__desc">${mount.desc}</div>
+        <div class="cpg-section-outline">${demo}</div>`;
+      return;
+    }
+
+    const inner = `
+      <div class="cpg-layout">
+        <div class="cpg-layout__intro">
+          ${mount.wrap ? `<span class="cpg-cursor-icon">${CPG_CURSOR_ICON_SVG}</span>` : ''}
+          <div class="cpg-layout__title">${mount.title}</div>
+          <div class="cpg-layout__desc">${mount.desc}</div>
+        </div>
+        <div class="cpg-layout__demo">${demo}</div>
+      </div>`;
+    const wrapped = mount.wrap ? `<div class="cpg-section-block">${inner}</div>` : inner;
+    root.innerHTML = (mount.headingAbove ? `<div class="cpg-overview-heading"><span class="cpg-overview-heading__icon">${CPG_INFO_ICON_SVG}</span><span>${mount.headingAbove}</span></div>` : '') + wrapped;
+  });
+
+  esgRefresh();
+}
+
+function renderEmptyStateCodeTab(){
+  const root = document.getElementById('es-code-tab');
+  if(!root) return;
+  root.innerHTML = `
+    <div class="type-sub__title">Code</div>
+    <div class="type-sub__desc">Live snippet matching the current Playground configuration &mdash; switch to Overview to change it.</div>
+    <div class="cpg-section-outline">
+      <div class="code-panel code-panel--bare open">
+        <div class="code-panel__head">
+          <div class="code-seg" role="tablist" aria-label="Code language" onkeydown="esLangKeydown(event)">
+            ${ES_LANGS.map(l=>`<button type="button" role="tab" class="code-seg__btn" id="es-lang-${l.key}" data-lang="${l.key}" aria-selected="${esLang===l.key?'true':'false'}" aria-controls="esg-code-block" tabindex="${esLang===l.key?'0':'-1'}" onclick="setEsLang('${l.key}')">${l.label}</button>`).join('')}
+          </div>
+          <span class="code-lang-file" id="es-lang-file">${(ES_LANGS.find(l=>l.key===esLang)||ES_LANGS[0]).file}</span>
+          <button class="code-copy-btn" onclick="esgCopyCode()" id="esg-copy-btn">Copy</button>
+        </div>
+        <div class="code-body"><div class="code-block" id="esg-code-block" role="tabpanel" aria-live="polite"></div></div>
+      </div>
+    </div>`;
+}
+
+function renderEmptyStateScenarios(){
+  const root = document.getElementById('es-scenarios');
+  if(!root) return;
+  const theme = currentTheme();
+  const sbg = stageBg(theme);
+
+  const cells = ES_SCENARIOS.map(sc=>`
+    <div class="spec-cell">
+      <div class="spec-cell__stage" style="background:${sbg};padding:16px 12px">${makeEmptyStateHTML(sc.icon, sc.title, sc.desc, sc.action)}</div>
+      <div class="spec-cell__name">${sc.label}</div>
+      <div class="spec-cell__desc">${sc.desc}</div>
+    </div>`).join('');
+
+  root.innerHTML = `
+    <div class="cpg-section-heading">
+      <div class="cpg-layout__title">Key scenarios</div>
+      <div class="cpg-layout__desc">Four common reasons a view has zero rows &mdash; match the copy and action to the real cause, not a generic placeholder.</div>
+    </div>
+    <div class="cpg-section-block">
+      <div class="spec-grid">${cells}</div>
+    </div>`;
+}
+
+function renderEmptyStateInSitu(){
+  const root = document.getElementById('es-insitu');
+  if(!root) return;
+  const theme = currentTheme();
+  const sbg = stageBg(theme);
+
+  // 1. Empty data table — header row present, body replaced by the empty state
+  const tableMock = `
+    <div class="spec-mock__stage" style="background:${sbg};padding:0">
+      <div style="display:flex;gap:0;padding:10px 14px;border-bottom:1px solid var(--chrome-border);font-size:10.5px;font-weight:700;color:var(--chrome-muted)">
+        <span style="flex:1">MERCHANT</span><span style="flex:1">REGION</span><span style="flex:0 0 70px;text-align:right">AMOUNT</span>
+      </div>
+      <div style="padding:22px 14px">${makeEmptyStateHTML('list', 'No transactions yet', 'Once a transaction is recorded, it will show up here.', 'Create manually')}</div>
+    </div>
+    <div class="spec-mock__cap"><b>Empty data table</b>The header row stays put; the body is replaced entirely.</div>`;
+
+  // 2. Empty list view — a settings-style list with nothing in it
+  const listMock = `
+    <div class="spec-mock__stage" style="background:${sbg};padding:0">
+      <div style="padding:12px 14px 0;font-size:11px;font-weight:700;color:var(--chrome-txt)">Saved reports</div>
+      <div style="padding:18px 14px">${makeEmptyStateHTML('search', 'No results for &ldquo;gauteng&rdquo;', 'Try a different spelling, or clear the search.', 'Clear search')}</div>
+    </div>
+    <div class="spec-mock__cap"><b>Empty list</b>A search that matched nothing, inside a named list panel.</div>`;
+
+  // 3. Empty card grid — a dashboard-style grid of cards with zero items
+  const gridMock = `
+    <div class="spec-mock__stage" style="background:${sbg};padding:18px 14px">${makeEmptyStateHTML('filter', 'No transactions match these filters', 'Nothing was recorded for the selected region and date range.', 'Clear filters')}</div>
+    <div class="spec-mock__cap"><b>Empty grid</b>Filters narrowed a card grid down to nothing.</div>`;
+
+  root.innerHTML = `
+    <div class="cpg-section-heading">
+      <div class="cpg-layout__title">In context</div>
+      <div class="cpg-layout__desc">The same component fills the empty moment across a table, a list and a filtered grid.</div>
+    </div>
+    <div class="cpg-section-block">
+      <div class="spec-insitu-grid">
+        <div class="spec-mock">${tableMock}</div>
+        <div class="spec-mock">${listMock}</div>
+        <div class="spec-mock">${gridMock}</div>
+      </div>
+    </div>`;
+}
+
+function esgSet(key, val){
+  if(key==='icon') esg.icon = (val==='on');
+  else if(key==='actionOn') esg.actionOn = (val==='on');
+  else esg[key] = val;
+  esg.dismissed = false;
+  renderEmptyStatePlayground();
+}
+function esgSetField(key, val){ esg[key] = val; esgRefresh(); }
+function esgReset(){ esg.dismissed = false; esgRefresh(); }
+function esgCopyCode(){
+  const b = document.getElementById('esg-code-block');
+  if(!b) return;
+  navigator.clipboard.writeText(b.innerText||b.textContent).catch(()=>{});
+  const btn = document.getElementById('esg-copy-btn');
+  if(btn){ btn.textContent = 'Copied!'; setTimeout(()=>btn.textContent='Copy', 2000); }
+}
+
+function renderEmptyStateReference(){
+  const root = document.getElementById('es-reference');
+  if(!root) return;
+
+  const theme = currentTheme();
+  const sbg = stageBg(theme);
+
+  /* ---- Anatomy ---- */
+  const heroEmpty = makeEmptyStateHTML('filter', 'No transactions match these filters', 'Nothing was recorded for the selected region and date range. Try widening the range or clearing the region filter.', 'Clear filters');
+
+  const parts = [
+    {num:1, name:'Icon',        note:'Optional. A muted 22px glyph that supports the message without competing with it.', vis:esIconSVG('filter',24)},
+    {num:2, name:'Title',       note:'Short, specific statement of what happened — not a vague placeholder.',             vis:'<span style="font-weight:800;font-size:14px;color:var(--chrome-txt)">Title</span>'},
+    {num:3, name:'Description', note:'One sentence of plain-language context or a next step.',                          vis:'<span style="font-size:12px;color:var(--chrome-muted);max-width:160px;display:inline-block;line-height:1.4">Description text wraps to a few lines.</span>'},
+    {num:4, name:'Action',      note:'Optional. A single primary button — never more than one.',                        vis:'<span class="dd-empty__action" style="pointer-events:none">Action</span>'},
+  ];
+  const partCards = parts.map(p=>`
+    <div class="spec-part">
+      <div class="spec-part__stage" style="background:${sbg}">${p.vis}</div>
+      <div class="spec-part__body">
+        <div class="spec-part__name"><span class="spec-part__num">${p.num}</span>${p.name}</div>
+        <div class="spec-part__note">${p.note}</div>
+      </div>
+    </div>`).join('');
+
+  /* ---- Spacing & dimensions ---- (single size — no size axis for this component) */
+  const dims = [
+    {name:'Container',    val:'1.5px dashed border, 12px radius, 40px/24px padding'},
+    {name:'Icon',         val:'44px chip, 12px radius, 22px glyph'},
+    {name:'Title',        val:'14px / weight 800'},
+    {name:'Description',  val:'12.5px / weight 400, max-width 340px, line-height 1.55'},
+    {name:'Content gap',  val:'10px between icon, title, description and action'},
+    {name:'Action',       val:'9px/16px padding, 8px radius, top margin 6px'},
+  ];
+  const dimRows = dims.map(d=>`<tr><td class="dd-table__name">${d.name}</td><td>${d.val}</td></tr>`).join('');
+
+  /* ---- States ---- */
+  const states = [
+    {name:'Default',       note:'Icon, title, description and action.',        html:makeEmptyStateHTML('list', 'No data yet', 'Records will show up here.', 'Create')},
+    {name:'No icon',       note:'Icon omitted when the message stands alone.', html:makeEmptyStateHTML(null, 'No data yet', 'Records will show up here.', 'Create')},
+    {name:'No action',     note:'Description-only, no obvious next step.',     html:makeEmptyStateHTML('list', 'No data yet', 'Records will show up here.', null)},
+    {name:'Dismissed',     note:'Cleared filters state, replaced by a reset control.', html:`<button class="cpg-reset" style="pointer-events:none">↺&nbsp;&nbsp;Bring it back</button>`},
+  ];
+  const stateCells = states.map(s=>`
+    <div class="spec-cell">
+      <div class="spec-cell__stage" style="background:${sbg};padding:18px 12px">${s.html}</div>
+      <div class="spec-cell__name">${s.name}</div>
+      <div class="spec-cell__desc">${s.note}</div>
+    </div>`).join('');
+
+  root.innerHTML = `
+    <div class="type-sub">
+      <div class="type-sub__title">Anatomy</div>
+      <div class="type-sub__desc">An empty state is a dashed-border card centring an optional icon, a title, a description and one optional primary action.</div>
+      <div class="cpg-section-outline">
+        <div class="spec-hero" style="background:${sbg}">${heroEmpty}</div>
+        <div class="spec-parts">${partCards}</div>
+      </div>
+    </div>
+
+    <div class="type-sub">
+      <div class="type-sub__title">Spacing &amp; dimensions</div>
+      <div class="type-sub__desc">One size only — there's no size axis for this component. Every dimension below is a fixed token, not a variant.</div>
+      <div class="cpg-section-outline">
+        <div class="dd-table-wrap"><table class="dd-table">
+          <thead><tr><th>Part</th><th>Value</th></tr></thead>
+          <tbody>${dimRows}</tbody>
+        </table></div>
+      </div>
+    </div>
+
+    <div class="type-sub" style="margin-bottom:0">
+      <div class="type-sub__title">States</div>
+      <div class="type-sub__desc">Beyond the default, the icon and action are each independently optional, and a dismissed state swaps in a reset control.</div>
+      <div class="cpg-section-outline">
+        <div class="spec-grid">${stateCells}</div>
+      </div>
+    </div>`;
+}
+
+try { renderEmptyStateCodeTab(); } catch(e){ console.error('es-code-tab',e); }
+try { renderEmptyStatePlayground(); } catch(e){ console.error('es-playground',e); }
+try { renderEmptyStateScenarios(); } catch(e){ console.error('es-scenarios',e); }
+try { renderEmptyStateInSitu(); } catch(e){ console.error('es-insitu',e); }
+try { renderEmptyStateReference(); } catch(e){ console.error('es-reference',e); }
+
+function esTabSwitch(tab){
+  const nav = document.getElementById('es-tabs-list');
+  if(!nav) return;
+  nav.querySelectorAll('.tab-item').forEach(btn=>btn.classList.toggle('on', btn.getAttribute('data-es-tab')===tab));
+  document.querySelectorAll('#s-empty-state .tabs-panel[data-es-panel]').forEach(p=>p.classList.toggle('on', p.getAttribute('data-es-panel')===tab));
 }
 
 /* ============================================================
@@ -14688,13 +15175,13 @@ function cbrTabSwitch(tab){
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.76.0';
+const SYSTEM_VERSION = '1.77.0';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
-      {version:'1.76.0', date:'2026-08-19', author:'Mo', title:'Checkboxes & Radios rebuilt with the full Pills-style tabbed treatment', changes:[
+      {version:'1.77.0', date:'2026-08-19', author:'Mo', title:'Checkboxes & Radios rebuilt with the full Pills-style tabbed treatment', changes:[
         ['added','Checkboxes & Radios (s-selection) converted from a single static "Quick copy" + "Reference grid" + "When to use" page into a full .sec--tabbed page — Overview / Style / Code / Changelog — matching Pills and Avatar: a "Try the component" playground with Control type (Checkbox/Radio) and Size (Regular/Small/XSmall) controls, whose stage is a real, clickable native input rather than a separate checked/unchecked toggle'],
         ['added','"Key controls" showcase (Checkbox / Radio) on Overview, replacing Pills\' colour-variant slot since this component has no colour axis — the real axis of variation is control type, not colour'],
         ['added','4 "In context" mockups: a preferences list (independent checkboxes), a form ending in a required "I agree to the Terms & Conditions" checkbox, a plan-tier radio group (one-of-many), and a filter sidebar checkbox list'],
@@ -14703,6 +15190,11 @@ const CHANGELOG = {
         ['added','Code tab with HTML/CSS (checkbox-radio.html), Blazor (DsSelectionControl.razor) and React TSX (DsSelectionControl.tsx) behind the segmented language switcher — one combined component parameterised by ControlType, mirroring the current playground selection (single checkbox, or a 2-option radio group)'],
         ['changed','Do/Dont card moved into the Overview tab\'s #cbr-usage .cpg-section-block, JS-rendered markup like Pills/Carousel (previously static markup); guidance text unchanged from the original 4 do / 4 dont'],
         ['removed','The static "Quick copy" and "Labels & tap target" blocks (.selqc/.selqc__* markup and CSS) — their real-markup examples now live in the Overview playground, Key controls and In-context mockups instead'],
+      ]},
+      {version:'1.76.0', date:'2026-08-19', author:'Mo', title:'Empty State rebuilt with the full Pills-style tabbed treatment', changes:[
+        ['added','Empty State (s-empty-state) converted from a single static "Empty state" + "When to use" page into a full .sec--tabbed page — Overview / Style / Code / Changelog — matching Pills and Carousel: a "Try the component" playground (Icon / Action toggles plus editable Title, Description and Action label fields, rendered into two synced mounts via shared esg state), a "Key scenarios" showcase (No data yet / No search results / Filtered to zero / Error loading — replacing Pills\' colour-variant slot, since Empty State has no colour or size axis), 3 "In context" mockups (empty data table, empty list, empty filtered grid), a Style tab (Anatomy, Spacing & dimensions, States) and a Code tab with the .code-seg HTML/CSS · Blazor · React TSX switcher'],
+        ['added','New ai-ctx tab regenerated via generate-ai-context-tab.mjs for the js-rendered builders (ES_SCENARIOS, esIconSVG, makeEmptyStateHTML, makeEmptyStateEl), moved from the end of the section into the new hero\'s sec-header-meta, matching Pills/Carousel'],
+        ['changed','Do/Dont card moved into the Overview tab\'s #es-usage .cpg-section-block, JS-rendered markup like Pills/Carousel (previously static markup); guidance text unchanged from the original 3 do / 3 dont'],
       ]},
       {version:'1.75.0', date:'2026-08-19', author:'Mo', title:'Carousel rebuilt with the full Pills-style tabbed treatment', changes:[
         ['added','Carousel (s-carousel) converted from a single static "Interactive" + "When to use" page into a full .sec--tabbed page — Overview / Style / Code / Changelog — matching Pills and Avatar: a "Try the component" playground (Arrows / Dots / Slide count controls, rendered into two synced mounts via shared crpg state), 3 "In context" mockups (onboarding steps, feature promo banner, product gallery), a Style tab (Anatomy, Dimensions & tokens, States — no Key-variants/colour-variant slot, since Carousel has no colour or size axis) and a Code tab with the .code-seg HTML/CSS · Blazor · React TSX switcher'],
@@ -17037,7 +17529,17 @@ const CHANGELOG = {
         ['added','Empty state — muted glyph, plain-language explanation and a single primary action'],
       ]},
     ]},
-    {secId:'s-empty-state', name:'Empty State', version:'1.0.0', entries:[
+    {secId:'s-empty-state', name:'Empty State', version:'2.0.0', entries:[
+      {version:'2.0.0', date:'2026-08-19', author:'Mo', title:'Rebuilt with the full Pills-style tabbed treatment', changes:[
+        ['changed','Page restructured from a flat .sec section into a .sec--tabbed page — hero with a live mini preview, and Overview / Style / Code / Changelog tabs (esTabSwitch), matching Pills/Carousel'],
+        ['added','"Try the component" playground with Icon and Action on/off toggles plus editable Title, Description and Action-label fields, rendered into two synced mounts (#es-playground on Overview, #es-code-playground on Code) over one shared esg state — the generalised form of Pills\' PILL_PLAYGROUND_MOUNTS pattern'],
+        ['added','"Key scenarios" section (No data yet / No search results / Filtered to zero / Error loading) — Empty State\'s stand-in for Pills\' colour-variant grid, since this component has no colour or size axis'],
+        ['added','3 "In context" mockups — empty data table (header row + zero-row body), empty named list (search matched nothing) and empty filtered card grid'],
+        ['added','Style tab: Anatomy (icon/title/description/action parts), Spacing & dimensions (single fixed-size token table, no size axis) and States (Default / No icon / No action / Dismissed)'],
+        ['added','Code tab with the shared .code-seg HTML/CSS · Blazor · React TSX language switcher, live-generated from the current Playground configuration'],
+        ['changed','Do/Dont card moved into the Overview tab\'s #es-usage .cpg-section-block, JS-rendered like Pills/Carousel (previously static markup); guidance text unchanged from the original 3 do / 3 dont'],
+        ['changed','ai-ctx tab regenerated for the new js-rendered builders (ES_SCENARIOS, esIconSVG, makeEmptyStateHTML, makeEmptyStateEl) and relocated from the end of the section into the new hero\'s sec-header-meta'],
+      ]},
       {version:'1.0.0', date:'2026-08-04', author:'Mo', title:'Initial release — split out of Lists into its own section', changes:[
         ['added','Empty State section (s-empty-state) — a dashed-border card with a muted glyph, title, short explanation and one primary action, plus When to use guidance'],
       ]},
@@ -22974,6 +23476,7 @@ try { renderSectionChangelogs(); } catch(e){ console.error('section-changelog',e
   {secId:'s-charts-distribution', panelId:'cdist-changelog-panel'},
   {secId:'s-nav', panelId:'nav-changelog-panel'},
   {secId:'s-carousel', panelId:'car-changelog-panel'},
+  {secId:'s-empty-state', panelId:'es-changelog-panel'},
 ].forEach(({secId, panelId})=>{
   try {
     const chlog = document.querySelector(`#${secId} > .sec-chlog`);
