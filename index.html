@@ -5610,9 +5610,9 @@ body.home .main{max-width:none;margin:0;padding:0}
       </div>
       <div class="sec-hero__preview">
         <div class="acc acc--reg" style="max-width:none;pointer-events:none" aria-hidden="true">
-          <div class="acc__item" style="display:flex;align-items:center;gap:12px;padding:15px 18px;min-height:44px"><div class="skl skl--line" style="width:62%;margin-bottom:0"></div></div>
-          <div class="acc__item" style="display:flex;align-items:center;gap:12px;padding:15px 18px;min-height:44px"><div class="skl skl--line" style="width:46%;margin-bottom:0"></div></div>
-          <div class="acc__item" style="display:flex;align-items:center;gap:12px;padding:15px 18px;min-height:44px"><div class="skl skl--line" style="width:54%;margin-bottom:0"></div></div>
+          <div class="acc__item" style="display:flex;align-items:center;gap:12px;padding:15px 18px;min-height:44px"><span class="mk-bar" style="width:62%"></span><span class="acc__chev" style="margin-left:auto;color:var(--chrome-border)">&rsaquo;</span></div>
+          <div class="acc__item" style="display:flex;align-items:center;gap:12px;padding:15px 18px;min-height:44px"><span class="mk-bar" style="width:46%"></span><span class="acc__chev" style="margin-left:auto;color:var(--chrome-border)">&rsaquo;</span></div>
+          <div class="acc__item" style="display:flex;align-items:center;gap:12px;padding:15px 18px;min-height:44px"><span class="mk-bar" style="width:54%"></span><span class="acc__chev" style="margin-left:auto;color:var(--chrome-border)">&rsaquo;</span></div>
         </div>
       </div>
       </div>
@@ -14211,7 +14211,7 @@ const CHANGELOG = {
     version: SYSTEM_VERSION,
     entries: [
       {version:'1.74.1', date:'2026-08-19', author:'Mo', title:'Fixed Accordion header preview clipping', changes:[
-        ['fixed','Accordion\'s sec-hero__preview (top-right header thumbnail) swapped its live, interactive 3-item accordion with real question text for a static, non-interactive skeleton mock — real FAQ content was overflowing/clipping the fixed 180px preview box'],
+        ['fixed','Accordion\'s sec-hero__preview (top-right header thumbnail) swapped its live, interactive 3-item accordion with real question text for a static, non-animated mock preserving the item + chevron layout — real FAQ content was overflowing/clipping the fixed 180px preview box'],
       ]},
       {version:'1.74.0', date:'2026-08-17', author:'Mo', title:'Added a "Give feedback" link to the top navbar', changes:[
         ['added','New .bar__feedback link in the header (.bar__inner), between the search field and the theme toggle — pairs the shared ICONS registry\'s outline "comment" glyph with "Give feedback" text and opens the team\'s Microsoft Forms feedback form in a new tab'],
@@ -15519,8 +15519,8 @@ const CHANGELOG = {
       ]},
     ]},
     {secId:'s-accordion', name:'Accordion', version:'1.2.1', entries:[
-      {version:'1.2.1', date:'2026-08-19', author:'Mo', title:'Fixed header preview clipping with a skeleton mock', changes:[
-        ['fixed','Section header preview (sec-hero__preview) was rendering a live, interactive 3-item accordion with real FAQ copy — long question text was clipping inside the fixed 180px preview box. Replaced with a static .skl skeleton mock (three non-interactive .acc__item rows with skeleton line placeholders), matching the mock-preview pattern used by every other component\'s header thumbnail'],
+      {version:'1.2.1', date:'2026-08-19', author:'Mo', title:'Fixed header preview clipping with a static mock', changes:[
+        ['fixed','Section header preview (sec-hero__preview) was rendering a live, interactive 3-item accordion with real FAQ copy — long question text was clipping inside the fixed 180px preview box. Replaced with a static, non-interactive mock (three .acc__item rows, each with an .mk-bar line placeholder and an .acc__chev on the right) that mirrors the component\'s real row + chevron layout without animation'],
         ['changed','Real accordion content (open/closed states, actual FAQ questions and answers) remains in the Overview tab\'s playground and in-context sections — only the small header thumbnail changed'],
       ]},
       {version:'1.2.0', date:'2026-08-11', author:'Helen', title:'In-context mockups reworked around content length', changes:[
