@@ -5566,7 +5566,7 @@ body.home .main{max-width:none;margin:0;padding:0}
       <div class="sec__head">
         <h1 class="sec__title">Accordion</h1>
         <div class="sec-header-meta">
-          <span class="comp-ver-badge" style="margin-left:0">v1.2.0</span>
+          <span class="comp-ver-badge" style="margin-left:0">v1.2.1</span>
           <details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-accordion">
@@ -5609,10 +5609,10 @@ body.home .main{max-width:none;margin:0;padding:0}
         </div>
       </div>
       <div class="sec-hero__preview">
-        <div class="acc acc--reg" style="max-width:none">
-          <details class="acc__item" name="acc-hero-demo" open><summary class="acc__sum">How do payouts work?<span class="acc__chev">&rsaquo;</span></summary><div class="acc__body">Settled funds are paid to your linked account on the next business day.</div></details>
-          <details class="acc__item" name="acc-hero-demo"><summary class="acc__sum">Can I refund a transaction?<span class="acc__chev">&rsaquo;</span></summary><div class="acc__body">Yes &mdash; full or partial refunds can be issued for up to 180 days.</div></details>
-          <details class="acc__item" name="acc-hero-demo"><summary class="acc__sum">Which cards are supported?<span class="acc__chev">&rsaquo;</span></summary><div class="acc__body">All major schemes, including Visa, Mastercard and domestic debit networks.</div></details>
+        <div class="acc acc--reg" style="max-width:none;pointer-events:none" aria-hidden="true">
+          <div class="acc__item" style="display:flex;align-items:center;gap:12px;padding:15px 18px;min-height:44px"><div class="skl skl--line" style="width:62%;margin-bottom:0"></div></div>
+          <div class="acc__item" style="display:flex;align-items:center;gap:12px;padding:15px 18px;min-height:44px"><div class="skl skl--line" style="width:46%;margin-bottom:0"></div></div>
+          <div class="acc__item" style="display:flex;align-items:center;gap:12px;padding:15px 18px;min-height:44px"><div class="skl skl--line" style="width:54%;margin-bottom:0"></div></div>
         </div>
       </div>
       </div>
@@ -14204,12 +14204,15 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.74.0';
+const SYSTEM_VERSION = '1.74.1';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.74.1', date:'2026-08-19', author:'Mo', title:'Fixed Accordion header preview clipping', changes:[
+        ['fixed','Accordion\'s sec-hero__preview (top-right header thumbnail) swapped its live, interactive 3-item accordion with real question text for a static, non-interactive skeleton mock — real FAQ content was overflowing/clipping the fixed 180px preview box'],
+      ]},
       {version:'1.74.0', date:'2026-08-17', author:'Mo', title:'Added a "Give feedback" link to the top navbar', changes:[
         ['added','New .bar__feedback link in the header (.bar__inner), between the search field and the theme toggle — pairs the shared ICONS registry\'s outline "comment" glyph with "Give feedback" text and opens the team\'s Microsoft Forms feedback form in a new tab'],
       ]},
@@ -15515,7 +15518,11 @@ const CHANGELOG = {
         ['added','Pure-CSS hover/focus tooltip with four placements and an icon-button example'],
       ]},
     ]},
-    {secId:'s-accordion', name:'Accordion', version:'1.2.0', entries:[
+    {secId:'s-accordion', name:'Accordion', version:'1.2.1', entries:[
+      {version:'1.2.1', date:'2026-08-19', author:'Mo', title:'Fixed header preview clipping with a skeleton mock', changes:[
+        ['fixed','Section header preview (sec-hero__preview) was rendering a live, interactive 3-item accordion with real FAQ copy — long question text was clipping inside the fixed 180px preview box. Replaced with a static .skl skeleton mock (three non-interactive .acc__item rows with skeleton line placeholders), matching the mock-preview pattern used by every other component\'s header thumbnail'],
+        ['changed','Real accordion content (open/closed states, actual FAQ questions and answers) remains in the Overview tab\'s playground and in-context sections — only the small header thumbnail changed'],
+      ]},
       {version:'1.2.0', date:'2026-08-11', author:'Helen', title:'In-context mockups reworked around content length', changes:[
         ['changed','Replaced the FAQ list / settings panel / order summary mockups with two content-length examples: Short form (one line of supporting detail) and Long form (a full paragraph as the expanded content), so the section shows the body panel handling both'],
         ['changed','spec-insitu-grid uses a new --2 modifier for a 2-column layout here, instead of the default 3'],
