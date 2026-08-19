@@ -2423,13 +2423,16 @@ body.home .main{max-width:none;margin:0;padding:0}
 .car__track{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;scrollbar-width:none;border-radius:14px}
 .car__track::-webkit-scrollbar{display:none}
 .car__slide{flex:0 0 100%;scroll-snap-align:center;min-height:196px;border-radius:14px;display:flex;align-items:flex-end;padding:20px;color:#fff;font-weight:800;font-size:17px;background:linear-gradient(135deg,var(--prim-grey-600),var(--prim-grey-1100))}
-.car__slide:nth-child(2){background:linear-gradient(135deg,var(--prim-gb-300),var(--prim-gb-700))}
-.car__slide:nth-child(3){background:linear-gradient(135deg,var(--prim-grey-800),var(--prim-dg-700))}
-.car__slide:nth-child(4){background:linear-gradient(135deg,var(--prim-gb-200),var(--prim-gb-600))}
-.car__arrow{position:absolute;top:98px;transform:translateY(-50%);width:34px;height:34px;border-radius:50%;background:var(--color-btn-s-bg);color:var(--color-btn-s-txt);border:0;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;font-family:inherit;box-shadow:0 2px 10px rgba(0,0,0,.25);z-index:2;transition:opacity .15s}
-.car__arrow:hover{opacity:.85}
+.car__slide--g2{background:linear-gradient(135deg,var(--prim-gb-300),var(--prim-gb-700))}
+.car__slide--g3{background:linear-gradient(135deg,var(--prim-grey-800),var(--prim-dg-700))}
+.car__slide--g4{background:linear-gradient(135deg,var(--prim-gb-200),var(--prim-gb-600))}
+.car__arrow{position:absolute;top:98px;transform:translateY(-50%);width:34px;height:34px;border-radius:50%;background:var(--color-btn-s-bg);color:var(--color-btn-s-txt);border:0;cursor:pointer;display:flex;align-items:center;justify-content:center;font-family:inherit;box-shadow:0 2px 10px rgba(0,0,0,.25);z-index:2;transition:opacity .15s}
+.car__arrow svg{width:16px;height:16px;display:block}
 .car__arrow--prev{left:10px}
+.car__arrow--prev svg{transform:rotate(180deg)}
 .car__arrow--next{right:10px}
+.car__arrow:hover{opacity:.85}
+.car__arrow:disabled{opacity:.35;cursor:default}
 .car__dots{display:flex;gap:7px;justify-content:center;margin-top:14px}
 .car__dot{width:7px;height:7px;border-radius:50%;background:var(--color-surface-n3);border:0;cursor:pointer;padding:0;transition:width .2s,background .2s}
 .car__dot.is-active{background:var(--color-surface-inverse);width:20px;border-radius:4px}
@@ -7461,56 +7464,25 @@ body.home .main{max-width:none;margin:0;padding:0}
     <!-- ============================================================
          CAROUSEL
     ============================================================ -->
-    <section class="sec" id="s-carousel">
+    <section class="sec sec--tabbed" id="s-carousel">
+      <div class="sec-hero">
       <div class="sec__head">
-        <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Carousel <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.1</span></h1>
-        <p class="sec__desc">A horizontally scrollable, snapping set of slides for browsing a small collection &mdash; features, images, onboarding steps. Drag/swipe, use the arrows, or jump with the dots.</p>
-      </div>
-      <div class="type-sub">
-        <div class="type-sub__title">Interactive</div>
-        <div class="type-sub__desc">Swipe or use the arrows; the active dot elongates to show position. Slides snap into place.</div>
-        <div class="sg-stage" style="justify-content:center">
-          <div class="car" id="car-demo">
-            <button class="car__arrow car__arrow--prev" type="button" aria-label="Previous slide">&lsaquo;</button>
-            <button class="car__arrow car__arrow--next" type="button" aria-label="Next slide">&rsaquo;</button>
-            <div class="car__track">
-              <div class="car__slide">Instant payouts</div>
-              <div class="car__slide">Tap to pay</div>
-              <div class="car__slide">Fraud protection</div>
-              <div class="car__slide">Same-day settlement</div>
-            </div>
-            <div class="car__dots"></div>
-          </div>
-        </div>
-      </div>
-      <div class="type-sub">
-        <div class="type-sub__title">When to use</div>
-        <div class="type-sub__desc">Carousels suit small, browsable sets where each slide stands alone. They hide content behind interaction, so don&rsquo;t bury anything essential.</div>
-        <div class="sel-usage">
-          <div class="sel-usage__card">
-            <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
-            <ul class="sel-usage__list">
-              <li>Use for a handful of equally-weighted, self-contained slides.</li>
-              <li>Show position with dots and offer arrows plus swipe.</li>
-              <li>Keep each slide understandable on its own.</li>
-            </ul>
-          </div>
-          <div class="sel-usage__card">
-            <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don&rsquo;t</div>
-            <ul class="sel-usage__list">
-              <li>Don&rsquo;t hide critical content or primary actions in later slides.</li>
-              <li>Don&rsquo;t auto-advance without a pause control &mdash; it fights the reader.</li>
-              <li>Don&rsquo;t use a carousel where a simple list would show everything at once.</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <details class="ai-ctx">
+        <h1 class="sec__title">Carousel</h1>
+        <div class="sec-header-meta">
+          <span class="comp-ver-badge" style="margin-left:0">v1.1.0</span>
+<details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-carousel">
 {
-  "status": "static",
+  "status": "js-rendered",
+  "builderFunctions": [
+    "CAR_SLIDE_CONTENT",
+    "CAR_GAP",
+    "carGradClass",
+    "carArrowSVG",
+    "makeCarHTML",
+    "makeCarEl"
+  ],
   "realClasses": [
     ".car",
     ".car__arrow",
@@ -7518,10 +7490,14 @@ body.home .main{max-width:none;margin:0;padding:0}
     ".car__arrow--next",
     ".car__track",
     ".car__slide",
+    ".car__slide--g2",
+    ".car__slide--g3",
+    ".car__slide--g4",
     ".car__dots",
     ".car__dot"
   ],
-  "css": "/* ---- Carousel ---- */\n.car { position:relative;width:440px;max-width:100% }\n.car__track { display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;scrollbar-width:none;border-radius:14px }\n.car__track::-webkit-scrollbar { display:none }\n.car__slide { flex:0 0 100%;scroll-snap-align:center;min-height:196px;border-radius:14px;display:flex;align-items:flex-end;padding:20px;color:#fff;font-weight:800;font-size:17px;background:linear-gradient(135deg,var(--prim-grey-600),var(--prim-grey-1100)) }\n.car__slide:nth-child(2) { background:linear-gradient(135deg,var(--prim-gb-300),var(--prim-gb-700)) }\n.car__slide:nth-child(3) { background:linear-gradient(135deg,var(--prim-grey-800),var(--prim-dg-700)) }\n.car__slide:nth-child(4) { background:linear-gradient(135deg,var(--prim-gb-200),var(--prim-gb-600)) }\n.car__arrow { position:absolute;top:98px;transform:translateY(-50%);width:34px;height:34px;border-radius:50%;background:var(--color-btn-s-bg);color:var(--color-btn-s-txt);border:0;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;font-family:inherit;box-shadow:0 2px 10px rgba(0,0,0,.25);z-index:2;transition:opacity .15s }\n.car__arrow:hover { opacity:.85 }\n.car__arrow--prev { left:10px }\n.car__arrow--next { right:10px }\n.car__dots { display:flex;gap:7px;justify-content:center;margin-top:14px }\n.car__dot { width:7px;height:7px;border-radius:50%;background:var(--color-surface-n3);border:0;cursor:pointer;padding:0;transition:width .2s,background .2s }\n.car__dot.is-active { background:var(--color-surface-inverse);width:20px;border-radius:4px }",
+  "css": "/* ---- Carousel ---- */\n.car { position:relative;width:440px;max-width:100% }\n.car__track { display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;scrollbar-width:none;border-radius:14px }\n.car__track::-webkit-scrollbar { display:none }\n.car__slide { flex:0 0 100%;scroll-snap-align:center;min-height:196px;border-radius:14px;display:flex;align-items:flex-end;padding:20px;color:#fff;font-weight:800;font-size:17px;background:linear-gradient(135deg,var(--prim-grey-600),var(--prim-grey-1100)) }\n.car__slide--g2 { background:linear-gradient(135deg,var(--prim-gb-300),var(--prim-gb-700)) }\n.car__slide--g3 { background:linear-gradient(135deg,var(--prim-grey-800),var(--prim-dg-700)) }\n.car__slide--g4 { background:linear-gradient(135deg,var(--prim-gb-200),var(--prim-gb-600)) }\n.car__arrow { position:absolute;top:98px;transform:translateY(-50%);width:34px;height:34px;border-radius:50%;background:var(--color-btn-s-bg);color:var(--color-btn-s-txt);border:0;cursor:pointer;display:flex;align-items:center;justify-content:center;font-family:inherit;box-shadow:0 2px 10px rgba(0,0,0,.25);z-index:2;transition:opacity .15s }\n.car__arrow svg { width:16px;height:16px;display:block }\n.car__arrow--prev { left:10px }\n.car__arrow--prev svg { transform:rotate(180deg) }\n.car__arrow--next { right:10px }\n.car__arrow:hover { opacity:.85 }\n.car__arrow:disabled { opacity:.35;cursor:default }\n.car__dots { display:flex;gap:7px;justify-content:center;margin-top:14px }\n.car__dot { width:7px;height:7px;border-radius:50%;background:var(--color-surface-n3);border:0;cursor:pointer;padding:0;transition:width .2s,background .2s }\n.car__dot.is-active { background:var(--color-surface-inverse);width:20px;border-radius:4px }",
+  "js": "const CAR_SLIDE_CONTENT = [\n  'Instant payouts',\n  'Tap to pay',\n  'Fraud protection',\n  'Same-day settlement',\n  '24/7 support',\n];\n\nconst CAR_GAP = 14;\n\nfunction carGradClass(i){\n  const m = i % 4;\n  return m === 0 ? '' : ` car__slide--g${m + 1}`;\n}\n\nfunction carArrowSVG(dir){\n  return `&lt;svg viewBox=\"0 -960 960 960\" xmlns=\"http://www.w3.org/2000/svg\" fill=\"currentColor\" aria-hidden=\"true\"&gt;&lt;path d=\"M496.35-480 344.17-632.17Q331.5-644.85 331.5-664t12.67-31.83Q356.85-708.5 376-708.5t31.83 12.67l183.76 183.76q6.71 6.72 9.81 14.92 3.1 8.19 3.1 17.15 0 8.96-3.1 17.15-3.1 8.2-9.81 14.92L407.83-264.17Q395.15-251.5 376-251.5t-31.83-12.67Q331.5-276.85 331.5-296t12.67-31.83L496.35-480Z\"/&gt;&lt;/svg&gt;`;\n}\n\nfunction makeCarHTML({slides = 4, arrows = true, dots = true} = {}){\n  const n = Math.max(2, Math.min(5, slides));\n  const slideHTML = CAR_SLIDE_CONTENT.slice(0, n).map((t, i) =&gt;\n    `&lt;div class=\"car__slide${carGradClass(i)}\"&gt;${t}&lt;/div&gt;`).join('');\n  const arrowHTML = arrows\n    ? `&lt;button class=\"car__arrow car__arrow--prev\" type=\"button\" aria-label=\"Previous slide\"&gt;${carArrowSVG('prev')}&lt;/button&gt;&lt;button class=\"car__arrow car__arrow--next\" type=\"button\" aria-label=\"Next slide\"&gt;${carArrowSVG('next')}&lt;/button&gt;`\n    : '';\n  const dotsHTML = dots\n    ? `&lt;div class=\"car__dots\"&gt;${Array.from({length: n}, (_, i) =&gt; `&lt;button class=\"car__dot${i === 0 ? ' is-active' : ''}\" data-i=\"${i}\" aria-label=\"Go to slide ${i + 1}\"&gt;&lt;/button&gt;`).join('')}&lt;/div&gt;`\n    : '';\n  return `&lt;div class=\"car\"&gt;${arrowHTML}&lt;div class=\"car__track\"&gt;${slideHTML}&lt;/div&gt;${dotsHTML}&lt;/div&gt;`;\n}\n\nfunction makeCarEl(){\n  const wrap = document.createElement('div');\n  wrap.innerHTML = makeCarHTML(crpg);\n  const car = wrap.firstElementChild;\n  const track = car.querySelector('.car__track');\n  const slides = car.querySelectorAll('.car__slide');\n  const dots = car.querySelectorAll('.car__dot');\n  const n = slides.length;\n  let idx = 0;\n\n  function update(){ dots.forEach((d, i) =&gt; d.classList.toggle('is-active', i === idx)); }\n  function go(i){\n    idx = Math.max(0, Math.min(n - 1, i));\n    track.scrollTo({left: idx * (track.clientWidth + CAR_GAP), behavior: 'smooth'});\n    update();\n  }\n  const prev = car.querySelector('.car__arrow--prev');\n  const next = car.querySelector('.car__arrow--next');\n  if(prev) prev.addEventListener('click', () =&gt; go(idx - 1));\n  if(next) next.addEventListener('click', () =&gt; go(idx + 1));\n  dots.forEach(d =&gt; d.addEventListener('click', () =&gt; go(+d.getAttribute('data-i'))));\n  let tmr;\n  track.addEventListener('scroll', () =&gt; {\n    clearTimeout(tmr);\n    tmr = setTimeout(() =&gt; {\n      const w = track.clientWidth + CAR_GAP;\n      if(w &gt; 1){ idx = Math.round(track.scrollLeft / w); update(); }\n    }, 110);\n  });\n  return car;\n}",
   "usage": {
     "do": [
       "Use for a handful of equally-weighted, self-contained slides.",
@@ -7529,16 +7505,65 @@ body.home .main{max-width:none;margin:0;padding:0}
       "Keep each slide understandable on its own."
     ],
     "dont": [
-      "Don’t hide critical content or primary actions in later slides.",
-      "Don’t auto-advance without a pause control — it fights the reader.",
-      "Don’t use a carousel where a simple list would show everything at once."
+      "Don't hide critical content or primary actions in later slides.",
+      "Don't auto-advance without a pause control — it fights the reader.",
+      "Don't use a carousel where a simple list would show everything at once."
     ]
   },
-  "contentHash": "7fd6b022053a4c68646b11cec1cc8b6a31805b7d23b459a219b3aa893a14a5b7",
-  "note": "Slide/track/arrow markup is static; only the .car__dot buttons are generated by an inline string-concatenation loop inside an anonymous IIFE (no separately named builder function/const to extract — update()/go() just toggle .is-active and scroll, they don't build markup)."
+  "contentHash": "cb0188cbc946f50399e8fd0898a29730ce2382dff70e6af41f937c05a48ef023",
+  "note": "makeCarHTML is the minimal real-markup builder (slide/arrow/dot config -&gt; carousel HTML string, arrows via the shared chevron-right glyph rotated for prev); makeCarEl is the fuller version wiring up prev/next/dot clicks and scroll-position sync for the live playground stage. crpg (playground state)/getCarCode*/renderCarPlayground/renderCarReference/renderCarInSitu/carTabSwitch are doc-site-only playground plumbing, excluded."
 }
   </pre>
 </details>
+        </div>
+      </div>
+      <div class="sec-hero__preview"><div class="mk"><span class="mk-bar" style="width:38%;height:34px;border-radius:10px;background:linear-gradient(135deg,var(--prim-gb-300),var(--prim-gb-700))"></span><span class="mk-bar" style="width:38%;height:34px;border-radius:10px;background:var(--chrome-border);opacity:.5"></span></div>
+      </div>
+      </div>
+      <div class="tabs-list sec-tabs" id="car-tabs-list">
+        <button type="button" class="tab-item on" data-car-tab="overview" onclick="carTabSwitch('overview')"><span class="tab-item__inner"><span class="tab-item__label">Overview</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-car-tab="style" onclick="carTabSwitch('style')"><span class="tab-item__inner"><span class="tab-item__label">Style</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-car-tab="code" onclick="carTabSwitch('code')"><span class="tab-item__inner"><span class="tab-item__label">Code</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-car-tab="changelog" onclick="carTabSwitch('changelog')"><span class="tab-item__inner"><span class="tab-item__label">Changelog</span></span><span class="tab-item__line"></span></button>
+      </div>
+      <div class="tabs-panel on" data-car-panel="overview">
+        <div id="car-playground" class="type-sub"></div>
+        <div id="car-insitu" class="type-sub"></div>
+        <div class="type-sub cpg-variants" id="car-usage">
+          <div class="cpg-section-heading">
+            <div class="cpg-layout__title">Do's and don'ts</div>
+            <div class="cpg-layout__desc">Carousels suit small, browsable sets where each slide stands alone. They hide content behind interaction, so don't bury anything essential.</div>
+          </div>
+          <div class="cpg-section-block">
+            <div class="sel-usage">
+              <div class="sel-usage__card">
+                <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
+                <ul class="sel-usage__list">
+                  <li>Use for a handful of equally-weighted, self-contained slides.</li>
+                  <li>Show position with dots and offer arrows plus swipe.</li>
+                  <li>Keep each slide understandable on its own.</li>
+                </ul>
+              </div>
+              <div class="sel-usage__card">
+                <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don't</div>
+                <ul class="sel-usage__list">
+                  <li>Don't hide critical content or primary actions in later slides.</li>
+                  <li>Don't auto-advance without a pause control &mdash; it fights the reader.</li>
+                  <li>Don't use a carousel where a simple list would show everything at once.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tabs-panel" data-car-panel="style">
+        <div id="car-reference" class="type-sub spec-panel spec-stack"></div>
+      </div>
+      <div class="tabs-panel" data-car-panel="code">
+        <div id="car-code-playground" class="type-sub spec-panel spec-code-playground"></div>
+        <div id="car-code-tab" class="type-sub spec-panel"></div>
+      </div>
+      <div class="tabs-panel" data-car-panel="changelog" id="car-changelog-panel"></div>
     </section>
 
     <!-- @@SHADCN_SECTIONS@@ -->
@@ -14207,12 +14232,17 @@ try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.74.3';
+const SYSTEM_VERSION = '1.75.0';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.75.0', date:'2026-08-19', author:'Mo', title:'Carousel rebuilt with the full Pills-style tabbed treatment', changes:[
+        ['added','Carousel (s-carousel) converted from a single static "Interactive" + "When to use" page into a full .sec--tabbed page — Overview / Style / Code / Changelog — matching Pills and Avatar: a "Try the component" playground (Arrows / Dots / Slide count controls, rendered into two synced mounts via shared crpg state), 3 "In context" mockups (onboarding steps, feature promo banner, product gallery), a Style tab (Anatomy, Dimensions & tokens, States — no Key-variants/colour-variant slot, since Carousel has no colour or size axis) and a Code tab with the .code-seg HTML/CSS · Blazor · React TSX switcher'],
+        ['changed','Prev/next arrow glyphs switched from literal "‹"/"›" characters to the shared ICONS "chevron-right" SVG (rotated 180deg for prev), matching the rest of the system’s icon convention instead of hand-typed HTML entities'],
+        ['changed','Slide background gradients switched from position-based :nth-child(2)/(3)/(4) selectors to explicit .car__slide--g2/g3/g4 modifier classes, so slide count can vary (2–5) in the playground without relying on DOM position'],
+      ]},
       {version:'1.74.3', date:'2026-08-19', author:'Mo', title:'Accordion chevron switched to a DS icon glyph', changes:[
         ['fixed','Rotating the plain "›" text character between collapsed/open states left the arrow visibly off-centre (the glyph\'s ink isn\'t centred within its own em-box, so a +90deg/-90deg rotation landed differently for each state). Replaced it with the shared ICONS registry\'s "chevron-down" SVG glyph (the same one used by dropdowns and side nav), which is a proper vector shape and rotates symmetrically'],
         ['changed','.acc__chev now rests unrotated (the icon already points down) in the collapsed state and rotates 180deg to point up when a .acc__item is open — applies to every real accordion instance (playground, Key variants, In-context, Style-tab hero swatch, header preview) since they all render via one shared CSS rule and iconSvg(\'chevron-down\') call, not a per-instance fix'],
@@ -15483,7 +15513,16 @@ const CHANGELOG = {
         ['added','Horizontal, vertical and labelled hairline dividers on the border token'],
       ]},
     ]},
-    {secId:'s-carousel', name:'Carousel', version:'1.0.1', entries:[
+    {secId:'s-carousel', name:'Carousel', version:'1.1.0', entries:[
+      {version:'1.1.0', date:'2026-08-19', author:'Mo', title:'Full tabbed rebuild — Overview / Style / Code / Changelog', changes:[
+        ['added','Overview tab: "Try the component" playground with Arrows on/off, Dots on/off and Slide count (2–5) controls, rendered into two synced mounts (Overview + Code tab) via shared crpg state, plus a "24/7 support" 5th slide added to CAR_SLIDE_CONTENT to support the new slide-count control'],
+        ['added','Overview tab: 3 "In context" mockups — onboarding steps, a dashboard feature-promo banner, and a product image gallery'],
+        ['added','Style tab: Anatomy (arrow, track, slide, dots), a Dimensions & tokens table (Carousel has no size or colour axis, so this replaces the usual Size/Colour-variant sections), and a States grid (default, no arrows, no dots)'],
+        ['added','Code tab: live HTML/CSS · Blazor · React TSX snippet matching the current Playground configuration, via the same .code-seg segmented switcher used by Pills/Avatar/Switch'],
+        ['changed','Section restructured from a plain .sec into a .sec--tabbed page (sec-hero with header preview + tabs-list), matching the Pills/Avatar page shape; the old "Interactive" demo and "When to use" Do/Dont block moved into the Overview tab as the playground and a "Do\'s and don\'ts" card respectively — copy unchanged'],
+        ['changed','Prev/next arrows switched from literal "‹"/"›" text characters to the shared ICONS "chevron-right" SVG glyph (rotated 180deg for prev), and slide gradients switched from :nth-child(2)/(3)/(4) selectors to explicit .car__slide--g2/g3/g4 classes so gradients stay correct at any slide count'],
+        ['added','AI context tab regenerated (status changed from "static" to "js-rendered") to document the new makeCarHTML/makeCarEl builders and CAR_SLIDE_CONTENT/CAR_GAP/carGradClass/carArrowSVG consts'],
+      ]},
       {version:'1.0.1', date:'2026-07-29', author:'Mo', title:'AI context tab added', changes:[
         ['added','AI context tab documenting the real .car/.car__arrow/.car__track/.car__slide/.car__dots/.car__dot markup, plus its existing "When to use" Do/Dont guidance (3 do / 3 dont); notes the dot buttons are generated by an inline loop with no separately named builder to extract'],
       ]},
@@ -21464,21 +21503,532 @@ function dpTabSwitch(tab){
   document.querySelectorAll('#s-calendar .tabs-panel[data-dp-panel]').forEach(p=>p.classList.toggle('on', p.getAttribute('data-dp-panel')===tab));
 }
 
-/* Carousel */
-(function(){
-  var car=document.getElementById('car-demo'); if(!car) return;
-  var track=car.querySelector('.car__track'), slides=car.querySelectorAll('.car__slide'), dotsWrap=car.querySelector('.car__dots');
-  var n=slides.length, idx=0, GAP=14, dh='';
-  for(var i=0;i<n;i++) dh+='<button class="car__dot'+(i===0?' is-active':'')+'" data-i="'+i+'" aria-label="Go to slide '+(i+1)+'"></button>';
-  dotsWrap.innerHTML=dh;
-  var dots=dotsWrap.querySelectorAll('.car__dot');
-  function update(){ Array.prototype.forEach.call(dots,function(d,i){ d.classList.toggle('is-active',i===idx); }); }
-  function go(i){ idx=Math.max(0,Math.min(n-1,i)); track.scrollTo({left:idx*(track.clientWidth+GAP),behavior:'smooth'}); update(); }
-  car.querySelector('.car__arrow--prev').addEventListener('click',function(){ go(idx-1); });
-  car.querySelector('.car__arrow--next').addEventListener('click',function(){ go(idx+1); });
-  Array.prototype.forEach.call(dots,function(d){ d.addEventListener('click',function(){ go(+d.getAttribute('data-i')); }); });
-  var tmr; track.addEventListener('scroll',function(){ clearTimeout(tmr); tmr=setTimeout(function(){ var w=track.clientWidth+GAP; if(w>1){ idx=Math.round(track.scrollLeft/w); update(); } },110); });
-})();
+/* ============================================================
+   CAROUSEL
+   Same tabbed-page treatment as Pills/Avatar (.sec--tabbed):
+   Overview / Style / Code / Changelog, a shared-state playground
+   rendered into two mounts, and a three-language code panel.
+   Unlike Pills, Carousel has no colour axis (no "Key variants"
+   slot) and no size axis — its controls are Arrows / Dots / Slide
+   count. Arrow glyphs use the shared ICONS.chevron-right glyph
+   (rotated 180deg for prev) instead of the old literal &lsaquo;/&rsaquo;
+   characters, per the system's icon convention (see Accordion).
+   NOTE: render calls for this section are deferred to just before
+   the ICONS/iconSvg definitions are guaranteed to exist — see the
+   `try { renderCarPlayground(); }` block further down the file.
+============================================================ */
+const CAR_SLIDE_CONTENT = [
+  'Instant payouts',
+  'Tap to pay',
+  'Fraud protection',
+  'Same-day settlement',
+  '24/7 support',
+];
+const CAR_GAP = 14;
+
+function carGradClass(i){
+  const m = i % 4;
+  return m === 0 ? '' : ` car__slide--g${m + 1}`;
+}
+
+function carArrowSVG(dir){
+  return `<svg viewBox="0 -960 960 960" xmlns="http://www.w3.org/2000/svg" fill="currentColor" aria-hidden="true"><path d="M496.35-480 344.17-632.17Q331.5-644.85 331.5-664t12.67-31.83Q356.85-708.5 376-708.5t31.83 12.67l183.76 183.76q6.71 6.72 9.81 14.92 3.1 8.19 3.1 17.15 0 8.96-3.1 17.15-3.1 8.2-9.81 14.92L407.83-264.17Q395.15-251.5 376-251.5t-31.83-12.67Q331.5-276.85 331.5-296t12.67-31.83L496.35-480Z"/></svg>`;
+}
+
+/* Minimal real-markup builder: slide/arrow/dot counts -> static .car HTML
+   string, matching exactly what a consumer would copy (dots pre-rendered
+   with the first marked is-active, since JS only ever toggles that class). */
+function makeCarHTML({slides = 4, arrows = true, dots = true} = {}){
+  const n = Math.max(2, Math.min(5, slides));
+  const slideHTML = CAR_SLIDE_CONTENT.slice(0, n).map((t, i) =>
+    `<div class="car__slide${carGradClass(i)}">${t}</div>`).join('');
+  const arrowHTML = arrows
+    ? `<button class="car__arrow car__arrow--prev" type="button" aria-label="Previous slide">${carArrowSVG('prev')}</button><button class="car__arrow car__arrow--next" type="button" aria-label="Next slide">${carArrowSVG('next')}</button>`
+    : '';
+  const dotsHTML = dots
+    ? `<div class="car__dots">${Array.from({length: n}, (_, i) => `<button class="car__dot${i === 0 ? ' is-active' : ''}" data-i="${i}" aria-label="Go to slide ${i + 1}"></button>`).join('')}</div>`
+    : '';
+  return `<div class="car">${arrowHTML}<div class="car__track">${slideHTML}</div>${dotsHTML}</div>`;
+}
+
+/* Doc-site-only illustrative wrapper for the Style tab's compact State
+   cells: same real .car/.car__slide/.car__dot markup as makeCarHTML, but
+   sized down via inline style instead of a CSS transform:scale (which
+   clipped slide text against the fixed-height .spec-cell__stage). Not part
+   of the ai-ctx builderFunctions — makeCarHTML remains the canonical,
+   full-size real-markup builder. */
+function ovCarHTML({slides = 3, arrows = true, dots = true, width = 220, slideHeight = 92} = {}){
+  const n = Math.max(2, Math.min(5, slides));
+  const slideHTML = CAR_SLIDE_CONTENT.slice(0, n).map((t, i) =>
+    `<div class="car__slide${carGradClass(i)}" style="min-height:${slideHeight}px;border-radius:10px;font-size:11px;padding:10px">${t}</div>`).join('');
+  const arrowHTML = arrows
+    ? `<button class="car__arrow car__arrow--prev" style="width:24px;height:24px;top:${slideHeight / 2}px" type="button" tabindex="-1" aria-hidden="true">${carArrowSVG('prev')}</button><button class="car__arrow car__arrow--next" style="width:24px;height:24px;top:${slideHeight / 2}px" type="button" tabindex="-1" aria-hidden="true">${carArrowSVG('next')}</button>`
+    : '';
+  const dotsHTML = dots
+    ? `<div class="car__dots">${Array.from({length: n}, (_, i) => `<span class="car__dot${i === 0 ? ' is-active' : ''}"></span>`).join('')}</div>`
+    : '';
+  return `<div class="car" style="width:${width}px">${arrowHTML}<div class="car__track">${slideHTML}</div>${dotsHTML}</div>`;
+}
+
+/* ── CAROUSEL PLAYGROUND ── */
+let crpg = { slides: 4, arrows: true, dots: true, theme: 'light' };
+
+/* Live element for a stage: builds real .car markup via makeCarHTML, then
+   wires up the same prev/next/dot/scroll behaviour the static demo used to
+   hand-roll in its own IIFE — now shared across every mount. */
+function makeCarEl(){
+  const wrap = document.createElement('div');
+  wrap.innerHTML = makeCarHTML(crpg);
+  const car = wrap.firstElementChild;
+  const track = car.querySelector('.car__track');
+  const slides = car.querySelectorAll('.car__slide');
+  const dots = car.querySelectorAll('.car__dot');
+  const n = slides.length;
+  let idx = 0;
+
+  function update(){ dots.forEach((d, i) => d.classList.toggle('is-active', i === idx)); }
+  function go(i){
+    idx = Math.max(0, Math.min(n - 1, i));
+    track.scrollTo({left: idx * (track.clientWidth + CAR_GAP), behavior: 'smooth'});
+    update();
+  }
+  const prev = car.querySelector('.car__arrow--prev');
+  const next = car.querySelector('.car__arrow--next');
+  if(prev) prev.addEventListener('click', () => go(idx - 1));
+  if(next) next.addEventListener('click', () => go(idx + 1));
+  dots.forEach(d => d.addEventListener('click', () => go(+d.getAttribute('data-i'))));
+  let tmr;
+  track.addEventListener('scroll', () => {
+    clearTimeout(tmr);
+    tmr = setTimeout(() => {
+      const w = track.clientWidth + CAR_GAP;
+      if(w > 1){ idx = Math.round(track.scrollLeft / w); update(); }
+    }, 110);
+  });
+  return car;
+}
+
+function getCarCodeHTML(){
+  const n = Math.max(2, Math.min(5, crpg.slides));
+  const kw = s => `<span class="code-kw">${s}</span>`;
+  const cls = s => `<span class="code-cls">${s}</span>`;
+  const val = s => `<span class="code-val">${s}</span>`;
+  const tag = (name, attrs, self) => `${kw('&#60;' + name)}${attrs ? ' ' + attrs : ''}${kw(self ? ' />' : '>')}`;
+  const closeTag = name => kw(`&#60;/${name}>`);
+  const classAttr = c => `${cls('class')}=${val('"' + c + '"')}`;
+
+  const arrowLines = crpg.arrows ? `
+  ${tag('button', `${classAttr('car__arrow car__arrow--prev')} type=${val('"button"')} aria-label=${val('"Previous slide"')}`)}<span class="code-cm">&#60;!-- chevron-right icon, rotated --></span>${closeTag('button')}
+  ${tag('button', `${classAttr('car__arrow car__arrow--next')} type=${val('"button"')} aria-label=${val('"Next slide"')}`)}<span class="code-cm">&#60;!-- chevron-right icon --></span>${closeTag('button')}` : '';
+  const slideLines = CAR_SLIDE_CONTENT.slice(0, n).map((t, i) =>
+    `\n    ${tag('div', classAttr('car__slide' + carGradClass(i)))}${t}${closeTag('div')}`).join('');
+  const dotsBlock = crpg.dots ? `\n  ${tag('div', classAttr('car__dots'))}${Array.from({length: n}, (_, i) =>
+    `\n    ${tag('button', `${classAttr('car__dot' + (i === 0 ? ' is-active' : ''))} data-i=${val('"' + i + '"')} aria-label=${val('"Go to slide ' + (i + 1) + '"')}`)}${closeTag('button')}`).join('')}\n  ${closeTag('div')}` : '';
+
+  return `<span class="code-cm">/* Flash · Carousel · ${n} slide${n === 1 ? '' : 's'}${crpg.arrows ? ', arrows' : ''}${crpg.dots ? ', dots' : ''} */</span>
+${tag('div', classAttr('car'))}${arrowLines}
+  ${tag('div', classAttr('car__track'))}${slideLines}
+  ${closeTag('div')}${dotsBlock}
+${closeTag('div')}`;
+}
+
+/* ── CODE PANEL LANGUAGES ──
+   HTML/CSS is the source of truth (real .car markup). Blazor and React TSX
+   are illustrative wrappers over the same classes, so slide count and the
+   arrows/dots toggles stay the only things a consumer ports. */
+const CAR_LANGS = [
+  {key: 'html', label: 'HTML / CSS', file: 'carousel.html'},
+  {key: 'blazor', label: 'Blazor', file: 'DsCarousel.razor'},
+  {key: 'tsx', label: 'React TSX', file: 'DsCarousel.tsx'},
+];
+let carLang = 'html';
+
+function getCarCodeBlazor(){
+  const n = Math.max(2, Math.min(5, crpg.slides));
+  const opt = name => `\n        <span class="code-attr">${name}</span>=<span class="code-val">"true"</span>`;
+  return `<span class="code-cm">@* DsCarousel.razor — usage *@</span>
+<span class="code-kw">&#60;DsCarousel</span> <span class="code-attr">SlideCount</span>=<span class="code-val">"${n}"</span>${crpg.arrows ? opt('ShowArrows') : ''}${crpg.dots ? opt('ShowDots') : ''} <span class="code-kw">/></span>
+
+<span class="code-cm">@* DsCarousel.razor — component definition *@</span>
+<span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"car"</span><span class="code-kw">></span>
+  <span class="code-kw">@if</span> (ShowArrows) {
+    <span class="code-kw">&#60;button</span> <span class="code-cls">class</span>=<span class="code-val">"car__arrow car__arrow--prev"</span> <span class="code-attr">@onclick</span>=<span class="code-val">"Prev"</span><span class="code-kw">>&#60;/button></span>
+    <span class="code-kw">&#60;button</span> <span class="code-cls">class</span>=<span class="code-val">"car__arrow car__arrow--next"</span> <span class="code-attr">@onclick</span>=<span class="code-val">"Next"</span><span class="code-kw">>&#60;/button></span>
+  }
+  <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"car__track"</span> <span class="code-attr">@ref</span>=<span class="code-val">"TrackEl"</span><span class="code-kw">></span>
+    <span class="code-kw">@foreach</span> (<span class="code-kw">var</span> slide <span class="code-kw">in</span> Slides) {
+      <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"@($&quot;car__slide {slide.GradClass}&quot;)"</span><span class="code-kw">></span>@slide.Label<span class="code-kw">&#60;/div></span>
+    }
+  <span class="code-kw">&#60;/div></span>
+  <span class="code-kw">@if</span> (ShowDots) {
+    <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"car__dots"</span><span class="code-kw">></span>
+      <span class="code-kw">@for</span> (<span class="code-kw">var</span> i = 0; i &lt; Slides.Count; i++) {
+        <span class="code-kw">&#60;button</span> <span class="code-cls">class</span>=<span class="code-val">"@(i == ActiveIndex ? &quot;car__dot is-active&quot; : &quot;car__dot&quot;)"</span> <span class="code-attr">@onclick</span>=<span class="code-val">"() => GoTo(i)"</span><span class="code-kw">>&#60;/button></span>
+      }
+    <span class="code-kw">&#60;/div></span>
+  }
+<span class="code-kw">&#60;/div></span>
+
+<span class="code-kw">@code</span> {
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> <span class="code-cls">int</span> SlideCount { get; set; } = 4;
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> <span class="code-cls">bool</span> ShowArrows { get; set; } = <span class="code-kw">true</span>;
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> <span class="code-cls">bool</span> ShowDots { get; set; } = <span class="code-kw">true</span>;
+  <span class="code-kw">private</span> <span class="code-cls">int</span> ActiveIndex;
+  <span class="code-kw">private</span> ElementReference TrackEl;
+
+  <span class="code-cm">// GAP must match --track's real column-gap (14px) for scroll math to land exactly</span>
+  <span class="code-kw">private const</span> <span class="code-cls">int</span> Gap = 14;
+  <span class="code-kw">private void</span> GoTo(<span class="code-cls">int</span> i) { ActiveIndex = Math.Clamp(i, 0, SlideCount - 1); <span class="code-cm">/* JS interop: track.scrollTo(...) */</span> }
+  <span class="code-kw">private void</span> Prev() => GoTo(ActiveIndex - 1);
+  <span class="code-kw">private void</span> Next() => GoTo(ActiveIndex + 1);
+}`;
+}
+
+function getCarCodeTSX(){
+  const n = Math.max(2, Math.min(5, crpg.slides));
+  const usageProps = `slideCount={${n}}` + (crpg.arrows ? ' showArrows' : '') + (crpg.dots ? ' showDots' : '');
+  return `<span class="code-cm">// DsCarousel.tsx</span>
+<span class="code-kw">import</span> React, { useRef, useState } <span class="code-kw">from</span> <span class="code-val">'react'</span>;
+
+<span class="code-cm">// GAP must match .car__track's real column-gap (14px) for scroll math to land exactly</span>
+<span class="code-kw">const</span> GAP = 14;
+
+<span class="code-kw">interface</span> <span class="code-cls">DsCarouselProps</span> {
+  slides: <span class="code-cls">string</span>[];
+  showArrows?: <span class="code-cls">boolean</span>;
+  showDots?: <span class="code-cls">boolean</span>;
+}
+
+<span class="code-kw">export const</span> <span class="code-cls">DsCarousel</span>: React.FC&#60;DsCarouselProps> = ({
+  slides,
+  showArrows = <span class="code-kw">true</span>,
+  showDots = <span class="code-kw">true</span>,
+}) => {
+  <span class="code-kw">const</span> trackRef = useRef&#60;HTMLDivElement>(<span class="code-kw">null</span>);
+  <span class="code-kw">const</span> [active, setActive] = useState(0);
+
+  <span class="code-kw">const</span> goTo = (i: <span class="code-cls">number</span>) => {
+    <span class="code-kw">const</span> track = trackRef.current;
+    <span class="code-kw">if</span> (!track) <span class="code-kw">return</span>;
+    <span class="code-kw">const</span> clamped = Math.max(0, Math.min(slides.length - 1, i));
+    track.scrollTo({ left: clamped * (track.clientWidth + GAP), behavior: <span class="code-val">'smooth'</span> });
+    setActive(clamped);
+  };
+
+  <span class="code-kw">return</span> (
+    &#60;div className=<span class="code-val">"car"</span>>
+      {showArrows &amp;&amp; (
+        &#60;>
+          &#60;button className=<span class="code-val">"car__arrow car__arrow--prev"</span> onClick={() => goTo(active - 1)} aria-label=<span class="code-val">"Previous slide"</span> />
+          &#60;button className=<span class="code-val">"car__arrow car__arrow--next"</span> onClick={() => goTo(active + 1)} aria-label=<span class="code-val">"Next slide"</span> />
+        &#60;/>
+      )}
+      &#60;div className=<span class="code-val">"car__track"</span> ref={trackRef}>
+        {slides.map((label, i) => (
+          &#60;div key={i} className={\`car__slide\${i % 4 === 0 ? <span class="code-val">''</span> : \` car__slide--g\${(i % 4) + 1}\`}\`}>{label}&#60;/div>
+        ))}
+      &#60;/div>
+      {showDots &amp;&amp; (
+        &#60;div className=<span class="code-val">"car__dots"</span>>
+          {slides.map((_, i) => (
+            &#60;button key={i} className={\`car__dot\${i === active ? <span class="code-val">' is-active'</span> : <span class="code-val">''</span>}\`} onClick={() => goTo(i)} aria-label={\`Go to slide \${i + 1}\`} />
+          ))}
+        &#60;/div>
+      )}
+    &#60;/div>
+  );
+};
+
+<span class="code-cm">// Usage</span>
+&#60;DsCarousel slides={[...]} ${usageProps} /></span>`;
+}
+
+function getCarCode(){
+  return carLang === 'blazor' ? getCarCodeBlazor()
+       : carLang === 'tsx' ? getCarCodeTSX()
+       : getCarCodeHTML();
+}
+
+function setCarLang(lang){
+  if(!CAR_LANGS.some(l => l.key === lang)) return;
+  carLang = lang;
+  document.querySelectorAll('#car-code-tab .code-seg__btn').forEach(b => {
+    const on = b.dataset.lang === lang;
+    b.setAttribute('aria-selected', on ? 'true' : 'false');
+    b.setAttribute('tabindex', on ? '0' : '-1');
+  });
+  const file = document.getElementById('car-lang-file');
+  const meta = CAR_LANGS.find(l => l.key === lang);
+  if(file && meta) file.textContent = meta.file;
+  const block = document.getElementById('crpg-code-block');
+  if(block) block.innerHTML = getCarCode();
+}
+
+/* Arrow-key navigation, per the WAI-ARIA tablist pattern: the segmented
+   control is one tab stop and Left/Right (plus Home/End) move between
+   languages. */
+function carLangKeydown(e){
+  const i = CAR_LANGS.findIndex(l => l.key === carLang);
+  let n = i;
+  if(e.key === 'ArrowLeft') n = (i - 1 + CAR_LANGS.length) % CAR_LANGS.length;
+  else if(e.key === 'ArrowRight') n = (i + 1) % CAR_LANGS.length;
+  else if(e.key === 'Home') n = 0;
+  else if(e.key === 'End') n = CAR_LANGS.length - 1;
+  else return;
+  e.preventDefault();
+  setCarLang(CAR_LANGS[n].key);
+  const btn = document.getElementById('car-lang-' + CAR_LANGS[n].key);
+  if(btn) btn.focus();
+}
+
+function crpgRefresh(){
+  document.querySelectorAll('.crpg-stage-el').forEach(stage => {
+    stage.innerHTML = '';
+    stage.appendChild(makeCarEl());
+  });
+  const block = document.getElementById('crpg-code-block');
+  if(block) block.innerHTML = getCarCode();
+}
+
+/* Carousel Playground renders into more than one mount (the main Overview
+   demo, and a smaller copy on the Code tab) so both stay in sync with the
+   same shared crpg state. */
+const CAR_PLAYGROUND_MOUNTS = [
+  {rootId: 'car-playground', idSuffix: '', wrap: true, title: 'Try the component', desc: 'Adjust the filters to test component states.', headingAbove: 'A carousel snaps a small, self-contained set of slides into view one at a time — swipe, use the arrows, or jump with a dot.'},
+  {rootId: 'car-code-playground', idSuffix: '-code', style: 'code', title: 'Playground', desc: 'Live demo of the component.'},
+];
+
+function renderCarPlayground(){
+  crpg.theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+  const sbg = stageBg(crpg.theme);
+
+  const arrowBtns = ['off', 'on'].map(x => `<button class="btn-pg__pill${(crpg.arrows ? (x === 'on') : (x === 'off')) ? ' on' : ''}" onclick="crpgSet('arrows','${x}')">${x === 'on' ? 'Arrows' : 'No arrows'}</button>`).join('');
+  const dotBtns = ['off', 'on'].map(x => `<button class="btn-pg__pill${(crpg.dots ? (x === 'on') : (x === 'off')) ? ' on' : ''}" onclick="crpgSet('dots','${x}')">${x === 'on' ? 'Dots' : 'No dots'}</button>`).join('');
+  const slideBtns = [2, 3, 4, 5].map(n => `<button class="btn-pg__pill${crpg.slides === n ? ' on' : ''}" onclick="crpgSet('slides','${n}')">${n}</button>`).join('');
+
+  CAR_PLAYGROUND_MOUNTS.forEach(mount => {
+    const root = document.getElementById(mount.rootId);
+    if(!root) return;
+    const s = mount.idSuffix;
+    const demo = `
+      <div class="btn-pg">
+        <div class="btn-pg__stage crpg-stage-el" id="crpg-stage${s}" style="background:${sbg}"></div>
+        <div class="btn-pg__ctrls">
+          <div class="btn-pg__group"><span class="btn-pg__clabel">Arrows</span><div class="btn-pg__pill-row">${arrowBtns}</div></div>
+          <div class="btn-pg__group"><span class="btn-pg__clabel">Dots</span><div class="btn-pg__pill-row">${dotBtns}</div></div>
+          <div class="btn-pg__group"><span class="btn-pg__clabel">Slides</span><div class="btn-pg__pill-row">${slideBtns}</div></div>
+        </div>
+      </div>`;
+
+    if(mount.style === 'code'){
+      root.innerHTML = `
+        <div class="type-sub__title">${mount.title}</div>
+        <div class="type-sub__desc">${mount.desc}</div>
+        <div class="cpg-section-outline">${demo}</div>`;
+      return;
+    }
+
+    const inner = `
+      <div class="cpg-layout">
+        <div class="cpg-layout__intro">
+          ${mount.wrap ? `<span class="cpg-cursor-icon">${CPG_CURSOR_ICON_SVG}</span>` : ''}
+          <div class="cpg-layout__title">${mount.title}</div>
+          <div class="cpg-layout__desc">${mount.desc}</div>
+        </div>
+        <div class="cpg-layout__demo">${demo}</div>
+      </div>`;
+    const wrapped = mount.wrap ? `<div class="cpg-section-block">${inner}</div>` : inner;
+    root.innerHTML = (mount.headingAbove ? `<div class="cpg-overview-heading"><span class="cpg-overview-heading__icon">${CPG_INFO_ICON_SVG}</span><span>${mount.headingAbove}</span></div>` : '') + wrapped;
+  });
+
+  crpgRefresh();
+}
+
+function renderCarCodeTab(){
+  const root = document.getElementById('car-code-tab');
+  if(!root) return;
+  root.innerHTML = `
+    <div class="type-sub__title">Code</div>
+    <div class="type-sub__desc">Live snippet matching the current Playground configuration &mdash; switch to Overview to change it.</div>
+    <div class="cpg-section-outline">
+      <div class="code-panel code-panel--bare open">
+        <div class="code-panel__head">
+          <div class="code-seg" role="tablist" aria-label="Code language" onkeydown="carLangKeydown(event)">
+            ${CAR_LANGS.map(l => `<button type="button" role="tab" class="code-seg__btn" id="car-lang-${l.key}" data-lang="${l.key}" aria-selected="${carLang === l.key ? 'true' : 'false'}" aria-controls="crpg-code-block" tabindex="${carLang === l.key ? '0' : '-1'}" onclick="setCarLang('${l.key}')">${l.label}</button>`).join('')}
+          </div>
+          <span class="code-lang-file" id="car-lang-file">${(CAR_LANGS.find(l => l.key === carLang) || CAR_LANGS[0]).file}</span>
+          <button class="code-copy-btn" onclick="crpgCopyCode()" id="crpg-copy-btn">Copy</button>
+        </div>
+        <div class="code-body"><div class="code-block" id="crpg-code-block" role="tabpanel" aria-live="polite"></div></div>
+      </div>
+    </div>`;
+}
+
+function renderCarInSitu(){
+  const root = document.getElementById('car-insitu');
+  if(!root) return;
+  const theme = currentTheme();
+  const sbg = stageBg(theme);
+  const bar = w => `<span class="spec-mock__bar" style="width:${w}"></span>`;
+  const miniDots = (n, active) => `<div class="car__dots" style="margin-top:10px">${Array.from({length: n}, (_, i) => `<span class="car__dot${i === active ? ' is-active' : ''}"></span>`).join('')}</div>`;
+
+  // 1. Onboarding — full-bleed step slide with a headline and progress dots
+  const onboardMock = `
+    <div class="spec-mock__stage" style="background:${sbg}">
+      <div class="car__slide" style="min-height:110px;border-radius:12px;font-size:14px">Add your first team member</div>
+      ${miniDots(3, 0)}
+    </div>
+    <div class="spec-mock__cap"><b>Onboarding steps</b>One idea per slide walks a new user through setup.</div>`;
+
+  // 2. Feature promo — dashboard banner slot cycling announcements
+  const promoMock = `
+    <div class="spec-mock__stage" style="background:${sbg}">
+      <div class="spec-mock__row" style="align-items:center;gap:0">
+        <button class="car__arrow car__arrow--prev" style="position:static;transform:none;width:26px;height:26px;flex-shrink:0" type="button" aria-label="Previous" tabindex="-1">${carArrowSVG('prev')}</button>
+        <div class="car__slide car__slide--g2" style="flex:1;min-height:70px;border-radius:10px;margin:0 8px;font-size:12.5px">New: instant settlement is live</div>
+        <button class="car__arrow car__arrow--next" style="position:static;transform:none;width:26px;height:26px;flex-shrink:0" type="button" aria-label="Next" tabindex="-1">${carArrowSVG('next')}</button>
+      </div>
+      ${miniDots(4, 1)}
+    </div>
+    <div class="spec-mock__cap"><b>Feature promo</b>A dashboard banner slot cycles announcements without competing with the page below it.</div>`;
+
+  // 3. Product gallery — image slide with a caption row beneath
+  const galleryMock = `
+    <div class="spec-mock__stage" style="background:${sbg}">
+      <div class="car__slide car__slide--g3" style="min-height:90px;border-radius:12px;align-items:center;justify-content:center;font-size:13px">Photo 2 of 5</div>
+      ${miniDots(5, 1)}
+      <div class="spec-mock__row" style="margin-top:8px">${bar('60%')}</div>
+    </div>
+    <div class="spec-mock__cap"><b>Product gallery</b>Browse a handful of images for one item, one at a time.</div>`;
+
+  root.innerHTML = `
+    <div class="cpg-section-heading">
+      <div class="cpg-layout__title">In context</div>
+      <div class="cpg-layout__desc">The same carousel does three everyday jobs &mdash; walking through onboarding, promoting a feature, and browsing a gallery.</div>
+    </div>
+    <div class="cpg-section-block">
+      <div class="spec-insitu-grid">
+        <div class="spec-mock">${onboardMock}</div>
+        <div class="spec-mock">${promoMock}</div>
+        <div class="spec-mock">${galleryMock}</div>
+      </div>
+    </div>`;
+}
+
+function crpgSet(key, val){
+  if(key === 'arrows') crpg.arrows = (val === 'on');
+  else if(key === 'dots') crpg.dots = (val === 'on');
+  else if(key === 'slides') crpg.slides = +val;
+  renderCarPlayground();
+}
+function crpgCopyCode(){
+  const b = document.getElementById('crpg-code-block');
+  if(!b) return;
+  navigator.clipboard.writeText(b.innerText || b.textContent).catch(() => {});
+  const btn = document.getElementById('crpg-copy-btn');
+  if(btn){ btn.textContent = 'Copied!'; setTimeout(() => btn.textContent = 'Copy', 2000); }
+}
+
+function renderCarReference(){
+  const root = document.getElementById('car-reference');
+  if(!root) return;
+
+  const theme = currentTheme();
+  const sbg = stageBg(theme);
+
+  /* ---- Anatomy ---- */
+  const heroCar = makeCarHTML({slides: 4, arrows: true, dots: true});
+
+  const parts = [
+    {num: 1, name: 'Arrow', note: 'Optional. Circular prev/next buttons overlaid on the track.', vis: `<button class="car__arrow" style="position:static;transform:none" type="button" tabindex="-1">${carArrowSVG('next')}</button>`},
+    {num: 2, name: 'Track', note: 'Scroll-snapping row that holds every slide; drag or swipe to move it directly.', vis: '<span style="width:60px;height:36px;border-radius:8px;background:var(--color-surface-n2);display:block"></span>'},
+    {num: 3, name: 'Slide', note: 'One self-contained item per slide, full width of the track.', vis: `<div class="car__slide" style="min-height:36px;border-radius:8px;padding:8px;font-size:11px;width:70px">Slide</div>`},
+    {num: 4, name: 'Dots', note: 'Position indicator below the track; the active dot elongates.', vis: `<div class="car__dots" style="margin-top:0">${[0,1,2].map(i=>`<span class="car__dot${i===0?' is-active':''}"></span>`).join('')}</div>`},
+  ];
+  const partCards = parts.map(p => `
+    <div class="spec-part">
+      <div class="spec-part__stage" style="background:${sbg}">${p.vis}</div>
+      <div class="spec-part__body">
+        <div class="spec-part__name"><span class="spec-part__num">${p.num}</span>${p.name}</div>
+        <div class="spec-part__note">${p.note}</div>
+      </div>
+    </div>`).join('');
+
+  /* ---- Dimensions & tokens (no size/colour axis, so this replaces both) ---- */
+  const dimRows = [
+    {name: 'Track max-width', val: '440px'},
+    {name: 'Slide gap', val: '14px'},
+    {name: 'Slide min-height', val: '196px'},
+    {name: 'Slide radius', val: '14px'},
+    {name: 'Arrow size', val: '34px'},
+    {name: 'Dot size (inactive)', val: '7px'},
+    {name: 'Dot size (active)', val: '20px × 7px'},
+  ].map(r => `<tr><td class="dd-table__name">${r.name}</td><td>${r.val}</td></tr>`).join('');
+
+  const tokRows = [
+    {name: 'Arrow background', tok: '--color-btn-s-bg', sw: 'var(--color-btn-s-bg)'},
+    {name: 'Arrow glyph', tok: '--color-btn-s-txt', sw: 'var(--color-btn-s-txt)'},
+    {name: 'Inactive dot', tok: '--color-surface-n3', sw: 'var(--color-surface-n3)'},
+    {name: 'Active dot', tok: '--color-surface-inverse', sw: 'var(--color-surface-inverse)'},
+  ].map(t => `
+    <tr>
+      <td class="dd-table__name">${t.name}</td>
+      <td><div class="spec-tok-cell"><span class="spec-tok-sw" style="background:${t.sw}"></span><code>${t.tok}</code></div></td>
+    </tr>`).join('');
+
+  /* ---- States ---- */
+  const states = [
+    {name: 'Default', note: 'Arrows and dots both shown.', car: ovCarHTML({slides: 3, arrows: true, dots: true})},
+    {name: 'No arrows', note: 'Swipe/drag and dots only.', car: ovCarHTML({slides: 3, arrows: false, dots: true})},
+    {name: 'No dots', note: 'Arrows only, no position indicator.', car: ovCarHTML({slides: 3, arrows: true, dots: false})},
+  ];
+  const stateCells = states.map(s => `
+    <div class="spec-cell">
+      <div class="spec-cell__stage" style="background:${sbg}">${s.car}</div>
+      <div class="spec-cell__name">${s.name}</div>
+      <div class="spec-cell__desc">${s.note}</div>
+    </div>`).join('');
+
+  root.innerHTML = `
+    <div class="type-sub">
+      <div class="type-sub__title">Anatomy</div>
+      <div class="type-sub__desc">A carousel is a scroll-snapping track of slides, with optional overlaid arrows and a dot position indicator.</div>
+      <div class="cpg-section-outline">
+        <div class="spec-hero" style="background:${sbg}"><div style="transform:scale(.85);transform-origin:center">${heroCar}</div></div>
+        <div class="spec-parts">${partCards}</div>
+      </div>
+    </div>
+
+    <div class="type-sub">
+      <div class="type-sub__title">Dimensions &amp; tokens</div>
+      <div class="type-sub__desc">Carousel has no size or colour axis like Pills &mdash; these are its fixed dimensions plus the tokens that drive its arrow and dot colours.</div>
+      <div class="cpg-section-outline">
+        <div class="dd-table-wrap"><table class="dd-table">
+          <thead><tr><th>Property</th><th>Value</th></tr></thead>
+          <tbody>${dimRows}</tbody>
+        </table></div>
+        <div class="dd-table-wrap" style="margin-top:12px"><table class="dd-table" style="min-width:340px">
+          <thead><tr><th>Token</th><th>Value</th></tr></thead>
+          <tbody>${tokRows}</tbody>
+        </table></div>
+      </div>
+    </div>
+
+    <div class="type-sub" style="margin-bottom:0">
+      <div class="type-sub__title">States</div>
+      <div class="type-sub__desc">Arrows and dots can each be switched off independently &mdash; swipe/drag always works regardless.</div>
+      <div class="cpg-section-outline">
+        <div class="spec-grid">${stateCells}</div>
+      </div>
+    </div>`;
+}
+
+function carTabSwitch(tab){
+  const nav = document.getElementById('car-tabs-list');
+  if(!nav) return;
+  nav.querySelectorAll('.tab-item').forEach(btn => btn.classList.toggle('on', btn.getAttribute('data-car-tab') === tab));
+  document.querySelectorAll('#s-carousel .tabs-panel[data-car-panel]').forEach(p => p.classList.toggle('on', p.getAttribute('data-car-panel') === tab));
+}
 /* Icons — shared SVG icon system (used by the Icons gallery and Navigation) */
 const ICONS = {
   home: {vb:'0 -960 960 960', d:'<path d="M151.87-202.87v-355.7q0-21.63 9.58-40.9 9.57-19.27 26.72-31.94L425.3-809.26q24.11-18.39 54.7-18.39 30.59 0 54.7 18.39l237.13 177.85q17.15 12.67 26.72 31.94 9.58 19.27 9.58 40.9v355.7q0 37.78-26.61 64.39t-64.39 26.61H607.41q-19.15 0-32.32-13.17-13.18-13.18-13.18-32.33v-199.04q0-19.16-13.17-32.33-13.17-13.17-32.33-13.17h-72.82q-19.16 0-32.33 13.17-13.17 13.17-13.17 32.33v199.04q0 19.15-13.18 32.33-13.17 13.17-32.32 13.17H242.87q-37.78 0-64.39-26.61t-26.61-64.39Z"/>'},
@@ -21912,6 +22462,11 @@ try { renderNavStatesRef();  } catch(e){ console.error('nav-states-ref',e); }
 /* @@SHADCN_JS@@ */
 
 try { renderTablesPlayground(); } catch(e){ console.error('tbl-playground',e); }
+
+try { renderCarCodeTab(); } catch(e){ console.error('car-code-tab',e); }
+try { renderCarPlayground(); } catch(e){ console.error('car-playground',e); }
+try { renderCarInSitu(); } catch(e){ console.error('car-insitu',e); }
+try { renderCarReference(); } catch(e){ console.error('car-reference',e); }
 try { renderSectionChangelogs(); } catch(e){ console.error('section-changelog',e); }
 
 /* .sec--tabbed pages have their own Changelog tab — relocate the auto-injected
@@ -21941,6 +22496,7 @@ try { renderSectionChangelogs(); } catch(e){ console.error('section-changelog',e
   {secId:'s-charts-meters', panelId:'cmeter-changelog-panel'},
   {secId:'s-charts-distribution', panelId:'cdist-changelog-panel'},
   {secId:'s-nav', panelId:'nav-changelog-panel'},
+  {secId:'s-carousel', panelId:'car-changelog-panel'},
 ].forEach(({secId, panelId})=>{
   try {
     const chlog = document.querySelector(`#${secId} > .sec-chlog`);
