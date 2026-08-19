@@ -1948,6 +1948,12 @@ body.home .main{max-width:none;margin:0;padding:0}
   border-color:var(--fs-green);
   background-image:radial-gradient(circle at center, var(--fs-green) 0 30%, var(--fs-bg) 33% 100%);
 }
+/* indeterminate — checkbox only; not settable via an HTML attribute, only
+   the DOM .indeterminate property, so this rule only ever fires from JS */
+.fsel__input:indeterminate{
+  background-color:var(--fs-green);border-color:var(--fs-green);background-size:60%;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='none' stroke='%23fff' stroke-width='2.3' stroke-linecap='round' d='M3.5 8h9'/%3E%3C/svg%3E");
+}
 /* hover (real + forced .is-hover) */
 .fsel:hover>.fsel__input:not(:disabled),.fsel__input.is-hover:not(:disabled){border-color:#9a9ea6}
 .fsel:hover>.fsel__input:checked:not(:disabled),.fsel__input.is-hover:checked:not(:disabled){border-color:var(--fs-green);filter:brightness(.93)}
@@ -1959,42 +1965,13 @@ body.home .main{max-width:none;margin:0;padding:0}
 .fsel__input[type="checkbox"]:disabled:checked{background-color:#c3c7cd;border-color:#c3c7cd}
 .fsel__input[type="radio"]:disabled:checked{border-color:#c3c7cd;background-image:radial-gradient(circle at center,#c3c7cd 0 30%,#f4f5f6 33% 100%)}
 .fsel__input:disabled~.fsel__label,.fsel--disabled{cursor:not-allowed;color:var(--chrome-muted);opacity:.75}
-/* dark stage (forced) + site dark theme */
-.selref__stage--dark .fsel,[data-theme="dark"] .fsel{color:#f4f5f6}
-.selref__stage--dark .fsel__input,[data-theme="dark"] .fsel__input{--fs-border:#565963;--fs-bg:#12131a;--fs-ring:rgba(255,255,255,.2)}
-.selref__stage--dark .fsel:hover>.fsel__input:not(:disabled),.selref__stage--dark .fsel__input.is-hover:not(:disabled),[data-theme="dark"] .fsel:hover>.fsel__input:not(:disabled){border-color:#8b8e97}
-.selref__stage--dark .fsel__input:disabled,[data-theme="dark"] .fsel__input:disabled{--fs-border:#33343a;--fs-bg:#1a1b22}
-.selref__stage--dark .fsel__input[type="checkbox"]:disabled:checked,[data-theme="dark"] .fsel__input[type="checkbox"]:disabled:checked{background-color:#3a3b42;border-color:#3a3b42}
-.selref__stage--dark .fsel__input[type="radio"]:disabled:checked,[data-theme="dark"] .fsel__input[type="radio"]:disabled:checked{border-color:#3a3b42;background-image:radial-gradient(circle at center,#3a3b42 0 30%,#1a1b22 33% 100%)}
-
-/* Quick-copy card */
-.selqc{border:1px solid var(--chrome-border);border-radius:16px;background:var(--chrome-bg);padding:26px 28px;transition:background .25s}
-.selqc__title{font-size:22px;font-weight:900;color:var(--chrome-txt);margin-bottom:6px}
-.selqc__desc{font-size:13px;color:var(--chrome-muted);margin-bottom:18px}
-.selqc__bare{display:flex;align-items:center;gap:12px;margin-bottom:16px}
-.selqc__row{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;background:var(--chrome-nav);border-radius:12px;padding:14px 16px;margin-bottom:10px;transition:background .25s}
-.selqc__row .fsel{gap:10px}
-
-/* Reference grid */
-.selref{border:1px solid var(--chrome-border);border-radius:14px;overflow:hidden}
-.selref__wrap{overflow-x:auto}
-.selref__wrap+.selref__wrap{border-top:1px solid var(--chrome-border)}
-.selref__stage{min-width:600px}
-.selref__stage--light{background:#fff}
-.selref__stage--dark{background:#12131a}
-.selref__grid{display:grid;grid-template-columns:120px repeat(6,minmax(72px,1fr));align-items:stretch}
-.selref__modehead{grid-column:1/8;padding:16px 16px 2px;font-size:14px;font-weight:800}
-.selref__grouphead{padding:12px 14px 2px;font-size:13px;font-weight:800}
-.selref__sizehead{padding:2px 14px 12px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
-.selref__rowlabel{padding:14px;font-size:12px;font-weight:600;display:flex;align-items:center}
-.selref__cell{display:flex;flex-direction:column;gap:11px;align-items:flex-start;justify-content:center;padding:12px 14px}
-.selref__grpdiv{grid-column:5;grid-row:2/9;border-left:1px dashed}
-.selref__stage--light .selref__modehead,.selref__stage--light .selref__grouphead,.selref__stage--light .selref__rowlabel{color:#161616}
-.selref__stage--light .selref__sizehead{color:#797b7e}
-.selref__stage--light .selref__grpdiv{border-color:#e6e6e6}
-.selref__stage--dark .selref__modehead,.selref__stage--dark .selref__grouphead,.selref__stage--dark .selref__rowlabel{color:#fff}
-.selref__stage--dark .selref__sizehead{color:#a1a3a8}
-.selref__stage--dark .selref__grpdiv{border-color:#33343a}
+/* site dark theme */
+[data-theme="dark"] .fsel{color:#f4f5f6}
+[data-theme="dark"] .fsel__input{--fs-border:#565963;--fs-bg:#12131a;--fs-ring:rgba(255,255,255,.2)}
+[data-theme="dark"] .fsel:hover>.fsel__input:not(:disabled){border-color:#8b8e97}
+[data-theme="dark"] .fsel__input:disabled{--fs-border:#33343a;--fs-bg:#1a1b22}
+[data-theme="dark"] .fsel__input[type="checkbox"]:disabled:checked{background-color:#3a3b42;border-color:#3a3b42}
+[data-theme="dark"] .fsel__input[type="radio"]:disabled:checked{border-color:#3a3b42;background-image:radial-gradient(circle at center,#3a3b42 0 30%,#1a1b22 33% 100%)}
 
 /* Usage do / don't */
 .sel-usage{display:grid;grid-template-columns:1fr 1fr;gap:16px}
@@ -3473,85 +3450,24 @@ body.home .main{max-width:none;margin:0;padding:0}
   </pre>
 </details>
     </section>
-    <section class="sec" id="s-selection">
+    <section class="sec sec--tabbed" id="s-selection">
+      <div class="sec-hero">
       <div class="sec__head">
-        <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Checkboxes &amp; Radios <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.1.1</span></h1>
-        <p class="sec__desc">Selection controls built on real native inputs, styled with the brand green. 2 control types &middot; 3 sizes &middot; 5 states &middot; light &amp; dark mode. Checkboxes for independent on/off choices; radios for one-of-many.</p>
-      </div>
-
-      <!-- Quick copy -->
-      <div class="type-sub">
-        <div class="type-sub__title">Quick copy</div>
-        <div class="type-sub__desc">Grab a ready-made instance. Every control here is a real, focusable native input.</div>
-        <div class="selqc">
-          <div class="selqc__title">Quick copy</div>
-          <div class="selqc__desc">Use these instances if you&rsquo;re here to quickly grab a copy.</div>
-          <div class="selqc__bare">
-            <input type="checkbox" class="fsel__input" aria-label="Unchecked checkbox">
-            <input type="checkbox" class="fsel__input" checked aria-label="Checked checkbox">
-            <input type="radio" name="qc-bare" class="fsel__input" aria-label="Unselected radio">
-            <input type="radio" name="qc-bare" class="fsel__input" checked aria-label="Selected radio">
-          </div>
-          <div class="selqc__row">
-            <label class="fsel"><input type="checkbox" class="fsel__input"><span class="fsel__label">With a label</span></label>
-            <label class="fsel"><input type="checkbox" class="fsel__input" checked><span class="fsel__label">With a label</span></label>
-            <label class="fsel"><input type="radio" name="qc-lbl" class="fsel__input"><span class="fsel__label">With a label</span></label>
-            <label class="fsel"><input type="radio" name="qc-lbl" class="fsel__input" checked><span class="fsel__label">With a label</span></label>
-          </div>
-          <div class="selqc__row">
-            <label class="fsel fsel--sm"><input type="checkbox" class="fsel__input"><span class="fsel__label">Small</span></label>
-            <label class="fsel fsel--sm"><input type="checkbox" class="fsel__input" checked><span class="fsel__label">Small</span></label>
-            <label class="fsel fsel--sm"><input type="radio" name="qc-sm" class="fsel__input"><span class="fsel__label">Small</span></label>
-            <label class="fsel fsel--sm"><input type="radio" name="qc-sm" class="fsel__input" checked><span class="fsel__label">Small</span></label>
-          </div>
-        </div>
-      </div>
-
-      <!-- Reference grid -->
-      <div id="sel-reference" class="type-sub"></div>
-
-      <!-- Labels & tap target -->
-      <div class="type-sub">
-        <div class="type-sub__title">Labels &amp; tap target</div>
-        <div class="type-sub__desc">Always wrap the control and its text in a single <code style="font-family:'SF Mono',monospace;font-size:11.5px;background:var(--chrome-nav);padding:1px 5px;border-radius:4px">&lt;label&gt;</code> so the whole row is clickable. Keep the interactive row at least 44&times;44px for comfortable touch targets.</div>
-        <div style="display:flex;flex-wrap:wrap;gap:14px 28px;align-items:center">
-          <label class="fsel" style="min-height:44px"><input type="checkbox" class="fsel__input" checked><span class="fsel__label">Email me product updates</span></label>
-          <label class="fsel" style="min-height:44px"><input type="radio" name="tap-demo" class="fsel__input" checked><span class="fsel__label">Standard delivery</span></label>
-          <label class="fsel" style="min-height:44px"><input type="radio" name="tap-demo" class="fsel__input"><span class="fsel__label">Express delivery</span></label>
-        </div>
-      </div>
-
-      <!-- Usage -->
-      <div class="type-sub">
-        <div class="type-sub__title">When to use which</div>
-        <div class="type-sub__desc">Checkboxes and radios look similar but answer different questions.</div>
-        <div class="sel-usage">
-          <div class="sel-usage__card">
-            <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
-            <ul class="sel-usage__list">
-              <li>Use a <strong>checkbox</strong> for independent on/off options, or a single opt-in (terms, marketing).</li>
-              <li>Use <strong>radios</strong> when exactly one option from a set must be chosen and all options are worth showing.</li>
-              <li>Give every control a visible, clickable text label.</li>
-              <li>Pre-select a sensible default for radio groups.</li>
-            </ul>
-          </div>
-          <div class="sel-usage__card">
-            <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don&rsquo;t</div>
-            <ul class="sel-usage__list">
-              <li>Don&rsquo;t use radios for a yes/no toggle &mdash; use a single checkbox or a switch.</li>
-              <li>Don&rsquo;t use checkboxes when only one choice is allowed.</li>
-              <li>Don&rsquo;t leave a radio group with no option selected once the user has interacted.</li>
-              <li>Don&rsquo;t nest more than one level of dependent checkboxes.</li>
-            </ul>
-          </div>
-        </div>
-      </div>
+        <h1 class="sec__title">Checkboxes &amp; Radios</h1>
+        <div class="sec-header-meta">
+          <span class="comp-ver-badge" style="margin-left:0">v1.2.0</span>
           <details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-selection">
 {
-  "status": "static",
+  "status": "js-rendered",
+  "builderFunctions": [
+    "CBR_SIZES",
+    "CBR_CONTROLS",
+    "cbrInputHTML",
+    "ovCbr",
+    "makeCbrEl"
+  ],
   "realClasses": [
     ".fsel",
     ".fsel__input",
@@ -3560,26 +3476,37 @@ body.home .main{max-width:none;margin:0;padding:0}
     ".fsel--xs",
     ".fsel--disabled"
   ],
-  "css": "/* ================================================================\n   CHECKBOXES &amp; RADIO BUTTONS\n================================================================ */\n.fsel { display:inline-flex;align-items:center;gap:9px;cursor:pointer;font-family:inherit;font-size:14px;line-height:1.2;color:var(--chrome-txt);-webkit-user-select:none;user-select:none }\n.fsel__input { --fs-box:20px; --fs-radius:6px;\n  --fs-border:#c2c6cc; --fs-bg:#fff; --fs-green:#10c504;\n  --fs-ring:rgba(0,0,0,.14);\n  appearance:none;-webkit-appearance:none;\n  flex:0 0 auto;display:block;width:var(--fs-box);height:var(--fs-box);margin:0;\n  border:1.6px solid var(--fs-border);border-radius:var(--fs-radius);\n  background-color:var(--fs-bg);background-repeat:no-repeat;background-position:center;\n  cursor:pointer;transition:border-color .15s,background-color .15s,box-shadow .15s; }\n.fsel__input[type=\"radio\"] { border-radius:50% }\n/* size modifiers (usable on the input directly or via .fsel--sm / --xs wrapper) */\n.fsel__input.is-sm,.fsel--sm .fsel__input { --fs-box:18px;--fs-radius:5px }\n.fsel__input.is-xs,.fsel--xs .fsel__input { --fs-box:16px;--fs-radius:4.5px }\n.fsel--sm { font-size:13px }\n.fsel--xs { font-size:12px }\n/* checked — checkbox: green fill + white tick */\n.fsel__input[type=\"checkbox\"]:checked { background-color:var(--fs-green);border-color:var(--fs-green);background-size:74%;\n  background-image:url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='none' stroke='%23fff' stroke-width='2.3' stroke-linecap='round' stroke-linejoin='round' d='M3.5 8.4l3 3 6-6.6'/%3E%3C/svg%3E\"); }\n/* checked — radio: green ring + white gap + green centre dot */\n.fsel__input[type=\"radio\"]:checked { border-color:var(--fs-green);\n  background-image:radial-gradient(circle at center, var(--fs-green) 0 30%, var(--fs-bg) 33% 100%); }\n/* hover (real + forced .is-hover) */\n.fsel:hover&gt;.fsel__input:not(:disabled),.fsel__input.is-hover:not(:disabled) { border-color:#9a9ea6 }\n.fsel:hover&gt;.fsel__input:checked:not(:disabled),.fsel__input.is-hover:checked:not(:disabled) { border-color:var(--fs-green);filter:brightness(.93) }\n/* focus (real + forced .is-focus) */\n.fsel__input:focus-visible,.fsel__input.is-focus { outline:none;box-shadow:0 0 0 4px var(--fs-ring) }\n.fsel__input:checked:focus-visible,.fsel__input.is-focus:checked { box-shadow:0 0 0 4px rgba(16,197,4,.24) }\n/* disabled */\n.fsel__input:disabled { cursor:not-allowed;--fs-border:#e0e2e6;--fs-bg:#f4f5f6 }\n.fsel__input[type=\"checkbox\"]:disabled:checked { background-color:#c3c7cd;border-color:#c3c7cd }\n.fsel__input[type=\"radio\"]:disabled:checked { border-color:#c3c7cd;background-image:radial-gradient(circle at center,#c3c7cd 0 30%,#f4f5f6 33% 100%) }\n.fsel__input:disabled~.fsel__label,.fsel--disabled { cursor:not-allowed;color:var(--chrome-muted);opacity:.75 }\n/* dark stage (forced) + site dark theme */\n.selref__stage--dark .fsel,[data-theme=\"dark\"] .fsel { color:#f4f5f6 }\n.selref__stage--dark .fsel__input,[data-theme=\"dark\"] .fsel__input { --fs-border:#565963;--fs-bg:#12131a;--fs-ring:rgba(255,255,255,.2) }\n.selref__stage--dark .fsel:hover&gt;.fsel__input:not(:disabled),.selref__stage--dark .fsel__input.is-hover:not(:disabled),[data-theme=\"dark\"] .fsel:hover&gt;.fsel__input:not(:disabled) { border-color:#8b8e97 }\n.selref__stage--dark .fsel__input:disabled,[data-theme=\"dark\"] .fsel__input:disabled { --fs-border:#33343a;--fs-bg:#1a1b22 }\n.selref__stage--dark .fsel__input[type=\"checkbox\"]:disabled:checked,[data-theme=\"dark\"] .fsel__input[type=\"checkbox\"]:disabled:checked { background-color:#3a3b42;border-color:#3a3b42 }\n.selref__stage--dark .fsel__input[type=\"radio\"]:disabled:checked,[data-theme=\"dark\"] .fsel__input[type=\"radio\"]:disabled:checked { border-color:#3a3b42;background-image:radial-gradient(circle at center,#3a3b42 0 30%,#1a1b22 33% 100%) }\n.selqc__row .fsel { gap:10px }",
-  "usage": {
-    "do": [
-      "Use a checkbox for independent on/off options, or a single opt-in (terms, marketing).",
-      "Use radios when exactly one option from a set must be chosen and all options are worth showing.",
-      "Give every control a visible, clickable text label.",
-      "Pre-select a sensible default for radio groups."
-    ],
-    "dont": [
-      "Don’t use radios for a yes/no toggle — use a single checkbox or a switch.",
-      "Don’t use checkboxes when only one choice is allowed.",
-      "Don’t leave a radio group with no option selected once the user has interacted.",
-      "Don’t nest more than one level of dependent checkboxes."
-    ]
-  },
-  "contentHash": "dae0ac19ed56907a2c27aed12af6f5b78bf216899a248c784ecd287c4c082030",
-  "note": "Fully static, real native &lt;input type=\"checkbox\"|\"radio\"&gt; markup wrapped in a .fsel label — see the Quick copy block for the exact markup. Size/disabled modifiers (.fsel--sm/--xs/--disabled) are genuine CSS; forced-state classes (is-hover/is-focus/is-sm/is-xs) are captured via the .fsel/.fsel__input boundary already. The Reference grid (all size×state combinations) is rendered by renderSelReference()/selCell()/SEL_SIZES/SEL_ROWS — doc-site-only plumbing for showing every combination side by side, not required to reconstruct the actual component."
+  "css": "/* ================================================================\n   CHECKBOXES &amp; RADIO BUTTONS\n================================================================ */\n.fsel { display:inline-flex;align-items:center;gap:9px;cursor:pointer;font-family:inherit;font-size:14px;line-height:1.2;color:var(--chrome-txt);-webkit-user-select:none;user-select:none }\n.fsel__input { --fs-box:20px; --fs-radius:6px;\n  --fs-border:#c2c6cc; --fs-bg:#fff; --fs-green:#10c504;\n  --fs-ring:rgba(0,0,0,.14);\n  appearance:none;-webkit-appearance:none;\n  flex:0 0 auto;display:block;width:var(--fs-box);height:var(--fs-box);margin:0;\n  border:1.6px solid var(--fs-border);border-radius:var(--fs-radius);\n  background-color:var(--fs-bg);background-repeat:no-repeat;background-position:center;\n  cursor:pointer;transition:border-color .15s,background-color .15s,box-shadow .15s; }\n.fsel__input[type=\"radio\"] { border-radius:50% }\n/* size modifiers (usable on the input directly or via .fsel--sm / --xs wrapper) */\n.fsel__input.is-sm,.fsel--sm .fsel__input { --fs-box:18px;--fs-radius:5px }\n.fsel__input.is-xs,.fsel--xs .fsel__input { --fs-box:16px;--fs-radius:4.5px }\n.fsel--sm { font-size:13px }\n.fsel--xs { font-size:12px }\n/* checked — checkbox: green fill + white tick */\n.fsel__input[type=\"checkbox\"]:checked { background-color:var(--fs-green);border-color:var(--fs-green);background-size:74%;\n  background-image:url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='none' stroke='%23fff' stroke-width='2.3' stroke-linecap='round' stroke-linejoin='round' d='M3.5 8.4l3 3 6-6.6'/%3E%3C/svg%3E\"); }\n/* checked — radio: green ring + white gap + green centre dot */\n.fsel__input[type=\"radio\"]:checked { border-color:var(--fs-green);\n  background-image:radial-gradient(circle at center, var(--fs-green) 0 30%, var(--fs-bg) 33% 100%); }\n/* indeterminate — checkbox only; not settable via an HTML attribute, only\n   the DOM .indeterminate property, so this rule only ever fires from JS */\n.fsel__input:indeterminate { background-color:var(--fs-green);border-color:var(--fs-green);background-size:60%;\n  background-image:url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='none' stroke='%23fff' stroke-width='2.3' stroke-linecap='round' d='M3.5 8h9'/%3E%3C/svg%3E\"); }\n/* hover (real + forced .is-hover) */\n.fsel:hover&gt;.fsel__input:not(:disabled),.fsel__input.is-hover:not(:disabled) { border-color:#9a9ea6 }\n.fsel:hover&gt;.fsel__input:checked:not(:disabled),.fsel__input.is-hover:checked:not(:disabled) { border-color:var(--fs-green);filter:brightness(.93) }\n/* focus (real + forced .is-focus) */\n.fsel__input:focus-visible,.fsel__input.is-focus { outline:none;box-shadow:0 0 0 4px var(--fs-ring) }\n.fsel__input:checked:focus-visible,.fsel__input.is-focus:checked { box-shadow:0 0 0 4px rgba(16,197,4,.24) }\n/* disabled */\n.fsel__input:disabled { cursor:not-allowed;--fs-border:#e0e2e6;--fs-bg:#f4f5f6 }\n.fsel__input[type=\"checkbox\"]:disabled:checked { background-color:#c3c7cd;border-color:#c3c7cd }\n.fsel__input[type=\"radio\"]:disabled:checked { border-color:#c3c7cd;background-image:radial-gradient(circle at center,#c3c7cd 0 30%,#f4f5f6 33% 100%) }\n.fsel__input:disabled~.fsel__label,.fsel--disabled { cursor:not-allowed;color:var(--chrome-muted);opacity:.75 }\n/* site dark theme */\n[data-theme=\"dark\"] .fsel { color:#f4f5f6 }\n[data-theme=\"dark\"] .fsel__input { --fs-border:#565963;--fs-bg:#12131a;--fs-ring:rgba(255,255,255,.2) }\n[data-theme=\"dark\"] .fsel:hover&gt;.fsel__input:not(:disabled) { border-color:#8b8e97 }\n[data-theme=\"dark\"] .fsel__input:disabled { --fs-border:#33343a;--fs-bg:#1a1b22 }\n[data-theme=\"dark\"] .fsel__input[type=\"checkbox\"]:disabled:checked { background-color:#3a3b42;border-color:#3a3b42 }\n[data-theme=\"dark\"] .fsel__input[type=\"radio\"]:disabled:checked { border-color:#3a3b42;background-image:radial-gradient(circle at center,#3a3b42 0 30%,#1a1b22 33% 100%) }",
+  "js": "const CBR_SIZES = [\n  {key:'reg', inputCls:'',      wrapCls:'',         label:'Regular', box:20, fontPx:14},\n  {key:'sm',  inputCls:'is-sm', wrapCls:'fsel--sm', label:'Small',   box:18, fontPx:13},\n  {key:'xs',  inputCls:'is-xs', wrapCls:'fsel--xs', label:'XSmall',  box:16, fontPx:12},\n];\n\nconst CBR_CONTROLS = [\n  {key:'checkbox', label:'Checkbox'},\n  {key:'radio',    label:'Radio'},\n];\n\nfunction cbrInputHTML(control, sizeKey, opts={}){\n  const sz = CBR_SIZES.find(s=&gt;s.key===sizeKey)||CBR_SIZES[0];\n  const {checked=false, disabled=false, extra='', indeterminate=false, name} = opts;\n  const cls = ['fsel__input', sz.inputCls, extra].filter(Boolean).join(' ');\n  const nameAttr = control==='radio' ? ` name=\"${name||'cbr-demo'}\"` : '';\n  const indAttr = indeterminate ? ' data-cbr-indeterminate=\"true\"' : '';\n  return `&lt;input type=\"${control}\" class=\"${cls}\"${nameAttr}${checked?' checked':''}${disabled?' disabled':''}${indAttr} aria-label=\"${cap(control)}\"&gt;`;\n}\n\nfunction ovCbr({control='checkbox', size='sm', label='Option', checked=false, disabled=false, name}={}){\n  const sz = CBR_SIZES.find(s=&gt;s.key===size)||CBR_SIZES[0];\n  const input = cbrInputHTML(control, size, {checked, disabled, name});\n  const wrapCls = ['fsel', sz.wrapCls].filter(Boolean).join(' ');\n  return `&lt;label class=\"${wrapCls}\"&gt;${input}&lt;span class=\"fsel__label\"&gt;${label}&lt;/span&gt;&lt;/label&gt;`;\n}\n\nfunction makeCbrEl(){\n  const sz = CBR_SIZES.find(s=&gt;s.key===cbrPg.size)||CBR_SIZES[0];\n  const wrap = document.createElement('div');\n  wrap.style.cssText = 'display:flex;flex-direction:column;gap:12px';\n  const rows = cbrPg.control==='radio'\n    ? [{txt:'Standard delivery', checked:true}, {txt:'Express delivery', checked:false}]\n    : [{txt:'Email me product updates', checked:false}];\n  rows.forEach(r=&gt;{\n    const label = document.createElement('label');\n    label.className = ['fsel', sz.wrapCls].filter(Boolean).join(' ');\n    const input = document.createElement('input');\n    input.type = cbrPg.control;\n    input.className = ['fsel__input', sz.inputCls].filter(Boolean).join(' ');\n    if(cbrPg.control==='radio') input.name = 'cbrpg-demo';\n    if(r.checked) input.checked = true;\n    label.appendChild(input);\n    const span = document.createElement('span');\n    span.className = 'fsel__label';\n    span.textContent = r.txt;\n    label.appendChild(span);\n    wrap.appendChild(label);\n  });\n  return wrap;\n}",
+  "contentHash": "48378855e2b5430f1e778cec407717299268f430a9942062c5cd0f640d9f91c0",
+  "note": "cbrInputHTML is the minimal real-markup builder (control+size -&gt; bare input HTML string); ovCbr wraps it in a real &lt;label class=\"fsel\"&gt; for full markup. Indeterminate has no HTML attribute form — it is only ever set via the DOM .indeterminate property (see the States grid's data-cbr-indeterminate post-render pass). cbrPg (playground state)/getCbrCode*/renderCbrPlayground/renderCbrReference/renderCbrInSitu/renderCbrKeyControls/renderCbrStatesGrid are doc-site-only playground plumbing, excluded."
 }
   </pre>
 </details>
+        </div>
+      </div>
+      <div class="sec-hero__preview"><div class="mk"><label class="fsel"><input type="checkbox" class="fsel__input" checked><span class="fsel__label">Checkbox</span></label><label class="fsel"><input type="radio" name="cbr-hero-preview" class="fsel__input" checked><span class="fsel__label">Radio</span></label></div></div>
+      </div>
+      <div class="tabs-list sec-tabs" id="cbr-tabs-list">
+        <button type="button" class="tab-item on" data-cbr-tab="overview" onclick="cbrTabSwitch('overview')"><span class="tab-item__inner"><span class="tab-item__label">Overview</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-cbr-tab="style" onclick="cbrTabSwitch('style')"><span class="tab-item__inner"><span class="tab-item__label">Style</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-cbr-tab="code" onclick="cbrTabSwitch('code')"><span class="tab-item__inner"><span class="tab-item__label">Code</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-cbr-tab="changelog" onclick="cbrTabSwitch('changelog')"><span class="tab-item__inner"><span class="tab-item__label">Changelog</span></span><span class="tab-item__line"></span></button>
+      </div>
+      <div class="tabs-panel on" data-cbr-panel="overview">
+        <div id="cbr-playground" class="type-sub"></div>
+        <div id="cbr-keycontrols" class="type-sub"></div>
+        <div id="cbr-insitu" class="type-sub"></div>
+        <div class="type-sub cpg-variants" id="cbr-usage"></div>
+      </div>
+      <div class="tabs-panel" data-cbr-panel="style">
+        <div id="cbr-reference" class="type-sub spec-panel spec-stack"></div>
+      </div>
+      <div class="tabs-panel" data-cbr-panel="code">
+        <div id="cbr-code-playground" class="type-sub spec-panel spec-code-playground"></div>
+        <div id="cbr-code-tab" class="type-sub spec-panel"></div>
+      </div>
+      <div class="tabs-panel" data-cbr-panel="changelog" id="cbr-changelog-panel"></div>
     </section>
     <section class="sec sec--tabbed" id="s-tags">
       <div class="sec-hero">
@@ -5387,7 +5314,7 @@ body.home .main{max-width:none;margin:0;padding:0}
     ".dd-status",
     ".dd-dot"
   ],
-  "css": "/* dd-num/dd-status/dd-dot are exclusive to the Tables \"Reporting variant\" demo */\n.dd-num { text-align:left;font-variant-numeric:tabular-nums;font-weight:700 }\n.dd-status { display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:600;white-space:nowrap }\n.dd-dot { width:7px;height:7px;border-radius:50%;flex-shrink:0 }\n/* ================================================================\n   TABLES\n================================================================ */\n/* Table row — a selectable record row assembled from cells */\n.tbl-row { --tbl-hover:#f4f4f4; --tbl-checked:#e9f9ea;\n  display:flex;align-items:center;gap:20px;\n  min-height:50px;padding:0 14px;border-radius:8px;\n  background:transparent;color:var(--chrome-txt);\n  transition:background .12s,box-shadow .12s; }\n[data-theme=\"dark\"] .tbl-row { --tbl-hover:rgba(255,255,255,.05);--tbl-checked:rgba(16,197,4,.13) }\n.tbl-row.is-hover,.tbl-row:not(.is-disabled):not(.is-checked):hover { background:var(--tbl-hover) }\n.tbl-row.is-focus { background:var(--chrome-bg);box-shadow:inset 0 0 0 2px var(--chrome-txt) }\n.tbl-row.is-checked { background:var(--tbl-checked) }\n.tbl-row.is-disabled { pointer-events:none }\n/* cells */\n.tbl-cell { font-size:14px;font-weight:500;color:var(--chrome-txt);white-space:nowrap;overflow:hidden;text-overflow:ellipsis }\n.tbl-cell--check { flex:0 0 20px }\n.tbl-cell--name { flex:0 0 92px;font-weight:700 }\n.tbl-cell--col { flex:0 0 116px }\n.tbl-cell--links { margin-left:auto;display:flex;gap:22px }\n.tbl-link { color:var(--color-link);font-weight:700;font-size:14px;text-decoration:none;cursor:pointer;white-space:nowrap }\n.tbl-link:hover { text-decoration:underline }\n/* disabled dims the content */\n.tbl-row.is-disabled .tbl-cell,.tbl-row.is-disabled .tbl-link { color:var(--chrome-muted);opacity:.85 }\n.tbl-row.is-disabled .tbl-pic { filter:grayscale(1);opacity:.5 }\n/* product icon */\n.tbl-pic { width:30px;height:30px;border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#fff;font-weight:900;font-size:15px }\n.tbl-pic svg { width:17px;height:17px;display:block }\n.tbl-pic--1v { background:var(--prim-1v-500) }\n.tbl-pic--gift { background:var(--prim-sup-pink-1) }\n/* status tag */\n.tbl-tag { display:inline-flex;align-items:center;height:22px;padding:0 9px;border-radius:6px;font-size:12px;font-weight:700;white-space:nowrap;line-height:1 }\n.tbl-tag--pending { background:#e6e6e6;color:#414141 }\n.tbl-tag--success { background:#16a220;color:#fff }\n.tbl-tag--failed { background:#eb0029;color:#fff }\n[data-theme=\"dark\"] .tbl-tag--pending { background:rgba(255,255,255,.14);color:#e6e6e6 }\n.tbl-pg__stage&gt;.tbl-row { flex:1 1 auto;min-width:640px }\n.tbl-pg__head .tbl-head__cell { flex-shrink:0 }\n.tbl-pg__card .tbl-row { border-radius:0 0 13px 13px }\n.tbl-staterow&gt;.tbl-row { flex:1 1 auto }\n/* full table — header + rows */\n.tbl-wrap { border:1px solid var(--chrome-border);border-radius:14px;overflow:hidden;overflow-x:auto }\n.tbl-inner { min-width:900px }\n.tbl-head { display:flex;align-items:center;gap:20px;padding:0 14px;height:44px;background:#000;border-bottom:1px solid var(--chrome-border) }\n.tbl-head__cell { display:inline-flex;align-items:center;gap:6px;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:#fff;white-space:nowrap }\n.tbl-body .tbl-row { border-radius:0;border-bottom:1px solid var(--chrome-border) }\n.tbl-body .tbl-row:last-child { border-bottom:none }\n/* shared column widths — keep header labels aligned with row cells */\n.tcol-check { flex:0 0 20px }\n.tcol-product { flex:2 1 0;min-width:0;display:flex;align-items:center;gap:12px }\n.tbl-head__cell.tcol-product { gap:6px }\n.tcol-ref { flex:1.3 1 0;min-width:0 }\n.tcol-date { flex:1.4 1 0;min-width:0 }\n.tcol-type { flex:1.2 1 0;min-width:0 }\n.tcol-status { flex:0 0 88px }\n.tcol-amt { flex:0 0 96px;text-align:right;font-variant-numeric:tabular-nums;font-weight:700 }\n.tbl-head__cell.tcol-amt { justify-content:flex-end }\n/* trailing row actions — hidden until the row is hovered or keyboard-focused.\n   :has(:focus-visible), not :focus-within — a plain mouse click leaves the\n   checkbox holding focus, which would keep the row \"stuck\" showing actions. */\n.tcol-actions { flex:0 0 132px;display:flex;justify-content:flex-end;gap:18px;opacity:0;transition:opacity .12s }\n.tbl-body .tbl-row:hover .tcol-actions,.tbl-body .tbl-row.is-hover .tcol-actions,.tbl-body .tbl-row:has(:focus-visible) .tcol-actions { opacity:1 }\n.tbl-head__cell.tcol-actions { opacity:1 }\n/* hover (real + forced .is-hover) */\n.fsel:hover&gt;.fsel__input:not(:disabled),.fsel__input.is-hover:not(:disabled) { border-color:#9a9ea6 }\n.fsel:hover&gt;.fsel__input:checked:not(:disabled),.fsel__input.is-hover:checked:not(:disabled) { border-color:var(--fs-green);filter:brightness(.93) }\n/* focus (real + forced .is-focus) */\n.fsel__input:focus-visible,.fsel__input.is-focus { outline:none;box-shadow:0 0 0 4px var(--fs-ring) }\n.fsel__input:checked:focus-visible,.fsel__input.is-focus:checked { box-shadow:0 0 0 4px rgba(16,197,4,.24) }\n.selref__stage--dark .fsel:hover&gt;.fsel__input:not(:disabled),.selref__stage--dark .fsel__input.is-hover:not(:disabled),[data-theme=\"dark\"] .fsel:hover&gt;.fsel__input:not(:disabled) { border-color:#8b8e97 }\n.bcr__link:hover,.bcr__link.is-hover { color:var(--chrome-txt);background:var(--chrome-hover) }",
+  "css": "/* dd-num/dd-status/dd-dot are exclusive to the Tables \"Reporting variant\" demo */\n.dd-num { text-align:left;font-variant-numeric:tabular-nums;font-weight:700 }\n.dd-status { display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:600;white-space:nowrap }\n.dd-dot { width:7px;height:7px;border-radius:50%;flex-shrink:0 }\n/* ================================================================\n   TABLES\n================================================================ */\n/* Table row — a selectable record row assembled from cells */\n.tbl-row { --tbl-hover:#f4f4f4; --tbl-checked:#e9f9ea;\n  display:flex;align-items:center;gap:20px;\n  min-height:50px;padding:0 14px;border-radius:8px;\n  background:transparent;color:var(--chrome-txt);\n  transition:background .12s,box-shadow .12s; }\n[data-theme=\"dark\"] .tbl-row { --tbl-hover:rgba(255,255,255,.05);--tbl-checked:rgba(16,197,4,.13) }\n.tbl-row.is-hover,.tbl-row:not(.is-disabled):not(.is-checked):hover { background:var(--tbl-hover) }\n.tbl-row.is-focus { background:var(--chrome-bg);box-shadow:inset 0 0 0 2px var(--chrome-txt) }\n.tbl-row.is-checked { background:var(--tbl-checked) }\n.tbl-row.is-disabled { pointer-events:none }\n/* cells */\n.tbl-cell { font-size:14px;font-weight:500;color:var(--chrome-txt);white-space:nowrap;overflow:hidden;text-overflow:ellipsis }\n.tbl-cell--check { flex:0 0 20px }\n.tbl-cell--name { flex:0 0 92px;font-weight:700 }\n.tbl-cell--col { flex:0 0 116px }\n.tbl-cell--links { margin-left:auto;display:flex;gap:22px }\n.tbl-link { color:var(--color-link);font-weight:700;font-size:14px;text-decoration:none;cursor:pointer;white-space:nowrap }\n.tbl-link:hover { text-decoration:underline }\n/* disabled dims the content */\n.tbl-row.is-disabled .tbl-cell,.tbl-row.is-disabled .tbl-link { color:var(--chrome-muted);opacity:.85 }\n.tbl-row.is-disabled .tbl-pic { filter:grayscale(1);opacity:.5 }\n/* product icon */\n.tbl-pic { width:30px;height:30px;border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#fff;font-weight:900;font-size:15px }\n.tbl-pic svg { width:17px;height:17px;display:block }\n.tbl-pic--1v { background:var(--prim-1v-500) }\n.tbl-pic--gift { background:var(--prim-sup-pink-1) }\n/* status tag */\n.tbl-tag { display:inline-flex;align-items:center;height:22px;padding:0 9px;border-radius:6px;font-size:12px;font-weight:700;white-space:nowrap;line-height:1 }\n.tbl-tag--pending { background:#e6e6e6;color:#414141 }\n.tbl-tag--success { background:#16a220;color:#fff }\n.tbl-tag--failed { background:#eb0029;color:#fff }\n[data-theme=\"dark\"] .tbl-tag--pending { background:rgba(255,255,255,.14);color:#e6e6e6 }\n.tbl-pg__stage&gt;.tbl-row { flex:1 1 auto;min-width:640px }\n.tbl-pg__head .tbl-head__cell { flex-shrink:0 }\n.tbl-pg__card .tbl-row { border-radius:0 0 13px 13px }\n.tbl-staterow&gt;.tbl-row { flex:1 1 auto }\n/* full table — header + rows */\n.tbl-wrap { border:1px solid var(--chrome-border);border-radius:14px;overflow:hidden;overflow-x:auto }\n.tbl-inner { min-width:900px }\n.tbl-head { display:flex;align-items:center;gap:20px;padding:0 14px;height:44px;background:#000;border-bottom:1px solid var(--chrome-border) }\n.tbl-head__cell { display:inline-flex;align-items:center;gap:6px;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:#fff;white-space:nowrap }\n.tbl-body .tbl-row { border-radius:0;border-bottom:1px solid var(--chrome-border) }\n.tbl-body .tbl-row:last-child { border-bottom:none }\n/* shared column widths — keep header labels aligned with row cells */\n.tcol-check { flex:0 0 20px }\n.tcol-product { flex:2 1 0;min-width:0;display:flex;align-items:center;gap:12px }\n.tbl-head__cell.tcol-product { gap:6px }\n.tcol-ref { flex:1.3 1 0;min-width:0 }\n.tcol-date { flex:1.4 1 0;min-width:0 }\n.tcol-type { flex:1.2 1 0;min-width:0 }\n.tcol-status { flex:0 0 88px }\n.tcol-amt { flex:0 0 96px;text-align:right;font-variant-numeric:tabular-nums;font-weight:700 }\n.tbl-head__cell.tcol-amt { justify-content:flex-end }\n/* trailing row actions — hidden until the row is hovered or keyboard-focused.\n   :has(:focus-visible), not :focus-within — a plain mouse click leaves the\n   checkbox holding focus, which would keep the row \"stuck\" showing actions. */\n.tcol-actions { flex:0 0 132px;display:flex;justify-content:flex-end;gap:18px;opacity:0;transition:opacity .12s }\n.tbl-body .tbl-row:hover .tcol-actions,.tbl-body .tbl-row.is-hover .tcol-actions,.tbl-body .tbl-row:has(:focus-visible) .tcol-actions { opacity:1 }\n.tbl-head__cell.tcol-actions { opacity:1 }\n/* hover (real + forced .is-hover) */\n.fsel:hover&gt;.fsel__input:not(:disabled),.fsel__input.is-hover:not(:disabled) { border-color:#9a9ea6 }\n.fsel:hover&gt;.fsel__input:checked:not(:disabled),.fsel__input.is-hover:checked:not(:disabled) { border-color:var(--fs-green);filter:brightness(.93) }\n/* focus (real + forced .is-focus) */\n.fsel__input:focus-visible,.fsel__input.is-focus { outline:none;box-shadow:0 0 0 4px var(--fs-ring) }\n.fsel__input:checked:focus-visible,.fsel__input.is-focus:checked { box-shadow:0 0 0 4px rgba(16,197,4,.24) }\n.bcr__link:hover,.bcr__link.is-hover { color:var(--chrome-txt);background:var(--chrome-hover) }",
   "usage": {
     "do": [
       "Use a table for lists of like records — transactions, stores, tickets — that users scan and compare.",
@@ -5402,7 +5329,7 @@ body.home .main{max-width:none;margin:0;padding:0}
       "Don’t mix left- and right-alignment for the same column across rows."
     ]
   },
-  "contentHash": "15f99af868c2dc355483e1f4d15da772b2828c6f7643468cd49c23b54e9baabf",
+  "contentHash": "700d89d2c67932bc1763569a15f6b2fbdf222f7ed55d56b85776c70ff523da58",
   "note": "Static hand-authored markup — the reference table's HTML is written directly in the section, not built by JS (a separate #tbl-playground exists only for a single-row live demo). Five row states: default, hover, focused, checked, disabled. The Reporting variant demo (.dd-num/.dd-status/.dd-dot) was migrated from the retired Data Display section; the .dd-table-wrap/.dd-table/.dd-table__name markup it sits in is a shared spec-table utility reused across many sections and is intentionally excluded from this tab's realClasses."
 }
   </pre>
@@ -8143,7 +8070,10 @@ function toggleTheme() {
   try { if(typeof renderDropdownPlayground==='function' && document.getElementById('dd-playground')) renderDropdownPlayground(); } catch(e){}
   try { if(typeof renderDropdownInSitu==='function' && document.getElementById('dd-insitu')) renderDropdownInSitu(); } catch(e){}
   try { if(typeof renderDropdownReference==='function' && document.getElementById('dd-reference')) renderDropdownReference(); } catch(e){}
-  try { if(typeof renderSelReference==='function' && document.getElementById('sel-reference')) renderSelReference(); } catch(e){}
+  try { if(typeof renderCbrPlayground==='function' && document.getElementById('cbr-playground')) renderCbrPlayground(); } catch(e){}
+  try { if(typeof renderCbrKeyControls==='function' && document.getElementById('cbr-keycontrols')) renderCbrKeyControls(); } catch(e){}
+  try { if(typeof renderCbrInSitu==='function' && document.getElementById('cbr-insitu')) renderCbrInSitu(); } catch(e){}
+  try { if(typeof renderCbrReference==='function' && document.getElementById('cbr-reference')) renderCbrReference(); } catch(e){}
   try { if(typeof renderBshPlayground==='function' && document.getElementById('bsh-playground')) renderBshPlayground(); } catch(e){}
   try { if(typeof renderBshInSitu==='function' && document.getElementById('bsh-insitu')) renderBshInSitu(); } catch(e){}
   try { if(typeof renderBshReference==='function' && document.getElementById('bsh-reference')) renderBshReference(); } catch(e){}
@@ -14651,80 +14581,616 @@ function breadcrumbTabSwitch(tab){
 }
 
 /* ============================================================
-   CHECKBOXES & RADIOS — reference grid
+   CHECKBOXES & RADIOS
+   Same tabbed treatment as Pills/Avatar (.sec--tabbed): Overview /
+   Style / Code / Changelog. Unlike Pills there's no colour axis —
+   the real axis of variation is Control type (checkbox/radio) and
+   Size; States (Default/Hover/Focus/Checked/Indeterminate/Disabled)
+   fill the Style tab's variant-grid slot instead of a colour grid.
+   The playground stage is a real, clickable native input — no
+   separate "checked" toggle control, matching real form behaviour.
 ============================================================ */
-const SEL_SIZES = [
-  {cls:'',      label:'Regular'},
-  {cls:'is-sm', label:'Small'},
-  {cls:'is-xs', label:'XSmall'},
-];
-const SEL_ROWS = [
-  {label:'Unchecked', kind:'single', checked:false},
-  {label:'Checked',   kind:'single', checked:true },
-  {label:'Hover',     kind:'pair',   extra:'is-hover'},
-  {label:'Focused',   kind:'pair',   extra:'is-focus'},
-  {label:'Disabled',  kind:'pair',   disabled:true },
+let cbrPg = { control:'checkbox', size:'reg', theme:'light' };
+
+const CBR_CONTROLS = [
+  {key:'checkbox', label:'Checkbox'},
+  {key:'radio',    label:'Radio'},
 ];
 
-function selInput(type, sizeCls, {checked=false, extra='', disabled=false}={}, uid){
-  const cls = ['fsel__input', sizeCls, extra].filter(Boolean).join(' ');
-  const name = type==='radio' ? ` name="selref-${uid}"` : '';
-  return `<input type="${type}" class="${cls}"${name}${checked?' checked':''}${disabled?' disabled':''} aria-label="${type} ${extra||''}">`;
+const CBR_SIZES = [
+  {key:'reg', inputCls:'',      wrapCls:'',         label:'Regular', box:20, fontPx:14},
+  {key:'sm',  inputCls:'is-sm', wrapCls:'fsel--sm', label:'Small',   box:18, fontPx:13},
+  {key:'xs',  inputCls:'is-xs', wrapCls:'fsel--xs', label:'XSmall',  box:16, fontPx:12},
+];
+
+/* Bare <input> builder — the minimal real-markup piece shared by every
+   visual on this page (playground stage, key controls, in-context
+   mockups, anatomy, states grid). Indeterminate can't be expressed as a
+   static HTML attribute (it's a DOM-only property), so a data attribute
+   flags it for a post-render pass that sets el.indeterminate = true. */
+function cbrInputHTML(control, sizeKey, opts={}){
+  const sz = CBR_SIZES.find(s=>s.key===sizeKey)||CBR_SIZES[0];
+  const {checked=false, disabled=false, extra='', indeterminate=false, name} = opts;
+  const cls = ['fsel__input', sz.inputCls, extra].filter(Boolean).join(' ');
+  const nameAttr = control==='radio' ? ` name="${name||'cbr-demo'}"` : '';
+  const indAttr = indeterminate ? ' data-cbr-indeterminate="true"' : '';
+  return `<input type="${control}" class="${cls}"${nameAttr}${checked?' checked':''}${disabled?' disabled':''}${indAttr} aria-label="${cap(control)}">`;
 }
 
-function selCell(type, size, row, mode, ri, ci){
-  const uid = `${mode}-${ci}-${ri}`;
-  let inner;
-  if(row.kind==='single'){
-    inner = selInput(type, size.cls, {checked:row.checked}, uid);
-  } else {
-    inner = selInput(type, size.cls, {checked:false, extra:row.extra, disabled:row.disabled}, uid+'a')
-          + selInput(type, size.cls, {checked:true,  extra:row.extra, disabled:row.disabled}, uid+'b');
-  }
-  return `<div class="selref__cell" style="grid-column:${ci};grid-row:${4+ri}">${inner}</div>`;
+/* Full <label class="fsel"> + input builder used by the Overview's
+   illustrative sections (key controls, in-context mockups). The size
+   modifier goes on the label (.fsel--sm/--xs), which cascades to both
+   the label's own font-size and, via ".fsel--sm .fsel__input", the input
+   box — cbrInputHTML's inputCls (.is-sm/.is-xs) is redundant here but
+   harmless, and is what carries the size when there's no wrapping label
+   (e.g. the bare states-grid cells). Doc-site-only helper; cbrInputHTML
+   remains the canonical bare-input builder. */
+function ovCbr({control='checkbox', size='sm', label='Option', checked=false, disabled=false, name}={}){
+  const sz = CBR_SIZES.find(s=>s.key===size)||CBR_SIZES[0];
+  const input = cbrInputHTML(control, size, {checked, disabled, name});
+  const wrapCls = ['fsel', sz.wrapCls].filter(Boolean).join(' ');
+  return `<label class="${wrapCls}">${input}<span class="fsel__label">${label}</span></label>`;
 }
 
-function selStageHTML(mode, modeLabel){
-  let g = '';
-  g += `<div class="selref__modehead">${modeLabel}</div>`;
-  // group headers
-  g += `<div style="grid-column:1;grid-row:2"></div>`;
-  g += `<div class="selref__grouphead" style="grid-column:2/5;grid-row:2">Checkboxes</div>`;
-  g += `<div class="selref__grouphead" style="grid-column:5/8;grid-row:2">Radios</div>`;
-  g += `<div class="selref__grpdiv"></div>`;
-  // size sub-headers
-  g += `<div style="grid-column:1;grid-row:3"></div>`;
-  SEL_SIZES.forEach((s,i)=>{ g += `<div class="selref__sizehead" style="grid-column:${2+i};grid-row:3">${s.label}</div>`; });
-  SEL_SIZES.forEach((s,i)=>{ g += `<div class="selref__sizehead" style="grid-column:${5+i};grid-row:3">${s.label}</div>`; });
-  // state rows
-  SEL_ROWS.forEach((row, ri)=>{
-    g += `<div class="selref__rowlabel" style="grid-column:1;grid-row:${4+ri}">${row.label}</div>`;
-    SEL_SIZES.forEach((s,i)=> g += selCell('checkbox', s, row, mode, ri, 2+i));
-    SEL_SIZES.forEach((s,i)=> g += selCell('radio',    s, row, mode, ri, 5+i));
+function makeCbrEl(){
+  const sz = CBR_SIZES.find(s=>s.key===cbrPg.size)||CBR_SIZES[0];
+  const wrap = document.createElement('div');
+  wrap.style.cssText = 'display:flex;flex-direction:column;gap:12px';
+  const rows = cbrPg.control==='radio'
+    ? [{txt:'Standard delivery', checked:true}, {txt:'Express delivery', checked:false}]
+    : [{txt:'Email me product updates', checked:false}];
+  rows.forEach(r=>{
+    const label = document.createElement('label');
+    label.className = ['fsel', sz.wrapCls].filter(Boolean).join(' ');
+    const input = document.createElement('input');
+    input.type = cbrPg.control;
+    input.className = ['fsel__input', sz.inputCls].filter(Boolean).join(' ');
+    if(cbrPg.control==='radio') input.name = 'cbrpg-demo';
+    if(r.checked) input.checked = true;
+    label.appendChild(input);
+    const span = document.createElement('span');
+    span.className = 'fsel__label';
+    span.textContent = r.txt;
+    label.appendChild(span);
+    wrap.appendChild(label);
   });
-  return `<div class="selref__wrap"><div class="selref__stage selref__stage--${mode}"><div class="selref__grid">${g}</div></div></div>`;
+  return wrap;
 }
 
-function renderSelReference(){
-  const root = document.getElementById('sel-reference');
+function getCbrCodeHTML(){
+  const sz = CBR_SIZES.find(s=>s.key===cbrPg.size)||CBR_SIZES[0];
+  const cls = ['fsel__input', sz.inputCls].filter(Boolean).join(' ');
+  if(cbrPg.control==='radio'){
+    return `<span class="code-cm">/* Flash · ${cap(cbrPg.theme)} · Radio group · ${sz.label} */</span>
+<span class="code-kw">&#60;label</span> <span class="code-cls">class</span>=<span class="code-val">"fsel"</span><span class="code-kw">></span>
+  <span class="code-kw">&#60;input</span> <span class="code-attr">type</span>=<span class="code-val">"radio"</span> <span class="code-cls">class</span>=<span class="code-val">"${cls}"</span> <span class="code-attr">name</span>=<span class="code-val">"delivery"</span> <span class="code-attr">checked</span><span class="code-kw">></span>
+  <span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"fsel__label"</span><span class="code-kw">></span>Standard delivery<span class="code-kw">&#60;/span></span>
+<span class="code-kw">&#60;/label></span>
+<span class="code-kw">&#60;label</span> <span class="code-cls">class</span>=<span class="code-val">"fsel"</span><span class="code-kw">></span>
+  <span class="code-kw">&#60;input</span> <span class="code-attr">type</span>=<span class="code-val">"radio"</span> <span class="code-cls">class</span>=<span class="code-val">"${cls}"</span> <span class="code-attr">name</span>=<span class="code-val">"delivery"</span><span class="code-kw">></span>
+  <span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"fsel__label"</span><span class="code-kw">></span>Express delivery<span class="code-kw">&#60;/span></span>
+<span class="code-kw">&#60;/label></span>`;
+  }
+  return `<span class="code-cm">/* Flash · ${cap(cbrPg.theme)} · Checkbox · ${sz.label} */</span>
+<span class="code-kw">&#60;label</span> <span class="code-cls">class</span>=<span class="code-val">"fsel"</span><span class="code-kw">></span>
+  <span class="code-kw">&#60;input</span> <span class="code-attr">type</span>=<span class="code-val">"checkbox"</span> <span class="code-cls">class</span>=<span class="code-val">"${cls}"</span><span class="code-kw">></span>
+  <span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"fsel__label"</span><span class="code-kw">></span>Email me product updates<span class="code-kw">&#60;/span></span>
+<span class="code-kw">&#60;/label></span>`;
+}
+
+/* ── CODE PANEL LANGUAGES ──
+   HTML/CSS is the source of truth (real .fsel/.fsel__input markup).
+   Blazor and React TSX are illustrative wrappers over the same classes,
+   so control type / size stay the only things a consumer ports. */
+const CBR_LANGS = [
+  {key:'html',   label:'HTML / CSS', file:'checkbox-radio.html'},
+  {key:'blazor', label:'Blazor',     file:'DsSelectionControl.razor'},
+  {key:'tsx',    label:'React TSX',  file:'DsSelectionControl.tsx'},
+];
+let cbrLang = 'html';
+
+const CBR_SIZE_PASCAL = {reg:'Regular', sm:'Small', xs:'XSmall'};
+
+function getCbrCodeBlazor(){
+  const sz = CBR_SIZES.find(s=>s.key===cbrPg.size)||CBR_SIZES[0];
+  const sizePascal = CBR_SIZE_PASCAL[cbrPg.size]||'Regular';
+  const usage = cbrPg.control==='radio'
+    ? `<span class="code-kw">&#60;DsSelectionControl</span> <span class="code-attr">Type</span>=<span class="code-val">"SelectionType.Radio"</span> <span class="code-attr">Size</span>=<span class="code-val">"SelectionSize.${sizePascal}"</span>
+                     <span class="code-attr">Name</span>=<span class="code-val">"delivery"</span> <span class="code-attr">Label</span>=<span class="code-val">"Standard delivery"</span> <span class="code-attr">Checked</span>=<span class="code-val">"true"</span> <span class="code-kw">/></span>
+<span class="code-kw">&#60;DsSelectionControl</span> <span class="code-attr">Type</span>=<span class="code-val">"SelectionType.Radio"</span> <span class="code-attr">Size</span>=<span class="code-val">"SelectionSize.${sizePascal}"</span>
+                     <span class="code-attr">Name</span>=<span class="code-val">"delivery"</span> <span class="code-attr">Label</span>=<span class="code-val">"Express delivery"</span> <span class="code-kw">/></span>`
+    : `<span class="code-kw">&#60;DsSelectionControl</span> <span class="code-attr">Type</span>=<span class="code-val">"SelectionType.Checkbox"</span> <span class="code-attr">Size</span>=<span class="code-val">"SelectionSize.${sizePascal}"</span>
+                     <span class="code-attr">Label</span>=<span class="code-val">"Email me product updates"</span> <span class="code-attr">@bind-Checked</span>=<span class="code-val">"subscribed"</span> <span class="code-kw">/></span>`;
+  return `<span class="code-cm">@* DsSelectionControl.razor — usage *@</span>
+${usage}
+
+<span class="code-cm">@* DsSelectionControl.razor — component definition *@</span>
+<span class="code-kw">&#60;label</span> <span class="code-cls">class</span>=<span class="code-val">"fsel"</span><span class="code-kw">></span>
+  <span class="code-kw">&#60;input</span> <span class="code-attr">type</span>=<span class="code-val">"@InputType"</span> <span class="code-cls">class</span>=<span class="code-val">"@CssClass"</span> <span class="code-attr">name</span>=<span class="code-val">"@Name"</span>
+         <span class="code-attr">checked</span>=<span class="code-val">"@Checked"</span> <span class="code-attr">disabled</span>=<span class="code-val">"@Disabled"</span> <span class="code-attr">@onchange</span>=<span class="code-val">"OnChange"</span><span class="code-kw">></span>
+  <span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"fsel__label"</span><span class="code-kw">></span>@Label<span class="code-kw">&#60;/span></span>
+<span class="code-kw">&#60;/label></span>
+
+<span class="code-kw">@code</span> {
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> SelectionType Type { get; set; } = SelectionType.Checkbox;
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> SelectionSize Size { get; set; } = SelectionSize.Regular;
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> <span class="code-cls">string</span> Label { get; set; } = <span class="code-val">""</span>;
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> <span class="code-cls">string</span> Name { get; set; }
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> <span class="code-cls">bool</span> Checked { get; set; }
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> <span class="code-cls">bool</span> Disabled { get; set; }
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> EventCallback&#60;<span class="code-cls">bool</span>> OnChange { get; set; }
+
+  <span class="code-kw">private</span> <span class="code-cls">string</span> InputType => Type == SelectionType.Radio ? <span class="code-val">"radio"</span> : <span class="code-val">"checkbox"</span>;
+
+  <span class="code-cm">// fsel__input.is-sm / .is-xs — Regular has no size modifier</span>
+  <span class="code-kw">private</span> <span class="code-cls">string</span> SizeClass => Size <span class="code-kw">switch</span> {
+    SelectionSize.Small => <span class="code-val">"is-sm"</span>, SelectionSize.XSmall => <span class="code-val">"is-xs"</span>, _ => <span class="code-val">""</span>
+  };
+
+  <span class="code-kw">private</span> <span class="code-cls">string</span> CssClass => $<span class="code-val">"fsel__input {SizeClass}"</span>.Trim();
+}`;
+}
+
+function getCbrCodeTSX(){
+  const sz = CBR_SIZES.find(s=>s.key===cbrPg.size)||CBR_SIZES[0];
+  const usage = cbrPg.control==='radio'
+    ? `<span class="code-cm">// Usage — radio group</span>
+<span class="code-kw">const</span> [delivery, setDelivery] = useState(<span class="code-val">'standard'</span>);
+&#60;DsSelectionControl type=<span class="code-val">"radio"</span> size=<span class="code-val">"${sz.key}"</span> name=<span class="code-val">"delivery"</span> label=<span class="code-val">"Standard delivery"</span> checked={delivery==='standard'} onChange={() => setDelivery('standard')} />
+&#60;DsSelectionControl type=<span class="code-val">"radio"</span> size=<span class="code-val">"${sz.key}"</span> name=<span class="code-val">"delivery"</span> label=<span class="code-val">"Express delivery"</span> checked={delivery==='express'} onChange={() => setDelivery('express')} />`
+    : `<span class="code-cm">// Usage — checkbox</span>
+<span class="code-kw">const</span> [subscribed, setSubscribed] = useState(<span class="code-kw">false</span>);
+&#60;DsSelectionControl type=<span class="code-val">"checkbox"</span> size=<span class="code-val">"${sz.key}"</span> label=<span class="code-val">"Email me product updates"</span> checked={subscribed} onChange={setSubscribed} />`;
+  return `<span class="code-cm">// DsSelectionControl.tsx</span>
+<span class="code-kw">import</span> React, { useState } <span class="code-kw">from</span> <span class="code-val">'react'</span>;
+
+<span class="code-kw">type</span> <span class="code-cls">SelectionType</span> = <span class="code-val">'checkbox'</span> | <span class="code-val">'radio'</span>;
+<span class="code-kw">type</span> <span class="code-cls">SelectionSize</span> = <span class="code-val">'reg'</span> | <span class="code-val">'sm'</span> | <span class="code-val">'xs'</span>;
+
+<span class="code-kw">const</span> SIZE_CLASS: <span class="code-cls">Record</span>&#60;SelectionSize, <span class="code-cls">string</span>> = { reg: <span class="code-val">''</span>, sm: <span class="code-val">'is-sm'</span>, xs: <span class="code-val">'is-xs'</span> };
+
+<span class="code-kw">interface</span> <span class="code-cls">DsSelectionControlProps</span> {
+  type: <span class="code-cls">SelectionType</span>;
+  size?: <span class="code-cls">SelectionSize</span>;
+  label: <span class="code-cls">string</span>;
+  name?: <span class="code-cls">string</span>;
+  checked?: <span class="code-cls">boolean</span>;
+  onChange?: (checked: <span class="code-cls">boolean</span>) => <span class="code-cls">void</span>;
+  disabled?: <span class="code-cls">boolean</span>;
+}
+
+<span class="code-kw">export const</span> <span class="code-cls">DsSelectionControl</span>: React.FC&#60;DsSelectionControlProps> = ({
+  type,
+  size = <span class="code-val">'reg'</span>,
+  label,
+  name,
+  checked,
+  onChange,
+  disabled = <span class="code-kw">false</span>,
+}) => (
+  &#60;label className=<span class="code-val">"fsel"</span>>
+    &#60;input
+      type={type}
+      className={[<span class="code-val">'fsel__input'</span>, SIZE_CLASS[size]].filter(Boolean).join(<span class="code-val">' '</span>)}
+      name={name}
+      checked={checked}
+      disabled={disabled}
+      onChange={(e) => onChange?.(e.target.checked)}
+    />
+    &#60;span className=<span class="code-val">"fsel__label"</span>>{label}&#60;/span>
+  &#60;/label>
+);
+
+${usage}`;
+}
+
+function getCbrCode(){
+  return cbrLang==='blazor' ? getCbrCodeBlazor()
+       : cbrLang==='tsx'    ? getCbrCodeTSX()
+       : getCbrCodeHTML();
+}
+
+function setCbrLang(lang){
+  if(!CBR_LANGS.some(l=>l.key===lang)) return;
+  cbrLang = lang;
+  document.querySelectorAll('#cbr-code-tab .code-seg__btn').forEach(b=>{
+    const on = b.dataset.lang===lang;
+    b.setAttribute('aria-selected', on ? 'true' : 'false');
+    b.setAttribute('tabindex', on ? '0' : '-1');
+  });
+  const file = document.getElementById('cbr-lang-file');
+  const meta = CBR_LANGS.find(l=>l.key===lang);
+  if(file && meta) file.textContent = meta.file;
+  const block = document.getElementById('cbrPg-code-block');
+  if(block) block.innerHTML = getCbrCode();
+}
+
+/* Arrow-key navigation, per the WAI-ARIA tablist pattern: the segmented
+   control is one tab stop and Left/Right (plus Home/End) move between
+   languages. */
+function cbrLangKeydown(e){
+  const i = CBR_LANGS.findIndex(l=>l.key===cbrLang);
+  let n = i;
+  if(e.key==='ArrowLeft')       n = (i - 1 + CBR_LANGS.length) % CBR_LANGS.length;
+  else if(e.key==='ArrowRight') n = (i + 1) % CBR_LANGS.length;
+  else if(e.key==='Home')       n = 0;
+  else if(e.key==='End')        n = CBR_LANGS.length - 1;
+  else return;
+  e.preventDefault();
+  setCbrLang(CBR_LANGS[n].key);
+  const btn = document.getElementById('cbr-lang-' + CBR_LANGS[n].key);
+  if(btn) btn.focus();
+}
+
+function cbrPgRefresh(){
+  document.querySelectorAll('.cbrPg-stage-el').forEach(stage=>{
+    stage.innerHTML = '';
+    stage.appendChild(makeCbrEl());
+  });
+  const block = document.getElementById('cbrPg-code-block');
+  if(block) block.innerHTML = getCbrCode();
+}
+
+/* Checkboxes & Radios Playground renders into more than one mount (the
+   main Overview demo, and a smaller copy on the Code tab) so both stay
+   in sync with the same shared cbrPg state — same pattern as Pills'
+   PILL_PLAYGROUND_MOUNTS / Avatar's AVATAR_PLAYGROUND_MOUNTS. */
+const CBR_PLAYGROUND_MOUNTS = [
+  {rootId:'cbr-playground', idSuffix:'', wrap:true, title:'Try the component', desc:'Adjust the controls to test component states.', headingAbove:'Use a checkbox for independent on/off choices, a radio for one choice from a visible set.'},
+  {rootId:'cbr-code-playground', idSuffix:'-code', style:'code', title:'Playground', desc:'Live demo of the component.'},
+];
+
+function renderCbrPlayground(){
+  cbrPg.theme = document.documentElement.getAttribute('data-theme')==='dark' ? 'dark' : 'light';
+  const sbg = stageBg(cbrPg.theme);
+
+  const ctrlBtns = CBR_CONTROLS.map(c=>`<button class="btn-pg__pill${cbrPg.control===c.key?' on':''}" onclick="cbrPgSet('control','${c.key}')">${c.label}</button>`).join('');
+  const szBtns   = CBR_SIZES.map(s=>`<button class="btn-pg__pill${cbrPg.size===s.key?' on':''}" onclick="cbrPgSet('size','${s.key}')">${s.label}</button>`).join('');
+
+  CBR_PLAYGROUND_MOUNTS.forEach(mount=>{
+    const root = document.getElementById(mount.rootId);
+    if(!root) return;
+    const s = mount.idSuffix;
+    const demo = `
+      <div class="btn-pg">
+        <div class="btn-pg__stage cbrPg-stage-el" id="cbrPg-stage${s}" style="background:${sbg}"></div>
+        <div class="btn-pg__ctrls">
+          <div class="btn-pg__group"><span class="btn-pg__clabel">Control type</span><div class="btn-pg__pill-row">${ctrlBtns}</div></div>
+          <div class="btn-pg__group"><span class="btn-pg__clabel">Size</span><div class="btn-pg__pill-row">${szBtns}</div></div>
+        </div>
+      </div>`;
+
+    if(mount.style==='code'){
+      root.innerHTML = `
+        <div class="type-sub__title">${mount.title}</div>
+        <div class="type-sub__desc">${mount.desc}</div>
+        <div class="cpg-section-outline">${demo}</div>`;
+      return;
+    }
+
+    const inner = `
+      <div class="cpg-layout">
+        <div class="cpg-layout__intro">
+          ${mount.wrap ? `<span class="cpg-cursor-icon">${CPG_CURSOR_ICON_SVG}</span>` : ''}
+          <div class="cpg-layout__title">${mount.title}</div>
+          <div class="cpg-layout__desc">${mount.desc}</div>
+        </div>
+        <div class="cpg-layout__demo">${demo}</div>
+      </div>`;
+    const wrapped = mount.wrap ? `<div class="cpg-section-block">${inner}</div>` : inner;
+    root.innerHTML = (mount.headingAbove ? `<div class="cpg-overview-heading"><span class="cpg-overview-heading__icon">${CPG_INFO_ICON_SVG}</span><span>${mount.headingAbove}</span></div>` : '') + wrapped;
+  });
+
+  cbrPgRefresh();
+}
+
+function renderCbrCodeTab(){
+  const root = document.getElementById('cbr-code-tab');
+  if(!root) return;
+  root.innerHTML = `
+    <div class="type-sub__title">Code</div>
+    <div class="type-sub__desc">Live snippet matching the current Playground configuration &mdash; switch to Overview to change it.</div>
+    <div class="cpg-section-outline">
+      <div class="code-panel code-panel--bare open">
+        <div class="code-panel__head">
+          <div class="code-seg" role="tablist" aria-label="Code language" onkeydown="cbrLangKeydown(event)">
+            ${CBR_LANGS.map(l=>`<button type="button" role="tab" class="code-seg__btn" id="cbr-lang-${l.key}" data-lang="${l.key}" aria-selected="${cbrLang===l.key?'true':'false'}" aria-controls="cbrPg-code-block" tabindex="${cbrLang===l.key?'0':'-1'}" onclick="setCbrLang('${l.key}')">${l.label}</button>`).join('')}
+          </div>
+          <span class="code-lang-file" id="cbr-lang-file">${(CBR_LANGS.find(l=>l.key===cbrLang)||CBR_LANGS[0]).file}</span>
+          <button class="code-copy-btn" onclick="cbrPgCopyCode()" id="cbrPg-copy-btn">Copy</button>
+        </div>
+        <div class="code-body"><div class="code-block" id="cbrPg-code-block" role="tabpanel" aria-live="polite"></div></div>
+      </div>
+    </div>`;
+}
+
+const KEY_CONTROLS = [
+  {key:'checkbox', name:'Checkbox', use:'Independent on/off choices, or a single opt-in.'},
+  {key:'radio',    name:'Radio',    use:'Exactly one choice from a visible set of options.'},
+];
+
+function renderCbrKeyControls(){
+  const root = document.getElementById('cbr-keycontrols');
   if(!root) return;
   const theme = currentTheme();
+
+  const cells = KEY_CONTROLS.map(k=>`
+    <div class="spec-cell">
+      <div class="spec-cell__stage" style="background:${stageBg(theme)}">${ovCbr({control:k.key, size:'reg', label:k.name, checked:true, name:'kc-'+k.key})}</div>
+      <div class="spec-cell__name">${k.name}</div>
+      <div class="spec-cell__desc">${k.use}</div>
+    </div>`).join('');
+
   root.innerHTML = `
-    <div class="type-sub__title">Reference grid</div>
-    <div class="type-sub__desc">Both control types across 3 sizes and 5 states, shown in the current light/dark theme. Hover and focused rows show the unchecked state above the checked state.</div>
-    ${selStageHTML(theme, theme==='dark'?'Dark mode':'Light mode')}`;
+    <div class="cpg-section-heading">
+      <div class="cpg-layout__title">Key controls</div>
+      <div class="cpg-layout__desc">Two control types, one visual language. Checkboxes and radios share styling but answer different questions.</div>
+    </div>
+    <div class="cpg-section-block">
+      <div class="spec-grid">${cells}</div>
+    </div>`;
 }
-try { renderSelReference(); } catch(e){ console.error('sel-reference',e); }
+
+function renderCbrInSitu(){
+  const root = document.getElementById('cbr-insitu');
+  if(!root) return;
+  const theme = currentTheme();
+  const sbg = stageBg(theme);
+  const bar = w => `<span class="spec-mock__bar" style="width:${w}"></span>`;
+
+  // 1. Preferences list — independent on/off settings
+  const settingsMock = `
+    <div class="spec-mock__stage" style="background:${sbg};gap:10px">
+      ${ovCbr({control:'checkbox', size:'sm', label:'Email me product updates', checked:true, name:'set1'})}
+      ${ovCbr({control:'checkbox', size:'sm', label:'SMS delivery alerts', checked:true, name:'set2'})}
+      ${ovCbr({control:'checkbox', size:'sm', label:'Share anonymous usage data', name:'set3'})}
+    </div>
+    <div class="spec-mock__cap"><b>Preferences list</b>Independent on/off settings &mdash; toggling one leaves the others untouched.</div>`;
+
+  // 2. Required agreement — a form ending in a single opt-in checkbox
+  const termsMock = `
+    <div class="spec-mock__stage" style="background:${sbg}">
+      <div class="spec-mock__row">${bar('90%')}</div>
+      <div class="spec-mock__row">${bar('70%')}</div>
+      <div class="spec-mock__row" style="margin-top:6px">${ovCbr({control:'checkbox', size:'sm', label:'I agree to the Terms & Conditions', name:'terms'})}</div>
+    </div>
+    <div class="spec-mock__cap"><b>Required agreement</b>A single opt-in checkbox gates form submission.</div>`;
+
+  // 3. Plan tier — a radio group, exactly one choice
+  const planMock = `
+    <div class="spec-mock__stage" style="background:${sbg};gap:10px">
+      ${ovCbr({control:'radio', size:'sm', label:'Starter — R99/mo', name:'plan'})}
+      ${ovCbr({control:'radio', size:'sm', label:'Growth — R249/mo', checked:true, name:'plan'})}
+      ${ovCbr({control:'radio', size:'sm', label:'Scale — R599/mo', name:'plan'})}
+    </div>
+    <div class="spec-mock__cap"><b>Plan tier</b>A radio group where exactly one option must be chosen.</div>`;
+
+  // 4. Filter sidebar — a checkbox list narrowing a result set
+  const filterMock = `
+    <div class="spec-mock__stage" style="background:${sbg}">
+      <div class="spec-mock__label">Category</div>
+      <div class="spec-mock__row" style="flex-direction:column;align-items:flex-start;gap:8px;margin-top:6px">
+        ${ovCbr({control:'checkbox', size:'sm', label:'Betting', checked:true, name:'f1'})}
+        ${ovCbr({control:'checkbox', size:'sm', label:'Airtime & Data', checked:true, name:'f2'})}
+        ${ovCbr({control:'checkbox', size:'sm', label:'Bill Pay', name:'f3'})}
+      </div>
+    </div>
+    <div class="spec-mock__cap"><b>Filter sidebar</b>A checkbox list narrows results &mdash; several categories can apply at once.</div>`;
+
+  root.innerHTML = `
+    <div class="cpg-section-heading">
+      <div class="cpg-layout__title">In context</div>
+      <div class="cpg-layout__desc">Four everyday jobs the same controls do &mdash; independent settings, a required opt-in, one-of-many selection, and narrowing a list.</div>
+    </div>
+    <div class="cpg-section-block">
+      <div class="spec-insitu-grid" style="grid-template-columns:repeat(2,1fr)">
+        <div class="spec-mock">${settingsMock}</div>
+        <div class="spec-mock">${termsMock}</div>
+        <div class="spec-mock">${planMock}</div>
+        <div class="spec-mock">${filterMock}</div>
+      </div>
+    </div>`;
+}
+
+function renderCbrUsage(){
+  const root = document.getElementById('cbr-usage');
+  if(!root) return;
+  root.innerHTML = `
+    <div class="cpg-section-heading">
+      <div class="cpg-layout__title">Do's and don'ts</div>
+      <div class="cpg-layout__desc">Checkboxes and radios look similar but answer different questions.</div>
+    </div>
+    <div class="cpg-section-block">
+      <div class="sel-usage">
+        <div class="sel-usage__card">
+          <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
+          <ul class="sel-usage__list">
+            <li>Use a <strong>checkbox</strong> for independent on/off options, or a single opt-in (terms, marketing).</li>
+            <li>Use <strong>radios</strong> when exactly one option from a set must be chosen and all options are worth showing.</li>
+            <li>Give every control a visible, clickable text label.</li>
+            <li>Pre-select a sensible default for radio groups.</li>
+          </ul>
+        </div>
+        <div class="sel-usage__card">
+          <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don't</div>
+          <ul class="sel-usage__list">
+            <li>Don't use radios for a yes/no toggle &mdash; use a single checkbox or a switch.</li>
+            <li>Don't use checkboxes when only one choice is allowed.</li>
+            <li>Don't leave a radio group with no option selected once the user has interacted.</li>
+            <li>Don't nest more than one level of dependent checkboxes.</li>
+          </ul>
+        </div>
+      </div>
+    </div>`;
+}
+
+function cbrPgSet(key, val){
+  cbrPg[key] = val;
+  renderCbrPlayground();
+}
+function cbrPgCopyCode(){
+  const b = document.getElementById('cbrPg-code-block');
+  if(!b) return;
+  navigator.clipboard.writeText(b.innerText||b.textContent).catch(()=>{});
+  const btn = document.getElementById('cbrPg-copy-btn');
+  if(btn){ btn.textContent = 'Copied!'; setTimeout(()=>btn.textContent='Copy', 2000); }
+}
+
+function renderCbrStatesGrid(){
+  const root = document.getElementById('cbr-states-grid');
+  if(!root) return;
+  const theme = currentTheme();
+  const sbg = stageBg(theme);
+
+  const bothPair = (opts={}) => `<div style="display:flex;gap:16px;align-items:center">${cbrInputHTML('checkbox','reg',opts)}${cbrInputHTML('radio','reg',{...opts, name:(opts.name||'state')+'-r'})}</div>`;
+
+  const states = [
+    {name:'Default',       note:'Unchecked, resting state.',                                            vis:bothPair()},
+    {name:'Hover',         note:'Border darkens on pointer hover (forced here via .is-hover).',          vis:bothPair({extra:'is-hover'})},
+    {name:'Focus',         note:'4px halo on keyboard focus (forced here via .is-focus).',                vis:bothPair({extra:'is-focus'})},
+    {name:'Checked',       note:'Green fill with a white tick (checkbox) or centre dot (radio).',        vis:bothPair({checked:true})},
+    {name:'Indeterminate', note:'Checkbox only &mdash; a "partial select" dash, set via the .indeterminate DOM property, not an HTML attribute.', vis:cbrInputHTML('checkbox','reg',{indeterminate:true})},
+    {name:'Disabled',      note:'Muted colours, not interactive; disabled-checked keeps a flat grey fill.', vis:bothPair({disabled:true})},
+  ];
+  const cells = states.map(s=>`
+    <div class="spec-cell">
+      <div class="spec-cell__stage" style="background:${sbg}">${s.vis}</div>
+      <div class="spec-cell__name">${s.name}</div>
+      <div class="spec-cell__desc">${s.note}</div>
+    </div>`).join('');
+  root.innerHTML = `<div class="spec-grid">${cells}</div>`;
+  root.querySelectorAll('[data-cbr-indeterminate]').forEach(el=>{ el.indeterminate = true; });
+}
+
+function renderCbrReference(){
+  const root = document.getElementById('cbr-reference');
+  if(!root) return;
+
+  const theme = currentTheme();
+  const sbg = stageBg(theme);
+
+  /* ---- Anatomy ---- */
+  const heroCbr = ovCbr({control:'checkbox', size:'reg', label:'Label', checked:true, name:'hero'});
+
+  const parts = [
+    {num:1, name:'Container',    note:'20/18/16px box (checkbox) or circle (radio), 1.6px border, radius scales with size.', vis:`<input type="checkbox" class="fsel__input" style="pointer-events:none">`},
+    {num:2, name:'Checked mark', note:'White tick (checkbox) or centre dot (radio) on a brand-green fill.',                  vis:`<input type="checkbox" class="fsel__input" checked style="pointer-events:none">`},
+    {num:3, name:'Label',        note:'Clickable text tied to the input via a wrapping &lt;label class="fsel"&gt;.',         vis:'<span style="font-weight:700;font-size:14px;color:var(--chrome-txt)">Label</span>'},
+    {num:4, name:'Focus ring',   note:'4px halo on keyboard focus — brand green when checked, neutral otherwise.',           vis:`<input type="checkbox" class="fsel__input is-focus" style="pointer-events:none">`},
+  ];
+  const partCards = parts.map(p=>`
+    <div class="spec-part">
+      <div class="spec-part__stage" style="background:${sbg}">${p.vis}</div>
+      <div class="spec-part__body">
+        <div class="spec-part__name"><span class="spec-part__num">${p.num}</span>${p.name}</div>
+        <div class="spec-part__note">${p.note}</div>
+      </div>
+    </div>`).join('');
+
+  /* ---- Size & dimensions ---- */
+  const sizeDemo = CBR_SIZES.map(sz=>`
+    <div class="spec-size-item">
+      ${ovCbr({control:'checkbox', size:sz.key, label:sz.label, checked:true, name:'sz-'+sz.key})}
+      <span class="spec-size-item__lbl">${sz.box}px</span>
+    </div>`).join('');
+
+  const sizeRows = CBR_SIZES.map(sz=>`
+    <tr>
+      <td class="dd-table__name">${sz.label}</td>
+      <td>${sz.box}px</td>
+      <td>${sz.fontPx}px</td>
+    </tr>`).join('');
+
+  /* ---- Colour tokens (no colour axis like Pills — one shared fill/border set) ---- */
+  const tokRows = [
+    {name:'Checked fill / border', tok:'--fs-green',  sw:'#10c504'},
+    {name:'Unchecked border',      tok:'--fs-border', sw:'#c2c6cc'},
+    {name:'Surface',               tok:'--fs-bg',     sw:'#ffffff'},
+    {name:'Focus ring',            tok:'--fs-ring',   sw:'rgba(0,0,0,.14)'},
+    {name:'Disabled border',       tok:'#e0e2e6 (literal, dark override #33343a)', sw:'#e0e2e6'},
+    {name:'Disabled surface',      tok:'#f4f5f6 (literal, dark override #1a1b22)', sw:'#f4f5f6'},
+  ].map(t=>`
+    <tr>
+      <td class="dd-table__name">${t.name}</td>
+      <td><div class="spec-tok-cell"><span class="spec-tok-sw" style="background:${t.sw}"></span><code>${t.tok}</code></div></td>
+    </tr>`).join('');
+
+  root.innerHTML = `
+    <div class="type-sub">
+      <div class="type-sub__title">Anatomy</div>
+      <div class="type-sub__desc">A checkbox or radio is a native input styled with the brand green, always paired with a clickable label.</div>
+      <div class="cpg-section-outline">
+        <div class="spec-hero" style="background:${sbg}">${heroCbr}</div>
+        <div class="spec-parts">${partCards}</div>
+      </div>
+    </div>
+
+    <div class="type-sub">
+      <div class="type-sub__title">Size &amp; dimensions</div>
+      <div class="type-sub__desc">Three sizes share one shape; box size and border thickness scale together, and text stays close to body size at every size.</div>
+      <div class="cpg-section-outline">
+        <div class="spec-size-demo" style="background:${sbg}">${sizeDemo}</div>
+        <div class="dd-table-wrap"><table class="dd-table">
+          <thead><tr><th>Size</th><th>Box</th><th>Label font-size</th></tr></thead>
+          <tbody>${sizeRows}</tbody>
+        </table></div>
+      </div>
+    </div>
+
+    <div class="type-sub">
+      <div class="type-sub__title">Colour tokens</div>
+      <div class="type-sub__desc">No colour axis like Pills &mdash; one shared set of fill/border custom props drives both control types across every state.</div>
+      <div class="cpg-section-outline">
+        <div class="dd-table-wrap"><table class="dd-table" style="min-width:460px">
+          <thead><tr><th>Token</th><th>Value</th></tr></thead>
+          <tbody>${tokRows}</tbody>
+        </table></div>
+      </div>
+    </div>
+
+    <div class="type-sub" style="margin-bottom:0">
+      <div class="type-sub__title">States</div>
+      <div class="type-sub__desc">Both control types across six states, shown in the current theme. Indeterminate applies to checkboxes only.</div>
+      <div class="cpg-section-outline" id="cbr-states-grid"></div>
+    </div>`;
+
+  renderCbrStatesGrid();
+}
+
+try { renderCbrCodeTab(); } catch(e){ console.error('cbr-code-tab',e); }
+try { renderCbrPlayground(); } catch(e){ console.error('cbr-playground',e); }
+try { renderCbrKeyControls(); } catch(e){ console.error('cbr-keycontrols',e); }
+try { renderCbrInSitu(); } catch(e){ console.error('cbr-insitu',e); }
+try { renderCbrUsage(); } catch(e){ console.error('cbr-usage',e); }
+try { renderCbrReference(); } catch(e){ console.error('cbr-reference',e); }
+
+function cbrTabSwitch(tab){
+  const nav = document.getElementById('cbr-tabs-list');
+  if(!nav) return;
+  nav.querySelectorAll('.tab-item').forEach(btn=>btn.classList.toggle('on', btn.getAttribute('data-cbr-tab')===tab));
+  document.querySelectorAll('#s-selection .tabs-panel[data-cbr-panel]').forEach(p=>p.classList.toggle('on', p.getAttribute('data-cbr-panel')===tab));
+}
+
 
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.76.0';
+const SYSTEM_VERSION = '1.77.0';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.77.0', date:'2026-08-19', author:'Mo', title:'Checkboxes & Radios rebuilt with the full Pills-style tabbed treatment', changes:[
+        ['added','Checkboxes & Radios (s-selection) converted from a single static "Quick copy" + "Reference grid" + "When to use" page into a full .sec--tabbed page — Overview / Style / Code / Changelog — matching Pills and Avatar: a "Try the component" playground with Control type (Checkbox/Radio) and Size (Regular/Small/XSmall) controls, whose stage is a real, clickable native input rather than a separate checked/unchecked toggle'],
+        ['added','"Key controls" showcase (Checkbox / Radio) on Overview, replacing Pills\' colour-variant slot since this component has no colour axis — the real axis of variation is control type, not colour'],
+        ['added','4 "In context" mockups: a preferences list (independent checkboxes), a form ending in a required "I agree to the Terms & Conditions" checkbox, a plan-tier radio group (one-of-many), and a filter sidebar checkbox list'],
+        ['added','Style tab: Anatomy (4 numbered parts — container, checked mark, label, focus ring), Size & dimensions table, a colour-token table (--fs-green/--fs-border/--fs-bg/--fs-ring), and a new States grid — Default / Hover / Focus / Checked / Indeterminate (checkbox only) / Disabled — replacing the old size×state "Reference grid" (SEL_SIZES/SEL_ROWS/selCell/selStageHTML/renderSelReference, all removed)'],
+        ['added','New .fsel__input:indeterminate CSS rule (green fill, horizontal dash glyph) — indeterminate can\'t be set via an HTML attribute, only the DOM .indeterminate property, so the States grid sets it via a small post-render pass (data-cbr-indeterminate)'],
+        ['added','Code tab with HTML/CSS (checkbox-radio.html), Blazor (DsSelectionControl.razor) and React TSX (DsSelectionControl.tsx) behind the segmented language switcher — one combined component parameterised by ControlType, mirroring the current playground selection (single checkbox, or a 2-option radio group)'],
+        ['changed','Do/Dont card moved into the Overview tab\'s #cbr-usage .cpg-section-block, JS-rendered markup like Pills/Carousel (previously static markup); guidance text unchanged from the original 4 do / 4 dont'],
+        ['removed','The static "Quick copy" and "Labels & tap target" blocks (.selqc/.selqc__* markup and CSS) — their real-markup examples now live in the Overview playground, Key controls and In-context mockups instead'],
+      ]},
       {version:'1.76.0', date:'2026-08-19', author:'Mo', title:'Empty State rebuilt with the full Pills-style tabbed treatment', changes:[
         ['added','Empty State (s-empty-state) converted from a single static "Empty state" + "When to use" page into a full .sec--tabbed page — Overview / Style / Code / Changelog — matching Pills and Carousel: a "Try the component" playground (Icon / Action toggles plus editable Title, Description and Action label fields, rendered into two synced mounts via shared esg state), a "Key scenarios" showcase (No data yet / No search results / Filtered to zero / Error loading — replacing Pills\' colour-variant slot, since Empty State has no colour or size axis), 3 "In context" mockups (empty data table, empty list, empty filtered grid), a Style tab (Anatomy, Spacing & dimensions, States) and a Code tab with the .code-seg HTML/CSS · Blazor · React TSX switcher'],
         ['added','New ai-ctx tab regenerated via generate-ai-context-tab.mjs for the js-rendered builders (ES_SCENARIOS, esIconSVG, makeEmptyStateHTML, makeEmptyStateEl), moved from the end of the section into the new hero\'s sec-header-meta, matching Pills/Carousel'],
@@ -16500,7 +16966,17 @@ const CHANGELOG = {
         ['removed','The separate v1 and v2 implementations'],
       ]},
     ]},
-    {secId:'s-selection', name:'Checkboxes & Radios', version:'1.1.1', entries:[
+    {secId:'s-selection', name:'Checkboxes & Radios', version:'1.2.0', entries:[
+      {version:'1.2.0', date:'2026-08-19', author:'Mo', title:'Rebuilt on the Pills tabbed treatment — playground, key controls, in-context mockups and a States grid', changes:[
+        ['changed','Page rebuilt as four tabs (Overview / Style / Code / Changelog) on the shared .sec--tabbed layout, replacing the single long scroll: a title with a live preview card in the hero, matching Pills, Avatar and Carousel'],
+        ['added','"Try the component" playground — Control type (Checkbox/Radio) and Size (Regular/Small/XSmall) — rendered into two mounts (cbr-playground, cbr-code-playground) sharing one cbrPg state; the stage is a real clickable native input, not a separate checked-state toggle'],
+        ['added','"Key controls" (Checkbox, Radio) on Overview — the real axis of variation on this page, standing in for the colour-variant showcase other tabbed pages use'],
+        ['added','"In context" — 4 mockups: a preferences list, a required terms-agreement checkbox, a plan-tier radio group, and a filter sidebar checkbox list'],
+        ['added','Style tab: Anatomy (4 parts), Size & dimensions, Colour tokens, and a new States grid (Default/Hover/Focus/Checked/Indeterminate/Disabled) via renderCbrStatesGrid()'],
+        ['added','Code tab: HTML/CSS, Blazor (DsSelectionControl.razor) and React TSX (DsSelectionControl.tsx) behind the segmented language switcher, tracking the live playground selection'],
+        ['added','New .fsel__input:indeterminate CSS — checkbox-only, applied via the DOM .indeterminate property since it has no HTML attribute form'],
+        ['removed','SEL_SIZES/SEL_ROWS/selInput/selCell/selStageHTML/renderSelReference and the old #sel-reference size×state grid, plus the static .selqc "Quick copy" card and its CSS — superseded by the playground, Key controls and States grid above'],
+      ]},
       {version:'1.1.1', date:'2026-07-29', author:'Mo', title:'Added an AI context tab', changes:[
         ['added','Collapsed "AI context" disclosure documenting the real, fully static .fsel/.fsel__input native checkbox/radio markup and its size/disabled modifiers'],
       ]},
@@ -22975,6 +23451,7 @@ try { renderSectionChangelogs(); } catch(e){ console.error('section-changelog',e
    changelog block (normally placed right after .sec__head) into that panel
    instead of leaving it inline above the tabs. */
 [
+  {secId:'s-selection', panelId:'cbr-changelog-panel'},
   {secId:'s-chips',  panelId:'pill-changelog-panel'},
   {secId:'s-avatar', panelId:'avatar-changelog-panel'},
   {secId:'s-switch', panelId:'sw-changelog-panel'},
