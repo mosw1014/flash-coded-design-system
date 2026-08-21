@@ -7405,12 +7405,12 @@ body.home .main{max-width:none;margin:0;padding:0}
       <div class="sec__head">
         <h1 class="sec__title">Carousel</h1>
         <div class="sec-header-meta">
-          <span class="comp-ver-badge" style="margin-left:0">v1.1.0</span>
+          <span class="comp-ver-badge" style="margin-left:0">v1.1.1</span>
 <details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-carousel">
 {
-  "status": "js-rendered",
+  "status": "static",
   "builderFunctions": [
     "CAR_SLIDE_CONTENT",
     "CAR_GAP",
@@ -7433,7 +7433,7 @@ body.home .main{max-width:none;margin:0;padding:0}
     ".car__dot"
   ],
   "css": "/* ---- Carousel ---- */\n.car { position:relative;width:440px;max-width:100% }\n.car__track { display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;scrollbar-width:none;border-radius:14px }\n.car__track::-webkit-scrollbar { display:none }\n.car__slide { flex:0 0 100%;scroll-snap-align:center;min-height:196px;border-radius:14px;display:flex;align-items:flex-end;padding:20px;color:#fff;font-weight:800;font-size:17px;background:linear-gradient(135deg,var(--prim-grey-600),var(--prim-grey-1100)) }\n.car__slide--g2 { background:linear-gradient(135deg,var(--prim-gb-300),var(--prim-gb-700)) }\n.car__slide--g3 { background:linear-gradient(135deg,var(--prim-grey-800),var(--prim-dg-700)) }\n.car__slide--g4 { background:linear-gradient(135deg,var(--prim-gb-200),var(--prim-gb-600)) }\n.car__arrow { position:absolute;top:98px;transform:translateY(-50%);width:34px;height:34px;border-radius:50%;background:var(--color-btn-s-bg);color:var(--color-btn-s-txt);border:0;cursor:pointer;display:flex;align-items:center;justify-content:center;font-family:inherit;box-shadow:0 2px 10px rgba(0,0,0,.25);z-index:2;transition:opacity .15s }\n.car__arrow svg { width:16px;height:16px;display:block }\n.car__arrow--prev { left:10px }\n.car__arrow--prev svg { transform:rotate(180deg) }\n.car__arrow--next { right:10px }\n.car__arrow:hover { opacity:.85 }\n.car__arrow:disabled { opacity:.35;cursor:default }\n.car__dots { display:flex;gap:7px;justify-content:center;margin-top:14px }\n.car__dot { width:7px;height:7px;border-radius:50%;background:var(--color-surface-n3);border:0;cursor:pointer;padding:0;transition:width .2s,background .2s }\n.car__dot.is-active { background:var(--color-surface-inverse);width:20px;border-radius:4px }",
-  "js": "const CAR_SLIDE_CONTENT = [\n  'Instant payouts',\n  'Tap to pay',\n  'Fraud protection',\n  'Same-day settlement',\n  '24/7 support',\n];\n\nconst CAR_GAP = 14;\n\nfunction carGradClass(i){\n  const m = i % 4;\n  return m === 0 ? '' : ` car__slide--g${m + 1}`;\n}\n\nfunction carArrowSVG(dir){\n  return `&lt;svg viewBox=\"0 -960 960 960\" xmlns=\"http://www.w3.org/2000/svg\" fill=\"currentColor\" aria-hidden=\"true\"&gt;&lt;path d=\"M496.35-480 344.17-632.17Q331.5-644.85 331.5-664t12.67-31.83Q356.85-708.5 376-708.5t31.83 12.67l183.76 183.76q6.71 6.72 9.81 14.92 3.1 8.19 3.1 17.15 0 8.96-3.1 17.15-3.1 8.2-9.81 14.92L407.83-264.17Q395.15-251.5 376-251.5t-31.83-12.67Q331.5-276.85 331.5-296t12.67-31.83L496.35-480Z\"/&gt;&lt;/svg&gt;`;\n}\n\nfunction makeCarHTML({slides = 4, arrows = true, dots = true} = {}){\n  const n = Math.max(2, Math.min(5, slides));\n  const slideHTML = CAR_SLIDE_CONTENT.slice(0, n).map((t, i) =&gt;\n    `&lt;div class=\"car__slide${carGradClass(i)}\"&gt;${t}&lt;/div&gt;`).join('');\n  const arrowHTML = arrows\n    ? `&lt;button class=\"car__arrow car__arrow--prev\" type=\"button\" aria-label=\"Previous slide\"&gt;${carArrowSVG('prev')}&lt;/button&gt;&lt;button class=\"car__arrow car__arrow--next\" type=\"button\" aria-label=\"Next slide\"&gt;${carArrowSVG('next')}&lt;/button&gt;`\n    : '';\n  const dotsHTML = dots\n    ? `&lt;div class=\"car__dots\"&gt;${Array.from({length: n}, (_, i) =&gt; `&lt;button class=\"car__dot${i === 0 ? ' is-active' : ''}\" data-i=\"${i}\" aria-label=\"Go to slide ${i + 1}\"&gt;&lt;/button&gt;`).join('')}&lt;/div&gt;`\n    : '';\n  return `&lt;div class=\"car\"&gt;${arrowHTML}&lt;div class=\"car__track\"&gt;${slideHTML}&lt;/div&gt;${dotsHTML}&lt;/div&gt;`;\n}\n\nfunction makeCarEl(){\n  const wrap = document.createElement('div');\n  wrap.innerHTML = makeCarHTML(crpg);\n  const car = wrap.firstElementChild;\n  const track = car.querySelector('.car__track');\n  const slides = car.querySelectorAll('.car__slide');\n  const dots = car.querySelectorAll('.car__dot');\n  const n = slides.length;\n  let idx = 0;\n\n  function update(){ dots.forEach((d, i) =&gt; d.classList.toggle('is-active', i === idx)); }\n  function go(i){\n    idx = Math.max(0, Math.min(n - 1, i));\n    track.scrollTo({left: idx * (track.clientWidth + CAR_GAP), behavior: 'smooth'});\n    update();\n  }\n  const prev = car.querySelector('.car__arrow--prev');\n  const next = car.querySelector('.car__arrow--next');\n  if(prev) prev.addEventListener('click', () =&gt; go(idx - 1));\n  if(next) next.addEventListener('click', () =&gt; go(idx + 1));\n  dots.forEach(d =&gt; d.addEventListener('click', () =&gt; go(+d.getAttribute('data-i'))));\n  let tmr;\n  track.addEventListener('scroll', () =&gt; {\n    clearTimeout(tmr);\n    tmr = setTimeout(() =&gt; {\n      const w = track.clientWidth + CAR_GAP;\n      if(w &gt; 1){ idx = Math.round(track.scrollLeft / w); update(); }\n    }, 110);\n  });\n  return car;\n}",
+  "js": "const CAR_SLIDE_CONTENT = [\n  'Instant payouts',\n  'Tap to pay',\n  'Fraud protection',\n  'Same-day settlement',\n  '24/7 support',\n];\n\nconst CAR_GAP = 14;\n\nfunction carGradClass(i){\n  const m = i % 4;\n  return m === 0 ? '' : ` car__slide--g${m + 1}`;\n}\n\nfunction carArrowSVG(dir){\n  return iconSvg('chevron-right');\n}\n\nfunction makeCarHTML({slides = 4, arrows = true, dots = true} = {}){\n  const n = Math.max(2, Math.min(5, slides));\n  const slideHTML = CAR_SLIDE_CONTENT.slice(0, n).map((t, i) =&gt;\n    `&lt;div class=\"car__slide${carGradClass(i)}\"&gt;${t}&lt;/div&gt;`).join('');\n  const arrowHTML = arrows\n    ? `&lt;button class=\"car__arrow car__arrow--prev\" type=\"button\" aria-label=\"Previous slide\"&gt;${carArrowSVG('prev')}&lt;/button&gt;&lt;button class=\"car__arrow car__arrow--next\" type=\"button\" aria-label=\"Next slide\"&gt;${carArrowSVG('next')}&lt;/button&gt;`\n    : '';\n  const dotsHTML = dots\n    ? `&lt;div class=\"car__dots\"&gt;${Array.from({length: n}, (_, i) =&gt; `&lt;button class=\"car__dot${i === 0 ? ' is-active' : ''}\" data-i=\"${i}\" aria-label=\"Go to slide ${i + 1}\"&gt;&lt;/button&gt;`).join('')}&lt;/div&gt;`\n    : '';\n  return `&lt;div class=\"car\"&gt;${arrowHTML}&lt;div class=\"car__track\"&gt;${slideHTML}&lt;/div&gt;${dotsHTML}&lt;/div&gt;`;\n}\n\nfunction makeCarEl(){\n  const wrap = document.createElement('div');\n  wrap.innerHTML = makeCarHTML(crpg);\n  const car = wrap.firstElementChild;\n  const track = car.querySelector('.car__track');\n  const slides = car.querySelectorAll('.car__slide');\n  const dots = car.querySelectorAll('.car__dot');\n  const n = slides.length;\n  let idx = 0;\n\n  function update(){ dots.forEach((d, i) =&gt; d.classList.toggle('is-active', i === idx)); }\n  function go(i){\n    idx = Math.max(0, Math.min(n - 1, i));\n    track.scrollTo({left: idx * (track.clientWidth + CAR_GAP), behavior: 'smooth'});\n    update();\n  }\n  const prev = car.querySelector('.car__arrow--prev');\n  const next = car.querySelector('.car__arrow--next');\n  if(prev) prev.addEventListener('click', () =&gt; go(idx - 1));\n  if(next) next.addEventListener('click', () =&gt; go(idx + 1));\n  dots.forEach(d =&gt; d.addEventListener('click', () =&gt; go(+d.getAttribute('data-i'))));\n  let tmr;\n  track.addEventListener('scroll', () =&gt; {\n    clearTimeout(tmr);\n    tmr = setTimeout(() =&gt; {\n      const w = track.clientWidth + CAR_GAP;\n      if(w &gt; 1){ idx = Math.round(track.scrollLeft / w); update(); }\n    }, 110);\n  });\n  return car;\n}",
   "usage": {
     "do": [
       "Use for a handful of equally-weighted, self-contained slides.",
@@ -7446,8 +7446,8 @@ body.home .main{max-width:none;margin:0;padding:0}
       "Don't use a carousel where a simple list would show everything at once."
     ]
   },
-  "contentHash": "cb0188cbc946f50399e8fd0898a29730ce2382dff70e6af41f937c05a48ef023",
-  "note": "makeCarHTML is the minimal real-markup builder (slide/arrow/dot config -&gt; carousel HTML string, arrows via the shared chevron-right glyph rotated for prev); makeCarEl is the fuller version wiring up prev/next/dot clicks and scroll-position sync for the live playground stage. crpg (playground state)/getCarCode*/renderCarPlayground/renderCarReference/renderCarInSitu/carTabSwitch are doc-site-only playground plumbing, excluded."
+  "contentHash": "b27ff8e628ca6c3875646ce05e0ac020d97c39b1e385c940799721d25e7a7bc8",
+  "note": "makeCarHTML is the minimal real-markup builder (slide/arrow/dot config -&gt; carousel HTML string, arrows via the shared ICONS chevron-right glyph through iconSvg(), rotated 180deg via CSS for prev); makeCarEl is the fuller version wiring up prev/next/dot clicks and scroll-position sync for the live playground stage. crpg (playground state)/getCarCode*/renderCarPlayground/renderCarReference/renderCarInSitu/carTabSwitch are doc-site-only playground plumbing, excluded."
 }
   </pre>
 </details>
@@ -15757,12 +15757,16 @@ function cbrTabSwitch(tab){
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.78.0';
+const SYSTEM_VERSION = '1.79.0';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.79.0', date:'2026-08-21', author:'Mowgli Swainston', title:'Carousel arrows now render via the shared chevron-right icon helper', changes:[
+        ['changed','carArrowSVG() in the Carousel component (s-carousel) now returns iconSvg(\'chevron-right\') from the shared ICONS registry instead of a hand-duplicated inline SVG string with the same path data — same rendered glyph (CSS still rotates it 180deg for .car__arrow--prev), but now sourced from one place like the Accordion and Side Nav chevrons'],
+        ['changed','s-carousel\'s AI context tab regenerated via generate-ai-context-tab.mjs to reflect the updated carArrowSVG source (status auto-detected as "static"); contentHash updated accordingly'],
+      ]},
       {version:'1.78.0', date:'2026-08-21', author:'Mo', title:'Lists rebuilt with the full Pills-style tabbed treatment', changes:[
         ['added','Lists (s-lists) converted from a flat, static "Key–value list" + "Activity timeline" + "When to use" page into a full .sec--tabbed page — Overview / Style / Code / Changelog — matching Pills/Empty State/Carousel: a "Try the component" playground with a Pattern switcher (Key–value list / Activity timeline) plus pattern-specific controls (Rows/Key column width, or Events/Newest event colour) and a shared Density toggle, 3 "In context" mockups (record detail panel, audit log panel, combined record page), a Style tab with separate Anatomy/dimensions for each pattern plus a Semantic dot colours table, and a Code tab with the .code-seg HTML/CSS · Blazor · React TSX switcher'],
         ['added','Two new reusable modifier classes on the existing .dd-kv/.dd-timeline components: key-column width (--key-narrow/--key-wide) and density (--compact)'],
@@ -17061,7 +17065,11 @@ const CHANGELOG = {
         ['added','Horizontal, vertical and labelled hairline dividers on the border token'],
       ]},
     ]},
-    {secId:'s-carousel', name:'Carousel', version:'1.1.0', entries:[
+    {secId:'s-carousel', name:'Carousel', version:'1.1.1', entries:[
+      {version:'1.1.1', date:'2026-08-21', author:'Mowgli Swainston', title:'Arrows now use the shared chevron-right icon helper', changes:[
+        ['changed','carArrowSVG() now returns iconSvg(\'chevron-right\') from the shared ICONS registry instead of a hardcoded inline SVG string that duplicated the same path data — visually identical (still rotated 180deg via .car__arrow--prev svg for the prev arrow), but now a single source of truth shared with Accordion and Side Nav'],
+        ['changed','AI context tab regenerated via generate-ai-context-tab.mjs to capture the updated carArrowSVG source; contentHash updated'],
+      ]},
       {version:'1.1.0', date:'2026-08-19', author:'Mo', title:'Full tabbed rebuild — Overview / Style / Code / Changelog', changes:[
         ['added','Overview tab: "Try the component" playground with Arrows on/off, Dots on/off and Slide count (2–5) controls, rendered into two synced mounts (Overview + Code tab) via shared crpg state, plus a "24/7 support" 5th slide added to CAR_SLIDE_CONTENT to support the new slide-count control'],
         ['added','Overview tab: 3 "In context" mockups — onboarding steps, a dashboard feature-promo banner, and a product image gallery'],
@@ -23113,7 +23121,7 @@ function carGradClass(i){
 }
 
 function carArrowSVG(dir){
-  return `<svg viewBox="0 -960 960 960" xmlns="http://www.w3.org/2000/svg" fill="currentColor" aria-hidden="true"><path d="M496.35-480 344.17-632.17Q331.5-644.85 331.5-664t12.67-31.83Q356.85-708.5 376-708.5t31.83 12.67l183.76 183.76q6.71 6.72 9.81 14.92 3.1 8.19 3.1 17.15 0 8.96-3.1 17.15-3.1 8.2-9.81 14.92L407.83-264.17Q395.15-251.5 376-251.5t-31.83-12.67Q331.5-276.85 331.5-296t12.67-31.83L496.35-480Z"/></svg>`;
+  return iconSvg('chevron-right');
 }
 
 /* Minimal real-markup builder: slide/arrow/dot counts -> static .car HTML
