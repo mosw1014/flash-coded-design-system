@@ -17073,12 +17073,16 @@ function cbrTabSwitch(tab){
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.83.0';
+const SYSTEM_VERSION = '1.83.1';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.83.1', date:'2026-09-04', author:'Mo', title:'Empty State: fixed Key scenarios duplication and hero preview', changes:[
+        ['fixed','Empty State\'s "Key scenarios" cards (#s-empty-state Overview tab) were rendering the full icon/title/desc/action mockup and then repeating the title and description again as a separate label underneath — read as duplicated copy. Switched from the .spec-cell swatch pattern to the same .spec-mock/.spec-mock__cap pattern already used by "In context" (full preview + one bold caption)'],
+        ['changed','Empty State\'s sec-hero__preview (top-right header thumbnail) reworked: dropped the shared .mk-card class (its drop shadow reads as an elevated floating card, wrong for a component whose identity is a flat dashed border) and the black/grey .mk-bar fake-content placeholders (which visually say "there\'s text content here" — the opposite of what an empty state should communicate). Now shows just a muted icon chip with real caption text ("Nothing to show"), floating alone with open space around it'],
+      ]},
       {version:'1.83.0', date:'2026-09-04', author:'Mo', title:'Spinner rebuilt with the full Pills-style tabbed treatment', changes:[
         ['added','Spinner (s-spinner) converted from a flat .sec page (Type / Ring sizes / Activity sizes / In context / When to use) into a full .sec--tabbed page — Overview / Style / Code / Changelog — matching Pills/Breadcrumb: a two-column hero (title/version/AI-context left, live spinning Ring+Activity preview right), a "Try the component" playground (Type: Ring/Activity, Size: Small/Regular/Large, Context: Standalone/In a button/Inline, rendered into two synced mounts via shared sspg state), a "Key types" showcase (Ring vs Activity, replacing Pills\' colour-variant slot since Spinner has no colour axis), 3 "In context" mockups (busy button, inline loading row, card overlay) and a Code tab with the .code-seg HTML/CSS · Blazor · React TSX switcher'],
         ['added','New ai-ctx tab regenerated via generate-ai-context-tab.mjs for the js-rendered builders (SPN_TYPES, ovSpn, makeSpnEl), moved from the end of the section into the new hero\'s sec-header-meta, matching Pills/Breadcrumb'],
@@ -19557,7 +19561,11 @@ const CHANGELOG = {
         ['added','Empty state — muted glyph, plain-language explanation and a single primary action'],
       ]},
     ]},
-    {secId:'s-empty-state', name:'Empty State', version:'2.0.0', entries:[
+    {secId:'s-empty-state', name:'Empty State', version:'2.0.1', entries:[
+      {version:'2.0.1', date:'2026-08-21', author:'Mo', title:'Fixed Key scenarios duplication and hero preview', changes:[
+        ['fixed','"Key scenarios" cards were showing the full icon/title/desc/action mockup then repeating the title and description again as a name/desc label below — reworked to the .spec-mock/.spec-mock__cap pattern (full preview + one bold caption) already used by "In context", so nothing repeats'],
+        ['changed','sec-hero__preview reworked twice more after the initial build: first from a shadowed .mk-card to a flat 1.5px dashed border matching the real component, then from a dashed card with fake .mk-bar content lines to just a muted icon chip and real "Nothing to show" caption text — bars implying "content is here" contradicted the point of an empty state'],
+      ]},
       {version:'2.0.0', date:'2026-08-19', author:'Mo', title:'Rebuilt with the full Pills-style tabbed treatment', changes:[
         ['changed','Page restructured from a flat .sec section into a .sec--tabbed page — hero with a live mini preview, and Overview / Style / Code / Changelog tabs (esTabSwitch), matching Pills/Carousel'],
         ['added','"Try the component" playground with Icon and Action on/off toggles plus editable Title, Description and Action-label fields, rendered into two synced mounts (#es-playground on Overview, #es-code-playground on Code) over one shared esg state — the generalised form of Pills\' PILL_PLAYGROUND_MOUNTS pattern'],
