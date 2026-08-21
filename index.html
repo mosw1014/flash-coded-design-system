@@ -7320,7 +7320,7 @@ body.home .main{max-width:none;margin:0;padding:0}
       <div class="sec__head">
         <h1 class="sec__title">Separator</h1>
         <div class="sec-header-meta">
-          <span class="comp-ver-badge" style="margin-left:0">v2.0.0</span>
+          <span class="comp-ver-badge" style="margin-left:0">v2.0.1</span>
           <details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-separator">
@@ -11930,9 +11930,33 @@ function sepLangKeydown(e){
   if(btn) btn.focus();
 }
 
+/* Wraps the real separator markup in a small piece of representative
+   content per variant, so the playground stage shows the separator doing
+   its job rather than floating alone. Illustrative only — the Code tab's
+   snippet still comes from the pure makeSepHTML builder above. */
+function sepgStageHTML(variant, label){
+  if(variant==='vertical'){
+    return `<div class="sep-hstack"><span>Profile</span>${makeSepHTML('vertical')}<span>Settings</span>${makeSepHTML('vertical')}<span>Log out</span></div>`;
+  }
+  if(variant==='labelled'){
+    return `<div style="width:100%;max-width:260px">
+      <div style="height:32px;border-radius:8px;border:1px solid var(--chrome-border);margin-bottom:14px"></div>
+      ${makeSepHTML('labelled', label)}
+      <div style="height:32px;border-radius:8px;border:1px solid var(--chrome-border);margin-top:14px"></div>
+    </div>`;
+  }
+  return `<div style="width:100%;max-width:260px;font-size:13px;color:var(--chrome-txt)">
+    <div style="font-weight:700;margin-bottom:3px">Account</div>
+    <div style="color:var(--chrome-muted);font-size:11.5px">Manage your business profile and details.</div>
+    <div style="margin:14px 0">${makeSepHTML('horizontal')}</div>
+    <div style="font-weight:700;margin-bottom:3px">Payouts</div>
+    <div style="color:var(--chrome-muted);font-size:11.5px">Choose where settled funds are deposited.</div>
+  </div>`;
+}
+
 function sepgRefresh(){
   document.querySelectorAll('.sepg-stage-el').forEach(stage=>{
-    stage.innerHTML = makeSepHTML(sepg.variant, sepg.label);
+    stage.innerHTML = sepgStageHTML(sepg.variant, sepg.label);
   });
   document.querySelectorAll('.sepg-label-input-el').forEach(inp=>{
     inp.disabled = sepg.variant!=='labelled';
@@ -16187,12 +16211,15 @@ function cbrTabSwitch(tab){
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.80.0';
+const SYSTEM_VERSION = '1.80.1';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.80.1', date:'2026-08-21', author:'Mo', title:'Separator playground now shows the rule in context', changes:[
+        ['changed','The playground stage previously rendered the bare .sep/.sep--v/.sep-label element alone on an empty background. Added sepgStageHTML(), a playground-only wrapper that surrounds the real separator markup with representative content per variant — an Account/Payouts text block for Horizontal, a Profile / Settings / Log out row for Vertical, and two field-shaped blocks for Labelled — so the stage demonstrates the separator doing its job instead of floating alone. The Code tab snippet is unaffected: it still comes from the pure makeSepHTML builder'],
+      ]},
       {version:'1.80.0', date:'2026-08-21', author:'Mo', title:'Separator rebuilt with the full Pills-style tabbed treatment', changes:[
         ['added','Separator (s-separator) converted from a static "Horizontal" + "Vertical & labelled" + "When to use" page into a full .sec--tabbed page — Overview / Style / Code / Changelog — matching Pills/Empty State/Skeleton loader: a "Try the component" playground (Variant: Horizontal/Vertical/Labelled, plus an editable Label field enabled only for the labelled form, rendered into two synced mounts via shared sepg state), a "Key variants" showcase (Horizontal / Vertical / Labelled — kept as "variants", not renamed to "building blocks", since the three forms are genuine variants of one component rather than composable primitives), 3 "In context" mockups (settings page, toolbar, auth form), a Style tab (Anatomy with dimensions folded in since there\'s no size-variant axis, a Variants grid showing each form\'s real markup, and a small Tokens & dimensions table) and a Code tab with the .code-seg HTML/CSS · Blazor · React TSX switcher'],
         ['added','New ai-ctx tab regenerated via generate-ai-context-tab.mjs for the js-rendered builders (SEP_VARIANTS, makeSepHTML), moved from the end of the section into the new hero\'s sec-header-meta, matching Pills/Empty State/Skeleton loader'],
@@ -17501,7 +17528,10 @@ const CHANGELOG = {
         ['added','CSS-driven rich preview card that fades in on hover/focus after a short delay'],
       ]},
     ]},
-    {secId:'s-separator', name:'Separator', version:'2.0.0', entries:[
+    {secId:'s-separator', name:'Separator', version:'2.0.1', entries:[
+      {version:'2.0.1', date:'2026-08-21', author:'Mo', title:'Playground now shows the rule in context', changes:[
+        ['changed','The playground stage rendered the bare separator element alone. Added sepgStageHTML(), a playground-only wrapper adding representative content per variant — an Account/Payouts text block for Horizontal, a Profile / Settings / Log out row for Vertical, and two field-shaped blocks for Labelled — so it demonstrates the separator in use. Code tab snippet unaffected (still from the pure makeSepHTML builder)'],
+      ]},
       {version:'2.0.0', date:'2026-08-21', author:'Mo', title:'Rebuilt with the full Pills-style tabbed treatment', changes:[
         ['added','Overview / Style / Code / Changelog tabs (.sec--tabbed), replacing the flat "Horizontal" / "Vertical & labelled" / "When to use" layout'],
         ['added','"Try the component" playground: Variant (Horizontal / Vertical / Labelled) plus an editable Label field, enabled only for the labelled form, rendered into two synced mounts (Overview and Code) over one shared sepg state'],
