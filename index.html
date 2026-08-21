@@ -8102,6 +8102,10 @@ function toggleTheme() {
   try { if(typeof renderEmptyStateScenarios==='function' && document.getElementById('es-scenarios')) renderEmptyStateScenarios(); } catch(e){}
   try { if(typeof renderEmptyStateInSitu==='function' && document.getElementById('es-insitu')) renderEmptyStateInSitu(); } catch(e){}
   try { if(typeof renderEmptyStateReference==='function' && document.getElementById('es-reference')) renderEmptyStateReference(); } catch(e){}
+  try { if(typeof renderPagPlayground==='function' && document.getElementById('pag-playground')) renderPagPlayground(); } catch(e){}
+  try { if(typeof renderPagLayouts==='function' && document.getElementById('pag-layouts')) renderPagLayouts(); } catch(e){}
+  try { if(typeof renderPagInSitu==='function' && document.getElementById('pag-insitu')) renderPagInSitu(); } catch(e){}
+  try { if(typeof renderPagReference==='function' && document.getElementById('pag-reference')) renderPagReference(); } catch(e){}
   try { if(typeof renderAvatarPlayground==='function' && document.getElementById('avatar-playground')) renderAvatarPlayground(); } catch(e){}
   try { if(typeof renderAvatarKeyTypes==='function' && document.getElementById('avatar-keytypes')) renderAvatarKeyTypes(); } catch(e){}
   try { if(typeof renderAvatarInSitu==='function' && document.getElementById('avatar-insitu')) renderAvatarInSitu(); } catch(e){}
@@ -11538,13 +11542,18 @@ function renderPagLayouts(){
   const root = document.getElementById('pag-layouts');
   if(!root) return;
 
+  const theme = currentTheme();
+  const sbg = stageBg(theme);
   const cells = PAG_LAYOUTS.map(l=>{
-    const sample = l.key==='compact' ? makePaginationHTML(6, 24, 'compact') : makePaginationHTML(6, 24, 'full');
+    const sample = (l.key==='compact' ? makePaginationHTML(6, 24, 'compact') : makePaginationHTML(6, 24, 'full'))
+      .replace('class="pag"', 'class="pag" style="flex-wrap:nowrap"');
     return `
-    <div class="spec-cell">
-      <div class="spec-cell__stage">${sample}</div>
-      <div class="spec-cell__name">${l.label}</div>
-      <div class="spec-cell__desc">${l.use}</div>
+    <div class="spec-cell" style="flex-direction:row;align-items:center;gap:16px">
+      <div class="spec-cell__stage" style="background:${sbg};flex:0 0 auto;min-width:400px;overflow-x:auto">${sample}</div>
+      <div style="padding:16px 16px 16px 0">
+        <div class="spec-cell__name">${l.label}</div>
+        <div class="spec-cell__desc">${l.use}</div>
+      </div>
     </div>`;
   }).join('');
 
@@ -11554,7 +11563,7 @@ function renderPagLayouts(){
       <div class="cpg-layout__desc">Two layouts, one component. Pick Full for room to show real page numbers, Compact when space is tight.</div>
     </div>
     <div class="cpg-section-block">
-      <div class="spec-grid">${cells}</div>
+      <div style="display:flex;flex-direction:column;gap:16px">${cells}</div>
     </div>`;
 }
 
@@ -11583,9 +11592,7 @@ function renderPagInSitu(){
       <div class="cpg-layout__desc">Pagination almost always sits in one place: the footer of a table, once the row count is known.</div>
     </div>
     <div class="cpg-section-block">
-      <div class="spec-insitu-grid">
-        <div class="spec-mock">${tableMock}</div>
-      </div>
+      <div class="spec-mock" style="max-width:480px">${tableMock}</div>
     </div>`;
 }
 
@@ -11638,11 +11645,15 @@ function renderPagReference(){
   const dimRows = dims.map(d=>`<tr><td class="dd-table__name">${d.name}</td><td>${d.val}</td></tr>`).join('');
 
   /* ---- Layout variants + tokens ---- */
-  const layoutDemo = PAG_LAYOUTS.map(l=>`
-    <div class="spec-cell">
-      <div class="spec-cell__stage" style="background:${sbg}">${l.key==='compact' ? makePaginationHTML(1, 24, 'compact') : makePaginationHTML(1, 8, 'full')}</div>
+  const layoutDemo = PAG_LAYOUTS.map(l=>{
+    const sample = (l.key==='compact' ? makePaginationHTML(1, 24, 'compact') : makePaginationHTML(1, 8, 'full'))
+      .replace('class="pag"', 'class="pag" style="flex-wrap:nowrap"');
+    return `
+    <div class="spec-cell" style="flex:1 1 240px">
+      <div class="spec-cell__stage" style="background:${sbg};overflow-x:auto">${sample}</div>
       <div class="spec-cell__name">${l.label}</div>
-    </div>`).join('');
+    </div>`;
+  }).join('');
 
   const tokRows = [
     {name:'Border / background', token:'--chrome-border / --chrome-bg'},
@@ -11690,7 +11701,7 @@ function renderPagReference(){
       <div class="type-sub__title">Layout variants</div>
       <div class="type-sub__desc">Full and Compact share every token below &mdash; only the middle section of the control changes.</div>
       <div class="cpg-section-outline">
-        <div class="spec-grid" style="margin-bottom:16px">${layoutDemo}</div>
+        <div class="spec-grid" style="margin-bottom:16px;grid-template-columns:repeat(2,1fr)">${layoutDemo}</div>
         <div class="dd-table-wrap"><table class="dd-table" style="min-width:420px">
           <thead><tr><th>Part</th><th>Token</th></tr></thead>
           <tbody>${tokRows}</tbody>
