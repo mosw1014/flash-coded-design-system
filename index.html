@@ -2233,6 +2233,10 @@ body.home .main{max-width:none;margin:0;padding:0}
 .pop__row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:7px 0;font-size:13px;color:var(--chrome-txt)}
 .pop__foot{display:flex;gap:8px;margin-top:12px;padding-top:12px;border-top:1px solid var(--chrome-border)}
 .pop__apply{flex:1;background:var(--color-btn-s-bg);color:var(--color-btn-s-txt);border:0;border-radius:8px;padding:8px;font-size:12.5px;font-weight:700;font-family:inherit;cursor:pointer}
+.pop__cancel{flex:1;background:transparent;color:var(--chrome-txt);border:1px solid var(--chrome-border);border-radius:8px;padding:8px;font-size:12.5px;font-weight:700;font-family:inherit;cursor:pointer;transition:background .15s}
+.pop__cancel:hover{background:var(--chrome-hover)}
+.pop__input{width:100%;margin-top:2px;background:var(--chrome-bg);border:1px solid var(--chrome-border);border-radius:8px;padding:8px 10px;font-size:12.5px;font-family:inherit;color:var(--chrome-txt)}
+.pop__input:focus-visible{outline:2px solid var(--color-input-focus);outline-offset:1px}
 
 /* ---- Input OTP ---- */
 .otp{display:inline-flex;gap:9px;align-items:center}
@@ -6416,72 +6420,38 @@ body.home .main{max-width:none;margin:0;padding:0}
     <!-- ============================================================
          POPOVER
     ============================================================ -->
-    <section class="sec" id="s-popover">
+    <section class="sec sec--tabbed" id="s-popover">
+      <div class="sec-hero">
       <div class="sec__head">
-        <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Popover <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.1</span></h1>
-        <p class="sec__desc">A small floating panel anchored to a trigger, holding secondary content or controls. Opens on click and dismisses on outside-click or Escape &mdash; richer than a tooltip, lighter than a dialog.</p>
-      </div>
-      <div class="type-sub">
-        <div class="type-sub__title">Interactive</div>
-        <div class="type-sub__desc">Click a trigger to open its panel; click outside or press Escape to close. Panels can carry real, interactive controls.</div>
-        <div class="sg-stage"><div class="sg-row">
-          <div class="pop">
-            <button class="sg-btn" type="button" data-pop>Filter &#9662;</button>
-            <div class="pop__panel">
-              <div class="pop__title">Filter transactions</div>
-              <div class="pop__row">Show refunds <label class="sw sw--sm"><input type="checkbox" class="sw__input" checked><span class="sw__track"><span class="sw__thumb"></span></span></label></div>
-              <div class="pop__row">Only over R100 <label class="sw sw--sm"><input type="checkbox" class="sw__input"><span class="sw__track"><span class="sw__thumb"></span></span></label></div>
-              <div class="pop__foot"><button class="pop__apply" type="button" data-pop-close>Apply</button></div>
-            </div>
-          </div>
-          <div class="pop">
-            <button class="sg-iconbtn" type="button" data-pop aria-label="More information">i</button>
-            <div class="pop__panel pop__panel--right" style="min-width:224px">
-              <div class="pop__title">About settlements</div>
-              <div class="pop__desc">Funds settle to your linked account on the next business day after a sale clears.</div>
-            </div>
-          </div>
-        </div></div>
-      </div>
-      <div class="type-sub">
-        <div class="type-sub__title">When to use</div>
-        <div class="type-sub__desc">A popover is for optional, on-demand content anchored to a control &mdash; not for essential steps or fleeting hints.</div>
-        <div class="sel-usage">
-          <div class="sel-usage__card">
-            <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
-            <ul class="sel-usage__list">
-              <li>Use for contextual actions or details tied to a trigger.</li>
-              <li>Support outside-click and Escape to dismiss.</li>
-              <li>Keep the content compact and focused on one task.</li>
-            </ul>
-          </div>
-          <div class="sel-usage__card">
-            <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don&rsquo;t</div>
-            <ul class="sel-usage__list">
-              <li>Don&rsquo;t use a popover for a required, blocking flow &mdash; use a dialog.</li>
-              <li>Don&rsquo;t use one for a plain text hint &mdash; use a tooltip.</li>
-              <li>Don&rsquo;t pack a whole form or page into it.</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <details class="ai-ctx">
+        <h1 class="sec__title">Popover</h1>
+        <div class="sec-header-meta">
+          <span class="comp-ver-badge" style="margin-left:0">v2.0.0</span>
+          <details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-popover">
 {
-  "status": "static",
+  "status": "js-rendered",
+  "builderFunctions": [
+    "POP_CONTENT_TYPES",
+    "popTriggerLabel",
+    "popPanelBody",
+    "makePopoverHTML",
+    "makePopoverEl"
+  ],
   "realClasses": [
     ".pop",
     ".pop__panel",
     ".pop__panel--right",
     ".pop__title",
-    ".pop__row",
     ".pop__desc",
+    ".pop__row",
     ".pop__foot",
-    ".pop__apply"
+    ".pop__apply",
+    ".pop__cancel",
+    ".pop__input"
   ],
-  "css": "/* ---- Popover ---- */\n.pop { position:relative;display:inline-block }\n.pop__panel { position:absolute;top:calc(100% + 8px);left:0;z-index:40;min-width:244px;background:var(--chrome-bg);border:1px solid var(--chrome-border);border-radius:12px;box-shadow:0 14px 36px rgba(0,0,0,.18);padding:16px;opacity:0;transform:translateY(-6px);pointer-events:none;transition:opacity .15s ease,transform .15s ease }\n.pop__panel--right { left:auto;right:0 }\n.pop.is-open .pop__panel { opacity:1;transform:translateY(0);pointer-events:auto }\n.pop__title { font-size:13px;font-weight:700;color:var(--chrome-txt);margin-bottom:5px }\n.pop__desc { font-size:12.5px;color:var(--chrome-muted);line-height:1.5 }\n.pop__row { display:flex;align-items:center;justify-content:space-between;gap:12px;padding:7px 0;font-size:13px;color:var(--chrome-txt) }\n.pop__foot { display:flex;gap:8px;margin-top:12px;padding-top:12px;border-top:1px solid var(--chrome-border) }\n.pop__apply { flex:1;background:var(--color-btn-s-bg);color:var(--color-btn-s-txt);border:0;border-radius:8px;padding:8px;font-size:12.5px;font-weight:700;font-family:inherit;cursor:pointer }",
+  "css": "/* ---- Popover ---- */\n.pop { position:relative;display:inline-block }\n.pop__panel { position:absolute;top:calc(100% + 8px);left:0;z-index:40;min-width:244px;background:var(--chrome-bg);border:1px solid var(--chrome-border);border-radius:12px;box-shadow:0 14px 36px rgba(0,0,0,.18);padding:16px;opacity:0;transform:translateY(-6px);pointer-events:none;transition:opacity .15s ease,transform .15s ease }\n.pop__panel--right { left:auto;right:0 }\n.pop.is-open .pop__panel { opacity:1;transform:translateY(0);pointer-events:auto }\n.pop__title { font-size:13px;font-weight:700;color:var(--chrome-txt);margin-bottom:5px }\n.pop__desc { font-size:12.5px;color:var(--chrome-muted);line-height:1.5 }\n.pop__row { display:flex;align-items:center;justify-content:space-between;gap:12px;padding:7px 0;font-size:13px;color:var(--chrome-txt) }\n.pop__foot { display:flex;gap:8px;margin-top:12px;padding-top:12px;border-top:1px solid var(--chrome-border) }\n.pop__apply { flex:1;background:var(--color-btn-s-bg);color:var(--color-btn-s-txt);border:0;border-radius:8px;padding:8px;font-size:12.5px;font-weight:700;font-family:inherit;cursor:pointer }\n.pop__cancel { flex:1;background:transparent;color:var(--chrome-txt);border:1px solid var(--chrome-border);border-radius:8px;padding:8px;font-size:12.5px;font-weight:700;font-family:inherit;cursor:pointer;transition:background .15s }\n.pop__cancel:hover { background:var(--chrome-hover) }\n.pop__input { width:100%;margin-top:2px;background:var(--chrome-bg);border:1px solid var(--chrome-border);border-radius:8px;padding:8px 10px;font-size:12.5px;font-family:inherit;color:var(--chrome-txt) }\n.pop__input:focus-visible { outline:2px solid var(--color-input-focus);outline-offset:1px }",
+  "js": "const POP_CONTENT_TYPES = [\n  {key:'info',   label:'Info'},\n  {key:'filter', label:'Filter'},\n  {key:'form',   label:'Form'},\n];\n\nfunction popTriggerLabel(type){\n  return type==='info' ? 'i' : type==='form' ? 'Rename ▾' : 'Filter ▾';\n}\n\nfunction popPanelBody(type, footer){\n  if(type==='info'){\n    let body = `&lt;div class=\"pop__title\"&gt;About settlements&lt;/div&gt;&lt;div class=\"pop__desc\"&gt;Funds settle to your linked account on the next business day after a sale clears.&lt;/div&gt;`;\n    if(footer) body += `&lt;div class=\"pop__foot\"&gt;&lt;button class=\"pop__apply\" type=\"button\" data-pop-close&gt;Got it&lt;/button&gt;&lt;/div&gt;`;\n    return body;\n  }\n  if(type==='form'){\n    let body = `&lt;div class=\"pop__title\"&gt;Rename report&lt;/div&gt;&lt;input class=\"pop__input\" type=\"text\" value=\"Monthly settlements\"&gt;`;\n    if(footer) body += `&lt;div class=\"pop__foot\"&gt;&lt;button class=\"pop__cancel\" type=\"button\" data-pop-close&gt;Cancel&lt;/button&gt;&lt;button class=\"pop__apply\" type=\"button\" data-pop-close&gt;Save&lt;/button&gt;&lt;/div&gt;`;\n    return body;\n  }\n  let body = `&lt;div class=\"pop__title\"&gt;Filter transactions&lt;/div&gt;\n      &lt;div class=\"pop__row\"&gt;Show refunds &lt;label class=\"sw sw--sm\"&gt;&lt;input type=\"checkbox\" class=\"sw__input\" checked&gt;&lt;span class=\"sw__track\"&gt;&lt;span class=\"sw__thumb\"&gt;&lt;/span&gt;&lt;/span&gt;&lt;/label&gt;&lt;/div&gt;\n      &lt;div class=\"pop__row\"&gt;Only over R100 &lt;label class=\"sw sw--sm\"&gt;&lt;input type=\"checkbox\" class=\"sw__input\"&gt;&lt;span class=\"sw__track\"&gt;&lt;span class=\"sw__thumb\"&gt;&lt;/span&gt;&lt;/span&gt;&lt;/label&gt;&lt;/div&gt;`;\n  if(footer) body += `&lt;div class=\"pop__foot\"&gt;&lt;button class=\"pop__apply\" type=\"button\" data-pop-close&gt;Apply&lt;/button&gt;&lt;/div&gt;`;\n  return body;\n}\n\nfunction makePopoverHTML(type, placement, footer){\n  const trigCls = type==='info' ? 'sg-iconbtn' : 'sg-btn';\n  const trigAria = type==='info' ? ' aria-label=\"More information\"' : '';\n  const panelCls = 'pop__panel' + (placement==='right' ? ' pop__panel--right' : '');\n  return `&lt;div class=\"pop\"&gt;&lt;button class=\"${trigCls}\" type=\"button\" data-pop${trigAria}&gt;${popTriggerLabel(type)}&lt;/button&gt;&lt;div class=\"${panelCls}\"&gt;${popPanelBody(type, footer)}&lt;/div&gt;&lt;/div&gt;`;\n}\n\nfunction makePopoverEl(){\n  const wrap = document.createElement('div');\n  wrap.innerHTML = makePopoverHTML(popg.type, popg.placement, popg.footer);\n  const pop = wrap.firstElementChild;\n  pop.classList.add('is-open');\n  return pop;\n}",
   "usage": {
     "do": [
       "Use for contextual actions or details tied to a trigger.",
@@ -6494,11 +6464,66 @@ body.home .main{max-width:none;margin:0;padding:0}
       "Don’t pack a whole form or page into it."
     ]
   },
-  "contentHash": "803ba8a89356f74970e785977382cae47ba11037d629c930092a7b9e42e34e0e",
-  "note": "Markup is fully static; a small generic JS wiring block (not a markup builder) toggles .is-open on [data-pop]/[data-pop-close] click and handles outside-click/Escape dismissal."
+  "contentHash": "9a9f4373e0d812cbd44db52e17b71fe1bd97accc26f343662c9f1c98e63bb5d7",
+  "note": "makePopoverHTML is the minimal real-markup builder (content type+placement+footer -&gt; .pop HTML string); makePopoverEl is the fuller playground version reading shared popg state. POP_KEY_PATTERNS drives the Overview tab's Key patterns showcase (no colour/size axis exists for this component, unlike Pills — placement left/right is the one structural variant). popPreviewHTML/popCodeBody/getPopoverCode*/renderPopover*/popTabSwitch are doc-site-only playground plumbing, excluded. The document-level delegated click handler (open/close/outside-click/Escape) is generic wiring, not a markup builder, but was changed from per-element binding to event delegation so it also wires up popovers the playground renders dynamically."
 }
   </pre>
 </details>
+        </div>
+      </div>
+      <div class="sec-hero__preview"><div class="mk"><div style="position:relative;padding-top:6px"><span class="mk-chip">Filter &#9662;</span><div class="mk-card" style="position:absolute;top:calc(100% + 4px);left:0;width:130px;padding:9px 9px;display:flex;flex-direction:column;gap:6px"><span class="mk-bar mk-bar--txt" style="width:65%"></span><span class="mk-bar" style="width:90%"></span><span class="mk-bar" style="width:70%"></span></div></div></div></div>
+      </div>
+      <div class="tabs-list sec-tabs" id="pop-tabs-list">
+        <button type="button" class="tab-item on" data-pop-tab="overview" onclick="popTabSwitch('overview')"><span class="tab-item__inner"><span class="tab-item__label">Overview</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-pop-tab="style" onclick="popTabSwitch('style')"><span class="tab-item__inner"><span class="tab-item__label">Style</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-pop-tab="code" onclick="popTabSwitch('code')"><span class="tab-item__inner"><span class="tab-item__label">Code</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-pop-tab="changelog" onclick="popTabSwitch('changelog')"><span class="tab-item__inner"><span class="tab-item__label">Changelog</span></span><span class="tab-item__line"></span></button>
+      </div>
+      <div class="tabs-panel on" data-pop-panel="overview">
+        <div id="pop-playground" class="type-sub"></div>
+        <div id="pop-patterns" class="type-sub"></div>
+        <div id="pop-insitu" class="type-sub"></div>
+        <div class="type-sub cpg-variants" id="pop-usage">
+          <div class="cpg-section-heading">
+            <div class="cpg-layout__title">Do's and don'ts</div>
+            <div class="cpg-layout__desc">A popover is for optional, on-demand content anchored to a control &mdash; not for essential steps or fleeting hints.</div>
+          </div>
+          <div class="cpg-section-block">
+            <div class="sel-usage">
+              <div class="sel-usage__card">
+                <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
+                <ul class="sel-usage__list">
+                  <li>Use for contextual actions or details tied to a trigger.</li>
+                  <li>Support outside-click and Escape to dismiss.</li>
+                  <li>Keep the content compact and focused on one task.</li>
+                </ul>
+                <div class="spec-usage-demo">
+                  <div class="pop" style="position:static"><button class="sg-iconbtn" type="button" tabindex="-1" aria-label="More information">i</button><div class="pop__panel" style="position:static;opacity:1;transform:none;pointer-events:none;margin-top:8px;min-width:200px"><div class="pop__title">About settlements</div><div class="pop__desc">Funds settle next business day.</div></div></div>
+                </div>
+              </div>
+              <div class="sel-usage__card">
+                <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don&rsquo;t</div>
+                <ul class="sel-usage__list">
+                  <li>Don&rsquo;t use a popover for a required, blocking flow &mdash; use a dialog.</li>
+                  <li>Don&rsquo;t use one for a plain text hint &mdash; use a tooltip.</li>
+                  <li>Don&rsquo;t pack a whole form or page into it.</li>
+                </ul>
+                <div class="spec-usage-demo">
+                  <div class="pop" style="position:static"><button class="sg-btn" type="button" tabindex="-1">Edit profile</button><div class="pop__panel" style="position:static;opacity:1;transform:none;pointer-events:none;margin-top:8px;min-width:220px"><div class="pop__title">Full profile form</div><div class="pop__row">Name</div><div class="pop__row">Email</div><div class="pop__row">Phone</div><div class="pop__row">Address</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tabs-panel" data-pop-panel="style">
+        <div id="pop-reference" class="type-sub spec-panel spec-stack"></div>
+      </div>
+      <div class="tabs-panel" data-pop-panel="code">
+        <div id="pop-code-playground" class="type-sub spec-panel spec-code-playground"></div>
+        <div id="pop-code-tab" class="type-sub spec-panel"></div>
+      </div>
+      <div class="tabs-panel" data-pop-panel="changelog" id="pop-changelog-panel"></div>
     </section>
 
     <!-- ============================================================
@@ -11186,6 +11211,504 @@ function esTabSwitch(tab){
 }
 
 /* ============================================================
+   POPOVER
+   Same tabbed-page treatment as Pills (.sec--tabbed): Overview /
+   Style / Code / Changelog, a shared-state playground rendered
+   into two mounts, and a three-language code panel. Popover has
+   no colour or size axis, so "Key variants" is replaced by
+   "Key patterns" — three content shapes (Info / Filter / Form)
+   crossed with anchor placement (left/right) and footer on/off,
+   covering both axes the source Pills page would have split into
+   separate "variant" and "size" slots.
+============================================================ */
+const POP_CONTENT_TYPES = [
+  {key:'info',   label:'Info'},
+  {key:'filter', label:'Filter'},
+  {key:'form',   label:'Form'},
+];
+
+function popEsc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&#60;').replace(/>/g,'&#62;').replace(/"/g,'&quot;'); }
+
+function popTriggerLabel(type){
+  return type==='info' ? 'i' : type==='form' ? 'Rename ▾' : 'Filter ▾';
+}
+
+/* Real panel body for each content type — shared by the minimal HTML
+   builder and the live playground element so both stay identical. */
+function popPanelBody(type, footer){
+  if(type==='info'){
+    let body = `<div class="pop__title">About settlements</div><div class="pop__desc">Funds settle to your linked account on the next business day after a sale clears.</div>`;
+    if(footer) body += `<div class="pop__foot"><button class="pop__apply" type="button" data-pop-close>Got it</button></div>`;
+    return body;
+  }
+  if(type==='form'){
+    let body = `<div class="pop__title">Rename report</div><input class="pop__input" type="text" value="Monthly settlements">`;
+    if(footer) body += `<div class="pop__foot"><button class="pop__cancel" type="button" data-pop-close>Cancel</button><button class="pop__apply" type="button" data-pop-close>Save</button></div>`;
+    return body;
+  }
+  let body = `<div class="pop__title">Filter transactions</div>
+      <div class="pop__row">Show refunds <label class="sw sw--sm"><input type="checkbox" class="sw__input" checked><span class="sw__track"><span class="sw__thumb"></span></span></label></div>
+      <div class="pop__row">Only over R100 <label class="sw sw--sm"><input type="checkbox" class="sw__input"><span class="sw__track"><span class="sw__thumb"></span></span></label></div>`;
+  if(footer) body += `<div class="pop__foot"><button class="pop__apply" type="button" data-pop-close>Apply</button></div>`;
+  return body;
+}
+
+/* Minimal real-markup builder: content type + placement + footer -> .pop HTML string. */
+function makePopoverHTML(type, placement, footer){
+  const trigCls = type==='info' ? 'sg-iconbtn' : 'sg-btn';
+  const trigAria = type==='info' ? ' aria-label="More information"' : '';
+  const panelCls = 'pop__panel' + (placement==='right' ? ' pop__panel--right' : '');
+  return `<div class="pop"><button class="${trigCls}" type="button" data-pop${trigAria}>${popTriggerLabel(type)}</button><div class="${panelCls}">${popPanelBody(type, footer)}</div></div>`;
+}
+
+/* ── POPOVER PLAYGROUND ── */
+let popg = { type:'filter', placement:'left', footer:true, theme:'light' };
+
+function makePopoverEl(){
+  const wrap = document.createElement('div');
+  wrap.innerHTML = makePopoverHTML(popg.type, popg.placement, popg.footer);
+  const pop = wrap.firstElementChild;
+  pop.classList.add('is-open');
+  return pop;
+}
+
+function popCodeBody(type, footer){
+  if(type==='info'){
+    const foot = footer ? `\n  <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"pop__foot"</span><span class="code-kw">>&#60;button</span> <span class="code-cls">class</span>=<span class="code-val">"pop__apply"</span> <span class="code-attr">data-pop-close</span><span class="code-kw">></span>Got it<span class="code-kw">&#60;/button>&#60;/div></span>` : '';
+    return `<span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"pop__title"</span><span class="code-kw">></span>About settlements<span class="code-kw">&#60;/div></span>
+    <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"pop__desc"</span><span class="code-kw">></span>Funds settle next business day&#8230;<span class="code-kw">&#60;/div></span>${foot}`;
+  }
+  if(type==='form'){
+    const foot = footer ? `\n  <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"pop__foot"</span><span class="code-kw">>&#60;button</span> <span class="code-cls">class</span>=<span class="code-val">"pop__cancel"</span> <span class="code-attr">data-pop-close</span><span class="code-kw">></span>Cancel<span class="code-kw">&#60;/button>&#60;button</span> <span class="code-cls">class</span>=<span class="code-val">"pop__apply"</span> <span class="code-attr">data-pop-close</span><span class="code-kw">></span>Save<span class="code-kw">&#60;/button>&#60;/div></span>` : '';
+    return `<span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"pop__title"</span><span class="code-kw">></span>Rename report<span class="code-kw">&#60;/div></span>
+    <span class="code-kw">&#60;input</span> <span class="code-cls">class</span>=<span class="code-val">"pop__input"</span> <span class="code-attr">type</span>=<span class="code-val">"text"</span> <span class="code-attr">value</span>=<span class="code-val">"Monthly settlements"</span><span class="code-kw">></span>${foot}`;
+  }
+  const foot = footer ? `\n  <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"pop__foot"</span><span class="code-kw">>&#60;button</span> <span class="code-cls">class</span>=<span class="code-val">"pop__apply"</span> <span class="code-attr">data-pop-close</span><span class="code-kw">></span>Apply<span class="code-kw">&#60;/button>&#60;/div></span>` : '';
+  return `<span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"pop__title"</span><span class="code-kw">></span>Filter transactions<span class="code-kw">&#60;/div></span>
+    <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"pop__row"</span><span class="code-kw">></span>Show refunds <span class="code-cm">&#60;!-- switch --></span><span class="code-kw">&#60;/div></span>
+    <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"pop__row"</span><span class="code-kw">></span>Only over R100 <span class="code-cm">&#60;!-- switch --></span><span class="code-kw">&#60;/div></span>${foot}`;
+}
+
+function getPopoverCodeHTML(){
+  const cls = 'pop__panel' + (popg.placement==='right' ? ' pop__panel--right' : '');
+  return `<span class="code-cm">/* Flash · ${cap(popg.theme)} · ${cap(popg.type)} popover */</span>
+<span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"pop"</span><span class="code-kw">></span>
+  <span class="code-kw">&#60;button</span> <span class="code-attr">data-pop</span><span class="code-kw">></span>${popEsc(popTriggerLabel(popg.type))}<span class="code-kw">&#60;/button></span>
+  <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"${cls}"</span><span class="code-kw">></span>
+    ${popCodeBody(popg.type, popg.footer)}
+  <span class="code-kw">&#60;/div></span>
+<span class="code-kw">&#60;/div></span>`;
+}
+
+/* ── CODE PANEL LANGUAGES ──
+   HTML/CSS is the source of truth (real .pop/.pop__* markup). Blazor and
+   React TSX are illustrative wrappers — the trigger/open-close wiring is
+   what actually differs per framework, not the panel markup itself. */
+const POP_LANGS = [
+  {key:'html',   label:'HTML / CSS', file:'popover.html'},
+  {key:'blazor', label:'Blazor',     file:'DsPopover.razor'},
+  {key:'tsx',    label:'React TSX',  file:'DsPopover.tsx'},
+];
+let popLang = 'html';
+
+function getPopoverCodeBlazor(){
+  const opt = popg.footer ? '' : `\n            <span class="code-attr">ShowFooter</span>=<span class="code-val">"false"</span>`;
+  return `<span class="code-cm">@* DsPopover.razor — usage *@</span>
+<span class="code-kw">&#60;DsPopover</span> <span class="code-attr">ContentType</span>=<span class="code-val">"PopoverContent.${cap(popg.type)}"</span>
+            <span class="code-attr">Placement</span>=<span class="code-val">"PopoverPlacement.${cap(popg.placement)}"</span>${opt} <span class="code-kw">/></span>
+
+<span class="code-cm">@* DsPopover.razor — component definition *@</span>
+<span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"pop"</span><span class="code-kw">></span>
+  <span class="code-kw">&#60;button</span> <span class="code-attr">@onclick</span>=<span class="code-val">"Toggle"</span> <span class="code-attr">@onclick:stopPropagation</span>=<span class="code-val">"true"</span><span class="code-kw">>@TriggerContent&#60;/button></span>
+  <span class="code-kw">@if</span> (_open) {
+    <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"pop__panel@(Placement == PopoverPlacement.Right ? " pop__panel--right" : "")"</span> <span class="code-attr">@onclick:stopPropagation</span>=<span class="code-val">"true"</span><span class="code-kw">>@ChildContent&#60;/div></span>
+  }
+<span class="code-kw">&#60;/div></span>
+
+<span class="code-kw">@code</span> {
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> PopoverContent ContentType { get; set; } = PopoverContent.Info;
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> PopoverPlacement Placement { get; set; } = PopoverPlacement.Left;
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> <span class="code-cls">bool</span> ShowFooter { get; set; } = <span class="code-kw">true</span>;
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> RenderFragment TriggerContent { get; set; }
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> RenderFragment ChildContent { get; set; }
+
+  <span class="code-kw">private</span> <span class="code-cls">bool</span> _open;
+  <span class="code-kw">private void</span> Toggle() => _open = !_open;
+}`;
+}
+
+function getPopoverCodeTSX(){
+  const usageProps = `contentType=<span class="code-val">"${popg.type}"</span> placement=<span class="code-val">"${popg.placement}"</span>` + (popg.footer?'':' showFooter={false}');
+  return `<span class="code-cm">// DsPopover.tsx</span>
+<span class="code-kw">import</span> React, { useState, useRef, useEffect } <span class="code-kw">from</span> <span class="code-val">'react'</span>;
+
+<span class="code-kw">type</span> <span class="code-cls">PopoverContent</span> = <span class="code-val">'info'</span> | <span class="code-val">'filter'</span> | <span class="code-val">'form'</span>;
+<span class="code-kw">type</span> <span class="code-cls">PopoverPlacement</span> = <span class="code-val">'left'</span> | <span class="code-val">'right'</span>;
+
+<span class="code-kw">interface</span> <span class="code-cls">DsPopoverProps</span> {
+  trigger: React.ReactNode;
+  contentType: <span class="code-cls">PopoverContent</span>;
+  placement?: <span class="code-cls">PopoverPlacement</span>;
+  showFooter?: <span class="code-cls">boolean</span>;
+  children: React.ReactNode;
+}
+
+<span class="code-kw">export const</span> <span class="code-cls">DsPopover</span>: React.FC&#60;DsPopoverProps> = ({ trigger, placement = <span class="code-val">'left'</span>, children }) => {
+  <span class="code-kw">const</span> [open, setOpen] = useState(<span class="code-kw">false</span>);
+  <span class="code-kw">const</span> ref = useRef&#60;HTMLDivElement>(<span class="code-kw">null</span>);
+
+  useEffect(() => {
+    <span class="code-kw">const</span> onDocClick = (e: MouseEvent) => { <span class="code-kw">if</span> (!ref.current?.contains(e.target <span class="code-kw">as</span> Node)) setOpen(<span class="code-kw">false</span>); };
+    <span class="code-kw">const</span> onEsc = (e: KeyboardEvent) => { <span class="code-kw">if</span> (e.key === <span class="code-val">'Escape'</span>) setOpen(<span class="code-kw">false</span>); };
+    document.addEventListener(<span class="code-val">'click'</span>, onDocClick);
+    document.addEventListener(<span class="code-val">'keydown'</span>, onEsc);
+    <span class="code-kw">return</span> () => { document.removeEventListener(<span class="code-val">'click'</span>, onDocClick); document.removeEventListener(<span class="code-val">'keydown'</span>, onEsc); };
+  }, []);
+
+  <span class="code-kw">return</span> (
+    &#60;div className=<span class="code-val">"pop"</span> ref={ref}>
+      &#60;button onClick={() => setOpen((o) => !o)}>{trigger}&#60;/button>
+      {open &amp;&amp; (
+        &#60;div className={\`pop__panel\${placement === <span class="code-val">'right'</span> ? <span class="code-val">' pop__panel--right'</span> : <span class="code-val">''</span>}\`} onClick={(e) => e.stopPropagation()}>
+          {children}
+        &#60;/div>
+      )}
+    &#60;/div>
+  );
+};
+
+<span class="code-cm">// Usage</span>
+&#60;DsPopover trigger={<span class="code-val">'${popTriggerLabel(popg.type)}'</span>} ${usageProps}>
+  {<span class="code-cm">/* panel content */</span>}
+&#60;/DsPopover>`;
+}
+
+function getPopoverCode(){
+  return popLang==='blazor' ? getPopoverCodeBlazor()
+       : popLang==='tsx'    ? getPopoverCodeTSX()
+       : getPopoverCodeHTML();
+}
+
+function setPopLang(lang){
+  if(!POP_LANGS.some(l=>l.key===lang)) return;
+  popLang = lang;
+  document.querySelectorAll('#pop-code-tab .code-seg__btn').forEach(b=>{
+    const on = b.dataset.lang===lang;
+    b.setAttribute('aria-selected', on ? 'true' : 'false');
+    b.setAttribute('tabindex', on ? '0' : '-1');
+  });
+  const file = document.getElementById('pop-lang-file');
+  const meta = POP_LANGS.find(l=>l.key===lang);
+  if(file && meta) file.textContent = meta.file;
+  const block = document.getElementById('popg-code-block');
+  if(block) block.innerHTML = getPopoverCode();
+}
+
+function popLangKeydown(e){
+  const i = POP_LANGS.findIndex(l=>l.key===popLang);
+  let n = i;
+  if(e.key==='ArrowLeft')       n = (i - 1 + POP_LANGS.length) % POP_LANGS.length;
+  else if(e.key==='ArrowRight') n = (i + 1) % POP_LANGS.length;
+  else if(e.key==='Home')       n = 0;
+  else if(e.key==='End')        n = POP_LANGS.length - 1;
+  else return;
+  e.preventDefault();
+  setPopLang(POP_LANGS[n].key);
+  const btn = document.getElementById('pop-lang-' + POP_LANGS[n].key);
+  if(btn) btn.focus();
+}
+
+function popgRefresh(){
+  document.querySelectorAll('.popg-stage-el').forEach(stage=>{
+    stage.innerHTML = '';
+    stage.appendChild(makePopoverEl());
+  });
+  const block = document.getElementById('popg-code-block');
+  if(block) block.innerHTML = getPopoverCode();
+}
+
+/* Popover Playground renders into more than one mount (the main Overview
+   demo, and a smaller copy on the Code tab) so both stay in sync with the
+   same shared popg state — same pattern as Pills' PILL_PLAYGROUND_MOUNTS. */
+const POP_PLAYGROUND_MOUNTS = [
+  {rootId:'pop-playground', idSuffix:'', wrap:true, title:'Try the component', desc:'Adjust the filters to test component states.', headingAbove:'Use a popover for optional, on-demand content anchored to a trigger — filters, quick info, or a small form.'},
+  {rootId:'pop-code-playground', idSuffix:'-code', style:'code', title:'Playground', desc:'Live demo of the component.'},
+];
+
+function renderPopoverPlayground(){
+  popg.theme = document.documentElement.getAttribute('data-theme')==='dark' ? 'dark' : 'light';
+  const sbg = stageBg(popg.theme);
+
+  const typeBtns = POP_CONTENT_TYPES.map(t=>`<button class="btn-pg__pill${popg.type===t.key?' on':''}" onclick="popgSet('type','${t.key}')">${t.label}</button>`).join('');
+  const placeBtns = [{key:'left',label:'Left'},{key:'right',label:'Right'}].map(p=>`<button class="btn-pg__pill${popg.placement===p.key?' on':''}" onclick="popgSet('placement','${p.key}')">${p.label}</button>`).join('');
+  const footBtns = ['off','on'].map(x=>`<button class="btn-pg__pill${(popg.footer?(x==='on'):(x==='off'))?' on':''}" onclick="popgSet('footer','${x}')">${x==='on'?'With footer':'No footer'}</button>`).join('');
+
+  POP_PLAYGROUND_MOUNTS.forEach(mount=>{
+    const root = document.getElementById(mount.rootId);
+    if(!root) return;
+    const s = mount.idSuffix;
+    const demo = `
+      <div class="btn-pg">
+        <div class="btn-pg__stage popg-stage-el" id="popg-stage${s}" style="background:${sbg};align-items:flex-start;padding-top:56px"></div>
+        <div class="btn-pg__ctrls">
+          <div class="btn-pg__group"><span class="btn-pg__clabel">Content type</span><div class="btn-pg__pill-row">${typeBtns}</div></div>
+          <div class="btn-pg__group"><span class="btn-pg__clabel">Placement</span><div class="btn-pg__pill-row">${placeBtns}</div></div>
+          <div class="btn-pg__group"><span class="btn-pg__clabel">Footer</span><div class="btn-pg__pill-row">${footBtns}</div></div>
+        </div>
+      </div>`;
+
+    if(mount.style==='code'){
+      root.innerHTML = `
+        <div class="type-sub__title">${mount.title}</div>
+        <div class="type-sub__desc">${mount.desc}</div>
+        <div class="cpg-section-outline">${demo}</div>`;
+      return;
+    }
+
+    const inner = `
+      <div class="cpg-layout">
+        <div class="cpg-layout__intro">
+          ${mount.wrap ? `<span class="cpg-cursor-icon">${CPG_CURSOR_ICON_SVG}</span>` : ''}
+          <div class="cpg-layout__title">${mount.title}</div>
+          <div class="cpg-layout__desc">${mount.desc}</div>
+        </div>
+        <div class="cpg-layout__demo">${demo}</div>
+      </div>`;
+    const wrapped = mount.wrap ? `<div class="cpg-section-block">${inner}</div>` : inner;
+    root.innerHTML = (mount.headingAbove ? `<div class="cpg-overview-heading"><span class="cpg-overview-heading__icon">${CPG_INFO_ICON_SVG}</span><span>${mount.headingAbove}</span></div>` : '') + wrapped;
+  });
+
+  popgRefresh();
+}
+
+function renderPopoverCodeTab(){
+  const root = document.getElementById('pop-code-tab');
+  if(!root) return;
+  root.innerHTML = `
+    <div class="type-sub__title">Code</div>
+    <div class="type-sub__desc">Live snippet matching the current Playground configuration &mdash; switch to Overview to change it.</div>
+    <div class="cpg-section-outline">
+      <div class="code-panel code-panel--bare open">
+        <div class="code-panel__head">
+          <div class="code-seg" role="tablist" aria-label="Code language" onkeydown="popLangKeydown(event)">
+            ${POP_LANGS.map(l=>`<button type="button" role="tab" class="code-seg__btn" id="pop-lang-${l.key}" data-lang="${l.key}" aria-selected="${popLang===l.key?'true':'false'}" aria-controls="popg-code-block" tabindex="${popLang===l.key?'0':'-1'}" onclick="setPopLang('${l.key}')">${l.label}</button>`).join('')}
+          </div>
+          <span class="code-lang-file" id="pop-lang-file">${(POP_LANGS.find(l=>l.key===popLang)||POP_LANGS[0]).file}</span>
+          <button class="code-copy-btn" onclick="popgCopyCode()" id="popg-copy-btn">Copy</button>
+        </div>
+        <div class="code-body"><div class="code-block" id="popg-code-block" role="tabpanel" aria-live="polite"></div></div>
+      </div>
+    </div>`;
+}
+
+function popgSet(key, val){
+  if(key==='footer') popg.footer = (val==='on');
+  else popg[key] = val;
+  renderPopoverPlayground();
+}
+function popgCopyCode(){
+  const b = document.getElementById('popg-code-block');
+  if(!b) return;
+  navigator.clipboard.writeText(b.innerText||b.textContent).catch(()=>{});
+  const btn = document.getElementById('popg-copy-btn');
+  if(btn){ btn.textContent = 'Copied!'; setTimeout(()=>btn.textContent='Copy', 2000); }
+}
+
+/* Static, force-open preview for the Overview "Key patterns" showcase and
+   "In context" mockups — same .pop/.pop__panel markup as the real
+   interactive popover, but positioned inline (not absolute) since these
+   are illustrative, non-clickable cards rather than working triggers. */
+function popPreviewHTML(type, placement, footer, triggerLabel){
+  const trigCls = type==='info' ? 'sg-iconbtn' : 'sg-btn';
+  const panelCls = 'pop__panel' + (placement==='right' ? ' pop__panel--right' : '');
+  return `<div class="pop" style="position:static;display:flex;flex-direction:column;align-items:${placement==='right'?'flex-end':'flex-start'}">
+    <button class="${trigCls}" type="button" tabindex="-1">${triggerLabel||popTriggerLabel(type)}</button>
+    <div class="${panelCls}" style="position:static;opacity:1;transform:none;pointer-events:none;margin-top:8px;left:auto;right:auto">${popPanelBody(type, footer)}</div>
+  </div>`;
+}
+
+const POP_KEY_PATTERNS = [
+  {key:'info-left',   label:'Info, left-anchored',          type:'info',   placement:'left',  footer:true},
+  {key:'filter-left',  label:'Filter, left-anchored',        type:'filter', placement:'left',  footer:true},
+  {key:'form-right',   label:'Form, right-anchored',         type:'form',   placement:'right', footer:true},
+  {key:'info-right',   label:'Info, right-anchored, no footer', type:'info', placement:'right', footer:false},
+];
+
+function renderPopoverPatterns(){
+  const root = document.getElementById('pop-patterns');
+  if(!root) return;
+  const theme = currentTheme();
+  const sbg = stageBg(theme);
+
+  const cells = POP_KEY_PATTERNS.map(p=>`
+    <div class="spec-cell">
+      <div class="spec-cell__stage" style="background:${sbg};align-items:flex-start;padding:40px 14px 16px">${popPreviewHTML(p.type, p.placement, p.footer)}</div>
+      <div class="spec-cell__name">${p.label}</div>
+    </div>`).join('');
+
+  root.innerHTML = `
+    <div class="cpg-section-heading">
+      <div class="cpg-layout__title">Key patterns</div>
+      <div class="cpg-layout__desc">The same anchored-panel shape covers three jobs &mdash; info, filters, and a small form &mdash; anchored from either side of its trigger.</div>
+    </div>
+    <div class="cpg-section-block">
+      <div class="spec-grid">${cells}</div>
+    </div>`;
+}
+
+function renderPopoverInSitu(){
+  const root = document.getElementById('pop-insitu');
+  if(!root) return;
+  const theme = currentTheme();
+  const sbg = stageBg(theme);
+
+  // 1. Filter popover on a transaction table toolbar
+  const tableMock = `
+    <div class="spec-mock__stage" style="background:${sbg};padding:0">
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;border-bottom:1px solid var(--chrome-border)">
+        <span style="font-size:11px;font-weight:700;color:var(--chrome-txt)">Transactions</span>
+        ${popPreviewHTML('filter','left',true,'Filter ▾')}
+      </div>
+      <div style="padding:14px;display:flex;flex-direction:column;gap:8px">
+        <span class="spec-mock__bar" style="width:95%"></span>
+        <span class="spec-mock__bar" style="width:80%"></span>
+        <span class="spec-mock__bar" style="width:88%"></span>
+      </div>
+    </div>
+    <div class="spec-mock__cap"><b>Table toolbar</b>A filter popover anchored to a toolbar action.</div>`;
+
+  // 2. Account popover from a nav avatar
+  const acctMock = `
+    <div class="spec-mock__stage" style="background:${sbg};padding:14px 14px 40px;display:flex;justify-content:flex-end">
+      <div class="pop" style="position:static;display:flex;flex-direction:column;align-items:flex-end">
+        <span class="avt avt--sm avt--icon" style="pointer-events:none">${avtIconSVG?avtIconSVG():''}</span>
+        <div class="pop__panel pop__panel--right" style="position:static;opacity:1;transform:none;pointer-events:none;margin-top:8px;min-width:180px">
+          <div class="pop__title">Mo Swainston</div>
+          <div class="pop__row">Account settings</div>
+          <div class="pop__row">Sign out</div>
+        </div>
+      </div>
+    </div>
+    <div class="spec-mock__cap"><b>Account menu</b>Right-anchored so the panel never runs off the edge of the nav bar.</div>`;
+
+  // 3. Quick-settings popover on a dashboard stat card
+  const statMock = `
+    <div class="spec-mock__stage" style="background:${sbg};padding:14px">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start">
+        <div><div style="font-size:10.5px;color:var(--chrome-muted)">Settlement total</div><div style="font-size:18px;font-weight:800;color:var(--chrome-txt)">R48,210</div></div>
+        ${popPreviewHTML('info','right',false,'i')}
+      </div>
+    </div>
+    <div class="spec-mock__cap"><b>Stat card</b>An info popover explains where a number comes from, without leaving the dashboard.</div>`;
+
+  root.innerHTML = `
+    <div class="cpg-section-heading">
+      <div class="cpg-layout__title">In context</div>
+      <div class="cpg-layout__desc">The same anchored panel does three everyday jobs &mdash; filtering a table, opening an account menu, and explaining a stat.</div>
+    </div>
+    <div class="cpg-section-block">
+      <div class="spec-insitu-grid">
+        <div class="spec-mock">${tableMock}</div>
+        <div class="spec-mock">${acctMock}</div>
+        <div class="spec-mock">${statMock}</div>
+      </div>
+    </div>`;
+}
+
+function renderPopoverReference(){
+  const root = document.getElementById('pop-reference');
+  if(!root) return;
+
+  const theme = currentTheme();
+  const sbg = stageBg(theme);
+
+  /* ---- Anatomy ---- */
+  const heroPop = popPreviewHTML('filter','left',true,'Filter ▾');
+
+  const parts = [
+    {num:1, name:'Trigger',     note:'Any button — text, icon-only, or a link — that toggles the panel.', vis:'<button class="sg-btn" type="button" tabindex="-1">Filter ▾</button>'},
+    {num:2, name:'Panel',       note:'Floating surface anchored below the trigger, either left- or right-aligned.', vis:'<span class="spec-part__pill" style="border-radius:12px;width:60px;height:36px;background:var(--chrome-bg);border:1px solid var(--chrome-border)"></span>'},
+    {num:3, name:'Body content', note:'Title plus any content — description, controls, or a field.', vis:'<span style="font-weight:700;font-size:13px;color:var(--chrome-txt)">Title</span>'},
+    {num:4, name:'Footer',      note:'Optional. One or two actions, separated by a top border.', vis:'<span class="pop__apply" style="pointer-events:none;flex:none;padding:6px 12px">Apply</span>'},
+  ];
+  const partCards = parts.map(p=>`
+    <div class="spec-part">
+      <div class="spec-part__stage" style="background:${sbg}">${p.vis}</div>
+      <div class="spec-part__body">
+        <div class="spec-part__name"><span class="spec-part__num">${p.num}</span>${p.name}</div>
+        <div class="spec-part__note">${p.note}</div>
+      </div>
+    </div>`).join('');
+
+  /* ---- Placement & dimensions ---- (no size axis for this component) */
+  const dims = [
+    {name:'Panel',        val:'min-width 244px, 12px radius, 16px padding, 8px offset from trigger'},
+    {name:'Placement',    val:'Left-aligned by default; .pop__panel--right anchors to the trigger’s right edge'},
+    {name:'Title',        val:'13px / weight 700'},
+    {name:'Description',  val:'12.5px / weight 400, line-height 1.5'},
+    {name:'Row',           val:'13px, 7px vertical padding, space-between layout'},
+    {name:'Footer',        val:'8px gap, 12px top padding, top border, buttons split evenly'},
+  ];
+  const dimRows = dims.map(d=>`<tr><td class="dd-table__name">${d.name}</td><td>${d.val}</td></tr>`).join('');
+
+  /* ---- States ---- */
+  const states = [
+    {name:'Closed',        note:'Default — trigger visible, panel hidden and non-interactive.', html:'<button class="sg-btn" type="button" tabindex="-1">Filter ▾</button>'},
+    {name:'Open',          note:'Panel fades and slides in; outside-click or Escape closes it.',  html:popPreviewHTML('filter','left',true,'Filter ▾')},
+    {name:'No footer',     note:'Info content with nothing actionable to confirm.',                html:popPreviewHTML('info','left',false,'i')},
+    {name:'Right-anchored', note:'Panel flips to the trigger’s right edge near a screen edge.', html:popPreviewHTML('form','right',true,'Rename ▾')},
+  ];
+  const stateCells = states.map(s=>`
+    <div class="spec-cell">
+      <div class="spec-cell__stage" style="background:${sbg};align-items:flex-start;padding:${s.name==='Closed'?'18px 12px':'40px 12px 16px'}">${s.html}</div>
+      <div class="spec-cell__name">${s.name}</div>
+      <div class="spec-cell__desc">${s.note}</div>
+    </div>`).join('');
+
+  root.innerHTML = `
+    <div class="type-sub">
+      <div class="type-sub__title">Anatomy</div>
+      <div class="type-sub__desc">A popover is a trigger plus a floating panel: a title, a body, and an optional footer of one or two actions.</div>
+      <div class="cpg-section-outline">
+        <div class="spec-hero" style="background:${sbg};align-items:flex-start;padding-top:48px">${heroPop}</div>
+        <div class="spec-parts">${partCards}</div>
+      </div>
+    </div>
+
+    <div class="type-sub">
+      <div class="type-sub__title">Placement &amp; dimensions</div>
+      <div class="type-sub__desc">One size only &mdash; there's no size axis for this component. Placement is the one structural variant, and every dimension below is a fixed token.</div>
+      <div class="cpg-section-outline">
+        <div class="dd-table-wrap"><table class="dd-table">
+          <thead><tr><th>Part</th><th>Value</th></tr></thead>
+          <tbody>${dimRows}</tbody>
+        </table></div>
+      </div>
+    </div>
+
+    <div class="type-sub" style="margin-bottom:0">
+      <div class="type-sub__title">States</div>
+      <div class="type-sub__desc">Beyond closed and open, the footer is independently optional and the panel can anchor to either edge of its trigger.</div>
+      <div class="cpg-section-outline">
+        <div class="spec-grid">${stateCells}</div>
+      </div>
+    </div>`;
+}
+
+try { renderPopoverCodeTab(); } catch(e){ console.error('pop-code-tab',e); }
+try { renderPopoverPlayground(); } catch(e){ console.error('pop-playground',e); }
+try { renderPopoverPatterns(); } catch(e){ console.error('pop-patterns',e); }
+try { renderPopoverInSitu(); } catch(e){ console.error('pop-insitu',e); }
+try { renderPopoverReference(); } catch(e){ console.error('pop-reference',e); }
+
+function popTabSwitch(tab){
+  const nav = document.getElementById('pop-tabs-list');
+  if(!nav) return;
+  nav.querySelectorAll('.tab-item').forEach(btn=>btn.classList.toggle('on', btn.getAttribute('data-pop-tab')===tab));
+  document.querySelectorAll('#s-popover .tabs-panel[data-pop-panel]').forEach(p=>p.classList.toggle('on', p.getAttribute('data-pop-panel')===tab));
+}
+
+/* ============================================================
    AVATAR
    Same tabbed-page treatment as Pills (.sec--tabbed): Overview /
    Style / Code / Changelog, a shared-state playground rendered
@@ -15175,12 +15698,18 @@ function cbrTabSwitch(tab){
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.77.1';
+const SYSTEM_VERSION = '1.78.0';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.78.0', date:'2026-08-21', author:'Mo', title:'Popover rebuilt with the full Pills-style tabbed treatment', changes:[
+        ['added','Popover (s-popover) converted from a single static "Interactive" + "When to use" page into a full .sec--tabbed page — Overview / Style / Code / Changelog — matching Pills and Empty State: a "Try the component" playground (Content type Info/Filter/Form, Placement Left/Right, and Footer on/off controls, rendered into two synced mounts via shared popg state), a "Key patterns" showcase crossing content type with placement and footer (replacing Pills\' colour-variant slot, since Popover has no colour or size axis), 3 "In context" mockups (table-toolbar filter, right-anchored account menu, dashboard stat info popover), a Style tab (Anatomy, Placement & dimensions, States) and a Code tab with the .code-seg HTML/CSS · Blazor · React TSX switcher'],
+        ['added','New .pop__cancel (ghost secondary footer button) and .pop__input (compact text field) CSS classes so the Form content type has a real cancel/save footer and an editable field, alongside the existing .pop__apply'],
+        ['changed','The generic click-to-open/outside-click/Escape wiring switched from binding listeners on each .pop found at page load to a single document-level delegated handler, so it also wires up .pop instances the Popover playground renders dynamically — behaviour is unchanged for the existing static popovers'],
+        ['added','New ai-ctx tab regenerated via generate-ai-context-tab.mjs for the js-rendered builders (POP_CONTENT_TYPES, popTriggerLabel, popPanelBody, makePopoverHTML, makePopoverEl), moved from the end of the section into the new hero\'s sec-header-meta, matching Pills/Empty State'],
+      ]},
       {version:'1.77.1', date:'2026-08-19', author:'Mo', title:'Dropdown ai-ctx tab regenerated to drop leftover PR trivia', changes:[
         ['fixed','s-dropdown\'s ai-ctx tab note ended with a leftover sentence ("Moved to the .sec--tabbed layout... in this PR.") from an earlier change — regenerated via generate-ai-context-tab.mjs per rule 5; CSS/JS/usage content and contentHash unchanged'],
       ]},
@@ -16679,7 +17208,17 @@ const CHANGELOG = {
         ['added','Native range input with a brand fill and live value; continuous, stepped and disabled examples'],
       ]},
     ]},
-    {secId:'s-popover', name:'Popover', version:'1.0.1', entries:[
+    {secId:'s-popover', name:'Popover', version:'2.0.0', entries:[
+      {version:'2.0.0', date:'2026-08-21', author:'Mo', title:'Rebuilt with the full Pills-style tabbed treatment', changes:[
+        ['added','Converted from a single static "Interactive" + "When to use" page into a full .sec--tabbed page — Overview / Style / Code / Changelog'],
+        ['added','"Try the component" playground: Content type (Info/Filter/Form), Placement (Left/Right) and Footer (on/off) controls over a shared popg state, rendered into two synced mounts (Overview and Code tab)'],
+        ['added','"Key patterns" showcase on Overview — four cards crossing content type with placement and footer, replacing the colour-variant slot this component has no equivalent axis for'],
+        ['added','3 "In context" mockups: a filter popover on a table toolbar, a right-anchored account menu off a nav avatar, and an info popover explaining a dashboard stat'],
+        ['added','Style tab: Anatomy (Trigger / Panel / Body content / Footer), Placement & dimensions table, and a States grid — Closed / Open / No footer / Right-anchored'],
+        ['added','Code tab with HTML/CSS (popover.html), Blazor (DsPopover.razor) and React TSX (DsPopover.tsx) behind the segmented language switcher, reflecting the current playground configuration'],
+        ['added','New .pop__cancel and .pop__input CSS classes for the Form content type\'s Cancel/Save footer and editable field'],
+        ['changed','Click-to-open/outside-click/Escape wiring switched from per-element listeners bound at page load to a single document-level delegated handler, so dynamically-rendered playground popovers work identically to the static ones'],
+      ]},
       {version:'1.0.1', date:'2026-07-29', author:'Mo', title:'AI context tab added', changes:[
         ['added','AI context tab documenting the real, fully static .pop/.pop__* markup, plus its existing "When to use" Do/Dont guidance (3 do / 3 dont); notes the JS is generic open/close/outside-click/Escape wiring, not a markup builder'],
       ]},
@@ -19583,25 +20122,35 @@ function ddTabSwitch(tab){
   });
 })();
 
-/* Popover — click to open, outside-click / Escape to close */
+/* Popover — click to open, outside-click / Escape to close.
+   Event-delegated on document (rather than bound per-.pop at load time) so
+   it also wires up .pop instances rendered later by the Popover playground. */
 (function(){
-  var pops = Array.prototype.slice.call(document.querySelectorAll('.pop'));
-  if(!pops.length) return;
-  function closeAll(except){ pops.forEach(function(p){ if(p !== except) p.classList.remove('is-open'); }); }
-  pops.forEach(function(p){
-    var trig = p.querySelector('[data-pop]');
-    if(trig) trig.addEventListener('click', function(e){
-      e.stopPropagation();
-      var open = p.classList.contains('is-open');
-      closeAll();
-      if(!open) p.classList.add('is-open');
-    });
-    var panel = p.querySelector('.pop__panel');
-    if(panel) panel.addEventListener('click', function(e){ e.stopPropagation(); });
-    var closeBtn = p.querySelector('[data-pop-close]');
-    if(closeBtn) closeBtn.addEventListener('click', function(){ p.classList.remove('is-open'); });
+  function closeAll(except){
+    document.querySelectorAll('.pop.is-open').forEach(function(p){ if(p !== except) p.classList.remove('is-open'); });
+  }
+  document.addEventListener('click', function(e){
+    var closeBtn = e.target.closest && e.target.closest('[data-pop-close]');
+    if(closeBtn){
+      var pc = closeBtn.closest('.pop');
+      if(pc) pc.classList.remove('is-open');
+      return;
+    }
+    var trig = e.target.closest && e.target.closest('[data-pop]');
+    if(trig){
+      var p = trig.closest('.pop');
+      if(p){
+        e.stopPropagation();
+        var open = p.classList.contains('is-open');
+        closeAll(p);
+        p.classList.toggle('is-open', !open);
+        return;
+      }
+    }
+    var panel = e.target.closest && e.target.closest('.pop__panel');
+    if(panel){ e.stopPropagation(); return; }
+    closeAll();
   });
-  document.addEventListener('click', function(){ closeAll(); });
   document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeAll(); });
 })();
 
