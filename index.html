@@ -5506,7 +5506,7 @@ body.home .main{max-width:none;margin:0;padding:0}
       <div class="sec__head">
         <h1 class="sec__title">Accordion</h1>
         <div class="sec-header-meta">
-          <span class="comp-ver-badge" style="margin-left:0">v1.2.3</span>
+          <span class="comp-ver-badge" style="margin-left:0">v1.2.4</span>
           <details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-accordion">
@@ -5613,7 +5613,7 @@ body.home .main{max-width:none;margin:0;padding:0}
       <div class="sec__head">
         <h1 class="sec__title">Alert</h1>
         <div class="sec-header-meta">
-          <span class="comp-ver-badge" style="margin-left:0">v1.2.0</span>
+          <span class="comp-ver-badge" style="margin-left:0">v1.2.1</span>
           <details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-alert">
@@ -5911,7 +5911,7 @@ body.home .main{max-width:none;margin:0;padding:0}
       <div class="sec__head">
         <h1 class="sec__title">Breadcrumb</h1>
         <div class="sec-header-meta">
-          <span class="comp-ver-badge" style="margin-left:0">v1.1.0</span>
+          <span class="comp-ver-badge" style="margin-left:0">v1.1.1</span>
           <details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-breadcrumb">
@@ -7405,7 +7405,7 @@ body.home .main{max-width:none;margin:0;padding:0}
       <div class="sec__head">
         <h1 class="sec__title">Carousel</h1>
         <div class="sec-header-meta">
-          <span class="comp-ver-badge" style="margin-left:0">v1.1.0</span>
+          <span class="comp-ver-badge" style="margin-left:0">v1.1.1</span>
 <details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-carousel">
@@ -8051,6 +8051,20 @@ function toggleTheme() {
   try { if(typeof renderBshInSitu==='function' && document.getElementById('bsh-insitu')) renderBshInSitu(); } catch(e){}
   try { if(typeof renderBshReference==='function' && document.getElementById('bsh-reference')) renderBshReference(); } catch(e){}
   try { if(typeof renderAccordionPlayground==='function' && document.getElementById('acc-playground')) renderAccordionPlayground(); } catch(e){}
+  try { if(typeof renderAccordionVariants==='function' && document.getElementById('acc-variants')) renderAccordionVariants(); } catch(e){}
+  try { if(typeof renderAccordionInSitu==='function' && document.getElementById('acc-insitu')) renderAccordionInSitu(); } catch(e){}
+  try { if(typeof renderAccordionReference==='function' && document.getElementById('acc-reference')) renderAccordionReference(); } catch(e){}
+  try { if(typeof renderAlertPlayground==='function' && document.getElementById('alrt-playground')) renderAlertPlayground(); } catch(e){}
+  try { if(typeof renderAlertVariants==='function' && document.getElementById('alrt-variants')) renderAlertVariants(); } catch(e){}
+  try { if(typeof renderAlertInSitu==='function' && document.getElementById('alrt-insitu')) renderAlertInSitu(); } catch(e){}
+  try { if(typeof renderAlertReference==='function' && document.getElementById('alrt-reference')) renderAlertReference(); } catch(e){}
+  try { if(typeof renderBreadcrumbPlayground==='function' && document.getElementById('bcr-playground')) renderBreadcrumbPlayground(); } catch(e){}
+  try { if(typeof renderBreadcrumbVariants==='function' && document.getElementById('bcr-variants')) renderBreadcrumbVariants(); } catch(e){}
+  try { if(typeof renderBreadcrumbInSitu==='function' && document.getElementById('bcr-insitu')) renderBreadcrumbInSitu(); } catch(e){}
+  try { if(typeof renderBreadcrumbReference==='function' && document.getElementById('bcr-reference')) renderBreadcrumbReference(); } catch(e){}
+  try { if(typeof renderCarPlayground==='function' && document.getElementById('car-playground')) renderCarPlayground(); } catch(e){}
+  try { if(typeof renderCarInSitu==='function' && document.getElementById('car-insitu')) renderCarInSitu(); } catch(e){}
+  try { if(typeof renderCarReference==='function' && document.getElementById('car-reference')) renderCarReference(); } catch(e){}
   try { if(typeof renderDpPlayground==='function' && document.getElementById('dp-playground')) renderDpPlayground(); } catch(e){}
   try { if(typeof renderDpKeyVariants==='function' && document.getElementById('dp-keyvariants')) renderDpKeyVariants(); } catch(e){}
   try { if(typeof renderDpInSitu==='function' && document.getElementById('dp-insitu')) renderDpInSitu(); } catch(e){}
@@ -15760,12 +15774,15 @@ function cbrTabSwitch(tab){
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.78.1';
+const SYSTEM_VERSION = '1.79.0';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.79.0', date:'2026-08-21', author:'Mo', title:'Fixed dark-mode toggle gaps in Accordion, Alert, Breadcrumb and Carousel', changes:[
+        ['fixed','toggleTheme() was missing the re-render calls for Alert (all 3 mounts), Breadcrumb (all 3) and Carousel (all 3) entirely, and for Accordion\'s Variants/InSitu/Reference mounts (only its Playground was wired) — so each of these pages\' inline-styled stageBg() backgrounds stayed on their light-mode value after switching to dark, until the next full page reload. Added the 13 missing calls to toggleTheme(); confirmed live for all four that their Overview/Style stages now repaint immediately on toggle'],
+      ]},
       {version:'1.78.1', date:'2026-08-21', author:'Mo', title:'Lists dark-mode toggle fix', changes:[
         ['fixed','toggleTheme() never called renderListPlayground/renderListInSitu/renderListReference, so Lists\' Overview and Style tab stage backgrounds stayed light after switching to dark until the next full page load — the same pre-existing gap already affecting Alert, Breadcrumb, Carousel and part of Accordion, none of which were touched here; added the three missing calls for Lists'],
       ]},
@@ -17067,7 +17084,10 @@ const CHANGELOG = {
         ['added','Horizontal, vertical and labelled hairline dividers on the border token'],
       ]},
     ]},
-    {secId:'s-carousel', name:'Carousel', version:'1.1.0', entries:[
+    {secId:'s-carousel', name:'Carousel', version:'1.1.1', entries:[
+      {version:'1.1.1', date:'2026-08-21', author:'Mo', title:'Fixed dark-mode toggle not repainting the Overview stage', changes:[
+        ['fixed','renderCarPlayground/renderCarInSitu/renderCarReference were never added to toggleTheme(), so switching to dark left the Try-the-component stage on its light background until a full reload; added the three missing calls'],
+      ]},
       {version:'1.1.0', date:'2026-08-19', author:'Mo', title:'Full tabbed rebuild — Overview / Style / Code / Changelog', changes:[
         ['added','Overview tab: "Try the component" playground with Arrows on/off, Dots on/off and Slide count (2–5) controls, rendered into two synced mounts (Overview + Code tab) via shared crpg state, plus a "24/7 support" 5th slide added to CAR_SLIDE_CONTENT to support the new slide-count control'],
         ['added','Overview tab: 3 "In context" mockups — onboarding steps, a dashboard feature-promo banner, and a product image gallery'],
@@ -17122,7 +17142,10 @@ const CHANGELOG = {
         ['added','Pure-CSS hover/focus tooltip with four placements and an icon-button example'],
       ]},
     ]},
-    {secId:'s-accordion', name:'Accordion', version:'1.2.3', entries:[
+    {secId:'s-accordion', name:'Accordion', version:'1.2.4', entries:[
+      {version:'1.2.4', date:'2026-08-21', author:'Mo', title:'Fixed dark-mode toggle not repainting Variants/InSitu/Reference', changes:[
+        ['fixed','toggleTheme() only called renderAccordionPlayground — renderAccordionVariants/InSitu/Reference were missing, so those mounts kept their light-mode stage backgrounds after switching to dark until a full reload; added the three missing calls'],
+      ]},
       {version:'1.2.3', date:'2026-08-19', author:'Mo', title:'Chevron rebuilt as a DS icon glyph, fixing misalignment', changes:[
         ['fixed','.acc__chev was a plain "›" text character rotated +90deg/-90deg between collapsed/open, which visibly misaligned between the two states because the glyph\'s ink isn\'t centred in its em-box. Replaced it with the shared ICONS registry\'s "chevron-down" SVG (iconSvg(\'chevron-down\')) — a proper vector shape that rotates symmetrically'],
         ['changed','.acc__chev now rests unrotated (icon already points down) when collapsed and rotates 180deg to point up when open. Updated in makeAccEl (playground), ovAcc (Key variants/In-context), heroAcc (Style-tab hero swatch) and the header preview mock — every real accordion instance, not a one-off patch'],
@@ -17161,7 +17184,10 @@ const CHANGELOG = {
         ['added','Native <details> disclosure with single-open and multiple-open variants'],
       ]},
     ]},
-    {secId:'s-alert', name:'Alert', version:'1.2.0', entries:[
+    {secId:'s-alert', name:'Alert', version:'1.2.1', entries:[
+      {version:'1.2.1', date:'2026-08-21', author:'Mo', title:'Fixed dark-mode toggle not repainting the Overview/Style stages', changes:[
+        ['fixed','renderAlertPlayground/Variants/InSitu/Reference were never added to toggleTheme(), so switching to dark left every Alert mount on its light-mode stage background until a full reload; added the four missing calls'],
+      ]},
       {version:'1.2.0', date:'2026-08-07', author:'Helen', title:'Full Pills-page treatment: tabbed layout, playground, In context, Style & Code tab', changes:[
         ['changed','Page restructured from a flat single-panel section to the .sec--tabbed convention — hero with a live two-alert preview, and Overview / Style / Code / Changelog tabs, matching Pills/Switch/Tags/Badges'],
         ['added','Overview: interactive playground (apg state) with Severity and Dismiss controls plus editable Title/Message fields, driving a live .alrt built by makeAlrtEl()'],
@@ -17207,7 +17233,10 @@ const CHANGELOG = {
         ['added','Indeterminate loader in three sizes, plus in-button and inline treatments'],
       ]},
     ]},
-    {secId:'s-breadcrumb', name:'Breadcrumb', version:'1.1.0', entries:[
+    {secId:'s-breadcrumb', name:'Breadcrumb', version:'1.1.1', entries:[
+      {version:'1.1.1', date:'2026-08-21', author:'Mo', title:'Fixed dark-mode toggle not repainting the Overview/Style stages', changes:[
+        ['fixed','renderBreadcrumbPlayground/Variants/InSitu/Reference were never added to toggleTheme(), so switching to dark left every Breadcrumb mount on its light-mode stage background until a full reload; added the four missing calls'],
+      ]},
       {version:'1.1.0', date:'2026-08-11', author:'Helen', title:'Brought to the Pills-page tabbed treatment', changes:[
         ['changed','Converted #s-breadcrumb from a flat .sec section to .sec--tabbed (Overview / Style / Code / Changelog), with a two-column hero (title/version/AI-context left, live 3-step .bcr preview right)'],
         ['added','Overview: interactive playground (bcpg state) with a Trail depth control (2–5 steps, editable labels), driving a live .bcr built by makeBcrEl(); depth beyond 3 auto-collapses into an ellipsis rather than exposing a manual truncation toggle'],
