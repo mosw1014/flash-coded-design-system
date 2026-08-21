@@ -6425,7 +6425,7 @@ body.home .main{max-width:none;margin:0;padding:0}
       <div class="sec__head">
         <h1 class="sec__title">Popover</h1>
         <div class="sec-header-meta">
-          <span class="comp-ver-badge" style="margin-left:0">v2.0.1</span>
+          <span class="comp-ver-badge" style="margin-left:0">v2.0.2</span>
           <details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-popover">
@@ -11556,7 +11556,7 @@ function renderPopoverPatterns(){
       <div class="cpg-layout__desc">The same anchored-panel shape covers three jobs &mdash; info, filters, and a small form &mdash; anchored from either side of its trigger.</div>
     </div>
     <div class="cpg-section-block">
-      <div class="spec-grid">${cells}</div>
+      <div class="spec-grid" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr))">${cells}</div>
     </div>`;
 }
 
@@ -11611,7 +11611,7 @@ function renderPopoverInSitu(){
       <div class="cpg-layout__desc">The same anchored panel does three everyday jobs &mdash; filtering a table, opening an account menu, and explaining a stat.</div>
     </div>
     <div class="cpg-section-block">
-      <div class="spec-insitu-grid">
+      <div class="spec-insitu-grid spec-insitu-grid--2">
         <div class="spec-mock">${tableMock}</div>
         <div class="spec-mock">${acctMock}</div>
         <div class="spec-mock">${statMock}</div>
@@ -11694,7 +11694,7 @@ function renderPopoverReference(){
       <div class="type-sub__title">States</div>
       <div class="type-sub__desc">Beyond closed and open, the footer is independently optional and the panel can anchor to either edge of its trigger.</div>
       <div class="cpg-section-outline">
-        <div class="spec-grid">${stateCells}</div>
+        <div class="spec-grid" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr))">${stateCells}</div>
       </div>
     </div>`;
 }
@@ -15702,12 +15702,16 @@ function cbrTabSwitch(tab){
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.78.1';
+const SYSTEM_VERSION = '1.78.2';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.78.2', date:'2026-08-21', author:'Mo', title:'Popover content overflowing its narrow grid cells', changes:[
+        ['fixed','Key patterns and Style-tab States grids used the shared .spec-grid default of minmax(120px,1fr) columns, far narrower than the real .pop__panel\'s 244px min-width — panels were clipped/crushed against the cell edge; both grids now use minmax(260px,1fr)'],
+        ['fixed','"In context" mockups used the plain 3-column .spec-insitu-grid, also too narrow for a 244px-wide panel — switched to the 2-column .spec-insitu-grid--2 modifier (already used by Accordion) so each mock has enough room'],
+      ]},
       {version:'1.78.1', date:'2026-08-21', author:'Mo', title:'Popover dark mode and hero preview fixes', changes:[
         ['fixed','Popover\'s playground/Key patterns/In context/Style-tab stages stayed light-themed after the global dark-mode toggle, because none of renderPopoverPlayground/renderPopoverPatterns/renderPopoverInSitu/renderPopoverReference were wired into toggleTheme()\'s re-render list — added, matching every other tabbed component'],
         ['changed','Hero preview swapped from an absolute-positioned trigger+floating-panel mock (looked broken at the header\'s small scale) to the same stacked two-mk-card pattern already used by Dropdown\'s hero preview — a trigger-row card above a content card'],
@@ -17216,7 +17220,11 @@ const CHANGELOG = {
         ['added','Native range input with a brand fill and live value; continuous, stepped and disabled examples'],
       ]},
     ]},
-    {secId:'s-popover', name:'Popover', version:'2.0.1', entries:[
+    {secId:'s-popover', name:'Popover', version:'2.0.2', entries:[
+      {version:'2.0.2', date:'2026-08-21', author:'Mo', title:'Fixed content overflowing narrow grid cells', changes:[
+        ['fixed','Key patterns grid and the Style tab\'s States grid switched from the shared .spec-grid default (minmax(120px,1fr)) to minmax(260px,1fr), so the real 244px-min-width .pop__panel no longer gets clipped against a too-narrow cell'],
+        ['fixed','"In context" mockups switched from the plain 3-column .spec-insitu-grid to the 2-column .spec-insitu-grid--2 modifier so each mock has enough width for a full-size popover panel'],
+      ]},
       {version:'2.0.1', date:'2026-08-21', author:'Mo', title:'Dark mode and hero preview fixes', changes:[
         ['fixed','Playground, Key patterns, In context and Style-tab stages now re-render on the global theme toggle — added the four render calls to toggleTheme() so they stop showing light-theme colours after switching to dark'],
         ['changed','Hero preview rebuilt as two stacked mk-card blocks (trigger row + panel content), matching Dropdown\'s hero preview convention, instead of an absolute-positioned floating panel that read as broken at the header\'s small scale'],
