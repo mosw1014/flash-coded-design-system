@@ -6012,68 +6012,31 @@ body.home .main{max-width:none;margin:0;padding:0}
     <!-- ============================================================
          PAGINATION
     ============================================================ -->
-    <section class="sec" id="s-pagination">
+    <section class="sec sec--tabbed" id="s-pagination">
+      <div class="sec-hero">
       <div class="sec__head">
-        <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Pagination <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.1</span></h1>
-        <p class="sec__desc">Page-by-page navigation through a large set of results. The active page is marked with the solid primary (black) tile; long ranges collapse to an ellipsis so the control stays compact.</p>
-      </div>
-      <div class="type-sub">
-        <div class="type-sub__title">Interactive</div>
-        <div class="type-sub__desc">Click a page or the arrows &mdash; the active page updates and the visible range recalculates around it. Prev/Next disable at the ends.</div>
-        <div class="sg-stage sg-stage--center" style="display:flex;justify-content:center"><div id="pag-play"></div></div>
-      </div>
-      <div class="type-sub">
-        <div class="type-sub__title">Compact</div>
-        <div class="type-sub__desc">Where horizontal space is scarce &mdash; toolbars, cards, mobile &mdash; pair the arrows with a plain &ldquo;Page X of Y&rdquo; status.</div>
-        <div class="sg-stage" style="display:flex;justify-content:center">
-          <div class="pag">
-            <button class="pag__btn" type="button" disabled>&lsaquo;</button>
-            <span class="pag__status">Page <b style="color:var(--chrome-txt)">1</b> of 24</span>
-            <button class="pag__btn" type="button">&rsaquo;</button>
-          </div>
-        </div>
-      </div>
-      <div class="type-sub">
-        <div class="type-sub__title">When to use</div>
-        <div class="type-sub__desc">Pagination gives users control and a sense of scale. For continuous feeds, infinite scroll may fit better.</div>
-        <div class="sel-usage">
-          <div class="sel-usage__card">
-            <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
-            <ul class="sel-usage__list">
-              <li>Use for large, countable result sets and data tables.</li>
-              <li>Always show the current page and keep Prev/Next reachable.</li>
-              <li>Collapse long ranges with an ellipsis around the active page.</li>
-            </ul>
-          </div>
-          <div class="sel-usage__card">
-            <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don&rsquo;t</div>
-            <ul class="sel-usage__list">
-              <li>Don&rsquo;t paginate a handful of items &mdash; just show them.</li>
-              <li>Don&rsquo;t render dozens of raw page numbers with no truncation.</li>
-              <li>Don&rsquo;t mix pagination and infinite scroll in the same list.</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <details class="ai-ctx">
+        <h1 class="sec__title">Pagination</h1>
+        <div class="sec-header-meta">
+          <span class="comp-ver-badge" style="margin-left:0">v2.0.0</span>
+          <details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-pagination">
 {
   "status": "js-rendered",
   "builderFunctions": [
-    "pageList",
-    "render"
+    "PAG_LAYOUTS",
+    "pagPageList",
+    "makePaginationHTML",
+    "makePaginationEl"
   ],
   "realClasses": [
     ".pag",
     ".pag__btn",
-    ".pag__btn--is-active",
     ".pag__ellipsis",
     ".pag__status"
   ],
   "css": "/* ---- Pagination ---- */\n.pag { display:inline-flex;align-items:center;gap:6px;flex-wrap:wrap }\n.pag__btn { min-width:34px;height:34px;padding:0 11px;display:inline-flex;align-items:center;justify-content:center;border:1px solid var(--chrome-border);background:var(--chrome-bg);color:var(--chrome-txt);border-radius:8px;font-size:13px;font-weight:600;font-family:inherit;cursor:pointer;transition:background .15s,border-color .15s,color .15s }\n.pag__btn:hover:not(:disabled):not(.is-active) { background:var(--chrome-hover) }\n.pag__btn.is-active { background:var(--color-btn-s-bg);border-color:var(--color-btn-s-bg);color:var(--color-btn-s-txt);cursor:default }\n.pag__btn:disabled { opacity:.4;cursor:not-allowed }\n.pag__ellipsis { min-width:22px;text-align:center;color:var(--chrome-muted) }\n.pag__status { font-size:13px;color:var(--chrome-muted) }",
-  "js": "function pageList(c,t){\n    var out=[], range=[];\n    for(var i=Math.max(2,c-1); i&lt;=Math.min(t-1,c+1); i++) range.push(i);\n    out.push(1);\n    if(range.length &amp;&amp; range[0] &gt; 2) out.push('e');\n    range.forEach(function(p){ out.push(p); });\n    if(range.length &amp;&amp; range[range.length-1] &lt; t-1) out.push('e');\n    if(t&gt;1) out.push(t);\n    return out;\n  }\n\nfunction render(){\n    var html = '&lt;div class=\"pag\"&gt;';\n    html += '&lt;button class=\"pag__btn\" type=\"button\" data-go=\"prev\"'+(cur===1?' disabled':'')+' aria-label=\"Previous page\"&gt;&amp;lsaquo;&lt;/button&gt;';\n    pageList(cur,total).forEach(function(p){\n      if(p==='e') html += '&lt;span class=\"pag__ellipsis\"&gt;&amp;hellip;&lt;/span&gt;';\n      else html += '&lt;button class=\"pag__btn'+(p===cur?' is-active':'')+'\" type=\"button\" data-go=\"'+p+'\"'+(p===cur?' aria-current=\"page\"':'')+'&gt;'+p+'&lt;/button&gt;';\n    });\n    html += '&lt;button class=\"pag__btn\" type=\"button\" data-go=\"next\"'+(cur===total?' disabled':'')+' aria-label=\"Next page\"&gt;&amp;rsaquo;&lt;/button&gt;';\n    html += '&lt;/div&gt;';\n    el.innerHTML = html;\n    Array.prototype.forEach.call(el.querySelectorAll('[data-go]'), function(b){\n      b.addEventListener('click', function(){\n        var g = b.getAttribute('data-go');\n        if(g==='prev') cur = Math.max(1, cur-1);\n        else if(g==='next') cur = Math.min(total, cur+1);\n        else cur = parseInt(g,10);\n        render();\n      });\n    });\n  }",
+  "js": "const PAG_LAYOUTS = [\n  {key:'full',    label:'Full',    use:'Numbered pages, truncated with an ellipsis — data tables, search results'},\n  {key:'compact', label:'Compact', use:'A plain \"Page X of Y\" status — toolbars, cards, mobile, tight widths'},\n];\n\nfunction pagPageList(c,t){\n  const out = [], range = [];\n  for(let i=Math.max(2,c-1); i&lt;=Math.min(t-1,c+1); i++) range.push(i);\n  out.push(1);\n  if(range.length &amp;&amp; range[0] &gt; 2) out.push('e');\n  range.forEach(p=&gt;out.push(p));\n  if(range.length &amp;&amp; range[range.length-1] &lt; t-1) out.push('e');\n  if(t&gt;1) out.push(t);\n  return out;\n}\n\nfunction makePaginationHTML(cur, total, layout){\n  const prev = `&lt;button class=\"pag__btn\" type=\"button\"${cur===1?' disabled':''} aria-label=\"Previous page\"&gt;&amp;lsaquo;&lt;/button&gt;`;\n  const next = `&lt;button class=\"pag__btn\" type=\"button\"${cur===total?' disabled':''} aria-label=\"Next page\"&gt;&amp;rsaquo;&lt;/button&gt;`;\n  if(layout==='compact'){\n    return `&lt;div class=\"pag\"&gt;${prev}&lt;span class=\"pag__status\"&gt;Page &lt;b style=\"color:var(--chrome-txt)\"&gt;${cur}&lt;/b&gt; of ${total}&lt;/span&gt;${next}&lt;/div&gt;`;\n  }\n  let mid = '';\n  pagPageList(cur, total).forEach(p=&gt;{\n    mid += p==='e'\n      ? `&lt;span class=\"pag__ellipsis\"&gt;&amp;hellip;&lt;/span&gt;`\n      : `&lt;button class=\"pag__btn${p===cur?' is-active':''}\" type=\"button\"${p===cur?' aria-current=\"page\"':''}&gt;${p}&lt;/button&gt;`;\n  });\n  return `&lt;div class=\"pag\"&gt;${prev}${mid}${next}&lt;/div&gt;`;\n}\n\nfunction makePaginationEl(){\n  const wrap = document.createElement('div');\n  wrap.className = 'pag';\n\n  const prev = document.createElement('button');\n  prev.className = 'pag__btn'; prev.type = 'button'; prev.setAttribute('aria-label','Previous page');\n  prev.innerHTML = '&amp;lsaquo;'; prev.disabled = pgg.cur === 1;\n  prev.onclick = ()=&gt;{ pgg.cur = Math.max(1, pgg.cur-1); pggRefresh(); };\n  wrap.appendChild(prev);\n\n  if(pgg.layout === 'compact'){\n    const status = document.createElement('span');\n    status.className = 'pag__status';\n    status.innerHTML = `Page &lt;b style=\"color:var(--chrome-txt)\"&gt;${pgg.cur}&lt;/b&gt; of ${pgg.total}`;\n    wrap.appendChild(status);\n  } else {\n    pagPageList(pgg.cur, pgg.total).forEach(p=&gt;{\n      if(p === 'e'){\n        const e = document.createElement('span');\n        e.className = 'pag__ellipsis'; e.innerHTML = '&amp;hellip;';\n        wrap.appendChild(e);\n      } else {\n        const b = document.createElement('button');\n        b.className = 'pag__btn' + (p===pgg.cur ? ' is-active' : '');\n        b.type = 'button';\n        if(p === pgg.cur) b.setAttribute('aria-current','page');\n        b.textContent = p;\n        b.onclick = ()=&gt;{ pgg.cur = p; pggRefresh(); };\n        wrap.appendChild(b);\n      }\n    });\n  }\n\n  const next = document.createElement('button');\n  next.className = 'pag__btn'; next.type = 'button'; next.setAttribute('aria-label','Next page');\n  next.innerHTML = '&amp;rsaquo;'; next.disabled = pgg.cur === pgg.total;\n  next.onclick = ()=&gt;{ pgg.cur = Math.min(pgg.total, pgg.cur+1); pggRefresh(); };\n  wrap.appendChild(next);\n\n  return wrap;\n}",
   "usage": {
     "do": [
       "Use for large, countable result sets and data tables.",
@@ -6081,15 +6044,95 @@ body.home .main{max-width:none;margin:0;padding:0}
       "Collapse long ranges with an ellipsis around the active page."
     ],
     "dont": [
-      "Don’t paginate a handful of items — just show them.",
-      "Don’t render dozens of raw page numbers with no truncation.",
-      "Don’t mix pagination and infinite scroll in the same list."
+      "Don't paginate a handful of items — just show them.",
+      "Don't render dozens of raw page numbers with no truncation.",
+      "Don't mix pagination and infinite scroll in the same list."
     ]
   },
-  "contentHash": "4d4aa13cfae2c2d953c6d6a2910d0237e629fcad43430d420b09b39a560bf78c"
+  "contentHash": "ee17a1af87109c8c4e7bb6c26cc4efedcc7df84c66b6f4b8ac78a14681b37a55",
+  "note": "makePaginationHTML is the minimal real-markup builder (cur+total+layout -&gt; .pag HTML string); makePaginationEl is the fuller playground version reading shared pgg state and wiring click handlers. PAG_LAYOUTS drives the Overview tab's Key layouts showcase (no colour/size axis exists for this component, unlike Pills). pggRefresh/getPaginationCodeHTML/renderPagPlayground/renderPagReference/renderPagLayouts/renderPagInSitu are doc-site-only playground plumbing, excluded."
 }
   </pre>
 </details>
+        </div>
+      </div>
+      <div class="sec-hero__preview"><div class="mk"><div class="pag" style="gap:4px">
+        <button class="pag__btn" type="button" style="min-width:24px;height:24px;font-size:11px;padding:0;border-radius:6px">&lsaquo;</button>
+        <button class="pag__btn" type="button" style="min-width:24px;height:24px;font-size:11px;padding:0;border-radius:6px">1</button>
+        <button class="pag__btn is-active" type="button" style="min-width:24px;height:24px;font-size:11px;padding:0;border-radius:6px">2</button>
+        <button class="pag__btn" type="button" style="min-width:24px;height:24px;font-size:11px;padding:0;border-radius:6px">3</button>
+        <span class="pag__ellipsis" style="min-width:14px;font-size:11px">&hellip;</span>
+        <button class="pag__btn" type="button" style="min-width:24px;height:24px;font-size:11px;padding:0;border-radius:6px">8</button>
+        <button class="pag__btn" type="button" style="min-width:24px;height:24px;font-size:11px;padding:0;border-radius:6px">&rsaquo;</button>
+      </div></div></div>
+      </div>
+      <div class="tabs-list sec-tabs" id="pag-tabs-list">
+        <button type="button" class="tab-item on" data-pag-tab="overview" onclick="pagTabSwitch('overview')"><span class="tab-item__inner"><span class="tab-item__label">Overview</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-pag-tab="style" onclick="pagTabSwitch('style')"><span class="tab-item__inner"><span class="tab-item__label">Style</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-pag-tab="code" onclick="pagTabSwitch('code')"><span class="tab-item__inner"><span class="tab-item__label">Code</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-pag-tab="changelog" onclick="pagTabSwitch('changelog')"><span class="tab-item__inner"><span class="tab-item__label">Changelog</span></span><span class="tab-item__line"></span></button>
+      </div>
+      <div class="tabs-panel on" data-pag-panel="overview">
+        <div id="pag-playground" class="type-sub"></div>
+        <div id="pag-layouts" class="type-sub"></div>
+        <div id="pag-insitu" class="type-sub"></div>
+        <div class="type-sub cpg-variants" id="pag-usage">
+          <div class="cpg-section-heading">
+            <div class="cpg-layout__title">Do's and don'ts</div>
+            <div class="cpg-layout__desc">Pagination gives people control and a sense of scale &mdash; for continuous feeds, infinite scroll may fit better.</div>
+          </div>
+          <div class="cpg-section-block">
+            <div class="sel-usage">
+              <div class="sel-usage__card">
+                <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
+                <ul class="sel-usage__list">
+                  <li>Use for large, countable result sets and data tables.</li>
+                  <li>Always show the current page and keep Prev/Next reachable.</li>
+                  <li>Collapse long ranges with an ellipsis around the active page.</li>
+                </ul>
+                <div class="spec-usage-demo">
+                  <div class="pag" style="gap:4px">
+                    <button class="pag__btn" type="button" style="min-width:26px;height:26px;font-size:11.5px;padding:0" disabled>&lsaquo;</button>
+                    <button class="pag__btn is-active" type="button" style="min-width:26px;height:26px;font-size:11.5px;padding:0">1</button>
+                    <button class="pag__btn" type="button" style="min-width:26px;height:26px;font-size:11.5px;padding:0">2</button>
+                    <button class="pag__btn" type="button" style="min-width:26px;height:26px;font-size:11.5px;padding:0">3</button>
+                    <span class="pag__ellipsis" style="min-width:16px;font-size:11.5px">&hellip;</span>
+                    <button class="pag__btn" type="button" style="min-width:26px;height:26px;font-size:11.5px;padding:0">24</button>
+                    <button class="pag__btn" type="button" style="min-width:26px;height:26px;font-size:11.5px;padding:0">&rsaquo;</button>
+                  </div>
+                </div>
+              </div>
+              <div class="sel-usage__card">
+                <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don't</div>
+                <ul class="sel-usage__list">
+                  <li>Don't paginate a handful of items &mdash; just show them.</li>
+                  <li>Don't render dozens of raw page numbers with no truncation.</li>
+                  <li>Don't mix pagination and infinite scroll in the same list.</li>
+                </ul>
+                <div class="spec-usage-demo">
+                  <div class="pag" style="gap:4px;flex-wrap:wrap;max-width:280px">
+                    <button class="pag__btn" type="button" style="min-width:26px;height:26px;font-size:11.5px;padding:0" disabled>&lsaquo;</button>
+                    <button class="pag__btn is-active" type="button" style="min-width:26px;height:26px;font-size:11.5px;padding:0">1</button>
+                    <button class="pag__btn" type="button" style="min-width:26px;height:26px;font-size:11.5px;padding:0">2</button>
+                    <button class="pag__btn" type="button" style="min-width:26px;height:26px;font-size:11.5px;padding:0">3</button>
+                    <button class="pag__btn" type="button" style="min-width:26px;height:26px;font-size:11.5px;padding:0">4</button>
+                    <button class="pag__btn" type="button" style="min-width:26px;height:26px;font-size:11.5px;padding:0">5</button>
+                    <button class="pag__btn" type="button" style="min-width:26px;height:26px;font-size:11.5px;padding:0">6</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tabs-panel" data-pag-panel="style">
+        <div id="pag-reference" class="type-sub spec-panel spec-stack"></div>
+      </div>
+      <div class="tabs-panel" data-pag-panel="code">
+        <div id="pag-code-playground" class="type-sub spec-panel spec-code-playground"></div>
+        <div id="pag-code-tab" class="type-sub spec-panel"></div>
+      </div>
+      <div class="tabs-panel" data-pag-panel="changelog" id="pag-changelog-panel"></div>
     </section>
 
     <!-- ============================================================
@@ -8035,6 +8078,10 @@ function toggleTheme() {
   try { if(typeof renderEmptyStateScenarios==='function' && document.getElementById('es-scenarios')) renderEmptyStateScenarios(); } catch(e){}
   try { if(typeof renderEmptyStateInSitu==='function' && document.getElementById('es-insitu')) renderEmptyStateInSitu(); } catch(e){}
   try { if(typeof renderEmptyStateReference==='function' && document.getElementById('es-reference')) renderEmptyStateReference(); } catch(e){}
+  try { if(typeof renderPagPlayground==='function' && document.getElementById('pag-playground')) renderPagPlayground(); } catch(e){}
+  try { if(typeof renderPagLayouts==='function' && document.getElementById('pag-layouts')) renderPagLayouts(); } catch(e){}
+  try { if(typeof renderPagInSitu==='function' && document.getElementById('pag-insitu')) renderPagInSitu(); } catch(e){}
+  try { if(typeof renderPagReference==='function' && document.getElementById('pag-reference')) renderPagReference(); } catch(e){}
   try { if(typeof renderAvatarPlayground==='function' && document.getElementById('avatar-playground')) renderAvatarPlayground(); } catch(e){}
   try { if(typeof renderAvatarKeyTypes==='function' && document.getElementById('avatar-keytypes')) renderAvatarKeyTypes(); } catch(e){}
   try { if(typeof renderAvatarInSitu==='function' && document.getElementById('avatar-insitu')) renderAvatarInSitu(); } catch(e){}
@@ -11159,6 +11206,505 @@ function esTabSwitch(tab){
   if(!nav) return;
   nav.querySelectorAll('.tab-item').forEach(btn=>btn.classList.toggle('on', btn.getAttribute('data-es-tab')===tab));
   document.querySelectorAll('#s-empty-state .tabs-panel[data-es-panel]').forEach(p=>p.classList.toggle('on', p.getAttribute('data-es-panel')===tab));
+}
+
+/* ============================================================
+   PAGINATION
+   Same tabbed-page treatment as Pills (.sec--tabbed): Overview /
+   Style / Code / Changelog, a shared-state playground rendered
+   into two mounts, and a three-language code panel. Pagination
+   has no colour or size axis, so "Key variants" is replaced by
+   "Key layouts" — Full (numbered, ellipsis-truncated) vs Compact
+   ("Page X of Y"), the two layouts this component already ships.
+============================================================ */
+const PAG_LAYOUTS = [
+  {key:'full',    label:'Full',    use:'Numbered pages, truncated with an ellipsis — data tables, search results'},
+  {key:'compact', label:'Compact', use:'A plain "Page X of Y" status — toolbars, cards, mobile, tight widths'},
+];
+
+function pagPageList(c,t){
+  const out = [], range = [];
+  for(let i=Math.max(2,c-1); i<=Math.min(t-1,c+1); i++) range.push(i);
+  out.push(1);
+  if(range.length && range[0] > 2) out.push('e');
+  range.forEach(p=>out.push(p));
+  if(range.length && range[range.length-1] < t-1) out.push('e');
+  if(t>1) out.push(t);
+  return out;
+}
+
+/* Minimal real-markup builder: cur+total+layout -> .pag HTML string. */
+function makePaginationHTML(cur, total, layout){
+  const prev = `<button class="pag__btn" type="button"${cur===1?' disabled':''} aria-label="Previous page">&lsaquo;</button>`;
+  const next = `<button class="pag__btn" type="button"${cur===total?' disabled':''} aria-label="Next page">&rsaquo;</button>`;
+  if(layout==='compact'){
+    return `<div class="pag">${prev}<span class="pag__status">Page <b style="color:var(--chrome-txt)">${cur}</b> of ${total}</span>${next}</div>`;
+  }
+  let mid = '';
+  pagPageList(cur, total).forEach(p=>{
+    mid += p==='e'
+      ? `<span class="pag__ellipsis">&hellip;</span>`
+      : `<button class="pag__btn${p===cur?' is-active':''}" type="button"${p===cur?' aria-current="page"':''}>${p}</button>`;
+  });
+  return `<div class="pag">${prev}${mid}${next}</div>`;
+}
+
+/* ── PAGINATION PLAYGROUND ── */
+let pgg = { layout:'full', cur:6, total:24, theme:'light' };
+
+function makePaginationEl(){
+  const wrap = document.createElement('div');
+  wrap.className = 'pag';
+
+  const prev = document.createElement('button');
+  prev.className = 'pag__btn'; prev.type = 'button'; prev.setAttribute('aria-label','Previous page');
+  prev.innerHTML = '&lsaquo;'; prev.disabled = pgg.cur === 1;
+  prev.onclick = ()=>{ pgg.cur = Math.max(1, pgg.cur-1); pggRefresh(); };
+  wrap.appendChild(prev);
+
+  if(pgg.layout === 'compact'){
+    const status = document.createElement('span');
+    status.className = 'pag__status';
+    status.innerHTML = `Page <b style="color:var(--chrome-txt)">${pgg.cur}</b> of ${pgg.total}`;
+    wrap.appendChild(status);
+  } else {
+    pagPageList(pgg.cur, pgg.total).forEach(p=>{
+      if(p === 'e'){
+        const e = document.createElement('span');
+        e.className = 'pag__ellipsis'; e.innerHTML = '&hellip;';
+        wrap.appendChild(e);
+      } else {
+        const b = document.createElement('button');
+        b.className = 'pag__btn' + (p===pgg.cur ? ' is-active' : '');
+        b.type = 'button';
+        if(p === pgg.cur) b.setAttribute('aria-current','page');
+        b.textContent = p;
+        b.onclick = ()=>{ pgg.cur = p; pggRefresh(); };
+        wrap.appendChild(b);
+      }
+    });
+  }
+
+  const next = document.createElement('button');
+  next.className = 'pag__btn'; next.type = 'button'; next.setAttribute('aria-label','Next page');
+  next.innerHTML = '&rsaquo;'; next.disabled = pgg.cur === pgg.total;
+  next.onclick = ()=>{ pgg.cur = Math.min(pgg.total, pgg.cur+1); pggRefresh(); };
+  wrap.appendChild(next);
+
+  return wrap;
+}
+
+function getPaginationCodeHTML(){
+  const cls = pgg.layout==='compact' ? 'pag pag--compact' : 'pag';
+  const prevLine = `<span class="code-kw">&#60;button</span> <span class="code-cls">class</span>=<span class="code-val">"pag__btn"</span> <span class="code-attr">type</span>=<span class="code-val">"button"</span>${pgg.cur===1?' <span class="code-attr">disabled</span>':''} <span class="code-attr">aria-label</span>=<span class="code-val">"Previous page"</span><span class="code-kw">>&#8249;&#60;/button></span>`;
+  let midLines;
+  if(pgg.layout==='compact'){
+    midLines = `\n  <span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"pag__status"</span><span class="code-kw">></span>Page <span class="code-kw">&#60;b></span>${pgg.cur}<span class="code-kw">&#60;/b></span> of ${pgg.total}<span class="code-kw">&#60;/span></span>`;
+  } else {
+    midLines = pagPageList(pgg.cur, pgg.total).map(p=>{
+      if(p==='e') return `\n  <span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"pag__ellipsis"</span><span class="code-kw">>&#8230;&#60;/span></span>`;
+      return `\n  <span class="code-kw">&#60;button</span> <span class="code-cls">class</span>=<span class="code-val">"pag__btn${p===pgg.cur?' is-active':''}"</span> <span class="code-attr">type</span>=<span class="code-val">"button"</span>${p===pgg.cur?' <span class="code-attr">aria-current</span>=<span class="code-val">"page"</span>':''}<span class="code-kw">>${p}&#60;/button></span>`;
+    }).join('');
+  }
+  const nextLine = `<span class="code-kw">&#60;button</span> <span class="code-cls">class</span>=<span class="code-val">"pag__btn"</span> <span class="code-attr">type</span>=<span class="code-val">"button"</span>${pgg.cur===pgg.total?' <span class="code-attr">disabled</span>':''} <span class="code-attr">aria-label</span>=<span class="code-val">"Next page"</span><span class="code-kw">>&#8250;&#60;/button></span>`;
+  return `<span class="code-cm">/* Flash · ${cap(pgg.theme)} · ${cap(pgg.layout)} pagination */</span>
+<span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"${cls}"</span><span class="code-kw">></span>
+  ${prevLine}${midLines}
+  ${nextLine}
+<span class="code-kw">&#60;/div></span>`;
+}
+
+/* ── CODE PANEL LANGUAGES ──
+   HTML/CSS is the source of truth (real .pag markup). Blazor and React TSX
+   are illustrative wrappers over the same classes, so the layout/current
+   page/total pages stay the only things a consumer ports. */
+const PAG_LANGS = [
+  {key:'html',   label:'HTML / CSS', file:'pagination.html'},
+  {key:'blazor', label:'Blazor',     file:'DsPagination.razor'},
+  {key:'tsx',    label:'React TSX',  file:'DsPagination.tsx'},
+];
+let pagLang = 'html';
+
+function getPaginationCodeBlazor(){
+  const layoutPascal = cap(pgg.layout);
+  return `<span class="code-cm">@* DsPagination.razor — usage *@</span>
+<span class="code-kw">&#60;DsPagination</span> <span class="code-attr">Layout</span>=<span class="code-val">"PaginationLayout.${layoutPascal}"</span>
+              <span class="code-attr">Page</span>=<span class="code-val">"${pgg.cur}"</span>
+              <span class="code-attr">TotalPages</span>=<span class="code-val">"${pgg.total}"</span>
+              <span class="code-attr">OnPageChange</span>=<span class="code-val">"HandlePageChange"</span> <span class="code-kw">/></span>
+
+<span class="code-cm">@* DsPagination.razor — component definition *@</span>
+<span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"pag"</span><span class="code-kw">></span>
+  <span class="code-kw">&#60;button</span> <span class="code-cls">class</span>=<span class="code-val">"pag__btn"</span> <span class="code-attr">disabled</span>=<span class="code-val">"@(Page==1)"</span> <span class="code-attr">@onclick</span>=<span class="code-val">"() => Go(Page-1)"</span><span class="code-kw">>&#8249;&#60;/button></span>
+  <span class="code-kw">@if</span> (Layout == PaginationLayout.Compact) {
+    <span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"pag__status"</span><span class="code-kw">></span>Page @Page of @TotalPages<span class="code-kw">&#60;/span></span>
+  } <span class="code-kw">else</span> {
+    <span class="code-kw">@foreach</span> (<span class="code-kw">var</span> p <span class="code-kw">in</span> PageList()) { <span class="code-cm">/* 1, e, cur-1..cur+1, e, total */</span> }
+  }
+  <span class="code-kw">&#60;button</span> <span class="code-cls">class</span>=<span class="code-val">"pag__btn"</span> <span class="code-attr">disabled</span>=<span class="code-val">"@(Page==TotalPages)"</span> <span class="code-attr">@onclick</span>=<span class="code-val">"() => Go(Page+1)"</span><span class="code-kw">>&#8250;&#60;/button></span>
+<span class="code-kw">&#60;/div></span>
+
+<span class="code-kw">@code</span> {
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> PaginationLayout Layout { get; set; } = PaginationLayout.Full;
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> <span class="code-cls">int</span> Page { get; set; } = 1;
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> <span class="code-cls">int</span> TotalPages { get; set; } = 1;
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> EventCallback&#60;<span class="code-cls">int</span>&#62; OnPageChange { get; set; }
+
+  <span class="code-kw">private void</span> Go(<span class="code-cls">int</span> p) { <span class="code-kw">if</span> (p &gt;= 1 &amp;&amp; p &lt;= TotalPages) OnPageChange.InvokeAsync(p); }
+}`;
+}
+
+function getPaginationCodeTSX(){
+  const usageProps = `layout=<span class="code-val">"${pgg.layout}"</span> page={${pgg.cur}} totalPages={${pgg.total}} onPageChange={setPage}`;
+  return `<span class="code-cm">// DsPagination.tsx</span>
+<span class="code-kw">import</span> React <span class="code-kw">from</span> <span class="code-val">'react'</span>;
+
+<span class="code-kw">type</span> <span class="code-cls">PaginationLayout</span> = <span class="code-val">'full'</span> | <span class="code-val">'compact'</span>;
+
+<span class="code-kw">interface</span> <span class="code-cls">DsPaginationProps</span> {
+  layout?: <span class="code-cls">PaginationLayout</span>;
+  page: <span class="code-cls">number</span>;
+  totalPages: <span class="code-cls">number</span>;
+  onPageChange: (page: <span class="code-cls">number</span>) => <span class="code-cls">void</span>;
+}
+
+<span class="code-cm">// 1, e(llipsis), the page either side of current, e, last</span>
+<span class="code-kw">function</span> pageList(cur: <span class="code-cls">number</span>, total: <span class="code-cls">number</span>): (<span class="code-cls">number</span> | <span class="code-val">'e'</span>)[] {
+  <span class="code-kw">const</span> out: (<span class="code-cls">number</span> | <span class="code-val">'e'</span>)[] = [<span class="code-val">1</span>];
+  <span class="code-kw">const</span> range = [];
+  <span class="code-kw">for</span> (<span class="code-kw">let</span> i = Math.max(<span class="code-val">2</span>, cur-<span class="code-val">1</span>); i &#60;= Math.min(total-<span class="code-val">1</span>, cur+<span class="code-val">1</span>); i++) range.push(i);
+  <span class="code-kw">if</span> (range[<span class="code-val">0</span>] &#62; <span class="code-val">2</span>) out.push(<span class="code-val">'e'</span>);
+  out.push(...range);
+  <span class="code-kw">if</span> (range[range.length-<span class="code-val">1</span>] &#60; total-<span class="code-val">1</span>) out.push(<span class="code-val">'e'</span>);
+  <span class="code-kw">if</span> (total &#62; <span class="code-val">1</span>) out.push(total);
+  <span class="code-kw">return</span> out;
+}
+
+<span class="code-kw">export const</span> <span class="code-cls">DsPagination</span>: React.FC&#60;DsPaginationProps&#62; = ({ layout = <span class="code-val">'full'</span>, page, totalPages, onPageChange }) => (
+  &#60;div className=<span class="code-val">"pag"</span>>
+    &#60;button className=<span class="code-val">"pag__btn"</span> type=<span class="code-val">"button"</span> disabled={page === 1} aria-label=<span class="code-val">"Previous page"</span> onClick={() => onPageChange(page - 1)}>&#8249;&#60;/button>
+    {layout === <span class="code-val">'compact'</span> ? (
+      &#60;span className=<span class="code-val">"pag__status"</span>>Page &#60;b&#62;{page}&#60;/b&#62; of {totalPages}&#60;/span>
+    ) : (
+      pageList(page, totalPages).map((p, i) =>
+        p === <span class="code-val">'e'</span>
+          ? &#60;span key={i} className=<span class="code-val">"pag__ellipsis"</span>>&#8230;&#60;/span>
+          : &#60;button key={i} className={p === page ? <span class="code-val">'pag__btn is-active'</span> : <span class="code-val">'pag__btn'</span>} type=<span class="code-val">"button"</span> aria-current={p === page ? <span class="code-val">'page'</span> : <span class="code-kw">undefined</span>} onClick={() => onPageChange(p)}>{p}&#60;/button>
+      )
+    )}
+    &#60;button className=<span class="code-val">"pag__btn"</span> type=<span class="code-val">"button"</span> disabled={page === totalPages} aria-label=<span class="code-val">"Next page"</span> onClick={() => onPageChange(page + 1)}>&#8250;&#60;/button>
+  &#60;/div>
+);
+
+<span class="code-cm">// Usage</span>
+&#60;DsPagination ${usageProps} /></span>`;
+}
+
+function getPaginationCode(){
+  return pagLang==='blazor' ? getPaginationCodeBlazor()
+       : pagLang==='tsx'    ? getPaginationCodeTSX()
+       : getPaginationCodeHTML();
+}
+
+function setPagLang(lang){
+  if(!PAG_LANGS.some(l=>l.key===lang)) return;
+  pagLang = lang;
+  document.querySelectorAll('#pag-code-tab .code-seg__btn').forEach(b=>{
+    const on = b.dataset.lang===lang;
+    b.setAttribute('aria-selected', on ? 'true' : 'false');
+    b.setAttribute('tabindex', on ? '0' : '-1');
+  });
+  const file = document.getElementById('pag-lang-file');
+  const meta = PAG_LANGS.find(l=>l.key===lang);
+  if(file && meta) file.textContent = meta.file;
+  const block = document.getElementById('pgg-code-block');
+  if(block) block.innerHTML = getPaginationCode();
+}
+
+function pagLangKeydown(e){
+  const i = PAG_LANGS.findIndex(l=>l.key===pagLang);
+  let n = i;
+  if(e.key==='ArrowLeft')       n = (i - 1 + PAG_LANGS.length) % PAG_LANGS.length;
+  else if(e.key==='ArrowRight') n = (i + 1) % PAG_LANGS.length;
+  else if(e.key==='Home')       n = 0;
+  else if(e.key==='End')        n = PAG_LANGS.length - 1;
+  else return;
+  e.preventDefault();
+  setPagLang(PAG_LANGS[n].key);
+  const btn = document.getElementById('pag-lang-' + PAG_LANGS[n].key);
+  if(btn) btn.focus();
+}
+
+function pggRefresh(){
+  document.querySelectorAll('.pgg-stage-el').forEach(stage=>{
+    stage.innerHTML = '';
+    stage.appendChild(makePaginationEl());
+  });
+  const block = document.getElementById('pgg-code-block');
+  if(block) block.innerHTML = getPaginationCode();
+}
+
+/* Pagination Playground renders into more than one mount (the main
+   Overview demo, and a smaller copy on the Code tab) so both stay in
+   sync with the same shared pgg state — same pattern as Pills' ppg. */
+const PAG_PLAYGROUND_MOUNTS = [
+  {rootId:'pag-playground', idSuffix:'', wrap:true, title:'Try the component', desc:'Adjust the filters to test component states.', headingAbove:'Use pagination to move page by page through a large, countable result set.'},
+  {rootId:'pag-code-playground', idSuffix:'-code', style:'code', title:'Playground', desc:'Live demo of the component.'},
+];
+
+function renderPagPlayground(){
+  pgg.theme = document.documentElement.getAttribute('data-theme')==='dark' ? 'dark' : 'light';
+  const sbg = stageBg(pgg.theme);
+
+  const layoutBtns = PAG_LAYOUTS.map(l=>`<button class="btn-pg__pill${pgg.layout===l.key?' on':''}" onclick="pggSet('layout','${l.key}')">${l.label}</button>`).join('');
+
+  PAG_PLAYGROUND_MOUNTS.forEach(mount=>{
+    const root = document.getElementById(mount.rootId);
+    if(!root) return;
+    const s = mount.idSuffix;
+    const demo = `
+      <div class="btn-pg">
+        <div class="btn-pg__stage pgg-stage-el" id="pgg-stage${s}" style="background:${sbg}"></div>
+        <div class="btn-pg__ctrls">
+          <div class="btn-pg__group"><span class="btn-pg__clabel">Layout</span><div class="btn-pg__pill-row">${layoutBtns}</div></div>
+        </div>
+      </div>`;
+
+    if(mount.style==='code'){
+      root.innerHTML = `
+        <div class="type-sub__title">${mount.title}</div>
+        <div class="type-sub__desc">${mount.desc}</div>
+        <div class="cpg-section-outline">${demo}</div>`;
+      return;
+    }
+
+    const inner = `
+      <div class="cpg-layout">
+        <div class="cpg-layout__intro">
+          ${mount.wrap ? `<span class="cpg-cursor-icon">${CPG_CURSOR_ICON_SVG}</span>` : ''}
+          <div class="cpg-layout__title">${mount.title}</div>
+          <div class="cpg-layout__desc">${mount.desc}</div>
+        </div>
+        <div class="cpg-layout__demo">${demo}</div>
+      </div>`;
+    const wrapped = mount.wrap ? `<div class="cpg-section-block">${inner}</div>` : inner;
+    root.innerHTML = (mount.headingAbove ? `<div class="cpg-overview-heading"><span class="cpg-overview-heading__icon">${CPG_INFO_ICON_SVG}</span><span>${mount.headingAbove}</span></div>` : '') + wrapped;
+  });
+
+  pggRefresh();
+}
+
+function renderPagCodeTab(){
+  const root = document.getElementById('pag-code-tab');
+  if(!root) return;
+  root.innerHTML = `
+    <div class="type-sub__title">Code</div>
+    <div class="type-sub__desc">Live snippet matching the current Playground configuration &mdash; switch to Overview to change it.</div>
+    <div class="cpg-section-outline">
+      <div class="code-panel code-panel--bare open">
+        <div class="code-panel__head">
+          <div class="code-seg" role="tablist" aria-label="Code language" onkeydown="pagLangKeydown(event)">
+            ${PAG_LANGS.map(l=>`<button type="button" role="tab" class="code-seg__btn" id="pag-lang-${l.key}" data-lang="${l.key}" aria-selected="${pagLang===l.key?'true':'false'}" aria-controls="pgg-code-block" tabindex="${pagLang===l.key?'0':'-1'}" onclick="setPagLang('${l.key}')">${l.label}</button>`).join('')}
+          </div>
+          <span class="code-lang-file" id="pag-lang-file">${(PAG_LANGS.find(l=>l.key===pagLang)||PAG_LANGS[0]).file}</span>
+          <button class="code-copy-btn" onclick="pggCopyCode()" id="pgg-copy-btn">Copy</button>
+        </div>
+        <div class="code-body"><div class="code-block" id="pgg-code-block" role="tabpanel" aria-live="polite"></div></div>
+      </div>
+    </div>`;
+}
+
+function renderPagLayouts(){
+  const root = document.getElementById('pag-layouts');
+  if(!root) return;
+
+  const theme = currentTheme();
+  const sbg = stageBg(theme);
+  const cells = PAG_LAYOUTS.map(l=>{
+    const sample = (l.key==='compact' ? makePaginationHTML(6, 24, 'compact') : makePaginationHTML(6, 24, 'full'))
+      .replace('class="pag"', 'class="pag" style="flex-wrap:nowrap"');
+    return `
+    <div class="spec-cell" style="flex-direction:row;align-items:center;gap:16px">
+      <div class="spec-cell__stage" style="background:${sbg};flex:0 0 auto;min-width:400px;overflow-x:auto">${sample}</div>
+      <div style="padding:16px 16px 16px 0">
+        <div class="spec-cell__name">${l.label}</div>
+        <div class="spec-cell__desc">${l.use}</div>
+      </div>
+    </div>`;
+  }).join('');
+
+  root.innerHTML = `
+    <div class="cpg-section-heading">
+      <div class="cpg-layout__title">Key layouts</div>
+      <div class="cpg-layout__desc">Two layouts, one component. Pick Full for room to show real page numbers, Compact when space is tight.</div>
+    </div>
+    <div class="cpg-section-block">
+      <div style="display:flex;flex-direction:column;gap:16px">${cells}</div>
+    </div>`;
+}
+
+function renderPagInSitu(){
+  const root = document.getElementById('pag-insitu');
+  if(!root) return;
+  const theme = currentTheme();
+  const sbg = stageBg(theme);
+
+  const bar = w => `<span class="spec-mock__bar" style="width:${w}"></span>`;
+  const rows = ['92%','78%','65%'].map(w=>`<div class="spec-mock__row">${bar(w)}</div>`).join('');
+
+  const tableMock = `
+    <div class="spec-mock__stage" style="background:${sbg};padding:0">
+      <div style="display:flex;gap:0;padding:10px 14px;border-bottom:1px solid var(--chrome-border);font-size:10.5px;font-weight:700;color:var(--chrome-muted)">
+        <span style="flex:1">MERCHANT</span><span style="flex:1">REGION</span><span style="flex:0 0 70px;text-align:right">AMOUNT</span>
+      </div>
+      <div style="padding:12px 14px 6px">${rows}</div>
+      <div style="display:flex;justify-content:flex-end;padding:12px 14px;border-top:1px solid var(--chrome-border)">${makePaginationHTML(3, 12, 'full')}</div>
+    </div>
+    <div class="spec-mock__cap"><b>Data table footer</b>The most common placement &mdash; docked bottom-right, below the last row.</div>`;
+
+  root.innerHTML = `
+    <div class="cpg-section-heading">
+      <div class="cpg-layout__title">In context</div>
+      <div class="cpg-layout__desc">Pagination almost always sits in one place: the footer of a table, once the row count is known.</div>
+    </div>
+    <div class="cpg-section-block">
+      <div class="spec-mock" style="max-width:480px">${tableMock}</div>
+    </div>`;
+}
+
+function pggSet(key, val){
+  pgg[key] = val;
+  renderPagPlayground();
+}
+function pggCopyCode(){
+  const b = document.getElementById('pgg-code-block');
+  if(!b) return;
+  navigator.clipboard.writeText(b.innerText||b.textContent).catch(()=>{});
+  const btn = document.getElementById('pgg-copy-btn');
+  if(btn){ btn.textContent = 'Copied!'; setTimeout(()=>btn.textContent='Copy', 2000); }
+}
+
+function renderPagReference(){
+  const root = document.getElementById('pag-reference');
+  if(!root) return;
+
+  const theme = currentTheme();
+  const sbg = stageBg(theme);
+
+  /* ---- Anatomy ---- */
+  const heroPag = makePaginationHTML(6, 24, 'full');
+
+  const parts = [
+    {num:1, name:'Previous / Next', note:'Arrow buttons that step one page at a time; disable at either end.', vis:`<button class="pag__btn" type="button">&lsaquo;</button>`},
+    {num:2, name:'Page button',     note:'A numbered tile — click to jump straight to that page.',             vis:`<button class="pag__btn" type="button">4</button>`},
+    {num:3, name:'Active page',     note:'Solid primary fill; not clickable, marks the current position.',    vis:`<button class="pag__btn is-active" type="button">4</button>`},
+    {num:4, name:'Ellipsis',        note:'Collapses a long run of skipped pages between two visible ones.',    vis:`<span class="pag__ellipsis">&hellip;</span>`},
+  ];
+  const partCards = parts.map(p=>`
+    <div class="spec-part">
+      <div class="spec-part__stage" style="background:${sbg}">${p.vis}</div>
+      <div class="spec-part__body">
+        <div class="spec-part__name"><span class="spec-part__num">${p.num}</span>${p.name}</div>
+        <div class="spec-part__note">${p.note}</div>
+      </div>
+    </div>`).join('');
+
+  /* ---- Spacing & dimensions ---- (single size — no size axis for this component) */
+  const dims = [
+    {name:'Button',    val:'34px min-width/height, 0/11px padding, 8px radius'},
+    {name:'Label',     val:'13px / weight 600'},
+    {name:'Gap',       val:'6px between buttons, wraps on overflow'},
+    {name:'Ellipsis',  val:'22px min-width, centred, muted colour'},
+    {name:'Status',    val:'13px / weight 400, compact layout only'},
+    {name:'Disabled',  val:'opacity .4, cursor not-allowed'},
+  ];
+  const dimRows = dims.map(d=>`<tr><td class="dd-table__name">${d.name}</td><td>${d.val}</td></tr>`).join('');
+
+  /* ---- Layout variants + tokens ---- */
+  const layoutDemo = PAG_LAYOUTS.map(l=>{
+    const sample = (l.key==='compact' ? makePaginationHTML(1, 24, 'compact') : makePaginationHTML(1, 8, 'full'))
+      .replace('class="pag"', 'class="pag" style="flex-wrap:nowrap"');
+    return `
+    <div class="spec-cell" style="flex:1 1 240px">
+      <div class="spec-cell__stage" style="background:${sbg};overflow-x:auto">${sample}</div>
+      <div class="spec-cell__name">${l.label}</div>
+    </div>`;
+  }).join('');
+
+  const tokRows = [
+    {name:'Border / background', token:'--chrome-border / --chrome-bg'},
+    {name:'Hover',                token:'--chrome-hover'},
+    {name:'Active page',          token:'--color-btn-s-bg / --color-btn-s-txt'},
+    {name:'Ellipsis / status',    token:'--chrome-muted'},
+  ].map(t=>`<tr><td class="dd-table__name">${t.name}</td><td><code>${t.token}</code></td></tr>`).join('');
+
+  /* ---- States ---- */
+  const states = [
+    {name:'Default',  note:'Bordered tile, current theme colours.', html:`<button class="pag__btn" type="button">4</button>`},
+    {name:'Hover',     note:'Fills with the hover surface token.',   html:`<button class="pag__btn" type="button" style="background:var(--chrome-hover)">4</button>`},
+    {name:'Active',    note:'Solid primary fill; not interactive.',  html:`<button class="pag__btn is-active" type="button">4</button>`},
+    {name:'Disabled',  note:'Prev/Next at either end of the range.', html:`<button class="pag__btn" type="button" disabled>&lsaquo;</button>`},
+  ];
+  const stateCells = states.map(s=>`
+    <div class="spec-cell">
+      <div class="spec-cell__stage" style="background:${sbg}">${s.html}</div>
+      <div class="spec-cell__name">${s.name}</div>
+      <div class="spec-cell__desc">${s.note}</div>
+    </div>`).join('');
+
+  root.innerHTML = `
+    <div class="type-sub">
+      <div class="type-sub__title">Anatomy</div>
+      <div class="type-sub__desc">Pagination is a row of bordered tiles: prev/next arrows, numbered pages, an active tile and an optional ellipsis.</div>
+      <div class="cpg-section-outline">
+        <div class="spec-hero" style="background:${sbg}">${heroPag}</div>
+        <div class="spec-parts">${partCards}</div>
+      </div>
+    </div>
+
+    <div class="type-sub">
+      <div class="type-sub__title">Spacing &amp; dimensions</div>
+      <div class="type-sub__desc">One size only &mdash; there's no size axis for this component. Every dimension below is a fixed token, not a variant.</div>
+      <div class="cpg-section-outline">
+        <div class="dd-table-wrap"><table class="dd-table">
+          <thead><tr><th>Part</th><th>Value</th></tr></thead>
+          <tbody>${dimRows}</tbody>
+        </table></div>
+      </div>
+    </div>
+
+    <div class="type-sub">
+      <div class="type-sub__title">Layout variants</div>
+      <div class="type-sub__desc">Full and Compact share every token below &mdash; only the middle section of the control changes.</div>
+      <div class="cpg-section-outline">
+        <div class="spec-grid" style="margin-bottom:16px;grid-template-columns:repeat(2,1fr)">${layoutDemo}</div>
+        <div class="dd-table-wrap"><table class="dd-table" style="min-width:420px">
+          <thead><tr><th>Part</th><th>Token</th></tr></thead>
+          <tbody>${tokRows}</tbody>
+        </table></div>
+      </div>
+    </div>
+
+    <div class="type-sub" style="margin-bottom:0">
+      <div class="type-sub__title">States</div>
+      <div class="type-sub__desc">Every page tile resolves to one of default, hover, active or disabled.</div>
+      <div class="cpg-section-outline">
+        <div class="spec-grid">${stateCells}</div>
+      </div>
+    </div>`;
+}
+
+try { renderPagCodeTab(); } catch(e){ console.error('pag-code-tab',e); }
+try { renderPagPlayground(); } catch(e){ console.error('pag-playground',e); }
+try { renderPagLayouts(); } catch(e){ console.error('pag-layouts',e); }
+try { renderPagInSitu(); } catch(e){ console.error('pag-insitu',e); }
+try { renderPagReference(); } catch(e){ console.error('pag-reference',e); }
+
+function pagTabSwitch(tab){
+  const nav = document.getElementById('pag-tabs-list');
+  if(!nav) return;
+  nav.querySelectorAll('.tab-item').forEach(btn=>btn.classList.toggle('on', btn.getAttribute('data-pag-tab')===tab));
+  document.querySelectorAll('#s-pagination .tabs-panel[data-pag-panel]').forEach(p=>p.classList.toggle('on', p.getAttribute('data-pag-panel')===tab));
 }
 
 /* ============================================================
@@ -15766,8 +16312,11 @@ const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
-      {version:'1.79.1', date:'2026-08-21', author:'Mo', title:'Fixed Input OTP In-context mockups clipping the digit row', changes:[
-        ['fixed','Both "In context" mockups (login verification, payment confirmation) used the default 3-column .spec-insitu-grid for only 2 cards, squeezing each stage to roughly a third of the row width — too narrow for the real, unscaled 44px-wide otp boxes, so the 6-digit login row overflowed and was clipped by .spec-mock\'s overflow:hidden. Switched to .spec-insitu-grid--2 (same 2-column modifier Accordion uses for its two mockups) and scaled the otp markup down 18% (transform:scale(.82), same technique as Carousel\'s Anatomy hero) so every digit box is visible in both cards'],
+      {version:'1.79.1', date:'2026-08-21', author:'Mo', title:'Pagination rebuilt with the full Pills-style tabbed treatment', changes:[
+        ['added','Pagination (s-pagination) converted from a single static "Interactive" + "Compact" + "When to use" page into a full .sec--tabbed page — Overview / Style / Code / Changelog — matching Pills and Empty State: a "Try the component" playground (a Full/Compact layout toggle plus live, clickable pages, rendered into two synced mounts via shared pgg state), a "Key layouts" showcase (Full vs Compact — replacing Pills\' colour-variant slot, since Pagination has no colour or size axis), a "Data table footer" in-context mockup, a Style tab (Anatomy, Spacing & dimensions, Layout variants, States) and a Code tab with the .code-seg HTML/CSS · Blazor · React TSX switcher'],
+        ['added','New ai-ctx tab regenerated via generate-ai-context-tab.mjs for the js-rendered builders (PAG_LAYOUTS, pagPageList, makePaginationHTML, makePaginationEl), moved from the end of the section into the new hero\'s sec-header-meta, matching Pills/Empty State'],
+        ['changed','Do/Dont card moved into the Overview tab\'s #pag-usage .cpg-section-block, JS-rendered markup like Pills/Empty State (previously static markup); guidance text unchanged from the original 3 do / 3 dont'],
+        ['removed','The old always-full "Interactive" and separate static "Compact" sub-sections, superseded by the single Full/Compact playground toggle'],
       ]},
       {version:'1.79.0', date:'2026-08-21', author:'Mo', title:'Input OTP rebuilt with the full Pills-style tabbed treatment', changes:[
         ['added','Input OTP (s-input-otp) converted from a single static page (three hand-typed example blocks + a "When to use" block) into a full .sec--tabbed page — Overview / Style / Code / Changelog — matching Pills and Carousel: a "Try the component" playground (Digits 4/6, Grouping and error-State controls, rendered into two synced mounts via shared otpg state, with every group fully typable), 2 "In context" mockups (login/2FA verification, payment confirmation mid-error), a Style tab (Anatomy — box/separator/error state/message — plus a combined Dimensions & tokens table, since Input OTP has no size or colour axis) and a Code tab with the .code-seg HTML/CSS · Blazor · React TSX switcher'],
@@ -17239,7 +17788,17 @@ const CHANGELOG = {
         ['added','Hierarchy trail with muted ancestor links, a current-page label and a truncated variant'],
       ]},
     ]},
-    {secId:'s-pagination', name:'Pagination', version:'1.0.1', entries:[
+    {secId:'s-pagination', name:'Pagination', version:'2.0.0', entries:[
+      {version:'2.0.0', date:'2026-08-21', author:'Mo', title:'Rebuilt with the full Pills-style tabbed treatment', changes:[
+        ['added','Overview / Style / Code / Changelog tabbed layout (.sec--tabbed) with a hero preview, replacing the single static page'],
+        ['added','"Try the component" playground — Full/Compact layout toggle plus live, clickable pages, rendered into two synced mounts (Overview + Code tab) via shared pgg state'],
+        ['added','"Key layouts" showcase — Full (numbered, ellipsis-truncated) vs Compact ("Page X of Y") — the no-colour-axis equivalent of Pills\' colour-variant grid'],
+        ['added','"In context" mockup — pagination docked in a data table footer'],
+        ['added','Style tab: Anatomy (Previous/Next, Page button, Active page, Ellipsis), Spacing & dimensions, Layout variants with a token table, and States (Default, Hover, Active, Disabled)'],
+        ['added','Code tab with the .code-seg HTML/CSS · Blazor · React TSX switcher, generated live from the playground\'s layout/current page/total pages'],
+        ['changed','Do/Dont card moved into the Overview tab, JS-rendered like Pills/Empty State; guidance text unchanged from the original 3 do / 3 dont'],
+        ['removed','The old separate "Interactive" and static "Compact" sub-sections, superseded by the single Full/Compact playground toggle'],
+      ]},
       {version:'1.0.1', date:'2026-07-29', author:'Mo', title:'AI context tab added', changes:[
         ['added','AI context tab documenting the real .pag/.pag__* structural classes and the pageList/render builders, plus its existing "When to use" Do/Dont guidance (3 do / 3 dont)'],
       ]},
@@ -17293,10 +17852,7 @@ const CHANGELOG = {
         ['added','Click-anchored floating panel with interactive contents; outside-click and Escape to dismiss'],
       ]},
     ]},
-    {secId:'s-input-otp', name:'Input OTP', version:'2.0.1', entries:[
-      {version:'2.0.1', date:'2026-08-21', author:'Mo', title:'Fixed In-context mockups clipping the digit row', changes:[
-        ['fixed','The login-verification and payment-confirmation mockups were laid out on the default 3-column .spec-insitu-grid with only 2 cards in it, leaving each stage too narrow for the real 44px otp boxes — the 6-digit login row overflowed and got clipped by .spec-mock\'s overflow:hidden. Switched to .spec-insitu-grid--2 (Accordion\'s existing 2-column modifier) and scaled the otp markup down 18% in both mockups so every box is visible'],
-      ]},
+    {secId:'s-input-otp', name:'Input OTP', version:'2.0.0', entries:[
       {version:'2.0.0', date:'2026-08-21', author:'Mo', title:'Full tabbed rebuild — Overview / Style / Code / Changelog', changes:[
         ['added','Overview tab: "Try the component" playground with Digits (4/6), Grouping (contiguous/grouped) and State (default/error) controls, rendered into two synced mounts (Overview + Code tab) via shared otpg state; every playground/in-context group is fully typable, so the real auto-advance, backspace and paste behaviour can be tried live, not just previewed'],
         ['added','Overview tab: 2 "In context" mockups — a login/2FA verification screen and a payment-confirmation screen shown mid-error'],
@@ -20130,44 +20686,6 @@ function ddTabSwitch(tab){
 /* ================================================================
    SHADCN-GAP COMPONENT JS — themed to Flash (Mo · 2026-07-09)
 ================================================================ */
-/* Pagination — interactive */
-(function(){
-  var el = document.getElementById('pag-play');
-  if(!el) return;
-  var total = 24, cur = 6;
-  function pageList(c,t){
-    var out=[], range=[];
-    for(var i=Math.max(2,c-1); i<=Math.min(t-1,c+1); i++) range.push(i);
-    out.push(1);
-    if(range.length && range[0] > 2) out.push('e');
-    range.forEach(function(p){ out.push(p); });
-    if(range.length && range[range.length-1] < t-1) out.push('e');
-    if(t>1) out.push(t);
-    return out;
-  }
-  function render(){
-    var html = '<div class="pag">';
-    html += '<button class="pag__btn" type="button" data-go="prev"'+(cur===1?' disabled':'')+' aria-label="Previous page">&lsaquo;</button>';
-    pageList(cur,total).forEach(function(p){
-      if(p==='e') html += '<span class="pag__ellipsis">&hellip;</span>';
-      else html += '<button class="pag__btn'+(p===cur?' is-active':'')+'" type="button" data-go="'+p+'"'+(p===cur?' aria-current="page"':'')+'>'+p+'</button>';
-    });
-    html += '<button class="pag__btn" type="button" data-go="next"'+(cur===total?' disabled':'')+' aria-label="Next page">&rsaquo;</button>';
-    html += '</div>';
-    el.innerHTML = html;
-    Array.prototype.forEach.call(el.querySelectorAll('[data-go]'), function(b){
-      b.addEventListener('click', function(){
-        var g = b.getAttribute('data-go');
-        if(g==='prev') cur = Math.max(1, cur-1);
-        else if(g==='next') cur = Math.min(total, cur+1);
-        else cur = parseInt(g,10);
-        render();
-      });
-    });
-  }
-  render();
-})();
-
 /* Toggle Group — interactive */
 (function(){
   var single = document.getElementById('tgl-single');
@@ -23926,18 +24444,13 @@ function renderOtpInSitu(){
   const sbg = stageBg(theme);
   const bar = w => `<span class="spec-mock__bar" style="width:${w}"></span>`;
 
-  // Both mockups scale their otp markup down (transform, not a separate
-  // size variant — Input OTP has only one real size) so the full digit row
-  // fits inside the narrower In-context card without clipping.
-  const otpScaled = (opts) => `<div style="transform:scale(.82);transform-origin:left top">${makeOtpHTML(opts)}</div>`;
-
   // 1. Login / 2FA verification — headline copy, then a plain 6-digit group
   const loginMock = `
     <div class="spec-mock__stage" style="background:${sbg}">
       <div class="spec-mock__row" style="flex-direction:column;align-items:flex-start;gap:10px">
         ${bar('72%')}
         ${bar('50%')}
-        <div style="margin-top:2px">${otpScaled({digits: 6, grouped: false, error: false})}</div>
+        <div style="margin-top:2px">${makeOtpHTML({digits: 6, grouped: false, error: false})}</div>
         <span style="font-size:11px;color:var(--chrome-muted)">Didn&rsquo;t get a code? <b style="color:var(--color-link)">Resend</b></span>
       </div>
     </div>
@@ -23948,7 +24461,7 @@ function renderOtpInSitu(){
     <div class="spec-mock__stage" style="background:${sbg}">
       <div class="spec-mock__row" style="flex-direction:column;align-items:flex-start;gap:10px">
         ${bar('80%')}
-        <div style="margin-top:2px">${otpScaled({digits: 4, grouped: true, error: true})}</div>
+        <div style="margin-top:2px">${makeOtpHTML({digits: 4, grouped: true, error: true})}</div>
         <div class="otp-msg otp-msg--err">That code isn&rsquo;t right &mdash; check it and try again.</div>
       </div>
     </div>
@@ -23960,7 +24473,7 @@ function renderOtpInSitu(){
       <div class="cpg-layout__desc">The same field verifies a sign-in and authorises a payment &mdash; only the digit count and state change.</div>
     </div>
     <div class="cpg-section-block">
-      <div class="spec-insitu-grid spec-insitu-grid--2">
+      <div class="spec-insitu-grid">
         <div class="spec-mock">${loginMock}</div>
         <div class="spec-mock">${payMock}</div>
       </div>
@@ -24533,6 +25046,7 @@ try { renderSectionChangelogs(); } catch(e){ console.error('section-changelog',e
   {secId:'s-nav', panelId:'nav-changelog-panel'},
   {secId:'s-carousel', panelId:'car-changelog-panel'},
   {secId:'s-empty-state', panelId:'es-changelog-panel'},
+  {secId:'s-pagination', panelId:'pag-changelog-panel'},
   {secId:'s-lists', panelId:'lst-changelog-panel'},
   {secId:'s-input-otp', panelId:'otp-changelog-panel'},
 ].forEach(({secId, panelId})=>{
