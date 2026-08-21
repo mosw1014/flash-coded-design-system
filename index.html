@@ -6425,7 +6425,7 @@ body.home .main{max-width:none;margin:0;padding:0}
       <div class="sec__head">
         <h1 class="sec__title">Popover</h1>
         <div class="sec-header-meta">
-          <span class="comp-ver-badge" style="margin-left:0">v2.0.2</span>
+          <span class="comp-ver-badge" style="margin-left:0">v2.0.3</span>
           <details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-popover">
@@ -11546,7 +11546,7 @@ function renderPopoverPatterns(){
 
   const cells = POP_KEY_PATTERNS.map(p=>`
     <div class="spec-cell">
-      <div class="spec-cell__stage" style="background:${sbg};align-items:flex-start;padding:40px 14px 16px">${popPreviewHTML(p.type, p.placement, p.footer)}</div>
+      <div class="spec-cell__stage" style="background:${sbg};padding:24px 14px">${popPreviewHTML(p.type, p.placement, p.footer)}</div>
       <div class="spec-cell__name">${p.label}</div>
     </div>`).join('');
 
@@ -11664,7 +11664,7 @@ function renderPopoverReference(){
   ];
   const stateCells = states.map(s=>`
     <div class="spec-cell">
-      <div class="spec-cell__stage" style="background:${sbg};align-items:flex-start;padding:${s.name==='Closed'?'18px 12px':'40px 12px 16px'}">${s.html}</div>
+      <div class="spec-cell__stage" style="background:${sbg};padding:24px 12px">${s.html}</div>
       <div class="spec-cell__name">${s.name}</div>
       <div class="spec-cell__desc">${s.note}</div>
     </div>`).join('');
@@ -15702,12 +15702,15 @@ function cbrTabSwitch(tab){
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.78.2';
+const SYSTEM_VERSION = '1.78.3';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.78.3', date:'2026-08-21', author:'Mo', title:'Popover Key patterns and States card padding rebalanced', changes:[
+        ['fixed','Key patterns and Style-tab States cards top-aligned their content with an asymmetric 40px-top/16px-bottom stage padding, so a shorter card sharing a grid row with a taller one dumped all the leftover row height into one big gap below it; switched to symmetric 24px padding with the stage\'s default centered alignment so leftover height now splits evenly above and below'],
+      ]},
       {version:'1.78.2', date:'2026-08-21', author:'Mo', title:'Popover content overflowing its narrow grid cells', changes:[
         ['fixed','Key patterns and Style-tab States grids used the shared .spec-grid default of minmax(120px,1fr) columns, far narrower than the real .pop__panel\'s 244px min-width — panels were clipped/crushed against the cell edge; both grids now use minmax(260px,1fr)'],
         ['fixed','"In context" mockups used the plain 3-column .spec-insitu-grid, also too narrow for a 244px-wide panel — switched to the 2-column .spec-insitu-grid--2 modifier (already used by Accordion) so each mock has enough room'],
@@ -17220,7 +17223,10 @@ const CHANGELOG = {
         ['added','Native range input with a brand fill and live value; continuous, stepped and disabled examples'],
       ]},
     ]},
-    {secId:'s-popover', name:'Popover', version:'2.0.2', entries:[
+    {secId:'s-popover', name:'Popover', version:'2.0.3', entries:[
+      {version:'2.0.3', date:'2026-08-21', author:'Mo', title:'Rebalanced Key patterns and States card padding', changes:[
+        ['fixed','Key patterns and States cards switched from top-aligned content with asymmetric 40px/16px stage padding to symmetric 24px padding with centered alignment, so a short card sharing a grid row with a tall one no longer dumps all the leftover height into one lopsided gap below it'],
+      ]},
       {version:'2.0.2', date:'2026-08-21', author:'Mo', title:'Fixed content overflowing narrow grid cells', changes:[
         ['fixed','Key patterns grid and the Style tab\'s States grid switched from the shared .spec-grid default (minmax(120px,1fr)) to minmax(260px,1fr), so the real 244px-min-width .pop__panel no longer gets clipped against a too-narrow cell'],
         ['fixed','"In context" mockups switched from the plain 3-column .spec-insitu-grid to the 2-column .spec-insitu-grid--2 modifier so each mock has enough width for a full-size popover panel'],
