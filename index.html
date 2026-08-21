@@ -5533,7 +5533,7 @@ body.home .main{max-width:none;margin:0;padding:0}
       <div class="sec__head">
         <h1 class="sec__title">Accordion</h1>
         <div class="sec-header-meta">
-          <span class="comp-ver-badge" style="margin-left:0">v1.2.3</span>
+          <span class="comp-ver-badge" style="margin-left:0">v1.2.4</span>
           <details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-accordion">
@@ -5555,7 +5555,7 @@ body.home .main{max-width:none;margin:0;padding:0}
     ".acc__body"
   ],
   "css": "/* ---- Accordion ---- */\n.acc { --acc-border:var(--chrome-border);--acc-bg:var(--chrome-bg);--acc-text:var(--chrome-txt);--acc-hover-bg:var(--chrome-hover);--acc-focus-ring:var(--color-input-focus);border:1px solid var(--acc-border);border-radius:12px;overflow:hidden;background:var(--acc-bg);width:100%;max-width:620px;transition:background .25s }\n.acc__item { border-bottom:1px solid var(--acc-border) }\n.acc__item:last-child { border-bottom:none }\n.acc__item[disabled] &gt; .acc__sum { cursor:not-allowed;opacity:.5;pointer-events:none }\n.acc__sum { list-style:none;cursor:pointer;display:flex;align-items:center;gap:12px;padding:15px 18px;font-size:14px;font-weight:600;color:var(--acc-text);transition:background .15s }\n.acc__sum::-webkit-details-marker { display:none }\n.acc__sum:hover { background:var(--acc-hover-bg) }\n.acc__sum:focus-visible { outline:2px solid var(--acc-focus-ring);outline-offset:-2px }\n.acc__chev { margin-left:auto;flex-shrink:0;width:16px;height:16px;display:inline-flex;color:var(--chrome-muted);transition:transform .2s,color .2s }\n.acc__chev svg { width:100%;height:100%;display:block }\n.acc__sum--lead .acc__chev { margin-left:0;order:-1 }\n.acc__item[open] &gt; .acc__sum .acc__chev { transform:rotate(180deg);color:var(--color-text-1) }\n.acc__body { padding:0 18px 16px;font-size:13px;line-height:1.6;color:var(--chrome-muted) }\n/* Sizes — sm mirrors the compact ~36px trigger row used by .pill--sm/.tag--sm; reg (default) is the original ~44px row */\n.acc--sm .acc__sum { padding:9px 14px;font-size:12.5px;gap:9px;min-height:36px }\n.acc--sm .acc__chev { width:14px;height:14px }\n.acc--sm .acc__body { padding:0 14px 12px;font-size:12px }\n.acc--reg .acc__sum { padding:15px 18px;font-size:14px;gap:12px;min-height:44px }\n.acc--reg .acc__body { padding:0 18px 16px;font-size:13px }",
-  "js": "const ACC_BEHAVIORS = [\n  {key:'single', label:'Single-open'},\n  {key:'multi',  label:'Multiple-open'},\n];\n\nfunction makeAccEl(){\n  const wrap = document.createElement('div');\n  wrap.className = `acc acc--${acpg.size}`;\n  wrap.style.setProperty('--cpg-stage-bg', stageBg(acpg.theme));\n  const nm = acpg.behavior==='single' ? ' name=\"acpg-demo\"' : '';\n  let html = '';\n  acpg.items.slice(0, acpg.itemCount).forEach((it, i)=&gt;{\n    const dis = (acpg.disabledIndex===i) ? ' disabled' : '';\n    const openAttr = (i===0 &amp;&amp; acpg.disabledIndex!==0) ? ' open' : '';\n    const chevCls = acpg.iconPos==='leading' ? ' acc__sum--lead' : '';\n    html += `&lt;details class=\"acc__item\"${nm}${openAttr}${dis}&gt;&lt;summary class=\"acc__sum${chevCls}\"&gt;${acpgEsc(it)}&lt;span class=\"acc__chev\"&gt;${iconSvg('chevron-down')}&lt;/span&gt;&lt;/summary&gt;&lt;div class=\"acc__body\"&gt;Supporting detail for &amp;ldquo;${acpgEsc(it)}&amp;rdquo; goes here.&lt;/div&gt;&lt;/details&gt;`;\n  });\n  wrap.innerHTML = html;\n  return wrap;\n}\n\nfunction ovAcc({behavior='multi', size='reg', items, name}){\n  const nm = behavior==='single' ? ` name=\"${name||'acc-ov'}\"` : '';\n  return `&lt;div class=\"acc acc--${size}\" style=\"max-width:none\"&gt;${items.map((it,i)=&gt;`&lt;details class=\"acc__item\"${nm}${i===0?' open':''}&gt;&lt;summary class=\"acc__sum\"&gt;${it.t}&lt;span class=\"acc__chev\"&gt;${iconSvg('chevron-down')}&lt;/span&gt;&lt;/summary&gt;&lt;div class=\"acc__body\"&gt;${it.b}&lt;/div&gt;&lt;/details&gt;`).join('')}&lt;/div&gt;`;\n}",
+  "js": "const ACC_BEHAVIORS = [\n  {key:'single', label:'Single-open'},\n  {key:'multi',  label:'Multiple-open'},\n];\n\nfunction makeAccEl(){\n  const wrap = document.createElement('div');\n  wrap.className = `acc acc--${acpg.size}`;\n  wrap.style.setProperty('--cpg-stage-bg', stageBg(acpg.theme));\n  const nm = acpg.behavior==='single' ? ' name=\"acpg-demo\"' : '';\n  let html = '';\n  acpg.items.slice(0, acpg.itemCount).forEach((it, i)=&gt;{\n    const dis = (acpg.disabledIndex===i) ? ' disabled' : '';\n    const openAttr = (i===0 &amp;&amp; acpg.disabledIndex!==0) ? ' open' : '';\n    const chevCls = acpg.iconPos==='leading' ? ' acc__sum--lead' : '';\n    html += `&lt;details class=\"acc__item\"${nm}${openAttr}${dis}&gt;&lt;summary class=\"acc__sum${chevCls}\"&gt;${acpgEsc(it)}&lt;span class=\"acc__chev\"&gt;${ACC_CHEV_SVG}&lt;/span&gt;&lt;/summary&gt;&lt;div class=\"acc__body\"&gt;Supporting detail for &amp;ldquo;${acpgEsc(it)}&amp;rdquo; goes here.&lt;/div&gt;&lt;/details&gt;`;\n  });\n  wrap.innerHTML = html;\n  return wrap;\n}\n\nfunction ovAcc({behavior='multi', size='reg', items, name}){\n  const nm = behavior==='single' ? ` name=\"${name||'acc-ov'}\"` : '';\n  return `&lt;div class=\"acc acc--${size}\" style=\"max-width:none\"&gt;${items.map((it,i)=&gt;`&lt;details class=\"acc__item\"${nm}${i===0?' open':''}&gt;&lt;summary class=\"acc__sum\"&gt;${it.t}&lt;span class=\"acc__chev\"&gt;${ACC_CHEV_SVG}&lt;/span&gt;&lt;/summary&gt;&lt;div class=\"acc__body\"&gt;${it.b}&lt;/div&gt;&lt;/details&gt;`).join('')}&lt;/div&gt;`;\n}",
   "usage": {
     "do": [
       "Use for FAQs, optional settings and long secondary content.",
@@ -5568,7 +5568,7 @@ body.home .main{max-width:none;margin:0;padding:0}
       "Don't use one for a single item — just show it."
     ]
   },
-  "contentHash": "446c28e2166fb195741474f1cb8a22e4816ca10cbff3ac3a23972e5b84efb24c",
+  "contentHash": "d1f44c72f06ba5201e049454bd394c13a59e4070f4aab522d70e34f242a1779b",
   "note": "makeAccEl is the playground builder driven by acpg state; ovAcc is the flexible doc-only builder used for the Overview key-variants/in-context illustrations and Style-tab reference, mirroring Alert's ovAlrt pattern. Accordion has no colour-variant axis, so its one real behavioural axis (single-open vs multiple-open) fills the Key-variants slot instead. acpg (playground state)/getAccCode*/renderAccordion*/accordionTabSwitch are doc-site-only playground plumbing, excluded."
 }
   </pre>
@@ -13694,6 +13694,11 @@ const ACC_BEHAVIORS = [
   {key:'multi',  label:'Multiple-open'},
 ];
 
+/* Local copy of ICONS['chevron-down'], not a live iconSvg() call — this component's
+   playground/variants/in-context/reference all render eagerly at script-load time,
+   before the ICONS const (declared much further down the file) has initialized. */
+const ACC_CHEV_SVG = '<svg viewBox="0 -960 960 960" xmlns="http://www.w3.org/2000/svg" fill="currentColor" aria-hidden="true"><path d="M480-355.5q-8.96 0-17.15-3.1-8.2-3.1-14.92-9.81L264.17-552.17Q251.5-564.85 251.5-584t12.67-31.83Q276.85-628.5 296-628.5t31.83 12.67L480-463.65l152.17-152.18Q644.85-628.5 664-628.5t31.83 12.67Q708.5-603.15 708.5-584t-12.67 31.83L512.07-368.41q-6.72 6.71-14.92 9.81-8.19 3.1-17.15 3.1Z"/></svg>';
+
 /* ── ACCORDION PLAYGROUND ── */
 let acpg = { behavior:'multi', size:'reg', iconPos:'trailing', disabledIndex:-1, itemCount:3, items:['How do payouts work?','Can I refund a transaction?','Which cards are supported?','Do you support recurring billing?'], theme:'light' };
 
@@ -13709,7 +13714,7 @@ function makeAccEl(){
     const dis = (acpg.disabledIndex===i) ? ' disabled' : '';
     const openAttr = (i===0 && acpg.disabledIndex!==0) ? ' open' : '';
     const chevCls = acpg.iconPos==='leading' ? ' acc__sum--lead' : '';
-    html += `<details class="acc__item"${nm}${openAttr}${dis}><summary class="acc__sum${chevCls}">${acpgEsc(it)}<span class="acc__chev">${iconSvg('chevron-down')}</span></summary><div class="acc__body">Supporting detail for &ldquo;${acpgEsc(it)}&rdquo; goes here.</div></details>`;
+    html += `<details class="acc__item"${nm}${openAttr}${dis}><summary class="acc__sum${chevCls}">${acpgEsc(it)}<span class="acc__chev">${ACC_CHEV_SVG}</span></summary><div class="acc__body">Supporting detail for &ldquo;${acpgEsc(it)}&rdquo; goes here.</div></details>`;
   });
   wrap.innerHTML = html;
   return wrap;
@@ -13938,7 +13943,7 @@ function renderAccordionCodeTab(){
    helper; makeAccEl remains the canonical playground builder. */
 function ovAcc({behavior='multi', size='reg', items, name}){
   const nm = behavior==='single' ? ` name="${name||'acc-ov'}"` : '';
-  return `<div class="acc acc--${size}" style="max-width:none">${items.map((it,i)=>`<details class="acc__item"${nm}${i===0?' open':''}><summary class="acc__sum">${it.t}<span class="acc__chev">${iconSvg('chevron-down')}</span></summary><div class="acc__body">${it.b}</div></details>`).join('')}</div>`;
+  return `<div class="acc acc--${size}" style="max-width:none">${items.map((it,i)=>`<details class="acc__item"${nm}${i===0?' open':''}><summary class="acc__sum">${it.t}<span class="acc__chev">${ACC_CHEV_SVG}</span></summary><div class="acc__body">${it.b}</div></details>`).join('')}</div>`;
 }
 
 function renderAccordionVariants(){
@@ -14029,7 +14034,7 @@ function renderAccordionReference(){
   const sbg = stageBg(theme);
 
   /* ---- Anatomy ---- */
-  const heroAcc = `<div class="acc acc--reg" style="max-width:420px"><details class="acc__item" open><summary class="acc__sum">Trigger row<span class="acc__chev">${iconSvg('chevron-down')}</span></summary><div class="acc__body">Body panel &mdash; revealed content sits here, hidden until the trigger is activated.</div></details><details class="acc__item"><summary class="acc__sum">Second item<span class="acc__chev">${iconSvg('chevron-down')}</span></summary><div class="acc__body">Collapsed by default.</div></details></div>`;
+  const heroAcc = `<div class="acc acc--reg" style="max-width:420px"><details class="acc__item" open><summary class="acc__sum">Trigger row<span class="acc__chev">${ACC_CHEV_SVG}</span></summary><div class="acc__body">Body panel &mdash; revealed content sits here, hidden until the trigger is activated.</div></details><details class="acc__item"><summary class="acc__sum">Second item<span class="acc__chev">${ACC_CHEV_SVG}</span></summary><div class="acc__body">Collapsed by default.</div></details></div>`;
 
   const parts = [
     {num:1, name:'Trigger row', note:'The clickable header &mdash; label plus chevron, built on <code>&lt;summary&gt;</code>.', vis:'<span style="font-weight:600;font-size:14px;color:var(--chrome-txt)">Header label</span>'},
@@ -15175,12 +15180,16 @@ function cbrTabSwitch(tab){
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.77.1';
+const SYSTEM_VERSION = '1.77.2';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.77.2', date:'2026-08-19', author:'Mo', title:'Fixed Accordion playground/variants going blank (ICONS TDZ error)', changes:[
+        ['fixed','A prior change (PR #144) made Accordion\'s makeAccEl/ovAcc/heroAcc call the shared iconSvg(\'chevron-down\') helper, which reads the global ICONS const. Accordion renders its playground/Key-variants/In-context/Style-hero/Code tabs eagerly at script-load time (renderAccordionPlayground() etc. run synchronously, not deferred), which executes long before ICONS is declared further down the same script — every one of those renders was silently throwing "Cannot access \'ICONS\' before initialization" and leaving its mount point empty'],
+        ['fixed','Replaced the iconSvg(\'chevron-down\') calls in makeAccEl/ovAcc/heroAcc with a new local ACC_CHEV_SVG constant (the same chevron-down path, defined right above the Accordion playground code, no ICONS dependency) — restores the playground, Key variants, In-context, Style-tab hero and Code tab, which were all rendering blank'],
+      ]},
       {version:'1.77.1', date:'2026-08-19', author:'Mo', title:'Dropdown ai-ctx tab regenerated to drop leftover PR trivia', changes:[
         ['fixed','s-dropdown\'s ai-ctx tab note ended with a leftover sentence ("Moved to the .sec--tabbed layout... in this PR.") from an earlier change — regenerated via generate-ai-context-tab.mjs per rule 5; CSS/JS/usage content and contentHash unchanged'],
       ]},
@@ -16529,7 +16538,11 @@ const CHANGELOG = {
         ['added','Pure-CSS hover/focus tooltip with four placements and an icon-button example'],
       ]},
     ]},
-    {secId:'s-accordion', name:'Accordion', version:'1.2.3', entries:[
+    {secId:'s-accordion', name:'Accordion', version:'1.2.4', entries:[
+      {version:'1.2.4', date:'2026-08-19', author:'Mo', title:'Fixed blank playground/variants/style/code from an ICONS TDZ error', changes:[
+        ['fixed','makeAccEl/ovAcc/heroAcc called the shared iconSvg(\'chevron-down\') helper (added in v1.2.3), which reads the global ICONS const. Accordion\'s playground, Key variants, In-context, Style-tab hero and Code tabs all render eagerly at script-load time — before ICONS is declared later in the same script — so every one of those renders was throwing "Cannot access \'ICONS\' before initialization" and quietly leaving its mount point empty'],
+        ['fixed','Added a local ACC_CHEV_SVG constant (same chevron-down path, defined next to ACC_BEHAVIORS, no ICONS dependency) and swapped every iconSvg(\'chevron-down\') call in makeAccEl/ovAcc/heroAcc for it — the header preview mock already used a literal SVG so was unaffected. Chevron look/rotation behaviour from v1.2.3 unchanged'],
+      ]},
       {version:'1.2.3', date:'2026-08-19', author:'Mo', title:'Chevron rebuilt as a DS icon glyph, fixing misalignment', changes:[
         ['fixed','.acc__chev was a plain "›" text character rotated +90deg/-90deg between collapsed/open, which visibly misaligned between the two states because the glyph\'s ink isn\'t centred in its em-box. Replaced it with the shared ICONS registry\'s "chevron-down" SVG (iconSvg(\'chevron-down\')) — a proper vector shape that rotates symmetrically'],
         ['changed','.acc__chev now rests unrotated (icon already points down) when collapsed and rotates 180deg to point up when open. Updated in makeAccEl (playground), ovAcc (Key variants/In-context), heroAcc (Style-tab hero swatch) and the header preview mock — every real accordion instance, not a one-off patch'],
