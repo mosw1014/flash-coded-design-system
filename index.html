@@ -1698,6 +1698,13 @@ body.home .main{max-width:none;margin:0;padding:0}
 .dd-tl__title{font-size:13px;font-weight:700;color:var(--chrome-txt)}
 .dd-tl__time{font-size:11px;font-weight:600;color:var(--chrome-muted);font-variant-numeric:tabular-nums}
 .dd-tl__desc{font-size:12px;color:var(--chrome-muted);line-height:1.55;margin-top:2px}
+/* Key column width — illustrative playground variation, not a separate token */
+.dd-kv--key-narrow .dd-kv__key{flex:0 0 120px}
+.dd-kv--key-wide .dd-kv__key{flex:0 0 220px}
+/* Density — comfortable is the default row/padding above; compact tightens both patterns */
+.dd-kv--compact .dd-kv__row{padding:8px 12px}
+.dd-timeline--compact{padding:14px 16px}
+.dd-timeline--compact .dd-tl__item{padding-bottom:14px}
 
 /* ── EMPTY STATE ── */
 .dd-empty{border:1.5px dashed var(--chrome-border);border-radius:12px;padding:40px 24px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px}
@@ -4784,85 +4791,37 @@ body.home .main{max-width:none;margin:0;padding:0}
       </div>
       <div class="tabs-panel" data-dd-panel="changelog" id="dd-changelog-panel"></div>
     </section>
-    <section class="sec" id="s-lists">
+    <section class="sec sec--tabbed" id="s-lists">
+      <div class="sec-hero">
       <div class="sec__head">
-        <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Lists <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.1.0</span></h1>
-        <p class="sec__desc">List-shaped patterns for a handful of facts or a chronological feed — key&ndash;value lists and activity timelines. All built on chrome and semantic tokens, so they adapt to light &amp; dark automatically.</p>
-      </div>
-
-      <div class="type-sub">
-        <div class="type-sub__title">Key&ndash;value list</div>
-        <div class="type-sub__desc">Definition rows for detail panels and record summaries. Keys are muted and fixed-width; values sit on the primary text token. Collapses to stacked pairs on mobile.</div>
-        <div class="dd-kv">
-          <div class="dd-kv__row"><div class="dd-kv__key">Merchant ID</div><div class="dd-kv__val">FLSH-004821-ZA</div></div>
-          <div class="dd-kv__row"><div class="dd-kv__key">Registered name</div><div class="dd-kv__val">Kasi Connect Spaza (Pty) Ltd</div></div>
-          <div class="dd-kv__row"><div class="dd-kv__key">Region</div><div class="dd-kv__val">Gauteng · Soweto</div></div>
-          <div class="dd-kv__row"><div class="dd-kv__key">Onboarded</div><div class="dd-kv__val">14 March 2026</div></div>
-          <div class="dd-kv__row"><div class="dd-kv__key">Settlement</div><div class="dd-kv__val">Daily · 18:00 SAST</div></div>
-        </div>
-      </div>
-
-      <div class="type-sub">
-        <div class="type-sub__title">Activity timeline</div>
-        <div class="type-sub__desc">A chronological event feed for audit logs and status history. Each node is coloured by the semantic meaning of the event; the connecting rail uses the border token.</div>
-        <div class="dd-timeline">
-          <div class="dd-tl">
-            <div class="dd-tl__item" style="--dd-tl-dot:var(--color-success-h)">
-              <div class="dd-tl__meta"><span class="dd-tl__title">Settlement completed</span><span class="dd-tl__time">Today · 18:00</span></div>
-              <div class="dd-tl__desc">R2.31M paid out to 4,812 traders across all regions.</div>
-            </div>
-            <div class="dd-tl__item" style="--dd-tl-dot:var(--chrome-accent)">
-              <div class="dd-tl__meta"><span class="dd-tl__title">Float top-up</span><span class="dd-tl__time">Today · 09:14</span></div>
-              <div class="dd-tl__desc">R5.0M added to the Gauteng float pool ahead of month-end.</div>
-            </div>
-            <div class="dd-tl__item" style="--dd-tl-dot:var(--color-warn-h)">
-              <div class="dd-tl__meta"><span class="dd-tl__title">API latency spike</span><span class="dd-tl__time">Yesterday · 21:47</span></div>
-              <div class="dd-tl__desc">p95 response time exceeded 800&nbsp;ms for 4 minutes, then recovered.</div>
-            </div>
-            <div class="dd-tl__item" style="--dd-tl-dot:var(--color-crit-h)">
-              <div class="dd-tl__meta"><span class="dd-tl__title">1Voucher redemptions dipped</span><span class="dd-tl__time">Yesterday · 14:02</span></div>
-              <div class="dd-tl__desc">Volume fell 8% below forecast; investigation opened with the vouchers team.</div>
-            </div>
-            <div class="dd-tl__item" style="--dd-tl-dot:var(--chrome-accent)">
-              <div class="dd-tl__meta"><span class="dd-tl__title">New region live</span><span class="dd-tl__time">2 Jul · 11:30</span></div>
-              <div class="dd-tl__desc">Limpopo trader onboarding opened to the first 500 merchants.</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="type-sub">
-        <div class="type-sub__title">When to use</div>
-        <div class="type-sub__desc">Reach for the pattern that matches the shape of what you have &mdash; a few facts, or a sequence of events.</div>
-        <div class="sel-usage">
-          <div class="sel-usage__card">
-            <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
-            <ul class="sel-usage__list">
-              <li>Use a key&ndash;value list for a handful of facts about one record &mdash; reach for a table once there are many similar records.</li>
-              <li>Use an activity timeline when order and time genuinely matter, not just as a decorative list style.</li>
-            </ul>
-          </div>
-          <div class="sel-usage__card">
-            <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don&rsquo;t</div>
-            <ul class="sel-usage__list">
-              <li>Don&rsquo;t stretch a key&ndash;value list to a screen&rsquo;s worth of facts &mdash; that&rsquo;s a table.</li>
-              <li>Don&rsquo;t use a timeline for unordered or unrelated items.</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <details class="ai-ctx">
+        <h1 class="sec__title">Lists</h1>
+        <div class="sec-header-meta">
+          <span class="comp-ver-badge" style="margin-left:0">v2.0.0</span>
+          <details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-lists">
 {
-  "status": "static",
+  "status": "js-rendered",
+  "builderFunctions": [
+    "LST_TYPES",
+    "LST_DOT_VARIANTS",
+    "LST_KV_POOL",
+    "LST_TL_POOL",
+    "lstKvRowHTML",
+    "makeKvHTML",
+    "lstTlItemHTML",
+    "makeTimelineHTML"
+  ],
   "realClasses": [
     ".dd-kv",
     ".dd-kv__row",
     ".dd-kv__key",
     ".dd-kv__val",
+    ".dd-kv--key-narrow",
+    ".dd-kv--key-wide",
+    ".dd-kv--compact",
     ".dd-timeline",
+    ".dd-timeline--compact",
     ".dd-tl",
     ".dd-tl__item",
     ".dd-tl__meta",
@@ -4870,22 +4829,36 @@ body.home .main{max-width:none;margin:0;padding:0}
     ".dd-tl__time",
     ".dd-tl__desc"
   ],
-  "css": "/* ── LISTS (Key-value list, Activity timeline) ── */\n.dd-kv { border:1px solid var(--chrome-border);border-radius:12px;overflow:hidden }\n.dd-kv__row { display:flex;gap:16px;padding:13px 16px;border-bottom:1px solid var(--chrome-border) }\n.dd-kv__row:last-child { border-bottom:none }\n.dd-kv__key { flex:0 0 180px;font-size:12px;font-weight:700;color:var(--chrome-muted) }\n.dd-kv__val { font-size:13px;font-weight:600;color:var(--chrome-txt) }\n.dd-timeline { border:1px solid var(--chrome-border);border-radius:12px;padding:22px 24px }\n.dd-tl { position:relative;padding-left:26px }\n.dd-tl__item { position:relative;padding-bottom:20px }\n.dd-tl__item:last-child { padding-bottom:0 }\n.dd-tl__item::before { content:\"\";position:absolute;left:-19px;top:3px;width:9px;height:9px;border-radius:50%;background:var(--dd-tl-dot,var(--chrome-accent));box-shadow:0 0 0 3px var(--chrome-bg) }\n.dd-tl__item::after { content:\"\";position:absolute;left:-15px;top:15px;bottom:-3px;width:1px;background:var(--chrome-border) }\n.dd-tl__item:last-child::after { display:none }\n.dd-tl__meta { display:flex;align-items:baseline;gap:8px;flex-wrap:wrap }\n.dd-tl__title { font-size:13px;font-weight:700;color:var(--chrome-txt) }\n.dd-tl__time { font-size:11px;font-weight:600;color:var(--chrome-muted);font-variant-numeric:tabular-nums }\n.dd-tl__desc { font-size:12px;color:var(--chrome-muted);line-height:1.55;margin-top:2px }",
-  "usage": {
-    "do": [
-      "Use a key–value list for a handful of facts about one record — reach for a table once there are many similar records.",
-      "Use an activity timeline when order and time genuinely matter, not just as a decorative list style."
-    ],
-    "dont": [
-      "Don’t stretch a key–value list to a screen’s worth of facts — that’s a table.",
-      "Don’t use a timeline for unordered or unrelated items."
-    ]
-  },
-  "contentHash": "bfcea3930c26ac8447ed80ef6f1455815f4683776740294c3977cc81c8ea2f83",
-  "note": "Split from the retired Data Display section (2026-08-04). Empty state was originally part of this section too, but moved out to its own s-empty-state section — see that section's own tab. Fully static hand-authored markup. .dd-tl__item::before reads a --dd-tl-dot custom property set inline per item for its semantic node colour."
+  "css": "/* ── LISTS (Key-value list, Activity timeline) ── */\n.dd-kv { border:1px solid var(--chrome-border);border-radius:12px;overflow:hidden }\n.dd-kv__row { display:flex;gap:16px;padding:13px 16px;border-bottom:1px solid var(--chrome-border) }\n.dd-kv__row:last-child { border-bottom:none }\n.dd-kv__key { flex:0 0 180px;font-size:12px;font-weight:700;color:var(--chrome-muted) }\n.dd-kv__val { font-size:13px;font-weight:600;color:var(--chrome-txt) }\n.dd-timeline { border:1px solid var(--chrome-border);border-radius:12px;padding:22px 24px }\n.dd-tl { position:relative;padding-left:26px }\n.dd-tl__item { position:relative;padding-bottom:20px }\n.dd-tl__item:last-child { padding-bottom:0 }\n.dd-tl__item::before { content:\"\";position:absolute;left:-19px;top:3px;width:9px;height:9px;border-radius:50%;background:var(--dd-tl-dot,var(--chrome-accent));box-shadow:0 0 0 3px var(--chrome-bg) }\n.dd-tl__item::after { content:\"\";position:absolute;left:-15px;top:15px;bottom:-3px;width:1px;background:var(--chrome-border) }\n.dd-tl__item:last-child::after { display:none }\n.dd-tl__meta { display:flex;align-items:baseline;gap:8px;flex-wrap:wrap }\n.dd-tl__title { font-size:13px;font-weight:700;color:var(--chrome-txt) }\n.dd-tl__time { font-size:11px;font-weight:600;color:var(--chrome-muted);font-variant-numeric:tabular-nums }\n.dd-tl__desc { font-size:12px;color:var(--chrome-muted);line-height:1.55;margin-top:2px }\n/* Key column width — illustrative playground variation, not a separate token */\n.dd-kv--key-narrow .dd-kv__key { flex:0 0 120px }\n.dd-kv--key-wide .dd-kv__key { flex:0 0 220px }\n/* Density — comfortable is the default row/padding above; compact tightens both patterns */\n.dd-kv--compact .dd-kv__row { padding:8px 12px }\n.dd-timeline--compact { padding:14px 16px }\n.dd-timeline--compact .dd-tl__item { padding-bottom:14px }",
+  "js": "const LST_TYPES = [\n  {key:'kv',       label:'Key–value list'},\n  {key:'timeline', label:'Activity timeline'},\n];\n\nconst LST_DOT_VARIANTS = [\n  {key:'info',    label:'Info',    token:'--color-info-h'},\n  {key:'success', label:'Success', token:'--color-success-h'},\n  {key:'warning', label:'Warning', token:'--color-warn-h'},\n  {key:'error',   label:'Error',   token:'--color-crit-h'},\n];\n\nconst LST_KV_POOL = [\n  {k:'Merchant ID',       v:'FLSH-004821-ZA'},\n  {k:'Registered name',   v:'Kasi Connect Spaza (Pty) Ltd'},\n  {k:'Region',            v:'Gauteng · Soweto'},\n  {k:'Onboarded',         v:'14 March 2026'},\n  {k:'Settlement',        v:'Daily · 18:00 SAST'},\n  {k:'Status',            v:'Active'},\n  {k:'Contact',           v:'+27 71 234 5678'},\n];\n\nconst LST_TL_POOL = [\n  {title:'Settlement completed',          time:'Today · 18:00',      desc:'R2.31M paid out to 4,812 traders across all regions.',                      dot:'success'},\n  {title:'Float top-up',                  time:'Today · 09:14',      desc:'R5.0M added to the Gauteng float pool ahead of month-end.',                  dot:'info'},\n  {title:'API latency spike',             time:'Yesterday · 21:47',  desc:'p95 response time exceeded 800ms for 4 minutes, then recovered.',            dot:'warning'},\n  {title:'1Voucher redemptions dipped',   time:'Yesterday · 14:02',  desc:'Volume fell 8% below forecast; investigation opened with the vouchers team.', dot:'error'},\n  {title:'New region live',               time:'2 Jul · 11:30',      desc:'Limpopo trader onboarding opened to the first 500 merchants.',               dot:'info'},\n];\n\nfunction lstKvRowHTML(row){\n  return `&lt;div class=\"dd-kv__row\"&gt;&lt;div class=\"dd-kv__key\"&gt;${lstEsc(row.k)}&lt;/div&gt;&lt;div class=\"dd-kv__val\"&gt;${lstEsc(row.v)}&lt;/div&gt;&lt;/div&gt;`;\n}\n\nfunction makeKvHTML(rows, opts){\n  opts = opts||{};\n  const cls = ['dd-kv'];\n  if(opts.keyWidth==='narrow') cls.push('dd-kv--key-narrow');\n  if(opts.keyWidth==='wide') cls.push('dd-kv--key-wide');\n  if(opts.density==='compact') cls.push('dd-kv--compact');\n  return `&lt;div class=\"${cls.join(' ')}\"&gt;${rows.map(lstKvRowHTML).join('')}&lt;/div&gt;`;\n}\n\nfunction lstTlItemHTML(ev){\n  const v = LST_DOT_VARIANTS.find(d=&gt;d.key===ev.dot)||LST_DOT_VARIANTS[0];\n  return `&lt;div class=\"dd-tl__item\" style=\"--dd-tl-dot:var(${v.token})\"&gt;\n      &lt;div class=\"dd-tl__meta\"&gt;&lt;span class=\"dd-tl__title\"&gt;${lstEsc(ev.title)}&lt;/span&gt;&lt;span class=\"dd-tl__time\"&gt;${lstEsc(ev.time)}&lt;/span&gt;&lt;/div&gt;\n      &lt;div class=\"dd-tl__desc\"&gt;${lstEsc(ev.desc)}&lt;/div&gt;\n    &lt;/div&gt;`;\n}\n\nfunction makeTimelineHTML(events, opts){\n  opts = opts||{};\n  const cls = ['dd-timeline'];\n  if(opts.density==='compact') cls.push('dd-timeline--compact');\n  return `&lt;div class=\"${cls.join(' ')}\"&gt;&lt;div class=\"dd-tl\"&gt;${events.map(lstTlItemHTML).join('')}&lt;/div&gt;&lt;/div&gt;`;\n}",
+  "contentHash": "9ad9838fc19d582c41718f0e170ce1fd4ce0c9bceb4ca36f6991093b5869e975",
+  "note": "makeKvHTML/makeTimelineHTML are the canonical real-markup builders (row/event array + opts -&gt; HTML string), shared by the playground, In-context mockups and Style-tab specimens; lstKvRowHTML/lstTlItemHTML are their per-row/per-event helpers. LST_KV_POOL/LST_TL_POOL are the sample data pools sliced by the playground's Rows/Events controls. lpg (playground state)/getListCode*/render*/LST_LANGS/lstEsc are doc-site-only plumbing, excluded."
 }
   </pre>
 </details>
+        </div>
+      </div>
+      <div class="sec-hero__preview"><div class="mk mk-col" style="gap:7px"><div class="mk-card" style="width:70%;padding:9px 12px;display:flex;justify-content:space-between;align-items:center"><span class="mk-bar" style="width:55px"></span><span class="mk-bar" style="width:70px"></span></div><div class="mk-card" style="width:70%;padding:9px 12px;display:flex;flex-direction:column;gap:6px"><span class="mk-bar" style="width:80%"></span><span class="mk-bar" style="width:60%"></span></div></div></div>
+      </div>
+      <div class="tabs-list sec-tabs" id="lst-tabs-list">
+        <button type="button" class="tab-item on" data-lst-tab="overview" onclick="lstTabSwitch('overview')"><span class="tab-item__inner"><span class="tab-item__label">Overview</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-lst-tab="style" onclick="lstTabSwitch('style')"><span class="tab-item__inner"><span class="tab-item__label">Style</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-lst-tab="code" onclick="lstTabSwitch('code')"><span class="tab-item__inner"><span class="tab-item__label">Code</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-lst-tab="changelog" onclick="lstTabSwitch('changelog')"><span class="tab-item__inner"><span class="tab-item__label">Changelog</span></span><span class="tab-item__line"></span></button>
+      </div>
+      <div class="tabs-panel on" data-lst-panel="overview">
+        <div id="lst-playground" class="type-sub"></div>
+        <div id="lst-insitu" class="type-sub"></div>
+        <div class="type-sub cpg-variants" id="lst-usage"></div>
+      </div>
+      <div class="tabs-panel" data-lst-panel="style">
+        <div id="lst-reference" class="type-sub spec-panel spec-stack"></div>
+      </div>
+      <div class="tabs-panel" data-lst-panel="code">
+        <div id="lst-code-playground" class="type-sub spec-panel spec-code-playground"></div>
+        <div id="lst-code-tab" class="type-sub spec-panel"></div>
+      </div>
+      <div class="tabs-panel" data-lst-panel="changelog" id="lst-changelog-panel"></div>
     </section>
     <section class="sec sec--tabbed" id="s-empty-state">
       <div class="sec-hero">
@@ -11189,6 +11162,615 @@ function esTabSwitch(tab){
 }
 
 /* ============================================================
+   LISTS
+   Same tabbed-page treatment as Pills (.sec--tabbed): Overview /
+   Style / Code / Changelog, a shared-state playground rendered
+   into two mounts, and a three-language code panel. Lists holds
+   two structurally different patterns (key–value list, activity
+   timeline) rather than one component with colour/size variants,
+   so the playground itself carries a Pattern switcher (lpg.type)
+   instead of Pills' variant row, and "Key variants" is replaced
+   by each pattern's own anatomy/tokens on the Style tab.
+============================================================ */
+function lstEsc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&#60;').replace(/>/g,'&#62;').replace(/"/g,'&quot;'); }
+
+const LST_TYPES = [
+  {key:'kv',       label:'Key–value list'},
+  {key:'timeline', label:'Activity timeline'},
+];
+
+/* Semantic dot colours available to the timeline's newest event — the
+   same info/success/warning/error family used by Tags and Alerts. */
+const LST_DOT_VARIANTS = [
+  {key:'info',    label:'Info',    token:'--color-info-h'},
+  {key:'success', label:'Success', token:'--color-success-h'},
+  {key:'warning', label:'Warning', token:'--color-warn-h'},
+  {key:'error',   label:'Error',   token:'--color-crit-h'},
+];
+
+const LST_ROWS_OPTIONS = [3, 5, 7];
+const LST_EVENTS_OPTIONS = [3, 4, 5];
+
+const LST_KV_POOL = [
+  {k:'Merchant ID',       v:'FLSH-004821-ZA'},
+  {k:'Registered name',   v:'Kasi Connect Spaza (Pty) Ltd'},
+  {k:'Region',            v:'Gauteng · Soweto'},
+  {k:'Onboarded',         v:'14 March 2026'},
+  {k:'Settlement',        v:'Daily · 18:00 SAST'},
+  {k:'Status',            v:'Active'},
+  {k:'Contact',           v:'+27 71 234 5678'},
+];
+
+const LST_TL_POOL = [
+  {title:'Settlement completed',          time:'Today · 18:00',      desc:'R2.31M paid out to 4,812 traders across all regions.',                      dot:'success'},
+  {title:'Float top-up',                  time:'Today · 09:14',      desc:'R5.0M added to the Gauteng float pool ahead of month-end.',                  dot:'info'},
+  {title:'API latency spike',             time:'Yesterday · 21:47',  desc:'p95 response time exceeded 800ms for 4 minutes, then recovered.',            dot:'warning'},
+  {title:'1Voucher redemptions dipped',   time:'Yesterday · 14:02',  desc:'Volume fell 8% below forecast; investigation opened with the vouchers team.', dot:'error'},
+  {title:'New region live',               time:'2 Jul · 11:30',      desc:'Limpopo trader onboarding opened to the first 500 merchants.',               dot:'info'},
+];
+
+/* ---- Real-markup builders (shared by the playground, Style-tab specimens
+   and In-context mockups) ---- */
+function lstKvRowHTML(row){
+  return `<div class="dd-kv__row"><div class="dd-kv__key">${lstEsc(row.k)}</div><div class="dd-kv__val">${lstEsc(row.v)}</div></div>`;
+}
+function makeKvHTML(rows, opts){
+  opts = opts||{};
+  const cls = ['dd-kv'];
+  if(opts.keyWidth==='narrow') cls.push('dd-kv--key-narrow');
+  if(opts.keyWidth==='wide') cls.push('dd-kv--key-wide');
+  if(opts.density==='compact') cls.push('dd-kv--compact');
+  return `<div class="${cls.join(' ')}">${rows.map(lstKvRowHTML).join('')}</div>`;
+}
+
+function lstTlItemHTML(ev){
+  const v = LST_DOT_VARIANTS.find(d=>d.key===ev.dot)||LST_DOT_VARIANTS[0];
+  return `<div class="dd-tl__item" style="--dd-tl-dot:var(${v.token})">
+      <div class="dd-tl__meta"><span class="dd-tl__title">${lstEsc(ev.title)}</span><span class="dd-tl__time">${lstEsc(ev.time)}</span></div>
+      <div class="dd-tl__desc">${lstEsc(ev.desc)}</div>
+    </div>`;
+}
+function makeTimelineHTML(events, opts){
+  opts = opts||{};
+  const cls = ['dd-timeline'];
+  if(opts.density==='compact') cls.push('dd-timeline--compact');
+  return `<div class="${cls.join(' ')}"><div class="dd-tl">${events.map(lstTlItemHTML).join('')}</div></div>`;
+}
+
+/* ---- Playground state ---- */
+let lpg = { type:'kv', rows:5, keyWidth:'default', events:3, newestDot:'success', density:'comfortable', theme:'light' };
+
+function lpgKvRows(){ return LST_KV_POOL.slice(0, lpg.rows); }
+function lpgTlEvents(){
+  const events = LST_TL_POOL.slice(0, lpg.events).map(e=>({...e}));
+  if(events.length) events[0].dot = lpg.newestDot;
+  return events;
+}
+
+function getListCodeHTML(){
+  if(lpg.type==='timeline'){
+    const events = lpgTlEvents();
+    const cls = 'dd-timeline' + (lpg.density==='compact' ? ' dd-timeline--compact' : '');
+    const items = events.map(ev=>{
+      const v = LST_DOT_VARIANTS.find(d=>d.key===ev.dot)||LST_DOT_VARIANTS[0];
+      return `\n    <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"dd-tl__item"</span> <span class="code-attr">style</span>=<span class="code-val">"--dd-tl-dot:var(${v.token})"</span><span class="code-kw">></span>
+      <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"dd-tl__meta"</span><span class="code-kw">>...&#60;/div></span>
+      <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"dd-tl__desc"</span><span class="code-kw">></span>${lstEsc(ev.desc)}<span class="code-kw">&#60;/div></span>
+    <span class="code-kw">&#60;/div></span>`;
+    }).join('');
+    return `<span class="code-cm">/* Flash · ${cap(lpg.theme)} · Activity timeline */</span>
+<span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"${cls}"</span><span class="code-kw">></span>
+  <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"dd-tl"</span><span class="code-kw">></span>${items}
+  <span class="code-kw">&#60;/div></span>
+<span class="code-kw">&#60;/div></span>`;
+  }
+  const rows = lpgKvRows();
+  const cls = ['dd-kv'];
+  if(lpg.keyWidth==='narrow') cls.push('dd-kv--key-narrow');
+  if(lpg.keyWidth==='wide') cls.push('dd-kv--key-wide');
+  if(lpg.density==='compact') cls.push('dd-kv--compact');
+  const rowLines = rows.map(r=>`
+  <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"dd-kv__row"</span><span class="code-kw">></span>
+    <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"dd-kv__key"</span><span class="code-kw">></span>${lstEsc(r.k)}<span class="code-kw">&#60;/div></span>
+    <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"dd-kv__val"</span><span class="code-kw">></span>${lstEsc(r.v)}<span class="code-kw">&#60;/div></span>
+  <span class="code-kw">&#60;/div></span>`).join('');
+  return `<span class="code-cm">/* Flash · ${cap(lpg.theme)} · Key–value list */</span>
+<span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"${cls.join(' ')}"</span><span class="code-kw">></span>${rowLines}
+<span class="code-kw">&#60;/div></span>`;
+}
+
+/* ── CODE PANEL LANGUAGES ──
+   HTML/CSS is the source of truth (real .dd-kv/.dd-timeline markup).
+   Blazor and React TSX are illustrative wrappers over the same classes,
+   one component per pattern, mirroring how Text Inputs ports its
+   Standard/Search families. */
+const LST_LANGS = [
+  {key:'html',   label:'HTML / CSS', file:'list.html'},
+  {key:'blazor', label:'Blazor',     file:'DsList.razor'},
+  {key:'tsx',    label:'React TSX',  file:'DsList.tsx'},
+];
+let lstLang = 'html';
+
+function getListCodeBlazor(){
+  if(lpg.type==='timeline'){
+    const rows = LST_DOT_VARIANTS.map(v=>`    TimelineDot.${cap(v.key)}${' '.repeat(Math.max(1, 8-v.key.length))}=> <span class="code-val">"--dd-tl-dot:var(${v.token})"</span>,`).join('\n');
+    return `<span class="code-cm">@* DsActivityTimeline.razor — usage *@</span>
+<span class="code-kw">&#60;DsActivityTimeline</span> <span class="code-attr">Events</span>=<span class="code-val">"events"</span> <span class="code-attr">Compact</span>=<span class="code-val">"${lpg.density==='compact'}"</span> <span class="code-kw">/></span>
+
+<span class="code-cm">@* DsActivityTimeline.razor — component definition *@</span>
+<span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"@CssClass"</span><span class="code-kw">></span>
+  <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"dd-tl"</span><span class="code-kw">></span>
+    <span class="code-kw">@foreach</span> (<span class="code-kw">var</span> ev <span class="code-kw">in</span> Events) {
+      <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"dd-tl__item"</span> <span class="code-attr">style</span>=<span class="code-val">"@DotStyle(ev.Dot)"</span><span class="code-kw">></span>
+        <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"dd-tl__meta"</span><span class="code-kw">></span>
+          <span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"dd-tl__title"</span><span class="code-kw">></span>@ev.Title<span class="code-kw">&#60;/span></span>
+          <span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"dd-tl__time"</span><span class="code-kw">></span>@ev.Time<span class="code-kw">&#60;/span></span>
+        <span class="code-kw">&#60;/div></span>
+        <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"dd-tl__desc"</span><span class="code-kw">></span>@ev.Description<span class="code-kw">&#60;/div></span>
+      <span class="code-kw">&#60;/div></span>
+    }
+  <span class="code-kw">&#60;/div></span>
+<span class="code-kw">&#60;/div></span>
+
+<span class="code-kw">@code</span> {
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> List&#60;TimelineEvent> Events { get; set; } = <span class="code-kw">new</span>();
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> <span class="code-cls">bool</span> Compact { get; set; }
+
+  <span class="code-kw">private</span> <span class="code-cls">string</span> CssClass => <span class="code-val">"dd-timeline"</span> + (Compact ? <span class="code-val">" dd-timeline--compact"</span> : <span class="code-val">""</span>);
+
+  <span class="code-cm">// info / success / warning / error — the semantic dot family shared with Tags</span>
+  <span class="code-kw">private</span> <span class="code-cls">string</span> DotStyle(TimelineDot dot) => dot <span class="code-kw">switch</span> {
+${rows}
+  };
+}`;
+  }
+  const rows = lpg.type==='kv' ? '' : '';
+  return `<span class="code-cm">@* DsKeyValueList.razor — usage *@</span>
+<span class="code-kw">&#60;DsKeyValueList</span> <span class="code-attr">Rows</span>=<span class="code-val">"rows"</span>
+                  <span class="code-attr">KeyWidth</span>=<span class="code-val">"KeyColumnWidth.${cap(lpg.keyWidth)}"</span>
+                  <span class="code-attr">Compact</span>=<span class="code-val">"${lpg.density==='compact'}"</span> <span class="code-kw">/></span>
+
+<span class="code-cm">@* DsKeyValueList.razor — component definition *@</span>
+<span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"@CssClass"</span><span class="code-kw">></span>
+  <span class="code-kw">@foreach</span> (<span class="code-kw">var</span> row <span class="code-kw">in</span> Rows) {
+    <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"dd-kv__row"</span><span class="code-kw">></span>
+      <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"dd-kv__key"</span><span class="code-kw">></span>@row.Key<span class="code-kw">&#60;/div></span>
+      <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"dd-kv__val"</span><span class="code-kw">></span>@row.Value<span class="code-kw">&#60;/div></span>
+    <span class="code-kw">&#60;/div></span>
+  }
+<span class="code-kw">&#60;/div></span>
+
+<span class="code-kw">@code</span> {
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> List&#60;(<span class="code-cls">string</span> Key, <span class="code-cls">string</span> Value)> Rows { get; set; } = <span class="code-kw">new</span>();
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> KeyColumnWidth KeyWidth { get; set; } = KeyColumnWidth.Default;
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> <span class="code-cls">bool</span> Compact { get; set; }
+
+  <span class="code-kw">private</span> <span class="code-cls">string</span> CssClass {
+    <span class="code-kw">get</span> {
+      <span class="code-kw">var</span> cls = <span class="code-val">"dd-kv"</span>;
+      <span class="code-kw">if</span> (KeyWidth == KeyColumnWidth.Narrow) cls += <span class="code-val">" dd-kv--key-narrow"</span>;
+      <span class="code-kw">if</span> (KeyWidth == KeyColumnWidth.Wide) cls += <span class="code-val">" dd-kv--key-wide"</span>;
+      <span class="code-kw">if</span> (Compact) cls += <span class="code-val">" dd-kv--compact"</span>;
+      <span class="code-kw">return</span> cls;
+    }
+  }
+}`;
+}
+
+function getListCodeTSX(){
+  if(lpg.type==='timeline'){
+    const colorMap = LST_DOT_VARIANTS.map(v=>`  ${v.key}:${' '.repeat(Math.max(1, 8-v.key.length))}<span class="code-val">'${v.token}'</span>,`).join('\n');
+    return `<span class="code-cm">// DsActivityTimeline.tsx</span>
+<span class="code-kw">import</span> React <span class="code-kw">from</span> <span class="code-val">'react'</span>;
+
+<span class="code-kw">type</span> <span class="code-cls">TimelineDot</span> = <span class="code-val">'info'</span> | <span class="code-val">'success'</span> | <span class="code-val">'warning'</span> | <span class="code-val">'error'</span>;
+<span class="code-kw">interface</span> <span class="code-cls">TimelineEvent</span> { title: <span class="code-cls">string</span>; time: <span class="code-cls">string</span>; description: <span class="code-cls">string</span>; dot: <span class="code-cls">TimelineDot</span>; }
+
+<span class="code-cm">// info / success / warning / error — the semantic dot family shared with Tags</span>
+<span class="code-kw">const</span> DOT_TOKENS: <span class="code-cls">Record</span>&#60;TimelineDot, <span class="code-cls">string</span>> = {
+${colorMap}
+};
+
+<span class="code-kw">interface</span> <span class="code-cls">DsActivityTimelineProps</span> { events: TimelineEvent[]; compact?: <span class="code-cls">boolean</span>; }
+
+<span class="code-kw">export const</span> <span class="code-cls">DsActivityTimeline</span>: React.FC&#60;DsActivityTimelineProps> = ({ events, compact }) => (
+  &#60;div className={<span class="code-val">'dd-timeline'</span> + (compact ? <span class="code-val">' dd-timeline--compact'</span> : <span class="code-val">''</span>)}>
+    &#60;div className=<span class="code-val">"dd-tl"</span>>
+      {events.map((ev, i) => (
+        &#60;div key={i} className=<span class="code-val">"dd-tl__item"</span> style={{ <span class="code-val">'--dd-tl-dot'</span>: \`var(\${DOT_TOKENS[ev.dot]})\` } <span class="code-kw">as</span> React.CSSProperties}>
+          &#60;div className=<span class="code-val">"dd-tl__meta"</span>>
+            &#60;span className=<span class="code-val">"dd-tl__title"</span>>{ev.title}&#60;/span>
+            &#60;span className=<span class="code-val">"dd-tl__time"</span>>{ev.time}&#60;/span>
+          &#60;/div>
+          &#60;div className=<span class="code-val">"dd-tl__desc"</span>>{ev.description}&#60;/div>
+        &#60;/div>
+      ))}
+    &#60;/div>
+  &#60;/div>
+);
+
+<span class="code-cm">// Usage</span>
+&#60;DsActivityTimeline events={events} compact={${lpg.density==='compact'}} />`;
+  }
+  return `<span class="code-cm">// DsKeyValueList.tsx</span>
+<span class="code-kw">import</span> React <span class="code-kw">from</span> <span class="code-val">'react'</span>;
+
+<span class="code-kw">type</span> <span class="code-cls">KeyColumnWidth</span> = <span class="code-val">'narrow'</span> | <span class="code-val">'default'</span> | <span class="code-val">'wide'</span>;
+<span class="code-kw">interface</span> <span class="code-cls">KeyValueRow</span> { key: <span class="code-cls">string</span>; value: <span class="code-cls">string</span>; }
+<span class="code-kw">interface</span> <span class="code-cls">DsKeyValueListProps</span> { rows: KeyValueRow[]; keyWidth?: KeyColumnWidth; compact?: <span class="code-cls">boolean</span>; }
+
+<span class="code-kw">export const</span> <span class="code-cls">DsKeyValueList</span>: React.FC&#60;DsKeyValueListProps> = ({ rows, keyWidth = <span class="code-val">'default'</span>, compact }) => {
+  <span class="code-kw">const</span> classes = [
+    <span class="code-val">'dd-kv'</span>,
+    keyWidth === <span class="code-val">'narrow'</span> &amp;&amp; <span class="code-val">'dd-kv--key-narrow'</span>,
+    keyWidth === <span class="code-val">'wide'</span> &amp;&amp; <span class="code-val">'dd-kv--key-wide'</span>,
+    compact &amp;&amp; <span class="code-val">'dd-kv--compact'</span>,
+  ].filter(Boolean).join(<span class="code-val">' '</span>);
+
+  <span class="code-kw">return</span> (
+    &#60;div className={classes}>
+      {rows.map((row, i) => (
+        &#60;div key={i} className=<span class="code-val">"dd-kv__row"</span>>
+          &#60;div className=<span class="code-val">"dd-kv__key"</span>>{row.key}&#60;/div>
+          &#60;div className=<span class="code-val">"dd-kv__val"</span>>{row.value}&#60;/div>
+        &#60;/div>
+      ))}
+    &#60;/div>
+  );
+};
+
+<span class="code-cm">// Usage</span>
+&#60;DsKeyValueList rows={rows} keyWidth=<span class="code-val">"${lpg.keyWidth}"</span> compact={${lpg.density==='compact'}} />`;
+}
+
+function getListCode(){
+  return lstLang==='blazor' ? getListCodeBlazor()
+       : lstLang==='tsx'    ? getListCodeTSX()
+       : getListCodeHTML();
+}
+
+function setLstLang(lang){
+  if(!LST_LANGS.some(l=>l.key===lang)) return;
+  lstLang = lang;
+  document.querySelectorAll('#lst-code-tab .code-seg__btn').forEach(b=>{
+    const on = b.dataset.lang===lang;
+    b.setAttribute('aria-selected', on ? 'true' : 'false');
+    b.setAttribute('tabindex', on ? '0' : '-1');
+  });
+  const file = document.getElementById('lst-lang-file');
+  const meta = LST_LANGS.find(l=>l.key===lang);
+  if(file && meta) file.textContent = meta.file;
+  const block = document.getElementById('lpg-code-block');
+  if(block) block.innerHTML = getListCode();
+}
+
+function lstLangKeydown(e){
+  const i = LST_LANGS.findIndex(l=>l.key===lstLang);
+  let n = i;
+  if(e.key==='ArrowLeft')       n = (i - 1 + LST_LANGS.length) % LST_LANGS.length;
+  else if(e.key==='ArrowRight') n = (i + 1) % LST_LANGS.length;
+  else if(e.key==='Home')       n = 0;
+  else if(e.key==='End')        n = LST_LANGS.length - 1;
+  else return;
+  e.preventDefault();
+  setLstLang(LST_LANGS[n].key);
+  const btn = document.getElementById('lst-lang-' + LST_LANGS[n].key);
+  if(btn) btn.focus();
+}
+
+function lpgRefresh(){
+  document.querySelectorAll('.lpg-stage-el').forEach(stage=>{
+    stage.innerHTML = lpg.type==='timeline' ? makeTimelineHTML(lpgTlEvents(), lpg) : makeKvHTML(lpgKvRows(), lpg);
+  });
+  const block = document.getElementById('lpg-code-block');
+  if(block) block.innerHTML = getListCode();
+}
+
+/* List Playground renders into more than one mount (the main Overview
+   demo, and a smaller copy on the Code tab) so both stay in sync with
+   the same shared lpg state — same pattern as Pills' ppg. */
+const LST_PLAYGROUND_MOUNTS = [
+  {rootId:'lst-playground', idSuffix:'', wrap:true, title:'Try the component', desc:'Adjust the filters to test component states.', headingAbove:'Use a key–value list for a handful of facts about one record, or an activity timeline when order and time matter.'},
+  {rootId:'lst-code-playground', idSuffix:'-code', style:'code', title:'Playground', desc:'Live demo of the component.'},
+];
+
+function renderListPlayground(){
+  lpg.theme = document.documentElement.getAttribute('data-theme')==='dark' ? 'dark' : 'light';
+  const sbg = stageBg(lpg.theme);
+
+  const typeBtns = LST_TYPES.map(t=>`<button class="btn-pg__pill${lpg.type===t.key?' on':''}" onclick="lpgSet('type','${t.key}')">${t.label}</button>`).join('');
+  const densityBtns = ['comfortable','compact'].map(d=>`<button class="btn-pg__pill${lpg.density===d?' on':''}" onclick="lpgSet('density','${d}')">${cap(d)}</button>`).join('');
+  const rowsBtns = LST_ROWS_OPTIONS.map(n=>`<button class="btn-pg__pill${lpg.rows===n?' on':''}" onclick="lpgSet('rows',${n})">${n} rows</button>`).join('');
+  const keyWidthBtns = ['narrow','default','wide'].map(w=>`<button class="btn-pg__pill${lpg.keyWidth===w?' on':''}" onclick="lpgSet('keyWidth','${w}')">${cap(w)}</button>`).join('');
+  const eventsBtns = LST_EVENTS_OPTIONS.map(n=>`<button class="btn-pg__pill${lpg.events===n?' on':''}" onclick="lpgSet('events',${n})">${n} events</button>`).join('');
+  const dotBtns = LST_DOT_VARIANTS.map(v=>`<button class="btn-pg__pill${lpg.newestDot===v.key?' on':''}" onclick="lpgSet('newestDot','${v.key}')">${v.label}</button>`).join('');
+
+  const kvCtrls = `
+          <div class="btn-pg__group"><span class="btn-pg__clabel">Rows</span><div class="btn-pg__pill-row">${rowsBtns}</div></div>
+          <div class="btn-pg__group"><span class="btn-pg__clabel">Key column width</span><div class="btn-pg__pill-row">${keyWidthBtns}</div></div>`;
+  const tlCtrls = `
+          <div class="btn-pg__group"><span class="btn-pg__clabel">Events</span><div class="btn-pg__pill-row">${eventsBtns}</div></div>
+          <div class="btn-pg__group"><span class="btn-pg__clabel">Newest event colour</span><div class="btn-pg__pill-row">${dotBtns}</div></div>`;
+
+  LST_PLAYGROUND_MOUNTS.forEach(mount=>{
+    const root = document.getElementById(mount.rootId);
+    if(!root) return;
+    const s = mount.idSuffix;
+    const demo = `
+      <div class="btn-pg">
+        <div class="btn-pg__stage lpg-stage-el" id="lpg-stage${s}" style="background:${sbg};align-items:flex-start;justify-content:flex-start;padding:20px"></div>
+        <div class="btn-pg__ctrls">
+          <div class="btn-pg__group"><span class="btn-pg__clabel">Pattern</span><div class="btn-pg__pill-row">${typeBtns}</div></div>
+          ${lpg.type==='kv' ? kvCtrls : tlCtrls}
+          <div class="btn-pg__group"><span class="btn-pg__clabel">Density</span><div class="btn-pg__pill-row">${densityBtns}</div></div>
+        </div>
+      </div>`;
+
+    if(mount.style==='code'){
+      root.innerHTML = `
+        <div class="type-sub__title">${mount.title}</div>
+        <div class="type-sub__desc">${mount.desc}</div>
+        <div class="cpg-section-outline">${demo}</div>`;
+      return;
+    }
+
+    const inner = `
+      <div class="cpg-layout">
+        <div class="cpg-layout__intro">
+          ${mount.wrap ? `<span class="cpg-cursor-icon">${CPG_CURSOR_ICON_SVG}</span>` : ''}
+          <div class="cpg-layout__title">${mount.title}</div>
+          <div class="cpg-layout__desc">${mount.desc}</div>
+        </div>
+        <div class="cpg-layout__demo">${demo}</div>
+      </div>`;
+    const wrapped = mount.wrap ? `<div class="cpg-section-block">${inner}</div>` : inner;
+    root.innerHTML = (mount.headingAbove ? `<div class="cpg-overview-heading"><span class="cpg-overview-heading__icon">${CPG_INFO_ICON_SVG}</span><span>${mount.headingAbove}</span></div>` : '') + wrapped;
+  });
+
+  lpgRefresh();
+}
+
+function renderListCodeTab(){
+  const root = document.getElementById('lst-code-tab');
+  if(!root) return;
+  root.innerHTML = `
+    <div class="type-sub__title">Code</div>
+    <div class="type-sub__desc">Live snippet matching the current Playground configuration &mdash; switch to Overview to change it.</div>
+    <div class="cpg-section-outline">
+      <div class="code-panel code-panel--bare open">
+        <div class="code-panel__head">
+          <div class="code-seg" role="tablist" aria-label="Code language" onkeydown="lstLangKeydown(event)">
+            ${LST_LANGS.map(l=>`<button type="button" role="tab" class="code-seg__btn" id="lst-lang-${l.key}" data-lang="${l.key}" aria-selected="${lstLang===l.key?'true':'false'}" aria-controls="lpg-code-block" tabindex="${lstLang===l.key?'0':'-1'}" onclick="setLstLang('${l.key}')">${l.label}</button>`).join('')}
+          </div>
+          <span class="code-lang-file" id="lst-lang-file">${(LST_LANGS.find(l=>l.key===lstLang)||LST_LANGS[0]).file}</span>
+          <button class="code-copy-btn" onclick="lpgCopyCode()" id="lpg-copy-btn">Copy</button>
+        </div>
+        <div class="code-body"><div class="code-block" id="lpg-code-block" role="tabpanel" aria-live="polite"></div></div>
+      </div>
+    </div>`;
+}
+
+function lpgSet(key, val){
+  lpg[key] = val;
+  renderListPlayground();
+}
+function lpgCopyCode(){
+  const b = document.getElementById('lpg-code-block');
+  if(!b) return;
+  navigator.clipboard.writeText(b.innerText||b.textContent).catch(()=>{});
+  const btn = document.getElementById('lpg-copy-btn');
+  if(btn){ btn.textContent = 'Copied!'; setTimeout(()=>btn.textContent='Copy', 2000); }
+}
+
+function renderListUsage(){
+  const root = document.getElementById('lst-usage');
+  if(!root) return;
+  root.innerHTML = `
+    <div class="cpg-section-heading">
+      <div class="cpg-layout__title">Do's and don'ts</div>
+      <div class="cpg-layout__desc">Reach for the pattern that matches the shape of what you have &mdash; a few facts, or a sequence of events.</div>
+    </div>
+    <div class="cpg-section-block">
+      <div class="sel-usage">
+        <div class="sel-usage__card">
+          <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
+          <ul class="sel-usage__list">
+            <li>Use a key&ndash;value list for a handful of facts about one record &mdash; reach for a table once there are many similar records.</li>
+            <li>Use an activity timeline when order and time genuinely matter, not just as a decorative list style.</li>
+            <li>Colour a timeline dot by the event's real semantic meaning &mdash; success, info, warning or error &mdash; not by decoration.</li>
+          </ul>
+        </div>
+        <div class="sel-usage__card">
+          <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don't</div>
+          <ul class="sel-usage__list">
+            <li>Don't stretch a key&ndash;value list to a screen's worth of facts &mdash; that's a table.</li>
+            <li>Don't use a timeline for unordered or unrelated items.</li>
+            <li>Don't mix key&ndash;value rows and timeline events in the same list &mdash; pick one shape per panel.</li>
+          </ul>
+        </div>
+      </div>
+    </div>`;
+}
+
+function renderListInSitu(){
+  const root = document.getElementById('lst-insitu');
+  if(!root) return;
+  const theme = currentTheme();
+  const sbg = stageBg(theme);
+
+  // 1. Merchant detail panel — key–value list in a record view
+  const detailMock = `
+    <div class="spec-mock__stage" style="background:${sbg};padding:16px 14px">
+      <div style="font-size:11px;font-weight:700;color:var(--chrome-txt);margin-bottom:10px">Merchant profile</div>
+      ${makeKvHTML(LST_KV_POOL.slice(0,4), {})}
+    </div>
+    <div class="spec-mock__cap"><b>Record detail panel</b>A handful of facts about one merchant, laid out as a definition list.</div>`;
+
+  // 2. Audit / activity feed panel — timeline in a system log view
+  const feedMock = `
+    <div class="spec-mock__stage" style="background:${sbg};padding:16px 14px">
+      <div style="font-size:11px;font-weight:700;color:var(--chrome-txt);margin-bottom:10px">System activity</div>
+      ${makeTimelineHTML(LST_TL_POOL.slice(0,3), {})}
+    </div>
+    <div class="spec-mock__cap"><b>Audit log panel</b>A chronological feed of system and settlement events.</div>`;
+
+  // 3. Side-by-side detail + activity — one record page combining both
+  const combinedMock = `
+    <div class="spec-mock__stage" style="background:${sbg};padding:16px 14px;display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start">
+      <div>
+        <div style="font-size:10.5px;font-weight:700;color:var(--chrome-muted);margin-bottom:8px">DETAILS</div>
+        ${makeKvHTML(LST_KV_POOL.slice(0,3), {density:'compact'})}
+      </div>
+      <div>
+        <div style="font-size:10.5px;font-weight:700;color:var(--chrome-muted);margin-bottom:8px">ACTIVITY</div>
+        ${makeTimelineHTML(LST_TL_POOL.slice(0,2), {density:'compact'})}
+      </div>
+    </div>
+    <div class="spec-mock__cap"><b>Record page</b>Facts on one side, activity on the other &mdash; the two patterns sharing a single screen.</div>`;
+
+  root.innerHTML = `
+    <div class="cpg-section-heading">
+      <div class="cpg-layout__title">In context</div>
+      <div class="cpg-layout__desc">Both patterns doing their everyday job &mdash; summarising one record, and showing what happened to it over time.</div>
+    </div>
+    <div class="cpg-section-block">
+      <div class="spec-insitu-grid">
+        <div class="spec-mock">${detailMock}</div>
+        <div class="spec-mock">${feedMock}</div>
+        <div class="spec-mock">${combinedMock}</div>
+      </div>
+    </div>`;
+}
+
+function renderListReference(){
+  const root = document.getElementById('lst-reference');
+  if(!root) return;
+  const theme = currentTheme();
+  const sbg = stageBg(theme);
+
+  /* ---- Anatomy: Key–value list ---- */
+  const heroKv = makeKvHTML(LST_KV_POOL.slice(0,3), {});
+  const kvParts = [
+    {num:1, name:'Row',   note:'One key–value pair per row, divided by a hairline border.', vis:'<span class="spec-part__pill" style="width:100px;height:36px;border-radius:8px"></span>'},
+    {num:2, name:'Key',   note:'Muted, fixed-width label — 12px, weight 700.',                vis:'<span style="font-size:12px;font-weight:700;color:var(--chrome-muted)">Key</span>'},
+    {num:3, name:'Value', note:'Primary text token — 13px, weight 600.',                      vis:'<span style="font-size:13px;font-weight:600;color:var(--chrome-txt)">Value</span>'},
+  ];
+  const kvPartCards = kvParts.map(p=>`
+    <div class="spec-part">
+      <div class="spec-part__stage" style="background:${sbg}">${p.vis}</div>
+      <div class="spec-part__body">
+        <div class="spec-part__name"><span class="spec-part__num">${p.num}</span>${p.name}</div>
+        <div class="spec-part__note">${p.note}</div>
+      </div>
+    </div>`).join('');
+
+  const kvDims = [
+    {name:'Container',        val:'1px solid border, 12px radius, overflow hidden'},
+    {name:'Row padding',      val:'13px 16px (comfortable) · 8px 12px (compact)'},
+    {name:'Key column width', val:'120px (narrow) · 180px (default) · 220px (wide)'},
+    {name:'Row gap',          val:'16px between key and value'},
+    {name:'Mobile',           val:'Below 520px, rows stack — key above value, no fixed width'},
+  ];
+  const kvDimRows = kvDims.map(d=>`<tr><td class="dd-table__name">${d.name}</td><td>${d.val}</td></tr>`).join('');
+
+  /* ---- Anatomy: Activity timeline ---- */
+  const heroTl = makeTimelineHTML(LST_TL_POOL.slice(0,3), {});
+  const tlParts = [
+    {num:1, name:'Dot',       note:'9px node, coloured by the event’s semantic meaning via --dd-tl-dot.', vis:'<span style="width:9px;height:9px;border-radius:50%;background:var(--color-success-h);display:inline-block"></span>'},
+    {num:2, name:'Rail',      note:'1px connecting line on the border token, joining each dot to the next.',   vis:'<span style="width:1px;height:32px;background:var(--chrome-border);display:inline-block"></span>'},
+    {num:3, name:'Title',     note:'13px, weight 700, paired with a right-aligned timestamp.',                 vis:'<span style="font-size:13px;font-weight:700;color:var(--chrome-txt)">Title</span>'},
+    {num:4, name:'Timestamp', note:'11px, muted, tabular numerals so times align.',                            vis:'<span style="font-size:11px;font-weight:600;color:var(--chrome-muted)">Today · 09:14</span>'},
+    {num:5, name:'Description', note:'12px, muted body copy below the title row.',                            vis:'<span style="font-size:12px;color:var(--chrome-muted)">Event description</span>'},
+  ];
+  const tlPartCards = tlParts.map(p=>`
+    <div class="spec-part">
+      <div class="spec-part__stage" style="background:${sbg}">${p.vis}</div>
+      <div class="spec-part__body">
+        <div class="spec-part__name"><span class="spec-part__num">${p.num}</span>${p.name}</div>
+        <div class="spec-part__note">${p.note}</div>
+      </div>
+    </div>`).join('');
+
+  const tlDims = [
+    {name:'Container', val:'1px solid border, 12px radius, 22px/24px padding (14px/16px compact)'},
+    {name:'Dot',        val:'9px diameter, 3px ring matching the surface behind it'},
+    {name:'Rail',       val:'1px wide, inset 15px from the dot'},
+    {name:'Item gap',   val:'20px between events (14px compact)'},
+  ];
+  const tlDimRows = tlDims.map(d=>`<tr><td class="dd-table__name">${d.name}</td><td>${d.val}</td></tr>`).join('');
+
+  /* ---- Semantic dot colours (Lists' stand-in for Pills' colour-variant grid) ---- */
+  const dotCells = LST_DOT_VARIANTS.map(v=>`
+    <div class="spec-cell">
+      <div class="spec-cell__stage" style="background:${sbg}"><span style="width:14px;height:14px;border-radius:50%;background:var(${v.token});display:inline-block"></span></div>
+      <div class="spec-cell__name">${v.label}</div>
+      <div class="spec-cell__desc"><code>${v.token}</code></div>
+    </div>`).join('');
+
+  root.innerHTML = `
+    <div class="type-sub">
+      <div class="type-sub__title">Anatomy &mdash; Key–value list</div>
+      <div class="type-sub__desc">A bordered card of stacked rows, each pairing a muted key with a value on the primary text token.</div>
+      <div class="cpg-section-outline">
+        <div class="spec-hero" style="background:${sbg}">${heroKv}</div>
+        <div class="spec-parts">${kvPartCards}</div>
+      </div>
+    </div>
+
+    <div class="type-sub">
+      <div class="type-sub__title">Key–value list &mdash; spacing &amp; dimensions</div>
+      <div class="type-sub__desc">No colour or size axis &mdash; density and key-column width are the two supported variations.</div>
+      <div class="cpg-section-outline">
+        <div class="dd-table-wrap"><table class="dd-table">
+          <thead><tr><th>Part</th><th>Value</th></tr></thead>
+          <tbody>${kvDimRows}</tbody>
+        </table></div>
+      </div>
+    </div>
+
+    <div class="type-sub">
+      <div class="type-sub__title">Anatomy &mdash; Activity timeline</div>
+      <div class="type-sub__desc">A bordered card of connected events, each with a semantic dot, a title/timestamp row and a description.</div>
+      <div class="cpg-section-outline">
+        <div class="spec-hero" style="background:${sbg}">${heroTl}</div>
+        <div class="spec-parts">${tlPartCards}</div>
+      </div>
+    </div>
+
+    <div class="type-sub">
+      <div class="type-sub__title">Activity timeline &mdash; spacing &amp; dimensions</div>
+      <div class="type-sub__desc">Density is the only supported size variation; the dot, rail and title stay fixed otherwise.</div>
+      <div class="cpg-section-outline">
+        <div class="dd-table-wrap"><table class="dd-table">
+          <thead><tr><th>Part</th><th>Value</th></tr></thead>
+          <tbody>${tlDimRows}</tbody>
+        </table></div>
+      </div>
+    </div>
+
+    <div class="type-sub" style="margin-bottom:0">
+      <div class="type-sub__title">Semantic dot colours</div>
+      <div class="type-sub__desc">The timeline dot reads a --dd-tl-dot custom property set per event. Four tokens cover every real-world case &mdash; the same family used by Tags and Alerts.</div>
+      <div class="cpg-section-outline">
+        <div class="spec-grid">${dotCells}</div>
+      </div>
+    </div>`;
+}
+
+try { renderListCodeTab(); } catch(e){ console.error('lst-code-tab',e); }
+try { renderListPlayground(); } catch(e){ console.error('lst-playground',e); }
+try { renderListUsage(); } catch(e){ console.error('lst-usage',e); }
+try { renderListInSitu(); } catch(e){ console.error('lst-insitu',e); }
+try { renderListReference(); } catch(e){ console.error('lst-reference',e); }
+
+function lstTabSwitch(tab){
+  const nav = document.getElementById('lst-tabs-list');
+  if(!nav) return;
+  nav.querySelectorAll('.tab-item').forEach(btn=>btn.classList.toggle('on', btn.getAttribute('data-lst-tab')===tab));
+  document.querySelectorAll('#s-lists .tabs-panel[data-lst-panel]').forEach(p=>p.classList.toggle('on', p.getAttribute('data-lst-panel')===tab));
+}
+
+/* ============================================================
    AVATAR
    Same tabbed-page treatment as Pills (.sec--tabbed): Overview /
    Style / Code / Changelog, a shared-state playground rendered
@@ -15178,20 +15760,25 @@ function cbrTabSwitch(tab){
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.78.0';
+const SYSTEM_VERSION = '1.79.0';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
-      {version:'1.78.0', date:'2026-08-21', author:'Mo', title:'Input OTP rebuilt with the full Pills-style tabbed treatment', changes:[
+      {version:'1.79.0', date:'2026-08-21', author:'Mo', title:'Input OTP rebuilt with the full Pills-style tabbed treatment', changes:[
         ['added','Input OTP (s-input-otp) converted from a single static page (three hand-typed example blocks + a "When to use" block) into a full .sec--tabbed page — Overview / Style / Code / Changelog — matching Pills and Carousel: a "Try the component" playground (Digits 4/6, Grouping and error-State controls, rendered into two synced mounts via shared otpg state, with every group fully typable), 2 "In context" mockups (login/2FA verification, payment confirmation mid-error), a Style tab (Anatomy — box/separator/error state/message — plus a combined Dimensions & tokens table, since Input OTP has no size or colour axis) and a Code tab with the .code-seg HTML/CSS · Blazor · React TSX switcher'],
         ['added','New ai-ctx tab regenerated via generate-ai-context-tab.mjs for the new js-rendered builders (makeOtpHTML, makeOtpEl, wireOtpGroup), moved from the end of the section into the new hero\'s sec-header-meta, matching Pills/Carousel'],
         ['changed','Do/Dont card moved into the Overview tab\'s #otp-usage .cpg-section-block, JS-rendered markup like Pills/Carousel (previously static markup); guidance text unchanged from the original 3 do / 3 dont'],
       ]},
-      {version:'1.77.2', date:'2026-08-21', author:'Mo', title:'Carousel arrow glyph now calls the shared icon function; theme re-render wired up', changes:[
+      {version:'1.78.1', date:'2026-08-21', author:'Mo', title:'Carousel arrow glyph now calls the shared icon function; theme re-render wired up', changes:[
         ['fixed','carArrowSVG() was returning a hand-copied SVG path string byte-identical to ICONS[\'chevron-right\'].d instead of calling the shared iconSvg(\'chevron-right\') function — now calls it live, matching the convention already used by Accordion, so a future edit to the shared glyph can\'t silently drift out of sync with Carousel\'s own copy'],
         ['fixed','renderCarPlayground/renderCarInSitu/renderCarReference were missing from toggleTheme()\'s re-render list — switching light/dark left Carousel\'s Playground stage, In-context mockups and Style-tab swatches on their stale background colour until the next full reload'],
+      ]},
+      {version:'1.78.0', date:'2026-08-21', author:'Mo', title:'Lists rebuilt with the full Pills-style tabbed treatment', changes:[
+        ['added','Lists (s-lists) converted from a flat, static "Key–value list" + "Activity timeline" + "When to use" page into a full .sec--tabbed page — Overview / Style / Code / Changelog — matching Pills/Empty State/Carousel: a "Try the component" playground with a Pattern switcher (Key–value list / Activity timeline) plus pattern-specific controls (Rows/Key column width, or Events/Newest event colour) and a shared Density toggle, 3 "In context" mockups (record detail panel, audit log panel, combined record page), a Style tab with separate Anatomy/dimensions for each pattern plus a Semantic dot colours table, and a Code tab with the .code-seg HTML/CSS · Blazor · React TSX switcher'],
+        ['added','Two new reusable modifier classes on the existing .dd-kv/.dd-timeline components: key-column width (--key-narrow/--key-wide) and density (--compact)'],
+        ['added','New ai-ctx tab regenerated via generate-ai-context-tab.mjs for the js-rendered builders (makeKvHTML, makeTimelineHTML), moved from the end of the section into the new hero\'s sec-header-meta, matching Pills/Empty State/Carousel'],
       ]},
       {version:'1.77.1', date:'2026-08-19', author:'Mo', title:'Dropdown ai-ctx tab regenerated to drop leftover PR trivia', changes:[
         ['fixed','s-dropdown\'s ai-ctx tab note ended with a leftover sentence ("Moved to the .sec--tabbed layout... in this PR.") from an earlier change — regenerated via generate-ai-context-tab.mjs per rule 5; CSS/JS/usage content and contentHash unchanged'],
@@ -17548,7 +18135,17 @@ const CHANGELOG = {
         ['added','Interactive playground with real open/select/close, click-outside and Escape-to-dismiss behaviour'],
       ]},
     ]},
-    {secId:'s-lists', name:'Lists', version:'1.1.0', entries:[
+    {secId:'s-lists', name:'Lists', version:'2.0.0', entries:[
+      {version:'2.0.0', date:'2026-08-21', author:'Mo', title:'Rebuilt with the full Pills-style tabbed treatment', changes:[
+        ['changed','Page restructured from a flat .sec section into a .sec--tabbed page — hero with a live mini preview, and Overview / Style / Code / Changelog tabs (lstTabSwitch), matching Pills/Carousel/Empty State'],
+        ['added','"Try the component" playground with a Pattern switcher (Key–value list / Activity timeline) plus pattern-specific controls — Rows and Key column width for the list, Events and Newest event colour for the timeline — and a shared Density (Comfortable/Compact) toggle, rendered into two synced mounts (#lst-playground on Overview, #lst-code-playground on Code) over one shared lpg state — the generalised form of Pills\' PILL_PLAYGROUND_MOUNTS pattern, extended with a pattern axis since Lists holds two structurally different components rather than one with colour/size variants'],
+        ['added','3 "In context" mockups — a merchant record detail panel (key–value list), a system activity/audit log panel (timeline), and a combined record page placing both patterns side by side'],
+        ['added','Style tab: separate Anatomy + Spacing & dimensions breakdowns for the Key–value list and the Activity timeline, plus a "Semantic dot colours" table (info/success/warning/error, the same family used by Tags/Alerts) standing in for Pills\' colour-variant grid, since only the timeline dot carries a colour axis'],
+        ['added','Code tab with the shared .code-seg HTML/CSS · Blazor · React TSX language switcher, live-generated from the current Playground pattern and configuration'],
+        ['added','Two new modifier classes: .dd-kv--key-narrow/--key-wide (key column width) and .dd-kv--compact/.dd-timeline--compact (density) — both real, reusable CSS additions to the existing .dd-kv/.dd-timeline rules, not playground-only inline styles'],
+        ['changed','Do/Dont card moved into the Overview tab\'s #lst-usage .cpg-section-block, JS-rendered like Pills/Empty State (previously static markup); added one new rule to each side (colour timeline dots by real meaning; don\'t mix the two list shapes in one panel) alongside the original guidance'],
+        ['changed','ai-ctx tab regenerated for the new js-rendered builders (makeKvHTML, makeTimelineHTML, lstTlItemHTML, lstKvRowHTML) and relocated from the end of the section into the new hero\'s sec-header-meta'],
+      ]},
       {version:'1.1.0', date:'2026-08-04', author:'Mo', title:'Empty state moved out into its own section', changes:[
         ['removed','Empty state — moved out to a new, dedicated Empty State section (s-empty-state); it wasn\'t really list-shaped and reads clearer as its own component'],
         ['changed','Section description and When to use guidance updated to cover only Key–value list and Activity timeline'],
@@ -23925,6 +24522,7 @@ try { renderSectionChangelogs(); } catch(e){ console.error('section-changelog',e
   {secId:'s-nav', panelId:'nav-changelog-panel'},
   {secId:'s-carousel', panelId:'car-changelog-panel'},
   {secId:'s-empty-state', panelId:'es-changelog-panel'},
+  {secId:'s-lists', panelId:'lst-changelog-panel'},
   {secId:'s-input-otp', panelId:'otp-changelog-panel'},
 ].forEach(({secId, panelId})=>{
   try {
