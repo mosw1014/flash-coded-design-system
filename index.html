@@ -6425,7 +6425,7 @@ body.home .main{max-width:none;margin:0;padding:0}
       <div class="sec__head">
         <h1 class="sec__title">Popover</h1>
         <div class="sec-header-meta">
-          <span class="comp-ver-badge" style="margin-left:0">v2.0.6</span>
+          <span class="comp-ver-badge" style="margin-left:0">v2.0.7</span>
           <details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-popover">
@@ -11537,10 +11537,10 @@ function popPreviewHTML(type, placement, footer, triggerLabel){
 }
 
 const POP_KEY_PATTERNS = [
-  {key:'info-left',   label:'Info, left-anchored',          type:'info',   placement:'left',  footer:true},
-  {key:'filter-left',  label:'Filter, left-anchored',        type:'filter', placement:'left',  footer:true},
-  {key:'form-right',   label:'Form, right-anchored',         type:'form',   placement:'right', footer:true},
-  {key:'info-right',   label:'Info, right-anchored, no footer', type:'info', placement:'right', footer:false},
+  {key:'info-left',   name:'Info',   detail:'left-anchored',              type:'info',   placement:'left',  footer:true},
+  {key:'filter-left',  name:'Filter', detail:'left-anchored',              type:'filter', placement:'left',  footer:true},
+  {key:'form-right',   name:'Form',   detail:'right-anchored',             type:'form',   placement:'right', footer:true},
+  {key:'info-right',   name:'Info',   detail:'right-anchored, no footer',  type:'info',   placement:'right', footer:false},
 ];
 
 function renderPopoverPatterns(){
@@ -11552,7 +11552,7 @@ function renderPopoverPatterns(){
   const cells = POP_KEY_PATTERNS.map(p=>`
     <div class="spec-cell">
       <div class="spec-cell__stage" style="background:${sbg};padding:24px 14px">${popPreviewHTML(p.type, p.placement, p.footer)}</div>
-      <div class="spec-cell__name">${p.label}</div>
+      <div class="spec-cell__name" style="padding-bottom:12px;line-height:1.4">${p.name}<span style="font-weight:400;color:var(--chrome-muted)">, ${p.detail}</span></div>
     </div>`).join('');
 
   root.innerHTML = `
@@ -15707,12 +15707,16 @@ function cbrTabSwitch(tab){
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.78.6';
+const SYSTEM_VERSION = '1.78.7';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.78.7', date:'2026-08-21', author:'Mo', title:'Popover Key patterns labels fixed and restyled', changes:[
+        ['fixed','.spec-cell__name has no bottom padding by default (fine for the short single-line labels other components use), so Key patterns\' longer two-part labels ("Info, left-anchored") were wrapping to a second line and getting crushed against the cell edge — added 12px bottom padding and 1.4 line-height'],
+        ['changed','Labels split into a bold pattern name ("Info"/"Filter"/"Form") plus a lighter-weight, muted detail ("left-anchored", "right-anchored, no footer") instead of one flat run of equal-weight text, for clearer at-a-glance scanning'],
+      ]},
       {version:'1.78.6', date:'2026-08-21', author:'Mo', title:'Popover hero preview switched to wireframe placeholders', changes:[
         ['changed','Trigger label and panel title replaced with .mk-bar wireframe shapes instead of literal copy ("Filter", "Filter transactions"), matching the placeholder-bar convention most other hero previews already use'],
       ]},
@@ -17237,7 +17241,11 @@ const CHANGELOG = {
         ['added','Native range input with a brand fill and live value; continuous, stepped and disabled examples'],
       ]},
     ]},
-    {secId:'s-popover', name:'Popover', version:'2.0.6', entries:[
+    {secId:'s-popover', name:'Popover', version:'2.0.7', entries:[
+      {version:'2.0.7', date:'2026-08-21', author:'Mo', title:'Key patterns labels fixed and restyled', changes:[
+        ['fixed','Key patterns cards\' two-part labels ("Info, left-anchored") wrapped to a second line and got crushed against the cell edge since .spec-cell__name has no bottom padding by default; added 12px bottom padding and 1.4 line-height'],
+        ['changed','Labels now split into a bold pattern name plus a lighter-weight, muted detail instead of one flat run of equal-weight text'],
+      ]},
       {version:'2.0.6', date:'2026-08-21', author:'Mo', title:'Hero preview switched to wireframe placeholders', changes:[
         ['changed','Trigger label and panel title replaced with .mk-bar wireframe shapes instead of literal copy, matching the placeholder-bar convention most other hero previews use'],
       ]},
