@@ -15760,12 +15760,15 @@ function cbrTabSwitch(tab){
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.79.0';
+const SYSTEM_VERSION = '1.79.1';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.79.1', date:'2026-08-21', author:'Mo', title:'Fixed Input OTP In-context mockups clipping the digit row', changes:[
+        ['fixed','Both "In context" mockups (login verification, payment confirmation) used the default 3-column .spec-insitu-grid for only 2 cards, squeezing each stage to roughly a third of the row width — too narrow for the real, unscaled 44px-wide otp boxes, so the 6-digit login row overflowed and was clipped by .spec-mock\'s overflow:hidden. Switched to .spec-insitu-grid--2 (same 2-column modifier Accordion uses for its two mockups) and scaled the otp markup down 18% (transform:scale(.82), same technique as Carousel\'s Anatomy hero) so every digit box is visible in both cards'],
+      ]},
       {version:'1.79.0', date:'2026-08-21', author:'Mo', title:'Input OTP rebuilt with the full Pills-style tabbed treatment', changes:[
         ['added','Input OTP (s-input-otp) converted from a single static page (three hand-typed example blocks + a "When to use" block) into a full .sec--tabbed page — Overview / Style / Code / Changelog — matching Pills and Carousel: a "Try the component" playground (Digits 4/6, Grouping and error-State controls, rendered into two synced mounts via shared otpg state, with every group fully typable), 2 "In context" mockups (login/2FA verification, payment confirmation mid-error), a Style tab (Anatomy — box/separator/error state/message — plus a combined Dimensions & tokens table, since Input OTP has no size or colour axis) and a Code tab with the .code-seg HTML/CSS · Blazor · React TSX switcher'],
         ['added','New ai-ctx tab regenerated via generate-ai-context-tab.mjs for the new js-rendered builders (makeOtpHTML, makeOtpEl, wireOtpGroup), moved from the end of the section into the new hero\'s sec-header-meta, matching Pills/Carousel'],
@@ -17290,7 +17293,10 @@ const CHANGELOG = {
         ['added','Click-anchored floating panel with interactive contents; outside-click and Escape to dismiss'],
       ]},
     ]},
-    {secId:'s-input-otp', name:'Input OTP', version:'2.0.0', entries:[
+    {secId:'s-input-otp', name:'Input OTP', version:'2.0.1', entries:[
+      {version:'2.0.1', date:'2026-08-21', author:'Mo', title:'Fixed In-context mockups clipping the digit row', changes:[
+        ['fixed','The login-verification and payment-confirmation mockups were laid out on the default 3-column .spec-insitu-grid with only 2 cards in it, leaving each stage too narrow for the real 44px otp boxes — the 6-digit login row overflowed and got clipped by .spec-mock\'s overflow:hidden. Switched to .spec-insitu-grid--2 (Accordion\'s existing 2-column modifier) and scaled the otp markup down 18% in both mockups so every box is visible'],
+      ]},
       {version:'2.0.0', date:'2026-08-21', author:'Mo', title:'Full tabbed rebuild — Overview / Style / Code / Changelog', changes:[
         ['added','Overview tab: "Try the component" playground with Digits (4/6), Grouping (contiguous/grouped) and State (default/error) controls, rendered into two synced mounts (Overview + Code tab) via shared otpg state; every playground/in-context group is fully typable, so the real auto-advance, backspace and paste behaviour can be tried live, not just previewed'],
         ['added','Overview tab: 2 "In context" mockups — a login/2FA verification screen and a payment-confirmation screen shown mid-error'],
@@ -23920,13 +23926,18 @@ function renderOtpInSitu(){
   const sbg = stageBg(theme);
   const bar = w => `<span class="spec-mock__bar" style="width:${w}"></span>`;
 
+  // Both mockups scale their otp markup down (transform, not a separate
+  // size variant — Input OTP has only one real size) so the full digit row
+  // fits inside the narrower In-context card without clipping.
+  const otpScaled = (opts) => `<div style="transform:scale(.82);transform-origin:left top">${makeOtpHTML(opts)}</div>`;
+
   // 1. Login / 2FA verification — headline copy, then a plain 6-digit group
   const loginMock = `
     <div class="spec-mock__stage" style="background:${sbg}">
       <div class="spec-mock__row" style="flex-direction:column;align-items:flex-start;gap:10px">
         ${bar('72%')}
         ${bar('50%')}
-        <div style="margin-top:2px">${makeOtpHTML({digits: 6, grouped: false, error: false})}</div>
+        <div style="margin-top:2px">${otpScaled({digits: 6, grouped: false, error: false})}</div>
         <span style="font-size:11px;color:var(--chrome-muted)">Didn&rsquo;t get a code? <b style="color:var(--color-link)">Resend</b></span>
       </div>
     </div>
@@ -23937,7 +23948,7 @@ function renderOtpInSitu(){
     <div class="spec-mock__stage" style="background:${sbg}">
       <div class="spec-mock__row" style="flex-direction:column;align-items:flex-start;gap:10px">
         ${bar('80%')}
-        <div style="margin-top:2px">${makeOtpHTML({digits: 4, grouped: true, error: true})}</div>
+        <div style="margin-top:2px">${otpScaled({digits: 4, grouped: true, error: true})}</div>
         <div class="otp-msg otp-msg--err">That code isn&rsquo;t right &mdash; check it and try again.</div>
       </div>
     </div>
@@ -23949,7 +23960,7 @@ function renderOtpInSitu(){
       <div class="cpg-layout__desc">The same field verifies a sign-in and authorises a payment &mdash; only the digit count and state change.</div>
     </div>
     <div class="cpg-section-block">
-      <div class="spec-insitu-grid">
+      <div class="spec-insitu-grid spec-insitu-grid--2">
         <div class="spec-mock">${loginMock}</div>
         <div class="spec-mock">${payMock}</div>
       </div>
