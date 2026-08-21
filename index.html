@@ -7358,60 +7358,21 @@ body.home .main{max-width:none;margin:0;padding:0}
     <!-- ============================================================
          SEPARATOR
     ============================================================ -->
-    <section class="sec" id="s-separator">
+    <section class="sec sec--tabbed" id="s-separator">
+      <div class="sec-hero">
       <div class="sec__head">
-        <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Separator <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.1</span></h1>
-        <p class="sec__desc">A thin rule that divides content into groups. Horizontal by default, vertical inside a row, or with a centred label to break a flow. One hairline on the border token, so it stays quiet in both themes.</p>
-      </div>
-      <div class="type-sub">
-        <div class="type-sub__title">Horizontal</div>
-        <div class="type-sub__desc">The default &mdash; separates stacked blocks of content.</div>
-        <div class="sg-stage" style="display:block">
-          <div style="font-size:13px;color:var(--chrome-txt);max-width:420px">
-            <div style="font-weight:700;margin-bottom:3px">Account</div>
-            <div style="color:var(--chrome-muted)">Manage your business profile and details.</div>
-            <hr class="sep" style="margin:16px 0">
-            <div style="font-weight:700;margin-bottom:3px">Payouts</div>
-            <div style="color:var(--chrome-muted)">Choose where settled funds are deposited.</div>
-          </div>
-        </div>
-      </div>
-      <div class="type-sub">
-        <div class="type-sub__title">Vertical &amp; labelled</div>
-        <div class="type-sub__desc">A vertical rule separates inline items; a labelled separator breaks a flow with a word like &ldquo;or&rdquo;.</div>
-        <div class="sg-stage sg-stage--col" style="display:flex;flex-direction:column;gap:26px;align-items:flex-start">
-          <div class="sep-hstack"><span>Profile</span><span class="sep--v"></span><span>Settings</span><span class="sep--v"></span><span>Log out</span></div>
-          <div class="sep-label">Or continue with</div>
-        </div>
-      </div>
-      <div class="type-sub">
-        <div class="type-sub__title">When to use</div>
-        <div class="type-sub__desc">A separator groups; whitespace usually does the same job more quietly. Reach for a rule only when the boundary needs to be explicit.</div>
-        <div class="sel-usage">
-          <div class="sel-usage__card">
-            <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
-            <ul class="sel-usage__list">
-              <li>Divide clearly distinct groups in a list or settings page.</li>
-              <li>Use a vertical rule between inline actions or meta items.</li>
-              <li>Use a labelled separator to introduce an alternative (&ldquo;or&rdquo;).</li>
-            </ul>
-          </div>
-          <div class="sel-usage__card">
-            <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don&rsquo;t</div>
-            <ul class="sel-usage__list">
-              <li>Don&rsquo;t rule between every row &mdash; let spacing do the work.</li>
-              <li>Don&rsquo;t make separators heavy or coloured; keep them hairline.</li>
-              <li>Don&rsquo;t stack multiple rules with no content between them.</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <details class="ai-ctx">
+        <h1 class="sec__title">Separator</h1>
+        <div class="sec-header-meta">
+          <span class="comp-ver-badge" style="margin-left:0">v2.0.1</span>
+          <details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-separator">
 {
-  "status": "static",
+  "status": "js-rendered",
+  "builderFunctions": [
+    "SEP_VARIANTS",
+    "makeSepHTML"
+  ],
   "realClasses": [
     ".sep",
     ".sep--v",
@@ -7419,6 +7380,7 @@ body.home .main{max-width:none;margin:0;padding:0}
     ".sep-label"
   ],
   "css": "/* ---- Separator ---- */\n.sep { border:none;height:1px;background:var(--chrome-border);margin:0;width:100% }\n.sep--v { width:1px;height:20px;background:var(--chrome-border);flex-shrink:0 }\n.sep-hstack { display:flex;align-items:center;gap:16px;font-size:13px;font-weight:600;color:var(--chrome-txt) }\n.sep-label { display:flex;align-items:center;gap:14px;color:var(--chrome-muted);font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;width:100%;max-width:360px }\n.sep-label::before,.sep-label::after { content:\"\";flex:1;height:1px;background:var(--chrome-border) }",
+  "js": "const SEP_VARIANTS = [\n  {key:'horizontal', label:'Horizontal'},\n  {key:'vertical',   label:'Vertical'},\n  {key:'labelled',   label:'Labelled'},\n];\n\nfunction makeSepHTML(variant, label){\n  if(variant==='vertical') return `&lt;span class=\"sep--v\"&gt;&lt;/span&gt;`;\n  if(variant==='labelled') return `&lt;div class=\"sep-label\"&gt;${sepEsc(label||'Or continue with')}&lt;/div&gt;`;\n  return `&lt;hr class=\"sep\"&gt;`;\n}",
   "usage": {
     "do": [
       "Divide clearly distinct groups in a list or settings page.",
@@ -7431,10 +7393,71 @@ body.home .main{max-width:none;margin:0;padding:0}
       "Don’t stack multiple rules with no content between them."
     ]
   },
-  "contentHash": "802166a5c2ecc81cac4d9965be0aa5b614e2c41b3d819898cf6cb47886c70fd6"
+  "contentHash": "611caf85ff89a9f5178e23a7449c439ba992d05d78381907c79668d121e860e2",
+  "note": "makeSepHTML is the minimal real-markup builder (variant+label -&gt; .sep/.sep--v/.sep-label HTML string), used directly by the playground, Key variants grid and Style tab. sepg (playground state)/sepgRefresh/getSepCode*/renderSepPlayground/renderSepReference/renderSepInSitu/renderSepVariants are doc-site-only playground plumbing, excluded."
 }
   </pre>
 </details>
+        </div>
+      </div>
+      <div class="sec-hero__preview"><div class="mk mk-col" style="gap:14px;width:70%"><span class="mk-bar mk-bar--txt" style="width:50%"></span><span class="mk-bar" style="width:85%"></span><hr class="sep" style="margin:2px 0"><span class="mk-bar mk-bar--txt" style="width:40%"></span><span class="mk-bar" style="width:70%"></span></div></div>
+      </div>
+      <div class="tabs-list sec-tabs" id="sep-tabs-list">
+        <button type="button" class="tab-item on" data-sep-tab="overview" onclick="sepTabSwitch('overview')"><span class="tab-item__inner"><span class="tab-item__label">Overview</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-sep-tab="style" onclick="sepTabSwitch('style')"><span class="tab-item__inner"><span class="tab-item__label">Style</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-sep-tab="code" onclick="sepTabSwitch('code')"><span class="tab-item__inner"><span class="tab-item__label">Code</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-sep-tab="changelog" onclick="sepTabSwitch('changelog')"><span class="tab-item__inner"><span class="tab-item__label">Changelog</span></span><span class="tab-item__line"></span></button>
+      </div>
+      <div class="tabs-panel on" data-sep-panel="overview">
+        <div id="sep-playground" class="type-sub"></div>
+        <div id="sep-variants" class="type-sub"></div>
+        <div id="sep-insitu" class="type-sub"></div>
+        <div class="type-sub cpg-variants" id="sep-usage">
+          <div class="cpg-section-heading">
+            <div class="cpg-layout__title">Do's and don'ts</div>
+            <div class="cpg-layout__desc">A separator groups; whitespace usually does the same job more quietly. Reach for a rule only when the boundary needs to be explicit.</div>
+          </div>
+          <div class="cpg-section-block">
+            <div class="sel-usage">
+              <div class="sel-usage__card">
+                <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
+                <ul class="sel-usage__list">
+                  <li>Divide clearly distinct groups in a list or settings page.</li>
+                  <li>Use a vertical rule between inline actions or meta items.</li>
+                  <li>Use a labelled separator to introduce an alternative (&ldquo;or&rdquo;).</li>
+                </ul>
+                <div class="spec-usage-demo" style="gap:10px;flex-direction:column;align-items:flex-start">
+                  <div style="font-size:12px;color:var(--chrome-txt)">Account</div>
+                  <hr class="sep" style="margin:0">
+                  <div style="font-size:12px;color:var(--chrome-txt)">Payouts</div>
+                </div>
+              </div>
+              <div class="sel-usage__card">
+                <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don't</div>
+                <ul class="sel-usage__list">
+                  <li>Don&rsquo;t rule between every row &mdash; let spacing do the work.</li>
+                  <li>Don&rsquo;t make separators heavy or coloured; keep them hairline.</li>
+                  <li>Don&rsquo;t stack multiple rules with no content between them.</li>
+                </ul>
+                <div class="spec-usage-demo" style="gap:6px;flex-direction:column;align-items:flex-start">
+                  <div style="font-size:12px;color:var(--chrome-txt)">Account</div>
+                  <hr class="sep" style="margin:0;background:#0062EB;height:3px">
+                  <hr class="sep" style="margin:0">
+                  <div style="font-size:12px;color:var(--chrome-txt)">Payouts</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tabs-panel" data-sep-panel="style">
+        <div id="sep-reference" class="type-sub spec-panel spec-stack"></div>
+      </div>
+      <div class="tabs-panel" data-sep-panel="code">
+        <div id="sep-code-playground" class="type-sub spec-panel spec-code-playground"></div>
+        <div id="sep-code-tab" class="type-sub spec-panel"></div>
+      </div>
+      <div class="tabs-panel" data-sep-panel="changelog" id="sep-changelog-panel"></div>
     </section>
 
     <!-- ============================================================
@@ -8078,6 +8101,10 @@ function toggleTheme() {
   try { if(typeof renderEmptyStateScenarios==='function' && document.getElementById('es-scenarios')) renderEmptyStateScenarios(); } catch(e){}
   try { if(typeof renderEmptyStateInSitu==='function' && document.getElementById('es-insitu')) renderEmptyStateInSitu(); } catch(e){}
   try { if(typeof renderEmptyStateReference==='function' && document.getElementById('es-reference')) renderEmptyStateReference(); } catch(e){}
+  try { if(typeof renderSepPlayground==='function' && document.getElementById('sep-playground')) renderSepPlayground(); } catch(e){}
+  try { if(typeof renderSepVariants==='function' && document.getElementById('sep-variants')) renderSepVariants(); } catch(e){}
+  try { if(typeof renderSepInSitu==='function' && document.getElementById('sep-insitu')) renderSepInSitu(); } catch(e){}
+  try { if(typeof renderSepReference==='function' && document.getElementById('sep-reference')) renderSepReference(); } catch(e){}
   try { if(typeof renderPagPlayground==='function' && document.getElementById('pag-playground')) renderPagPlayground(); } catch(e){}
   try { if(typeof renderPagLayouts==='function' && document.getElementById('pag-layouts')) renderPagLayouts(); } catch(e){}
   try { if(typeof renderPagInSitu==='function' && document.getElementById('pag-insitu')) renderPagInSitu(); } catch(e){}
@@ -12317,6 +12344,430 @@ function lstTabSwitch(tab){
 }
 
 /* ============================================================
+   SEPARATOR
+   Same tabbed-page treatment as Pills/Empty State (.sec--tabbed):
+   Overview / Style / Code / Changelog, a shared-state playground
+   rendered into two mounts, and a three-language code panel.
+   Separator has no colour axis (one hairline on --chrome-border)
+   and no discrete size axis — its own axis is which of the three
+   forms is shown (horizontal / vertical / labelled) plus the
+   label text on the labelled form. Unlike Skeleton loader, "Key
+   variants" genuinely fits here (the three forms are variants of
+   one component, not composable primitives), so that heading is
+   kept rather than renamed to "Key building blocks". Style's
+   Size & dimensions folds into Anatomy since there's no size axis.
+============================================================ */
+const SEP_VARIANTS = [
+  {key:'horizontal', label:'Horizontal'},
+  {key:'vertical',   label:'Vertical'},
+  {key:'labelled',   label:'Labelled'},
+];
+
+function sepEsc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&#60;').replace(/>/g,'&#62;').replace(/"/g,'&quot;'); }
+
+/* Minimal real-markup builder: variant+label -> .sep/.sep--v/.sep-label HTML string. */
+function makeSepHTML(variant, label){
+  if(variant==='vertical') return `<span class="sep--v"></span>`;
+  if(variant==='labelled') return `<div class="sep-label">${sepEsc(label||'Or continue with')}</div>`;
+  return `<hr class="sep">`;
+}
+
+/* ── SEPARATOR PLAYGROUND ── */
+let sepg = { variant:'horizontal', label:'Or continue with', theme:'light' };
+
+function getSepCodeHTML(){
+  const html = makeSepHTML(sepg.variant, sepg.label).replace(/</g,'&#60;').replace(/>/g,'&#62;');
+  return `<span class="code-cm">/* Flash · ${cap(sepg.theme)} · ${cap(sepg.variant)} separator */</span>
+${html}`;
+}
+
+/* ── CODE PANEL LANGUAGES ──
+   HTML/CSS is the source of truth (real .sep/.sep--v/.sep-label markup).
+   Blazor and React TSX are illustrative wrappers over the same classes,
+   so variant + label stay the only things a consumer ports. */
+const SEP_LANGS = [
+  {key:'html',   label:'HTML / CSS', file:'separator.html'},
+  {key:'blazor', label:'Blazor',     file:'DsSeparator.razor'},
+  {key:'tsx',    label:'React TSX',  file:'DsSeparator.tsx'},
+];
+let sepLang = 'html';
+
+function getSepCodeBlazor(){
+  const variantPascal = cap(sepg.variant);
+  const labelAttr = sepg.variant==='labelled' ? `\n              <span class="code-attr">Label</span>=<span class="code-val">"${sepEsc(sepg.label||'Or continue with')}"</span>` : '';
+  return `<span class="code-cm">@* DsSeparator.razor — usage *@</span>
+<span class="code-kw">&#60;DsSeparator</span> <span class="code-attr">Variant</span>=<span class="code-val">"SeparatorVariant.${variantPascal}"</span>${labelAttr} <span class="code-kw">/></span>
+
+<span class="code-cm">@* DsSeparator.razor — component definition *@</span>
+<span class="code-kw">@if</span> (Variant == SeparatorVariant.Vertical) {
+  <span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"sep--v"</span><span class="code-kw">>&#60;/span></span>
+} <span class="code-kw">else if</span> (Variant == SeparatorVariant.Labelled) {
+  <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"sep-label"</span><span class="code-kw">></span>@Label<span class="code-kw">&#60;/div></span>
+} <span class="code-kw">else</span> {
+  <span class="code-kw">&#60;hr</span> <span class="code-cls">class</span>=<span class="code-val">"sep"</span> <span class="code-kw">/></span>
+}
+
+<span class="code-kw">@code</span> {
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> SeparatorVariant Variant { get; set; } = SeparatorVariant.Horizontal;
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> <span class="code-cls">string</span>? Label { get; set; }
+}`;
+}
+
+function getSepCodeTSX(){
+  const usageProps = `variant=<span class="code-val">"${sepg.variant}"</span>` + (sepg.variant==='labelled' ? ` label=<span class="code-val">"${sepEsc(sepg.label||'Or continue with')}"</span>` : '');
+  return `<span class="code-cm">// DsSeparator.tsx</span>
+<span class="code-kw">import</span> React <span class="code-kw">from</span> <span class="code-val">'react'</span>;
+
+<span class="code-kw">type</span> <span class="code-cls">SeparatorVariant</span> = <span class="code-val">'horizontal'</span> | <span class="code-val">'vertical'</span> | <span class="code-val">'labelled'</span>;
+
+<span class="code-kw">interface</span> <span class="code-cls">DsSeparatorProps</span> {
+  variant?: <span class="code-cls">SeparatorVariant</span>;
+  label?: <span class="code-cls">string</span>;
+}
+
+<span class="code-kw">export const</span> <span class="code-cls">DsSeparator</span>: React.FC&#60;DsSeparatorProps> = ({
+  variant = <span class="code-val">'horizontal'</span>,
+  label,
+}) => {
+  <span class="code-kw">if</span> (variant === <span class="code-val">'vertical'</span>) <span class="code-kw">return</span> &#60;span className=<span class="code-val">"sep--v"</span> />;
+  <span class="code-kw">if</span> (variant === <span class="code-val">'labelled'</span>) <span class="code-kw">return</span> &#60;div className=<span class="code-val">"sep-label"</span>>{label}&#60;/div>;
+  <span class="code-kw">return</span> &#60;hr className=<span class="code-val">"sep"</span> />;
+};
+
+<span class="code-cm">// Usage</span>
+&#60;DsSeparator ${usageProps} />`;
+}
+
+function getSepCode(){
+  return sepLang==='blazor' ? getSepCodeBlazor()
+       : sepLang==='tsx'    ? getSepCodeTSX()
+       : getSepCodeHTML();
+}
+
+function setSepLang(lang){
+  if(!SEP_LANGS.some(l=>l.key===lang)) return;
+  sepLang = lang;
+  document.querySelectorAll('#sep-code-tab .code-seg__btn').forEach(b=>{
+    const on = b.dataset.lang===lang;
+    b.setAttribute('aria-selected', on ? 'true' : 'false');
+    b.setAttribute('tabindex', on ? '0' : '-1');
+  });
+  const file = document.getElementById('sep-lang-file');
+  const meta = SEP_LANGS.find(l=>l.key===lang);
+  if(file && meta) file.textContent = meta.file;
+  const block = document.getElementById('sepg-code-block');
+  if(block) block.innerHTML = getSepCode();
+}
+
+/* Arrow-key navigation, per the WAI-ARIA tablist pattern: the segmented
+   control is one tab stop and Left/Right (plus Home/End) move between
+   languages. */
+function sepLangKeydown(e){
+  const i = SEP_LANGS.findIndex(l=>l.key===sepLang);
+  let n = i;
+  if(e.key==='ArrowLeft')       n = (i - 1 + SEP_LANGS.length) % SEP_LANGS.length;
+  else if(e.key==='ArrowRight') n = (i + 1) % SEP_LANGS.length;
+  else if(e.key==='Home')       n = 0;
+  else if(e.key==='End')        n = SEP_LANGS.length - 1;
+  else return;
+  e.preventDefault();
+  setSepLang(SEP_LANGS[n].key);
+  const btn = document.getElementById('sep-lang-' + SEP_LANGS[n].key);
+  if(btn) btn.focus();
+}
+
+/* Wraps the real separator markup in a small piece of representative
+   content per variant, so the playground stage shows the separator doing
+   its job rather than floating alone. Illustrative only — the Code tab's
+   snippet still comes from the pure makeSepHTML builder above. */
+function sepgStageHTML(variant, label){
+  if(variant==='vertical'){
+    return `<div class="sep-hstack"><span>Profile</span>${makeSepHTML('vertical')}<span>Settings</span>${makeSepHTML('vertical')}<span>Log out</span></div>`;
+  }
+  if(variant==='labelled'){
+    return `<div style="width:100%;max-width:260px">
+      <div style="height:32px;border-radius:8px;border:1px solid var(--chrome-border);margin-bottom:14px"></div>
+      ${makeSepHTML('labelled', label)}
+      <div style="height:32px;border-radius:8px;border:1px solid var(--chrome-border);margin-top:14px"></div>
+    </div>`;
+  }
+  return `<div style="width:100%;max-width:260px;font-size:13px;color:var(--chrome-txt)">
+    <div style="font-weight:700;margin-bottom:3px">Account</div>
+    <div style="color:var(--chrome-muted);font-size:11.5px">Manage your business profile and details.</div>
+    <div style="margin:14px 0">${makeSepHTML('horizontal')}</div>
+    <div style="font-weight:700;margin-bottom:3px">Payouts</div>
+    <div style="color:var(--chrome-muted);font-size:11.5px">Choose where settled funds are deposited.</div>
+  </div>`;
+}
+
+function sepgRefresh(){
+  document.querySelectorAll('.sepg-stage-el').forEach(stage=>{
+    stage.innerHTML = sepgStageHTML(sepg.variant, sepg.label);
+  });
+  document.querySelectorAll('.sepg-label-input-el').forEach(inp=>{
+    inp.disabled = sepg.variant!=='labelled';
+    if(document.activeElement !== inp) inp.value = sepg.label;
+  });
+  const block = document.getElementById('sepg-code-block');
+  if(block) block.innerHTML = getSepCode();
+}
+
+/* Separator Playground renders into more than one mount (the main
+   Overview demo, and a smaller copy on the Code tab) so both stay in
+   sync with the same shared sepg state — same pattern as Pills' ppg. */
+const SEP_PLAYGROUND_MOUNTS = [
+  {rootId:'sep-playground', idSuffix:'', wrap:true, title:'Try the component', desc:'Adjust the filters to test component states.', headingAbove:'Use a separator to divide content into groups when whitespace alone isn’t explicit enough.'},
+  {rootId:'sep-code-playground', idSuffix:'-code', style:'code', title:'Playground', desc:'Live demo of the component.'},
+];
+
+function renderSepPlayground(){
+  sepg.theme = document.documentElement.getAttribute('data-theme')==='dark' ? 'dark' : 'light';
+  const sbg = stageBg(sepg.theme);
+
+  const variantBtns = SEP_VARIANTS.map(v=>`<button class="btn-pg__pill${sepg.variant===v.key?' on':''}" onclick="sepgSet('variant','${v.key}')">${v.label}</button>`).join('');
+
+  SEP_PLAYGROUND_MOUNTS.forEach(mount=>{
+    const root = document.getElementById(mount.rootId);
+    if(!root) return;
+    const s = mount.idSuffix;
+    const stageStyle = sepg.variant==='vertical' ? 'align-items:center;justify-content:center' : 'align-items:stretch;justify-content:center;flex-direction:column;padding:0 24px';
+    const demo = `
+      <div class="btn-pg">
+        <div class="btn-pg__stage sepg-stage-el" id="sepg-stage${s}" style="background:${sbg};${stageStyle}"></div>
+        <div class="btn-pg__ctrls">
+          <div class="btn-pg__group"><span class="btn-pg__clabel">Variant</span><div class="btn-pg__pill-row">${variantBtns}</div></div>
+          <div class="btn-pg__group"><span class="btn-pg__clabel">Label</span><input class="cpg-label-input sepg-label-input-el" id="sepg-label-input${s}" value="${sepEsc(sepg.label)}" maxlength="28" oninput="sepgSetLabel(this.value)" placeholder="Or continue with"${sepg.variant!=='labelled'?' disabled':''}></div>
+        </div>
+      </div>`;
+
+    if(mount.style==='code'){
+      root.innerHTML = `
+        <div class="type-sub__title">${mount.title}</div>
+        <div class="type-sub__desc">${mount.desc}</div>
+        <div class="cpg-section-outline">${demo}</div>`;
+      return;
+    }
+
+    const inner = `
+      <div class="cpg-layout">
+        <div class="cpg-layout__intro">
+          ${mount.wrap ? `<span class="cpg-cursor-icon">${CPG_CURSOR_ICON_SVG}</span>` : ''}
+          <div class="cpg-layout__title">${mount.title}</div>
+          <div class="cpg-layout__desc">${mount.desc}</div>
+        </div>
+        <div class="cpg-layout__demo">${demo}</div>
+      </div>`;
+    const wrapped = mount.wrap ? `<div class="cpg-section-block">${inner}</div>` : inner;
+    root.innerHTML = (mount.headingAbove ? `<div class="cpg-overview-heading"><span class="cpg-overview-heading__icon">${CPG_INFO_ICON_SVG}</span><span>${mount.headingAbove}</span></div>` : '') + wrapped;
+  });
+
+  sepgRefresh();
+}
+
+function renderSepCodeTab(){
+  const root = document.getElementById('sep-code-tab');
+  if(!root) return;
+  root.innerHTML = `
+    <div class="type-sub__title">Code</div>
+    <div class="type-sub__desc">Live snippet matching the current Playground configuration &mdash; switch to Overview to change it.</div>
+    <div class="cpg-section-outline">
+      <div class="code-panel code-panel--bare open">
+        <div class="code-panel__head">
+          <div class="code-seg" role="tablist" aria-label="Code language" onkeydown="sepLangKeydown(event)">
+            ${SEP_LANGS.map(l=>`<button type="button" role="tab" class="code-seg__btn" id="sep-lang-${l.key}" data-lang="${l.key}" aria-selected="${sepLang===l.key?'true':'false'}" aria-controls="sepg-code-block" tabindex="${sepLang===l.key?'0':'-1'}" onclick="setSepLang('${l.key}')">${l.label}</button>`).join('')}
+          </div>
+          <span class="code-lang-file" id="sep-lang-file">${(SEP_LANGS.find(l=>l.key===sepLang)||SEP_LANGS[0]).file}</span>
+          <button class="code-copy-btn" onclick="sepgCopyCode()" id="sepg-copy-btn">Copy</button>
+        </div>
+        <div class="code-body"><div class="code-block" id="sepg-code-block" role="tabpanel" aria-live="polite"></div></div>
+      </div>
+    </div>`;
+}
+
+function renderSepVariants(){
+  const root = document.getElementById('sep-variants');
+  if(!root) return;
+  const theme = currentTheme();
+  const sbg = stageBg(theme);
+
+  const stages = {
+    horizontal: `<hr class="sep" style="margin:0">`,
+    vertical:   `<span class="sep--v" style="height:32px"></span>`,
+    labelled:   `<div class="sep-label" style="max-width:140px">Or</div>`,
+  };
+  const uses = {
+    horizontal: 'Divides stacked blocks of content.',
+    vertical:   'Divides inline items in a row.',
+    labelled:   'Breaks a flow to introduce an alternative.',
+  };
+
+  const cells = SEP_VARIANTS.map(v=>`
+    <div class="spec-cell">
+      <div class="spec-cell__stage" style="background:${sbg}">${stages[v.key]}</div>
+      <div class="spec-cell__name">${v.label}</div>
+      <div class="spec-cell__desc">${uses[v.key]}</div>
+    </div>`).join('');
+
+  root.innerHTML = `
+    <div class="cpg-section-heading">
+      <div class="cpg-layout__title">Key variants</div>
+      <div class="cpg-layout__desc">Three forms, one hairline surface. Match the form to how the content is arranged &mdash; stacked, inline, or interrupted.</div>
+    </div>
+    <div class="cpg-section-block">
+      <div class="spec-grid">${cells}</div>
+    </div>`;
+}
+
+function renderSepInSitu(){
+  const root = document.getElementById('sep-insitu');
+  if(!root) return;
+  const theme = currentTheme();
+  const sbg = stageBg(theme);
+
+  // 1. Settings page — horizontal rules between stacked sections
+  const settingsMock = `
+    <div class="spec-mock__stage" style="background:${sbg};padding:16px 14px">
+      <div style="font-size:12px;font-weight:700;color:var(--chrome-txt);margin-bottom:2px">Account</div>
+      <div style="font-size:11px;color:var(--chrome-muted)">Manage your business profile and details.</div>
+      <hr class="sep" style="margin:14px 0">
+      <div style="font-size:12px;font-weight:700;color:var(--chrome-txt);margin-bottom:2px">Payouts</div>
+      <div style="font-size:11px;color:var(--chrome-muted)">Choose where settled funds are deposited.</div>
+    </div>
+    <div class="spec-mock__cap"><b>Settings page</b>A horizontal rule between clearly distinct sections.</div>`;
+
+  // 2. Toolbar — vertical rules between inline actions
+  const toolbarMock = `
+    <div class="spec-mock__stage" style="background:${sbg};padding:16px 14px;display:flex;align-items:center;justify-content:center">
+      <div class="sep-hstack"><span>Edit</span><span class="sep--v"></span><span>Share</span><span class="sep--v"></span><span>Delete</span></div>
+    </div>
+    <div class="spec-mock__cap"><b>Toolbar</b>A vertical rule between inline actions in one row.</div>`;
+
+  // 3. Auth form — labelled separator introducing an alternative
+  const authMock = `
+    <div class="spec-mock__stage" style="background:${sbg};padding:16px 14px">
+      <div style="height:30px;border-radius:8px;background:var(--chrome-hover);margin-bottom:12px"></div>
+      <div class="sep-label" style="max-width:none">Or continue with</div>
+      <div style="height:30px;border-radius:8px;border:1px solid var(--chrome-border);margin-top:12px"></div>
+    </div>
+    <div class="spec-mock__cap"><b>Auth form</b>A labelled separator introduces an alternative sign-in method.</div>`;
+
+  root.innerHTML = `
+    <div class="cpg-section-heading">
+      <div class="cpg-layout__title">In context</div>
+      <div class="cpg-layout__desc">The same hairline does three everyday jobs &mdash; dividing sections, separating inline actions, and introducing an alternative.</div>
+    </div>
+    <div class="cpg-section-block">
+      <div class="spec-insitu-grid">
+        <div class="spec-mock">${settingsMock}</div>
+        <div class="spec-mock">${toolbarMock}</div>
+        <div class="spec-mock">${authMock}</div>
+      </div>
+    </div>`;
+}
+
+function sepgSet(key, val){
+  sepg[key] = val;
+  renderSepPlayground();
+}
+function sepgSetLabel(val){ sepg.label = val; sepgRefresh(); }
+function sepgCopyCode(){
+  const b = document.getElementById('sepg-code-block');
+  if(!b) return;
+  navigator.clipboard.writeText(b.innerText||b.textContent).catch(()=>{});
+  const btn = document.getElementById('sepg-copy-btn');
+  if(btn){ btn.textContent = 'Copied!'; setTimeout(()=>btn.textContent='Copy', 2000); }
+}
+
+function renderSepReference(){
+  const root = document.getElementById('sep-reference');
+  if(!root) return;
+
+  const theme = currentTheme();
+  const sbg = stageBg(theme);
+
+  /* ---- Anatomy (dimensions folded in — no size axis to table separately) ---- */
+  const heroSep = `<div style="width:280px;font-size:13px;color:var(--chrome-txt)"><div style="font-weight:700;margin-bottom:3px">Account</div><div style="color:var(--chrome-muted);font-size:11px">Manage your business profile.</div><hr class="sep" style="margin:14px 0"><div style="font-weight:700;margin-bottom:3px">Payouts</div><div style="color:var(--chrome-muted);font-size:11px">Choose a payout destination.</div></div>`;
+
+  const parts = [
+    {num:1, name:'Horizontal rule',  note:'A 1px .sep hairline, full width, on the --chrome-border token. No margin of its own — spacing comes from the surrounding content.', vis:`<hr class="sep" style="width:100px;margin:0">`},
+    {num:2, name:'Vertical rule',    note:'A 1px .sep--v hairline, 20px tall by default, sized to the row it sits in.', vis:`<span class="sep--v" style="height:28px"></span>`},
+    {num:3, name:'Label',            note:'Centred text with a hairline continuing on each side, via ::before/::after.', vis:`<div class="sep-label" style="max-width:120px">Or</div>`},
+  ];
+  const partCards = parts.map(p=>`
+    <div class="spec-part">
+      <div class="spec-part__stage" style="background:${sbg}">${p.vis}</div>
+      <div class="spec-part__body">
+        <div class="spec-part__name"><span class="spec-part__num">${p.num}</span>${p.name}</div>
+        <div class="spec-part__note">${p.note}</div>
+      </div>
+    </div>`).join('');
+
+  /* ---- Tokens & dimensions (small table — no per-variant colour palette to grid out) ---- */
+  const tokRows = [
+    {name:'Rule colour',       val:'<code>--chrome-border</code>'},
+    {name:'Rule thickness',    val:'1px'},
+    {name:'Vertical rule height', val:'20px default (flex-shrink:0, scales with row)'},
+    {name:'Label text',        val:'10.5px, weight 700, uppercase, 0.6px letter-spacing, muted colour'},
+    {name:'Label side-gap',    val:'14px between the word and each hairline'},
+  ].map(t=>`<tr><td class="dd-table__name">${t.name}</td><td>${t.val}</td></tr>`).join('');
+
+  /* ---- Variants (mirrors Overview's Key variants grid, larger, with markup shown) ---- */
+  const variantCells = SEP_VARIANTS.map(v=>{
+    const stage = v.key==='horizontal' ? `<hr class="sep" style="margin:0;width:140px">`
+      : v.key==='vertical' ? `<span class="sep--v" style="height:36px"></span>`
+      : `<div class="sep-label" style="max-width:160px">Or</div>`;
+    return `
+    <div class="spec-cell">
+      <div class="spec-cell__stage" style="background:${sbg}">${stage}</div>
+      <div class="spec-cell__name">${v.label}</div>
+      <div class="spec-cell__desc">${v.key==='horizontal'?'&lt;hr class="sep"&gt;':v.key==='vertical'?'&lt;span class="sep--v"&gt;':'&lt;div class="sep-label"&gt;'}</div>
+    </div>`;
+  }).join('');
+
+  root.innerHTML = `
+    <div class="type-sub">
+      <div class="type-sub__title">Anatomy</div>
+      <div class="type-sub__desc">A separator is a plain hairline in one of three forms. There's no size variant — thickness and default height are fixed, adjusted per instance with surrounding spacing.</div>
+      <div class="cpg-section-outline">
+        <div class="spec-hero" style="background:${sbg}">${heroSep}</div>
+        <div class="spec-parts">${partCards}</div>
+      </div>
+    </div>
+
+    <div class="type-sub">
+      <div class="type-sub__title">Variants</div>
+      <div class="type-sub__desc">The three forms and the real class each one renders.</div>
+      <div class="cpg-section-outline">
+        <div class="spec-grid">${variantCells}</div>
+      </div>
+    </div>
+
+    <div class="type-sub" style="margin-bottom:0">
+      <div class="type-sub__title">Tokens &amp; dimensions</div>
+      <div class="type-sub__desc">One hairline colour and a handful of fixed dimensions &mdash; there's no per-variant colour palette like Pills' five semantic colours.</div>
+      <div class="cpg-section-outline">
+        <div class="dd-table-wrap"><table class="dd-table">
+          <thead><tr><th>Property</th><th>Value</th></tr></thead>
+          <tbody>${tokRows}</tbody>
+        </table></div>
+      </div>
+    </div>`;
+}
+
+try { renderSepCodeTab(); } catch(e){ console.error('sep-code-tab',e); }
+try { renderSepPlayground(); } catch(e){ console.error('sep-playground',e); }
+try { renderSepVariants(); } catch(e){ console.error('sep-variants',e); }
+try { renderSepInSitu(); } catch(e){ console.error('sep-insitu',e); }
+try { renderSepReference(); } catch(e){ console.error('sep-reference',e); }
+
+function sepTabSwitch(tab){
+  const nav = document.getElementById('sep-tabs-list');
+  if(!nav) return;
+  nav.querySelectorAll('.tab-item').forEach(btn=>btn.classList.toggle('on', btn.getAttribute('data-sep-tab')===tab));
+  document.querySelectorAll('#s-separator .tabs-panel[data-sep-panel]').forEach(p=>p.classList.toggle('on', p.getAttribute('data-sep-panel')===tab));
+}
+
+/* ============================================================
    AVATAR
    Same tabbed-page treatment as Pills (.sec--tabbed): Overview /
    Style / Code / Changelog, a shared-state playground rendered
@@ -16306,12 +16757,21 @@ function cbrTabSwitch(tab){
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.79.1';
+const SYSTEM_VERSION = '1.80.1';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.80.1', date:'2026-08-21', author:'Mo', title:'Separator playground now shows the rule in context', changes:[
+        ['changed','The playground stage previously rendered the bare .sep/.sep--v/.sep-label element alone on an empty background. Added sepgStageHTML(), a playground-only wrapper that surrounds the real separator markup with representative content per variant — an Account/Payouts text block for Horizontal, a Profile / Settings / Log out row for Vertical, and two field-shaped blocks for Labelled — so the stage demonstrates the separator doing its job instead of floating alone. The Code tab snippet is unaffected: it still comes from the pure makeSepHTML builder'],
+      ]},
+      {version:'1.80.0', date:'2026-08-21', author:'Mo', title:'Separator rebuilt with the full Pills-style tabbed treatment', changes:[
+        ['added','Separator (s-separator) converted from a static "Horizontal" + "Vertical & labelled" + "When to use" page into a full .sec--tabbed page — Overview / Style / Code / Changelog — matching Pills/Empty State/Skeleton loader: a "Try the component" playground (Variant: Horizontal/Vertical/Labelled, plus an editable Label field enabled only for the labelled form, rendered into two synced mounts via shared sepg state), a "Key variants" showcase (Horizontal / Vertical / Labelled — kept as "variants", not renamed to "building blocks", since the three forms are genuine variants of one component rather than composable primitives), 3 "In context" mockups (settings page, toolbar, auth form), a Style tab (Anatomy with dimensions folded in since there\'s no size-variant axis, a Variants grid showing each form\'s real markup, and a small Tokens & dimensions table) and a Code tab with the .code-seg HTML/CSS · Blazor · React TSX switcher'],
+        ['added','New ai-ctx tab regenerated via generate-ai-context-tab.mjs for the js-rendered builders (SEP_VARIANTS, makeSepHTML), moved from the end of the section into the new hero\'s sec-header-meta, matching Pills/Empty State/Skeleton loader'],
+        ['added','toggleTheme() wired to re-render all four of Separator\'s JS-mounted sections (playground, Key variants, In context, Style tab reference) on the global dark-mode toggle — done from the start this time, having just fixed the same omission on Skeleton loader'],
+        ['changed','Do/Dont card moved into the Overview tab\'s #sep-usage .cpg-section-block, JS-rendered markup like Pills/Empty State (previously static markup); guidance text unchanged from the original 3 do / 3 dont'],
+      ]},
       {version:'1.79.1', date:'2026-08-21', author:'Mo', title:'Pagination rebuilt with the full Pills-style tabbed treatment', changes:[
         ['added','Pagination (s-pagination) converted from a single static "Interactive" + "Compact" + "When to use" page into a full .sec--tabbed page — Overview / Style / Code / Changelog — matching Pills and Empty State: a "Try the component" playground (a Full/Compact layout toggle plus live, clickable pages, rendered into two synced mounts via shared pgg state), a "Key layouts" showcase (Full vs Compact — replacing Pills\' colour-variant slot, since Pagination has no colour or size axis), a "Data table footer" in-context mockup, a Style tab (Anatomy, Spacing & dimensions, Layout variants, States) and a Code tab with the .code-seg HTML/CSS · Blazor · React TSX switcher'],
         ['added','New ai-ctx tab regenerated via generate-ai-context-tab.mjs for the js-rendered builders (PAG_LAYOUTS, pagPageList, makePaginationHTML, makePaginationEl), moved from the end of the section into the new hero\'s sec-header-meta, matching Pills/Empty State'],
@@ -17617,7 +18077,19 @@ const CHANGELOG = {
         ['added','CSS-driven rich preview card that fades in on hover/focus after a short delay'],
       ]},
     ]},
-    {secId:'s-separator', name:'Separator', version:'1.0.1', entries:[
+    {secId:'s-separator', name:'Separator', version:'2.0.1', entries:[
+      {version:'2.0.1', date:'2026-08-21', author:'Mo', title:'Playground now shows the rule in context', changes:[
+        ['changed','The playground stage rendered the bare separator element alone. Added sepgStageHTML(), a playground-only wrapper adding representative content per variant — an Account/Payouts text block for Horizontal, a Profile / Settings / Log out row for Vertical, and two field-shaped blocks for Labelled — so it demonstrates the separator in use. Code tab snippet unaffected (still from the pure makeSepHTML builder)'],
+      ]},
+      {version:'2.0.0', date:'2026-08-21', author:'Mo', title:'Rebuilt with the full Pills-style tabbed treatment', changes:[
+        ['added','Overview / Style / Code / Changelog tabs (.sec--tabbed), replacing the flat "Horizontal" / "Vertical & labelled" / "When to use" layout'],
+        ['added','"Try the component" playground: Variant (Horizontal / Vertical / Labelled) plus an editable Label field, enabled only for the labelled form, rendered into two synced mounts (Overview and Code) over one shared sepg state'],
+        ['added','"Key variants" showcase on Overview — Horizontal, Vertical and Labelled each with a one-line purpose'],
+        ['added','3 "In context" mockups: a settings page, a toolbar, and an auth form'],
+        ['added','Style tab: Anatomy (with default dimensions folded in, since there\'s no size-variant axis), a Variants grid showing each form\'s real markup, and a small Tokens & dimensions table'],
+        ['added','Code tab: HTML/CSS, Blazor and React TSX snippets behind a .code-seg language switcher, live to the current playground configuration'],
+        ['changed','Component version bumped to 2.0.0 for the structural rebuild; secId (s-separator) and all CSS classes (.sep, .sep--v, .sep-hstack, .sep-label) are unchanged'],
+      ]},
       {version:'1.0.1', date:'2026-08-03', author:'Mo', title:'AI context tab added', changes:[
         ['added','AI context tab documenting the real, fully static .sep/.sep--v/.sep-hstack/.sep-label markup, plus its existing "When to use" Do/Dont guidance (3 do / 3 dont)'],
       ]},
@@ -25048,6 +25520,7 @@ try { renderSectionChangelogs(); } catch(e){ console.error('section-changelog',e
   {secId:'s-empty-state', panelId:'es-changelog-panel'},
   {secId:'s-pagination', panelId:'pag-changelog-panel'},
   {secId:'s-lists', panelId:'lst-changelog-panel'},
+  {secId:'s-separator', panelId:'sep-changelog-panel'},
   {secId:'s-input-otp', panelId:'otp-changelog-panel'},
 ].forEach(({secId, panelId})=>{
   try {
