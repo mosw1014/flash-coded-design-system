@@ -6425,7 +6425,7 @@ body.home .main{max-width:none;margin:0;padding:0}
       <div class="sec__head">
         <h1 class="sec__title">Popover</h1>
         <div class="sec-header-meta">
-          <span class="comp-ver-badge" style="margin-left:0">v2.0.0</span>
+          <span class="comp-ver-badge" style="margin-left:0">v2.0.1</span>
           <details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-popover">
@@ -6471,7 +6471,7 @@ body.home .main{max-width:none;margin:0;padding:0}
 </details>
         </div>
       </div>
-      <div class="sec-hero__preview"><div class="mk"><div style="position:relative;padding-top:6px"><span class="mk-chip">Filter &#9662;</span><div class="mk-card" style="position:absolute;top:calc(100% + 4px);left:0;width:130px;padding:9px 9px;display:flex;flex-direction:column;gap:6px"><span class="mk-bar mk-bar--txt" style="width:65%"></span><span class="mk-bar" style="width:90%"></span><span class="mk-bar" style="width:70%"></span></div></div></div></div>
+      <div class="sec-hero__preview"><div class="mk mk-col" style="gap:7px"><div class="mk-card" style="width:60%;padding:9px 12px;display:flex;justify-content:space-between;align-items:center"><span class="mk-bar" style="width:44px"></span><span style="color:var(--chrome-muted)">&#9662;</span></div><div class="mk-card" style="width:70%;padding:10px 12px;display:flex;flex-direction:column;gap:6px"><span class="mk-bar mk-bar--txt" style="width:60%"></span><span class="mk-bar" style="width:90%"></span><span class="mk-bar" style="width:70%"></span></div></div></div>
       </div>
       <div class="tabs-list sec-tabs" id="pop-tabs-list">
         <button type="button" class="tab-item on" data-pop-tab="overview" onclick="popTabSwitch('overview')"><span class="tab-item__inner"><span class="tab-item__label">Overview</span></span><span class="tab-item__line"></span></button>
@@ -8084,6 +8084,10 @@ function toggleTheme() {
   try { if(typeof renderEmptyStateScenarios==='function' && document.getElementById('es-scenarios')) renderEmptyStateScenarios(); } catch(e){}
   try { if(typeof renderEmptyStateInSitu==='function' && document.getElementById('es-insitu')) renderEmptyStateInSitu(); } catch(e){}
   try { if(typeof renderEmptyStateReference==='function' && document.getElementById('es-reference')) renderEmptyStateReference(); } catch(e){}
+  try { if(typeof renderPopoverPlayground==='function' && document.getElementById('pop-playground')) renderPopoverPlayground(); } catch(e){}
+  try { if(typeof renderPopoverPatterns==='function' && document.getElementById('pop-patterns')) renderPopoverPatterns(); } catch(e){}
+  try { if(typeof renderPopoverInSitu==='function' && document.getElementById('pop-insitu')) renderPopoverInSitu(); } catch(e){}
+  try { if(typeof renderPopoverReference==='function' && document.getElementById('pop-reference')) renderPopoverReference(); } catch(e){}
   try { if(typeof renderAvatarPlayground==='function' && document.getElementById('avatar-playground')) renderAvatarPlayground(); } catch(e){}
   try { if(typeof renderAvatarKeyTypes==='function' && document.getElementById('avatar-keytypes')) renderAvatarKeyTypes(); } catch(e){}
   try { if(typeof renderAvatarInSitu==='function' && document.getElementById('avatar-insitu')) renderAvatarInSitu(); } catch(e){}
@@ -15698,12 +15702,16 @@ function cbrTabSwitch(tab){
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.78.0';
+const SYSTEM_VERSION = '1.78.1';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.78.1', date:'2026-08-21', author:'Mo', title:'Popover dark mode and hero preview fixes', changes:[
+        ['fixed','Popover\'s playground/Key patterns/In context/Style-tab stages stayed light-themed after the global dark-mode toggle, because none of renderPopoverPlayground/renderPopoverPatterns/renderPopoverInSitu/renderPopoverReference were wired into toggleTheme()\'s re-render list — added, matching every other tabbed component'],
+        ['changed','Hero preview swapped from an absolute-positioned trigger+floating-panel mock (looked broken at the header\'s small scale) to the same stacked two-mk-card pattern already used by Dropdown\'s hero preview — a trigger-row card above a content card'],
+      ]},
       {version:'1.78.0', date:'2026-08-21', author:'Mo', title:'Popover rebuilt with the full Pills-style tabbed treatment', changes:[
         ['added','Popover (s-popover) converted from a single static "Interactive" + "When to use" page into a full .sec--tabbed page — Overview / Style / Code / Changelog — matching Pills and Empty State: a "Try the component" playground (Content type Info/Filter/Form, Placement Left/Right, and Footer on/off controls, rendered into two synced mounts via shared popg state), a "Key patterns" showcase crossing content type with placement and footer (replacing Pills\' colour-variant slot, since Popover has no colour or size axis), 3 "In context" mockups (table-toolbar filter, right-anchored account menu, dashboard stat info popover), a Style tab (Anatomy, Placement & dimensions, States) and a Code tab with the .code-seg HTML/CSS · Blazor · React TSX switcher'],
         ['added','New .pop__cancel (ghost secondary footer button) and .pop__input (compact text field) CSS classes so the Form content type has a real cancel/save footer and an editable field, alongside the existing .pop__apply'],
@@ -17208,7 +17216,11 @@ const CHANGELOG = {
         ['added','Native range input with a brand fill and live value; continuous, stepped and disabled examples'],
       ]},
     ]},
-    {secId:'s-popover', name:'Popover', version:'2.0.0', entries:[
+    {secId:'s-popover', name:'Popover', version:'2.0.1', entries:[
+      {version:'2.0.1', date:'2026-08-21', author:'Mo', title:'Dark mode and hero preview fixes', changes:[
+        ['fixed','Playground, Key patterns, In context and Style-tab stages now re-render on the global theme toggle — added the four render calls to toggleTheme() so they stop showing light-theme colours after switching to dark'],
+        ['changed','Hero preview rebuilt as two stacked mk-card blocks (trigger row + panel content), matching Dropdown\'s hero preview convention, instead of an absolute-positioned floating panel that read as broken at the header\'s small scale'],
+      ]},
       {version:'2.0.0', date:'2026-08-21', author:'Mo', title:'Rebuilt with the full Pills-style tabbed treatment', changes:[
         ['added','Converted from a single static "Interactive" + "When to use" page into a full .sec--tabbed page — Overview / Style / Code / Changelog'],
         ['added','"Try the component" playground: Content type (Info/Filter/Form), Placement (Left/Right) and Footer (on/off) controls over a shared popg state, rendered into two synced mounts (Overview and Code tab)'],
