@@ -4796,7 +4796,7 @@ body.home .main{max-width:none;margin:0;padding:0}
       <div class="sec__head">
         <h1 class="sec__title">Lists</h1>
         <div class="sec-header-meta">
-          <span class="comp-ver-badge" style="margin-left:0">v2.0.0</span>
+          <span class="comp-ver-badge" style="margin-left:0">v2.0.1</span>
           <details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-lists">
@@ -8060,6 +8060,9 @@ function toggleTheme() {
   try { if(typeof renderCardPages==='function' && document.getElementById('cbasic-playground')) renderCardPages(); } catch(e){}
   // Same one-call pattern for the five Charts sub-pages.
   try { if(typeof renderChartPages==='function' && document.getElementById('cbar-playground')) renderChartPages(); } catch(e){}
+  try { if(typeof renderListPlayground==='function' && document.getElementById('lst-playground')) renderListPlayground(); } catch(e){}
+  try { if(typeof renderListInSitu==='function' && document.getElementById('lst-insitu')) renderListInSitu(); } catch(e){}
+  try { if(typeof renderListReference==='function' && document.getElementById('lst-reference')) renderListReference(); } catch(e){}
 }
 
 // Colour view switch (prim / sem)
@@ -15757,12 +15760,15 @@ function cbrTabSwitch(tab){
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.78.0';
+const SYSTEM_VERSION = '1.78.1';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.78.1', date:'2026-08-21', author:'Mo', title:'Lists dark-mode toggle fix', changes:[
+        ['fixed','toggleTheme() never called renderListPlayground/renderListInSitu/renderListReference, so Lists\' Overview and Style tab stage backgrounds stayed light after switching to dark until the next full page load — the same pre-existing gap already affecting Alert, Breadcrumb, Carousel and part of Accordion, none of which were touched here; added the three missing calls for Lists'],
+      ]},
       {version:'1.78.0', date:'2026-08-21', author:'Mo', title:'Lists rebuilt with the full Pills-style tabbed treatment', changes:[
         ['added','Lists (s-lists) converted from a flat, static "Key–value list" + "Activity timeline" + "When to use" page into a full .sec--tabbed page — Overview / Style / Code / Changelog — matching Pills/Empty State/Carousel: a "Try the component" playground with a Pattern switcher (Key–value list / Activity timeline) plus pattern-specific controls (Rows/Key column width, or Events/Newest event colour) and a shared Density toggle, 3 "In context" mockups (record detail panel, audit log panel, combined record page), a Style tab with separate Anatomy/dimensions for each pattern plus a Semantic dot colours table, and a Code tab with the .code-seg HTML/CSS · Blazor · React TSX switcher'],
         ['added','Two new reusable modifier classes on the existing .dd-kv/.dd-timeline components: key-column width (--key-narrow/--key-wide) and density (--compact)'],
@@ -18110,7 +18116,10 @@ const CHANGELOG = {
         ['added','Interactive playground with real open/select/close, click-outside and Escape-to-dismiss behaviour'],
       ]},
     ]},
-    {secId:'s-lists', name:'Lists', version:'2.0.0', entries:[
+    {secId:'s-lists', name:'Lists', version:'2.0.1', entries:[
+      {version:'2.0.1', date:'2026-08-21', author:'Mo', title:'Fixed dark mode not repainting the Overview/Style stages', changes:[
+        ['fixed','renderListPlayground/renderListInSitu/renderListReference were never added to the global toggleTheme() dispatcher, so their inline-styled stage backgrounds (set via stageBg(theme) at render time) stayed on their light-mode value after switching to dark until the next full re-render — same class of bug already present for Alert/Breadcrumb/Carousel/Accordion; added the three missing calls'],
+      ]},
       {version:'2.0.0', date:'2026-08-21', author:'Mo', title:'Rebuilt with the full Pills-style tabbed treatment', changes:[
         ['changed','Page restructured from a flat .sec section into a .sec--tabbed page — hero with a live mini preview, and Overview / Style / Code / Changelog tabs (lstTabSwitch), matching Pills/Carousel/Empty State'],
         ['added','"Try the component" playground with a Pattern switcher (Key–value list / Activity timeline) plus pattern-specific controls — Rows and Key column width for the list, Events and Newest event colour for the timeline — and a shared Density (Comfortable/Compact) toggle, rendered into two synced mounts (#lst-playground on Overview, #lst-code-playground on Code) over one shared lpg state — the generalised form of Pills\' PILL_PLAYGROUND_MOUNTS pattern, extended with a pattern axis since Lists holds two structurally different components rather than one with colour/size variants'],
