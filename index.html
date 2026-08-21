@@ -7405,7 +7405,7 @@ body.home .main{max-width:none;margin:0;padding:0}
       <div class="sec__head">
         <h1 class="sec__title">Carousel</h1>
         <div class="sec-header-meta">
-          <span class="comp-ver-badge" style="margin-left:0">v1.1.1</span>
+          <span class="comp-ver-badge" style="margin-left:0">v1.1.2</span>
 <details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-carousel">
@@ -8060,6 +8060,11 @@ function toggleTheme() {
   try { if(typeof renderCardPages==='function' && document.getElementById('cbasic-playground')) renderCardPages(); } catch(e){}
   // Same one-call pattern for the five Charts sub-pages.
   try { if(typeof renderChartPages==='function' && document.getElementById('cbar-playground')) renderChartPages(); } catch(e){}
+  // Carousel's stage backgrounds are inline-styled per theme (stageBg()), same as
+  // Buttons/Pills/Date picker/Cards — they need an explicit re-render on toggle too.
+  try { if(typeof renderCarPlayground==='function' && document.getElementById('car-playground')) renderCarPlayground(); } catch(e){}
+  try { if(typeof renderCarInSitu==='function' && document.getElementById('car-insitu')) renderCarInSitu(); } catch(e){}
+  try { if(typeof renderCarReference==='function' && document.getElementById('car-reference')) renderCarReference(); } catch(e){}
 }
 
 // Colour view switch (prim / sem)
@@ -15757,12 +15762,15 @@ function cbrTabSwitch(tab){
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.79.0';
+const SYSTEM_VERSION = '1.79.1';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.79.1', date:'2026-08-21', author:'Mowgli Swainston', title:'Fixed Carousel stage backgrounds not following dark mode', changes:[
+        ['fixed','toggleTheme() never re-rendered the Carousel (s-carousel) — renderCarPlayground()/renderCarInSitu()/renderCarReference() were missing from its re-render list, so the inline stageBg(theme) background baked in at initial (light) render stayed white after switching to dark, on the Overview, Style and Code tabs. Added the same three calls other components (Buttons, Pills, Date picker, Cards) already get on toggle'],
+      ]},
       {version:'1.79.0', date:'2026-08-21', author:'Mowgli Swainston', title:'Carousel arrows now render via the shared chevron-right icon helper', changes:[
         ['changed','carArrowSVG() in the Carousel component (s-carousel) now returns iconSvg(\'chevron-right\') from the shared ICONS registry instead of a hand-duplicated inline SVG string with the same path data — same rendered glyph (CSS still rotates it 180deg for .car__arrow--prev), but now sourced from one place like the Accordion and Side Nav chevrons'],
         ['changed','s-carousel\'s AI context tab regenerated via generate-ai-context-tab.mjs to reflect the updated carArrowSVG source (status auto-detected as "static"); contentHash updated accordingly'],
@@ -17065,7 +17073,10 @@ const CHANGELOG = {
         ['added','Horizontal, vertical and labelled hairline dividers on the border token'],
       ]},
     ]},
-    {secId:'s-carousel', name:'Carousel', version:'1.1.1', entries:[
+    {secId:'s-carousel', name:'Carousel', version:'1.1.2', entries:[
+      {version:'1.1.2', date:'2026-08-21', author:'Mowgli Swainston', title:'Fixed dark mode — stage backgrounds weren\'t updating', changes:[
+        ['fixed','Overview, Style and Code tab demo stages stayed on their initial light-mode background after switching to dark, since toggleTheme() never called renderCarPlayground()/renderCarInSitu()/renderCarReference() to re-run stageBg(theme) with the new theme. Added those three calls to toggleTheme(), matching Buttons/Pills/Date picker/Cards'],
+      ]},
       {version:'1.1.1', date:'2026-08-21', author:'Mowgli Swainston', title:'Arrows now use the shared chevron-right icon helper', changes:[
         ['changed','carArrowSVG() now returns iconSvg(\'chevron-right\') from the shared ICONS registry instead of a hardcoded inline SVG string that duplicated the same path data — visually identical (still rotated 180deg via .car__arrow--prev svg for the prev arrow), but now a single source of truth shared with Accordion and Side Nav'],
         ['changed','AI context tab regenerated via generate-ai-context-tab.mjs to capture the updated carArrowSVG source; contentHash updated'],
