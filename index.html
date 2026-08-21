@@ -6425,7 +6425,7 @@ body.home .main{max-width:none;margin:0;padding:0}
       <div class="sec__head">
         <h1 class="sec__title">Popover</h1>
         <div class="sec-header-meta">
-          <span class="comp-ver-badge" style="margin-left:0">v2.0.3</span>
+          <span class="comp-ver-badge" style="margin-left:0">v2.0.4</span>
           <details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-popover">
@@ -6471,7 +6471,14 @@ body.home .main{max-width:none;margin:0;padding:0}
 </details>
         </div>
       </div>
-      <div class="sec-hero__preview"><div class="mk mk-col" style="gap:7px"><div class="mk-card" style="width:60%;padding:9px 12px;display:flex;justify-content:space-between;align-items:center"><span class="mk-bar" style="width:44px"></span><span style="color:var(--chrome-muted)">&#9662;</span></div><div class="mk-card" style="width:70%;padding:10px 12px;display:flex;flex-direction:column;gap:6px"><span class="mk-bar mk-bar--txt" style="width:60%"></span><span class="mk-bar" style="width:90%"></span><span class="mk-bar" style="width:70%"></span></div></div></div>
+      <div class="sec-hero__preview"><div class="mk"><div class="pop" style="position:static;pointer-events:none" aria-hidden="true">
+        <button class="sg-btn" type="button" tabindex="-1">Filter &#9662;</button>
+        <div class="pop__panel" style="position:static;opacity:1;transform:none;box-shadow:none;margin-top:8px;padding:12px">
+          <div class="pop__title">Filter transactions</div>
+          <div class="pop__row" style="padding:5px 0">Show refunds <label class="sw sw--sm"><input type="checkbox" class="sw__input" checked><span class="sw__track"><span class="sw__thumb"></span></span></label></div>
+          <div class="pop__foot" style="margin-top:10px;padding-top:10px"><button class="pop__apply" type="button">Apply</button></div>
+        </div>
+      </div></div></div>
       </div>
       <div class="tabs-list sec-tabs" id="pop-tabs-list">
         <button type="button" class="tab-item on" data-pop-tab="overview" onclick="popTabSwitch('overview')"><span class="tab-item__inner"><span class="tab-item__label">Overview</span></span><span class="tab-item__line"></span></button>
@@ -15702,12 +15709,15 @@ function cbrTabSwitch(tab){
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.78.3';
+const SYSTEM_VERSION = '1.78.4';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.78.4', date:'2026-08-21', author:'Mo', title:'Popover hero preview now uses the real component markup', changes:[
+        ['changed','Hero preview swapped from an abstract two-mk-card mock to the actual .pop/.pop__panel markup — a real "Filter" trigger button above an open panel with its title, a switch row and an Apply button — so the header thumbnail reads unmistakably as this component, matching Switch/Accordion\'s hero previews which also use their real classes rather than a generic mock'],
+      ]},
       {version:'1.78.3', date:'2026-08-21', author:'Mo', title:'Popover Key patterns and States card padding rebalanced', changes:[
         ['fixed','Key patterns and Style-tab States cards top-aligned their content with an asymmetric 40px-top/16px-bottom stage padding, so a shorter card sharing a grid row with a taller one dumped all the leftover row height into one big gap below it; switched to symmetric 24px padding with the stage\'s default centered alignment so leftover height now splits evenly above and below'],
       ]},
@@ -17223,7 +17233,10 @@ const CHANGELOG = {
         ['added','Native range input with a brand fill and live value; continuous, stepped and disabled examples'],
       ]},
     ]},
-    {secId:'s-popover', name:'Popover', version:'2.0.3', entries:[
+    {secId:'s-popover', name:'Popover', version:'2.0.4', entries:[
+      {version:'2.0.4', date:'2026-08-21', author:'Mo', title:'Hero preview rebuilt with the real component markup', changes:[
+        ['changed','Hero preview now shows a real "Filter" trigger button plus an open .pop__panel (title, switch row, Apply button) instead of an abstract stacked-card mock, so it reads as an actual popover at a glance'],
+      ]},
       {version:'2.0.3', date:'2026-08-21', author:'Mo', title:'Rebalanced Key patterns and States card padding', changes:[
         ['fixed','Key patterns and States cards switched from top-aligned content with asymmetric 40px/16px stage padding to symmetric 24px padding with centered alignment, so a short card sharing a grid row with a tall one no longer dumps all the leftover height into one lopsided gap below it'],
       ]},
