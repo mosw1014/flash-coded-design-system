@@ -6477,75 +6477,22 @@ body.home .main{max-width:none;margin:0;padding:0}
     <!-- ============================================================
          INPUT OTP
     ============================================================ -->
-    <section class="sec" id="s-input-otp">
+    <section class="sec sec--tabbed" id="s-input-otp">
+      <div class="sec-hero">
       <div class="sec__head">
-        <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Input OTP <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.1</span></h1>
-        <p class="sec__desc">A segmented field for one-time passcodes &mdash; SMS, email or authenticator 2FA. Each digit gets its own box; typing auto-advances, Backspace steps back, and a pasted code fills every box at once.</p>
-      </div>
-      <div class="type-sub">
-        <div class="type-sub__title">Six digit</div>
-        <div class="type-sub__desc">The default for most verification codes. Type a digit to advance; try pasting a 6-digit number into the first box.</div>
-        <div class="sg-stage"><div class="otp" data-otp>
-          <input class="otp__box" inputmode="numeric" maxlength="1" placeholder=" " aria-label="Digit 1">
-          <input class="otp__box" inputmode="numeric" maxlength="1" placeholder=" " aria-label="Digit 2">
-          <input class="otp__box" inputmode="numeric" maxlength="1" placeholder=" " aria-label="Digit 3">
-          <input class="otp__box" inputmode="numeric" maxlength="1" placeholder=" " aria-label="Digit 4">
-          <input class="otp__box" inputmode="numeric" maxlength="1" placeholder=" " aria-label="Digit 5">
-          <input class="otp__box" inputmode="numeric" maxlength="1" placeholder=" " aria-label="Digit 6">
-        </div></div>
-      </div>
-      <div class="type-sub">
-        <div class="type-sub__title">Four digit, grouped</div>
-        <div class="type-sub__desc">A shorter PIN, split into two pairs with a separator for readability.</div>
-        <div class="sg-stage"><div class="otp" data-otp>
-          <input class="otp__box" inputmode="numeric" maxlength="1" placeholder=" " aria-label="Digit 1">
-          <input class="otp__box" inputmode="numeric" maxlength="1" placeholder=" " aria-label="Digit 2">
-          <span class="otp__sep">&ndash;</span>
-          <input class="otp__box" inputmode="numeric" maxlength="1" placeholder=" " aria-label="Digit 3">
-          <input class="otp__box" inputmode="numeric" maxlength="1" placeholder=" " aria-label="Digit 4">
-        </div></div>
-      </div>
-      <div class="type-sub">
-        <div class="type-sub__title">Error</div>
-        <div class="type-sub__desc">On an invalid or expired code, mark the whole group and explain what to do next below it.</div>
-        <div class="sg-stage" style="display:block">
-          <div class="otp otp--error" data-otp>
-            <input class="otp__box" inputmode="numeric" maxlength="1" placeholder=" " value="4" aria-label="Digit 1">
-            <input class="otp__box" inputmode="numeric" maxlength="1" placeholder=" " value="8" aria-label="Digit 2">
-            <input class="otp__box" inputmode="numeric" maxlength="1" placeholder=" " value="1" aria-label="Digit 3">
-            <input class="otp__box" inputmode="numeric" maxlength="1" placeholder=" " value="5" aria-label="Digit 4">
-          </div>
-          <div class="otp-msg otp-msg--err">That code isn&rsquo;t right &mdash; check it and try again.</div>
-        </div>
-      </div>
-      <div class="type-sub">
-        <div class="type-sub__title">When to use</div>
-        <div class="type-sub__desc">Use an OTP field for short, fixed-length codes the user transcribes once &mdash; not for regular data entry.</div>
-        <div class="sel-usage">
-          <div class="sel-usage__card">
-            <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
-            <ul class="sel-usage__list">
-              <li>Use for SMS / email verification and 2FA codes.</li>
-              <li>Support paste and auto-advance so entry is effortless.</li>
-              <li>Use <code>inputmode="numeric"</code> to bring up the number pad on mobile.</li>
-            </ul>
-          </div>
-          <div class="sel-usage__card">
-            <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don&rsquo;t</div>
-            <ul class="sel-usage__list">
-              <li>Don&rsquo;t use segmented boxes for ordinary or variable-length input.</li>
-              <li>Don&rsquo;t use it for long secrets or passwords &mdash; use a password field.</li>
-              <li>Don&rsquo;t block pasting &mdash; it&rsquo;s how most people enter codes.</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <details class="ai-ctx">
+        <h1 class="sec__title">Input OTP</h1>
+        <div class="sec-header-meta">
+          <span class="comp-ver-badge" style="margin-left:0">v2.0.0</span>
+          <details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-input-otp">
 {
-  "status": "static",
+  "status": "js-rendered",
+  "builderFunctions": [
+    "makeOtpHTML",
+    "makeOtpEl",
+    "wireOtpGroup"
+  ],
   "realClasses": [
     ".otp",
     ".otp__box",
@@ -6555,6 +6502,7 @@ body.home .main{max-width:none;margin:0;padding:0}
     ".otp-msg--err"
   ],
   "css": "/* ---- Input OTP ---- */\n.otp { display:inline-flex;gap:9px;align-items:center }\n.otp__box { width:44px;height:52px;text-align:center;font-size:20px;font-weight:700;font-family:inherit;color:var(--chrome-txt);background:var(--color-input-bg);border:1.5px solid var(--color-input-border);border-radius:10px;outline:none;transition:border-color .15s,box-shadow .15s;caret-color:var(--color-input-focus) }\n.otp__box:focus { border-color:var(--color-input-focus);box-shadow:0 0 0 3px var(--color-surface-n2) }\n.otp__box:not(:placeholder-shown) { border-color:var(--color-text-s) }\n.otp__sep { color:var(--chrome-muted);font-size:20px;font-weight:700 }\n.otp--error .otp__box { border-color:var(--color-crit-h) }\n.otp--error .otp__box:focus { box-shadow:0 0 0 3px rgba(235,0,41,.16) }\n.otp-msg { font-size:12px;margin-top:10px }\n.otp-msg--err { color:var(--color-crit-h);font-weight:600 }",
+  "js": "function makeOtpHTML({digits = 6, grouped = false, error = false} = {}){\n  const n = Math.max(4, Math.min(6, digits));\n  const mid = Math.floor(n / 2);\n  const boxes = Array.from({length: n}, (_, i) =&gt;\n    `&lt;input class=\"otp__box\" inputmode=\"numeric\" maxlength=\"1\" placeholder=\" \" aria-label=\"Digit ${i + 1}\"&gt;${grouped &amp;&amp; i === mid - 1 &amp;&amp; i &lt; n - 1 ? '&lt;span class=\"otp__sep\"&gt;&amp;ndash;&lt;/span&gt;' : ''}`\n  ).join('');\n  return `&lt;div class=\"otp${error ? ' otp--error' : ''}\" data-otp&gt;${boxes}&lt;/div&gt;`;\n}\n\nfunction makeOtpEl(){\n  const wrap = document.createElement('div');\n  wrap.innerHTML = makeOtpHTML(otpg);\n  const otp = wrap.firstElementChild;\n  wireOtpGroup(otp);\n  if(!otpg.error) return otp;\n  const stage = document.createElement('div');\n  stage.appendChild(otp);\n  const msg = document.createElement('div');\n  msg.className = 'otp-msg otp-msg--err';\n  msg.textContent = 'That code isn’t right — check it and try again.';\n  stage.appendChild(msg);\n  return stage;\n}\n\nfunction wireOtpGroup(group){\n  var boxes = Array.prototype.slice.call(group.querySelectorAll('.otp__box'));\n  boxes.forEach(function(box, i){\n    box.addEventListener('input', function(){\n      box.value = box.value.replace(/[^0-9]/g, '').slice(0, 1);\n      group.classList.remove('otp--error');\n      if(box.value &amp;&amp; boxes[i+1]) boxes[i+1].focus();\n    });\n    box.addEventListener('keydown', function(e){\n      if(e.key === 'Backspace' &amp;&amp; !box.value &amp;&amp; boxes[i-1]) boxes[i-1].focus();\n      else if(e.key === 'ArrowLeft' &amp;&amp; boxes[i-1]){ e.preventDefault(); boxes[i-1].focus(); }\n      else if(e.key === 'ArrowRight' &amp;&amp; boxes[i+1]){ e.preventDefault(); boxes[i+1].focus(); }\n    });\n    box.addEventListener('paste', function(e){\n      e.preventDefault();\n      var txt = ((e.clipboardData || window.clipboardData).getData('text') || '').replace(/[^0-9]/g, '');\n      if(!txt) return;\n      group.classList.remove('otp--error');\n      for(var j = 0; j &lt; txt.length &amp;&amp; i + j &lt; boxes.length; j++) boxes[i+j].value = txt[j];\n      boxes[Math.min(i + txt.length, boxes.length - 1)].focus();\n    });\n  });\n}",
   "usage": {
     "do": [
       "Use for SMS / email verification and 2FA codes.",
@@ -6567,11 +6515,60 @@ body.home .main{max-width:none;margin:0;padding:0}
       "Don’t block pasting — it’s how most people enter codes."
     ]
   },
-  "contentHash": "0772fd06b379d5cf6621a44f50feca0439779b08442c56aa1671e6f5c2e4d3e2",
-  "note": "Markup is fully static; a small generic JS wiring block (anonymous IIFE keyed off [data-otp], no named builder function) auto-advances focus on digit entry, steps back on Backspace/ArrowLeft, moves forward on ArrowRight, and on paste strips non-digits and fans a pasted code out across every box in the group."
+  "contentHash": "cc42606438c16bd34515cbe1daabe7110f8abebba5373efe7728b5283e63849b",
+  "note": "makeOtpHTML is the minimal real-markup builder (digit/grouping/error config -&gt; otp HTML string); makeOtpEl is the fuller version wiring the live element via wireOtpGroup and, when error is on, pairing it with its otp-msg. otpg (playground state)/getOtpCode*/renderOtpPlayground/renderOtpReference/renderOtpInSitu/otpTabSwitch are doc-site-only playground plumbing, excluded."
 }
   </pre>
 </details>
+        </div>
+      </div>
+      <div class="sec-hero__preview"><div class="mk-otp"><span class="on">4</span><span class="on">2</span><span></span><span></span></div>
+      </div>
+      </div>
+      <div class="tabs-list sec-tabs" id="otp-tabs-list">
+        <button type="button" class="tab-item on" data-otp-tab="overview" onclick="otpTabSwitch('overview')"><span class="tab-item__inner"><span class="tab-item__label">Overview</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-otp-tab="style" onclick="otpTabSwitch('style')"><span class="tab-item__inner"><span class="tab-item__label">Style</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-otp-tab="code" onclick="otpTabSwitch('code')"><span class="tab-item__inner"><span class="tab-item__label">Code</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-otp-tab="changelog" onclick="otpTabSwitch('changelog')"><span class="tab-item__inner"><span class="tab-item__label">Changelog</span></span><span class="tab-item__line"></span></button>
+      </div>
+      <div class="tabs-panel on" data-otp-panel="overview">
+        <div id="otp-playground" class="type-sub"></div>
+        <div id="otp-insitu" class="type-sub"></div>
+        <div class="type-sub cpg-variants" id="otp-usage">
+          <div class="cpg-section-heading">
+            <div class="cpg-layout__title">Do's and don'ts</div>
+            <div class="cpg-layout__desc">Use an OTP field for short, fixed-length codes the user transcribes once &mdash; not for regular data entry.</div>
+          </div>
+          <div class="cpg-section-block">
+            <div class="sel-usage">
+              <div class="sel-usage__card">
+                <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
+                <ul class="sel-usage__list">
+                  <li>Use for SMS / email verification and 2FA codes.</li>
+                  <li>Support paste and auto-advance so entry is effortless.</li>
+                  <li>Use <code>inputmode="numeric"</code> to bring up the number pad on mobile.</li>
+                </ul>
+              </div>
+              <div class="sel-usage__card">
+                <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don&rsquo;t</div>
+                <ul class="sel-usage__list">
+                  <li>Don&rsquo;t use segmented boxes for ordinary or variable-length input.</li>
+                  <li>Don&rsquo;t use it for long secrets or passwords &mdash; use a password field.</li>
+                  <li>Don&rsquo;t block pasting &mdash; it&rsquo;s how most people enter codes.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tabs-panel" data-otp-panel="style">
+        <div id="otp-reference" class="type-sub spec-panel spec-stack"></div>
+      </div>
+      <div class="tabs-panel" data-otp-panel="code">
+        <div id="otp-code-playground" class="type-sub spec-panel spec-code-playground"></div>
+        <div id="otp-code-tab" class="type-sub spec-panel"></div>
+      </div>
+      <div class="tabs-panel" data-otp-panel="changelog" id="otp-changelog-panel"></div>
     </section>
 
     <!-- ============================================================
@@ -7433,7 +7430,7 @@ body.home .main{max-width:none;margin:0;padding:0}
     ".car__dot"
   ],
   "css": "/* ---- Carousel ---- */\n.car { position:relative;width:440px;max-width:100% }\n.car__track { display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;scrollbar-width:none;border-radius:14px }\n.car__track::-webkit-scrollbar { display:none }\n.car__slide { flex:0 0 100%;scroll-snap-align:center;min-height:196px;border-radius:14px;display:flex;align-items:flex-end;padding:20px;color:#fff;font-weight:800;font-size:17px;background:linear-gradient(135deg,var(--prim-grey-600),var(--prim-grey-1100)) }\n.car__slide--g2 { background:linear-gradient(135deg,var(--prim-gb-300),var(--prim-gb-700)) }\n.car__slide--g3 { background:linear-gradient(135deg,var(--prim-grey-800),var(--prim-dg-700)) }\n.car__slide--g4 { background:linear-gradient(135deg,var(--prim-gb-200),var(--prim-gb-600)) }\n.car__arrow { position:absolute;top:98px;transform:translateY(-50%);width:34px;height:34px;border-radius:50%;background:var(--color-btn-s-bg);color:var(--color-btn-s-txt);border:0;cursor:pointer;display:flex;align-items:center;justify-content:center;font-family:inherit;box-shadow:0 2px 10px rgba(0,0,0,.25);z-index:2;transition:opacity .15s }\n.car__arrow svg { width:16px;height:16px;display:block }\n.car__arrow--prev { left:10px }\n.car__arrow--prev svg { transform:rotate(180deg) }\n.car__arrow--next { right:10px }\n.car__arrow:hover { opacity:.85 }\n.car__arrow:disabled { opacity:.35;cursor:default }\n.car__dots { display:flex;gap:7px;justify-content:center;margin-top:14px }\n.car__dot { width:7px;height:7px;border-radius:50%;background:var(--color-surface-n3);border:0;cursor:pointer;padding:0;transition:width .2s,background .2s }\n.car__dot.is-active { background:var(--color-surface-inverse);width:20px;border-radius:4px }",
-  "js": "const CAR_SLIDE_CONTENT = [\n  'Instant payouts',\n  'Tap to pay',\n  'Fraud protection',\n  'Same-day settlement',\n  '24/7 support',\n];\n\nconst CAR_GAP = 14;\n\nfunction carGradClass(i){\n  const m = i % 4;\n  return m === 0 ? '' : ` car__slide--g${m + 1}`;\n}\n\nfunction carArrowSVG(dir){\n  return `&lt;svg viewBox=\"0 -960 960 960\" xmlns=\"http://www.w3.org/2000/svg\" fill=\"currentColor\" aria-hidden=\"true\"&gt;&lt;path d=\"M496.35-480 344.17-632.17Q331.5-644.85 331.5-664t12.67-31.83Q356.85-708.5 376-708.5t31.83 12.67l183.76 183.76q6.71 6.72 9.81 14.92 3.1 8.19 3.1 17.15 0 8.96-3.1 17.15-3.1 8.2-9.81 14.92L407.83-264.17Q395.15-251.5 376-251.5t-31.83-12.67Q331.5-276.85 331.5-296t12.67-31.83L496.35-480Z\"/&gt;&lt;/svg&gt;`;\n}\n\nfunction makeCarHTML({slides = 4, arrows = true, dots = true} = {}){\n  const n = Math.max(2, Math.min(5, slides));\n  const slideHTML = CAR_SLIDE_CONTENT.slice(0, n).map((t, i) =&gt;\n    `&lt;div class=\"car__slide${carGradClass(i)}\"&gt;${t}&lt;/div&gt;`).join('');\n  const arrowHTML = arrows\n    ? `&lt;button class=\"car__arrow car__arrow--prev\" type=\"button\" aria-label=\"Previous slide\"&gt;${carArrowSVG('prev')}&lt;/button&gt;&lt;button class=\"car__arrow car__arrow--next\" type=\"button\" aria-label=\"Next slide\"&gt;${carArrowSVG('next')}&lt;/button&gt;`\n    : '';\n  const dotsHTML = dots\n    ? `&lt;div class=\"car__dots\"&gt;${Array.from({length: n}, (_, i) =&gt; `&lt;button class=\"car__dot${i === 0 ? ' is-active' : ''}\" data-i=\"${i}\" aria-label=\"Go to slide ${i + 1}\"&gt;&lt;/button&gt;`).join('')}&lt;/div&gt;`\n    : '';\n  return `&lt;div class=\"car\"&gt;${arrowHTML}&lt;div class=\"car__track\"&gt;${slideHTML}&lt;/div&gt;${dotsHTML}&lt;/div&gt;`;\n}\n\nfunction makeCarEl(){\n  const wrap = document.createElement('div');\n  wrap.innerHTML = makeCarHTML(crpg);\n  const car = wrap.firstElementChild;\n  const track = car.querySelector('.car__track');\n  const slides = car.querySelectorAll('.car__slide');\n  const dots = car.querySelectorAll('.car__dot');\n  const n = slides.length;\n  let idx = 0;\n\n  function update(){ dots.forEach((d, i) =&gt; d.classList.toggle('is-active', i === idx)); }\n  function go(i){\n    idx = Math.max(0, Math.min(n - 1, i));\n    track.scrollTo({left: idx * (track.clientWidth + CAR_GAP), behavior: 'smooth'});\n    update();\n  }\n  const prev = car.querySelector('.car__arrow--prev');\n  const next = car.querySelector('.car__arrow--next');\n  if(prev) prev.addEventListener('click', () =&gt; go(idx - 1));\n  if(next) next.addEventListener('click', () =&gt; go(idx + 1));\n  dots.forEach(d =&gt; d.addEventListener('click', () =&gt; go(+d.getAttribute('data-i'))));\n  let tmr;\n  track.addEventListener('scroll', () =&gt; {\n    clearTimeout(tmr);\n    tmr = setTimeout(() =&gt; {\n      const w = track.clientWidth + CAR_GAP;\n      if(w &gt; 1){ idx = Math.round(track.scrollLeft / w); update(); }\n    }, 110);\n  });\n  return car;\n}",
+  "js": "const CAR_SLIDE_CONTENT = [\n  'Instant payouts',\n  'Tap to pay',\n  'Fraud protection',\n  'Same-day settlement',\n  '24/7 support',\n];\n\nconst CAR_GAP = 14;\n\nfunction carGradClass(i){\n  const m = i % 4;\n  return m === 0 ? '' : ` car__slide--g${m + 1}`;\n}\n\nfunction carArrowSVG(dir){\n  return iconSvg('chevron-right');\n}\n\nfunction makeCarHTML({slides = 4, arrows = true, dots = true} = {}){\n  const n = Math.max(2, Math.min(5, slides));\n  const slideHTML = CAR_SLIDE_CONTENT.slice(0, n).map((t, i) =&gt;\n    `&lt;div class=\"car__slide${carGradClass(i)}\"&gt;${t}&lt;/div&gt;`).join('');\n  const arrowHTML = arrows\n    ? `&lt;button class=\"car__arrow car__arrow--prev\" type=\"button\" aria-label=\"Previous slide\"&gt;${carArrowSVG('prev')}&lt;/button&gt;&lt;button class=\"car__arrow car__arrow--next\" type=\"button\" aria-label=\"Next slide\"&gt;${carArrowSVG('next')}&lt;/button&gt;`\n    : '';\n  const dotsHTML = dots\n    ? `&lt;div class=\"car__dots\"&gt;${Array.from({length: n}, (_, i) =&gt; `&lt;button class=\"car__dot${i === 0 ? ' is-active' : ''}\" data-i=\"${i}\" aria-label=\"Go to slide ${i + 1}\"&gt;&lt;/button&gt;`).join('')}&lt;/div&gt;`\n    : '';\n  return `&lt;div class=\"car\"&gt;${arrowHTML}&lt;div class=\"car__track\"&gt;${slideHTML}&lt;/div&gt;${dotsHTML}&lt;/div&gt;`;\n}\n\nfunction makeCarEl(){\n  const wrap = document.createElement('div');\n  wrap.innerHTML = makeCarHTML(crpg);\n  const car = wrap.firstElementChild;\n  const track = car.querySelector('.car__track');\n  const slides = car.querySelectorAll('.car__slide');\n  const dots = car.querySelectorAll('.car__dot');\n  const n = slides.length;\n  let idx = 0;\n\n  function update(){ dots.forEach((d, i) =&gt; d.classList.toggle('is-active', i === idx)); }\n  function go(i){\n    idx = Math.max(0, Math.min(n - 1, i));\n    track.scrollTo({left: idx * (track.clientWidth + CAR_GAP), behavior: 'smooth'});\n    update();\n  }\n  const prev = car.querySelector('.car__arrow--prev');\n  const next = car.querySelector('.car__arrow--next');\n  if(prev) prev.addEventListener('click', () =&gt; go(idx - 1));\n  if(next) next.addEventListener('click', () =&gt; go(idx + 1));\n  dots.forEach(d =&gt; d.addEventListener('click', () =&gt; go(+d.getAttribute('data-i'))));\n  let tmr;\n  track.addEventListener('scroll', () =&gt; {\n    clearTimeout(tmr);\n    tmr = setTimeout(() =&gt; {\n      const w = track.clientWidth + CAR_GAP;\n      if(w &gt; 1){ idx = Math.round(track.scrollLeft / w); update(); }\n    }, 110);\n  });\n  return car;\n}",
   "usage": {
     "do": [
       "Use for a handful of equally-weighted, self-contained slides.",
@@ -7446,8 +7443,8 @@ body.home .main{max-width:none;margin:0;padding:0}
       "Don't use a carousel where a simple list would show everything at once."
     ]
   },
-  "contentHash": "cb0188cbc946f50399e8fd0898a29730ce2382dff70e6af41f937c05a48ef023",
-  "note": "makeCarHTML is the minimal real-markup builder (slide/arrow/dot config -&gt; carousel HTML string, arrows via the shared chevron-right glyph rotated for prev); makeCarEl is the fuller version wiring up prev/next/dot clicks and scroll-position sync for the live playground stage. crpg (playground state)/getCarCode*/renderCarPlayground/renderCarReference/renderCarInSitu/carTabSwitch are doc-site-only playground plumbing, excluded."
+  "contentHash": "b27ff8e628ca6c3875646ce05e0ac020d97c39b1e385c940799721d25e7a7bc8",
+  "note": "makeCarHTML is the minimal real-markup builder (slide/arrow/dot config -&gt; carousel HTML string, arrows via the shared iconSvg('chevron-right') call, rotated for prev via CSS); makeCarEl is the fuller version wiring up prev/next/dot clicks and scroll-position sync for the live playground stage. crpg (playground state)/getCarCode*/renderCarPlayground/renderCarReference/renderCarInSitu/carTabSwitch are doc-site-only playground plumbing, excluded."
 }
   </pre>
 </details>
@@ -8028,6 +8025,12 @@ function toggleTheme() {
   try { if(typeof renderBadgeInSitu==='function' && document.getElementById('badge-insitu')) renderBadgeInSitu(); } catch(e){}
   try { if(typeof renderBadgeReference==='function' && document.getElementById('badge-reference')) renderBadgeReference(); } catch(e){}
   try { if(typeof renderPillReference==='function' && document.getElementById('pill-reference')) renderPillReference(); } catch(e){}
+  try { if(typeof renderCarPlayground==='function' && document.getElementById('car-playground')) renderCarPlayground(); } catch(e){}
+  try { if(typeof renderCarInSitu==='function' && document.getElementById('car-insitu')) renderCarInSitu(); } catch(e){}
+  try { if(typeof renderCarReference==='function' && document.getElementById('car-reference')) renderCarReference(); } catch(e){}
+  try { if(typeof renderOtpPlayground==='function' && document.getElementById('otp-playground')) renderOtpPlayground(); } catch(e){}
+  try { if(typeof renderOtpInSitu==='function' && document.getElementById('otp-insitu')) renderOtpInSitu(); } catch(e){}
+  try { if(typeof renderOtpReference==='function' && document.getElementById('otp-reference')) renderOtpReference(); } catch(e){}
   try { if(typeof renderEmptyStatePlayground==='function' && document.getElementById('es-playground')) renderEmptyStatePlayground(); } catch(e){}
   try { if(typeof renderEmptyStateScenarios==='function' && document.getElementById('es-scenarios')) renderEmptyStateScenarios(); } catch(e){}
   try { if(typeof renderEmptyStateInSitu==='function' && document.getElementById('es-insitu')) renderEmptyStateInSitu(); } catch(e){}
@@ -15757,12 +15760,21 @@ function cbrTabSwitch(tab){
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.78.0';
+const SYSTEM_VERSION = '1.79.0';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.79.0', date:'2026-08-21', author:'Mo', title:'Input OTP rebuilt with the full Pills-style tabbed treatment', changes:[
+        ['added','Input OTP (s-input-otp) converted from a single static page (three hand-typed example blocks + a "When to use" block) into a full .sec--tabbed page — Overview / Style / Code / Changelog — matching Pills and Carousel: a "Try the component" playground (Digits 4/6, Grouping and error-State controls, rendered into two synced mounts via shared otpg state, with every group fully typable), 2 "In context" mockups (login/2FA verification, payment confirmation mid-error), a Style tab (Anatomy — box/separator/error state/message — plus a combined Dimensions & tokens table, since Input OTP has no size or colour axis) and a Code tab with the .code-seg HTML/CSS · Blazor · React TSX switcher'],
+        ['added','New ai-ctx tab regenerated via generate-ai-context-tab.mjs for the new js-rendered builders (makeOtpHTML, makeOtpEl, wireOtpGroup), moved from the end of the section into the new hero\'s sec-header-meta, matching Pills/Carousel'],
+        ['changed','Do/Dont card moved into the Overview tab\'s #otp-usage .cpg-section-block, JS-rendered markup like Pills/Carousel (previously static markup); guidance text unchanged from the original 3 do / 3 dont'],
+      ]},
+      {version:'1.78.1', date:'2026-08-21', author:'Mo', title:'Carousel arrow glyph now calls the shared icon function; theme re-render wired up', changes:[
+        ['fixed','carArrowSVG() was returning a hand-copied SVG path string byte-identical to ICONS[\'chevron-right\'].d instead of calling the shared iconSvg(\'chevron-right\') function — now calls it live, matching the convention already used by Accordion, so a future edit to the shared glyph can\'t silently drift out of sync with Carousel\'s own copy'],
+        ['fixed','renderCarPlayground/renderCarInSitu/renderCarReference were missing from toggleTheme()\'s re-render list — switching light/dark left Carousel\'s Playground stage, In-context mockups and Style-tab swatches on their stale background colour until the next full reload'],
+      ]},
       {version:'1.78.0', date:'2026-08-21', author:'Mo', title:'Lists rebuilt with the full Pills-style tabbed treatment', changes:[
         ['added','Lists (s-lists) converted from a flat, static "Key–value list" + "Activity timeline" + "When to use" page into a full .sec--tabbed page — Overview / Style / Code / Changelog — matching Pills/Empty State/Carousel: a "Try the component" playground with a Pattern switcher (Key–value list / Activity timeline) plus pattern-specific controls (Rows/Key column width, or Events/Newest event colour) and a shared Density toggle, 3 "In context" mockups (record detail panel, audit log panel, combined record page), a Style tab with separate Anatomy/dimensions for each pattern plus a Semantic dot colours table, and a Code tab with the .code-seg HTML/CSS · Blazor · React TSX switcher'],
         ['added','Two new reusable modifier classes on the existing .dd-kv/.dd-timeline components: key-column width (--key-narrow/--key-wide) and density (--compact)'],
@@ -17061,7 +17073,11 @@ const CHANGELOG = {
         ['added','Horizontal, vertical and labelled hairline dividers on the border token'],
       ]},
     ]},
-    {secId:'s-carousel', name:'Carousel', version:'1.1.0', entries:[
+    {secId:'s-carousel', name:'Carousel', version:'1.1.1', entries:[
+      {version:'1.1.1', date:'2026-08-21', author:'Mo', title:'Arrow glyph now calls the shared icon function; theme re-render wired up', changes:[
+        ['fixed','carArrowSVG() was returning a hand-copied &lt;path&gt; string byte-identical to ICONS[\'chevron-right\'].d instead of actually calling the shared iconSvg(\'chevron-right\') function — visually identical today, but a future edit to the shared chevron-right glyph would have silently drifted out of sync with Carousel\'s own copy. Now calls iconSvg(\'chevron-right\') live, matching the convention already used by Accordion'],
+        ['fixed','renderCarPlayground/renderCarInSitu/renderCarReference were missing from toggleTheme()\'s re-render list, so switching light/dark left the Playground stage, In-context mockups and Style-tab swatches on their stale background colour until the next full page reload — added alongside the other .sec--tabbed pages'],
+      ]},
       {version:'1.1.0', date:'2026-08-19', author:'Mo', title:'Full tabbed rebuild — Overview / Style / Code / Changelog', changes:[
         ['added','Overview tab: "Try the component" playground with Arrows on/off, Dots on/off and Slide count (2–5) controls, rendered into two synced mounts (Overview + Code tab) via shared crpg state, plus a "24/7 support" 5th slide added to CAR_SLIDE_CONTENT to support the new slide-count control'],
         ['added','Overview tab: 3 "In context" mockups — onboarding steps, a dashboard feature-promo banner, and a product image gallery'],
@@ -17274,7 +17290,16 @@ const CHANGELOG = {
         ['added','Click-anchored floating panel with interactive contents; outside-click and Escape to dismiss'],
       ]},
     ]},
-    {secId:'s-input-otp', name:'Input OTP', version:'1.0.1', entries:[
+    {secId:'s-input-otp', name:'Input OTP', version:'2.0.0', entries:[
+      {version:'2.0.0', date:'2026-08-21', author:'Mo', title:'Full tabbed rebuild — Overview / Style / Code / Changelog', changes:[
+        ['added','Overview tab: "Try the component" playground with Digits (4/6), Grouping (contiguous/grouped) and State (default/error) controls, rendered into two synced mounts (Overview + Code tab) via shared otpg state; every playground/in-context group is fully typable, so the real auto-advance, backspace and paste behaviour can be tried live, not just previewed'],
+        ['added','Overview tab: 2 "In context" mockups — a login/2FA verification screen and a payment-confirmation screen shown mid-error'],
+        ['added','Style tab: Anatomy (box, separator, error state, message) and a combined Dimensions & tokens table — Input OTP has no size or colour axis, so this replaces the usual separate Size and Colour-variant sections, matching Carousel\'s pattern'],
+        ['added','Code tab: live HTML/CSS · Blazor · React TSX snippet matching the current Playground configuration, via the same .code-seg segmented switcher used by Pills/Carousel'],
+        ['changed','Section restructured from a plain .sec into a .sec--tabbed page (sec-hero with header preview + tabs-list), matching Pills/Carousel; the three static example blocks (six digit, four digit grouped, error) and the "When to use" Do/Dont block moved into the Overview tab as the playground and a "Do\'s and don\'ts" card respectively — guidance copy unchanged'],
+        ['changed','Markup builder introduced (makeOtpHTML/makeOtpEl) — the previously hand-typed digit/separator markup is now generated from state (digits/grouped/error), and the page\'s auto-advance/backspace/paste wiring was extracted from its page-load-only IIFE into a shared wireOtpGroup() function so every live and mock .otp group gets the same behaviour'],
+        ['added','AI context tab regenerated (status changed from "static" to "js-rendered") to document the new makeOtpHTML/makeOtpEl/wireOtpGroup builders'],
+      ]},
       {version:'1.0.1', date:'2026-08-03', author:'Mo', title:'AI context tab added', changes:[
         ['added','AI context tab documenting the real, fully static .otp/.otp__*/.otp-msg markup, plus its existing "When to use" Do/Dont guidance (3 do / 3 dont); notes the auto-advance/paste JS is generic input wiring, not a markup builder'],
       ]},
@@ -20202,31 +20227,34 @@ function ddTabSwitch(tab){
   document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeAll(); });
 })();
 
-/* Input OTP — auto-advance, backspace, arrows, paste */
-(function(){
-  Array.prototype.forEach.call(document.querySelectorAll('[data-otp]'), function(group){
-    var boxes = Array.prototype.slice.call(group.querySelectorAll('.otp__box'));
-    boxes.forEach(function(box, i){
-      box.addEventListener('input', function(){
-        box.value = box.value.replace(/[^0-9]/g, '').slice(0, 1);
-        group.classList.remove('otp--error');
-        if(box.value && boxes[i+1]) boxes[i+1].focus();
-      });
-      box.addEventListener('keydown', function(e){
-        if(e.key === 'Backspace' && !box.value && boxes[i-1]) boxes[i-1].focus();
-        else if(e.key === 'ArrowLeft' && boxes[i-1]){ e.preventDefault(); boxes[i-1].focus(); }
-        else if(e.key === 'ArrowRight' && boxes[i+1]){ e.preventDefault(); boxes[i+1].focus(); }
-      });
-      box.addEventListener('paste', function(e){
-        e.preventDefault();
-        var txt = ((e.clipboardData || window.clipboardData).getData('text') || '').replace(/[^0-9]/g, '');
-        if(!txt) return;
-        group.classList.remove('otp--error');
-        for(var j = 0; j < txt.length && i + j < boxes.length; j++) boxes[i+j].value = txt[j];
-        boxes[Math.min(i + txt.length, boxes.length - 1)].focus();
-      });
+/* Input OTP — auto-advance, backspace, arrows, paste. Shared across every
+   [data-otp] group, whether it's static markup or a live element built by
+   makeOtpEl() for the Style/Overview/Code playground. */
+function wireOtpGroup(group){
+  var boxes = Array.prototype.slice.call(group.querySelectorAll('.otp__box'));
+  boxes.forEach(function(box, i){
+    box.addEventListener('input', function(){
+      box.value = box.value.replace(/[^0-9]/g, '').slice(0, 1);
+      group.classList.remove('otp--error');
+      if(box.value && boxes[i+1]) boxes[i+1].focus();
+    });
+    box.addEventListener('keydown', function(e){
+      if(e.key === 'Backspace' && !box.value && boxes[i-1]) boxes[i-1].focus();
+      else if(e.key === 'ArrowLeft' && boxes[i-1]){ e.preventDefault(); boxes[i-1].focus(); }
+      else if(e.key === 'ArrowRight' && boxes[i+1]){ e.preventDefault(); boxes[i+1].focus(); }
+    });
+    box.addEventListener('paste', function(e){
+      e.preventDefault();
+      var txt = ((e.clipboardData || window.clipboardData).getData('text') || '').replace(/[^0-9]/g, '');
+      if(!txt) return;
+      group.classList.remove('otp--error');
+      for(var j = 0; j < txt.length && i + j < boxes.length; j++) boxes[i+j].value = txt[j];
+      boxes[Math.min(i + txt.length, boxes.length - 1)].focus();
     });
   });
+}
+(function(){
+  Array.prototype.forEach.call(document.querySelectorAll('[data-otp]'), function(group){ wireOtpGroup(group); });
 })();
 /* ============================================================
    DATE PICKER
@@ -23113,7 +23141,7 @@ function carGradClass(i){
 }
 
 function carArrowSVG(dir){
-  return `<svg viewBox="0 -960 960 960" xmlns="http://www.w3.org/2000/svg" fill="currentColor" aria-hidden="true"><path d="M496.35-480 344.17-632.17Q331.5-644.85 331.5-664t12.67-31.83Q356.85-708.5 376-708.5t31.83 12.67l183.76 183.76q6.71 6.72 9.81 14.92 3.1 8.19 3.1 17.15 0 8.96-3.1 17.15-3.1 8.2-9.81 14.92L407.83-264.17Q395.15-251.5 376-251.5t-31.83-12.67Q331.5-276.85 331.5-296t12.67-31.83L496.35-480Z"/></svg>`;
+  return iconSvg('chevron-right');
 }
 
 /* Minimal real-markup builder: slide/arrow/dot counts -> static .car HTML
@@ -23610,6 +23638,416 @@ function carTabSwitch(tab){
   nav.querySelectorAll('.tab-item').forEach(btn => btn.classList.toggle('on', btn.getAttribute('data-car-tab') === tab));
   document.querySelectorAll('#s-carousel .tabs-panel[data-car-panel]').forEach(p => p.classList.toggle('on', p.getAttribute('data-car-panel') === tab));
 }
+
+/* ============================================================
+   INPUT OTP
+   Same tabbed-page treatment as Pills/Carousel (.sec--tabbed):
+   Overview / Style / Code / Changelog, a shared-state playground
+   rendered into two mounts, and a three-language code panel.
+   Like Carousel, Input OTP has no colour or size axis — its own
+   axes are digit count, grouping (a separator splitting the group
+   in two) and error state, so its Style tab merges Anatomy with a
+   single "Dimensions & tokens" section instead of separate Size
+   and Colour-variant slots. wireOtpGroup() (defined earlier, next
+   to the legacy static-markup IIFE) is reused so every live/mock
+   .otp group — playground, in-context, anatomy hero — gets the
+   same auto-advance/backspace/paste behaviour.
+============================================================ */
+let otpg = { digits: 6, grouped: false, error: false, theme: 'light' };
+
+/* Minimal real-markup builder: digit count/grouping/error -> static .otp HTML */
+function makeOtpHTML({digits = 6, grouped = false, error = false} = {}){
+  const n = Math.max(4, Math.min(6, digits));
+  const mid = Math.floor(n / 2);
+  const boxes = Array.from({length: n}, (_, i) =>
+    `<input class="otp__box" inputmode="numeric" maxlength="1" placeholder=" " aria-label="Digit ${i + 1}">${grouped && i === mid - 1 && i < n - 1 ? '<span class="otp__sep">&ndash;</span>' : ''}`
+  ).join('');
+  return `<div class="otp${error ? ' otp--error' : ''}" data-otp>${boxes}</div>`;
+}
+
+/* Live element for a stage: builds real .otp markup via makeOtpHTML, wires it
+   with the same auto-advance/backspace/paste behaviour every OTP group uses,
+   and — when the error toggle is on — pairs it with its error message. */
+function makeOtpEl(){
+  const wrap = document.createElement('div');
+  wrap.innerHTML = makeOtpHTML(otpg);
+  const otp = wrap.firstElementChild;
+  wireOtpGroup(otp);
+  if(!otpg.error) return otp;
+  const stage = document.createElement('div');
+  stage.appendChild(otp);
+  const msg = document.createElement('div');
+  msg.className = 'otp-msg otp-msg--err';
+  msg.textContent = 'That code isn’t right — check it and try again.';
+  stage.appendChild(msg);
+  return stage;
+}
+
+function getOtpCodeHTML(){
+  const n = Math.max(4, Math.min(6, otpg.digits));
+  const mid = Math.floor(n / 2);
+  const kw = s => `<span class="code-kw">${s}</span>`;
+  const cls = s => `<span class="code-cls">${s}</span>`;
+  const val = s => `<span class="code-val">${s}</span>`;
+  const tag = (name, attrs, self) => `${kw('&#60;' + name)}${attrs ? ' ' + attrs : ''}${kw(self ? ' />' : '>')}`;
+  const closeTag = name => kw(`&#60;/${name}>`);
+  const classAttr = c => `${cls('class')}=${val('"' + c + '"')}`;
+
+  const boxLines = Array.from({length: n}, (_, i) => {
+    const box = `\n  ${tag('input', `${classAttr('otp__box')} inputmode=${val('"numeric"')} maxlength=${val('"1"')} placeholder=${val('" "')} aria-label=${val('"Digit ' + (i + 1) + '"')}`, true)}`;
+    const sep = (otpg.grouped && i === mid - 1 && i < n - 1) ? `\n  ${tag('span', classAttr('otp__sep'))}&ndash;${closeTag('span')}` : '';
+    return box + sep;
+  }).join('');
+
+  const msgBlock = otpg.error
+    ? `\n${closeTag('div')}\n${tag('div', classAttr('otp-msg otp-msg--err'))}That code isn&rsquo;t right &mdash; check it and try again.${closeTag('div')}`
+    : `\n${closeTag('div')}`;
+
+  return `<span class="code-cm">/* Flash · Input OTP · ${n} digit${n === 1 ? '' : 's'}${otpg.grouped ? ', grouped' : ''}${otpg.error ? ', error' : ''} */</span>
+${tag('div', classAttr('otp' + (otpg.error ? ' otp--error' : '')))}${boxLines}${msgBlock}`;
+}
+
+/* ── CODE PANEL LANGUAGES ──
+   HTML/CSS is the source of truth (real .otp markup). Blazor and React TSX
+   are illustrative wrappers over the same classes, so digit count, grouping
+   and the error toggle stay the only things a consumer ports. */
+const OTP_LANGS = [
+  {key: 'html', label: 'HTML / CSS', file: 'input-otp.html'},
+  {key: 'blazor', label: 'Blazor', file: 'DsInputOtp.razor'},
+  {key: 'tsx', label: 'React TSX', file: 'DsInputOtp.tsx'},
+];
+let otpLang = 'html';
+
+function getOtpCodeBlazor(){
+  const n = Math.max(4, Math.min(6, otpg.digits));
+  return `<span class="code-cm">@* DsInputOtp.razor — usage *@</span>
+<span class="code-kw">&#60;DsInputOtp</span> <span class="code-attr">Digits</span>=<span class="code-val">"${n}"</span>${otpg.grouped ? ` <span class="code-attr">Grouped</span>=<span class="code-val">"true"</span>` : ''}${otpg.error ? ` <span class="code-attr">HasError</span>=<span class="code-val">"true"</span>` : ''} <span class="code-kw">/></span>
+
+<span class="code-cm">@* DsInputOtp.razor — component definition *@</span>
+<span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"@($&quot;otp{(HasError ? &quot; otp--error&quot; : &quot;&quot;)}&quot;)"</span><span class="code-kw">></span>
+  <span class="code-kw">@for</span> (<span class="code-kw">var</span> i = 0; i &lt; Digits; i++) {
+    <span class="code-kw">&#60;input</span> <span class="code-cls">class</span>=<span class="code-val">"otp__box"</span> <span class="code-attr">inputmode</span>=<span class="code-val">"numeric"</span> <span class="code-attr">maxlength</span>=<span class="code-val">"1"</span> <span class="code-attr">@onpaste</span>=<span class="code-val">"OnPaste"</span> <span class="code-kw">/></span>
+    <span class="code-kw">@if</span> (Grouped &amp;&amp; i == Digits / 2 - 1 &amp;&amp; i &lt; Digits - 1) { <span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"otp__sep"</span><span class="code-kw">>&#8211;&#60;/span></span> }
+  }
+<span class="code-kw">&#60;/div></span>
+<span class="code-kw">@if</span> (HasError) {
+  <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"otp-msg otp-msg--err"</span><span class="code-kw">></span>That code isn&rsquo;t right &mdash; check it and try again.<span class="code-kw">&#60;/div></span>
+}
+
+<span class="code-kw">@code</span> {
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> <span class="code-cls">int</span> Digits { get; set; } = 6;
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> <span class="code-cls">bool</span> Grouped { get; set; }
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> <span class="code-cls">bool</span> HasError { get; set; }
+  <span class="code-kw">private void</span> OnPaste(ClipboardEventArgs e) { <span class="code-cm">/* strip non-digits, fan out across boxes */</span> }
+}`;
+}
+
+function getOtpCodeTSX(){
+  const n = Math.max(4, Math.min(6, otpg.digits));
+  const usageProps = `digits={${n}}` + (otpg.grouped ? ' grouped' : '') + (otpg.error ? ' hasError' : '');
+  return `<span class="code-cm">// DsInputOtp.tsx</span>
+<span class="code-kw">import</span> React, { useRef } <span class="code-kw">from</span> <span class="code-val">'react'</span>;
+
+<span class="code-kw">interface</span> <span class="code-cls">DsInputOtpProps</span> {
+  digits?: <span class="code-cls">number</span>;
+  grouped?: <span class="code-cls">boolean</span>;
+  hasError?: <span class="code-cls">boolean</span>;
+}
+
+<span class="code-kw">export const</span> <span class="code-cls">DsInputOtp</span>: React.FC&#60;DsInputOtpProps> = ({
+  digits = 6,
+  grouped = <span class="code-kw">false</span>,
+  hasError = <span class="code-kw">false</span>,
+}) => {
+  <span class="code-kw">const</span> boxRefs = useRef&#60;HTMLInputElement[]>([]);
+  <span class="code-kw">const</span> mid = Math.floor(digits / 2);
+
+  <span class="code-kw">const</span> onInput = (i: <span class="code-cls">number</span>, v: <span class="code-cls">string</span>) => {
+    <span class="code-kw">const</span> digit = v.replace(<span class="code-val">/[^0-9]/g</span>, <span class="code-val">''</span>).slice(0, 1);
+    <span class="code-kw">if</span> (digit &amp;&amp; boxRefs.current[i + 1]) boxRefs.current[i + 1].focus();
+  };
+
+  <span class="code-kw">return</span> (
+    &#60;>
+      &#60;div className={\`otp\${hasError ? <span class="code-val">' otp--error'</span> : <span class="code-val">''</span>}\`}>
+        {Array.from({ length: digits }).map((_, i) => (
+          &#60;React.Fragment key={i}>
+            &#60;input
+              ref={(el) => (boxRefs.current[i] = el!)}
+              className=<span class="code-val">"otp__box"</span>
+              inputMode=<span class="code-val">"numeric"</span>
+              maxLength={1}
+              onChange={(e) => onInput(i, e.target.value)}
+            />
+            {grouped &amp;&amp; i === mid - 1 &amp;&amp; i &lt; digits - 1 &amp;&amp; &#60;span className=<span class="code-val">"otp__sep"</span>>&#8211;&#60;/span>}
+          &#60;/React.Fragment>
+        ))}
+      &#60;/div>
+      {hasError &amp;&amp; &#60;div className=<span class="code-val">"otp-msg otp-msg--err"</span>>That code isn&rsquo;t right &mdash; check it and try again.&#60;/div>}
+    &#60;/>
+  );
+};
+
+<span class="code-cm">// Usage</span>
+&#60;DsInputOtp ${usageProps} /></span>`;
+}
+
+function getOtpCode(){
+  return otpLang === 'blazor' ? getOtpCodeBlazor()
+       : otpLang === 'tsx' ? getOtpCodeTSX()
+       : getOtpCodeHTML();
+}
+
+function setOtpLang(lang){
+  if(!OTP_LANGS.some(l => l.key === lang)) return;
+  otpLang = lang;
+  document.querySelectorAll('#otp-code-tab .code-seg__btn').forEach(b => {
+    const on = b.dataset.lang === lang;
+    b.setAttribute('aria-selected', on ? 'true' : 'false');
+    b.setAttribute('tabindex', on ? '0' : '-1');
+  });
+  const file = document.getElementById('otp-lang-file');
+  const meta = OTP_LANGS.find(l => l.key === lang);
+  if(file && meta) file.textContent = meta.file;
+  const block = document.getElementById('otpg-code-block');
+  if(block) block.innerHTML = getOtpCode();
+}
+
+/* Arrow-key navigation, per the WAI-ARIA tablist pattern: the segmented
+   control is one tab stop and Left/Right (plus Home/End) move between
+   languages. */
+function otpLangKeydown(e){
+  const i = OTP_LANGS.findIndex(l => l.key === otpLang);
+  let n = i;
+  if(e.key === 'ArrowLeft') n = (i - 1 + OTP_LANGS.length) % OTP_LANGS.length;
+  else if(e.key === 'ArrowRight') n = (i + 1) % OTP_LANGS.length;
+  else if(e.key === 'Home') n = 0;
+  else if(e.key === 'End') n = OTP_LANGS.length - 1;
+  else return;
+  e.preventDefault();
+  setOtpLang(OTP_LANGS[n].key);
+  const btn = document.getElementById('otp-lang-' + OTP_LANGS[n].key);
+  if(btn) btn.focus();
+}
+
+function otpgRefresh(){
+  document.querySelectorAll('.otpg-stage-el').forEach(stage => {
+    stage.innerHTML = '';
+    stage.appendChild(makeOtpEl());
+  });
+  const block = document.getElementById('otpg-code-block');
+  if(block) block.innerHTML = getOtpCode();
+}
+
+/* Input OTP Playground renders into more than one mount (the main Overview
+   demo, and a smaller copy on the Code tab) so both stay in sync with the
+   same shared otpg state. */
+const OTP_PLAYGROUND_MOUNTS = [
+  {rootId: 'otp-playground', idSuffix: '', wrap: true, title: 'Try the component', desc: 'Adjust the filters to test component states.', headingAbove: 'Each digit gets its own box &mdash; typing auto-advances, Backspace steps back, and a pasted code fills every box at once.'},
+  {rootId: 'otp-code-playground', idSuffix: '-code', style: 'code', title: 'Playground', desc: 'Live demo of the component.'},
+];
+
+function renderOtpPlayground(){
+  otpg.theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+  const sbg = stageBg(otpg.theme);
+
+  const digitBtns = [4, 6].map(n => `<button class="btn-pg__pill${otpg.digits === n ? ' on' : ''}" onclick="otpgSet('digits','${n}')">${n}</button>`).join('');
+  const groupBtns = ['off', 'on'].map(x => `<button class="btn-pg__pill${(otpg.grouped ? (x === 'on') : (x === 'off')) ? ' on' : ''}" onclick="otpgSet('grouped','${x}')">${x === 'on' ? 'Grouped' : 'Contiguous'}</button>`).join('');
+  const errBtns = ['off', 'on'].map(x => `<button class="btn-pg__pill${(otpg.error ? (x === 'on') : (x === 'off')) ? ' on' : ''}" onclick="otpgSet('error','${x}')">${x === 'on' ? 'Error' : 'Default'}</button>`).join('');
+
+  OTP_PLAYGROUND_MOUNTS.forEach(mount => {
+    const root = document.getElementById(mount.rootId);
+    if(!root) return;
+    const s = mount.idSuffix;
+    const demo = `
+      <div class="btn-pg">
+        <div class="btn-pg__stage otpg-stage-el" id="otpg-stage${s}" style="background:${sbg}"></div>
+        <div class="btn-pg__ctrls">
+          <div class="btn-pg__group"><span class="btn-pg__clabel">Digits</span><div class="btn-pg__pill-row">${digitBtns}</div></div>
+          <div class="btn-pg__group"><span class="btn-pg__clabel">Grouping</span><div class="btn-pg__pill-row">${groupBtns}</div></div>
+          <div class="btn-pg__group"><span class="btn-pg__clabel">State</span><div class="btn-pg__pill-row">${errBtns}</div></div>
+        </div>
+      </div>`;
+
+    if(mount.style === 'code'){
+      root.innerHTML = `
+        <div class="type-sub__title">${mount.title}</div>
+        <div class="type-sub__desc">${mount.desc}</div>
+        <div class="cpg-section-outline">${demo}</div>`;
+      return;
+    }
+
+    const inner = `
+      <div class="cpg-layout">
+        <div class="cpg-layout__intro">
+          ${mount.wrap ? `<span class="cpg-cursor-icon">${CPG_CURSOR_ICON_SVG}</span>` : ''}
+          <div class="cpg-layout__title">${mount.title}</div>
+          <div class="cpg-layout__desc">${mount.desc}</div>
+        </div>
+        <div class="cpg-layout__demo">${demo}</div>
+      </div>`;
+    const wrapped = mount.wrap ? `<div class="cpg-section-block">${inner}</div>` : inner;
+    root.innerHTML = (mount.headingAbove ? `<div class="cpg-overview-heading"><span class="cpg-overview-heading__icon">${CPG_INFO_ICON_SVG}</span><span>${mount.headingAbove}</span></div>` : '') + wrapped;
+  });
+
+  otpgRefresh();
+}
+
+function renderOtpCodeTab(){
+  const root = document.getElementById('otp-code-tab');
+  if(!root) return;
+  root.innerHTML = `
+    <div class="type-sub__title">Code</div>
+    <div class="type-sub__desc">Live snippet matching the current Playground configuration &mdash; switch to Overview to change it.</div>
+    <div class="cpg-section-outline">
+      <div class="code-panel code-panel--bare open">
+        <div class="code-panel__head">
+          <div class="code-seg" role="tablist" aria-label="Code language" onkeydown="otpLangKeydown(event)">
+            ${OTP_LANGS.map(l => `<button type="button" role="tab" class="code-seg__btn" id="otp-lang-${l.key}" data-lang="${l.key}" aria-selected="${otpLang === l.key ? 'true' : 'false'}" aria-controls="otpg-code-block" tabindex="${otpLang === l.key ? '0' : '-1'}" onclick="setOtpLang('${l.key}')">${l.label}</button>`).join('')}
+          </div>
+          <span class="code-lang-file" id="otp-lang-file">${(OTP_LANGS.find(l => l.key === otpLang) || OTP_LANGS[0]).file}</span>
+          <button class="code-copy-btn" onclick="otpgCopyCode()" id="otpg-copy-btn">Copy</button>
+        </div>
+        <div class="code-body"><div class="code-block" id="otpg-code-block" role="tabpanel" aria-live="polite"></div></div>
+      </div>
+    </div>`;
+}
+
+function renderOtpInSitu(){
+  const root = document.getElementById('otp-insitu');
+  if(!root) return;
+  const theme = currentTheme();
+  const sbg = stageBg(theme);
+  const bar = w => `<span class="spec-mock__bar" style="width:${w}"></span>`;
+
+  // 1. Login / 2FA verification — headline copy, then a plain 6-digit group
+  const loginMock = `
+    <div class="spec-mock__stage" style="background:${sbg}">
+      <div class="spec-mock__row" style="flex-direction:column;align-items:flex-start;gap:10px">
+        ${bar('72%')}
+        ${bar('50%')}
+        <div style="margin-top:2px">${makeOtpHTML({digits: 6, grouped: false, error: false})}</div>
+        <span style="font-size:11px;color:var(--chrome-muted)">Didn&rsquo;t get a code? <b style="color:var(--color-link)">Resend</b></span>
+      </div>
+    </div>
+    <div class="spec-mock__cap"><b>Login verification</b>Confirms it&rsquo;s really the account owner signing in on a new device.</div>`;
+
+  // 2. Payment confirmation — grouped 4-digit PIN shown mid-error
+  const payMock = `
+    <div class="spec-mock__stage" style="background:${sbg}">
+      <div class="spec-mock__row" style="flex-direction:column;align-items:flex-start;gap:10px">
+        ${bar('80%')}
+        <div style="margin-top:2px">${makeOtpHTML({digits: 4, grouped: true, error: true})}</div>
+        <div class="otp-msg otp-msg--err">That code isn&rsquo;t right &mdash; check it and try again.</div>
+      </div>
+    </div>
+    <div class="spec-mock__cap"><b>Payment confirmation</b>Authorises a transfer with a one-time code sent at the moment of payment.</div>`;
+
+  root.innerHTML = `
+    <div class="cpg-section-heading">
+      <div class="cpg-layout__title">In context</div>
+      <div class="cpg-layout__desc">The same field verifies a sign-in and authorises a payment &mdash; only the digit count and state change.</div>
+    </div>
+    <div class="cpg-section-block">
+      <div class="spec-insitu-grid">
+        <div class="spec-mock">${loginMock}</div>
+        <div class="spec-mock">${payMock}</div>
+      </div>
+    </div>`;
+}
+
+function otpgSet(key, val){
+  if(key === 'digits') otpg.digits = +val;
+  else if(key === 'grouped') otpg.grouped = (val === 'on');
+  else if(key === 'error') otpg.error = (val === 'on');
+  renderOtpPlayground();
+}
+function otpgCopyCode(){
+  const b = document.getElementById('otpg-code-block');
+  if(!b) return;
+  navigator.clipboard.writeText(b.innerText || b.textContent).catch(() => {});
+  const btn = document.getElementById('otpg-copy-btn');
+  if(btn){ btn.textContent = 'Copied!'; setTimeout(() => btn.textContent = 'Copy', 2000); }
+}
+
+function renderOtpReference(){
+  const root = document.getElementById('otp-reference');
+  if(!root) return;
+
+  const theme = currentTheme();
+  const sbg = stageBg(theme);
+
+  /* ---- Anatomy ---- */
+  const heroOtp = makeOtpHTML({digits: 6, grouped: false, error: false});
+
+  const parts = [
+    {num: 1, name: 'Box', note: 'One digit per box; typing auto-advances to the next.', vis: `<input class="otp__box" style="width:36px;height:44px;font-size:16px" maxlength="1" placeholder=" " tabindex="-1">`},
+    {num: 2, name: 'Separator', note: 'Optional divider marking a group boundary, e.g. a 2+2 PIN.', vis: `<span class="otp__sep" style="font-size:16px">&ndash;</span>`},
+    {num: 3, name: 'Error state', note: 'Every box borders red when the submitted code is wrong.', vis: `<input class="otp__box" style="width:36px;height:44px;font-size:16px;border-color:var(--color-crit-h)" maxlength="1" value="4" tabindex="-1">`},
+    {num: 4, name: 'Message', note: 'Explains the error and what to do next, placed under the group.', vis: `<span class="otp-msg otp-msg--err" style="margin-top:0;font-size:11px">Code incorrect</span>`},
+  ];
+  const partCards = parts.map(p => `
+    <div class="spec-part">
+      <div class="spec-part__stage" style="background:${sbg}">${p.vis}</div>
+      <div class="spec-part__body">
+        <div class="spec-part__name"><span class="spec-part__num">${p.num}</span>${p.name}</div>
+        <div class="spec-part__note">${p.note}</div>
+      </div>
+    </div>`).join('');
+
+  /* ---- Dimensions & tokens (no size/colour axis, so this replaces both) ---- */
+  const dimRows = [
+    {name: 'Box size', val: '44px × 52px'},
+    {name: 'Box gap', val: '9px'},
+    {name: 'Box radius', val: '10px'},
+    {name: 'Digit font', val: '20px / 700'},
+    {name: 'Message font', val: '12px'},
+  ].map(r => `<tr><td class="dd-table__name">${r.name}</td><td>${r.val}</td></tr>`).join('');
+
+  const tokRows = [
+    {name: 'Box background', tok: '--color-input-bg', sw: 'var(--color-input-bg)'},
+    {name: 'Box border', tok: '--color-input-border', sw: 'var(--color-input-border)'},
+    {name: 'Focus ring', tok: '--color-input-focus', sw: 'var(--color-input-focus)'},
+    {name: 'Filled border', tok: '--color-text-s', sw: 'var(--color-text-s)'},
+    {name: 'Error border / message', tok: '--color-crit-h', sw: 'var(--color-crit-h)'},
+  ].map(t => `
+    <tr>
+      <td class="dd-table__name">${t.name}</td>
+      <td><div class="spec-tok-cell"><span class="spec-tok-sw" style="background:${t.sw}"></span><code>${t.tok}</code></div></td>
+    </tr>`).join('');
+
+  root.innerHTML = `
+    <div class="type-sub">
+      <div class="type-sub__title">Anatomy</div>
+      <div class="type-sub__desc">A row of single-digit boxes, an optional separator between groups, and an error state with its message.</div>
+      <div class="cpg-section-outline">
+        <div class="spec-hero" style="background:${sbg}">${heroOtp}</div>
+        <div class="spec-parts">${partCards}</div>
+      </div>
+    </div>
+
+    <div class="type-sub" style="margin-bottom:0">
+      <div class="type-sub__title">Dimensions &amp; tokens</div>
+      <div class="type-sub__desc">Input OTP has no size or colour axis like Pills &mdash; these are its fixed dimensions plus the tokens that drive its box and error colours.</div>
+      <div class="cpg-section-outline">
+        <div class="dd-table-wrap"><table class="dd-table">
+          <thead><tr><th>Property</th><th>Value</th></tr></thead>
+          <tbody>${dimRows}</tbody>
+        </table></div>
+        <div class="dd-table-wrap" style="margin-top:12px"><table class="dd-table" style="min-width:340px">
+          <thead><tr><th>Token</th><th>Value</th></tr></thead>
+          <tbody>${tokRows}</tbody>
+        </table></div>
+      </div>
+    </div>`;
+}
+
+function otpTabSwitch(tab){
+  const nav = document.getElementById('otp-tabs-list');
+  if(!nav) return;
+  nav.querySelectorAll('.tab-item').forEach(btn => btn.classList.toggle('on', btn.getAttribute('data-otp-tab') === tab));
+  document.querySelectorAll('#s-input-otp .tabs-panel[data-otp-panel]').forEach(p => p.classList.toggle('on', p.getAttribute('data-otp-panel') === tab));
+}
 /* Icons — shared SVG icon system (used by the Icons gallery and Navigation) */
 const ICONS = {
   home: {vb:'0 -960 960 960', d:'<path d="M151.87-202.87v-355.7q0-21.63 9.58-40.9 9.57-19.27 26.72-31.94L425.3-809.26q24.11-18.39 54.7-18.39 30.59 0 54.7 18.39l237.13 177.85q17.15 12.67 26.72 31.94 9.58 19.27 9.58 40.9v355.7q0 37.78-26.61 64.39t-64.39 26.61H607.41q-19.15 0-32.32-13.17-13.18-13.18-13.18-32.33v-199.04q0-19.16-13.17-32.33-13.17-13.17-32.33-13.17h-72.82q-19.16 0-32.33 13.17-13.17 13.17-13.17 32.33v199.04q0 19.15-13.18 32.33-13.17 13.17-32.32 13.17H242.87q-37.78 0-64.39-26.61t-26.61-64.39Z"/>'},
@@ -24048,6 +24486,10 @@ try { renderCarCodeTab(); } catch(e){ console.error('car-code-tab',e); }
 try { renderCarPlayground(); } catch(e){ console.error('car-playground',e); }
 try { renderCarInSitu(); } catch(e){ console.error('car-insitu',e); }
 try { renderCarReference(); } catch(e){ console.error('car-reference',e); }
+try { renderOtpCodeTab(); } catch(e){ console.error('otp-code-tab',e); }
+try { renderOtpPlayground(); } catch(e){ console.error('otp-playground',e); }
+try { renderOtpInSitu(); } catch(e){ console.error('otp-insitu',e); }
+try { renderOtpReference(); } catch(e){ console.error('otp-reference',e); }
 try { renderSectionChangelogs(); } catch(e){ console.error('section-changelog',e); }
 
 /* .sec--tabbed pages have their own Changelog tab — relocate the auto-injected
@@ -24081,6 +24523,7 @@ try { renderSectionChangelogs(); } catch(e){ console.error('section-changelog',e
   {secId:'s-carousel', panelId:'car-changelog-panel'},
   {secId:'s-empty-state', panelId:'es-changelog-panel'},
   {secId:'s-lists', panelId:'lst-changelog-panel'},
+  {secId:'s-input-otp', panelId:'otp-changelog-panel'},
 ].forEach(({secId, panelId})=>{
   try {
     const chlog = document.querySelector(`#${secId} > .sec-chlog`);
