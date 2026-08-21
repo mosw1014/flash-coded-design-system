@@ -1510,6 +1510,7 @@ body.home .main{max-width:none;margin:0;padding:0}
 .sec--tabbed .spec-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:16px}
 .sec--tabbed .spec-insitu-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
 .sec--tabbed .spec-insitu-grid--2{grid-template-columns:repeat(2,1fr)}
+.sec--tabbed .spec-insitu-grid--4{grid-template-columns:repeat(4,1fr)}
 .sec--tabbed .spec-mock{border:1px solid var(--chrome-border);border-radius:12px;overflow:hidden;background:var(--chrome-bg);display:flex;flex-direction:column;transition:background .25s,border-color .25s}
 .sec--tabbed .spec-mock__stage{flex:1;padding:22px 20px;display:flex;flex-direction:column;justify-content:center;gap:12px;min-height:150px;transition:background .25s}
 .sec--tabbed .spec-mock__cap{padding:12px 16px;border-top:1px solid var(--chrome-border);font-size:12px;line-height:1.5;color:var(--chrome-muted)}
@@ -10897,10 +10898,9 @@ function renderEmptyStateScenarios(){
   const sbg = stageBg(theme);
 
   const cells = ES_SCENARIOS.map(sc=>`
-    <div class="spec-cell">
-      <div class="spec-cell__stage" style="background:${sbg};padding:16px 12px">${makeEmptyStateHTML(sc.icon, sc.title, sc.desc, sc.action)}</div>
-      <div class="spec-cell__name">${sc.label}</div>
-      <div class="spec-cell__desc">${sc.desc}</div>
+    <div class="spec-mock">
+      <div class="spec-mock__stage" style="background:${sbg};padding:16px 12px">${makeEmptyStateHTML(sc.icon, sc.title, sc.desc, sc.action)}</div>
+      <div class="spec-mock__cap"><b>${sc.label}</b></div>
     </div>`).join('');
 
   root.innerHTML = `
@@ -10909,7 +10909,7 @@ function renderEmptyStateScenarios(){
       <div class="cpg-layout__desc">Four common reasons a view has zero rows &mdash; match the copy and action to the real cause, not a generic placeholder.</div>
     </div>
     <div class="cpg-section-block">
-      <div class="spec-grid">${cells}</div>
+      <div class="spec-insitu-grid spec-insitu-grid--4">${cells}</div>
     </div>`;
 }
 
