@@ -911,6 +911,7 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;font-feature-
 .btn-pg__pill-row{display:flex;gap:2px;background:var(--chrome-bg);border:1px solid var(--chrome-border);border-radius:7px;padding:2px;transition:background .25s}
 .btn-pg__pill{padding:4px 11px;border-radius:5px;border:none;cursor:pointer;font-family:inherit;font-size:11.5px;font-weight:600;color:var(--chrome-muted);background:transparent;transition:all .15s;white-space:nowrap}
 .btn-pg__pill.on{background:var(--chrome-txt);color:var(--chrome-bg)}
+.btn-pg__pill:disabled{opacity:.4;cursor:not-allowed}
 .btn-pg__stage{display:flex;align-items:center;justify-content:center;min-height:160px;padding:40px;transition:background .25s}
 .btn-pg__hint{padding:10px 20px;font-size:11px;color:var(--chrome-muted);border-top:1px solid var(--chrome-border);text-align:center;background:var(--chrome-nav);transition:background .25s}
 
@@ -5596,7 +5597,7 @@ body.home .main{max-width:none;margin:0;padding:0}
       <div class="sec__head">
         <h1 class="sec__title">Skeleton loader</h1>
         <div class="sec-header-meta">
-          <span class="comp-ver-badge" style="margin-left:0">v2.0.1</span>
+          <span class="comp-ver-badge" style="margin-left:0">v2.0.2</span>
           <details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-skeleton">
@@ -5640,7 +5641,7 @@ body.home .main{max-width:none;margin:0;padding:0}
 </details>
         </div>
       </div>
-      <div class="sec-hero__preview"><div class="mk"><div class="skl-card" style="width:64%;overflow:hidden"><div class="skl skl--block" style="height:60px"></div><div class="skl skl--title" style="margin-bottom:10px"></div><div class="skl skl--line"></div><div class="skl skl--line" style="width:70%;margin-bottom:0"></div></div></div></div>
+      <div class="sec-hero__preview"><div class="mk"><div class="skl-card" style="width:56%;overflow:hidden;padding:10px"><div class="skl skl--block" style="height:28px;margin-bottom:8px"></div><div class="skl skl--title" style="margin-bottom:6px"></div><div class="skl skl--line" style="margin-bottom:0"></div></div></div></div>
       </div>
       <div class="tabs-list sec-tabs" id="skl-tabs-list">
         <button type="button" class="tab-item on" data-skl-tab="overview" onclick="sklTabSwitch('overview')"><span class="tab-item__inner"><span class="tab-item__label">Overview</span></span><span class="tab-item__line"></span></button>
@@ -18716,12 +18717,16 @@ function cbrTabSwitch(tab){
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.87.1';
+const SYSTEM_VERSION = '1.87.2';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.87.2', date:'2026-09-04', author:'Mo', title:'Fixed Skeleton loader hero preview sizing and disabled playground controls', changes:[
+        ['fixed','Skeleton loader\'s sec-hero__preview card (.skl-card with a block + title + line) filled 169px of the 180px-tall preview box, leaving almost no breathing room compared to every other component\'s hero preview. Reduced the block height (60px → 28px), dropped the second text line, and tightened the card\'s padding/margins so the card now sits at ~94px tall with generous space above and below, matching the airy proportions of Pills\' and other components\' hero previews'],
+        ['fixed','The Overview playground\'s Shape and Width buttons are disabled (via the native disabled attribute) whenever Layout isn\'t "Primitive", but .btn-pg__pill had no :disabled style anywhere in the stylesheet, so a disabled button looked pixel-identical to an enabled one — still full opacity, still cursor:pointer — and clicking it silently did nothing, reading as a broken control. Added .btn-pg__pill:disabled{opacity:.4;cursor:not-allowed}, a sitewide fix since this class is shared by every component\'s "Try the component" playground, not just Skeleton loader\'s'],
+      ]},
       {version:'1.87.1', date:'2026-09-04', author:'Mo', title:'Fixed Skeleton loader Overview/Style stages staying light in dark mode', changes:[
         ['fixed','toggleTheme() never re-rendered Skeleton loader\'s four JS-mounted sections (renderSklPlayground/renderSklBlocks/renderSklInSitu/renderSklReference), so their stage backgrounds — computed once from the theme active at page load via stageBg(theme) — stayed white after switching to dark. Added the same four guarded calls Pills/Empty State already have in toggleTheme()'],
       ]},
@@ -20278,7 +20283,11 @@ const CHANGELOG = {
         ['added','Info / Success / Warning / Critical inline banner on the semantic tokens, with a dismissible variant'],
       ]},
     ]},
-    {secId:'s-skeleton', name:'Skeleton loader', version:'2.0.1', entries:[
+    {secId:'s-skeleton', name:'Skeleton loader', version:'2.0.2', entries:[
+      {version:'2.0.2', date:'2026-09-04', author:'Mo', title:'Fixed cramped hero preview and unresponsive-looking disabled playground controls', changes:[
+        ['fixed','Hero preview card scaled down (block 60px → 28px, one text line instead of two, tighter padding) so it no longer fills nearly the whole 180px preview box — now ~94px tall with proper breathing room, matching other components\' hero previews'],
+        ['fixed','Playground\'s Shape and Width controls go disabled when Layout isn\'t "Primitive", but looked fully enabled with no visual change, making them read as broken. Added a sitewide .btn-pg__pill:disabled style (dimmed, not-allowed cursor) shared by every component\'s playground'],
+      ]},
       {version:'2.0.1', date:'2026-08-21', author:'Mo', title:'Fixed Overview/Style stages staying light in dark mode', changes:[
         ['fixed','The four JS-mounted sections (playground, Key building blocks, In context, Style tab reference) never re-rendered on the global dark-mode toggle, so their stage backgrounds stayed white after switching themes. toggleTheme() now calls renderSklPlayground/renderSklBlocks/renderSklInSitu/renderSklReference, the same pattern Pills/Empty State already use'],
       ]},
