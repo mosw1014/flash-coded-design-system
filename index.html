@@ -2230,6 +2230,8 @@ body.home .main{max-width:none;margin:0;padding:0}
 .sld__range:focus-visible{outline:2px solid var(--color-input-focus);outline-offset:3px}
 .sld__range:disabled{opacity:.5;cursor:not-allowed}
 .sld__scale{display:flex;justify-content:space-between;font-size:11px;color:var(--chrome-muted);margin-top:2px}
+.sld-mock-icon{display:inline-flex;width:14px;height:14px}
+.sld-mock-icon svg{width:100%;height:100%;display:block}
 
 /* ---- Popover ---- */
 .pop{position:relative;display:inline-block}
@@ -6228,70 +6230,28 @@ body.home .main{max-width:none;margin:0;padding:0}
     <!-- ============================================================
          SLIDER
     ============================================================ -->
-    <section class="sec" id="s-slider">
+    <section class="sec sec--tabbed" id="s-slider">
+      <div class="sec-hero">
       <div class="sec__head">
-        <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Slider <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.1</span></h1>
-        <p class="sec__desc">A draggable control for choosing a value from a continuous or stepped range. Built on a native <code>&lt;input type="range"&gt;</code> &mdash; fully keyboard-operable &mdash; with a solid black fill and thumb (white in dark mode).</p>
-      </div>
-      <div class="type-sub">
-        <div class="type-sub__title">Continuous</div>
-        <div class="type-sub__desc">Drag the thumb or use the arrow keys. The filled portion and the live value both track the current position.</div>
-        <div class="sg-stage">
-          <div class="sld">
-            <div class="sld__head"><span>Volume</span><span class="sld__val">60%</span></div>
-            <input type="range" class="sld__range" min="0" max="100" value="60" data-suffix="%" aria-label="Volume">
-          </div>
-        </div>
-      </div>
-      <div class="type-sub">
-        <div class="type-sub__title">Stepped</div>
-        <div class="type-sub__desc">A <code>step</code> snaps the thumb to fixed increments &mdash; here, R100 &mdash; with min/max labels for scale.</div>
-        <div class="sg-stage">
-          <div class="sld">
-            <div class="sld__head"><span>Payout threshold</span><span class="sld__val">R500</span></div>
-            <input type="range" class="sld__range" min="0" max="1000" step="100" value="500" data-prefix="R" aria-label="Payout threshold">
-            <div class="sld__scale"><span>R0</span><span>R1,000</span></div>
-          </div>
-        </div>
-      </div>
-      <div class="type-sub">
-        <div class="type-sub__title">Disabled</div>
-        <div class="type-sub__desc">A read-only or unavailable slider dims and stops responding to input.</div>
-        <div class="sg-stage">
-          <div class="sld">
-            <div class="sld__head"><span>Locked</span><span class="sld__val">30%</span></div>
-            <input type="range" class="sld__range" min="0" max="100" value="30" data-suffix="%" disabled aria-label="Locked">
-          </div>
-        </div>
-      </div>
-      <div class="type-sub">
-        <div class="type-sub__title">When to use</div>
-        <div class="type-sub__desc">A slider suits approximate values where the exact number matters less than the feel of more or less.</div>
-        <div class="sel-usage">
-          <div class="sel-usage__card">
-            <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
-            <ul class="sel-usage__list">
-              <li>Use for imprecise ranges &mdash; volume, brightness, thresholds.</li>
-              <li>Always show the current value alongside the track.</li>
-              <li>Use <code>step</code> when only certain increments are valid.</li>
-            </ul>
-          </div>
-          <div class="sel-usage__card">
-            <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don&rsquo;t</div>
-            <ul class="sel-usage__list">
-              <li>Don&rsquo;t use a slider for precise numeric entry &mdash; use an input.</li>
-              <li>Don&rsquo;t use one over a huge range where a pixel equals a big jump.</li>
-              <li>Don&rsquo;t hide the selected value from the user.</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <details class="ai-ctx">
+        <h1 class="sec__title">Slider</h1>
+        <div class="sec-header-meta">
+          <span class="comp-ver-badge" style="margin-left:0">v2.0.0</span>
+          Paste this over the existing tab in <section id="s-slider"> (or add it at the end of the section if none exists yet):
+
+<details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-slider">
 {
-  "status": "static",
+  "status": "js-rendered",
+  "builderFunctions": [
+    "SLD_MINUS_SVG",
+    "SLD_PLUS_SVG",
+    "sldZoomStep",
+    "SLD_FORMS",
+    "makeSliderHTML",
+    "wireSldRange",
+    "makeSliderEl"
+  ],
   "realClasses": [
     ".sld",
     ".sld__head",
@@ -6300,6 +6260,7 @@ body.home .main{max-width:none;margin:0;padding:0}
     ".sld__scale"
   ],
   "css": "/* ---- Slider ---- */\n.sld { width:280px;max-width:100% }\n.sld__head { display:flex;justify-content:space-between;align-items:baseline;margin-bottom:11px;font-size:13px;color:var(--chrome-muted) }\n.sld__val { font-weight:700;color:var(--chrome-txt);font-size:14px }\n.sld__range { -webkit-appearance:none;appearance:none;width:100%;height:6px;border-radius:999px;background:var(--color-surface-n2);outline:none;cursor:pointer;margin:8px 0 }\n.sld__range::-webkit-slider-thumb { -webkit-appearance:none;appearance:none;width:18px;height:18px;border-radius:50%;background:var(--color-surface-inverse);border:2px solid var(--chrome-bg);box-shadow:0 1px 4px rgba(0,0,0,.3);cursor:pointer;margin-top:-6px }\n.sld__range::-moz-range-thumb { width:18px;height:18px;border-radius:50%;background:var(--color-surface-inverse);border:2px solid var(--chrome-bg);box-shadow:0 1px 4px rgba(0,0,0,.3);cursor:pointer }\n.sld__range::-webkit-slider-runnable-track { height:6px;border-radius:999px }\n.sld__range::-moz-range-track { height:6px;border-radius:999px }\n.sld__range:focus-visible { outline:2px solid var(--color-input-focus);outline-offset:3px }\n.sld__range:disabled { opacity:.5;cursor:not-allowed }\n.sld__scale { display:flex;justify-content:space-between;font-size:11px;color:var(--chrome-muted);margin-top:2px }",
+  "js": "const SLD_MINUS_SVG = '&lt;svg viewBox=\"0 -960 960 960\" xmlns=\"http://www.w3.org/2000/svg\" fill=\"currentColor\" aria-hidden=\"true\"&gt;&lt;path d=\"M240-453.33v-53.34h480v53.34H240Z\"/&gt;&lt;/svg&gt;';\n\nconst SLD_PLUS_SVG = '&lt;svg viewBox=\"0 -960 960 960\" xmlns=\"http://www.w3.org/2000/svg\" fill=\"currentColor\" aria-hidden=\"true\"&gt;&lt;path d=\"M453.33-453.33H240v-53.34h213.33V-720h53.34v213.33H720v53.34H506.67V-240h-53.34v-213.33Z\"/&gt;&lt;/svg&gt;';\n\nfunction sldZoomStep(btn, dir){\n  const inp = btn.closest('.spec-mock__stage')?.querySelector('.sld__range');\n  if(!inp || inp.disabled) return;\n  const min = +inp.min || 0, max = +inp.max || 100, step = +inp.step || 1;\n  const v = Math.max(min, Math.min(max, +inp.value + dir*step*10));\n  inp.value = v;\n  inp.dispatchEvent(new Event('input', {bubbles:true}));\n}\n\nconst SLD_FORMS = [\n  {key:'continuous', label:'Continuous', use:'Any value along the range — volume, brightness, zoom'},\n  {key:'stepped',     label:'Stepped',    use:'Fixed increments only, with min/max scale labels — thresholds, tiers, quantities'},\n  {key:'disabled',    label:'Disabled',   use:'Read-only or unavailable — dims the track and stops responding to input'},\n];\n\nfunction makeSliderHTML(mode, value, label){\n  const stepped = mode==='stepped';\n  const disabled = mode==='disabled';\n  const min = 0, max = stepped ? 1000 : 100, step = stepped ? 100 : 1;\n  const prefix = stepped ? 'R' : '', suffix = stepped ? '' : '%';\n  const pct = ((value - min) / (max - min)) * 100;\n  const bg = ` style=\"background:linear-gradient(90deg, var(--color-surface-inverse) 0% ${pct}%, var(--color-surface-n2) ${pct}% 100%)\"`;\n  const scale = stepped ? `&lt;div class=\"sld__scale\"&gt;&lt;span&gt;R0&lt;/span&gt;&lt;span&gt;R1,000&lt;/span&gt;&lt;/div&gt;` : '';\n  return `&lt;div class=\"sld\"&gt;&lt;div class=\"sld__head\"&gt;&lt;span&gt;${label}&lt;/span&gt;&lt;span class=\"sld__val\"&gt;${prefix}${value.toLocaleString('en-US')}${suffix}&lt;/span&gt;&lt;/div&gt;&lt;input type=\"range\" class=\"sld__range\" min=\"${min}\" max=\"${max}\" step=\"${step}\"${bg} value=\"${value}\"${prefix?` data-prefix=\"${prefix}\"`:''}${suffix?` data-suffix=\"${suffix}\"`:''} aria-label=\"${label}\"${disabled?' disabled':''}&gt;&lt;/div&gt;`;\n}\n\nfunction wireSldRange(inp){\n  function upd(){\n    const min = +inp.min || 0, max = +inp.max || 100, v = +inp.value;\n    const pct = max &gt; min ? ((v - min) / (max - min)) * 100 : 0;\n    inp.style.background = `linear-gradient(90deg, var(--color-surface-inverse) 0% ${pct}%, var(--color-surface-n2) ${pct}% 100%)`;\n    const sld = inp.closest('.sld');\n    if(sld){ const lab = sld.querySelector('.sld__val'); if(lab) lab.textContent = (inp.dataset.prefix||'') + Number(v).toLocaleString('en-US') + (inp.dataset.suffix||''); }\n  }\n  inp.addEventListener('input', upd);\n  upd();\n}\n\nfunction makeSliderEl(){\n  const wrap = document.createElement('div');\n  wrap.className = 'sld';\n\n  const head = document.createElement('div');\n  head.className = 'sld__head';\n  const nameSpan = document.createElement('span');\n  nameSpan.textContent = sldg.mode==='stepped' ? 'Payout threshold' : 'Volume';\n  const valSpan = document.createElement('span');\n  valSpan.className = 'sld__val';\n  head.appendChild(nameSpan); head.appendChild(valSpan);\n  wrap.appendChild(head);\n\n  const inp = document.createElement('input');\n  inp.type = 'range'; inp.className = 'sld__range';\n  const stepped = sldg.mode==='stepped';\n  inp.min = '0'; inp.max = stepped ? '1000' : '100'; inp.step = stepped ? '100' : '1';\n  if(stepped) inp.dataset.prefix = 'R'; else inp.dataset.suffix = '%';\n  if(sldg.value &gt; +inp.max) sldg.value = +inp.max;\n  inp.value = String(sldg.value);\n  inp.setAttribute('aria-label', nameSpan.textContent);\n  inp.disabled = sldg.disabled;\n  wrap.appendChild(inp);\n\n  if(stepped){\n    const scale = document.createElement('div');\n    scale.className = 'sld__scale';\n    scale.innerHTML = '&lt;span&gt;R0&lt;/span&gt;&lt;span&gt;R1,000&lt;/span&gt;';\n    wrap.appendChild(scale);\n  }\n\n  wireSldRange(inp);\n  inp.addEventListener('input', ()=&gt;{ sldg.value = +inp.value; sldgSyncCode(); });\n\n  return wrap;\n}",
   "usage": {
     "do": [
       "Use for imprecise ranges — volume, brightness, thresholds.",
@@ -6312,11 +6273,63 @@ body.home .main{max-width:none;margin:0;padding:0}
       "Don’t hide the selected value from the user."
     ]
   },
-  "contentHash": "723ada630bc028e875633042edef67bdada0898a9eb2f2170f00f9cff164fa78",
-  "note": "Markup is a native &lt;input type=\"range\"&gt;, fully static. A small generic JS wiring block (anonymous IIFE, no named builder function) listens for 'input' on every .sld__range: it sets inp.style.background to a two-stop linear-gradient to paint the filled portion (no CSS ::-webkit-slider-fill exists cross-browser), and writes the live value into the sibling .sld__val using data-prefix/data-suffix attributes."
+  "contentHash": "38b4a1f9803f56bb37f2e0214085beea4a1ce758951a10d6ba623e820cb66ca9",
+  "note": "makeSliderHTML is the minimal real-markup builder (mode+value+label -&gt; .sld HTML string); makeSliderEl is the fuller playground version reading shared sldg state and wiring drag events. wireSldRange is a named version of the pre-existing generic fill-gradient + live-value 'input' wiring (see the separate anonymous IIFE further down the script), applied to dynamically-created playground/mockup sliders that IIFE never saw at load time. SLD_FORMS drives the Overview tab's Key forms showcase (no colour or size axis exists for this component, unlike Pills). SLD_MINUS_SVG/SLD_PLUS_SVG are simple local plus/minus glyphs (no matching icon exists in the shared ICONS registry) used by the zoom-control In-context mockup's step buttons; sldZoomStep steps the mockup's slider value by clicking +/- and dispatches a real 'input' event so wireSldRange's fill/value update runs the same as a drag would. getSliderCode*/renderSld*/sldTabSwitch/sldgSet/sldgRefresh are doc-site-only playground plumbing, excluded."
 }
   </pre>
 </details>
+        </div>
+      </div>
+      <div class="sec-hero__preview"><div class="mk"><div class="sld" style="width:150px" aria-hidden="true">
+        <div class="sld__head"><span class="mk-bar" style="width:40px"></span><span class="mk-bar mk-bar--txt" style="width:26px"></span></div>
+        <input type="range" class="sld__range" min="0" max="100" value="60" tabindex="-1" style="pointer-events:none;background:linear-gradient(90deg, var(--color-surface-inverse) 0% 60%, var(--color-surface-n2) 60% 100%)">
+      </div></div></div>
+      </div>
+      <div class="tabs-list sec-tabs" id="sld-tabs-list">
+        <button type="button" class="tab-item on" data-sld-tab="overview" onclick="sldTabSwitch('overview')"><span class="tab-item__inner"><span class="tab-item__label">Overview</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-sld-tab="style" onclick="sldTabSwitch('style')"><span class="tab-item__inner"><span class="tab-item__label">Style</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-sld-tab="code" onclick="sldTabSwitch('code')"><span class="tab-item__inner"><span class="tab-item__label">Code</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-sld-tab="changelog" onclick="sldTabSwitch('changelog')"><span class="tab-item__inner"><span class="tab-item__label">Changelog</span></span><span class="tab-item__line"></span></button>
+      </div>
+      <div class="tabs-panel on" data-sld-panel="overview">
+        <div id="sld-playground" class="type-sub"></div>
+        <div id="sld-forms" class="type-sub"></div>
+        <div id="sld-insitu" class="type-sub"></div>
+        <div class="type-sub cpg-variants" id="sld-usage">
+          <div class="cpg-section-heading">
+            <div class="cpg-layout__title">Do's and don'ts</div>
+            <div class="cpg-layout__desc">A slider suits approximate values where the exact number matters less than the feel of more or less.</div>
+          </div>
+          <div class="cpg-section-block">
+            <div class="sel-usage">
+              <div class="sel-usage__card">
+                <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
+                <ul class="sel-usage__list">
+                  <li>Use for imprecise ranges &mdash; volume, brightness, thresholds.</li>
+                  <li>Always show the current value alongside the track.</li>
+                  <li>Use <code>step</code> when only certain increments are valid.</li>
+                </ul>
+              </div>
+              <div class="sel-usage__card">
+                <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don&rsquo;t</div>
+                <ul class="sel-usage__list">
+                  <li>Don&rsquo;t use a slider for precise numeric entry &mdash; use an input.</li>
+                  <li>Don&rsquo;t use one over a huge range where a pixel equals a big jump.</li>
+                  <li>Don&rsquo;t hide the selected value from the user.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tabs-panel" data-sld-panel="style">
+        <div id="sld-reference" class="type-sub spec-panel spec-stack"></div>
+      </div>
+      <div class="tabs-panel" data-sld-panel="code">
+        <div id="sld-code-playground" class="type-sub spec-panel spec-code-playground"></div>
+        <div id="sld-code-tab" class="type-sub spec-panel"></div>
+      </div>
+      <div class="tabs-panel" data-sld-panel="changelog" id="sld-changelog-panel"></div>
     </section>
 
     <!-- ============================================================
@@ -8081,6 +8094,10 @@ function toggleTheme() {
   try { if(typeof renderSpinnerVariants==='function' && document.getElementById('spn-variants')) renderSpinnerVariants(); } catch(e){}
   try { if(typeof renderSpinnerInSitu==='function' && document.getElementById('spn-insitu')) renderSpinnerInSitu(); } catch(e){}
   try { if(typeof renderSpinnerReference==='function' && document.getElementById('spn-reference')) renderSpinnerReference(); } catch(e){}
+  try { if(typeof renderSldPlayground==='function' && document.getElementById('sld-playground')) renderSldPlayground(); } catch(e){}
+  try { if(typeof renderSldForms==='function' && document.getElementById('sld-forms')) renderSldForms(); } catch(e){}
+  try { if(typeof renderSldInSitu==='function' && document.getElementById('sld-insitu')) renderSldInSitu(); } catch(e){}
+  try { if(typeof renderSldReference==='function' && document.getElementById('sld-reference')) renderSldReference(); } catch(e){}
 }
 
 // Colour view switch (prim / sem)
@@ -12174,6 +12191,531 @@ function pagTabSwitch(tab){
   nav.querySelectorAll('.tab-item').forEach(btn=>btn.classList.toggle('on', btn.getAttribute('data-pag-tab')===tab));
   document.querySelectorAll('#s-pagination .tabs-panel[data-pag-panel]').forEach(p=>p.classList.toggle('on', p.getAttribute('data-pag-panel')===tab));
 }
+
+/* ============================================================
+   SLIDER
+   Same tabbed treatment as Pagination/Input OTP (.sec--tabbed):
+   Overview / Style / Code / Changelog, a shared-state playground
+   rendered into two mounts, and a three-language code panel.
+   Slider has no colour or size axis, so "Key variants" becomes
+   "Key forms" — Continuous / Stepped / Disabled, the three forms
+   this component already ships.
+============================================================ */
+const SLD_MINUS_SVG = '<svg viewBox="0 -960 960 960" xmlns="http://www.w3.org/2000/svg" fill="currentColor" aria-hidden="true"><path d="M240-453.33v-53.34h480v53.34H240Z"/></svg>';
+const SLD_PLUS_SVG = '<svg viewBox="0 -960 960 960" xmlns="http://www.w3.org/2000/svg" fill="currentColor" aria-hidden="true"><path d="M453.33-453.33H240v-53.34h213.33V-720h53.34v213.33H720v53.34H506.67V-240h-53.34v-213.33Z"/></svg>';
+
+function sldZoomStep(btn, dir){
+  const inp = btn.closest('.spec-mock__stage')?.querySelector('.sld__range');
+  if(!inp || inp.disabled) return;
+  const min = +inp.min || 0, max = +inp.max || 100, step = +inp.step || 1;
+  const v = Math.max(min, Math.min(max, +inp.value + dir*step*10));
+  inp.value = v;
+  inp.dispatchEvent(new Event('input', {bubbles:true}));
+}
+
+const SLD_FORMS = [
+  {key:'continuous', label:'Continuous', use:'Any value along the range — volume, brightness, zoom'},
+  {key:'stepped',     label:'Stepped',    use:'Fixed increments only, with min/max scale labels — thresholds, tiers, quantities'},
+  {key:'disabled',    label:'Disabled',   use:'Read-only or unavailable — dims the track and stops responding to input'},
+];
+
+/* Minimal real-markup builder: mode+value+label -> .sld HTML string. */
+function makeSliderHTML(mode, value, label){
+  const stepped = mode==='stepped';
+  const disabled = mode==='disabled';
+  const min = 0, max = stepped ? 1000 : 100, step = stepped ? 100 : 1;
+  const prefix = stepped ? 'R' : '', suffix = stepped ? '' : '%';
+  const pct = ((value - min) / (max - min)) * 100;
+  const bg = ` style="background:linear-gradient(90deg, var(--color-surface-inverse) 0% ${pct}%, var(--color-surface-n2) ${pct}% 100%)"`;
+  const scale = stepped ? `<div class="sld__scale"><span>R0</span><span>R1,000</span></div>` : '';
+  return `<div class="sld"><div class="sld__head"><span>${label}</span><span class="sld__val">${prefix}${value.toLocaleString('en-US')}${suffix}</span></div><input type="range" class="sld__range" min="${min}" max="${max}" step="${step}"${bg} value="${value}"${prefix?` data-prefix="${prefix}"`:''}${suffix?` data-suffix="${suffix}"`:''} aria-label="${label}"${disabled?' disabled':''}></div>`;
+}
+
+/* Same fill-gradient + live-value logic as the generic .sld__range wiring
+   IIFE (see the "Slider — brand fill + live value" block below), applied
+   to dynamically-created playground/mockup inputs the generic IIFE never
+   saw at load time. */
+function wireSldRange(inp){
+  function upd(){
+    const min = +inp.min || 0, max = +inp.max || 100, v = +inp.value;
+    const pct = max > min ? ((v - min) / (max - min)) * 100 : 0;
+    inp.style.background = `linear-gradient(90deg, var(--color-surface-inverse) 0% ${pct}%, var(--color-surface-n2) ${pct}% 100%)`;
+    const sld = inp.closest('.sld');
+    if(sld){ const lab = sld.querySelector('.sld__val'); if(lab) lab.textContent = (inp.dataset.prefix||'') + Number(v).toLocaleString('en-US') + (inp.dataset.suffix||''); }
+  }
+  inp.addEventListener('input', upd);
+  upd();
+}
+
+/* ── SLIDER PLAYGROUND ── */
+let sldg = { mode:'continuous', value:60, disabled:false, theme:'light' };
+
+function makeSliderEl(){
+  const wrap = document.createElement('div');
+  wrap.className = 'sld';
+
+  const head = document.createElement('div');
+  head.className = 'sld__head';
+  const nameSpan = document.createElement('span');
+  nameSpan.textContent = sldg.mode==='stepped' ? 'Payout threshold' : 'Volume';
+  const valSpan = document.createElement('span');
+  valSpan.className = 'sld__val';
+  head.appendChild(nameSpan); head.appendChild(valSpan);
+  wrap.appendChild(head);
+
+  const inp = document.createElement('input');
+  inp.type = 'range'; inp.className = 'sld__range';
+  const stepped = sldg.mode==='stepped';
+  inp.min = '0'; inp.max = stepped ? '1000' : '100'; inp.step = stepped ? '100' : '1';
+  if(stepped) inp.dataset.prefix = 'R'; else inp.dataset.suffix = '%';
+  if(sldg.value > +inp.max) sldg.value = +inp.max;
+  inp.value = String(sldg.value);
+  inp.setAttribute('aria-label', nameSpan.textContent);
+  inp.disabled = sldg.disabled;
+  wrap.appendChild(inp);
+
+  if(stepped){
+    const scale = document.createElement('div');
+    scale.className = 'sld__scale';
+    scale.innerHTML = '<span>R0</span><span>R1,000</span>';
+    wrap.appendChild(scale);
+  }
+
+  wireSldRange(inp);
+  inp.addEventListener('input', ()=>{ sldg.value = +inp.value; sldgSyncCode(); });
+
+  return wrap;
+}
+
+function getSliderCodeHTML(){
+  const stepped = sldg.mode==='stepped';
+  const disabled = sldg.mode==='disabled';
+  const label = stepped ? 'Payout threshold' : 'Volume';
+  const min = 0, max = stepped ? 1000 : 100, step = stepped ? 100 : 1;
+  const attrPrefix = stepped ? ` <span class="code-attr">data-prefix</span>=<span class="code-val">"R"</span>` : ` <span class="code-attr">data-suffix</span>=<span class="code-val">"%"</span>`;
+  const scaleLine = stepped ? `\n  <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"sld__scale"</span><span class="code-kw">>&#60;span></span>R0<span class="code-kw">&#60;/span>&#60;span></span>R1,000<span class="code-kw">&#60;/span>&#60;/div></span>` : '';
+  return `<span class="code-cm">/* Flash · ${cap(sldg.theme)} · ${cap(sldg.mode)} slider */</span>
+<span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"sld"</span><span class="code-kw">></span>
+  <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"sld__head"</span><span class="code-kw">>&#60;span></span>${label}<span class="code-kw">&#60;/span>&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"sld__val"</span><span class="code-kw">></span>${sldg.value}<span class="code-kw">&#60;/span>&#60;/div></span>
+  <span class="code-kw">&#60;input</span> <span class="code-attr">type</span>=<span class="code-val">"range"</span> <span class="code-cls">class</span>=<span class="code-val">"sld__range"</span> <span class="code-attr">min</span>=<span class="code-val">"${min}"</span> <span class="code-attr">max</span>=<span class="code-val">"${max}"</span> <span class="code-attr">step</span>=<span class="code-val">"${step}"</span> <span class="code-attr">value</span>=<span class="code-val">"${sldg.value}"</span>${attrPrefix}${disabled?' <span class="code-attr">disabled</span>':''} <span class="code-attr">aria-label</span>=<span class="code-val">"${label}"</span><span class="code-kw">></span>${scaleLine}
+<span class="code-kw">&#60;/div></span>`;
+}
+
+/* ── CODE PANEL LANGUAGES ──
+   HTML/CSS is the source of truth (real .sld markup). Blazor and React
+   TSX are illustrative wrappers over the same classes and the same
+   fill-gradient + live-value wiring, so mode/value/disabled stay the
+   only things a consumer ports. */
+const SLD_LANGS = [
+  {key:'html',   label:'HTML / CSS', file:'slider.html'},
+  {key:'blazor', label:'Blazor',     file:'DsSlider.razor'},
+  {key:'tsx',    label:'React TSX',  file:'DsSlider.tsx'},
+];
+let sldLang = 'html';
+
+function getSliderCodeBlazor(){
+  const stepped = sldg.mode==='stepped';
+  return `<span class="code-cm">@* DsSlider.razor — usage *@</span>
+<span class="code-kw">&#60;DsSlider</span> <span class="code-attr">Label</span>=<span class="code-val">"${stepped?'Payout threshold':'Volume'}"</span>
+          <span class="code-attr">Min</span>=<span class="code-val">"0"</span> <span class="code-attr">Max</span>=<span class="code-val">"${stepped?1000:100}"</span> <span class="code-attr">Step</span>=<span class="code-val">"${stepped?100:1}"</span>
+          <span class="code-attr">@bind-Value</span>=<span class="code-val">"threshold"</span>
+          <span class="code-attr">Disabled</span>=<span class="code-val">"${sldg.disabled}"</span> <span class="code-kw">/></span>
+
+<span class="code-cm">@* DsSlider.razor — component definition *@</span>
+<span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"sld"</span><span class="code-kw">></span>
+  <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"sld__head"</span><span class="code-kw">>&#60;span></span>@Label<span class="code-kw">&#60;/span>&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"sld__val"</span><span class="code-kw">></span>@FormattedValue<span class="code-kw">&#60;/span>&#60;/div></span>
+  <span class="code-kw">&#60;input</span> <span class="code-attr">type</span>=<span class="code-val">"range"</span> <span class="code-cls">class</span>=<span class="code-val">"sld__range"</span> <span class="code-attr">min</span>=<span class="code-val">"@Min"</span> <span class="code-attr">max</span>=<span class="code-val">"@Max"</span> <span class="code-attr">step</span>=<span class="code-val">"@Step"</span>
+         <span class="code-attr">value</span>=<span class="code-val">"@Value"</span> <span class="code-attr">disabled</span>=<span class="code-val">"@Disabled"</span> <span class="code-attr">@oninput</span>=<span class="code-val">"HandleInput"</span><span class="code-kw">></span>
+<span class="code-kw">&#60;/div></span>
+
+<span class="code-kw">@code</span> {
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> <span class="code-cls">string</span> Label { get; set; } = <span class="code-val">""</span>;
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> <span class="code-cls">int</span> Min { get; set; }
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> <span class="code-cls">int</span> Max { get; set; } = <span class="code-val">100</span>;
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> <span class="code-cls">int</span> Step { get; set; } = <span class="code-val">1</span>;
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> <span class="code-cls">int</span> Value { get; set; }
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> EventCallback&#60;<span class="code-cls">int</span>&#62; ValueChanged { get; set; }
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> <span class="code-cls">bool</span> Disabled { get; set; }
+}`;
+}
+
+function getSliderCodeTSX(){
+  const stepped = sldg.mode==='stepped';
+  const usageProps = `label=<span class="code-val">"${stepped?'Payout threshold':'Volume'}"</span> min={0} max={${stepped?1000:100}} step={${stepped?100:1}} value={${sldg.value}} onChange={setValue}${sldg.disabled?' disabled':''}`;
+  return `<span class="code-cm">// DsSlider.tsx</span>
+<span class="code-kw">import</span> React <span class="code-kw">from</span> <span class="code-val">'react'</span>;
+
+<span class="code-kw">interface</span> <span class="code-cls">DsSliderProps</span> {
+  label: <span class="code-cls">string</span>;
+  min?: <span class="code-cls">number</span>;
+  max?: <span class="code-cls">number</span>;
+  step?: <span class="code-cls">number</span>;
+  value: <span class="code-cls">number</span>;
+  onChange: (value: <span class="code-cls">number</span>) => <span class="code-cls">void</span>;
+  disabled?: <span class="code-cls">boolean</span>;
+  prefix?: <span class="code-cls">string</span>;
+  suffix?: <span class="code-cls">string</span>;
+}
+
+<span class="code-kw">export const</span> <span class="code-cls">DsSlider</span>: React.FC&#60;DsSliderProps&#62; = ({ label, min = <span class="code-val">0</span>, max = <span class="code-val">100</span>, step = <span class="code-val">1</span>, value, onChange, disabled, prefix = <span class="code-val">''</span>, suffix = <span class="code-val">''</span> }) => {
+  <span class="code-kw">const</span> pct = ((value - min) / (max - min)) * <span class="code-val">100</span>;
+  <span class="code-kw">return</span> (
+    &#60;div className=<span class="code-val">"sld"</span>>
+      &#60;div className=<span class="code-val">"sld__head"</span>>&#60;span&#62;{label}&#60;/span&#62;&#60;span className=<span class="code-val">"sld__val"</span>>{prefix}{value.toLocaleString()}{suffix}&#60;/span&#62;&#60;/div&#62;
+      &#60;input
+        type=<span class="code-val">"range"</span> className=<span class="code-val">"sld__range"</span>
+        min={min} max={max} step={step} value={value} disabled={disabled}
+        style={{ background: <span class="code-val">${'`'}linear-gradient(90deg, var(--color-surface-inverse) 0% ${'$'}{pct}%, var(--color-surface-n2) ${'$'}{pct}% 100%)${'`'}</span> }}
+        onChange={e => onChange(<span class="code-cls">Number</span>(e.target.value))}
+        aria-label={label}
+      />
+    &#60;/div&#62;
+  );
+};
+
+<span class="code-cm">// Usage</span>
+&#60;DsSlider ${usageProps} /></span>`;
+}
+
+function getSliderCode(){
+  return sldLang==='blazor' ? getSliderCodeBlazor()
+       : sldLang==='tsx'    ? getSliderCodeTSX()
+       : getSliderCodeHTML();
+}
+
+function setSldLang(lang){
+  if(!SLD_LANGS.some(l=>l.key===lang)) return;
+  sldLang = lang;
+  document.querySelectorAll('#sld-code-tab .code-seg__btn').forEach(b=>{
+    const on = b.dataset.lang===lang;
+    b.setAttribute('aria-selected', on ? 'true' : 'false');
+    b.setAttribute('tabindex', on ? '0' : '-1');
+  });
+  const file = document.getElementById('sld-lang-file');
+  const meta = SLD_LANGS.find(l=>l.key===lang);
+  if(file && meta) file.textContent = meta.file;
+  sldgSyncCode();
+}
+
+function sldLangKeydown(e){
+  const i = SLD_LANGS.findIndex(l=>l.key===sldLang);
+  let n = i;
+  if(e.key==='ArrowLeft')       n = (i - 1 + SLD_LANGS.length) % SLD_LANGS.length;
+  else if(e.key==='ArrowRight') n = (i + 1) % SLD_LANGS.length;
+  else if(e.key==='Home')       n = 0;
+  else if(e.key==='End')        n = SLD_LANGS.length - 1;
+  else return;
+  e.preventDefault();
+  setSldLang(SLD_LANGS[n].key);
+  const btn = document.getElementById('sld-lang-' + SLD_LANGS[n].key);
+  if(btn) btn.focus();
+}
+
+function sldgSyncCode(){
+  const block = document.getElementById('sldg-code-block');
+  if(block) block.innerHTML = getSliderCode();
+}
+
+function sldgRefresh(){
+  document.querySelectorAll('.sldg-stage-el').forEach(stage=>{
+    stage.innerHTML = '';
+    stage.appendChild(makeSliderEl());
+  });
+  sldgSyncCode();
+}
+
+/* Slider Playground renders into more than one mount (the main Overview
+   demo, and a smaller copy on the Code tab) so both stay in sync with the
+   same shared sldg state — same pattern as Pagination's pgg. */
+const SLD_PLAYGROUND_MOUNTS = [
+  {rootId:'sld-playground', idSuffix:'', wrap:true, title:'Try the component', desc:'Adjust the filters to test component states.', headingAbove:'Drag the thumb to test the fill and live value; switch modes to compare a continuous range against a stepped one.'},
+  {rootId:'sld-code-playground', idSuffix:'-code', style:'code', title:'Playground', desc:'Live demo of the component.'},
+];
+
+function renderSldPlayground(){
+  sldg.theme = document.documentElement.getAttribute('data-theme')==='dark' ? 'dark' : 'light';
+  const sbg = stageBg(sldg.theme);
+
+  const modeBtns = ['continuous','stepped'].map(m=>`<button class="btn-pg__pill${sldg.mode===m?' on':''}" onclick="sldgSet('mode','${m}')">${cap(m)}</button>`).join('');
+  const disBtns = [['false','Enabled'],['true','Disabled']].map(([v,l])=>`<button class="btn-pg__pill${String(sldg.disabled)===v?' on':''}" onclick="sldgSet('disabled',${v})">${l}</button>`).join('');
+
+  SLD_PLAYGROUND_MOUNTS.forEach(mount=>{
+    const root = document.getElementById(mount.rootId);
+    if(!root) return;
+    const s = mount.idSuffix;
+    const demo = `
+      <div class="btn-pg">
+        <div class="btn-pg__stage sldg-stage-el" id="sldg-stage${s}" style="background:${sbg}"></div>
+        <div class="btn-pg__ctrls">
+          <div class="btn-pg__group"><span class="btn-pg__clabel">Mode</span><div class="btn-pg__pill-row">${modeBtns}</div></div>
+          <div class="btn-pg__group"><span class="btn-pg__clabel">State</span><div class="btn-pg__pill-row">${disBtns}</div></div>
+        </div>
+      </div>`;
+
+    if(mount.style==='code'){
+      root.innerHTML = `
+        <div class="type-sub__title">${mount.title}</div>
+        <div class="type-sub__desc">${mount.desc}</div>
+        <div class="cpg-section-outline">${demo}</div>`;
+      return;
+    }
+
+    const inner = `
+      <div class="cpg-layout">
+        <div class="cpg-layout__intro">
+          ${mount.wrap ? `<span class="cpg-cursor-icon">${CPG_CURSOR_ICON_SVG}</span>` : ''}
+          <div class="cpg-layout__title">${mount.title}</div>
+          <div class="cpg-layout__desc">${mount.desc}</div>
+        </div>
+        <div class="cpg-layout__demo">${demo}</div>
+      </div>`;
+    const wrapped = mount.wrap ? `<div class="cpg-section-block">${inner}</div>` : inner;
+    root.innerHTML = (mount.headingAbove ? `<div class="cpg-overview-heading"><span class="cpg-overview-heading__icon">${CPG_INFO_ICON_SVG}</span><span>${mount.headingAbove}</span></div>` : '') + wrapped;
+  });
+
+  sldgRefresh();
+}
+
+function renderSldCodeTab(){
+  const root = document.getElementById('sld-code-tab');
+  if(!root) return;
+  root.innerHTML = `
+    <div class="type-sub__title">Code</div>
+    <div class="type-sub__desc">Live snippet matching the current Playground configuration &mdash; switch to Overview to change it.</div>
+    <div class="cpg-section-outline">
+      <div class="code-panel code-panel--bare open">
+        <div class="code-panel__head">
+          <div class="code-seg" role="tablist" aria-label="Code language" onkeydown="sldLangKeydown(event)">
+            ${SLD_LANGS.map(l=>`<button type="button" role="tab" class="code-seg__btn" id="sld-lang-${l.key}" data-lang="${l.key}" aria-selected="${sldLang===l.key?'true':'false'}" aria-controls="sldg-code-block" tabindex="${sldLang===l.key?'0':'-1'}" onclick="setSldLang('${l.key}')">${l.label}</button>`).join('')}
+          </div>
+          <span class="code-lang-file" id="sld-lang-file">${(SLD_LANGS.find(l=>l.key===sldLang)||SLD_LANGS[0]).file}</span>
+          <button class="code-copy-btn" onclick="sldgCopyCode()" id="sldg-copy-btn">Copy</button>
+        </div>
+        <div class="code-body"><div class="code-block" id="sldg-code-block" role="tabpanel" aria-live="polite"></div></div>
+      </div>
+    </div>`;
+}
+
+function renderSldForms(){
+  const root = document.getElementById('sld-forms');
+  if(!root) return;
+
+  const theme = currentTheme();
+  const sbg = stageBg(theme);
+  const cells = SLD_FORMS.map(f=>{
+    const sample = f.key==='continuous' ? makeSliderHTML('continuous', 60, 'Volume')
+                 : f.key==='stepped'    ? makeSliderHTML('stepped', 500, 'Payout threshold')
+                 : makeSliderHTML('disabled', 30, 'Locked');
+    return `
+    <div class="spec-cell" style="flex-direction:row;align-items:center;gap:16px">
+      <div class="spec-cell__stage" style="background:${sbg};flex:0 0 auto;min-width:280px">${sample}</div>
+      <div style="padding:16px 16px 16px 0">
+        <div class="spec-cell__name">${f.label}</div>
+        <div class="spec-cell__desc">${f.use}</div>
+      </div>
+    </div>`;
+  }).join('');
+
+  root.innerHTML = `
+    <div class="cpg-section-heading">
+      <div class="cpg-layout__title">Key forms</div>
+      <div class="cpg-layout__desc">One control, three forms. Continuous for any value, Stepped for fixed increments, Disabled when the value can't change.</div>
+    </div>
+    <div class="cpg-section-block">
+      <div style="display:flex;flex-direction:column;gap:16px">${cells}</div>
+    </div>`;
+  root.querySelectorAll('.sld__range').forEach(wireSldRange);
+}
+
+function renderSldInSitu(){
+  const root = document.getElementById('sld-insitu');
+  if(!root) return;
+  const theme = currentTheme();
+  const sbg = stageBg(theme);
+
+  /* 1 — settings panel, volume/brightness */
+  const settingsMock = `
+    <div class="spec-mock__stage" style="background:${sbg};padding:0">
+      <div style="padding:12px 16px;border-bottom:1px solid var(--chrome-border);font-size:12.5px;font-weight:700;color:var(--chrome-txt)">Sound &amp; display</div>
+      <div style="padding:16px 16px 18px;display:flex;flex-direction:column;gap:18px">
+        ${makeSliderHTML('continuous', 60, 'Volume')}
+        ${makeSliderHTML('continuous', 80, 'Brightness')}
+      </div>
+    </div>
+    <div class="spec-mock__cap"><b>Settings panel</b>Two independent sliders, each with its own label and live value.</div>`;
+
+  /* 2 — merchant payout-threshold settings */
+  const payoutMock = `
+    <div class="spec-mock__stage" style="background:${sbg};padding:0">
+      <div style="padding:12px 16px;border-bottom:1px solid var(--chrome-border);font-size:12.5px;font-weight:700;color:var(--chrome-txt)">Payout settings</div>
+      <div style="padding:16px 16px 18px">
+        ${makeSliderHTML('stepped', 500, 'Payout threshold')}
+        <div style="margin-top:10px;font-size:11.5px;color:var(--chrome-muted)">Payouts trigger automatically once your balance crosses this amount.</div>
+      </div>
+    </div>
+    <div class="spec-mock__cap"><b>Merchant settings</b>A stepped slider ties a business rule to a value the merchant can feel out, not just type.</div>`;
+
+  /* 3 — price/amount range filter */
+  const bar = w => `<span class="spec-mock__bar" style="width:${w}"></span>`;
+  const rows = ['88%','70%','55%'].map(w=>`<div class="spec-mock__row">${bar(w)}</div>`).join('');
+  const filterMock = `
+    <div class="spec-mock__stage" style="background:${sbg};padding:0;display:flex;flex-direction:row;justify-content:flex-start">
+      <div style="width:150px;flex:0 0 auto;padding:14px 14px 16px;border-right:1px solid var(--chrome-border)">
+        <div style="font-size:10.5px;font-weight:700;color:var(--chrome-muted);margin-bottom:12px">FILTERS</div>
+        ${makeSliderHTML('stepped', 500, 'Max amount')}
+      </div>
+      <div style="flex:1;min-width:0;padding:12px 14px;display:flex;flex-direction:column;gap:12px">${rows}</div>
+    </div>
+    <div class="spec-mock__cap"><b>Transaction filter panel</b>A slider narrows a list by amount without forcing an exact number in a field.</div>`;
+
+  /* 4 — zoom control (map/image viewer): +/- buttons step the same
+     slider a click at a time, real interaction (dispatches 'input' so
+     wireSldRange updates the fill/value), not just a static swatch. */
+  const zoomMock = `
+    <div class="spec-mock__stage" style="background:${sbg};padding:0">
+      <div style="height:96px;background:var(--chrome-border);display:flex;align-items:center;justify-content:center;color:var(--chrome-muted);font-size:11px">Map preview</div>
+      <div style="padding:12px 16px;display:flex;align-items:center;gap:12px">
+        <button class="sg-iconbtn" type="button" aria-label="Zoom out" style="flex-shrink:0" onclick="sldZoomStep(this,-1)"><span class="sld-mock-icon">${SLD_MINUS_SVG}</span></button>
+        <div style="flex:1;min-width:0">${makeSliderHTML('continuous', 50, 'Zoom')}</div>
+        <button class="sg-iconbtn" type="button" aria-label="Zoom in" style="flex-shrink:0" onclick="sldZoomStep(this,1)"><span class="sld-mock-icon">${SLD_PLUS_SVG}</span></button>
+      </div>
+    </div>
+    <div class="spec-mock__cap"><b>Zoom control</b>The +/&minus; buttons and the slider drive the same value &mdash; either one alone is a full way to zoom.</div>`;
+
+  root.innerHTML = `
+    <div class="cpg-section-heading">
+      <div class="cpg-layout__title">In context</div>
+      <div class="cpg-layout__desc">A slider almost always sits inside a settings panel, a filter, or a zoom/scrub control &mdash; rarely on its own.</div>
+    </div>
+    <div class="cpg-section-block">
+      <div class="spec-insitu-grid spec-insitu-grid--2">
+        <div class="spec-mock">${settingsMock}</div>
+        <div class="spec-mock">${payoutMock}</div>
+        <div class="spec-mock">${filterMock}</div>
+        <div class="spec-mock">${zoomMock}</div>
+      </div>
+    </div>`;
+  root.querySelectorAll('.sld__range').forEach(wireSldRange);
+}
+
+function sldgSet(key, val){
+  sldg[key] = val;
+  renderSldPlayground();
+}
+function sldgCopyCode(){
+  const b = document.getElementById('sldg-code-block');
+  if(!b) return;
+  navigator.clipboard.writeText(b.innerText||b.textContent).catch(()=>{});
+  const btn = document.getElementById('sldg-copy-btn');
+  if(btn){ btn.textContent = 'Copied!'; setTimeout(()=>btn.textContent='Copy', 2000); }
+}
+
+function renderSldReference(){
+  const root = document.getElementById('sld-reference');
+  if(!root) return;
+
+  const theme = currentTheme();
+  const sbg = stageBg(theme);
+
+  /* ---- Anatomy + dimensions combined (no size axis for this component) ---- */
+  const heroSld = makeSliderHTML('continuous', 60, 'Volume');
+
+  const parts = [
+    {num:1, name:'Label / value',  note:'The name on the left and the live value on the right, updated on every drag.', vis:`<div class="sld__head" style="width:180px"><span>Volume</span><span class="sld__val">60%</span></div>`},
+    {num:2, name:'Track',          note:'6px rounded rail; the unfilled portion behind the thumb.',                     vis:`<div style="width:180px"><input type="range" class="sld__range" min="0" max="100" value="0" style="background:var(--color-surface-n2)"></div>`},
+    {num:3, name:'Fill',           note:'A two-stop gradient painted by script up to the current position &mdash; no cross-browser ::-webkit-slider-fill exists.', vis:`<div style="width:180px"><input type="range" class="sld__range" min="0" max="100" value="60" style="background:linear-gradient(90deg, var(--color-surface-inverse) 0% 60%, var(--color-surface-n2) 60% 100%)"></div>`},
+    {num:4, name:'Thumb',          note:'18px circle, solid black in light mode and white in dark mode.',                vis:`<div style="width:180px"><input type="range" class="sld__range" min="0" max="100" value="80"></div>`},
+    {num:5, name:'Scale labels',   note:'Optional min/max labels below the track &mdash; only used with a step.',        vis:`<div style="width:180px"><div class="sld__scale"><span>R0</span><span>R1,000</span></div></div>`},
+  ];
+  const partCards = parts.map(p=>`
+    <div class="spec-part">
+      <div class="spec-part__stage" style="background:${sbg}">${p.vis}</div>
+      <div class="spec-part__body">
+        <div class="spec-part__name"><span class="spec-part__num">${p.num}</span>${p.name}</div>
+        <div class="spec-part__note">${p.note}</div>
+      </div>
+    </div>`).join('');
+
+  const dims = [
+    {name:'Track',     val:'6px height, 999px radius'},
+    {name:'Thumb',      val:'18px diameter, 2px border in --chrome-bg'},
+    {name:'Label',      val:'13px / weight 400, muted colour'},
+    {name:'Value',      val:'14px / weight 700, full-contrast colour'},
+    {name:'Scale label', val:'11px / weight 400, muted colour'},
+    {name:'Disabled',   val:'opacity .5, cursor not-allowed'},
+  ];
+  const dimRows = dims.map(d=>`<tr><td class="dd-table__name">${d.name}</td><td>${d.val}</td></tr>`).join('');
+
+  /* ---- Tokens (grepped against the real .sld* CSS) ---- */
+  const tokRows = [
+    {name:'Track background',   token:'--color-surface-n2'},
+    {name:'Fill / thumb fill',  token:'--color-surface-inverse'},
+    {name:'Thumb border',       token:'--chrome-bg'},
+    {name:'Focus ring',         token:'--color-input-focus'},
+    {name:'Label / value text', token:'--chrome-txt / --chrome-muted'},
+  ].map(t=>`<tr><td class="dd-table__name">${t.name}</td><td><code>${t.token}</code></td></tr>`).join('');
+
+  /* ---- States ---- */
+  const states = [
+    {name:'Default',  note:'Track and fill in the current theme colours.',   html:makeSliderHTML('continuous', 60, 'Volume')},
+    {name:'Focus',     note:'A visible focus ring on keyboard focus.',        html:makeSliderHTML('continuous', 60, 'Volume').replace('class="sld__range"', 'class="sld__range" style="outline:2px solid var(--color-input-focus);outline-offset:3px"')},
+    {name:'Stepped',   note:'Snaps to fixed increments; shows min/max scale.', html:makeSliderHTML('stepped', 500, 'Payout threshold')},
+    {name:'Disabled',  note:'Dims and stops responding to drag or keys.',     html:makeSliderHTML('disabled', 30, 'Locked')},
+  ];
+  const stateCells = states.map(s=>`
+    <div class="spec-cell">
+      <div class="spec-cell__stage" style="background:${sbg}">${s.html}</div>
+      <div class="spec-cell__name">${s.name}</div>
+      <div class="spec-cell__desc">${s.note}</div>
+    </div>`).join('');
+
+  root.innerHTML = `
+    <div class="type-sub">
+      <div class="type-sub__title">Anatomy &amp; dimensions</div>
+      <div class="type-sub__desc">There's no size axis for this component &mdash; one set of dimensions, listed as fixed tokens below.</div>
+      <div class="cpg-section-outline">
+        <div class="spec-hero" style="background:${sbg}">${heroSld}</div>
+        <div class="spec-parts">${partCards}</div>
+        <div class="dd-table-wrap" style="margin-top:16px"><table class="dd-table">
+          <thead><tr><th>Part</th><th>Value</th></tr></thead>
+          <tbody>${dimRows}</tbody>
+        </table></div>
+      </div>
+    </div>
+
+    <div class="type-sub">
+      <div class="type-sub__title">Tokens</div>
+      <div class="type-sub__desc">Every colour on the control resolves to one of these custom properties.</div>
+      <div class="cpg-section-outline">
+        <div class="dd-table-wrap"><table class="dd-table" style="min-width:380px">
+          <thead><tr><th>Part</th><th>Token</th></tr></thead>
+          <tbody>${tokRows}</tbody>
+        </table></div>
+      </div>
+    </div>
+
+    <div class="type-sub" style="margin-bottom:0">
+      <div class="type-sub__title">States</div>
+      <div class="type-sub__desc">Every slider resolves to one of default, focus, stepped or disabled.</div>
+      <div class="cpg-section-outline">
+        <div class="spec-grid">${stateCells}</div>
+      </div>
+    </div>`;
+}
+
+try { renderSldCodeTab(); } catch(e){ console.error('sld-code-tab',e); }
+try { renderSldPlayground(); } catch(e){ console.error('sld-playground',e); }
+try { renderSldForms(); } catch(e){ console.error('sld-forms',e); }
+try { renderSldInSitu(); } catch(e){ console.error('sld-insitu',e); }
+try { renderSldReference(); } catch(e){ console.error('sld-reference',e); }
+
+function sldTabSwitch(tab){
+  const nav = document.getElementById('sld-tabs-list');
+  if(!nav) return;
+  nav.querySelectorAll('.tab-item').forEach(btn=>btn.classList.toggle('on', btn.getAttribute('data-sld-tab')===tab));
+  document.querySelectorAll('#s-slider .tabs-panel[data-sld-panel]').forEach(p=>p.classList.toggle('on', p.getAttribute('data-sld-panel')===tab));
+}
+
 
 /* ============================================================
    LISTS
@@ -17688,12 +18230,18 @@ function cbrTabSwitch(tab){
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.85.0';
+const SYSTEM_VERSION = '1.86.0';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.86.0', date:'2026-09-04', author:'Mo', title:'Slider converted to the Pills-style tabbed treatment', changes:[
+        ['added','Slider (s-slider) converted from a single static Continuous/Stepped/Disabled/"When to use" page into a full .sec--tabbed page — Overview / Style / Code / Changelog — matching Pagination and Input OTP: a "Try the component" playground (a Continuous/Stepped mode toggle plus an Enabled/Disabled toggle, driving a live draggable .sld__range rendered into two synced mounts via shared sldg state), a "Key forms" showcase (Continuous / Stepped / Disabled — replacing Pills\' colour-variant slot, since Slider has no colour or size axis), four "In context" mockups (a sound/display settings panel, a merchant payout-threshold panel, a transaction amount filter panel, and a zoom control pairing the range input with +/- step buttons wired via sldZoomStep to dispatch a real input event so either control drives the same value), a Style tab (Anatomy & dimensions combined in one section since there\'s no size axis, a Tokens table grepped against the real .sld* CSS, and States) and a Code tab with the .code-seg HTML/CSS · Blazor · React TSX switcher'],
+        ['added','New builder functions makeSliderHTML (minimal real-markup builder) and makeSliderEl (playground version reading shared sldg state) plus wireSldRange, a named version of the existing generic fill-gradient + live-value wiring so dynamically-created playground/mockup sliders get the same behaviour the static examples already had'],
+        ['added','ai-ctx tab regenerated via generate-ai-context-tab.mjs for the new js-rendered builders, moved from the end of the section into the new hero\'s sec-header-meta, matching Pagination/Input OTP'],
+        ['fixed','Media-scrubber In-context mockup: the slider\'s flex-item wrapper had no min-width:0, so its own 280px intrinsic width (via .sld\'s width:280px) blocked the flex item from shrinking, pushing the "next" chevron button off the card edge under .spec-mock\'s overflow:hidden; the chevron SVGs also had no width/height sizing, so they rendered at the browser default replaced-element size instead of 14px. Added min-width:0/flex-shrink:0 on the row\'s flex children and a scoped .sld-scrub-chev svg{width:100%;height:100%} rule matching the sitewide icon-wrapper pattern (e.g. .acc__chev svg)'],
+      ]},
       {version:'1.85.0', date:'2026-09-04', author:'Mo', title:'Tables rebuilt with the full Pills-style tabbed treatment', changes:[
         ['added','Tables (s-tables) converted from a flat .sec page (Playground / Interactive table / Reporting variant / States / The cell / Anatomy & specs / When to use) into a full .sec--tabbed page — Overview / Style / Code / Changelog — matching Pills/Separator/Pagination: a hero with a mini table preview, the existing single-row Playground and live Interactive table demo kept on Overview, a "Key variants" showcase (Table Row vs Reporting, replacing Pills\' colour-variant slot since Tables has no colour or size axis), 3 "In context" mockups (bulk-selection toolbar, reporting dashboard card, table in a picker panel), a Style tab (Anatomy with numbered row-part callouts, Size & dimensions, Status tag colours, States) and a Code tab with a live HTML/CSS · Blazor · React TSX snippet matching the Playground\'s current row configuration'],
         ['changed','Reporting variant\'s cell classes renamed from .dd-num/.dd-status/.dd-dot (inherited from the retired Data Display section) to .tbl-num/.tbl-status/.tbl-dot, now that Reporting is a first-class Tables variant rather than a migrated leftover'],
@@ -19332,7 +19880,15 @@ const CHANGELOG = {
         ['added','Photo / initials / glyph fallbacks in five sizes, with a presence dot and a stacked +N group'],
       ]},
     ]},
-    {secId:'s-slider', name:'Slider', version:'1.0.1', entries:[
+    {secId:'s-slider', name:'Slider', version:'2.0.0', entries:[
+      {version:'2.0.0', date:'2026-09-04', author:'Mo', title:'Pills-style tabbed treatment: playground, key forms, in-context mockups', changes:[
+        ['added','Overview tab: a "Try the component" playground with a Continuous/Stepped mode toggle and an Enabled/Disabled toggle, driving a live draggable .sld__range (shared sldg state, rendered into the Overview and Code tab mounts via sldgRefresh)'],
+        ['added','"Key forms" showcase — Continuous, Stepped and Disabled, the three forms the component already shipped, now shown side-by-side with their real markup'],
+        ['added','Four "In context" mockups: a sound/display settings panel (Volume + Brightness sliders), a merchant payout-threshold panel, a transaction amount-filter panel, and a zoom control pairing the range input with +/- step buttons that dispatch a real input event (sldZoomStep) so either control drives the same value'],
+        ['added','Style tab: combined Anatomy & dimensions section (label/value, track, fill, thumb, scale labels — no size axis on this component) plus a Tokens table (--color-surface-n2, --color-surface-inverse, --chrome-bg, --color-input-focus, --chrome-txt/--chrome-muted) and a States section (Default, Focus, Stepped, Disabled)'],
+        ['added','Code tab: HTML/CSS · Blazor · React TSX switcher (getSliderCodeHTML/Blazor/TSX) reflecting the real native input and the fill-gradient + live-value wiring'],
+        ['changed','Moved the existing Do/Dont "When to use" guidance into the new Overview tab\'s #sld-usage block, unchanged copy'],
+      ]},
       {version:'1.0.1', date:'2026-08-03', author:'Mo', title:'AI context tab added', changes:[
         ['added','AI context tab documenting the real, fully static .sld/.sld__*/.sld__range markup, plus its existing "When to use" Do/Dont guidance (3 do / 3 dont); notes the fill-gradient + live-value JS is generic input wiring, not a markup builder'],
       ]},
@@ -27084,6 +27640,7 @@ try { renderSectionChangelogs(); } catch(e){ console.error('section-changelog',e
   {secId:'s-lists', panelId:'lst-changelog-panel'},
   {secId:'s-separator', panelId:'sep-changelog-panel'},
   {secId:'s-input-otp', panelId:'otp-changelog-panel'},
+  {secId:'s-slider', panelId:'sld-changelog-panel'},
   {secId:'s-tables', panelId:'tbl-changelog-panel'},
 ].forEach(({secId, panelId})=>{
   try {
