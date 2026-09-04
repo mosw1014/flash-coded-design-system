@@ -12544,12 +12544,12 @@ function renderSldInSitu(){
   const bar = w => `<span class="spec-mock__bar" style="width:${w}"></span>`;
   const rows = ['88%','70%','55%'].map(w=>`<div class="spec-mock__row">${bar(w)}</div>`).join('');
   const filterMock = `
-    <div class="spec-mock__stage" style="background:${sbg};padding:0;display:flex">
+    <div class="spec-mock__stage" style="background:${sbg};padding:0;display:flex;flex-direction:row;justify-content:flex-start">
       <div style="width:150px;flex:0 0 auto;padding:14px 14px 16px;border-right:1px solid var(--chrome-border)">
         <div style="font-size:10.5px;font-weight:700;color:var(--chrome-muted);margin-bottom:12px">FILTERS</div>
         ${makeSliderHTML('stepped', 500, 'Max amount')}
       </div>
-      <div style="flex:1;padding:12px 14px">${rows}</div>
+      <div style="flex:1;min-width:0;padding:12px 14px">${rows}</div>
     </div>
     <div class="spec-mock__cap"><b>Transaction filter panel</b>A slider narrows a list by amount without forcing an exact number in a field.</div>`;
 
