@@ -1510,6 +1510,7 @@ body.home .main{max-width:none;margin:0;padding:0}
 .sec--tabbed .spec-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:16px}
 .sec--tabbed .spec-insitu-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
 .sec--tabbed .spec-insitu-grid--2{grid-template-columns:repeat(2,1fr)}
+.sec--tabbed .spec-insitu-grid--4{grid-template-columns:repeat(4,1fr)}
 .sec--tabbed .spec-mock{border:1px solid var(--chrome-border);border-radius:12px;overflow:hidden;background:var(--chrome-bg);display:flex;flex-direction:column;transition:background .25s,border-color .25s}
 .sec--tabbed .spec-mock__stage{flex:1;padding:22px 20px;display:flex;flex-direction:column;justify-content:center;gap:12px;min-height:150px;transition:background .25s}
 .sec--tabbed .spec-mock__cap{padding:12px 16px;border-top:1px solid var(--chrome-border);font-size:12px;line-height:1.5;color:var(--chrome-muted)}
@@ -1674,10 +1675,10 @@ body.home .main{max-width:none;margin:0;padding:0}
 .dd-table tbody tr{transition:background .12s}
 .dd-table tbody tr:hover{background:var(--chrome-hover)}
 .dd-table__name{font-weight:700;color:var(--chrome-txt)}
-/* dd-num/dd-status/dd-dot are exclusive to the Tables "Reporting variant" demo */
-.dd-num{text-align:left;font-variant-numeric:tabular-nums;font-weight:700}
-.dd-status{display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:600;white-space:nowrap}
-.dd-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+/* tbl-num/tbl-status/tbl-dot are exclusive to the Tables "Reporting" variant */
+.tbl-num{text-align:left;font-variant-numeric:tabular-nums;font-weight:700}
+.tbl-status{display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:600;white-space:nowrap}
+.tbl-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
 
 /* ── LISTS (Key-value list, Activity timeline) ── */
 .dd-kv{border:1px solid var(--chrome-border);border-radius:12px;overflow:hidden}
@@ -4909,7 +4910,7 @@ body.home .main{max-width:none;margin:0;padding:0}
 </details>
         </div>
       </div>
-      <div class="sec-hero__preview"><div class="mk"><div class="mk-card" style="width:64%;overflow:hidden;padding:18px 12px;display:flex;flex-direction:column;align-items:center;gap:6px;border-style:dashed"><span style="width:26px;height:26px;border-radius:8px;background:var(--chrome-hover);display:flex;align-items:center;justify-content:center;color:var(--chrome-muted)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M4 7h16M4 12h16M4 17h9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span><span class="mk-bar mk-bar--txt" style="width:70%"></span><span class="mk-bar" style="width:85%"></span></div></div></div>
+      <div class="sec-hero__preview"><div class="mk mk-col" style="gap:10px"><span style="width:40px;height:40px;border-radius:12px;background:var(--chrome-hover);display:flex;align-items:center;justify-content:center;color:var(--chrome-muted)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 7h16M4 12h16M4 17h9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span><span style="font-size:12px;font-weight:700;color:var(--chrome-muted)">Nothing to show</span></div></div>
       </div>
       <div class="tabs-list sec-tabs" id="es-tabs-list">
         <button type="button" class="tab-item on" data-es-tab="overview" onclick="esTabSwitch('overview')"><span class="tab-item__inner"><span class="tab-item__label">Overview</span></span><span class="tab-item__line"></span></button>
@@ -4973,344 +4974,154 @@ body.home .main{max-width:none;margin:0;padding:0}
       </div>
       <div class="tabs-panel" data-es-panel="changelog" id="es-changelog-panel"></div>
     </section>
-    <section class="sec" id="s-tables">
+    <section class="sec sec--tabbed" id="s-tables">
+      <div class="sec-hero">
       <div class="sec__head">
-        <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Tables <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.3.0</span></h1>
-        <p class="sec__desc">A selectable, row-based <strong>Table Row</strong> for records and transactions. Each row is assembled from cells &mdash; the <strong>List building block</strong> &mdash; starting with a leading checkbox, a product icon and a bold primary label, then any number of data cells, a status tag and optional trailing links. Rows resolve to five states and stack under a select-all header to form a full table. Adapts to light &amp; dark via semantic tokens.</p>
-      </div>
-
-      <div class="type-sub">
-        <div class="type-sub__title">Playground</div>
-        <div class="type-sub__desc">Customise a single Table Row live &mdash; swap the product and status, preview any of the five states, or click the checkbox to select it. Trailing links are revealed on hover, so they appear in the Hover state.</div>
-        <div id="tbl-playground"></div>
-      </div>
-
-      <div class="type-sub">
-        <div class="type-sub__title">Interactive table</div>
-        <div class="type-sub__desc">A working transactions table &mdash; tick any row to select it (the row tints green), or use the header checkbox to select or clear every row at once. Hover a row (or tab to it) to reveal its trailing link actions.</div>
-        <div class="tbl-wrap" id="tbl-play">
-          <div class="tbl-inner">
-            <div class="tbl-head">
-              <span class="tcol-check"><input type="checkbox" class="fsel__input tbl-check tbl-check--all" aria-label="Select all rows"></span>
-              <span class="tbl-head__cell tcol-product">Product<svg class="tbl-sort-icon" viewBox="0 0 10 12" fill="none"><path d="M5 0L8.5 4.5H1.5L5 0Z" fill="currentColor"/><path d="M5 12L1.5 7.5H8.5L5 12Z" fill="currentColor"/></svg></span>
-              <span class="tbl-head__cell tcol-ref">Reference<svg class="tbl-sort-icon" viewBox="0 0 10 12" fill="none"><path d="M5 0L8.5 4.5H1.5L5 0Z" fill="currentColor"/><path d="M5 12L1.5 7.5H8.5L5 12Z" fill="currentColor"/></svg></span>
-              <span class="tbl-head__cell tcol-date">Date<svg class="tbl-sort-icon" viewBox="0 0 10 12" fill="none"><path d="M5 0L8.5 4.5H1.5L5 0Z" fill="currentColor"/><path d="M5 12L1.5 7.5H8.5L5 12Z" fill="currentColor"/></svg></span>
-              <span class="tbl-head__cell tcol-type">Type<svg class="tbl-sort-icon" viewBox="0 0 10 12" fill="none"><path d="M5 0L8.5 4.5H1.5L5 0Z" fill="currentColor"/><path d="M5 12L1.5 7.5H8.5L5 12Z" fill="currentColor"/></svg></span>
-              <span class="tbl-head__cell tcol-status">Status<svg class="tbl-sort-icon" viewBox="0 0 10 12" fill="none"><path d="M5 0L8.5 4.5H1.5L5 0Z" fill="currentColor"/><path d="M5 12L1.5 7.5H8.5L5 12Z" fill="currentColor"/></svg></span>
-              <span class="tbl-head__cell tcol-amt">Amount<svg class="tbl-sort-icon" viewBox="0 0 10 12" fill="none"><path d="M5 0L8.5 4.5H1.5L5 0Z" fill="currentColor"/><path d="M5 12L1.5 7.5H8.5L5 12Z" fill="currentColor"/></svg></span>
-              <span class="tbl-head__cell tcol-actions" aria-label="Actions"></span>
-            </div>
-            <div class="tbl-body">
-              <div class="tbl-row">
-                <input type="checkbox" class="fsel__input tbl-check tcol-check" aria-label="Select row">
-                <span class="tcol-product"><span class="tbl-pic tbl-pic--1v">1</span><span class="tbl-cell tbl-cell--name" style="flex:0 0 auto">1Voucher</span></span>
-                <span class="tbl-cell tcol-ref">1325468</span>
-                <span class="tbl-cell tcol-date">30 Aug at 07h31</span>
-                <span class="tbl-cell tcol-type">Redemption</span>
-                <span class="tcol-status"><span class="tbl-tag tbl-tag--pending">Pending</span></span>
-                <span class="tbl-cell tcol-amt">R523.00</span>
-                <span class="tcol-actions"><a class="tbl-link">View</a><a class="tbl-link">Receipt</a></span>
-              </div>
-              <div class="tbl-row">
-                <input type="checkbox" class="fsel__input tbl-check tcol-check" aria-label="Select row">
-                <span class="tcol-product"><span class="tbl-pic tbl-pic--gift"><svg viewBox="0 0 24 24" fill="none"><path d="M20 12v8H4v-8M2 7h20v5H2zM12 22V7M12 7S9 2 6.5 4.5 12 7 12 7zM12 7s3-5 5.5-2.5S12 7 12 7z" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"/></svg></span><span class="tbl-cell tbl-cell--name" style="flex:0 0 auto">Gift Voucher</span></span>
-                <span class="tbl-cell tcol-ref">VD938818-5</span>
-                <span class="tbl-cell tcol-date">29 Aug at 19h17</span>
-                <span class="tbl-cell tcol-type">Purchase</span>
-                <span class="tcol-status"><span class="tbl-tag tbl-tag--success">Success</span></span>
-                <span class="tbl-cell tcol-amt">R1,000.50</span>
-                <span class="tcol-actions"><a class="tbl-link">View</a><a class="tbl-link">Receipt</a></span>
-              </div>
-              <div class="tbl-row">
-                <input type="checkbox" class="fsel__input tbl-check tcol-check" aria-label="Select row">
-                <span class="tcol-product"><span class="tbl-pic tbl-pic--1v">1</span><span class="tbl-cell tbl-cell--name" style="flex:0 0 auto">1Voucher</span></span>
-                <span class="tbl-cell tcol-ref">1325571</span>
-                <span class="tbl-cell tcol-date">29 Aug at 17h12</span>
-                <span class="tbl-cell tcol-type">Redemption</span>
-                <span class="tcol-status"><span class="tbl-tag tbl-tag--success">Success</span></span>
-                <span class="tbl-cell tcol-amt">R850.50</span>
-                <span class="tcol-actions"><a class="tbl-link">View</a><a class="tbl-link">Receipt</a></span>
-              </div>
-              <div class="tbl-row">
-                <input type="checkbox" class="fsel__input tbl-check tcol-check" aria-label="Select row">
-                <span class="tcol-product"><span class="tbl-pic tbl-pic--gift"><svg viewBox="0 0 24 24" fill="none"><path d="M20 12v8H4v-8M2 7h20v5H2zM12 22V7M12 7S9 2 6.5 4.5 12 7 12 7zM12 7s3-5 5.5-2.5S12 7 12 7z" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"/></svg></span><span class="tbl-cell tbl-cell--name" style="flex:0 0 auto">Gift Voucher</span></span>
-                <span class="tbl-cell tcol-ref">FG125468-1</span>
-                <span class="tbl-cell tcol-date">28 Aug at 20h04</span>
-                <span class="tbl-cell tcol-type">Purchase</span>
-                <span class="tcol-status"><span class="tbl-tag tbl-tag--success">Success</span></span>
-                <span class="tbl-cell tcol-amt">R25.00</span>
-                <span class="tcol-actions"><a class="tbl-link">View</a><a class="tbl-link">Receipt</a></span>
-              </div>
-              <div class="tbl-row">
-                <input type="checkbox" class="fsel__input tbl-check tcol-check" aria-label="Select row">
-                <span class="tcol-product"><span class="tbl-pic tbl-pic--gift"><svg viewBox="0 0 24 24" fill="none"><path d="M20 12v8H4v-8M2 7h20v5H2zM12 22V7M12 7S9 2 6.5 4.5 12 7 12 7zM12 7s3-5 5.5-2.5S12 7 12 7z" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"/></svg></span><span class="tbl-cell tbl-cell--name" style="flex:0 0 auto">Gift Voucher</span></span>
-                <span class="tbl-cell tcol-ref">MP134791-31</span>
-                <span class="tbl-cell tcol-date">22 Aug at 11h28</span>
-                <span class="tbl-cell tcol-type">Purchase</span>
-                <span class="tcol-status"><span class="tbl-tag tbl-tag--failed">Failed</span></span>
-                <span class="tbl-cell tcol-amt">R349.25</span>
-                <span class="tcol-actions"><a class="tbl-link">View</a><a class="tbl-link">Receipt</a></span>
-              </div>
-              <div class="tbl-row">
-                <input type="checkbox" class="fsel__input tbl-check tcol-check" aria-label="Select row">
-                <span class="tcol-product"><span class="tbl-pic tbl-pic--gift"><svg viewBox="0 0 24 24" fill="none"><path d="M20 12v8H4v-8M2 7h20v5H2zM12 22V7M12 7S9 2 6.5 4.5 12 7 12 7zM12 7s3-5 5.5-2.5S12 7 12 7z" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"/></svg></span><span class="tbl-cell tbl-cell--name" style="flex:0 0 auto">Gift Voucher</span></span>
-                <span class="tbl-cell tcol-ref">MP134791-02</span>
-                <span class="tbl-cell tcol-date">22 Aug at 09h17</span>
-                <span class="tbl-cell tcol-type">Purchase</span>
-                <span class="tcol-status"><span class="tbl-tag tbl-tag--success">Success</span></span>
-                <span class="tbl-cell tcol-amt">R1,000.50</span>
-                <span class="tcol-actions"><a class="tbl-link">View</a><a class="tbl-link">Receipt</a></span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="type-sub">
-        <div class="type-sub__title">Reporting variant</div>
-        <div class="type-sub__desc">A denser, plain-table style for reporting grids and dashboards — an uppercase header, tabular-aligned numerics, hover rows and a status dot, instead of the flex-row Table Row above.</div>
-        <div class="dd-table-wrap">
-          <table class="dd-table">
-            <thead>
-              <tr>
-                <th><span class="tbl-th-inner">Product<svg class="tbl-sort-icon" viewBox="0 0 10 12" fill="none"><path d="M5 0L8.5 4.5H1.5L5 0Z" fill="currentColor"/><path d="M5 12L1.5 7.5H8.5L5 12Z" fill="currentColor"/></svg></span></th>
-                <th><span class="tbl-th-inner">Category<svg class="tbl-sort-icon" viewBox="0 0 10 12" fill="none"><path d="M5 0L8.5 4.5H1.5L5 0Z" fill="currentColor"/><path d="M5 12L1.5 7.5H8.5L5 12Z" fill="currentColor"/></svg></span></th>
-                <th class="dd-num"><span class="tbl-th-inner">Volume<svg class="tbl-sort-icon" viewBox="0 0 10 12" fill="none"><path d="M5 0L8.5 4.5H1.5L5 0Z" fill="currentColor"/><path d="M5 12L1.5 7.5H8.5L5 12Z" fill="currentColor"/></svg></span></th>
-                <th class="dd-num"><span class="tbl-th-inner">Value<svg class="tbl-sort-icon" viewBox="0 0 10 12" fill="none"><path d="M5 0L8.5 4.5H1.5L5 0Z" fill="currentColor"/><path d="M5 12L1.5 7.5H8.5L5 12Z" fill="currentColor"/></svg></span></th>
-                <th><span class="tbl-th-inner">Status<svg class="tbl-sort-icon" viewBox="0 0 10 12" fill="none"><path d="M5 0L8.5 4.5H1.5L5 0Z" fill="currentColor"/><path d="M5 12L1.5 7.5H8.5L5 12Z" fill="currentColor"/></svg></span></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td class="dd-table__name">Airtime &amp; Data</td>
-                <td>Prepaid</td>
-                <td class="dd-num">842,190</td>
-                <td class="dd-num">R14.8M</td>
-                <td><span class="dd-status"><span class="dd-dot" style="background:var(--color-success-h)"></span>Live</span></td>
-              </tr>
-              <tr>
-                <td class="dd-table__name">Electricity</td>
-                <td>Utilities</td>
-                <td class="dd-num">613,455</td>
-                <td class="dd-num">R11.2M</td>
-                <td><span class="dd-status"><span class="dd-dot" style="background:var(--color-success-h)"></span>Live</span></td>
-              </tr>
-              <tr>
-                <td class="dd-table__name">1Voucher</td>
-                <td>Vouchers</td>
-                <td class="dd-num">508,720</td>
-                <td class="dd-num">R9.6M</td>
-                <td><span class="dd-status"><span class="dd-dot" style="background:var(--color-warn-h)"></span>Degraded</span></td>
-              </tr>
-              <tr>
-                <td class="dd-table__name">Bill Payments</td>
-                <td>Utilities</td>
-                <td class="dd-num">231,004</td>
-                <td class="dd-num">R7.1M</td>
-                <td><span class="dd-status"><span class="dd-dot" style="background:var(--color-success-h)"></span>Live</span></td>
-              </tr>
-              <tr>
-                <td class="dd-table__name">Gaming Vouchers</td>
-                <td>Vouchers</td>
-                <td class="dd-num">96,338</td>
-                <td class="dd-num">R5.5M</td>
-                <td><span class="dd-status"><span class="dd-dot" style="background:var(--chrome-muted)"></span>Paused</span></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <div class="type-sub">
-        <div class="type-sub__title">States</div>
-        <div class="type-sub__desc">Every table row resolves to one of five states. <strong>Default</strong> sits on the base surface; <strong>Hover</strong> fills with a subtle neutral; <strong>Focused</strong> draws a 2px inverse outline for keyboard navigation; <strong>Checked</strong> tints the row and fills the checkbox in brand green; <strong>Disabled</strong> greys the content and blocks interaction.</div>
-        <div class="tbl-states">
-          <div class="tbl-staterow"><div class="tbl-statelabel">Default</div>
-            <div class="tbl-row">
-              <input type="checkbox" class="fsel__input tbl-check tbl-cell--check" aria-label="Select row">
-              <span class="tbl-pic tbl-pic--1v">1</span>
-              <span class="tbl-cell tbl-cell--name">1Voucher</span>
-              <span class="tbl-cell tbl-cell--col">Lorem ipsum</span>
-              <span class="tbl-cell tbl-cell--col">Lorem ipsum</span>
-              <span class="tbl-cell tbl-cell--col">Lorem ipsum</span>
-              <span class="tbl-tag tbl-tag--pending">Pending</span>
-            </div>
-          </div>
-          <div class="tbl-staterow"><div class="tbl-statelabel">Hover</div>
-            <div class="tbl-row is-hover">
-              <input type="checkbox" class="fsel__input tbl-check tbl-cell--check" aria-label="Select row">
-              <span class="tbl-pic tbl-pic--1v">1</span>
-              <span class="tbl-cell tbl-cell--name">1Voucher</span>
-              <span class="tbl-cell tbl-cell--col">Lorem ipsum</span>
-              <span class="tbl-cell tbl-cell--col">Lorem ipsum</span>
-              <span class="tbl-cell tbl-cell--col">Lorem ipsum</span>
-              <span class="tbl-tag tbl-tag--pending">Pending</span>
-              <span class="tbl-cell--links"><a class="tbl-link">Link text</a><a class="tbl-link">Link text</a></span>
-            </div>
-          </div>
-          <div class="tbl-staterow"><div class="tbl-statelabel">Focused</div>
-            <div class="tbl-row is-focus">
-              <input type="checkbox" class="fsel__input tbl-check tbl-cell--check" aria-label="Select row">
-              <span class="tbl-pic tbl-pic--1v">1</span>
-              <span class="tbl-cell tbl-cell--name">1Voucher</span>
-              <span class="tbl-cell tbl-cell--col">Lorem ipsum</span>
-              <span class="tbl-cell tbl-cell--col">Lorem ipsum</span>
-              <span class="tbl-cell tbl-cell--col">Lorem ipsum</span>
-              <span class="tbl-tag tbl-tag--pending">Pending</span>
-            </div>
-          </div>
-          <div class="tbl-staterow"><div class="tbl-statelabel">Checked</div>
-            <div class="tbl-row is-checked">
-              <input type="checkbox" class="fsel__input tbl-check tbl-cell--check" checked aria-label="Select row">
-              <span class="tbl-pic tbl-pic--1v">1</span>
-              <span class="tbl-cell tbl-cell--name">1Voucher</span>
-              <span class="tbl-cell tbl-cell--col">Lorem ipsum</span>
-              <span class="tbl-cell tbl-cell--col">Lorem ipsum</span>
-              <span class="tbl-cell tbl-cell--col">Lorem ipsum</span>
-              <span class="tbl-tag tbl-tag--pending">Pending</span>
-            </div>
-          </div>
-          <div class="tbl-staterow"><div class="tbl-statelabel">Disabled</div>
-            <div class="tbl-row is-disabled">
-              <input type="checkbox" class="fsel__input tbl-check tbl-cell--check" disabled aria-label="Select row">
-              <span class="tbl-pic tbl-pic--1v">1</span>
-              <span class="tbl-cell tbl-cell--name">1Voucher</span>
-              <span class="tbl-cell tbl-cell--col">Lorem ipsum</span>
-              <span class="tbl-cell tbl-cell--col">Lorem ipsum</span>
-              <span class="tbl-cell tbl-cell--col">Lorem ipsum</span>
-              <span class="tbl-tag tbl-tag--pending">Pending</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="type-sub">
-        <div class="type-sub__title">The cell (List building block)</div>
-        <div class="type-sub__desc">Rows are composed from a small set of interchangeable cells. Mix and match them to fit the data &mdash; a row needs only the leading checkbox and one labelled cell to be valid.</div>
-        <div class="dd-table-wrap">
-          <table class="dd-table">
-            <thead><tr><th>Cell</th><th>Purpose</th><th>Notes</th></tr></thead>
-            <tbody>
-              <tr><td class="dd-table__name">Checkbox</td><td>Row selection</td><td>Always leads the row; drives the Checked state and the header select-all.</td></tr>
-              <tr><td class="dd-table__name">Product icon</td><td>Visual identifier</td><td>30px rounded tile &middot; radius 7px. 1Voucher orange <code>#FF5F00</code>, Gift Voucher pink <code>#E43E79</code>.</td></tr>
-              <tr><td class="dd-table__name">Name</td><td>Primary label</td><td>Body m semibold &middot; 16px, text-primary. One per row.</td></tr>
-              <tr><td class="dd-table__name">Text</td><td>Data value</td><td>Body m medium. Repeatable &mdash; add one per column.</td></tr>
-              <tr><td class="dd-table__name">Tag</td><td>Status</td><td>Pending (neutral), Success (green), Failed (red).</td></tr>
-              <tr><td class="dd-table__name">Link</td><td>Row action</td><td>Optional trailing links; pinned to the right edge.</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <div class="type-sub">
-        <div class="type-sub__title">Anatomy &amp; specs</div>
-        <div class="type-sub__desc">Measurements and tokens for a single row and the table header.</div>
-        <div class="dd-table-wrap">
-          <table class="dd-table">
-            <thead><tr><th>Property</th><th>Value</th><th>Token</th></tr></thead>
-            <tbody>
-              <tr><td class="dd-table__name">Row height</td><td>50px</td><td>&mdash;</td></tr>
-              <tr><td class="dd-table__name">Row padding</td><td>0 14px</td><td>spacing-150</td></tr>
-              <tr><td class="dd-table__name">Cell gap</td><td>20px</td><td>spacing-250</td></tr>
-              <tr><td class="dd-table__name">Corner radius</td><td>8px</td><td>Radius/xs (6&ndash;8)</td></tr>
-              <tr><td class="dd-table__name">Checkbox</td><td>20px &middot; radius 6px</td><td>reuses <code>.fsel__input</code> &middot; green <code>#10C504</code></td></tr>
-              <tr><td class="dd-table__name">Product icon</td><td>30px &middot; radius 7px</td><td>1V <code>#FF5F00</code> &middot; Gift <code>#E43E79</code></td></tr>
-              <tr><td class="dd-table__name">Name</td><td>16px semibold</td><td>Body m semibold &middot; <code>text-primary</code></td></tr>
-              <tr><td class="dd-table__name">Data cell</td><td>16px medium</td><td>Body m medium &middot; <code>text-primary</code></td></tr>
-              <tr><td class="dd-table__name">Hover fill</td><td colspan="2">#F4F4F4 <span style="color:var(--chrome-muted)">(dark rgba(255,255,255,.05))</span></td></tr>
-              <tr><td class="dd-table__name">Checked fill</td><td colspan="2">#E9F9EA <span style="color:var(--chrome-muted)">(dark rgba(16,197,4,.13))</span></td></tr>
-              <tr><td class="dd-table__name">Focus outline</td><td>2px inset</td><td><code>text-primary</code> #000 <span style="color:var(--chrome-muted)">(dark #FFF)</span></td></tr>
-              <tr><td class="dd-table__name">Header</td><td>44px &middot; uppercase 10.5px</td><td>bg <code>chrome-nav</code> &middot; <code>chrome-muted</code></td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <div class="type-sub">
-        <div class="type-sub__title">When to use</div>
-        <div class="type-sub__desc">Tables are for scannable, comparable records where rows can be selected and acted on &mdash; not for free-form content or a handful of key&ndash;value facts.</div>
-        <div class="sel-usage">
-          <div class="sel-usage__card">
-            <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
-            <ul class="sel-usage__list">
-              <li>Use a table for lists of like records &mdash; transactions, stores, tickets &mdash; that users scan and compare.</li>
-              <li>Lead every row with the checkbox when rows can be selected, and pair it with a header select-all.</li>
-              <li>Right-align amounts and other numerics, and keep them tabular so digits line up.</li>
-              <li>Use the status tag sparingly &mdash; one per row &mdash; and keep its colour meaning consistent.</li>
-            </ul>
-          </div>
-          <div class="sel-usage__card">
-            <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don&rsquo;t</div>
-            <ul class="sel-usage__list">
-              <li>Don&rsquo;t reach for a table to show a few facts about one object &mdash; use a key&ndash;value list.</li>
-              <li>Don&rsquo;t stack more than a couple of trailing links per row &mdash; move overflow into a menu.</li>
-              <li>Don&rsquo;t leave a disabled row interactive &mdash; grey it and block selection.</li>
-              <li>Don&rsquo;t mix left- and right-alignment for the same column across rows.</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <details class="ai-ctx">
+        <h1 class="sec__title">Tables</h1>
+        <div class="sec-header-meta">
+          <span class="comp-ver-badge" style="margin-left:0">v1.4.0</span>
+          <details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-tables">
-{
-  "status": "static",
-  "realClasses": [
-    ".tbl-wrap",
-    ".tbl-inner",
-    ".tbl-head",
-    ".tbl-head__cell",
-    ".tbl-row",
-    ".tbl-cell",
-    ".tbl-cell--check",
-    ".tbl-cell--name",
-    ".tbl-cell--col",
-    ".tbl-cell--links",
-    ".tbl-link",
-    ".tbl-pic",
-    ".tbl-pic--1v",
-    ".tbl-pic--gift",
-    ".tbl-tag",
-    ".tbl-tag--pending",
-    ".tbl-tag--success",
-    ".tbl-tag--failed",
-    ".tcol-check",
-    ".tcol-product",
-    ".tcol-ref",
-    ".tcol-date",
-    ".tcol-type",
-    ".tcol-status",
-    ".tcol-amt",
-    ".tcol-actions",
-    ".is-hover",
-    ".is-focus",
-    ".is-checked",
-    ".is-disabled",
-    ".dd-num",
-    ".dd-status",
-    ".dd-dot"
-  ],
-  "css": "/* dd-num/dd-status/dd-dot are exclusive to the Tables \"Reporting variant\" demo */\n.dd-num { text-align:left;font-variant-numeric:tabular-nums;font-weight:700 }\n.dd-status { display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:600;white-space:nowrap }\n.dd-dot { width:7px;height:7px;border-radius:50%;flex-shrink:0 }\n/* ================================================================\n   TABLES\n================================================================ */\n/* Table row — a selectable record row assembled from cells */\n.tbl-row { --tbl-hover:#f4f4f4; --tbl-checked:#e9f9ea;\n  display:flex;align-items:center;gap:20px;\n  min-height:50px;padding:0 14px;border-radius:8px;\n  background:transparent;color:var(--chrome-txt);\n  transition:background .12s,box-shadow .12s; }\n[data-theme=\"dark\"] .tbl-row { --tbl-hover:rgba(255,255,255,.05);--tbl-checked:rgba(16,197,4,.13) }\n.tbl-row.is-hover,.tbl-row:not(.is-disabled):not(.is-checked):hover { background:var(--tbl-hover) }\n.tbl-row.is-focus { background:var(--chrome-bg);box-shadow:inset 0 0 0 2px var(--chrome-txt) }\n.tbl-row.is-checked { background:var(--tbl-checked) }\n.tbl-row.is-disabled { pointer-events:none }\n/* cells */\n.tbl-cell { font-size:14px;font-weight:500;color:var(--chrome-txt);white-space:nowrap;overflow:hidden;text-overflow:ellipsis }\n.tbl-cell--check { flex:0 0 20px }\n.tbl-cell--name { flex:0 0 92px;font-weight:700 }\n.tbl-cell--col { flex:0 0 116px }\n.tbl-cell--links { margin-left:auto;display:flex;gap:22px }\n.tbl-link { color:var(--color-link);font-weight:700;font-size:14px;text-decoration:none;cursor:pointer;white-space:nowrap }\n.tbl-link:hover { text-decoration:underline }\n/* disabled dims the content */\n.tbl-row.is-disabled .tbl-cell,.tbl-row.is-disabled .tbl-link { color:var(--chrome-muted);opacity:.85 }\n.tbl-row.is-disabled .tbl-pic { filter:grayscale(1);opacity:.5 }\n/* product icon */\n.tbl-pic { width:30px;height:30px;border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#fff;font-weight:900;font-size:15px }\n.tbl-pic svg { width:17px;height:17px;display:block }\n.tbl-pic--1v { background:var(--prim-1v-500) }\n.tbl-pic--gift { background:var(--prim-sup-pink-1) }\n/* status tag */\n.tbl-tag { display:inline-flex;align-items:center;height:22px;padding:0 9px;border-radius:6px;font-size:12px;font-weight:700;white-space:nowrap;line-height:1 }\n.tbl-tag--pending { background:#e6e6e6;color:#414141 }\n.tbl-tag--success { background:#16a220;color:#fff }\n.tbl-tag--failed { background:#eb0029;color:#fff }\n[data-theme=\"dark\"] .tbl-tag--pending { background:rgba(255,255,255,.14);color:#e6e6e6 }\n.tbl-pg__stage&gt;.tbl-row { flex:1 1 auto;min-width:640px }\n.tbl-pg__head .tbl-head__cell { flex-shrink:0 }\n.tbl-pg__card .tbl-row { border-radius:0 0 13px 13px }\n.tbl-staterow&gt;.tbl-row { flex:1 1 auto }\n/* full table — header + rows */\n.tbl-wrap { border:1px solid var(--chrome-border);border-radius:14px;overflow:hidden;overflow-x:auto }\n.tbl-inner { min-width:900px }\n.tbl-head { display:flex;align-items:center;gap:20px;padding:0 14px;height:44px;background:#000;border-bottom:1px solid var(--chrome-border) }\n.tbl-head__cell { display:inline-flex;align-items:center;gap:6px;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:#fff;white-space:nowrap }\n.tbl-body .tbl-row { border-radius:0;border-bottom:1px solid var(--chrome-border) }\n.tbl-body .tbl-row:last-child { border-bottom:none }\n/* shared column widths — keep header labels aligned with row cells */\n.tcol-check { flex:0 0 20px }\n.tcol-product { flex:2 1 0;min-width:0;display:flex;align-items:center;gap:12px }\n.tbl-head__cell.tcol-product { gap:6px }\n.tcol-ref { flex:1.3 1 0;min-width:0 }\n.tcol-date { flex:1.4 1 0;min-width:0 }\n.tcol-type { flex:1.2 1 0;min-width:0 }\n.tcol-status { flex:0 0 88px }\n.tcol-amt { flex:0 0 96px;text-align:right;font-variant-numeric:tabular-nums;font-weight:700 }\n.tbl-head__cell.tcol-amt { justify-content:flex-end }\n/* trailing row actions — hidden until the row is hovered or keyboard-focused.\n   :has(:focus-visible), not :focus-within — a plain mouse click leaves the\n   checkbox holding focus, which would keep the row \"stuck\" showing actions. */\n.tcol-actions { flex:0 0 132px;display:flex;justify-content:flex-end;gap:18px;opacity:0;transition:opacity .12s }\n.tbl-body .tbl-row:hover .tcol-actions,.tbl-body .tbl-row.is-hover .tcol-actions,.tbl-body .tbl-row:has(:focus-visible) .tcol-actions { opacity:1 }\n.tbl-head__cell.tcol-actions { opacity:1 }\n/* hover (real + forced .is-hover) */\n.fsel:hover&gt;.fsel__input:not(:disabled),.fsel__input.is-hover:not(:disabled) { border-color:#9a9ea6 }\n.fsel:hover&gt;.fsel__input:checked:not(:disabled),.fsel__input.is-hover:checked:not(:disabled) { border-color:var(--fs-green);filter:brightness(.93) }\n/* focus (real + forced .is-focus) */\n.fsel__input:focus-visible,.fsel__input.is-focus { outline:none;box-shadow:0 0 0 4px var(--fs-ring) }\n.fsel__input:checked:focus-visible,.fsel__input.is-focus:checked { box-shadow:0 0 0 4px rgba(16,197,4,.24) }\n.bcr__link:hover,.bcr__link.is-hover { color:var(--chrome-txt);background:var(--chrome-hover) }",
-  "usage": {
-    "do": [
-      "Use a table for lists of like records — transactions, stores, tickets — that users scan and compare.",
-      "Lead every row with the checkbox when rows can be selected, and pair it with a header select-all.",
-      "Right-align amounts and other numerics, and keep them tabular so digits line up.",
-      "Use the status tag sparingly — one per row — and keep its colour meaning consistent."
-    ],
-    "dont": [
-      "Don’t reach for a table to show a few facts about one object — use a key–value list.",
-      "Don’t stack more than a couple of trailing links per row — move overflow into a menu.",
-      "Don’t leave a disabled row interactive — grey it and block selection.",
-      "Don’t mix left- and right-alignment for the same column across rows."
-    ]
-  },
-  "contentHash": "700d89d2c67932bc1763569a15f6b2fbdf222f7ed55d56b85776c70ff523da58",
-  "note": "Static hand-authored markup — the reference table's HTML is written directly in the section, not built by JS (a separate #tbl-playground exists only for a single-row live demo). Five row states: default, hover, focused, checked, disabled. The Reporting variant demo (.dd-num/.dd-status/.dd-dot) was migrated from the retired Data Display section; the .dd-table-wrap/.dd-table/.dd-table__name markup it sits in is a shared spec-table utility reused across many sections and is intentionally excluded from this tab's realClasses."
-}
+{}
   </pre>
 </details>
+        </div>
+      </div>
+      <div class="sec-hero__preview"><div class="mk"><div class="mk-card" style="width:80%;overflow:hidden">
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;background:var(--chrome-nav);padding:8px 10px;gap:8px"><span class="mk-bar" style="width:80%"></span><span class="mk-bar" style="width:80%"></span><span class="mk-bar" style="width:80%"></span></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;padding:8px 10px;gap:8px;border-top:1px solid var(--chrome-border)"><span class="mk-bar" style="width:70%"></span><span class="mk-bar" style="width:70%"></span><span class="mk-bar" style="width:70%"></span></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;padding:8px 10px;gap:8px;border-top:1px solid var(--chrome-border)"><span class="mk-bar" style="width:70%"></span><span class="mk-bar" style="width:70%"></span><span class="mk-bar" style="width:70%"></span></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;padding:8px 10px;gap:8px;border-top:1px solid var(--chrome-border)"><span class="mk-bar" style="width:70%"></span><span class="mk-bar" style="width:70%"></span><span class="mk-bar" style="width:70%"></span></div>
+      </div></div></div>
+      </div>
+      <div class="tabs-list sec-tabs" id="tbl-tabs-list">
+        <button type="button" class="tab-item on" data-tbl-tab="overview" onclick="tblTabSwitch('overview')"><span class="tab-item__inner"><span class="tab-item__label">Overview</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-tbl-tab="style" onclick="tblTabSwitch('style')"><span class="tab-item__inner"><span class="tab-item__label">Style</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-tbl-tab="code" onclick="tblTabSwitch('code')"><span class="tab-item__inner"><span class="tab-item__label">Code</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-tbl-tab="changelog" onclick="tblTabSwitch('changelog')"><span class="tab-item__inner"><span class="tab-item__label">Changelog</span></span><span class="tab-item__line"></span></button>
+      </div>
+      <div class="tabs-panel on" data-tbl-panel="overview">
+        <div id="tbl-playground" class="type-sub"></div>
+        <div class="type-sub">
+          <div class="type-sub__title">Interactive table</div>
+          <div class="type-sub__desc">A full transactions table wired for live selection. Tick any row to select it, or use the header checkbox to select or clear every row at once. Hover a row (or tab to it) to reveal its trailing link actions.</div>
+          <div class="tbl-wrap" id="tbl-play">
+            <div class="tbl-inner">
+              <div class="tbl-head">
+                <span class="tcol-check"><input type="checkbox" class="fsel__input tbl-check tbl-check--all" aria-label="Select all rows"></span>
+                <span class="tbl-head__cell tcol-product">Product<svg class="tbl-sort-icon" viewBox="0 0 10 12" fill="none"><path d="M5 0L8.5 4.5H1.5L5 0Z" fill="currentColor"/><path d="M5 12L1.5 7.5H8.5L5 12Z" fill="currentColor"/></svg></span>
+                <span class="tbl-head__cell tcol-ref">Reference<svg class="tbl-sort-icon" viewBox="0 0 10 12" fill="none"><path d="M5 0L8.5 4.5H1.5L5 0Z" fill="currentColor"/><path d="M5 12L1.5 7.5H8.5L5 12Z" fill="currentColor"/></svg></span>
+                <span class="tbl-head__cell tcol-date">Date<svg class="tbl-sort-icon" viewBox="0 0 10 12" fill="none"><path d="M5 0L8.5 4.5H1.5L5 0Z" fill="currentColor"/><path d="M5 12L1.5 7.5H8.5L5 12Z" fill="currentColor"/></svg></span>
+                <span class="tbl-head__cell tcol-type">Type<svg class="tbl-sort-icon" viewBox="0 0 10 12" fill="none"><path d="M5 0L8.5 4.5H1.5L5 0Z" fill="currentColor"/><path d="M5 12L1.5 7.5H8.5L5 12Z" fill="currentColor"/></svg></span>
+                <span class="tbl-head__cell tcol-status">Status<svg class="tbl-sort-icon" viewBox="0 0 10 12" fill="none"><path d="M5 0L8.5 4.5H1.5L5 0Z" fill="currentColor"/><path d="M5 12L1.5 7.5H8.5L5 12Z" fill="currentColor"/></svg></span>
+                <span class="tbl-head__cell tcol-amt">Amount<svg class="tbl-sort-icon" viewBox="0 0 10 12" fill="none"><path d="M5 0L8.5 4.5H1.5L5 0Z" fill="currentColor"/><path d="M5 12L1.5 7.5H8.5L5 12Z" fill="currentColor"/></svg></span>
+                <span class="tbl-head__cell tcol-actions" aria-label="Actions"></span>
+              </div>
+              <div class="tbl-body">
+                <div class="tbl-row">
+                  <input type="checkbox" class="fsel__input tbl-check tcol-check" aria-label="Select row">
+                  <span class="tcol-product"><span class="tbl-pic tbl-pic--1v">1</span><span class="tbl-cell tbl-cell--name" style="flex:0 0 auto">1Voucher</span></span>
+                  <span class="tbl-cell tcol-ref">1325468</span>
+                  <span class="tbl-cell tcol-date">30 Aug at 07h31</span>
+                  <span class="tbl-cell tcol-type">Redemption</span>
+                  <span class="tcol-status"><span class="tbl-tag tbl-tag--pending">Pending</span></span>
+                  <span class="tbl-cell tcol-amt">R523.00</span>
+                  <span class="tcol-actions"><a class="tbl-link">View</a><a class="tbl-link">Receipt</a></span>
+                </div>
+                <div class="tbl-row">
+                  <input type="checkbox" class="fsel__input tbl-check tcol-check" aria-label="Select row">
+                  <span class="tcol-product"><span class="tbl-pic tbl-pic--gift"><svg viewBox="0 0 24 24" fill="none"><path d="M20 12v8H4v-8M2 7h20v5H2zM12 22V7M12 7S9 2 6.5 4.5 12 7 12 7zM12 7s3-5 5.5-2.5S12 7 12 7z" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"/></svg></span><span class="tbl-cell tbl-cell--name" style="flex:0 0 auto">Gift Voucher</span></span>
+                  <span class="tbl-cell tcol-ref">VD938818-5</span>
+                  <span class="tbl-cell tcol-date">29 Aug at 19h17</span>
+                  <span class="tbl-cell tcol-type">Purchase</span>
+                  <span class="tcol-status"><span class="tbl-tag tbl-tag--success">Success</span></span>
+                  <span class="tbl-cell tcol-amt">R1,000.50</span>
+                  <span class="tcol-actions"><a class="tbl-link">View</a><a class="tbl-link">Receipt</a></span>
+                </div>
+                <div class="tbl-row">
+                  <input type="checkbox" class="fsel__input tbl-check tcol-check" aria-label="Select row">
+                  <span class="tcol-product"><span class="tbl-pic tbl-pic--1v">1</span><span class="tbl-cell tbl-cell--name" style="flex:0 0 auto">1Voucher</span></span>
+                  <span class="tbl-cell tcol-ref">1325571</span>
+                  <span class="tbl-cell tcol-date">29 Aug at 17h12</span>
+                  <span class="tbl-cell tcol-type">Redemption</span>
+                  <span class="tcol-status"><span class="tbl-tag tbl-tag--success">Success</span></span>
+                  <span class="tbl-cell tcol-amt">R850.50</span>
+                  <span class="tcol-actions"><a class="tbl-link">View</a><a class="tbl-link">Receipt</a></span>
+                </div>
+                <div class="tbl-row">
+                  <input type="checkbox" class="fsel__input tbl-check tcol-check" aria-label="Select row">
+                  <span class="tcol-product"><span class="tbl-pic tbl-pic--gift"><svg viewBox="0 0 24 24" fill="none"><path d="M20 12v8H4v-8M2 7h20v5H2zM12 22V7M12 7S9 2 6.5 4.5 12 7 12 7zM12 7s3-5 5.5-2.5S12 7 12 7z" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"/></svg></span><span class="tbl-cell tbl-cell--name" style="flex:0 0 auto">Gift Voucher</span></span>
+                  <span class="tbl-cell tcol-ref">FG125468-1</span>
+                  <span class="tbl-cell tcol-date">28 Aug at 20h04</span>
+                  <span class="tbl-cell tcol-type">Purchase</span>
+                  <span class="tcol-status"><span class="tbl-tag tbl-tag--success">Success</span></span>
+                  <span class="tbl-cell tcol-amt">R25.00</span>
+                  <span class="tcol-actions"><a class="tbl-link">View</a><a class="tbl-link">Receipt</a></span>
+                </div>
+                <div class="tbl-row">
+                  <input type="checkbox" class="fsel__input tbl-check tcol-check" aria-label="Select row">
+                  <span class="tcol-product"><span class="tbl-pic tbl-pic--gift"><svg viewBox="0 0 24 24" fill="none"><path d="M20 12v8H4v-8M2 7h20v5H2zM12 22V7M12 7S9 2 6.5 4.5 12 7 12 7zM12 7s3-5 5.5-2.5S12 7 12 7z" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"/></svg></span><span class="tbl-cell tbl-cell--name" style="flex:0 0 auto">Gift Voucher</span></span>
+                  <span class="tbl-cell tcol-ref">MP134791-31</span>
+                  <span class="tbl-cell tcol-date">22 Aug at 11h28</span>
+                  <span class="tbl-cell tcol-type">Purchase</span>
+                  <span class="tcol-status"><span class="tbl-tag tbl-tag--failed">Failed</span></span>
+                  <span class="tbl-cell tcol-amt">R349.25</span>
+                  <span class="tcol-actions"><a class="tbl-link">View</a><a class="tbl-link">Receipt</a></span>
+                </div>
+                <div class="tbl-row">
+                  <input type="checkbox" class="fsel__input tbl-check tcol-check" aria-label="Select row">
+                  <span class="tcol-product"><span class="tbl-pic tbl-pic--gift"><svg viewBox="0 0 24 24" fill="none"><path d="M20 12v8H4v-8M2 7h20v5H2zM12 22V7M12 7S9 2 6.5 4.5 12 7 12 7zM12 7s3-5 5.5-2.5S12 7 12 7z" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"/></svg></span><span class="tbl-cell tbl-cell--name" style="flex:0 0 auto">Gift Voucher</span></span>
+                  <span class="tbl-cell tcol-ref">MP134791-02</span>
+                  <span class="tbl-cell tcol-date">22 Aug at 09h17</span>
+                  <span class="tbl-cell tcol-type">Purchase</span>
+                  <span class="tcol-status"><span class="tbl-tag tbl-tag--success">Success</span></span>
+                  <span class="tbl-cell tcol-amt">R1,000.50</span>
+                  <span class="tcol-actions"><a class="tbl-link">View</a><a class="tbl-link">Receipt</a></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="tbl-variants" class="type-sub"></div>
+        <div id="tbl-insitu" class="type-sub"></div>
+        <div class="type-sub cpg-variants" id="tbl-usage">
+          <div class="cpg-section-heading">
+            <div class="cpg-layout__title">Do's and don'ts</div>
+            <div class="cpg-layout__desc">Tables are for scannable, comparable records where rows can be selected and acted on &mdash; not for free-form content or a handful of key&ndash;value facts.</div>
+          </div>
+          <div class="cpg-section-block">
+            <div class="sel-usage">
+              <div class="sel-usage__card">
+                <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
+                <ul class="sel-usage__list">
+                  <li>Use a table for lists of like records &mdash; transactions, stores, tickets &mdash; that users scan and compare.</li>
+                  <li>Lead every row with the checkbox when rows can be selected, and pair it with a header select-all.</li>
+                  <li>Right-align amounts and other numerics, and keep them tabular so digits line up.</li>
+                  <li>Use the status tag sparingly &mdash; one per row &mdash; and keep its colour meaning consistent.</li>
+                </ul>
+              </div>
+              <div class="sel-usage__card">
+                <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don't</div>
+                <ul class="sel-usage__list">
+                  <li>Don't reach for a table to show a few facts about one object &mdash; use a key&ndash;value list.</li>
+                  <li>Don't stack more than a couple of trailing links per row &mdash; move overflow into a menu.</li>
+                  <li>Don't leave a disabled row interactive &mdash; grey it and block selection.</li>
+                  <li>Don't mix left- and right-alignment for the same column across rows.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tabs-panel" data-tbl-panel="style">
+        <div id="tbl-reference" class="type-sub spec-panel spec-stack"></div>
+      </div>
+      <div class="tabs-panel" data-tbl-panel="code">
+        <div id="tbl-code-playground" class="type-sub spec-panel spec-code-playground"></div>
+        <div id="tbl-code-tab" class="type-sub spec-panel"></div>
+      </div>
+      <div class="tabs-panel" data-tbl-panel="changelog" id="tbl-changelog-panel"></div>
     </section>
     <!-- ============================================================
          SWITCH
@@ -5807,74 +5618,22 @@ body.home .main{max-width:none;margin:0;padding:0}
     <!-- ============================================================
          SPINNER
     ============================================================ -->
-    <section class="sec" id="s-spinner">
+    <section class="sec sec--tabbed" id="s-spinner">
+      <div class="sec-hero">
       <div class="sec__head">
-        <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Spinner <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.1.1</span></h1>
-        <p class="sec__desc">An indeterminate loading indicator for short waits where progress can&rsquo;t be measured. Two styles cover most needs: a solid arc spinning over a neutral ring, or a fading 8-blade activity indicator (from the Figma component library). Both flip black/white with the theme.</p>
-      </div>
-      <div class="type-sub">
-        <div class="type-sub__title">Type</div>
-        <div class="type-sub__desc"><strong>Ring</strong> is the default &mdash; compact and works well at small sizes. <strong>Activity</strong> is a fading blade wheel, useful where a slightly richer loading motif suits the surface.</div>
-        <div class="sg-stage"><div class="sg-row" style="gap:48px">
-          <div class="sg-swatch"><span class="sg-swatch__cap">Ring</span><span class="spn"></span></div>
-          <div class="sg-swatch"><span class="sg-swatch__cap">Activity</span><span class="spn-activity" role="status" aria-label="Loading"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><g class="spn-activity__blades"><rect x="11" y="1" width="2" height="6" rx="1" opacity="1"/><rect x="11" y="1" width="2" height="6" rx="1" opacity=".87" transform="rotate(45 12 12)"/><rect x="11" y="1" width="2" height="6" rx="1" opacity=".74" transform="rotate(90 12 12)"/><rect x="11" y="1" width="2" height="6" rx="1" opacity=".61" transform="rotate(135 12 12)"/><rect x="11" y="1" width="2" height="6" rx="1" opacity=".48" transform="rotate(180 12 12)"/><rect x="11" y="1" width="2" height="6" rx="1" opacity=".35" transform="rotate(225 12 12)"/><rect x="11" y="1" width="2" height="6" rx="1" opacity=".22" transform="rotate(270 12 12)"/><rect x="11" y="1" width="2" height="6" rx="1" opacity=".15" transform="rotate(315 12 12)"/></g></svg></span></div>
-        </div></div>
-      </div>
-      <div class="type-sub">
-        <div class="type-sub__title">Ring sizes</div>
-        <div class="type-sub__desc"><strong>Small</strong> (16px) for inline and buttons, <strong>Regular</strong> (24px) as the default, <strong>Large</strong> (36px) for full-block loading.</div>
-        <div class="sg-stage"><div class="sg-row" style="gap:40px">
-          <div class="sg-swatch"><span class="sg-swatch__cap">Small</span><span class="spn spn--sm"></span></div>
-          <div class="sg-swatch"><span class="sg-swatch__cap">Regular</span><span class="spn"></span></div>
-          <div class="sg-swatch"><span class="sg-swatch__cap">Large</span><span class="spn spn--lg"></span></div>
-        </div></div>
-      </div>
-      <div class="type-sub">
-        <div class="type-sub__title">Activity sizes</div>
-        <div class="type-sub__desc">The same three steps, built as an 8-blade SVG that fades around the wheel instead of a rotating arc.</div>
-        <div class="sg-stage"><div class="sg-row" style="gap:40px">
-          <div class="sg-swatch"><span class="sg-swatch__cap">Small</span><span class="spn-activity spn-activity--sm" role="status" aria-label="Loading"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><g class="spn-activity__blades"><rect x="11" y="1" width="2" height="6" rx="1" opacity="1"/><rect x="11" y="1" width="2" height="6" rx="1" opacity=".87" transform="rotate(45 12 12)"/><rect x="11" y="1" width="2" height="6" rx="1" opacity=".74" transform="rotate(90 12 12)"/><rect x="11" y="1" width="2" height="6" rx="1" opacity=".61" transform="rotate(135 12 12)"/><rect x="11" y="1" width="2" height="6" rx="1" opacity=".48" transform="rotate(180 12 12)"/><rect x="11" y="1" width="2" height="6" rx="1" opacity=".35" transform="rotate(225 12 12)"/><rect x="11" y="1" width="2" height="6" rx="1" opacity=".22" transform="rotate(270 12 12)"/><rect x="11" y="1" width="2" height="6" rx="1" opacity=".15" transform="rotate(315 12 12)"/></g></svg></span></div>
-          <div class="sg-swatch"><span class="sg-swatch__cap">Regular</span><span class="spn-activity" role="status" aria-label="Loading"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><g class="spn-activity__blades"><rect x="11" y="1" width="2" height="6" rx="1" opacity="1"/><rect x="11" y="1" width="2" height="6" rx="1" opacity=".87" transform="rotate(45 12 12)"/><rect x="11" y="1" width="2" height="6" rx="1" opacity=".74" transform="rotate(90 12 12)"/><rect x="11" y="1" width="2" height="6" rx="1" opacity=".61" transform="rotate(135 12 12)"/><rect x="11" y="1" width="2" height="6" rx="1" opacity=".48" transform="rotate(180 12 12)"/><rect x="11" y="1" width="2" height="6" rx="1" opacity=".35" transform="rotate(225 12 12)"/><rect x="11" y="1" width="2" height="6" rx="1" opacity=".22" transform="rotate(270 12 12)"/><rect x="11" y="1" width="2" height="6" rx="1" opacity=".15" transform="rotate(315 12 12)"/></g></svg></span></div>
-          <div class="sg-swatch"><span class="sg-swatch__cap">Large</span><span class="spn-activity spn-activity--lg" role="status" aria-label="Loading"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><g class="spn-activity__blades"><rect x="11" y="1" width="2" height="6" rx="1" opacity="1"/><rect x="11" y="1" width="2" height="6" rx="1" opacity=".87" transform="rotate(45 12 12)"/><rect x="11" y="1" width="2" height="6" rx="1" opacity=".74" transform="rotate(90 12 12)"/><rect x="11" y="1" width="2" height="6" rx="1" opacity=".61" transform="rotate(135 12 12)"/><rect x="11" y="1" width="2" height="6" rx="1" opacity=".48" transform="rotate(180 12 12)"/><rect x="11" y="1" width="2" height="6" rx="1" opacity=".35" transform="rotate(225 12 12)"/><rect x="11" y="1" width="2" height="6" rx="1" opacity=".22" transform="rotate(270 12 12)"/><rect x="11" y="1" width="2" height="6" rx="1" opacity=".15" transform="rotate(315 12 12)"/></g></svg></span></div>
-        </div></div>
-      </div>
-      <div class="type-sub">
-        <div class="type-sub__title">In context</div>
-        <div class="type-sub__desc">On a busy primary button the indicator switches to the button&rsquo;s text colour; inline it sits beside a label. Either type works in both places &mdash; pick one per surface and stay consistent.</div>
-        <div class="sg-stage"><div class="sg-row" style="gap:30px">
-          <span class="spn-btn"><span class="spn spn--btn"></span>Processing&hellip;</span>
-          <span class="spn-inline"><span class="spn spn--sm"></span>Loading transactions&hellip;</span>
-          <span class="spn-inline"><span class="spn-activity spn-activity--sm spn-activity--btn" role="status" aria-label="Loading"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><g class="spn-activity__blades"><rect x="11" y="1" width="2" height="6" rx="1" opacity="1"/><rect x="11" y="1" width="2" height="6" rx="1" opacity=".87" transform="rotate(45 12 12)"/><rect x="11" y="1" width="2" height="6" rx="1" opacity=".74" transform="rotate(90 12 12)"/><rect x="11" y="1" width="2" height="6" rx="1" opacity=".61" transform="rotate(135 12 12)"/><rect x="11" y="1" width="2" height="6" rx="1" opacity=".48" transform="rotate(180 12 12)"/><rect x="11" y="1" width="2" height="6" rx="1" opacity=".35" transform="rotate(225 12 12)"/><rect x="11" y="1" width="2" height="6" rx="1" opacity=".22" transform="rotate(270 12 12)"/><rect x="11" y="1" width="2" height="6" rx="1" opacity=".15" transform="rotate(315 12 12)"/></g></svg></span>Syncing account&hellip;</span>
-        </div></div>
-      </div>
-      <div class="type-sub">
-        <div class="type-sub__title">When to use</div>
-        <div class="type-sub__desc">A spinner says &ldquo;working&rdquo; without saying how long. For content whose shape you know, a skeleton feels faster.</div>
-        <div class="sel-usage">
-          <div class="sel-usage__card">
-            <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
-            <ul class="sel-usage__list">
-              <li>Use for short, indeterminate waits &mdash; submitting, saving, fetching.</li>
-              <li>Place it where the result will appear, or inside the triggering button.</li>
-              <li>Keep one spinner per action, not many at once.</li>
-            </ul>
-          </div>
-          <div class="sel-usage__card">
-            <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don&rsquo;t</div>
-            <ul class="sel-usage__list">
-              <li>Don&rsquo;t use a spinner for long, content-shaped loads &mdash; use a skeleton.</li>
-              <li>Don&rsquo;t leave it spinning with no resolution or error path.</li>
-              <li>Don&rsquo;t scatter multiple spinners across one view.</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <details class="ai-ctx">
+        <h1 class="sec__title">Spinner</h1>
+        <div class="sec-header-meta">
+          <span class="comp-ver-badge" style="margin-left:0">v1.2.0</span>
+          <details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-spinner">
 {
-  "status": "static",
+  "status": "js-rendered",
+  "builderFunctions": [
+    "SPN_TYPES",
+    "ovSpn",
+    "makeSpnEl"
+  ],
   "realClasses": [
     ".spn",
     ".spn--sm",
@@ -5889,6 +5648,7 @@ body.home .main{max-width:none;margin:0;padding:0}
     ".spn-inline"
   ],
   "css": ".spn { display:inline-block;width:24px;height:24px;border-radius:50%;border:2.5px solid var(--color-surface-n3);border-top-color:var(--color-surface-inverse);animation:spn-rot .7s linear infinite;vertical-align:middle;box-sizing:border-box }\n.spn--sm { width:16px;height:16px;border-width:2px }\n.spn--lg { width:36px;height:36px;border-width:3px }\n.spn--btn { width:15px;height:15px;border-width:2px;border-color:transparent;border-top-color:currentColor }\n.spn-btn { display:inline-flex;align-items:center;gap:9px;background:var(--color-btn-s-bg);color:var(--color-btn-s-txt);border:0;border-radius:999px;padding:10px 18px;font-size:13px;font-weight:700;font-family:inherit;cursor:default }\n.spn-inline { display:inline-flex;align-items:center;gap:9px;font-size:13px;color:var(--chrome-muted) }\n/* Activity (blade) spinner — Figma \"New Icons/Spinner\" */\n.spn-activity { display:inline-block;width:24px;height:24px;vertical-align:middle;color:var(--chrome-txt) }\n.spn-activity svg { display:block;width:100%;height:100% }\n.spn-activity__blades { fill:currentColor;transform-origin:12px 12px;animation:spn-activity-step .9s steps(8) infinite }\n.spn-activity--sm { width:16px;height:16px }\n.spn-activity--lg { width:36px;height:36px }\n.spn-activity--btn { color:currentColor }",
+  "js": "const SPN_TYPES = [\n  {key:'ring',     label:'Ring',     desc:'A solid arc rotating over a neutral track. Compact and reads well even at 16px — the default for most surfaces.'},\n  {key:'activity', label:'Activity', desc:'An 8-blade wheel that fades around instead of rotating. A slightly richer motif for surfaces that want it — same sizes, same placements.'},\n];\n\nfunction ovSpn({type='ring', size='reg', context='standalone'}){\n  const sizeCls = size!=='reg' ? ` spn${type==='activity'?'-activity':''}--${size}` : '';\n  const btnCls = context!=='standalone' ? ` spn${type==='activity'?'-activity':''}--btn` : '';\n  if(type==='activity'){\n    return `&lt;span class=\"spn-activity${sizeCls}${btnCls}\" role=\"status\" aria-label=\"Loading\"&gt;${SPN_ACTIVITY_BLADES}&lt;/span&gt;`;\n  }\n  return `&lt;span class=\"spn${sizeCls}${btnCls}\"&gt;&lt;/span&gt;`;\n}\n\nfunction makeSpnEl(){\n  const wrap = document.createElement('span');\n  wrap.innerHTML = ovSpnInContext(sspg.type, sspg.size, sspg.context);\n  const el = wrap.firstElementChild;\n  el.style.setProperty('--cpg-stage-bg', stageBg(sspg.theme));\n  return el;\n}",
   "usage": {
     "do": [
       "Use for short, indeterminate waits — submitting, saving, fetching.",
@@ -5896,15 +5656,65 @@ body.home .main{max-width:none;margin:0;padding:0}
       "Keep one spinner per action, not many at once."
     ],
     "dont": [
-      "Don’t use a spinner for long, content-shaped loads — use a skeleton.",
-      "Don’t leave it spinning with no resolution or error path.",
-      "Don’t scatter multiple spinners across one view."
+      "Don't use a spinner for long, content-shaped loads — use a skeleton.",
+      "Don't leave it spinning with no resolution or error path.",
+      "Don't scatter multiple spinners across one view."
     ]
   },
-  "contentHash": "2358046509278210d1dfce868d70a2e3d5f1730e7890690e3c46114c37ad7760"
+  "contentHash": "9259f448183ae4680271f567c748886d172cade9849a4e5801dadc00d584dcc0",
+  "note": "ovSpn is the flexible doc-only builder used for the Overview key-types/in-context illustrations and Style-tab reference, mirroring Pills' ovPill/Breadcrumb's ovBcr pattern; makeSpnEl is the playground builder driven by sspg state (sspg to avoid colliding with Switch's existing spg). Spinner has no colour-variant axis, so SPN_TYPES (Ring/Activity) fills the Key-variants slot instead, and Context (Standalone/Button/Inline) fills the States slot. sspg (playground state)/getSpnCode*/renderSpinner*/spinnerTabSwitch are doc-site-only plumbing, excluded."
 }
   </pre>
 </details>
+        </div>
+      </div>
+      <div class="sec-hero__preview"><div class="mk" style="gap:14px"><span class="spn"></span><span class="spn-activity" role="status" aria-label="Loading"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><g class="spn-activity__blades"><rect x="11" y="1" width="2" height="6" rx="1" opacity="1"/><rect x="11" y="1" width="2" height="6" rx="1" opacity=".87" transform="rotate(45 12 12)"/><rect x="11" y="1" width="2" height="6" rx="1" opacity=".74" transform="rotate(90 12 12)"/><rect x="11" y="1" width="2" height="6" rx="1" opacity=".61" transform="rotate(135 12 12)"/><rect x="11" y="1" width="2" height="6" rx="1" opacity=".48" transform="rotate(180 12 12)"/><rect x="11" y="1" width="2" height="6" rx="1" opacity=".35" transform="rotate(225 12 12)"/><rect x="11" y="1" width="2" height="6" rx="1" opacity=".22" transform="rotate(270 12 12)"/><rect x="11" y="1" width="2" height="6" rx="1" opacity=".15" transform="rotate(315 12 12)"/></g></svg></span></div></div>
+      </div>
+      <div class="tabs-list sec-tabs" id="spn-tabs-list">
+        <button type="button" class="tab-item on" data-spn-tab="overview" onclick="spinnerTabSwitch('overview')"><span class="tab-item__inner"><span class="tab-item__label">Overview</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-spn-tab="style" onclick="spinnerTabSwitch('style')"><span class="tab-item__inner"><span class="tab-item__label">Style</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-spn-tab="code" onclick="spinnerTabSwitch('code')"><span class="tab-item__inner"><span class="tab-item__label">Code</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-spn-tab="changelog" onclick="spinnerTabSwitch('changelog')"><span class="tab-item__inner"><span class="tab-item__label">Changelog</span></span><span class="tab-item__line"></span></button>
+      </div>
+      <div class="tabs-panel on" data-spn-panel="overview">
+        <div id="spn-playground" class="type-sub"></div>
+        <div id="spn-variants" class="type-sub"></div>
+        <div id="spn-insitu" class="type-sub"></div>
+        <div class="type-sub cpg-variants" id="spn-usage">
+          <div class="cpg-section-heading">
+            <div class="cpg-layout__title">Do's and don'ts</div>
+            <div class="cpg-layout__desc">A spinner says &ldquo;working&rdquo; without saying how long. For content whose shape you know, a skeleton feels faster.</div>
+          </div>
+          <div class="cpg-section-block">
+            <div class="sel-usage">
+              <div class="sel-usage__card">
+                <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
+                <ul class="sel-usage__list">
+                  <li>Use for short, indeterminate waits &mdash; submitting, saving, fetching.</li>
+                  <li>Place it where the result will appear, or inside the triggering button.</li>
+                  <li>Keep one spinner per action, not many at once.</li>
+                </ul>
+              </div>
+              <div class="sel-usage__card">
+                <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don't</div>
+                <ul class="sel-usage__list">
+                  <li>Don't use a spinner for long, content-shaped loads &mdash; use a skeleton.</li>
+                  <li>Don't leave it spinning with no resolution or error path.</li>
+                  <li>Don't scatter multiple spinners across one view.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tabs-panel" data-spn-panel="style">
+        <div id="spn-reference" class="type-sub spec-panel spec-stack"></div>
+      </div>
+      <div class="tabs-panel" data-spn-panel="code">
+        <div id="spn-code-playground" class="type-sub spec-panel spec-code-playground"></div>
+        <div id="spn-code-tab" class="type-sub spec-panel"></div>
+      </div>
+      <div class="tabs-panel" data-spn-panel="changelog" id="spn-changelog-panel"></div>
     </section>
 
     <!-- ============================================================
@@ -8129,6 +7939,10 @@ function toggleTheme() {
   try { if(typeof renderOtpPlayground==='function' && document.getElementById('otp-playground')) renderOtpPlayground(); } catch(e){}
   try { if(typeof renderOtpInSitu==='function' && document.getElementById('otp-insitu')) renderOtpInSitu(); } catch(e){}
   try { if(typeof renderOtpReference==='function' && document.getElementById('otp-reference')) renderOtpReference(); } catch(e){}
+  try { if(typeof renderTablesPlayground==='function' && document.getElementById('tbl-playground')) renderTablesPlayground(); } catch(e){}
+  try { if(typeof renderTblVariants==='function' && document.getElementById('tbl-variants')) renderTblVariants(); } catch(e){}
+  try { if(typeof renderTblInSitu==='function' && document.getElementById('tbl-insitu')) renderTblInSitu(); } catch(e){}
+  try { if(typeof renderTblReference==='function' && document.getElementById('tbl-reference')) renderTblReference(); } catch(e){}
   try { if(typeof renderEmptyStatePlayground==='function' && document.getElementById('es-playground')) renderEmptyStatePlayground(); } catch(e){}
   try { if(typeof renderEmptyStateScenarios==='function' && document.getElementById('es-scenarios')) renderEmptyStateScenarios(); } catch(e){}
   try { if(typeof renderEmptyStateInSitu==='function' && document.getElementById('es-insitu')) renderEmptyStateInSitu(); } catch(e){}
@@ -8187,6 +8001,10 @@ function toggleTheme() {
   try { if(typeof renderCardPages==='function' && document.getElementById('cbasic-playground')) renderCardPages(); } catch(e){}
   // Same one-call pattern for the five Charts sub-pages.
   try { if(typeof renderChartPages==='function' && document.getElementById('cbar-playground')) renderChartPages(); } catch(e){}
+  try { if(typeof renderSpinnerPlayground==='function' && document.getElementById('spn-playground')) renderSpinnerPlayground(); } catch(e){}
+  try { if(typeof renderSpinnerVariants==='function' && document.getElementById('spn-variants')) renderSpinnerVariants(); } catch(e){}
+  try { if(typeof renderSpinnerInSitu==='function' && document.getElementById('spn-insitu')) renderSpinnerInSitu(); } catch(e){}
+  try { if(typeof renderSpinnerReference==='function' && document.getElementById('spn-reference')) renderSpinnerReference(); } catch(e){}
 }
 
 // Colour view switch (prim / sem)
@@ -11116,10 +10934,9 @@ function renderEmptyStateScenarios(){
   const sbg = stageBg(theme);
 
   const cells = ES_SCENARIOS.map(sc=>`
-    <div class="spec-cell">
-      <div class="spec-cell__stage" style="background:${sbg};padding:16px 12px">${makeEmptyStateHTML(sc.icon, sc.title, sc.desc, sc.action)}</div>
-      <div class="spec-cell__name">${sc.label}</div>
-      <div class="spec-cell__desc">${sc.desc}</div>
+    <div class="spec-mock">
+      <div class="spec-mock__stage" style="background:${sbg};padding:16px 12px">${makeEmptyStateHTML(sc.icon, sc.title, sc.desc, sc.action)}</div>
+      <div class="spec-mock__cap"><b>${sc.label}</b></div>
     </div>`).join('');
 
   root.innerHTML = `
@@ -11128,7 +10945,7 @@ function renderEmptyStateScenarios(){
       <div class="cpg-layout__desc">Four common reasons a view has zero rows &mdash; match the copy and action to the real cause, not a generic placeholder.</div>
     </div>
     <div class="cpg-section-block">
-      <div class="spec-grid">${cells}</div>
+      <div class="spec-insitu-grid spec-insitu-grid--4">${cells}</div>
     </div>`;
 }
 
@@ -16714,6 +16531,488 @@ function breadcrumbTabSwitch(tab){
 }
 
 /* ============================================================
+   SPINNER
+   Same tabbed treatment as Pills/Breadcrumb (.sec--tabbed): Overview /
+   Style / Code / Changelog. Spinner has no colour axis — Type (Ring /
+   Activity) fills the Key-variants slot instead, same pattern as
+   Breadcrumb's States. Context (Standalone / Button / Inline) is the
+   axis Pills doesn't have at all: on a button the ring switches to a
+   fixed compact size using currentColor (.spn--btn), and the activity
+   wheel gets the same currentColor treatment (.spn-activity--btn) in
+   both button and inline contexts, matching the real static markup
+   this page used before the tabbed rebuild.
+============================================================ */
+const SPN_TYPES = [
+  {key:'ring',     label:'Ring',     desc:'A solid arc rotating over a neutral track. Compact and reads well even at 16px — the default for most surfaces.'},
+  {key:'activity', label:'Activity', desc:'An 8-blade wheel that fades around instead of rotating. A slightly richer motif for surfaces that want it — same sizes, same placements.'},
+];
+
+function spnEsc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&#60;').replace(/>/g,'&#62;').replace(/"/g,'&quot;'); }
+
+const SPN_ACTIVITY_BLADES = '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><g class="spn-activity__blades"><rect x="11" y="1" width="2" height="6" rx="1" opacity="1"/><rect x="11" y="1" width="2" height="6" rx="1" opacity=".87" transform="rotate(45 12 12)"/><rect x="11" y="1" width="2" height="6" rx="1" opacity=".74" transform="rotate(90 12 12)"/><rect x="11" y="1" width="2" height="6" rx="1" opacity=".61" transform="rotate(135 12 12)"/><rect x="11" y="1" width="2" height="6" rx="1" opacity=".48" transform="rotate(180 12 12)"/><rect x="11" y="1" width="2" height="6" rx="1" opacity=".35" transform="rotate(225 12 12)"/><rect x="11" y="1" width="2" height="6" rx="1" opacity=".22" transform="rotate(270 12 12)"/><rect x="11" y="1" width="2" height="6" rx="1" opacity=".15" transform="rotate(315 12 12)"/></g></svg>';
+
+/* Flexible doc-only builder for the Overview's illustrative sections
+   (key types, in-context) and the Style-tab reference — real .spn /
+   .spn-activity markup with a type/size/context axis. Doc-site-only
+   helper; makeSpnEl remains the canonical playground builder. */
+function ovSpn({type='ring', size='reg', context='standalone'}){
+  const sizeCls = size!=='reg' ? ` spn${type==='activity'?'-activity':''}--${size}` : '';
+  const btnCls = context!=='standalone' ? ` spn${type==='activity'?'-activity':''}--btn` : '';
+  if(type==='activity'){
+    return `<span class="spn-activity${sizeCls}${btnCls}" role="status" aria-label="Loading">${SPN_ACTIVITY_BLADES}</span>`;
+  }
+  return `<span class="spn${sizeCls}${btnCls}"></span>`;
+}
+
+function ovSpnInContext(type, size, context){
+  const glyph = ovSpn({type, size, context});
+  if(context==='button') return `<span class="spn-btn">${glyph}Processing&hellip;</span>`;
+  if(context==='inline') return `<span class="spn-inline">${glyph}Loading&hellip;</span>`;
+  return glyph;
+}
+
+/* ── SPINNER PLAYGROUND ── */
+let sspg = { type:'ring', size:'reg', context:'standalone', theme:'light' };
+
+function makeSpnEl(){
+  const wrap = document.createElement('span');
+  wrap.innerHTML = ovSpnInContext(sspg.type, sspg.size, sspg.context);
+  const el = wrap.firstElementChild;
+  el.style.setProperty('--cpg-stage-bg', stageBg(sspg.theme));
+  return el;
+}
+
+const SPN_CONTEXT_PASCAL = {standalone:'Standalone', button:'Button', inline:'Inline'};
+const SPN_SIZE_PASCAL = {sm:'Small', reg:'Regular', lg:'Large'};
+
+function getSpnCodeHTML(){
+  const glyphCls = sspg.type==='activity'
+    ? `spn-activity${sspg.size!=='reg'?' spn-activity--'+sspg.size:''}${sspg.context!=='standalone'?' spn-activity--btn':''}`
+    : `spn${sspg.size!=='reg'?' spn--'+sspg.size:''}${sspg.context!=='standalone'?' spn--btn':''}`;
+  const glyphLine = sspg.type==='activity'
+    ? `<span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"${glyphCls}"</span> <span class="code-attr">role</span>=<span class="code-val">"status"</span> <span class="code-attr">aria-label</span>=<span class="code-val">"Loading"</span><span class="code-kw">>&#60;svg>&#8230;&#60;/svg>&#60;/span></span>`
+    : `<span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"${glyphCls}"</span><span class="code-kw">>&#60;/span></span>`;
+  if(sspg.context==='button') return `<span class="code-cm">/* Flash &middot; ${cap(sspg.type)} &middot; Button */</span>
+<span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"spn-btn"</span><span class="code-kw">></span>
+  ${glyphLine}
+  Processing&#8230;
+<span class="code-kw">&#60;/span></span>`;
+  if(sspg.context==='inline') return `<span class="code-cm">/* Flash &middot; ${cap(sspg.type)} &middot; Inline */</span>
+<span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"spn-inline"</span><span class="code-kw">></span>
+  ${glyphLine}
+  Loading&#8230;
+<span class="code-kw">&#60;/span></span>`;
+  return `<span class="code-cm">/* Flash &middot; ${cap(sspg.type)} &middot; Standalone */</span>
+${glyphLine}`;
+}
+
+/* ── CODE PANEL LANGUAGES ──
+   HTML/CSS is the source of truth (real .spn/.spn-activity markup).
+   Blazor and React TSX are illustrative wrappers over the same classes,
+   so Type/Size/Context stay the only things a consumer ports. */
+const SPN_LANGS = [
+  {key:'html',   label:'HTML / CSS', file:'spinner.html'},
+  {key:'blazor', label:'Blazor',     file:'DsSpinner.razor'},
+  {key:'tsx',    label:'React TSX',  file:'DsSpinner.tsx'},
+];
+let spnLang = 'html';
+
+function getSpnCodeBlazor(){
+  const sizePascal = SPN_SIZE_PASCAL[sspg.size]||'Regular';
+  const ctxPascal = SPN_CONTEXT_PASCAL[sspg.context]||'Standalone';
+  return `<span class="code-cm">@* DsSpinner.razor — usage *@</span>
+<span class="code-kw">&#60;DsSpinner</span> <span class="code-attr">Type</span>=<span class="code-val">"SpinnerType.${cap(sspg.type)}"</span>
+           <span class="code-attr">Size</span>=<span class="code-val">"SpinnerSize.${sizePascal}"</span>
+           <span class="code-attr">Context</span>=<span class="code-val">"SpinnerContext.${ctxPascal}"</span> <span class="code-kw">/></span>
+
+<span class="code-cm">@* DsSpinner.razor — component definition *@</span>
+<span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"@CssClass"</span> <span class="code-attr">role</span>=<span class="code-val">"@(IsActivity ? \"status\" : null)"</span> <span class="code-attr">aria-label</span>=<span class="code-val">"@(IsActivity ? \"Loading\" : null)"</span><span class="code-kw">></span>
+  <span class="code-kw">@if</span> (IsActivity) { <span class="code-kw">&#60;svg</span> <span class="code-attr">viewBox</span>=<span class="code-val">"0 0 24 24"</span><span class="code-kw">>&#8230;&#60;/svg></span> }
+<span class="code-kw">&#60;/span></span>
+
+<span class="code-kw">@code</span> {
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> SpinnerType Type { get; set; } = SpinnerType.Ring;
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> SpinnerSize Size { get; set; } = SpinnerSize.Regular;
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> SpinnerContext Context { get; set; } = SpinnerContext.Standalone;
+
+  <span class="code-kw">private</span> <span class="code-cls">bool</span> IsActivity => Type == SpinnerType.Activity;
+
+  <span class="code-cm">// spn--sm / spn--lg / spn-activity--sm / spn-activity--lg — mapped explicitly</span>
+  <span class="code-kw">private</span> <span class="code-cls">string</span> CssClass {
+    <span class="code-kw">get</span> {
+      <span class="code-kw">var</span> baseCls = IsActivity ? <span class="code-val">"spn-activity"</span> : <span class="code-val">"spn"</span>;
+      <span class="code-kw">var</span> sizeCls = Size == SpinnerSize.Regular ? <span class="code-val">""</span> : $<span class="code-val">" {baseCls}--{Size.ToString().ToLower()}"</span>;
+      <span class="code-kw">var</span> ctxCls = Context == SpinnerContext.Standalone ? <span class="code-val">""</span> : $<span class="code-val">" {baseCls}--btn"</span>;
+      <span class="code-kw">return</span> baseCls + sizeCls + ctxCls;
+    }
+  }
+}`;
+}
+
+function getSpnCodeTSX(){
+  return `<span class="code-cm">// DsSpinner.tsx</span>
+<span class="code-kw">import</span> React <span class="code-kw">from</span> <span class="code-val">'react'</span>;
+
+<span class="code-kw">type</span> <span class="code-cls">SpinnerType</span> = <span class="code-val">'ring'</span> | <span class="code-val">'activity'</span>;
+<span class="code-kw">type</span> <span class="code-cls">SpinnerSize</span> = <span class="code-val">'sm'</span> | <span class="code-val">'reg'</span> | <span class="code-val">'lg'</span>;
+<span class="code-kw">type</span> <span class="code-cls">SpinnerContext</span> = <span class="code-val">'standalone'</span> | <span class="code-val">'button'</span> | <span class="code-val">'inline'</span>;
+
+<span class="code-kw">interface</span> <span class="code-cls">DsSpinnerProps</span> {
+  type?: <span class="code-cls">SpinnerType</span>;
+  size?: <span class="code-cls">SpinnerSize</span>;
+  context?: <span class="code-cls">SpinnerContext</span>;
+}
+
+<span class="code-kw">export const</span> <span class="code-cls">DsSpinner</span>: React.FC&#60;DsSpinnerProps> = ({
+  type = <span class="code-val">'ring'</span>,
+  size = <span class="code-val">'reg'</span>,
+  context = <span class="code-val">'standalone'</span>,
+}) => {
+  <span class="code-kw">const</span> base = type === <span class="code-val">'activity'</span> ? <span class="code-val">'spn-activity'</span> : <span class="code-val">'spn'</span>;
+  <span class="code-kw">const</span> classes = [
+    base,
+    size !== <span class="code-val">'reg'</span> &amp;&amp; \`\${base}--\${size}\`,
+    context !== <span class="code-val">'standalone'</span> &amp;&amp; \`\${base}--btn\`,
+  ].filter(Boolean).join(<span class="code-val">' '</span>);
+
+  <span class="code-kw">return</span> type === <span class="code-val">'activity'</span> ? (
+    &#60;span className={classes} role=<span class="code-val">"status"</span> aria-label=<span class="code-val">"Loading"</span>>
+      &#60;svg viewBox=<span class="code-val">"0 0 24 24"</span>>&#8230;&#60;/svg>
+    &#60;/span>
+  ) : (
+    &#60;span className={classes} />
+  );
+};
+
+<span class="code-cm">// Usage</span>
+&#60;DsSpinner type=<span class="code-val">"${sspg.type}"</span> size=<span class="code-val">"${sspg.size}"</span> context=<span class="code-val">"${sspg.context}"</span> />`;
+}
+
+function getSpnCode(){
+  return spnLang==='blazor' ? getSpnCodeBlazor()
+       : spnLang==='tsx'    ? getSpnCodeTSX()
+       : getSpnCodeHTML();
+}
+
+function setSpnLang(lang){
+  if(!SPN_LANGS.some(l=>l.key===lang)) return;
+  spnLang = lang;
+  document.querySelectorAll('#spn-code-tab .code-seg__btn').forEach(b=>{
+    const on = b.dataset.lang===lang;
+    b.setAttribute('aria-selected', on ? 'true' : 'false');
+    b.setAttribute('tabindex', on ? '0' : '-1');
+  });
+  const file = document.getElementById('spn-lang-file');
+  const meta = SPN_LANGS.find(l=>l.key===lang);
+  if(file && meta) file.textContent = meta.file;
+  const block = document.getElementById('sspg-code-block');
+  if(block) block.innerHTML = getSpnCode();
+}
+
+function spnLangKeydown(e){
+  const i = SPN_LANGS.findIndex(l=>l.key===spnLang);
+  let n = i;
+  if(e.key==='ArrowLeft')       n = (i - 1 + SPN_LANGS.length) % SPN_LANGS.length;
+  else if(e.key==='ArrowRight') n = (i + 1) % SPN_LANGS.length;
+  else if(e.key==='Home')       n = 0;
+  else if(e.key==='End')        n = SPN_LANGS.length - 1;
+  else return;
+  e.preventDefault();
+  setSpnLang(SPN_LANGS[n].key);
+  const btn = document.getElementById('spn-lang-' + SPN_LANGS[n].key);
+  if(btn) btn.focus();
+}
+
+function sspgRefresh(){
+  document.querySelectorAll('.sspg-stage-el').forEach(stage=>{
+    stage.innerHTML = '';
+    stage.appendChild(makeSpnEl());
+  });
+  const block = document.getElementById('sspg-code-block');
+  if(block) block.innerHTML = getSpnCode();
+}
+
+const SPN_PLAYGROUND_MOUNTS = [
+  {rootId:'spn-playground', idSuffix:'', wrap:true, title:'Try the component', desc:'Adjust the filters to test component states.', headingAbove:'Use a spinner for a short, indeterminate wait &mdash; submitting, saving, fetching.'},
+  {rootId:'spn-code-playground', idSuffix:'-code', style:'code', title:'Playground', desc:'Live demo of the component.'},
+];
+
+function renderSpinnerPlayground(){
+  sspg.theme = document.documentElement.getAttribute('data-theme')==='dark' ? 'dark' : 'light';
+  const sbg = stageBg(sspg.theme);
+
+  const typeBtns = SPN_TYPES.map(t=>`<button class="btn-pg__pill${sspg.type===t.key?' on':''}" onclick="sspgSet('type','${t.key}')">${t.label}</button>`).join('');
+  const szBtns = [{key:'sm',label:'Small'},{key:'reg',label:'Regular'},{key:'lg',label:'Large'}].map(s=>`<button class="btn-pg__pill${sspg.size===s.key?' on':''}" onclick="sspgSet('size','${s.key}')">${s.label}</button>`).join('');
+  const ctxBtns = [{key:'standalone',label:'Standalone'},{key:'button',label:'In a button'},{key:'inline',label:'Inline'}].map(c=>`<button class="btn-pg__pill${sspg.context===c.key?' on':''}" onclick="sspgSet('context','${c.key}')">${c.label}</button>`).join('');
+
+  SPN_PLAYGROUND_MOUNTS.forEach(mount=>{
+    const root = document.getElementById(mount.rootId);
+    if(!root) return;
+    const s = mount.idSuffix;
+    const demo = `
+      <div class="btn-pg">
+        <div class="btn-pg__stage sspg-stage-el" id="sspg-stage${s}" style="background:${sbg}"></div>
+        <div class="btn-pg__ctrls">
+          <div class="btn-pg__group"><span class="btn-pg__clabel">Type</span><div class="btn-pg__pill-row">${typeBtns}</div></div>
+          <div class="btn-pg__group"><span class="btn-pg__clabel">Size</span><div class="btn-pg__pill-row">${szBtns}</div></div>
+          <div class="btn-pg__group"><span class="btn-pg__clabel">Context</span><div class="btn-pg__pill-row">${ctxBtns}</div></div>
+        </div>
+      </div>`;
+
+    if(mount.style==='code'){
+      root.innerHTML = `
+        <div class="type-sub__title">${mount.title}</div>
+        <div class="type-sub__desc">${mount.desc}</div>
+        <div class="cpg-section-outline">${demo}</div>`;
+      return;
+    }
+
+    const inner = `
+      <div class="cpg-layout">
+        <div class="cpg-layout__intro">
+          ${mount.wrap ? `<span class="cpg-cursor-icon">${CPG_CURSOR_ICON_SVG}</span>` : ''}
+          <div class="cpg-layout__title">${mount.title}</div>
+          <div class="cpg-layout__desc">${mount.desc}</div>
+        </div>
+        <div class="cpg-layout__demo">${demo}</div>
+      </div>`;
+    const wrapped = mount.wrap ? `<div class="cpg-section-block">${inner}</div>` : inner;
+    root.innerHTML = (mount.headingAbove ? `<div class="cpg-overview-heading"><span class="cpg-overview-heading__icon">${CPG_INFO_ICON_SVG}</span><span>${mount.headingAbove}</span></div>` : '') + wrapped;
+  });
+
+  sspgRefresh();
+}
+
+function renderSpinnerCodeTab(){
+  const root = document.getElementById('spn-code-tab');
+  if(!root) return;
+  root.innerHTML = `
+    <div class="type-sub__title">Code</div>
+    <div class="type-sub__desc">Live snippet matching the current Playground configuration &mdash; switch to Overview to change it.</div>
+    <div class="cpg-section-outline">
+      <div class="code-panel code-panel--bare open">
+        <div class="code-panel__head">
+          <div class="code-seg" role="tablist" aria-label="Code language" onkeydown="spnLangKeydown(event)">
+            ${SPN_LANGS.map(l=>`<button type="button" role="tab" class="code-seg__btn" id="spn-lang-${l.key}" data-lang="${l.key}" aria-selected="${spnLang===l.key?'true':'false'}" aria-controls="sspg-code-block" tabindex="${spnLang===l.key?'0':'-1'}" onclick="setSpnLang('${l.key}')">${l.label}</button>`).join('')}
+          </div>
+          <span class="code-lang-file" id="spn-lang-file">${(SPN_LANGS.find(l=>l.key===spnLang)||SPN_LANGS[0]).file}</span>
+          <button class="code-copy-btn" onclick="sspgCopyCode()" id="sspg-copy-btn">Copy</button>
+        </div>
+        <div class="code-body"><div class="code-block" id="sspg-code-block" role="tabpanel" aria-live="polite"></div></div>
+      </div>
+    </div>`;
+}
+
+function renderSpinnerVariants(){
+  const root = document.getElementById('spn-variants');
+  if(!root) return;
+  const theme = currentTheme();
+  const sbg = stageBg(theme);
+
+  const cells = SPN_TYPES.map(t=>`
+    <div class="spec-cell">
+      <div class="spec-cell__stage" style="background:${sbg}">${ovSpn({type:t.key, size:'reg'})}</div>
+      <div class="spec-cell__name">${t.label}</div>
+      <div class="spec-cell__desc">${t.desc}</div>
+    </div>`).join('');
+
+  root.innerHTML = `
+    <div class="cpg-section-heading">
+      <div class="cpg-layout__title">Key types</div>
+      <div class="cpg-layout__desc">Spinner has no colour-variant axis &mdash; these are its two types instead. Pick one per surface and stay consistent.</div>
+    </div>
+    <div class="cpg-section-block">
+      <div class="spec-grid">${cells}</div>
+    </div>`;
+}
+
+function renderSpinnerInSitu(){
+  const root = document.getElementById('spn-insitu');
+  if(!root) return;
+  const theme = currentTheme();
+  const sbg = stageBg(theme);
+
+  // 1. Busy primary button — the spinner replaces the label mid-submit
+  const buttonMock = `
+    <div class="spec-mock__stage" style="background:${sbg};display:flex;align-items:center;justify-content:center;min-height:96px">
+      <span class="spn-btn">${ovSpn({type:'ring', context:'button'})}Processing&hellip;</span>
+    </div>
+    <div class="spec-mock__cap"><b>Busy button</b>The indicator switches to the button&rsquo;s text colour while the action runs.</div>`;
+
+  // 2. Inline row — loading a list, spinner beside a label
+  const inlineMock = `
+    <div class="spec-mock__stage" style="background:${sbg};padding:16px">
+      <span class="spn-inline">${ovSpn({type:'ring', size:'sm', context:'inline'})}Loading transactions&hellip;</span>
+    </div>
+    <div class="spec-mock__cap"><b>Inline loading</b>Sits beside a label where a row or list is still fetching.</div>`;
+
+  // 3. Card overlay — large spinner centred while a panel's content loads
+  const cardMock = `
+    <div class="spec-mock__stage" style="background:${sbg};display:flex;align-items:center;justify-content:center;min-height:96px">
+      ${ovSpn({type:'activity', size:'lg'})}
+    </div>
+    <div class="spec-mock__cap"><b>Card overlay</b>A large, centred spinner while an entire card or panel&rsquo;s content loads.</div>`;
+
+  root.innerHTML = `
+    <div class="cpg-section-heading">
+      <div class="cpg-layout__title">In context</div>
+      <div class="cpg-layout__desc">The same spinner does three everyday jobs &mdash; a busy button, an inline load, and a card overlay.</div>
+    </div>
+    <div class="cpg-section-block">
+      <div class="spec-insitu-grid">
+        <div class="spec-mock">${buttonMock}</div>
+        <div class="spec-mock">${inlineMock}</div>
+        <div class="spec-mock">${cardMock}</div>
+      </div>
+    </div>`;
+}
+
+function sspgSet(key, val){
+  sspg[key] = val;
+  renderSpinnerPlayground();
+}
+function sspgCopyCode(){
+  const b = document.getElementById('sspg-code-block');
+  if(!b) return;
+  navigator.clipboard.writeText(b.innerText||b.textContent).catch(()=>{});
+  const btn = document.getElementById('sspg-copy-btn');
+  if(btn){ btn.textContent = 'Copied!'; setTimeout(()=>btn.textContent='Copy', 2000); }
+}
+
+function renderSpinnerReference(){
+  const root = document.getElementById('spn-reference');
+  if(!root) return;
+
+  const theme = currentTheme();
+  const sbg = stageBg(theme);
+
+  /* ---- Anatomy ---- */
+  const heroSpn = `<div style="display:flex;align-items:center;gap:28px">${ovSpn({type:'ring', size:'lg'})}${ovSpn({type:'activity', size:'lg'})}</div>`;
+
+  const parts = [
+    {num:1, name:'Track', note:'Ring only. A neutral, static circle the arc rotates over.', vis:`<span style="display:inline-block;width:36px;height:36px;border-radius:50%;border:3px solid var(--color-surface-n3)"></span>`},
+    {num:2, name:'Arc', note:'Ring only. The rotating segment that reads as motion.', vis:ovSpn({type:'ring', size:'lg'})},
+    {num:3, name:'Blade', note:'Activity only. One of 8 fixed bars arranged in a wheel.', vis:`<svg width="24" height="24" viewBox="0 0 24 24"><rect x="11" y="1" width="2" height="6" rx="1" fill="var(--chrome-txt)"/></svg>`},
+    {num:4, name:'Fade step', note:'Activity only. Opacity steps down around the wheel, animated in 8 discrete steps.', vis:ovSpn({type:'activity', size:'lg'})},
+  ];
+  const partCards = parts.map(p=>`
+    <div class="spec-part">
+      <div class="spec-part__stage" style="background:${sbg}">${p.vis}</div>
+      <div class="spec-part__body">
+        <div class="spec-part__name"><span class="spec-part__num">${p.num}</span>${p.name}</div>
+        <div class="spec-part__note">${p.note}</div>
+      </div>
+    </div>`).join('');
+
+  /* ---- Size & dimensions ---- */
+  const SPN_SIZE_SPECS = [
+    {key:'sm',  label:'Small',   px:16, border:'2px'},
+    {key:'reg', label:'Regular', px:24, border:'2.5px'},
+    {key:'lg',  label:'Large',   px:36, border:'3px'},
+  ];
+  const sizeDemo = SPN_SIZE_SPECS.map(sz=>`
+    <div class="spec-size-item">
+      ${ovSpn({type:'ring', size:sz.key})}
+      <span class="spec-size-item__lbl">${sz.px}px</span>
+    </div>`).join('');
+  const sizeRows = SPN_SIZE_SPECS.map(sz=>`
+    <tr>
+      <td class="dd-table__name">${sz.label}</td>
+      <td>${sz.px}px</td>
+      <td>${sz.border}</td>
+    </tr>`).join('');
+
+  /* ---- Types ---- */
+  const typeCells = SPN_TYPES.map(t=>`
+    <div class="spec-cell">
+      <div class="spec-cell__stage" style="background:${sbg}">${ovSpn({type:t.key, size:'reg'})}</div>
+      <div class="spec-cell__name">${t.label}</div>
+      <div class="spec-cell__desc">${t.desc}</div>
+    </div>`).join('');
+
+  /* ---- Context (states) ---- */
+  const SPN_CONTEXTS = [
+    {key:'standalone', label:'Standalone', note:'On its own, drawing from the neutral surface tokens.'},
+    {key:'button',      label:'In a button', note:'Fixed compact size, currentColor arc/blades so it matches the button text.'},
+    {key:'inline',       label:'Inline',      note:'Sits beside a text label at Small size.'},
+  ];
+  const ctxCells = SPN_CONTEXTS.map(c=>`
+    <div class="spec-cell">
+      <div class="spec-cell__stage" style="background:${sbg}">${ovSpnInContext('ring', c.key==='standalone'?'reg':'sm', c.key)}</div>
+      <div class="spec-cell__name">${c.label}</div>
+      <div class="spec-cell__desc">${c.note}</div>
+    </div>`).join('');
+
+  /* ---- Tokens ---- */
+  const tokRows = [
+    ['Ring track', '--color-surface-n3', 'The neutral, static ring the arc rotates over.'],
+    ['Ring arc', '--color-surface-inverse', 'The rotating segment, standalone context.'],
+    ['Activity blades', '--chrome-txt', 'Fill colour of the 8-blade wheel, standalone context.'],
+    ['On-button / inline (either type)', 'currentColor', 'Both types switch to currentColor via the --btn modifier, so they always match surrounding text.'],
+  ].map(([part, tok, desc])=>`
+    <tr>
+      <td class="dd-table__name">${part}</td>
+      <td><code>${tok}</code></td>
+      <td>${desc}</td>
+    </tr>`).join('');
+
+  root.innerHTML = `
+    <div class="type-sub">
+      <div class="type-sub__title">Anatomy</div>
+      <div class="type-sub__desc">Ring is a track plus a rotating arc; Activity is 8 fixed blades whose opacity steps around the wheel. Both are built as a single element (Activity nests one inline SVG).</div>
+      <div class="cpg-section-outline">
+        <div class="spec-hero" style="background:${sbg}">${heroSpn}</div>
+        <div class="spec-parts">${partCards}</div>
+      </div>
+    </div>
+
+    <div class="type-sub">
+      <div class="type-sub__title">Size &amp; dimensions</div>
+      <div class="type-sub__desc">Three sizes shared by both types. <b>Small</b> for inline and buttons, <b>Regular</b> as the default, <b>Large</b> for full-block loading.</div>
+      <div class="cpg-section-outline">
+        <div class="spec-size-demo" style="background:${sbg}">${sizeDemo}</div>
+        <div class="dd-table-wrap"><table class="dd-table">
+          <thead><tr><th>Size</th><th>Diameter</th><th>Border / blade weight</th></tr></thead>
+          <tbody>${sizeRows}</tbody>
+        </table></div>
+      </div>
+    </div>
+
+    <div class="type-sub">
+      <div class="type-sub__title">Types</div>
+      <div class="type-sub__desc">Spinner has no colour-variant axis &mdash; Ring and Activity are the two builds instead, interchangeable at every size and context.</div>
+      <div class="cpg-section-outline">
+        <div class="spec-grid">${typeCells}</div>
+      </div>
+    </div>
+
+    <div class="type-sub" style="margin-bottom:0">
+      <div class="type-sub__title">Context</div>
+      <div class="type-sub__desc">Where a spinner sits changes its size and colour source, not its markup structure.</div>
+      <div class="cpg-section-outline">
+        <div class="spec-grid">${ctxCells}</div>
+        <div class="dd-table-wrap" style="margin-top:16px"><table class="dd-table" style="min-width:480px">
+          <thead><tr><th>Part</th><th>Token</th><th>Used for</th></tr></thead>
+          <tbody>${tokRows}</tbody>
+        </table></div>
+      </div>
+    </div>`;
+}
+
+try { renderSpinnerCodeTab(); } catch(e){ console.error('spn-code-tab',e); }
+try { renderSpinnerPlayground(); } catch(e){ console.error('spn-playground',e); }
+try { renderSpinnerVariants(); } catch(e){ console.error('spn-variants',e); }
+try { renderSpinnerInSitu(); } catch(e){ console.error('spn-insitu',e); }
+try { renderSpinnerReference(); } catch(e){ console.error('spn-reference',e); }
+
+function spinnerTabSwitch(tab){
+  const nav = document.getElementById('spn-tabs-list');
+  if(!nav) return;
+  nav.querySelectorAll('.tab-item').forEach(btn=>btn.classList.toggle('on', btn.getAttribute('data-spn-tab')===tab));
+  document.querySelectorAll('#s-spinner .tabs-panel[data-spn-panel]').forEach(p=>p.classList.toggle('on', p.getAttribute('data-spn-panel')===tab));
+}
+
+/* ============================================================
    CHECKBOXES & RADIOS
    Same tabbed treatment as Pills/Avatar (.sec--tabbed): Overview /
    Style / Code / Changelog. Unlike Pills there's no colour axis —
@@ -17308,49 +17607,60 @@ function cbrTabSwitch(tab){
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.83.9';
+const SYSTEM_VERSION = '1.84.9';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
-      {version:'1.83.9', date:'2026-09-04', author:'Mo', title:'Popover hero preview closer to the real anatomy', changes:[
+      {version:'1.84.9', date:'2026-09-04', author:'Mo', title:'Popover hero preview closer to the real anatomy', changes:[
         ['changed','Hero preview\'s open panel expanded from just a title bar to title + one content-row bar + a footer action, all still wireframe .mk-bar placeholders (no literal copy) — reads closer to the real component\'s title/body/footer anatomy while staying reduced for the small header thumbnail'],
         ['fixed','The footer action button stretched full-width via .pop__apply\'s real flex:1, reading as an odd wide bar rather than a button; constrained to a fixed 64px width so it reads as a compact action'],
         ['changed','Trigger button switched from a solid filled treatment to an outlined one (transparent background, chrome-border outline) so it\'s immediately distinguishable from the solid black footer action button below it — the two were reading as the same shape/colour at this small scale'],
       ]},
-      {version:'1.83.8', date:'2026-08-21', author:'Mo', title:'Popover playground label spacing fixed', changes:[
+      {version:'1.84.8', date:'2026-08-21', author:'Mo', title:'Popover playground label spacing fixed', changes:[
         ['fixed','"Try the component" playground\'s control labels sit in a shared .btn-pg__clabel column fixed at 60px, sized for short labels like "Icon" or "Size" — "Content type" (and Placement/Footer, for visual consistency) crowded against their pill rows at that width; widened to 82px and added a 6px margin before each pill row for breathing room'],
       ]},
-      {version:'1.83.7', date:'2026-08-21', author:'Mo', title:'Popover Key patterns labels fixed and restyled', changes:[
+      {version:'1.84.7', date:'2026-08-21', author:'Mo', title:'Popover Key patterns labels fixed and restyled', changes:[
         ['fixed','.spec-cell__name has no bottom padding by default (fine for the short single-line labels other components use), so Key patterns\' longer two-part labels ("Info, left-anchored") were wrapping to a second line and getting crushed against the cell edge — added 12px bottom padding and 1.4 line-height'],
         ['changed','Labels split into a bold pattern name ("Info"/"Filter"/"Form") plus a lighter-weight, muted detail ("left-anchored", "right-anchored, no footer") instead of one flat run of equal-weight text, for clearer at-a-glance scanning'],
       ]},
-      {version:'1.83.6', date:'2026-08-21', author:'Mo', title:'Popover hero preview switched to wireframe placeholders', changes:[
+      {version:'1.84.6', date:'2026-08-21', author:'Mo', title:'Popover hero preview switched to wireframe placeholders', changes:[
         ['changed','Trigger label and panel title replaced with .mk-bar wireframe shapes instead of literal copy ("Filter", "Filter transactions"), matching the placeholder-bar convention most other hero previews already use'],
       ]},
-      {version:'1.83.5', date:'2026-08-21', author:'Mo', title:'Popover hero preview simplified', changes:[
+      {version:'1.84.5', date:'2026-08-21', author:'Mo', title:'Popover hero preview simplified', changes:[
         ['changed','Trimmed the hero preview\'s open panel down to just its title — dropped the switch row and Apply-button footer, which read as too busy for a small header thumbnail'],
       ]},
-      {version:'1.83.4', date:'2026-08-21', author:'Mo', title:'Popover hero preview now uses the real component markup', changes:[
+      {version:'1.84.4', date:'2026-08-21', author:'Mo', title:'Popover hero preview now uses the real component markup', changes:[
         ['changed','Hero preview swapped from an abstract two-mk-card mock to the actual .pop/.pop__panel markup — a real "Filter" trigger button above an open panel with its title, a switch row and an Apply button — so the header thumbnail reads unmistakably as this component, matching Switch/Accordion\'s hero previews which also use their real classes rather than a generic mock'],
       ]},
-      {version:'1.83.3', date:'2026-08-21', author:'Mo', title:'Popover Key patterns and States card padding rebalanced', changes:[
+      {version:'1.84.3', date:'2026-08-21', author:'Mo', title:'Popover Key patterns and States card padding rebalanced', changes:[
         ['fixed','Key patterns and Style-tab States cards top-aligned their content with an asymmetric 40px-top/16px-bottom stage padding, so a shorter card sharing a grid row with a taller one dumped all the leftover row height into one big gap below it; switched to symmetric 24px padding with the stage\'s default centered alignment so leftover height now splits evenly above and below'],
       ]},
-      {version:'1.83.2', date:'2026-08-21', author:'Mo', title:'Popover content overflowing its narrow grid cells', changes:[
+      {version:'1.84.2', date:'2026-08-21', author:'Mo', title:'Popover content overflowing its narrow grid cells', changes:[
         ['fixed','Key patterns and Style-tab States grids used the shared .spec-grid default of minmax(120px,1fr) columns, far narrower than the real .pop__panel\'s 244px min-width — panels were clipped/crushed against the cell edge; both grids now use minmax(260px,1fr)'],
         ['fixed','"In context" mockups used the plain 3-column .spec-insitu-grid, also too narrow for a 244px-wide panel — switched to the 2-column .spec-insitu-grid--2 modifier (already used by Accordion) so each mock has enough room'],
       ]},
-      {version:'1.83.1', date:'2026-08-21', author:'Mo', title:'Popover dark mode and hero preview fixes', changes:[
+      {version:'1.84.1', date:'2026-08-21', author:'Mo', title:'Popover dark mode and hero preview fixes', changes:[
         ['fixed','Popover\'s playground/Key patterns/In context/Style-tab stages stayed light-themed after the global dark-mode toggle, because none of renderPopoverPlayground/renderPopoverPatterns/renderPopoverInSitu/renderPopoverReference were wired into toggleTheme()\'s re-render list — added, matching every other tabbed component'],
         ['changed','Hero preview swapped from an absolute-positioned trigger+floating-panel mock (looked broken at the header\'s small scale) to the same stacked two-mk-card pattern already used by Dropdown\'s hero preview — a trigger-row card above a content card'],
       ]},
-      {version:'1.83.0', date:'2026-08-21', author:'Mo', title:'Popover rebuilt with the full Pills-style tabbed treatment', changes:[
+      {version:'1.84.0', date:'2026-08-21', author:'Mo', title:'Popover rebuilt with the full Pills-style tabbed treatment', changes:[
         ['added','Popover (s-popover) converted from a single static "Interactive" + "When to use" page into a full .sec--tabbed page — Overview / Style / Code / Changelog — matching Pills and Empty State: a "Try the component" playground (Content type Info/Filter/Form, Placement Left/Right, and Footer on/off controls, rendered into two synced mounts via shared popg state), a "Key patterns" showcase crossing content type with placement and footer (replacing Pills\' colour-variant slot, since Popover has no colour or size axis), 3 "In context" mockups (table-toolbar filter, right-anchored account menu, dashboard stat info popover), a Style tab (Anatomy, Placement & dimensions, States) and a Code tab with the .code-seg HTML/CSS · Blazor · React TSX switcher'],
         ['added','New .pop__cancel (ghost secondary footer button) and .pop__input (compact text field) CSS classes so the Form content type has a real cancel/save footer and an editable field, alongside the existing .pop__apply'],
         ['changed','The generic click-to-open/outside-click/Escape wiring switched from binding listeners on each .pop found at page load to a single document-level delegated handler, so it also wires up .pop instances the Popover playground renders dynamically — behaviour is unchanged for the existing static popovers'],
         ['added','New ai-ctx tab regenerated via generate-ai-context-tab.mjs for the js-rendered builders (POP_CONTENT_TYPES, popTriggerLabel, popPanelBody, makePopoverHTML, makePopoverEl), moved from the end of the section into the new hero\'s sec-header-meta, matching Pills/Empty State'],
+      ]},
+      {version:'1.83.1', date:'2026-09-04', author:'Mo', title:'Empty State: fixed Key scenarios duplication and hero preview', changes:[
+        ['fixed','Empty State\'s "Key scenarios" cards (#s-empty-state Overview tab) were rendering the full icon/title/desc/action mockup and then repeating the title and description again as a separate label underneath — read as duplicated copy. Switched from the .spec-cell swatch pattern to the same .spec-mock/.spec-mock__cap pattern already used by "In context" (full preview + one bold caption)'],
+        ['changed','Empty State\'s sec-hero__preview (top-right header thumbnail) reworked: dropped the shared .mk-card class (its drop shadow reads as an elevated floating card, wrong for a component whose identity is a flat dashed border) and the black/grey .mk-bar fake-content placeholders (which visually say "there\'s text content here" — the opposite of what an empty state should communicate). Now shows just a muted icon chip with real caption text ("Nothing to show"), floating alone with open space around it'],
+      ]},
+      {version:'1.83.0', date:'2026-09-04', author:'Mo', title:'Spinner rebuilt with the full Pills-style tabbed treatment', changes:[
+        ['added','Spinner (s-spinner) converted from a flat .sec page (Type / Ring sizes / Activity sizes / In context / When to use) into a full .sec--tabbed page — Overview / Style / Code / Changelog — matching Pills/Breadcrumb: a two-column hero (title/version/AI-context left, live spinning Ring+Activity preview right), a "Try the component" playground (Type: Ring/Activity, Size: Small/Regular/Large, Context: Standalone/In a button/Inline, rendered into two synced mounts via shared sspg state), a "Key types" showcase (Ring vs Activity, replacing Pills\' colour-variant slot since Spinner has no colour axis), 3 "In context" mockups (busy button, inline loading row, card overlay) and a Code tab with the .code-seg HTML/CSS · Blazor · React TSX switcher'],
+        ['added','New ai-ctx tab regenerated via generate-ai-context-tab.mjs for the js-rendered builders (SPN_TYPES, ovSpn, makeSpnEl), moved from the end of the section into the new hero\'s sec-header-meta, matching Pills/Breadcrumb'],
+        ['added','Style tab: Anatomy (track/arc for Ring, blade/fade-step for Activity), Size & dimensions, Types, and a Context section documenting the Standalone/Button/Inline states plus their colour tokens'],
+        ['changed','Do/Dont card moved into the Overview tab\'s #spn-usage .cpg-section-block, JS-rendered markup like Pills/Breadcrumb; guidance text unchanged from the original 3 do / 3 dont'],
+        ['removed','The old always-static "Type", "Ring sizes", "Activity sizes" and "In context" sub-sections, superseded by the single Type/Size/Context playground plus the Style tab\'s Size & dimensions and Types breakdowns'],
       ]},
       {version:'1.82.0', date:'2026-09-02', author:'Mo', title:'Fixed dark-mode toggle gaps in Accordion, Alert, Breadcrumb, Lists; fixed Lists\' Record page mockup clipping', changes:[
         ['fixed','toggleTheme() was missing the re-render calls for Alert (all 4 mounts) and Breadcrumb (all 4) entirely, for Accordion\'s InSitu/Reference mounts (only its Playground was wired), and for Lists (all 3, added once already but never merged before this branch was cut) — so each page\'s inline stageBg() background stayed on its light-mode value after switching to dark, until the next full page reload. Added the 15 missing calls; verified live that each now repaints its stage immediately on toggle. Carousel\'s, Pagination\'s and Separator\'s equivalent gaps were already fixed independently in concurrent PRs and are unaffected by this change'],
@@ -18836,7 +19146,15 @@ const CHANGELOG = {
         ['added','Shimmering placeholders (lines, blocks, circles) and composed media/card examples; respects reduced-motion'],
       ]},
     ]},
-    {secId:'s-spinner', name:'Spinner', version:'1.1.1', entries:[
+    {secId:'s-spinner', name:'Spinner', version:'1.2.0', entries:[
+      {version:'1.2.0', date:'2026-09-04', author:'Mo', title:'Brought to the Pills-page tabbed treatment', changes:[
+        ['changed','Converted #s-spinner from a flat .sec section to .sec--tabbed (Overview / Style / Code / Changelog), with a two-column hero (title/version/AI-context left, live spinning Ring+Activity preview right)'],
+        ['added','Interactive playground (Type: Ring/Activity, Size: Small/Regular/Large, Context: Standalone/In a button/Inline) driven by shared sspg state, rendered into the Overview and Code tabs'],
+        ['added','"Key types" showcase (Ring vs Activity) replacing the colour-variant slot Pills/Breadcrumb use, since Spinner has no colour axis'],
+        ['added','Three "In context" mockups: busy primary button, inline loading row, and a large centred spinner as a card overlay'],
+        ['added','Style tab: Anatomy, Size & dimensions, Types, and Context (Standalone/Button/Inline) sections with a token table'],
+        ['added','Code tab with a live HTML/CSS · Blazor · React TSX snippet matching the current playground configuration'],
+      ]},
       {version:'1.1.1', date:'2026-07-29', author:'Mo', title:'AI context tab added', changes:[
         ['added','AI context tab documenting the real, fully static .spn/.spn-activity/.spn-btn/.spn-inline markup (spinning-ring and blade variants), plus its existing "When to use" Do/Dont guidance (3 do / 3 dont)'],
       ]},
@@ -19857,7 +20175,11 @@ const CHANGELOG = {
         ['added','Empty state — muted glyph, plain-language explanation and a single primary action'],
       ]},
     ]},
-    {secId:'s-empty-state', name:'Empty State', version:'2.0.0', entries:[
+    {secId:'s-empty-state', name:'Empty State', version:'2.0.1', entries:[
+      {version:'2.0.1', date:'2026-08-21', author:'Mo', title:'Fixed Key scenarios duplication and hero preview', changes:[
+        ['fixed','"Key scenarios" cards were showing the full icon/title/desc/action mockup then repeating the title and description again as a name/desc label below — reworked to the .spec-mock/.spec-mock__cap pattern (full preview + one bold caption) already used by "In context", so nothing repeats'],
+        ['changed','sec-hero__preview reworked twice more after the initial build: first from a shadowed .mk-card to a flat 1.5px dashed border matching the real component, then from a dashed card with fake .mk-bar content lines to just a muted icon chip and real "Nothing to show" caption text — bars implying "content is here" contradicted the point of an empty state'],
+      ]},
       {version:'2.0.0', date:'2026-08-19', author:'Mo', title:'Rebuilt with the full Pills-style tabbed treatment', changes:[
         ['changed','Page restructured from a flat .sec section into a .sec--tabbed page — hero with a live mini preview, and Overview / Style / Code / Changelog tabs (esTabSwitch), matching Pills/Carousel'],
         ['added','"Try the component" playground with Icon and Action on/off toggles plus editable Title, Description and Action-label fields, rendered into two synced mounts (#es-playground on Overview, #es-code-playground on Code) over one shared esg state — the generalised form of Pills\' PILL_PLAYGROUND_MOUNTS pattern'],
@@ -21018,9 +21340,18 @@ function renderSectionChangelogs() {
   }
 })();
 
-/* ── TABLES — playground (customise a single Table Row) ── */
+/* ============================================================
+   TABLES
+   Same tabbed-page treatment as Pills/Separator/Pagination
+   (.sec--tabbed): Overview / Style / Code / Changelog, a
+   shared-state playground rendered into two mounts, and a
+   three-language code panel. Tables has no colour/size axis —
+   its two genuinely distinct row styles (Table Row, Reporting)
+   fill the "Key variants" slot instead, same approach Separator
+   used for Horizontal/Vertical/Labelled.
+============================================================ */
 // state is the single source of truth (Default / Hover / Focused / Checked / Disabled),
-// mirroring the five states in the reference below. Trailing links are a hover-revealed
+// mirroring the five states in the Style tab. Trailing links are a hover-revealed
 // affordance, so they only render in the Hover state — never at rest.
 var tblPg = { product:'1v', status:'pending', state:'default', links:true, sort:true, checkbox:true, header:false };
 var TBL_PG_GIFT_SVG = '<svg viewBox="0 0 24 24" fill="none"><path d="M20 12v8H4v-8M2 7h20v5H2zM12 22V7M12 7S9 2 6.5 4.5 12 7 12 7zM12 7s3-5 5.5-2.5S12 7 12 7z" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"/></svg>';
@@ -21063,9 +21394,16 @@ function tblPgPillRow(name, options){
   }).join('');
 }
 
-function renderTablesPlayground(){
-  var el = document.getElementById('tbl-playground');
-  if(!el) return;
+/* Table Row playground renders into more than one mount (the main
+   Overview demo, and a smaller copy on the Code tab) so both stay
+   in sync with the same shared tblPg state — same pattern as
+   PILL_PLAYGROUND_MOUNTS. */
+var TBL_PLAYGROUND_MOUNTS = [
+  {rootId:'tbl-playground', wrap:true, title:'Try the component', desc:'Adjust the filters to test component states.', headingAbove:'A table lists selectable records side by side &mdash; lead with a checkbox, add data cells, and close with a status tag or trailing action.'},
+  {rootId:'tbl-code-playground', style:'code', title:'Playground', desc:'Live demo of the component.'},
+];
+
+function tblPgDemoHtml(){
   var productBtns = tblPgPillRow('product', [{key:'1v',label:'1Voucher'},{key:'gift',label:'Gift Voucher'}]);
   var statusBtns  = tblPgPillRow('status',  [{key:'pending',label:'Pending'},{key:'success',label:'Success'},{key:'failed',label:'Failed'}]);
   var stateBtns   = tblPgPillRow('state',   [{key:'default',label:'Default'},{key:'hover',label:'Hover'},{key:'focus',label:'Focused'},{key:'checked',label:'Checked'},{key:'disabled',label:'Disabled'}]);
@@ -21109,8 +21447,7 @@ function renderTablesPlayground(){
         tblPgRowHtml() +
       '</div>'
     : tblPgRowHtml();
-  el.innerHTML =
-    '<div class="tbl-pg">' +
+  return '<div class="tbl-pg">' +
       '<div class="tbl-pg__stage">' + stageContent + '</div>' +
       '<div class="tbl-pg__ctrls">' +
         '<div class="tbl-pg__group"><span class="tbl-pg__clabel">Product</span><div class="tbl-pg__pill-row">' + productBtns + '</div></div>' +
@@ -21123,6 +21460,37 @@ function renderTablesPlayground(){
         hint +
       '</div>' +
     '</div>';
+}
+
+function renderTablesPlayground(){
+  var demo = tblPgDemoHtml();
+  TBL_PLAYGROUND_MOUNTS.forEach(function(mount){
+    var root = document.getElementById(mount.rootId);
+    if(!root) return;
+
+    if(mount.style==='code'){
+      root.innerHTML =
+        '<div class="type-sub__title">' + mount.title + '</div>' +
+        '<div class="type-sub__desc">' + mount.desc + '</div>' +
+        '<div class="cpg-section-outline">' + demo + '</div>';
+      return;
+    }
+
+    var inner =
+      '<div class="cpg-layout">' +
+        '<div class="cpg-layout__intro">' +
+          (mount.wrap ? '<span class="cpg-cursor-icon">' + CPG_CURSOR_ICON_SVG + '</span>' : '') +
+          '<div class="cpg-layout__title">' + mount.title + '</div>' +
+          '<div class="cpg-layout__desc">' + mount.desc + '</div>' +
+        '</div>' +
+        '<div class="cpg-layout__demo">' + demo + '</div>' +
+      '</div>';
+    var wrapped = mount.wrap ? '<div class="cpg-section-block">' + inner + '</div>' : inner;
+    root.innerHTML = (mount.headingAbove ? '<div class="cpg-overview-heading"><span class="cpg-overview-heading__icon">' + CPG_INFO_ICON_SVG + '</span><span>' + mount.headingAbove + '</span></div>' : '') + wrapped;
+  });
+
+  var block = document.getElementById('tbl-code-block');
+  if(block) block.innerHTML = getTblCode();
 }
 
 function tblPgSet(key, val){
@@ -21142,6 +21510,414 @@ function tblPgSetBool(key, val){
 function tblPgToggleChecked(cb){
   tblPg.state = cb.checked ? 'checked' : 'default';
   renderTablesPlayground();
+}
+
+/* ── CODE PANEL LANGUAGES ──
+   HTML/CSS is the source of truth (real .tbl-row/.tbl-pg__head markup). Blazor
+   and React TSX are illustrative wrappers over the same classes, so the row's
+   product/status/state config stays the single thing a consumer ports. */
+var TBL_LANGS = [
+  {key:'html',   label:'HTML / CSS', file:'table-row.html'},
+  {key:'blazor', label:'Blazor',     file:'DsTableRow.razor'},
+  {key:'tsx',    label:'React TSX',  file:'DsTableRow.tsx'},
+];
+var tblLang = 'html';
+
+function tblEsc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&#60;').replace(/>/g,'&#62;').replace(/"/g,'&quot;'); }
+
+function getTblCodeHTML(){
+  var product = tblPg.product === 'gift' ? 'Gift Voucher' : '1Voucher';
+  var picCls = tblPg.product === 'gift' ? 'tbl-pic--gift' : 'tbl-pic--1v';
+  var statusCls = { pending:'tbl-tag--pending', success:'tbl-tag--success', failed:'tbl-tag--failed' }[tblPg.status];
+  var statusLabel = { pending:'Pending', success:'Success', failed:'Failed' }[tblPg.status];
+  var stateCls = tblPg.state !== 'default' ? ' is-' + tblPg.state : '';
+  var checkboxLine = tblPg.checkbox ? '\n  <span class="code-kw">&#60;input</span> <span class="code-cls">type</span>=<span class="code-val">"checkbox"</span> <span class="code-cls">class</span>=<span class="code-val">"fsel__input tbl-check tbl-cell--check"</span><span class="code-kw">></span>' : '';
+  var linksLine = (tblPg.links && tblPg.state==='hover') ? '\n  <span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"tbl-cell--links"</span><span class="code-kw">>…&#60;/span></span>' : '';
+  var headHtml = tblPg.header
+    ? '<span class="code-cm">&lt;!-- header row: .tbl-head + .tbl-head__cell, sort icon optional --></span>\n' : '';
+  return '<span class="code-cm">/* Flash · Table Row · ' + tblEsc(product) + ' · ' + tblEsc(statusLabel) + ' */</span>\n' +
+    headHtml +
+    '<span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"tbl-row' + stateCls + '"</span><span class="code-kw">></span>' + checkboxLine + '\n' +
+    '  <span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"tbl-pic ' + picCls + '"</span><span class="code-kw">>…&#60;/span></span>\n' +
+    '  <span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"tbl-cell tbl-cell--name"</span><span class="code-kw">></span>' + tblEsc(product) + '<span class="code-kw">&#60;/span></span>\n' +
+    '  <span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"tbl-cell tbl-cell--col"</span><span class="code-kw">></span>…<span class="code-kw">&#60;/span></span>\n' +
+    '  <span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"tbl-tag ' + statusCls + '"</span><span class="code-kw">></span>' + tblEsc(statusLabel) + '<span class="code-kw">&#60;/span></span>' + linksLine + '\n' +
+    '<span class="code-kw">&#60;/div></span>';
+}
+
+function getTblCodeBlazor(){
+  var product = tblPg.product === 'gift' ? 'Gift Voucher' : '1Voucher';
+  var statusPascal = { pending:'Pending', success:'Success', failed:'Failed' }[tblPg.status];
+  var statePascal = { default:'Default', hover:'Hover', focus:'Focus', checked:'Checked', disabled:'Disabled' }[tblPg.state];
+  return '<span class="code-cm">@* DsTableRow.razor — usage *@</span>\n' +
+    '<span class="code-kw">&#60;DsTableRow</span> <span class="code-attr">Product</span>=<span class="code-val">"' + tblEsc(product) + '"</span>\n' +
+    '             <span class="code-attr">Status</span>=<span class="code-val">"RowStatus.' + statusPascal + '"</span>\n' +
+    '             <span class="code-attr">State</span>=<span class="code-val">"RowState.' + statePascal + '"</span>' + (tblPg.checkbox ? '\n             <span class="code-attr">Checkbox</span>=<span class="code-val">"true"</span>' : '') + (tblPg.links ? '\n             <span class="code-attr">ShowLinksOnHover</span>=<span class="code-val">"true"</span>' : '') + ' <span class="code-kw">/></span>\n\n' +
+    '<span class="code-cm">@* DsTableRow.razor — component definition *@</span>\n' +
+    '<span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"@CssClass"</span><span class="code-kw">></span>\n' +
+    '  <span class="code-kw">@if</span> (Checkbox) { <span class="code-kw">&#60;input</span> <span class="code-cls">type</span>=<span class="code-val">"checkbox"</span> <span class="code-cls">class</span>=<span class="code-val">"fsel__input tbl-check tbl-cell--check"</span> <span class="code-attr">@onchange</span>=<span class="code-val">"OnToggle"</span><span class="code-kw">>;</span> }\n' +
+    '  <span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"tbl-pic @PicClass"</span><span class="code-kw">>@ProductIcon&#60;/span></span>\n' +
+    '  <span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"tbl-cell tbl-cell--name"</span><span class="code-kw">>@Product&#60;/span></span>\n' +
+    '  <span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"tbl-tag @StatusClass"</span><span class="code-kw">>@Status&#60;/span></span>\n' +
+    '<span class="code-kw">&#60;/div></span>\n\n' +
+    '<span class="code-kw">@code</span> {\n' +
+    '  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> <span class="code-cls">string</span> Product { get; set; } = <span class="code-val">"1Voucher"</span>;\n' +
+    '  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> RowStatus Status { get; set; } = RowStatus.Pending;\n' +
+    '  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> RowState State { get; set; } = RowState.Default;\n' +
+    '  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> <span class="code-cls">bool</span> Checkbox { get; set; }\n' +
+    '  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> <span class="code-cls">bool</span> ShowLinksOnHover { get; set; }\n' +
+    '  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> EventCallback OnToggle { get; set; }\n\n' +
+    '  <span class="code-kw">private</span> <span class="code-cls">string</span> CssClass => $<span class="code-val">"tbl-row{StateClass}"</span>;\n' +
+    '}';
+}
+
+function getTblCodeTSX(){
+  var product = tblPg.product === 'gift' ? 'Gift Voucher' : '1Voucher';
+  return '<span class="code-cm">// DsTableRow.tsx</span>\n' +
+    '<span class="code-kw">import</span> React <span class="code-kw">from</span> <span class="code-val">\'react\'</span>;\n\n' +
+    '<span class="code-kw">type</span> <span class="code-cls">RowStatus</span> = <span class="code-val">\'pending\'</span> | <span class="code-val">\'success\'</span> | <span class="code-val">\'failed\'</span>;\n' +
+    '<span class="code-kw">type</span> <span class="code-cls">RowState</span> = <span class="code-val">\'default\'</span> | <span class="code-val">\'hover\'</span> | <span class="code-val">\'focus\'</span> | <span class="code-val">\'checked\'</span> | <span class="code-val">\'disabled\'</span>;\n\n' +
+    '<span class="code-kw">interface</span> <span class="code-cls">DsTableRowProps</span> {\n' +
+    '  product: <span class="code-cls">string</span>;\n' +
+    '  status: <span class="code-cls">RowStatus</span>;\n' +
+    '  state?: <span class="code-cls">RowState</span>;\n' +
+    '  checkbox?: <span class="code-cls">boolean</span>;\n' +
+    '  showLinksOnHover?: <span class="code-cls">boolean</span>;\n' +
+    '  onToggle?: (checked: <span class="code-cls">boolean</span>) => <span class="code-cls">void</span>;\n' +
+    '}\n\n' +
+    '<span class="code-kw">export const</span> <span class="code-cls">DsTableRow</span>: React.FC&#60;DsTableRowProps> = ({\n' +
+    '  product,\n' +
+    '  status,\n' +
+    '  state = <span class="code-val">\'default\'</span>,\n' +
+    '  checkbox = <span class="code-kw">false</span>,\n' +
+    '  showLinksOnHover = <span class="code-kw">false</span>,\n' +
+    '  onToggle,\n' +
+    '}) => {\n' +
+    '  <span class="code-kw">const</span> classes = [<span class="code-val">\'tbl-row\'</span>, state !== <span class="code-val">\'default\'</span> &amp;&amp; \`is-${state}\`].filter(Boolean).join(<span class="code-val">\' \'</span>);\n' +
+    '  <span class="code-kw">return</span> (\n' +
+    '    &#60;div className={classes}>\n' +
+    '      {checkbox &amp;&amp; &#60;input type=<span class="code-val">"checkbox"</span> className=<span class="code-val">"fsel__input tbl-check tbl-cell--check"</span> onChange={(e) => onToggle?.(e.target.checked)} />}\n' +
+    '      &#60;span className=<span class="code-val">"tbl-cell tbl-cell--name"</span>>{product}&#60;/span>\n' +
+    '      &#60;span className={\`tbl-tag tbl-tag--${status}\`}>{status}&#60;/span>\n' +
+    '    &#60;/div>\n' +
+    '  );\n' +
+    '};\n\n' +
+    '<span class="code-cm">// Usage</span>\n' +
+    '&#60;DsTableRow product=<span class="code-val">"' + tblEsc(product) + '"</span> status=<span class="code-val">"' + tblPg.status + '"</span> state=<span class="code-val">"' + tblPg.state + '"</span>' + (tblPg.checkbox ? ' checkbox' : '') + (tblPg.links ? ' showLinksOnHover' : '') + ' />';
+}
+
+function getTblCode(){
+  return tblLang==='blazor' ? getTblCodeBlazor()
+       : tblLang==='tsx'    ? getTblCodeTSX()
+       : getTblCodeHTML();
+}
+
+function setTblLang(lang){
+  if(!TBL_LANGS.some(function(l){ return l.key===lang; })) return;
+  tblLang = lang;
+  document.querySelectorAll('#tbl-code-tab .code-seg__btn').forEach(function(b){
+    var on = b.dataset.lang===lang;
+    b.setAttribute('aria-selected', on ? 'true' : 'false');
+    b.setAttribute('tabindex', on ? '0' : '-1');
+  });
+  var file = document.getElementById('tbl-lang-file');
+  var meta = TBL_LANGS.find(function(l){ return l.key===lang; });
+  if(file && meta) file.textContent = meta.file;
+  var block = document.getElementById('tbl-code-block');
+  if(block) block.innerHTML = getTblCode();
+}
+
+/* Arrow-key navigation, per the WAI-ARIA tablist pattern: the segmented control
+   is one tab stop and Left/Right (plus Home/End) move between languages. */
+function tblLangKeydown(e){
+  var i = TBL_LANGS.findIndex(function(l){ return l.key===tblLang; });
+  var n = i;
+  if(e.key==='ArrowLeft')       n = (i - 1 + TBL_LANGS.length) % TBL_LANGS.length;
+  else if(e.key==='ArrowRight') n = (i + 1) % TBL_LANGS.length;
+  else if(e.key==='Home')       n = 0;
+  else if(e.key==='End')        n = TBL_LANGS.length - 1;
+  else return;
+  e.preventDefault();
+  setTblLang(TBL_LANGS[n].key);
+  var btn = document.getElementById('tbl-lang-' + TBL_LANGS[n].key);
+  if(btn) btn.focus();
+}
+
+function renderTblCodeTab(){
+  var root = document.getElementById('tbl-code-tab');
+  if(!root) return;
+  root.innerHTML =
+    '<div class="type-sub__title">Code</div>' +
+    '<div class="type-sub__desc">Live snippet matching the current Playground configuration &mdash; switch to Overview to change it.</div>' +
+    '<div class="cpg-section-outline">' +
+      '<div class="code-panel code-panel--bare open">' +
+        '<div class="code-panel__head">' +
+          '<div class="code-seg" role="tablist" aria-label="Code language" onkeydown="tblLangKeydown(event)">' +
+            TBL_LANGS.map(function(l){ return '<button type="button" role="tab" class="code-seg__btn" id="tbl-lang-' + l.key + '" data-lang="' + l.key + '" aria-selected="' + (tblLang===l.key?'true':'false') + '" aria-controls="tbl-code-block" tabindex="' + (tblLang===l.key?'0':'-1') + '" onclick="setTblLang(\'' + l.key + '\')">' + l.label + '</button>'; }).join('') +
+          '</div>' +
+          '<span class="code-lang-file" id="tbl-lang-file">' + (TBL_LANGS.find(function(l){ return l.key===tblLang; })||TBL_LANGS[0]).file + '</span>' +
+          '<button class="code-copy-btn" onclick="tblCopyCode()" id="tbl-copy-btn">Copy</button>' +
+        '</div>' +
+        '<div class="code-body"><div class="code-block" id="tbl-code-block" role="tabpanel" aria-live="polite"></div></div>' +
+      '</div>' +
+    '</div>';
+}
+
+function tblCopyCode(){
+  var b = document.getElementById('tbl-code-block');
+  if(!b) return;
+  navigator.clipboard.writeText(b.innerText||b.textContent).catch(function(){});
+  var btn = document.getElementById('tbl-copy-btn');
+  if(btn){ btn.textContent = 'Copied!'; setTimeout(function(){ btn.textContent='Copy'; }, 2000); }
+}
+
+/* ── KEY VARIANTS ──
+   Tables has no colour or size axis — its two genuinely distinct row
+   styles fill this slot instead: the flex-row Table Row (selectable
+   records, one status tag) and the dense Reporting grid (numerics +
+   status dot), same real markup used elsewhere on this page. */
+function renderTblVariants(){
+  var root = document.getElementById('tbl-variants');
+  if(!root) return;
+
+  var tableRowPreview =
+    '<div class="tbl-wrap" style="border:0;border-radius:0"><div class="tbl-inner" style="min-width:0">' +
+      '<div class="tbl-body">' +
+        '<div class="tbl-row"><span class="tbl-pic tbl-pic--1v">1</span><span class="tbl-cell tbl-cell--name">1Voucher</span><span class="tbl-cell tbl-cell--col">1325468</span><span class="tbl-tag tbl-tag--pending">Pending</span></div>' +
+        '<div class="tbl-row"><span class="tbl-pic tbl-pic--gift">' + TBL_PG_GIFT_SVG + '</span><span class="tbl-cell tbl-cell--name">Gift Voucher</span><span class="tbl-cell tbl-cell--col">VD938818-5</span><span class="tbl-tag tbl-tag--success">Success</span></div>' +
+      '</div>' +
+    '</div></div>';
+
+  var reportingPreview =
+    '<div class="dd-table-wrap" style="border:0;border-radius:0"><table class="dd-table">' +
+      '<thead><tr><th>Product</th><th class="tbl-num">Value</th><th>Status</th></tr></thead>' +
+      '<tbody>' +
+        '<tr><td class="dd-table__name">Airtime &amp; Data</td><td class="tbl-num">R14.8M</td><td><span class="tbl-status"><span class="tbl-dot" style="background:var(--color-success-h)"></span>Live</span></td></tr>' +
+        '<tr><td class="dd-table__name">1Voucher</td><td class="tbl-num">R9.6M</td><td><span class="tbl-status"><span class="tbl-dot" style="background:var(--color-warn-h)"></span>Degraded</span></td></tr>' +
+      '</tbody>' +
+    '</table></div>';
+
+  var cells = [
+    {name:'Table Row', use:'Selectable records with a checkbox, product icon and one status tag &mdash; transactions, tickets, stores.', vis:tableRowPreview},
+    {name:'Reporting',  use:'Denser plain-table style for dashboards &mdash; tabular numerics and a status dot, no selection.',              vis:reportingPreview},
+  ].map(function(v){
+    return '<div class="spec-cell">' +
+      '<div class="spec-cell__stage" style="padding:0;overflow-x:auto;align-items:stretch">' + v.vis + '</div>' +
+      '<div class="spec-cell__name">' + v.name + '</div>' +
+      '<div class="spec-cell__desc">' + v.use + '</div>' +
+    '</div>';
+  }).join('');
+
+  root.innerHTML =
+    '<div class="cpg-section-heading">' +
+      '<div class="cpg-layout__title">Key variants</div>' +
+      '<div class="cpg-layout__desc">Two ways to present tabular data &mdash; pick by task, not by taste.</div>' +
+    '</div>' +
+    '<div class="cpg-section-block">' +
+      '<div class="spec-grid" style="grid-template-columns:repeat(auto-fill,minmax(280px,1fr))">' + cells + '</div>' +
+    '</div>';
+}
+
+/* ── IN CONTEXT ──
+   Three everyday jobs a table does: bulk-selecting records, summarising
+   numbers for a dashboard, and sitting inside a picker panel. */
+function renderTblInSitu(){
+  var root = document.getElementById('tbl-insitu');
+  if(!root) return;
+
+  // 1. Bulk-selection toolbar — two rows checked, an action bar appears
+  var bulkMock =
+    '<div class="spec-mock__stage" style="padding:0;gap:0">' +
+      '<div style="display:flex;align-items:center;justify-content:space-between;padding:10px 16px;background:var(--color-btn-p-bg);color:var(--color-btn-p-txt);font-size:12.5px;font-weight:700">' +
+        '<span>2 selected</span><span style="display:flex;gap:16px"><a class="tbl-link" style="color:inherit">Export</a><a class="tbl-link" style="color:inherit">Delete</a></span>' +
+      '</div>' +
+      '<div class="tbl-wrap" style="border:0;border-radius:0"><div class="tbl-inner" style="min-width:0"><div class="tbl-body">' +
+        '<div class="tbl-row is-checked" style="border-radius:0"><input type="checkbox" class="fsel__input tbl-check tbl-cell--check" checked tabindex="-1" aria-hidden="true"><span class="tbl-pic tbl-pic--1v">1</span><span class="tbl-cell tbl-cell--name">1Voucher</span><span class="tbl-tag tbl-tag--pending">Pending</span></div>' +
+        '<div class="tbl-row is-checked" style="border-radius:0"><input type="checkbox" class="fsel__input tbl-check tbl-cell--check" checked tabindex="-1" aria-hidden="true"><span class="tbl-pic tbl-pic--gift">' + TBL_PG_GIFT_SVG + '</span><span class="tbl-cell tbl-cell--name">Gift Voucher</span><span class="tbl-tag tbl-tag--success">Success</span></div>' +
+        '<div class="tbl-row" style="border-radius:0"><input type="checkbox" class="fsel__input tbl-check tbl-cell--check" tabindex="-1" aria-hidden="true"><span class="tbl-pic tbl-pic--1v">1</span><span class="tbl-cell tbl-cell--name">1Voucher</span><span class="tbl-tag tbl-tag--failed">Failed</span></div>' +
+      '</div></div></div>' +
+    '</div>' +
+    '<div class="spec-mock__cap"><b>Bulk actions</b>Selecting rows surfaces a toolbar for acting on all of them at once.</div>';
+
+  // 2. Reporting dashboard card — the Reporting variant inside a dashboard tile
+  var dashMock =
+    '<div class="spec-mock__stage" style="padding:16px 16px 0">' +
+      '<div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--chrome-muted)">Product performance</div>' +
+      '<div class="dd-table-wrap"><table class="dd-table">' +
+        '<thead><tr><th>Product</th><th class="tbl-num">Value</th><th>Status</th></tr></thead>' +
+        '<tbody>' +
+          '<tr><td class="dd-table__name">Airtime &amp; Data</td><td class="tbl-num">R14.8M</td><td><span class="tbl-status"><span class="tbl-dot" style="background:var(--color-success-h)"></span>Live</span></td></tr>' +
+          '<tr><td class="dd-table__name">Electricity</td><td class="tbl-num">R11.2M</td><td><span class="tbl-status"><span class="tbl-dot" style="background:var(--color-success-h)"></span>Live</span></td></tr>' +
+        '</tbody>' +
+      '</table></div>' +
+    '</div>' +
+    '<div class="spec-mock__cap"><b>Dashboard summary</b>The Reporting variant scans well as a tile on an analytics page.</div>';
+
+  // 3. Compact table in a panel — a picker with a couple of rows and a footer
+  var panelMock =
+    '<div class="spec-mock__stage" style="padding:0;gap:0">' +
+      '<div style="padding:14px 16px;border-bottom:1px solid var(--chrome-border);font-size:13px;font-weight:700;color:var(--chrome-txt)">Select an account</div>' +
+      '<div class="tbl-wrap" style="border:0;border-radius:0"><div class="tbl-inner" style="min-width:0"><div class="tbl-body">' +
+        '<div class="tbl-row" style="border-radius:0"><input type="checkbox" class="fsel__input tbl-check tbl-cell--check" tabindex="-1" aria-hidden="true"><span class="tbl-cell tbl-cell--name">Main wallet</span><span class="tbl-cell tbl-cell--col" style="margin-left:auto">R2,340.00</span></div>' +
+        '<div class="tbl-row is-checked" style="border-radius:0"><input type="checkbox" class="fsel__input tbl-check tbl-cell--check" checked tabindex="-1" aria-hidden="true"><span class="tbl-cell tbl-cell--name">Savings pocket</span><span class="tbl-cell tbl-cell--col" style="margin-left:auto">R860.00</span></div>' +
+      '</div></div></div>' +
+      '<div style="display:flex;justify-content:flex-end;gap:10px;padding:12px 16px;border-top:1px solid var(--chrome-border)"><a class="tbl-link" style="color:var(--chrome-muted)">Cancel</a><a class="tbl-link">Confirm</a></div>' +
+    '</div>' +
+    '<div class="spec-mock__cap"><b>Table in a panel</b>A compact table works just as well inside a modal or side panel.</div>';
+
+  root.innerHTML =
+    '<div class="cpg-section-heading">' +
+      '<div class="cpg-layout__title">In context</div>' +
+      '<div class="cpg-layout__desc">The same row does three everyday jobs &mdash; bulk-selecting records, summarising numbers, and picking one item.</div>' +
+    '</div>' +
+    '<div class="cpg-section-block">' +
+      '<div class="spec-insitu-grid">' +
+        '<div class="spec-mock">' + bulkMock + '</div>' +
+        '<div class="spec-mock">' + dashMock + '</div>' +
+        '<div class="spec-mock">' + panelMock + '</div>' +
+      '</div>' +
+    '</div>';
+}
+
+/* ── STYLE TAB ── */
+function renderTblReference(){
+  var root = document.getElementById('tbl-reference');
+  if(!root) return;
+
+  var sbg = stageBg(currentTheme());
+
+  /* ---- Anatomy ---- */
+  var heroRow =
+    '<div class="tbl-row" style="min-width:560px">' +
+      '<input type="checkbox" class="fsel__input tbl-check tbl-cell--check" tabindex="-1" aria-hidden="true">' +
+      '<span class="tbl-pic tbl-pic--1v">1</span>' +
+      '<span class="tbl-cell tbl-cell--name">1Voucher</span>' +
+      '<span class="tbl-cell tbl-cell--col">1325468</span>' +
+      '<span class="tbl-tag tbl-tag--pending">Pending</span>' +
+      '<span class="tbl-cell--links"><a class="tbl-link">View</a><a class="tbl-link">Receipt</a></span>' +
+    '</div>';
+
+  var parts = [
+    {num:1, name:'Checkbox',     note:'Leads the row when it can be selected; drives the Checked state and the header select-all.', vis:'<input type="checkbox" class="fsel__input" checked tabindex="-1" aria-hidden="true">'},
+    {num:2, name:'Product icon', note:'30px rounded tile identifying the record at a glance.',                                       vis:'<span class="tbl-pic tbl-pic--1v" style="width:26px;height:26px;font-size:13px">1</span>'},
+    {num:3, name:'Name',         note:'The primary label &mdash; bold, one per row.',                                                 vis:'<span style="font-weight:700;font-size:15px;color:var(--chrome-txt)">Name</span>'},
+    {num:4, name:'Data cell',    note:'Repeatable value cell &mdash; add one per column.',                                            vis:'<span style="font-size:14px;font-weight:500;color:var(--chrome-txt)">Value</span>'},
+    {num:5, name:'Status tag',   note:'One per row: Pending (neutral), Success (green) or Failed (red).',                             vis:'<span class="tbl-tag tbl-tag--success" style="font-size:11px">Tag</span>'},
+    {num:6, name:'Trailing link',note:'Optional row action, revealed on hover or keyboard focus.',                                    vis:'<a class="tbl-link" style="font-size:13px" tabindex="-1">Link</a>'},
+  ];
+  var partCards = parts.map(function(p){
+    return '<div class="spec-part">' +
+      '<div class="spec-part__stage" style="background:' + sbg + '">' + p.vis + '</div>' +
+      '<div class="spec-part__body">' +
+        '<div class="spec-part__name"><span class="spec-part__num">' + p.num + '</span>' + p.name + '</div>' +
+        '<div class="spec-part__note">' + p.note + '</div>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+
+  /* ---- Size & dimensions ---- */
+  var sizeRows = [
+    ['Row height', '50px', '&mdash;'],
+    ['Row padding', '0 14px', 'spacing-150'],
+    ['Cell gap', '20px', 'spacing-250'],
+    ['Corner radius', '8px', 'Radius/xs (6&ndash;8)'],
+    ['Checkbox', '20px &middot; radius 6px', 'reuses <code>.fsel__input</code> &middot; green <code>#10C504</code>'],
+    ['Product icon', '30px &middot; radius 7px', '1V <code>#FF5F00</code> &middot; Gift <code>#E43E79</code>'],
+    ['Name', '16px semibold', 'Body m semibold &middot; <code>text-primary</code>'],
+    ['Data cell', '16px medium', 'Body m medium &middot; <code>text-primary</code>'],
+    ['Header', '44px &middot; uppercase 10.5px', 'bg <code>chrome-nav</code> &middot; <code>chrome-muted</code>'],
+  ].map(function(r){ return '<tr><td class="dd-table__name">' + r[0] + '</td><td>' + r[1] + '</td><td>' + r[2] + '</td></tr>'; }).join('');
+
+  /* ---- Status tag colours ---- */
+  var TBL_TAG_TOKENS = [
+    {key:'pending', label:'Pending', cls:'tbl-tag--pending', light:{bg:'#E6E6E6',text:'#414141'}, dark:{bg:'rgba(255,255,255,.14)',text:'#E6E6E6'}},
+    {key:'success', label:'Success', cls:'tbl-tag--success', light:{bg:'#16A220',text:'#FFFFFF'}, dark:{bg:'#16A220',text:'#FFFFFF'}},
+    {key:'failed',  label:'Failed',  cls:'tbl-tag--failed',  light:{bg:'#EB0029',text:'#FFFFFF'}, dark:{bg:'#EB0029',text:'#FFFFFF'}},
+  ];
+  var theme = currentTheme();
+  var tagCells = TBL_TAG_TOKENS.map(function(t){
+    return '<div class="spec-cell">' +
+      '<div class="spec-cell__stage" style="background:' + sbg + '"><span class="tbl-tag ' + t.cls + '">' + t.label + '</span></div>' +
+      '<div class="spec-cell__name">' + t.label + '</div>' +
+      '<div class="spec-cell__desc">' + t[theme].bg.toUpperCase() + ' / ' + t[theme].text.toUpperCase() + '</div>' +
+    '</div>';
+  }).join('');
+  var tagTokRows = TBL_TAG_TOKENS.map(function(t){
+    var same = t.light.bg.toLowerCase() === t.dark.bg.toLowerCase();
+    var bgCell = '<div class="spec-tok-cell"><span class="spec-tok-sw" style="background:' + t.light.bg + '"></span><code>' + t.light.bg.toUpperCase() + '</code></div>' +
+      (same ? '' : '<div class="spec-tok-cell" style="margin-top:6px"><span class="spec-tok-sw" style="background:' + t.dark.bg + '"></span><code>' + t.dark.bg.toUpperCase() + '</code><span style="color:var(--chrome-muted);font-size:11px">dark</span></div>');
+    return '<tr><td class="dd-table__name">' + t.label + '</td><td>' + bgCell + '</td><td><code>' + t.light.text.toUpperCase() + '</code></td></tr>';
+  }).join('');
+
+  /* ---- States ---- */
+  var stateRows = [
+    {label:'Default',  cls:'', extra:''},
+    {label:'Hover',    cls:' is-hover', extra:'<span class="tbl-cell--links"><a class="tbl-link">Link text</a><a class="tbl-link">Link text</a></span>'},
+    {label:'Focused',  cls:' is-focus', extra:''},
+    {label:'Checked',  cls:' is-checked', checked:true, extra:''},
+    {label:'Disabled', cls:' is-disabled', disabled:true, extra:''},
+  ].map(function(s){
+    return '<div class="tbl-staterow"><div class="tbl-statelabel">' + s.label + '</div>' +
+      '<div class="tbl-row' + s.cls + '">' +
+        '<input type="checkbox" class="fsel__input tbl-check tbl-cell--check" ' + (s.checked?'checked ':'') + (s.disabled?'disabled ':'') + 'tabindex="-1" aria-hidden="true">' +
+        '<span class="tbl-pic tbl-pic--1v">1</span>' +
+        '<span class="tbl-cell tbl-cell--name">1Voucher</span>' +
+        '<span class="tbl-cell tbl-cell--col">Lorem ipsum</span>' +
+        '<span class="tbl-cell tbl-cell--col">Lorem ipsum</span>' +
+        '<span class="tbl-cell tbl-cell--col">Lorem ipsum</span>' +
+        '<span class="tbl-tag tbl-tag--pending">Pending</span>' +
+        s.extra +
+      '</div>' +
+    '</div>';
+  }).join('');
+
+  root.innerHTML =
+    '<div class="type-sub">' +
+      '<div class="type-sub__title">Anatomy</div>' +
+      '<div class="type-sub__desc">A row is assembled from a small set of interchangeable cells &mdash; only the checkbox (when selectable) and one labelled cell are required.</div>' +
+      '<div class="cpg-section-outline">' +
+        '<div class="spec-hero" style="background:' + sbg + ';overflow-x:auto">' + heroRow + '</div>' +
+        '<div class="spec-parts">' + partCards + '</div>' +
+      '</div>' +
+    '</div>' +
+
+    '<div class="type-sub">' +
+      '<div class="type-sub__title">Size &amp; dimensions</div>' +
+      '<div class="type-sub__desc">Tables have a single size &mdash; one row height, one type scale. Measurements and tokens for a row and the table header.</div>' +
+      '<div class="cpg-section-outline">' +
+        '<div class="dd-table-wrap"><table class="dd-table">' +
+          '<thead><tr><th>Property</th><th>Value</th><th>Token</th></tr></thead>' +
+          '<tbody>' + sizeRows + '</tbody>' +
+        '</table></div>' +
+      '</div>' +
+    '</div>' +
+
+    '<div class="type-sub">' +
+      '<div class="type-sub__title">Status tag colours</div>' +
+      '<div class="type-sub__desc">Three semantic variants, one per row. The token table below lists each fill and label colour &mdash; pending is the only one that changes between light and dark.</div>' +
+      '<div class="cpg-section-outline">' +
+        '<div class="spec-grid" style="margin-bottom:16px">' + tagCells + '</div>' +
+        '<div class="dd-table-wrap"><table class="dd-table" style="min-width:420px">' +
+          '<thead><tr><th>Status</th><th>Background</th><th>Label text</th></tr></thead>' +
+          '<tbody>' + tagTokRows + '</tbody>' +
+        '</table></div>' +
+      '</div>' +
+    '</div>' +
+
+    '<div class="type-sub" style="margin-bottom:0">' +
+      '<div class="type-sub__title">States</div>' +
+      '<div class="type-sub__desc">Every row resolves to one of five states. Default sits on the base surface; Hover fills with a subtle neutral; Focused draws a 2px inverse outline; Checked tints the row green; Disabled greys the content and blocks interaction.</div>' +
+      '<div class="cpg-section-outline">' +
+        '<div class="tbl-states" style="border:0;padding:0;background:transparent">' + stateRows + '</div>' +
+      '</div>' +
+    '</div>';
+}
+
+function tblTabSwitch(tab){
+  var nav = document.getElementById('tbl-tabs-list');
+  if(!nav) return;
+  nav.querySelectorAll('.tab-item').forEach(function(btn){ btn.classList.toggle('on', btn.getAttribute('data-tbl-tab')===tab); });
+  document.querySelectorAll('#s-tables .tabs-panel[data-tbl-panel]').forEach(function(p){ p.classList.toggle('on', p.getAttribute('data-tbl-panel')===tab); });
 }
 
 /* ── TABLES — interactive selection ── */
@@ -26152,7 +26928,11 @@ try { renderNavColourRef();  } catch(e){ console.error('nav-colour-ref',e); }
 try { renderNavStatesRef();  } catch(e){ console.error('nav-states-ref',e); }
 /* @@SHADCN_JS@@ */
 
+try { renderTblCodeTab(); } catch(e){ console.error('tbl-code-tab',e); }
 try { renderTablesPlayground(); } catch(e){ console.error('tbl-playground',e); }
+try { renderTblVariants(); } catch(e){ console.error('tbl-variants',e); }
+try { renderTblInSitu(); } catch(e){ console.error('tbl-insitu',e); }
+try { renderTblReference(); } catch(e){ console.error('tbl-reference',e); }
 
 try { renderCarCodeTab(); } catch(e){ console.error('car-code-tab',e); }
 try { renderCarPlayground(); } catch(e){ console.error('car-playground',e); }
@@ -26179,6 +26959,7 @@ try { renderSectionChangelogs(); } catch(e){ console.error('section-changelog',e
   {secId:'s-drawers', panelId:'bsh-changelog-panel'},
   {secId:'s-accordion', panelId:'acc-changelog-panel'},
   {secId:'s-breadcrumb', panelId:'bcr-changelog-panel'},
+  {secId:'s-spinner', panelId:'spn-changelog-panel'},
   {secId:'s-buttons', panelId:'btn-changelog-panel'},
   {secId:'s-calendar', panelId:'dp-changelog-panel'},
   {secId:'s-cards-basic', panelId:'cbasic-changelog-panel'},
@@ -26198,6 +26979,7 @@ try { renderSectionChangelogs(); } catch(e){ console.error('section-changelog',e
   {secId:'s-lists', panelId:'lst-changelog-panel'},
   {secId:'s-separator', panelId:'sep-changelog-panel'},
   {secId:'s-input-otp', panelId:'otp-changelog-panel'},
+  {secId:'s-tables', panelId:'tbl-changelog-panel'},
 ].forEach(({secId, panelId})=>{
   try {
     const chlog = document.querySelector(`#${secId} > .sec-chlog`);
