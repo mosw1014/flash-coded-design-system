@@ -1510,6 +1510,7 @@ body.home .main{max-width:none;margin:0;padding:0}
 .sec--tabbed .spec-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:16px}
 .sec--tabbed .spec-insitu-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
 .sec--tabbed .spec-insitu-grid--2{grid-template-columns:repeat(2,1fr)}
+.sec--tabbed .spec-insitu-grid--4{grid-template-columns:repeat(4,1fr)}
 .sec--tabbed .spec-mock{border:1px solid var(--chrome-border);border-radius:12px;overflow:hidden;background:var(--chrome-bg);display:flex;flex-direction:column;transition:background .25s,border-color .25s}
 .sec--tabbed .spec-mock__stage{flex:1;padding:22px 20px;display:flex;flex-direction:column;justify-content:center;gap:12px;min-height:150px;transition:background .25s}
 .sec--tabbed .spec-mock__cap{padding:12px 16px;border-top:1px solid var(--chrome-border);font-size:12px;line-height:1.5;color:var(--chrome-muted)}
@@ -4905,7 +4906,7 @@ body.home .main{max-width:none;margin:0;padding:0}
 </details>
         </div>
       </div>
-      <div class="sec-hero__preview"><div class="mk"><div class="mk-card" style="width:64%;overflow:hidden;padding:18px 12px;display:flex;flex-direction:column;align-items:center;gap:6px;border-style:dashed"><span style="width:26px;height:26px;border-radius:8px;background:var(--chrome-hover);display:flex;align-items:center;justify-content:center;color:var(--chrome-muted)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M4 7h16M4 12h16M4 17h9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span><span class="mk-bar mk-bar--txt" style="width:70%"></span><span class="mk-bar" style="width:85%"></span></div></div></div>
+      <div class="sec-hero__preview"><div class="mk mk-col" style="gap:10px"><span style="width:40px;height:40px;border-radius:12px;background:var(--chrome-hover);display:flex;align-items:center;justify-content:center;color:var(--chrome-muted)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 7h16M4 12h16M4 17h9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span><span style="font-size:12px;font-weight:700;color:var(--chrome-muted)">Nothing to show</span></div></div>
       </div>
       <div class="tabs-list sec-tabs" id="es-tabs-list">
         <button type="button" class="tab-item on" data-es-tab="overview" onclick="esTabSwitch('overview')"><span class="tab-item__inner"><span class="tab-item__label">Overview</span></span><span class="tab-item__line"></span></button>
@@ -10897,10 +10898,9 @@ function renderEmptyStateScenarios(){
   const sbg = stageBg(theme);
 
   const cells = ES_SCENARIOS.map(sc=>`
-    <div class="spec-cell">
-      <div class="spec-cell__stage" style="background:${sbg};padding:16px 12px">${makeEmptyStateHTML(sc.icon, sc.title, sc.desc, sc.action)}</div>
-      <div class="spec-cell__name">${sc.label}</div>
-      <div class="spec-cell__desc">${sc.desc}</div>
+    <div class="spec-mock">
+      <div class="spec-mock__stage" style="background:${sbg};padding:16px 12px">${makeEmptyStateHTML(sc.icon, sc.title, sc.desc, sc.action)}</div>
+      <div class="spec-mock__cap"><b>${sc.label}</b></div>
     </div>`).join('');
 
   root.innerHTML = `
@@ -10909,7 +10909,7 @@ function renderEmptyStateScenarios(){
       <div class="cpg-layout__desc">Four common reasons a view has zero rows &mdash; match the copy and action to the real cause, not a generic placeholder.</div>
     </div>
     <div class="cpg-section-block">
-      <div class="spec-grid">${cells}</div>
+      <div class="spec-insitu-grid spec-insitu-grid--4">${cells}</div>
     </div>`;
 }
 
@@ -17073,12 +17073,16 @@ function cbrTabSwitch(tab){
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.83.0';
+const SYSTEM_VERSION = '1.83.1';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.83.1', date:'2026-09-04', author:'Mo', title:'Empty State: fixed Key scenarios duplication and hero preview', changes:[
+        ['fixed','Empty State\'s "Key scenarios" cards (#s-empty-state Overview tab) were rendering the full icon/title/desc/action mockup and then repeating the title and description again as a separate label underneath — read as duplicated copy. Switched from the .spec-cell swatch pattern to the same .spec-mock/.spec-mock__cap pattern already used by "In context" (full preview + one bold caption)'],
+        ['changed','Empty State\'s sec-hero__preview (top-right header thumbnail) reworked: dropped the shared .mk-card class (its drop shadow reads as an elevated floating card, wrong for a component whose identity is a flat dashed border) and the black/grey .mk-bar fake-content placeholders (which visually say "there\'s text content here" — the opposite of what an empty state should communicate). Now shows just a muted icon chip with real caption text ("Nothing to show"), floating alone with open space around it'],
+      ]},
       {version:'1.83.0', date:'2026-09-04', author:'Mo', title:'Spinner rebuilt with the full Pills-style tabbed treatment', changes:[
         ['added','Spinner (s-spinner) converted from a flat .sec page (Type / Ring sizes / Activity sizes / In context / When to use) into a full .sec--tabbed page — Overview / Style / Code / Changelog — matching Pills/Breadcrumb: a two-column hero (title/version/AI-context left, live spinning Ring+Activity preview right), a "Try the component" playground (Type: Ring/Activity, Size: Small/Regular/Large, Context: Standalone/In a button/Inline, rendered into two synced mounts via shared sspg state), a "Key types" showcase (Ring vs Activity, replacing Pills\' colour-variant slot since Spinner has no colour axis), 3 "In context" mockups (busy button, inline loading row, card overlay) and a Code tab with the .code-seg HTML/CSS · Blazor · React TSX switcher'],
         ['added','New ai-ctx tab regenerated via generate-ai-context-tab.mjs for the js-rendered builders (SPN_TYPES, ovSpn, makeSpnEl), moved from the end of the section into the new hero\'s sec-header-meta, matching Pills/Breadcrumb'],
@@ -19557,7 +19561,11 @@ const CHANGELOG = {
         ['added','Empty state — muted glyph, plain-language explanation and a single primary action'],
       ]},
     ]},
-    {secId:'s-empty-state', name:'Empty State', version:'2.0.0', entries:[
+    {secId:'s-empty-state', name:'Empty State', version:'2.0.1', entries:[
+      {version:'2.0.1', date:'2026-08-21', author:'Mo', title:'Fixed Key scenarios duplication and hero preview', changes:[
+        ['fixed','"Key scenarios" cards were showing the full icon/title/desc/action mockup then repeating the title and description again as a name/desc label below — reworked to the .spec-mock/.spec-mock__cap pattern (full preview + one bold caption) already used by "In context", so nothing repeats'],
+        ['changed','sec-hero__preview reworked twice more after the initial build: first from a shadowed .mk-card to a flat 1.5px dashed border matching the real component, then from a dashed card with fake .mk-bar content lines to just a muted icon chip and real "Nothing to show" caption text — bars implying "content is here" contradicted the point of an empty state'],
+      ]},
       {version:'2.0.0', date:'2026-08-19', author:'Mo', title:'Rebuilt with the full Pills-style tabbed treatment', changes:[
         ['changed','Page restructured from a flat .sec section into a .sec--tabbed page — hero with a live mini preview, and Overview / Style / Code / Changelog tabs (esTabSwitch), matching Pills/Carousel'],
         ['added','"Try the component" playground with Icon and Action on/off toggles plus editable Title, Description and Action-label fields, rendered into two synced mounts (#es-playground on Overview, #es-code-playground on Code) over one shared esg state — the generalised form of Pills\' PILL_PLAYGROUND_MOUNTS pattern'],
