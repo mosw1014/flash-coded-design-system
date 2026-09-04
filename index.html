@@ -1846,30 +1846,6 @@ body.home .main{max-width:none;margin:0;padding:0}
 .tabs-panel{display:none;padding:22px 4px 4px}
 .tabs-panel.on{display:block;animation:tabsPanelIn .2s ease}
 @keyframes tabsPanelIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
-.tabs-skel{border:1px solid var(--chrome-border);border-radius:10px;overflow:hidden}
-.tabs-skel__row{display:flex;align-items:center;gap:16px;padding:13px 16px;border-bottom:1px solid var(--chrome-border)}
-.tabs-skel__row:last-child{border-bottom:none}
-.tabs-skel__row--head{background:var(--chrome-nav)}
-.tabs-skel__cell{height:9px;border-radius:4px;background:var(--chrome-border)}
-.tabs-skel__row--head .tabs-skel__cell{height:7px;opacity:.8}
-
-/* Showcase surface so tab swatches sit on a clean board in both themes */
-.tabs-demo{border:1px solid var(--chrome-border);border-radius:12px;padding:6px 20px 0;background:var(--chrome-bg)}
-.tabs-demo--pad{padding:26px 20px}
-/* interactive playground — centre the tab bar across the full-width divider */
-#tabs-play .tabs-list{justify-content:center}
-#tabs-play .tabs-panel{max-width:680px;margin:0 auto}
-/* comparison swatches — compact, centred lists that hug their tabs */
-.tabs-swatchgrid{display:flex;flex-wrap:wrap;gap:22px 48px;justify-content:center;align-items:flex-start}
-.tabs-swatch{display:flex;flex-direction:column;align-items:center;gap:12px}
-.tabs-swatch__cap{font-size:10.5px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--chrome-muted)}
-.tabs-swatch .tabs-list{width:-moz-fit-content;width:fit-content}
-/* Sizes comparison — bottom-align swatches so the two underlines sit flush */
-.tabs-swatchgrid--bottom{align-items:stretch}
-.tabs-swatchgrid--bottom .tabs-swatch{justify-content:flex-end}
-/* States matrix — lock to a 2-up grid so each size's icon/no-icon pair always sits together, even on wide screens */
-.tabs-swatchgrid--states{display:grid;grid-template-columns:repeat(2,max-content);justify-content:center;align-items:start;gap:28px 48px}
-@media(max-width:640px){.tabs-swatchgrid--states{grid-template-columns:max-content}}
 
 /* ================================================================
    DROPDOWN
@@ -4555,86 +4531,17 @@ body.home .main{max-width:none;margin:0;padding:0}
       </div>
       <div class="tabs-panel" data-nav-panel="changelog" id="nav-changelog-panel"></div>
     </section>
-    <section class="sec" id="s-tabs">
+    <section class="sec sec--tabbed" id="s-tabs">
+      <div class="sec-hero">
       <div class="sec__head">
-        <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Tabs <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.2.1</span></h1>
-        <p class="sec__desc">A horizontal tab bar for switching between views within a single screen. Built from a <strong>Tab item</strong> (with or without a leading icon, in Regular or Small) composed into a <strong>Tabs list</strong> that shares one bottom divider. The active tab is marked by a weighted label and an inverse underline. Adapts to light &amp; dark via semantic tokens.</p>
-      </div>
-
-      <div class="type-sub">
-        <div class="type-sub__title">Interactive</div>
-        <div class="type-sub__desc">A working Tabs list &mdash; click any tab to switch the panel below. Only one tab is active at a time; the underline slides to the selected item.</div>
-        <div class="tabs-demo" id="tabs-play"></div>
-      </div>
-
-      <div class="type-sub">
-        <div class="type-sub__title">Sizes</div>
-        <div class="type-sub__desc"><strong>Regular</strong> (56px tall, 16px label) is the default for primary, page-level navigation. <strong>Small</strong> (46px tall, 13px label) suits denser or secondary contexts such as inside a card or panel.</div>
-        <div class="tabs-demo tabs-demo--pad"><div class="tabs-swatchgrid tabs-swatchgrid--bottom" id="tabs-sizes"></div></div>
-      </div>
-
-      <div class="type-sub">
-        <div class="type-sub__title">With &amp; without icon</div>
-        <div class="type-sub__desc">A tab item can carry an optional leading icon in a rounded neutral chip. Use icons only when they add scanning value &mdash; keep every tab in a list consistent, either all with icons or all without.</div>
-        <div class="tabs-demo tabs-demo--pad"><div class="tabs-swatchgrid" id="tabs-icon"></div></div>
-      </div>
-
-      <div class="type-sub">
-        <div class="type-sub__title">States</div>
-        <div class="type-sub__desc">Every tab item resolves to one of three states. <strong>Inactive</strong> uses tertiary text at medium weight with a muted icon glyph; <strong>Hover</strong> lifts the label and glyph to primary; <strong>Active</strong> keeps primary text at semibold, darkens the glyph and adds the underline. Shown here for both sizes, with and without the icon.</div>
-        <div class="tabs-demo tabs-demo--pad"><div class="tabs-swatchgrid tabs-swatchgrid--states" id="tabs-states"></div></div>
-      </div>
-
-      <div class="type-sub">
-        <div class="type-sub__title">Anatomy &amp; specs</div>
-        <div class="type-sub__desc">Measurements and tokens per size. The active underline straddles the list&rsquo;s 2px divider so it reads as a single continuous edge.</div>
-        <div class="dd-table-wrap">
-          <table class="dd-table">
-            <thead><tr><th>Property</th><th>Regular</th><th>Small</th><th>Token</th></tr></thead>
-            <tbody>
-              <tr><td class="dd-table__name">Height</td><td>56px</td><td>46px</td><td>&mdash;</td></tr>
-              <tr><td class="dd-table__name">Horizontal padding</td><td>20px</td><td>12px</td><td>spacing-250 / spacing-150</td></tr>
-              <tr><td class="dd-table__name">Vertical padding</td><td>4px</td><td>4px</td><td>spacing-050</td></tr>
-              <tr><td class="dd-table__name">Icon &harr; label gap</td><td>8px</td><td>6px</td><td>spacing-100 / spacing-075</td></tr>
-              <tr><td class="dd-table__name">Label size</td><td>16px</td><td>13px</td><td>Body m / Body s</td></tr>
-              <tr><td class="dd-table__name">Icon chip</td><td>12px glyph &middot; 4px pad</td><td>11px glyph &middot; 4px pad</td><td>bg <code>surface-neutral-secondary</code> #E6E6E6 &middot; radius 6px</td></tr>
-              <tr><td class="dd-table__name">Icon glyph colour</td><td colspan="2">Inactive #5F6261 &rarr; Active #000000</td><td><code>chrome-muted</code> &rarr; <code>text-primary</code></td></tr>
-              <tr><td class="dd-table__name">Active underline</td><td>4px tall, offset &minus;2px</td><td>3px tall, flush</td><td><code>surface-base-inverse</code> #000 <span style="color:var(--chrome-muted)">(dark #FFF)</span></td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <div class="type-sub">
-        <div class="type-sub__title">When to use</div>
-        <div class="type-sub__desc">Tabs switch between peer views of the same context without leaving the screen &mdash; they are not a substitute for primary navigation between destinations.</div>
-        <div class="sel-usage">
-          <div class="sel-usage__card">
-            <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
-            <ul class="sel-usage__list">
-              <li>Use tabs to switch between related views of one object &mdash; Overview, Activity, Settings.</li>
-              <li>Keep exactly one tab active at all times, and default to the most useful view.</li>
-              <li>Keep labels short and parallel &mdash; ideally one or two words each.</li>
-              <li>Pick one size and one icon treatment for the whole list, and stay consistent.</li>
-            </ul>
-          </div>
-          <div class="sel-usage__card">
-            <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don&rsquo;t</div>
-            <ul class="sel-usage__list">
-              <li>Don&rsquo;t use tabs to move between unrelated destinations &mdash; that&rsquo;s navigation, not tabs.</li>
-              <li>Don&rsquo;t mix icon and no-icon tabs, or Regular and Small, in the same list.</li>
-              <li>Don&rsquo;t overflow with too many tabs &mdash; if it scrolls a lot, reconsider the structure.</li>
-              <li>Don&rsquo;t leave the list with no active tab, or with more than one active at once.</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <details class="ai-ctx">
+        <h1 class="sec__title">Tabs</h1>
+        <div class="sec-header-meta">
+          <span class="comp-ver-badge" style="margin-left:0">v1.3.0</span>
+          <details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-tabs">
 {
-  "status": "js-rendered",
+  "status": "static",
   "builderFunctions": [
     "tabItem",
     "tabsList"
@@ -4650,8 +4557,8 @@ body.home .main{max-width:none;margin:0;padding:0}
     ".tab-item__line",
     ".tabs-list"
   ],
-  "css": "/* ================================================================\n   TABS\n================================================================ */\n/* Tabs list — the horizontal strip with the shared bottom divider */\n.tabs-list { display:flex;align-items:flex-start;gap:0;border-bottom:2px solid var(--chrome-border) }\n/* Tab item */\n.tab-item { position:relative;display:flex;flex-direction:column;align-items:stretch;flex-shrink:0;background:none;border:none;padding:0;margin:0;cursor:pointer;font-family:inherit;color:inherit }\n.tab-item__inner { display:flex;align-items:center;justify-content:center;height:56px;gap:8px;padding:4px 20px }\n.tab-item__icon { display:flex;align-items:center;justify-content:center;flex-shrink:0;padding:4px;border-radius:6px;background:var(--color-surface-n2);color:var(--chrome-muted);transition:color .15s ease }\n.tab-item__icon svg { width:12px;height:12px;display:block }\n.tab-item__label { font-size:16px;font-weight:500;line-height:1.25;color:var(--color-text-3);white-space:nowrap;transition:color .15s ease }\n/* active underline — straddles the 2px divider */\n.tab-item__line { position:absolute;left:0;right:0;bottom:-2px;height:4px;border-radius:4px;background:var(--color-surface-inverse);opacity:0;transition:opacity .15s ease }\n/* Hover state — label lifts to primary, icon glyph darkens */\n.tab-item:hover .tab-item__label,\n.tab-item--hover .tab-item__label { color:var(--color-text-1) }\n.tab-item:hover .tab-item__icon,\n.tab-item--hover .tab-item__icon { color:var(--color-text-1) }\n/* Active state — semibold primary label, dark glyph, underline shown */\n.tab-item.on .tab-item__label,\n.tab-item--active .tab-item__label { color:var(--color-text-1);font-weight:650 }\n.tab-item.on .tab-item__icon,\n.tab-item--active .tab-item__icon { color:var(--color-text-1) }\n.tab-item.on .tab-item__line,\n.tab-item--active .tab-item__line { opacity:1 }\n/* Small size */\n.tab-item--sm .tab-item__inner { height:46px;gap:6px;padding:4px 12px }\n.tab-item--sm .tab-item__label { font-size:13px;line-height:1.3 }\n.tab-item--sm .tab-item__icon svg { width:11px;height:11px }\n.tab-item--sm .tab-item__line { bottom:0;height:3px }\n/* interactive playground — centre the tab bar across the full-width divider */\n#tabs-play .tabs-list { justify-content:center }\n.tabs-swatch .tabs-list { width:-moz-fit-content;width:fit-content }",
-  "js": "function tabItem(opts){\n    var tag = opts.el || 'button';\n    var cls = 'tab-item';\n    if(opts.size === 'sm') cls += ' tab-item--sm';\n    if(opts.state === 'hover')  cls += ' tab-item--hover';\n    if(opts.state === 'active') cls += ' tab-item--active';\n    var icon = opts.icon ? '&lt;span class=\"tab-item__icon\"&gt;' + USER_ICON + '&lt;/span&gt;' : '';\n    return '&lt;' + tag + ' type=\"button\" class=\"' + cls + '\"&gt;' +\n             '&lt;span class=\"tab-item__inner\"&gt;' + icon +\n               '&lt;span class=\"tab-item__label\"&gt;' + (opts.label || 'Tab item') + '&lt;/span&gt;' +\n             '&lt;/span&gt;' +\n             '&lt;span class=\"tab-item__line\"&gt;&lt;/span&gt;' +\n           '&lt;/' + tag + '&gt;';\n  }\n\nfunction tabsList(items, size){\n    return '&lt;div class=\"tabs-list\"&gt;' + items.map(function(it){\n      it.size = size; return tabItem(it);\n    }).join('') + '&lt;/div&gt;';\n  }",
+  "css": "/* ================================================================\n   TABS\n================================================================ */\n/* Tabs list — the horizontal strip with the shared bottom divider */\n.tabs-list { display:flex;align-items:flex-start;gap:0;border-bottom:2px solid var(--chrome-border) }\n/* Tab item */\n.tab-item { position:relative;display:flex;flex-direction:column;align-items:stretch;flex-shrink:0;background:none;border:none;padding:0;margin:0;cursor:pointer;font-family:inherit;color:inherit }\n.tab-item__inner { display:flex;align-items:center;justify-content:center;height:56px;gap:8px;padding:4px 20px }\n.tab-item__icon { display:flex;align-items:center;justify-content:center;flex-shrink:0;padding:4px;border-radius:6px;background:var(--color-surface-n2);color:var(--chrome-muted);transition:color .15s ease }\n.tab-item__icon svg { width:12px;height:12px;display:block }\n.tab-item__label { font-size:16px;font-weight:500;line-height:1.25;color:var(--color-text-3);white-space:nowrap;transition:color .15s ease }\n/* active underline — straddles the 2px divider */\n.tab-item__line { position:absolute;left:0;right:0;bottom:-2px;height:4px;border-radius:4px;background:var(--color-surface-inverse);opacity:0;transition:opacity .15s ease }\n/* Hover state — label lifts to primary, icon glyph darkens */\n.tab-item:hover .tab-item__label,\n.tab-item--hover .tab-item__label { color:var(--color-text-1) }\n.tab-item:hover .tab-item__icon,\n.tab-item--hover .tab-item__icon { color:var(--color-text-1) }\n/* Active state — semibold primary label, dark glyph, underline shown */\n.tab-item.on .tab-item__label,\n.tab-item--active .tab-item__label { color:var(--color-text-1);font-weight:650 }\n.tab-item.on .tab-item__icon,\n.tab-item--active .tab-item__icon { color:var(--color-text-1) }\n.tab-item.on .tab-item__line,\n.tab-item--active .tab-item__line { opacity:1 }\n/* Small size */\n.tab-item--sm .tab-item__inner { height:46px;gap:6px;padding:4px 12px }\n.tab-item--sm .tab-item__label { font-size:13px;line-height:1.3 }\n.tab-item--sm .tab-item__icon svg { width:11px;height:11px }\n.tab-item--sm .tab-item__line { bottom:0;height:3px }",
+  "js": "function tabItem(opts){\n  var tag = opts.el || 'button';\n  var cls = 'tab-item';\n  if(opts.size === 'sm') cls += ' tab-item--sm';\n  if(opts.state === 'hover')  cls += ' tab-item--hover';\n  if(opts.state === 'active') cls += ' tab-item--active';\n  var icon = opts.icon ? '&lt;span class=\"tab-item__icon\"&gt;' + USER_ICON + '&lt;/span&gt;' : '';\n  return '&lt;' + tag + ' type=\"button\" class=\"' + cls + '\"&gt;' +\n           '&lt;span class=\"tab-item__inner\"&gt;' + icon +\n             '&lt;span class=\"tab-item__label\"&gt;' + (opts.label || 'Tab item') + '&lt;/span&gt;' +\n           '&lt;/span&gt;' +\n           '&lt;span class=\"tab-item__line\"&gt;&lt;/span&gt;' +\n         '&lt;/' + tag + '&gt;';\n}\n\nfunction tabsList(items, size){\n  return '&lt;div class=\"tabs-list\"&gt;' + items.map(function(it){\n    it.size = size; return tabItem(it);\n  }).join('') + '&lt;/div&gt;';\n}",
   "usage": {
     "do": [
       "Use tabs to switch between related views of one object — Overview, Activity, Settings.",
@@ -4666,10 +4573,80 @@ body.home .main{max-width:none;margin:0;padding:0}
       "Don’t leave the list with no active tab, or with more than one active at once."
     ]
   },
-  "contentHash": "ab311ae9fb4bf49215f2dd234d692dfe24c3ca1f3c72bcc12a3fdbaf3e8fab85"
+  "contentHash": "36b4b2883189611b653b6fd8d72387d1d96cfdc23046b6f91076a871b2bb7ab1",
+  "note": "tabItem is the minimal real-markup builder (label+icon+size+state -&gt; .tab-item HTML string); tabsList composes items into the shared-divider .tabs-list strip. Both are the real component builders and are reused site-wide as the sub-tab nav furniture on every .sec--tabbed page, including this one. TBC_KEY_PATTERNS drives the Overview tab's Key patterns showcase (size x icon is the full variant space — there is no colour axis). tabsPreviewHTML/getTabsCode*/renderTabs*/tbcg*/tbcTabSwitch are doc-site-only playground plumbing, excluded."
 }
   </pre>
 </details>
+        </div>
+      </div>
+      <div class="sec-hero__preview"><div class="mk"><div class="tabs-list" style="justify-content:center;pointer-events:none" aria-hidden="true">
+        <div class="tab-item tab-item--sm tab-item--active"><span class="tab-item__inner"><span class="tab-item__icon"><svg viewBox="0 0 10.5 11" fill="none" xmlns="http://www.w3.org/2000/svg"><path transform="translate(-24.75,-22.5)" fill-rule="evenodd" clip-rule="evenodd" d="M32.4479 24.8119C32.4479 26.0887 31.3676 27.1237 30.035 27.1237C28.7024 27.1237 27.6221 26.0887 27.6221 24.8119C27.6221 23.5351 28.7024 22.5 30.035 22.5C31.3676 22.5 32.4479 23.5351 32.4479 24.8119ZM35.2235 30.8447C35.1916 30.9409 35.1397 31.0298 35.071 31.1062H35.0321C34.4324 31.8437 33.6649 32.4403 32.7882 32.8507C31.9114 33.2611 30.9485 33.4744 29.9728 33.4744C28.997 33.4744 28.0341 33.2611 27.1574 32.8507C26.2806 32.4403 25.5132 31.8437 24.9135 31.1062C24.7872 30.9463 24.729 30.7465 24.7507 30.5471C24.7723 30.3478 24.8723 30.1637 25.0302 30.0323C26.3975 28.865 28.1648 28.22 29.9961 28.22C31.8274 28.22 33.5948 28.865 34.962 30.0323C35.0448 30.0945 35.1136 30.1722 35.1642 30.2607C35.2148 30.3491 35.2461 30.4465 35.2563 30.5469C35.2665 30.6473 35.2553 30.7486 35.2235 30.8447Z" fill="currentColor"/></svg></span><span class="tab-item__label"><span class="mk-bar mk-bar--txt" style="width:40px"></span></span></span><span class="tab-item__line"></span></div>
+        <div class="tab-item tab-item--sm"><span class="tab-item__inner"><span class="tab-item__label"><span class="mk-bar" style="width:32px"></span></span></span><span class="tab-item__line"></span></div>
+        <div class="tab-item tab-item--sm"><span class="tab-item__inner"><span class="tab-item__label"><span class="mk-bar" style="width:36px"></span></span></span><span class="tab-item__line"></span></div>
+      </div></div></div>
+      </div>
+      <div class="tabs-list sec-tabs" id="tbc-tabs-list">
+        <button type="button" class="tab-item on" data-tbc-tab="overview" onclick="tbcTabSwitch('overview')"><span class="tab-item__inner"><span class="tab-item__label">Overview</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-tbc-tab="style" onclick="tbcTabSwitch('style')"><span class="tab-item__inner"><span class="tab-item__label">Style</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-tbc-tab="code" onclick="tbcTabSwitch('code')"><span class="tab-item__inner"><span class="tab-item__label">Code</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-tbc-tab="changelog" onclick="tbcTabSwitch('changelog')"><span class="tab-item__inner"><span class="tab-item__label">Changelog</span></span><span class="tab-item__line"></span></button>
+      </div>
+      <div class="tabs-panel on" data-tbc-panel="overview">
+        <div id="tbc-playground" class="type-sub"></div>
+        <div id="tbc-patterns" class="type-sub"></div>
+        <div id="tbc-insitu" class="type-sub"></div>
+        <div class="type-sub cpg-variants" id="tbc-usage">
+          <div class="cpg-section-heading">
+            <div class="cpg-layout__title">Do's and don'ts</div>
+            <div class="cpg-layout__desc">Tabs switch between peer views of the same context without leaving the screen &mdash; they are not a substitute for primary navigation between destinations.</div>
+          </div>
+          <div class="cpg-section-block">
+            <div class="sel-usage">
+              <div class="sel-usage__card">
+                <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
+                <ul class="sel-usage__list">
+                  <li>Use tabs to switch between related views of one object &mdash; Overview, Activity, Settings.</li>
+                  <li>Keep exactly one tab active at all times, and default to the most useful view.</li>
+                  <li>Keep labels short and parallel &mdash; ideally one or two words each.</li>
+                  <li>Pick one size and one icon treatment for the whole list, and stay consistent.</li>
+                </ul>
+                <div class="spec-usage-demo">
+                  <div class="tabs-list" style="width:-moz-fit-content;width:fit-content;pointer-events:none">
+                    <div class="tab-item tab-item--sm tab-item--active"><span class="tab-item__inner"><span class="tab-item__label">Overview</span></span><span class="tab-item__line"></span></div>
+                    <div class="tab-item tab-item--sm"><span class="tab-item__inner"><span class="tab-item__label">Activity</span></span><span class="tab-item__line"></span></div>
+                    <div class="tab-item tab-item--sm"><span class="tab-item__inner"><span class="tab-item__label">Settings</span></span><span class="tab-item__line"></span></div>
+                  </div>
+                </div>
+              </div>
+              <div class="sel-usage__card">
+                <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don&rsquo;t</div>
+                <ul class="sel-usage__list">
+                  <li>Don&rsquo;t use tabs to move between unrelated destinations &mdash; that&rsquo;s navigation, not tabs.</li>
+                  <li>Don&rsquo;t mix icon and no-icon tabs, or Regular and Small, in the same list.</li>
+                  <li>Don&rsquo;t overflow with too many tabs &mdash; if it scrolls a lot, reconsider the structure.</li>
+                  <li>Don&rsquo;t leave the list with no active tab, or with more than one active at once.</li>
+                </ul>
+                <div class="spec-usage-demo">
+                  <div class="tabs-list" style="width:-moz-fit-content;width:fit-content;pointer-events:none">
+                    <div class="tab-item tab-item--sm tab-item--active"><span class="tab-item__inner"><span class="tab-item__icon"><svg viewBox="0 0 10.5 11" fill="none" xmlns="http://www.w3.org/2000/svg"><path transform="translate(-24.75,-22.5)" fill-rule="evenodd" clip-rule="evenodd" d="M32.4479 24.8119C32.4479 26.0887 31.3676 27.1237 30.035 27.1237C28.7024 27.1237 27.6221 26.0887 27.6221 24.8119C27.6221 23.5351 28.7024 22.5 30.035 22.5C31.3676 22.5 32.4479 23.5351 32.4479 24.8119ZM35.2235 30.8447C35.1916 30.9409 35.1397 31.0298 35.071 31.1062H35.0321C34.4324 31.8437 33.6649 32.4403 32.7882 32.8507C31.9114 33.2611 30.9485 33.4744 29.9728 33.4744C28.997 33.4744 28.0341 33.2611 27.1574 32.8507C26.2806 32.4403 25.5132 31.8437 24.9135 31.1062C24.7872 30.9463 24.729 30.7465 24.7507 30.5471C24.7723 30.3478 24.8723 30.1637 25.0302 30.0323C26.3975 28.865 28.1648 28.22 29.9961 28.22C31.8274 28.22 33.5948 28.865 34.962 30.0323C35.0448 30.0945 35.1136 30.1722 35.1642 30.2607C35.2148 30.3491 35.2461 30.4465 35.2563 30.5469C35.2665 30.6473 35.2553 30.7486 35.2235 30.8447Z" fill="currentColor"/></svg></span><span class="tab-item__label">Dashboard</span></span><span class="tab-item__line"></span></div>
+                    <div class="tab-item"><span class="tab-item__inner"><span class="tab-item__label">Billing</span></span><span class="tab-item__line"></span></div>
+                    <div class="tab-item tab-item--sm"><span class="tab-item__inner"><span class="tab-item__label">Log out</span></span><span class="tab-item__line"></span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tabs-panel" data-tbc-panel="style">
+        <div id="tbc-reference" class="type-sub spec-panel spec-stack"></div>
+      </div>
+      <div class="tabs-panel" data-tbc-panel="code">
+        <div id="tbc-code-playground" class="type-sub spec-panel spec-code-playground"></div>
+        <div id="tbc-code-tab" class="type-sub spec-panel"></div>
+      </div>
+      <div class="tabs-panel" data-tbc-panel="changelog" id="tbc-changelog-panel"></div>
     </section>
     <section class="sec sec--tabbed" id="s-dropdown">
       <div class="sec-hero">
@@ -7951,6 +7928,10 @@ function toggleTheme() {
   try { if(typeof renderPopoverPatterns==='function' && document.getElementById('pop-patterns')) renderPopoverPatterns(); } catch(e){}
   try { if(typeof renderPopoverInSitu==='function' && document.getElementById('pop-insitu')) renderPopoverInSitu(); } catch(e){}
   try { if(typeof renderPopoverReference==='function' && document.getElementById('pop-reference')) renderPopoverReference(); } catch(e){}
+  try { if(typeof renderTabsPlayground==='function' && document.getElementById('tbc-playground')) renderTabsPlayground(); } catch(e){}
+  try { if(typeof renderTabsPatterns==='function' && document.getElementById('tbc-patterns')) renderTabsPatterns(); } catch(e){}
+  try { if(typeof renderTabsInSitu==='function' && document.getElementById('tbc-insitu')) renderTabsInSitu(); } catch(e){}
+  try { if(typeof renderTabsReference==='function' && document.getElementById('tbc-reference')) renderTabsReference(); } catch(e){}
   try { if(typeof renderSepPlayground==='function' && document.getElementById('sep-playground')) renderSepPlayground(); } catch(e){}
   try { if(typeof renderSepVariants==='function' && document.getElementById('sep-variants')) renderSepVariants(); } catch(e){}
   try { if(typeof renderSepInSitu==='function' && document.getElementById('sep-insitu')) renderSepInSitu(); } catch(e){}
@@ -17607,12 +17588,18 @@ function cbrTabSwitch(tab){
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.84.9';
+const SYSTEM_VERSION = '1.85.0';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.85.0', date:'2026-09-04', author:'Mo', title:'Tabs (s-tabs) rebuilt as a full tabbed page, matching Pills and Popover', changes:[
+        ['changed','Tabs converted from a single flat page into a .sec--tabbed page — Overview / Style / Code / Changelog — with a hero preview, a "Try the component" playground (size, icon, tab-count, editable labels) mirrored on the Code tab via shared tbcg state, an Overview "Key patterns" grid crossing size × icon (no colour axis on this component), 3 "In context" mockups (detail-page header, card-scoped switcher, icon dashboard switcher), a Style tab (Anatomy / Sizes & dimensions / States) and a Code tab with the HTML/CSS · Blazor · React TSX language switcher'],
+        ['changed','toggleTheme() now re-renders Tabs\' four new stages (playground, patterns, in-context, style reference) on every light/dark toggle so they stay in sync with the site theme'],
+        ['removed','Tabs\' old flat-page-only demo CSS/JS (.tabs-demo, .tabs-swatch*, .tabs-skel*, the #tabs-play mount rules, and their rendering IIFE) — tabItem/tabsList, the real component builders (also reused site-wide as every tabbed page\'s own sub-tab nav), moved to global scope'],
+        ['changed','Tabs\' ai-ctx tab regenerated — status now "static" (its sub-tab nav is real static markup on the page, not JS-rendered) — via scripts/generate-ai-context-tab.mjs'],
+      ]},
       {version:'1.84.9', date:'2026-09-04', author:'Mo', title:'Popover hero preview closer to the real anatomy', changes:[
         ['changed','Hero preview\'s open panel expanded from just a title bar to title + one content-row bar + a footer action, all still wireframe .mk-bar placeholders (no literal copy) — reads closer to the real component\'s title/body/footer anatomy while staying reduced for the small header thumbnail'],
         ['fixed','The footer action button stretched full-width via .pop__apply\'s real flex:1, reading as an odd wide bar rather than a button; constrained to a fixed 64px width so it reads as a compact action'],
@@ -20095,7 +20082,18 @@ const CHANGELOG = {
         ['added','Live size + colour customiser, a 30-icon library with click-to-copy, and an anatomy/specs table'],
       ]},
     ]},
-    {secId:'s-tabs', name:'Tabs', version:'1.2.1', entries:[
+    {secId:'s-tabs', name:'Tabs', version:'1.3.0', entries:[
+      {version:'1.3.0', date:'2026-09-04', author:'Mo', title:'Tabs converted to a full tabbed page — Overview / Style / Code / Changelog', changes:[
+        ['changed','Page rebuilt from a single flat "Interactive/Sizes/With & without icon/States/Anatomy & specs/When to use" scroll into a .sec--tabbed page matching Pills and Popover: a hero with a static illustrative preview, and Overview / Style / Code / Changelog sub-tabs switched by tbcTabSwitch(), all under the unchanged #s-tabs id so deep links keep working'],
+        ['added','"Try the component" playground (renderTabsPlayground, mounted at #tbc-playground and mirrored at #tbc-code-playground via shared tbcg state) with controls for Size (Regular/Small), Icon (on/off), a 2–5 tab-count stepper, and a per-tab label text input — the stage itself is clickable to change the active tab, built from the real tabItem/tabsList functions'],
+        ['added','Overview "Key patterns" showcase (renderTabsPatterns, TBC_KEY_PATTERNS) crossing size × icon in a 4-cell grid — Tabs\' full variant space, since there is no colour axis to showcase the way Pills does'],
+        ['added','"In context" mockups (renderTabsInSitu) — 3 real-world scenarios: a Regular tab bar heading a merchant profile/detail page, a Small tab bar scoped inside a card, and an icon-led Regular bar as a dashboard section switcher'],
+        ['added','Style tab (renderTabsReference) with Anatomy (5 numbered parts: Tab item, Icon chip, Label, Active underline, Tabs list container), Sizes & dimensions (the existing Regular/Small token table, ported as-is), and States (a size × icon × state spec grid plus a treatment table for Inactive/Hover/Active)'],
+        ['added','Code tab (renderTabsCodeTab) with the same .code-seg HTML/CSS · Blazor · React TSX language switcher as Popover/Pills, generating a live snippet (getTabsCode / getTabsCodeHTML / getTabsCodeBlazor / getTabsCodeTSX) that reflects the current Playground size/icon/label/active-tab state'],
+        ['changed','toggleTheme() now re-renders all four new Tabs mounts (renderTabsPlayground/Patterns/InSitu/Reference) on every light/dark toggle, so their stages never desync from the site theme — a bug Popover\'s own migration originally shipped with and later had to fix'],
+        ['removed','Old flat-page-only demo chrome (.tabs-demo, .tabs-swatch*, .tabs-skel*, the #tabs-play grid rules) deleted from CSS along with the mounts that used them (#tabs-play, #tabs-sizes, #tabs-icon, #tabs-states) and their rendering IIFE — tabItem/tabsList moved to global scope so the new render functions can call them'],
+        ['changed','ai-ctx tab regenerated: status flipped from "js-rendered" to "static" now that its own sub-tab nav is real static .tab-item/.tabs-list markup on the page; builderFunctions still lists only tabItem/tabsList, excluding the new doc-site playground plumbing'],
+      ]},
       {version:'1.2.1', date:'2026-07-29', author:'Mo', title:'AI context tab added', changes:[
         ['added','AI context tab documenting the real .tab-item/.tabs-list structural classes and the tabItem/tabsList builders, plus its existing "When to use" Do/Dont guidance (4 do / 4 dont); notes that .tabs-swatch/.tabs-skel* are doc-site-only demo chrome, excluded from the tab'],
       ]},
@@ -21230,115 +21228,561 @@ function renderSectionChangelogs() {
   });
 }
 
-/* ── TABS ── */
-(function(){
-  var USER_ICON = '<svg viewBox="0 0 10.5 11" fill="none" xmlns="http://www.w3.org/2000/svg"><path transform="translate(-24.75,-22.5)" fill-rule="evenodd" clip-rule="evenodd" d="M32.4479 24.8119C32.4479 26.0887 31.3676 27.1237 30.035 27.1237C28.7024 27.1237 27.6221 26.0887 27.6221 24.8119C27.6221 23.5351 28.7024 22.5 30.035 22.5C31.3676 22.5 32.4479 23.5351 32.4479 24.8119ZM35.2235 30.8447C35.1916 30.9409 35.1397 31.0298 35.071 31.1062H35.0321C34.4324 31.8437 33.6649 32.4403 32.7882 32.8507C31.9114 33.2611 30.9485 33.4744 29.9728 33.4744C28.997 33.4744 28.0341 33.2611 27.1574 32.8507C26.2806 32.4403 25.5132 31.8437 24.9135 31.1062C24.7872 30.9463 24.729 30.7465 24.7507 30.5471C24.7723 30.3478 24.8723 30.1637 25.0302 30.0323C26.3975 28.865 28.1648 28.22 29.9961 28.22C31.8274 28.22 33.5948 28.865 34.962 30.0323C35.0448 30.0945 35.1136 30.1722 35.1642 30.2607C35.2148 30.3491 35.2461 30.4465 35.2563 30.5469C35.2665 30.6473 35.2553 30.7486 35.2235 30.8447Z" fill="currentColor"/></svg>';
+/* ============================================================
+   TABS
+   Same tabbed-page treatment as Pills/Popover (.sec--tabbed):
+   Overview / Style / Code / Changelog, a shared-state playground
+   rendered into two mounts, and a three-language code panel.
 
-  // opts: {label, icon(bool), size:'reg'|'sm', state:'inactive'|'hover'|'active', el:'div'|'button'}
-  function tabItem(opts){
-    var tag = opts.el || 'button';
-    var cls = 'tab-item';
-    if(opts.size === 'sm') cls += ' tab-item--sm';
-    if(opts.state === 'hover')  cls += ' tab-item--hover';
-    if(opts.state === 'active') cls += ' tab-item--active';
-    var icon = opts.icon ? '<span class="tab-item__icon">' + USER_ICON + '</span>' : '';
-    return '<' + tag + ' type="button" class="' + cls + '">' +
-             '<span class="tab-item__inner">' + icon +
-               '<span class="tab-item__label">' + (opts.label || 'Tab item') + '</span>' +
-             '</span>' +
-             '<span class="tab-item__line"></span>' +
-           '</' + tag + '>';
-  }
-  function tabsList(items, size){
-    return '<div class="tabs-list">' + items.map(function(it){
-      it.size = size; return tabItem(it);
-    }).join('') + '</div>';
-  }
-  function swatch(cap, inner){
-    return '<div class="tabs-swatch"><div class="tabs-swatch__cap">' + cap + '</div>' + inner + '</div>';
-  }
+   Naming: every NEW doc-site-only id/class/function here is
+   prefixed tbc- / tbcg / TBC_ ("Tabs Component"). The bare
+   tabs- / .tab-item / .tabs-list names belong to the REAL
+   component and are reused site-wide as the sub-tab nav on every
+   tabbed page — including this one — so they must never be
+   repurposed for page plumbing.
 
-  // Placeholder table simulation — stands in for real content switching between panels
-  function skeletonRow(widths, head){
-    var cells = widths.map(function(w){ return '<span class="tabs-skel__cell" style="width:' + w + '%"></span>'; }).join('');
-    return '<div class="tabs-skel__row' + (head ? ' tabs-skel__row--head' : '') + '">' + cells + '</div>';
-  }
-  function skeletonTable(rowCount){
-    var cols = [38, 24, 20, 12];
-    var rows = skeletonRow(cols, true);
-    for(var i = 0; i < rowCount; i++) rows += skeletonRow(cols);
-    return '<div class="tabs-skel">' + rows + '</div>';
-  }
+   Tabs has no colour axis, so "Key variants" is replaced by
+   "Key patterns": size (Regular / Small) x icon (on / off)
+   crossed with the three states (Inactive / Hover / Active).
+============================================================ */
+var USER_ICON = '<svg viewBox="0 0 10.5 11" fill="none" xmlns="http://www.w3.org/2000/svg"><path transform="translate(-24.75,-22.5)" fill-rule="evenodd" clip-rule="evenodd" d="M32.4479 24.8119C32.4479 26.0887 31.3676 27.1237 30.035 27.1237C28.7024 27.1237 27.6221 26.0887 27.6221 24.8119C27.6221 23.5351 28.7024 22.5 30.035 22.5C31.3676 22.5 32.4479 23.5351 32.4479 24.8119ZM35.2235 30.8447C35.1916 30.9409 35.1397 31.0298 35.071 31.1062H35.0321C34.4324 31.8437 33.6649 32.4403 32.7882 32.8507C31.9114 33.2611 30.9485 33.4744 29.9728 33.4744C28.997 33.4744 28.0341 33.2611 27.1574 32.8507C26.2806 32.4403 25.5132 31.8437 24.9135 31.1062C24.7872 30.9463 24.729 30.7465 24.7507 30.5471C24.7723 30.3478 24.8723 30.1637 25.0302 30.0323C26.3975 28.865 28.1648 28.22 29.9961 28.22C31.8274 28.22 33.5948 28.865 34.962 30.0323C35.0448 30.0945 35.1136 30.1722 35.1642 30.2607C35.2148 30.3491 35.2461 30.4465 35.2563 30.5469C35.2665 30.6473 35.2553 30.7486 35.2235 30.8447Z" fill="currentColor"/></svg>';
 
-  // Interactive playground
-  var play = document.getElementById('tabs-play');
-  if(play){
-    var tabs = [
-      {label:'Overview',  icon:true, rows:4},
-      {label:'Activity',  icon:true, rows:3},
-      {label:'Documents', icon:true, rows:5},
-      {label:'Settings',  icon:true, rows:2}
-    ];
-    play.innerHTML = tabsList(tabs, 'reg') +
-      tabs.map(function(t,i){ return '<div class="tabs-panel' + (i===0?' on':'') + '">' + skeletonTable(t.rows) + '</div>'; }).join('');
-    var items  = play.querySelectorAll('.tab-item');
-    var panels = play.querySelectorAll('.tabs-panel');
-    items[0].classList.add('on');
-    items.forEach(function(btn, i){
-      btn.addEventListener('click', function(){
-        items.forEach(function(b){ b.classList.remove('on'); });
-        panels.forEach(function(p){ p.classList.remove('on'); });
-        btn.classList.add('on');
-        if(panels[i]) panels[i].classList.add('on');
-      });
+// opts: {label, icon(bool), size:'reg'|'sm', state:'inactive'|'hover'|'active', el:'div'|'button'}
+function tabItem(opts){
+  var tag = opts.el || 'button';
+  var cls = 'tab-item';
+  if(opts.size === 'sm') cls += ' tab-item--sm';
+  if(opts.state === 'hover')  cls += ' tab-item--hover';
+  if(opts.state === 'active') cls += ' tab-item--active';
+  var icon = opts.icon ? '<span class="tab-item__icon">' + USER_ICON + '</span>' : '';
+  return '<' + tag + ' type="button" class="' + cls + '">' +
+           '<span class="tab-item__inner">' + icon +
+             '<span class="tab-item__label">' + (opts.label || 'Tab item') + '</span>' +
+           '</span>' +
+           '<span class="tab-item__line"></span>' +
+         '</' + tag + '>';
+}
+function tabsList(items, size){
+  return '<div class="tabs-list">' + items.map(function(it){
+    it.size = size; return tabItem(it);
+  }).join('') + '</div>';
+}
+
+/* ── TABS PLAYGROUND ── */
+/* Shared state for both playground mounts, same role popg plays for
+   Popover. `active` is the selected tab index — the stage is clickable,
+   since switching is the whole point of the component. */
+let tbcg = { size:'reg', icon:true, tabCount:4, labels:['Overview','Activity','Settings','More'], active:0, theme:'light' };
+const TBC_SPARE_LABELS = ['Overview','Activity','Settings','More','Files'];
+
+function tbcEsc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&#60;').replace(/>/g,'&#62;').replace(/"/g,'&quot;'); }
+
+/* Current labels, always exactly tabCount long. */
+function tbcgLabels(){
+  const out = [];
+  for(let i=0; i<tbcg.tabCount; i++) out.push(tbcg.labels[i] || TBC_SPARE_LABELS[i] || ('Tab ' + (i+1)));
+  return out;
+}
+
+/* Fresh opts objects each call — tabsList() writes `size` onto them. */
+function tbcgItems(){
+  return tbcgLabels().map((l,i)=>({label:tbcEsc(l)||'Tab item', icon:tbcg.icon, state:i===tbcg.active?'active':'inactive'}));
+}
+
+function tbcgRefresh(){
+  document.querySelectorAll('.tbcg-stage-el').forEach(stage=>{
+    /* The stage is a centring flex box; a wide tab bar would be clipped on
+       both edges with no way to reach it, so the list gets its own
+       max-width:100% scroll container. */
+    stage.innerHTML = '<div style="overflow-x:auto;max-width:100%">' + tabsList(tbcgItems(), tbcg.size) + '</div>';
+    stage.querySelectorAll('.tab-item').forEach((btn,i)=>{
+      btn.addEventListener('click', ()=>{ tbcg.active = i; tbcgRefresh(); });
     });
-  }
+  });
+  const block = document.getElementById('tbcg-code-block');
+  if(block) block.innerHTML = getTabsCode();
+}
 
-  // Sizes
-  var sizes = document.getElementById('tabs-sizes');
-  if(sizes){
-    var listItems = [
-      {label:'Overview', icon:true, state:'active'},
-      {label:'Activity', icon:true},
-      {label:'Documents', icon:true}
-    ];
-    sizes.innerHTML =
-      swatch('Regular · 56px', tabsList(listItems.map(function(o){return Object.assign({},o);}), 'reg')) +
-      swatch('Small · 46px',   tabsList(listItems.map(function(o){return Object.assign({},o);}), 'sm'));
-  }
+/* ── CODE PANEL LANGUAGES ──
+   HTML/CSS is the source of truth (real .tab-item/.tabs-list markup
+   straight out of tabItem/tabsList). Blazor and React TSX are
+   illustrative wrappers — what differs per framework is the
+   active-index wiring, not the markup. */
+const TBC_LANGS = [
+  {key:'html',   label:'HTML / CSS', file:'tabs.html'},
+  {key:'blazor', label:'Blazor',     file:'DsTabs.razor'},
+  {key:'tsx',    label:'React TSX',  file:'DsTabs.tsx'},
+];
+let tbcLang = 'html';
 
-  // With & without icon
-  var iconEl = document.getElementById('tabs-icon');
-  if(iconEl){
-    var withIcon = [{label:'Overview',icon:true,state:'active'},{label:'Activity',icon:true},{label:'Documents',icon:true}];
-    var noIcon   = [{label:'Overview',icon:false,state:'active'},{label:'Activity',icon:false},{label:'Documents',icon:false}];
-    iconEl.innerHTML =
-      swatch('With icon',    tabsList(withIcon, 'reg')) +
-      swatch('Without icon', tabsList(noIcon, 'reg'));
-  }
+function getTabsCodeHTML(){
+  const listCls = 'tabs-list';
+  const rows = tbcgLabels().map((l,i)=>{
+    const on = i===tbcg.active;
+    const cls = 'tab-item' + (tbcg.size==='sm' ? ' tab-item--sm' : '') + (on ? ' on' : '');
+    const icon = tbcg.icon ? `<span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"tab-item__icon"</span><span class="code-kw">></span><span class="code-cm">&#60;!-- icon --></span><span class="code-kw">&#60;/span></span>` : '';
+    return `  <span class="code-kw">&#60;button</span> <span class="code-cls">class</span>=<span class="code-val">"${cls}"</span><span class="code-kw">></span>
+    <span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"tab-item__inner"</span><span class="code-kw">></span>${icon}<span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"tab-item__label"</span><span class="code-kw">></span>${tbcEsc(l)}<span class="code-kw">&#60;/span>&#60;/span></span>
+    <span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"tab-item__line"</span><span class="code-kw">>&#60;/span></span>
+  <span class="code-kw">&#60;/button></span>`;
+  }).join('\n');
+  return `<span class="code-cm">/* Flash · ${cap(tbcg.theme)} · ${tbcg.size==='sm'?'Small':'Regular'} tabs · ${tbcg.icon?'with':'no'} icon */</span>
+<span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"${listCls}"</span><span class="code-kw">></span>
+${rows}
+<span class="code-kw">&#60;/div></span>`;
+}
 
-  // States — every combination of size × icon × state
-  var states = document.getElementById('tabs-states');
-  if(states){
-    var order = [
-      {state:'inactive', cap:'Inactive'},
-      {state:'hover',    cap:'Hover'},
-      {state:'active',   cap:'Active'}
-    ];
-    var groups = [
-      {size:'reg', icon:true,  cap:'Regular · with icon'},
-      {size:'reg', icon:false, cap:'Regular · no icon'},
-      {size:'sm',  icon:true,  cap:'Small · with icon'},
-      {size:'sm',  icon:false, cap:'Small · no icon'}
-    ];
-    states.innerHTML = groups.map(function(g){
-      var row = order.map(function(o){
-        return tabItem({label:o.cap, icon:g.icon, size:g.size, state:o.state, el:'div'});
-      }).join('');
-      return swatch(g.cap, '<div class="tabs-list">' + row + '</div>');
-    }).join('');
+function getTabsCodeBlazor(){
+  const items = tbcgLabels().map(l=>`<span class="code-val">"${tbcEsc(l)}"</span>`).join(', ');
+  const opt = tbcg.icon ? '' : `\n         <span class="code-attr">ShowIcons</span>=<span class="code-val">"false"</span>`;
+  return `<span class="code-cm">@* DsTabs.razor — usage *@</span>
+<span class="code-kw">&#60;DsTabs</span> <span class="code-attr">Items</span>=<span class="code-val">"new[] { ${items} }"</span>
+         <span class="code-attr">Size</span>=<span class="code-val">"TabsSize.${tbcg.size==='sm'?'Small':'Regular'}"</span>${opt} <span class="code-kw">/></span>
+
+<span class="code-cm">@* DsTabs.razor — component definition *@</span>
+<span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"tabs-list"</span><span class="code-kw">></span>
+  <span class="code-kw">@for</span> (<span class="code-cls">var</span> i = 0; i &#60; Items.Length; i++) {
+    <span class="code-cls">var</span> idx = i;
+    <span class="code-kw">&#60;button</span> <span class="code-cls">class</span>=<span class="code-val">"@ItemClass(idx)"</span> <span class="code-attr">@onclick</span>=<span class="code-val">"() => Active = idx"</span><span class="code-kw">></span>
+      <span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"tab-item__inner"</span><span class="code-kw">></span>
+        <span class="code-kw">@if</span> (ShowIcons) { <span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"tab-item__icon"</span><span class="code-kw">>@IconContent&#60;/span></span> }
+        <span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"tab-item__label"</span><span class="code-kw">>@Items[idx]&#60;/span></span>
+      <span class="code-kw">&#60;/span></span>
+      <span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"tab-item__line"</span><span class="code-kw">>&#60;/span></span>
+    <span class="code-kw">&#60;/button></span>
   }
-})();
+<span class="code-kw">&#60;/div></span>
+
+<span class="code-kw">@code</span> {
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> <span class="code-cls">string</span>[] Items { get; set; } = <span class="code-cls">Array</span>.Empty&#60;<span class="code-cls">string</span>>();
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> TabsSize Size { get; set; } = TabsSize.Regular;
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> <span class="code-cls">bool</span> ShowIcons { get; set; } = <span class="code-kw">true</span>;
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> RenderFragment IconContent { get; set; }
+
+  <span class="code-kw">private</span> <span class="code-cls">int</span> Active { get; set; } = 0;
+  <span class="code-kw">private</span> <span class="code-cls">string</span> ItemClass(<span class="code-cls">int</span> i) =>
+    <span class="code-val">"tab-item"</span>
+    + (Size == TabsSize.Small ? <span class="code-val">" tab-item--sm"</span> : <span class="code-val">""</span>)
+    + (i == Active ? <span class="code-val">" on"</span> : <span class="code-val">""</span>);
+}`;
+}
+
+function getTabsCodeTSX(){
+  const items = tbcgLabels().map(l=>`<span class="code-val">'${tbcEsc(l)}'</span>`).join(', ');
+  const usageProps = `items={[${items}]} size=<span class="code-val">"${tbcg.size==='sm'?'sm':'reg'}"</span>` + (tbcg.icon?'':' showIcons={false}');
+  return `<span class="code-cm">// DsTabs.tsx</span>
+<span class="code-kw">import</span> React, { useState } <span class="code-kw">from</span> <span class="code-val">'react'</span>;
+
+<span class="code-kw">type</span> <span class="code-cls">TabsSize</span> = <span class="code-val">'reg'</span> | <span class="code-val">'sm'</span>;
+
+<span class="code-kw">interface</span> <span class="code-cls">DsTabsProps</span> {
+  items: <span class="code-cls">string</span>[];
+  size?: <span class="code-cls">TabsSize</span>;
+  showIcons?: <span class="code-cls">boolean</span>;
+  icon?: React.ReactNode;
+  defaultActive?: <span class="code-cls">number</span>;
+  onChange?: (index: <span class="code-cls">number</span>) => <span class="code-kw">void</span>;
+}
+
+<span class="code-kw">export const</span> <span class="code-cls">DsTabs</span>: React.FC&#60;DsTabsProps> = ({ items, size = <span class="code-val">'reg'</span>, showIcons = <span class="code-kw">true</span>, icon, defaultActive = 0, onChange }) => {
+  <span class="code-kw">const</span> [active, setActive] = useState(defaultActive);
+
+  <span class="code-kw">const</span> select = (i: <span class="code-cls">number</span>) => { setActive(i); onChange?.(i); };
+
+  <span class="code-kw">return</span> (
+    &#60;div className=<span class="code-val">"tabs-list"</span> role=<span class="code-val">"tablist"</span>>
+      {items.map((label, i) => (
+        &#60;button
+          key={label}
+          type=<span class="code-val">"button"</span>
+          role=<span class="code-val">"tab"</span>
+          aria-selected={i === active}
+          className={[<span class="code-val">'tab-item'</span>, size === <span class="code-val">'sm'</span> &amp;&amp; <span class="code-val">'tab-item--sm'</span>, i === active &amp;&amp; <span class="code-val">'on'</span>].filter(Boolean).join(<span class="code-val">' '</span>)}
+          onClick={() => select(i)}
+        >
+          &#60;span className=<span class="code-val">"tab-item__inner"</span>>
+            {showIcons &amp;&amp; &#60;span className=<span class="code-val">"tab-item__icon"</span>>{icon}&#60;/span>}
+            &#60;span className=<span class="code-val">"tab-item__label"</span>>{label}&#60;/span>
+          &#60;/span>
+          &#60;span className=<span class="code-val">"tab-item__line"</span> />
+        &#60;/button>
+      ))}
+    &#60;/div>
+  );
+};
+
+<span class="code-cm">// Usage</span>
+&#60;DsTabs ${usageProps} />`;
+}
+
+function getTabsCode(){
+  return tbcLang==='blazor' ? getTabsCodeBlazor()
+       : tbcLang==='tsx'    ? getTabsCodeTSX()
+       : getTabsCodeHTML();
+}
+
+function setTbcLang(lang){
+  if(!TBC_LANGS.some(l=>l.key===lang)) return;
+  tbcLang = lang;
+  document.querySelectorAll('#tbc-code-tab .code-seg__btn').forEach(b=>{
+    const on = b.dataset.lang===lang;
+    b.setAttribute('aria-selected', on ? 'true' : 'false');
+    b.setAttribute('tabindex', on ? '0' : '-1');
+  });
+  const file = document.getElementById('tbc-lang-file');
+  const meta = TBC_LANGS.find(l=>l.key===lang);
+  if(file && meta) file.textContent = meta.file;
+  const block = document.getElementById('tbcg-code-block');
+  if(block) block.innerHTML = getTabsCode();
+}
+
+function tbcLangKeydown(e){
+  const i = TBC_LANGS.findIndex(l=>l.key===tbcLang);
+  let n = i;
+  if(e.key==='ArrowLeft')       n = (i - 1 + TBC_LANGS.length) % TBC_LANGS.length;
+  else if(e.key==='ArrowRight') n = (i + 1) % TBC_LANGS.length;
+  else if(e.key==='Home')       n = 0;
+  else if(e.key==='End')        n = TBC_LANGS.length - 1;
+  else return;
+  e.preventDefault();
+  setTbcLang(TBC_LANGS[n].key);
+  const btn = document.getElementById('tbc-lang-' + TBC_LANGS[n].key);
+  if(btn) btn.focus();
+}
+
+/* The Tabs playground renders into more than one mount (the main Overview
+   demo, and a smaller copy on the Code tab) so both stay in sync with the
+   same shared tbcg state — same pattern as POP_PLAYGROUND_MOUNTS. */
+const TBC_PLAYGROUND_MOUNTS = [
+  {rootId:'tbc-playground', idSuffix:'', wrap:true, title:'Try the component', desc:'Adjust the filters to test component states.', headingAbove:'Use tabs to switch between peer views of one screen — pick a size, decide on icons, and keep the labels short.'},
+  {rootId:'tbc-code-playground', idSuffix:'-code', style:'code', title:'Playground', desc:'Live demo of the component.'},
+];
+
+function renderTabsPlayground(){
+  tbcg.theme = document.documentElement.getAttribute('data-theme')==='dark' ? 'dark' : 'light';
+  const sbg = stageBg(tbcg.theme);
+
+  const sizeBtns = [{key:'reg',label:'Regular'},{key:'sm',label:'Small'}]
+    .map(s=>`<button class="btn-pg__pill${tbcg.size===s.key?' on':''}" onclick="tbcgSet('size','${s.key}')">${s.label}</button>`).join('');
+  const iconBtns = ['on','off']
+    .map(x=>`<button class="btn-pg__pill${(tbcg.icon?(x==='on'):(x==='off'))?' on':''}" onclick="tbcgSet('icon','${x}')">${x==='on'?'With icon':'No icon'}</button>`).join('');
+  const countCtrl = `
+    <button class="btn-pg__pill" onclick="tbcgRemoveTab()"${tbcg.tabCount<=2?' disabled style="opacity:.4;cursor:not-allowed"':''} aria-label="Remove a tab">&minus;</button>
+    <span class="btn-pg__pill on" style="pointer-events:none;min-width:28px;justify-content:center">${tbcg.tabCount}</span>
+    <button class="btn-pg__pill" onclick="tbcgAddTab()"${tbcg.tabCount>=5?' disabled style="opacity:.4;cursor:not-allowed"':''} aria-label="Add a tab">+</button>`;
+
+  TBC_PLAYGROUND_MOUNTS.forEach(mount=>{
+    const root = document.getElementById(mount.rootId);
+    if(!root) return;
+    const s = mount.idSuffix;
+    const labelInputs = tbcgLabels().map((l,i)=>`<input class="pop__input" type="text" value="${tbcEsc(l)}" style="width:112px;margin-top:0" aria-label="Tab ${i+1} label" oninput="tbcgSetLabel(${i}, this.value)">`).join('');
+    const demo = `
+      <div class="btn-pg">
+        <div class="btn-pg__stage tbcg-stage-el" id="tbcg-stage${s}" style="background:${sbg}"></div>
+        <div class="btn-pg__ctrls">
+          <div class="btn-pg__group"><span class="btn-pg__clabel" style="width:82px">Size</span><div class="btn-pg__pill-row" style="margin-left:6px">${sizeBtns}</div></div>
+          <div class="btn-pg__group"><span class="btn-pg__clabel" style="width:82px">Icon</span><div class="btn-pg__pill-row" style="margin-left:6px">${iconBtns}</div></div>
+          <div class="btn-pg__group"><span class="btn-pg__clabel" style="width:82px">Tabs</span><div class="btn-pg__pill-row" style="margin-left:6px">${countCtrl}</div></div>
+          <div class="btn-pg__group" style="align-items:flex-start"><span class="btn-pg__clabel" style="width:82px">Labels</span><div class="btn-pg__pill-row" style="margin-left:6px;flex-wrap:wrap;gap:6px">${labelInputs}</div></div>
+        </div>
+      </div>`;
+
+    if(mount.style==='code'){
+      root.innerHTML = `
+        <div class="type-sub__title">${mount.title}</div>
+        <div class="type-sub__desc">${mount.desc}</div>
+        <div class="cpg-section-outline">${demo}</div>`;
+      return;
+    }
+
+    const inner = `
+      <div class="cpg-layout">
+        <div class="cpg-layout__intro">
+          ${mount.wrap ? `<span class="cpg-cursor-icon">${CPG_CURSOR_ICON_SVG}</span>` : ''}
+          <div class="cpg-layout__title">${mount.title}</div>
+          <div class="cpg-layout__desc">${mount.desc}</div>
+        </div>
+        <div class="cpg-layout__demo">${demo}</div>
+      </div>`;
+    const wrapped = mount.wrap ? `<div class="cpg-section-block">${inner}</div>` : inner;
+    root.innerHTML = (mount.headingAbove ? `<div class="cpg-overview-heading"><span class="cpg-overview-heading__icon">${CPG_INFO_ICON_SVG}</span><span>${mount.headingAbove}</span></div>` : '') + wrapped;
+  });
+
+  tbcgRefresh();
+}
+
+function renderTabsCodeTab(){
+  const root = document.getElementById('tbc-code-tab');
+  if(!root) return;
+  root.innerHTML = `
+    <div class="type-sub__title">Code</div>
+    <div class="type-sub__desc">Live snippet matching the current Playground configuration &mdash; switch to Overview to change it.</div>
+    <div class="cpg-section-outline">
+      <div class="code-panel code-panel--bare open">
+        <div class="code-panel__head">
+          <div class="code-seg" role="tablist" aria-label="Code language" onkeydown="tbcLangKeydown(event)">
+            ${TBC_LANGS.map(l=>`<button type="button" role="tab" class="code-seg__btn" id="tbc-lang-${l.key}" data-lang="${l.key}" aria-selected="${tbcLang===l.key?'true':'false'}" aria-controls="tbcg-code-block" tabindex="${tbcLang===l.key?'0':'-1'}" onclick="setTbcLang('${l.key}')">${l.label}</button>`).join('')}
+          </div>
+          <span class="code-lang-file" id="tbc-lang-file">${(TBC_LANGS.find(l=>l.key===tbcLang)||TBC_LANGS[0]).file}</span>
+          <button class="code-copy-btn" onclick="tbcgCopyCode()" id="tbcg-copy-btn">Copy</button>
+        </div>
+        <div class="code-body"><div class="code-block" id="tbcg-code-block" role="tabpanel" aria-live="polite"></div></div>
+      </div>
+    </div>`;
+}
+
+function tbcgSet(key, val){
+  if(key==='icon') tbcg.icon = (val==='on');
+  else tbcg[key] = val;
+  renderTabsPlayground();
+}
+function tbcgSetLabel(i, val){
+  tbcg.labels[i] = val;
+  tbcgRefresh();
+}
+function tbcgAddTab(){
+  if(tbcg.tabCount >= 5) return;
+  tbcg.labels = tbcgLabels();
+  tbcg.tabCount++;
+  renderTabsPlayground();
+}
+function tbcgRemoveTab(){
+  if(tbcg.tabCount <= 2) return;
+  tbcg.labels = tbcgLabels();
+  tbcg.tabCount--;
+  if(tbcg.active >= tbcg.tabCount) tbcg.active = tbcg.tabCount - 1;
+  renderTabsPlayground();
+}
+function tbcgCopyCode(){
+  const b = document.getElementById('tbcg-code-block');
+  if(!b) return;
+  navigator.clipboard.writeText(b.innerText||b.textContent).catch(()=>{});
+  const btn = document.getElementById('tbcg-copy-btn');
+  if(btn){ btn.textContent = 'Copied!'; setTimeout(()=>btn.textContent='Copy', 2000); }
+}
+
+/* Static, non-interactive preview for the Overview "Key patterns"
+   showcase, the "In context" mockups and the Style tab — real
+   tabItem/tabsList markup, rendered with el:'div' so the cards read as
+   illustrations rather than working tab bars. */
+function tabsPreviewHTML(items, size, activeIndex){
+  const act = (activeIndex==null ? 0 : activeIndex);
+  const opts = items.map((it,i)=>Object.assign({el:'div', state: i===act ? 'active' : 'inactive'}, it));
+  return tabsList(opts, size);
+}
+
+const TBC_KEY_PATTERNS = [
+  {name:'Regular', detail:'with icon',  size:'reg', icon:true},
+  {name:'Regular', detail:'no icon',    size:'reg', icon:false},
+  {name:'Small',   detail:'with icon',  size:'sm',  icon:true},
+  {name:'Small',   detail:'no icon',    size:'sm',  icon:false},
+];
+
+function renderTabsPatterns(){
+  const root = document.getElementById('tbc-patterns');
+  if(!root) return;
+  const theme = currentTheme();
+  const sbg = stageBg(theme);
+
+  const cells = TBC_KEY_PATTERNS.map(p=>{
+    const items = ['Overview','Activity'].map(l=>({label:l, icon:p.icon}));
+    return `
+    <div class="spec-cell">
+      <div class="spec-cell__stage" style="background:${sbg};padding:18px 14px">
+        <div style="overflow-x:auto;max-width:100%"><div style="width:-moz-fit-content;width:fit-content;margin:0 auto">${tabsPreviewHTML(items, p.size, 0)}</div></div>
+      </div>
+      <div class="spec-cell__name" style="padding-bottom:12px;line-height:1.4">${p.name}<span style="font-weight:400;color:var(--chrome-muted)">, ${p.detail}</span></div>
+    </div>`;
+  }).join('');
+
+  root.innerHTML = `
+    <div class="cpg-section-heading">
+      <div class="cpg-layout__title">Key patterns</div>
+      <div class="cpg-layout__desc">Two sizes crossed with the optional leading icon cover the whole variant space &mdash; there is no colour axis. Pick one combination per list and stay with it.</div>
+    </div>
+    <div class="cpg-section-block">
+      <div class="spec-grid" style="grid-template-columns:repeat(auto-fit,minmax(320px,1fr))">${cells}</div>
+    </div>`;
+}
+
+function renderTabsInSitu(){
+  const root = document.getElementById('tbc-insitu');
+  if(!root) return;
+  const theme = currentTheme();
+  const sbg = stageBg(theme);
+
+  // 1. Detail-page header — Regular size, the default for page-level switching
+  const detailMock = `
+    <div class="spec-mock__stage" style="background:${sbg};padding:0">
+      <div style="padding:14px 14px 0">
+        <div style="font-size:11px;font-weight:700;color:var(--chrome-txt)">Mo Swainston</div>
+        <div style="font-size:10px;color:var(--chrome-muted);margin-top:2px">Merchant &middot; Cape Town</div>
+      </div>
+      <div style="padding:10px 14px 0">${tabsPreviewHTML([{label:'Overview'},{label:'Activity'},{label:'Settings'}], 'reg', 0)}</div>
+      <div style="padding:14px;display:flex;flex-direction:column;gap:8px">
+        <span class="spec-mock__bar" style="width:92%"></span>
+        <span class="spec-mock__bar" style="width:78%"></span>
+      </div>
+    </div>
+    <div class="spec-mock__cap"><b>Detail page header</b>Regular tabs sit directly under the page title and switch between peer views of one record.</div>`;
+
+  // 2. Card-scoped tab bar — Small size for a dense, secondary context
+  const cardMock = `
+    <div class="spec-mock__stage" style="background:${sbg};padding:12px">
+      <div style="background:var(--chrome-bg);border:1px solid var(--chrome-border);border-radius:10px;overflow:hidden">
+        <div style="padding:10px 12px 0">${tabsPreviewHTML([{label:'Daily'},{label:'Weekly'},{label:'Monthly'}], 'sm', 1)}</div>
+        <div style="padding:12px;display:flex;flex-direction:column;gap:7px">
+          <span class="spec-mock__bar" style="width:85%"></span>
+          <span class="spec-mock__bar" style="width:64%"></span>
+          <span class="spec-mock__bar" style="width:74%"></span>
+        </div>
+      </div>
+    </div>
+    <div class="spec-mock__cap"><b>Inside a card</b>Small tabs keep a panel-scoped switcher from competing with the page&rsquo;s own navigation.</div>`;
+
+  // 3. Dashboard section switcher — icon tabs, used for scanning value
+  const dashMock = `
+    <div class="spec-mock__stage" style="background:${sbg};padding:0">
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px 0">
+        <span style="font-size:11px;font-weight:700;color:var(--chrome-txt)">Dashboard</span>
+        <span class="mk-bar" style="width:46px"></span>
+      </div>
+      <div style="padding:8px 14px 0">${tabsPreviewHTML([{label:'Sales', icon:true},{label:'Refunds', icon:true},{label:'Payouts', icon:true}], 'reg', 0)}</div>
+      <div style="padding:14px;display:flex;gap:10px">
+        <span class="spec-mock__bar" style="width:30%"></span>
+        <span class="spec-mock__bar" style="width:30%"></span>
+        <span class="spec-mock__bar" style="width:30%"></span>
+      </div>
+    </div>
+    <div class="spec-mock__cap"><b>Dashboard switcher</b>Icon tabs earn their chips here &mdash; each section has a recognisable glyph, and every tab carries one.</div>`;
+
+  root.innerHTML = `
+    <div class="cpg-section-heading">
+      <div class="cpg-layout__title">In context</div>
+      <div class="cpg-layout__desc">The same strip does three everyday jobs &mdash; heading a detail page, scoping a switcher to one card, and cutting a dashboard into sections.</div>
+    </div>
+    <div class="cpg-section-block">
+      <div class="spec-insitu-grid spec-insitu-grid--2">
+        <div class="spec-mock">${detailMock}</div>
+        <div class="spec-mock">${cardMock}</div>
+        <div class="spec-mock">${dashMock}</div>
+      </div>
+    </div>`;
+}
+
+function renderTabsReference(){
+  const root = document.getElementById('tbc-reference');
+  if(!root) return;
+
+  const theme = currentTheme();
+  const sbg = stageBg(theme);
+
+  /* ---- Anatomy ---- */
+  const heroTabs = tabsPreviewHTML([{label:'Overview', icon:true},{label:'Activity', icon:true},{label:'Settings', icon:true}], 'reg', 0);
+
+  const parts = [
+    {num:1, name:'Tab item',             note:'One switchable view. A button by default, in Regular or Small.', vis:tabItem({label:'Overview', icon:false, size:'sm', state:'inactive', el:'div'})},
+    {num:2, name:'Icon chip',            note:'Optional leading glyph in a rounded neutral chip — all tabs or none.', vis:'<span class="tab-item__icon" style="pointer-events:none">' + USER_ICON + '</span>'},
+    {num:3, name:'Label',                note:'One or two words. 16px Regular / 13px Small, semibold when active.', vis:'<span class="tab-item__label" style="color:var(--color-text-1);font-weight:650">Overview</span>'},
+    {num:4, name:'Active underline',     note:'Inverse bar straddling the divider, marking the one active tab.', vis:'<span class="spec-part__pill" style="width:60px;height:4px;border-radius:4px;background:var(--color-surface-inverse)"></span>'},
+    {num:5, name:'Tabs list container',  note:'Flex strip with one shared 2px bottom divider under every item.', vis:'<span class="spec-part__pill" style="width:64px;height:22px;border-radius:0;background:transparent;border-bottom:2px solid var(--chrome-border)"></span>'},
+  ];
+  const partCards = parts.map(p=>`
+    <div class="spec-part">
+      <div class="spec-part__stage" style="background:${sbg}">${p.vis}</div>
+      <div class="spec-part__body">
+        <div class="spec-part__name"><span class="spec-part__num">${p.num}</span>${p.name}</div>
+        <div class="spec-part__note">${p.note}</div>
+      </div>
+    </div>`).join('');
+
+  /* ---- Sizes & dimensions ---- (ported from the pre-tabbed Anatomy & specs table) */
+  const dims = [
+    {name:'Height',              reg:'56px',                        sm:'46px',                        token:'&mdash;'},
+    {name:'Horizontal padding',  reg:'20px',                        sm:'12px',                        token:'spacing-250 / spacing-150'},
+    {name:'Vertical padding',    reg:'4px',                         sm:'4px',                         token:'spacing-050'},
+    {name:'Icon &harr; label gap', reg:'8px',                       sm:'6px',                         token:'spacing-100 / spacing-075'},
+    {name:'Label size',          reg:'16px',                        sm:'13px',                        token:'Body m / Body s'},
+    {name:'Icon chip',           reg:'12px glyph &middot; 4px pad', sm:'11px glyph &middot; 4px pad', token:'bg <code>surface-neutral-secondary</code> #E6E6E6 &middot; radius 6px'},
+    {name:'Icon glyph colour',   span:'Inactive #5F6261 &rarr; Active #000000', token:'<code>chrome-muted</code> &rarr; <code>text-primary</code>'},
+    {name:'Active underline',    reg:'4px tall, offset &minus;2px', sm:'3px tall, flush',             token:'<code>surface-base-inverse</code> #000 <span style="color:var(--chrome-muted)">(dark #FFF)</span>'},
+  ];
+  const dimRows = dims.map(d=>d.span
+    ? `<tr><td class="dd-table__name">${d.name}</td><td colspan="2">${d.span}</td><td>${d.token}</td></tr>`
+    : `<tr><td class="dd-table__name">${d.name}</td><td>${d.reg}</td><td>${d.sm}</td><td>${d.token}</td></tr>`).join('');
+
+  /* ---- States ---- every combination of size x icon x state */
+  const stateOrder = [
+    {state:'inactive', cap:'Inactive', note:'Tertiary label at medium weight, muted icon glyph, no underline.'},
+    {state:'hover',    cap:'Hover',    note:'Label and glyph lift to primary; the underline stays hidden.'},
+    {state:'active',   cap:'Active',   note:'Primary label at semibold, dark glyph, underline shown.'},
+  ];
+  const stateGroups = [
+    {size:'reg', icon:true,  cap:'Regular &middot; with icon'},
+    {size:'reg', icon:false, cap:'Regular &middot; no icon'},
+    {size:'sm',  icon:true,  cap:'Small &middot; with icon'},
+    {size:'sm',  icon:false, cap:'Small &middot; no icon'},
+  ];
+  const stateCells = stateGroups.map(g=>{
+    const row = stateOrder.map(o=>tabItem({label:o.cap, icon:g.icon, size:g.size, state:o.state, el:'div'})).join('');
+    return `
+    <div class="spec-cell">
+      <div class="spec-cell__stage" style="background:${sbg};padding:18px 12px">
+        <div style="overflow-x:auto;max-width:100%"><div class="tabs-list" style="width:-moz-fit-content;width:fit-content;margin:0 auto;pointer-events:none">${row}</div></div>
+      </div>
+      <div class="spec-cell__name">${g.cap}</div>
+      <div class="spec-cell__desc">Inactive, Hover and Active, left to right.</div>
+    </div>`;
+  }).join('');
+
+  const stateNotes = stateOrder.map(o=>`<tr><td class="dd-table__name">${o.cap}</td><td>${o.note}</td></tr>`).join('');
+
+  root.innerHTML = `
+    <div class="type-sub">
+      <div class="type-sub__title">Anatomy</div>
+      <div class="type-sub__desc">A tabs list is a flex strip of tab items over one shared divider. Each item is an optional icon chip plus a label, with an underline that only appears on the active one.</div>
+      <div class="cpg-section-outline">
+        <div class="spec-hero" style="background:${sbg}"><div style="overflow-x:auto;max-width:100%"><div style="width:-moz-fit-content;width:fit-content;margin:0 auto;pointer-events:none">${heroTabs}</div></div></div>
+        <div class="spec-parts">${partCards}</div>
+      </div>
+    </div>
+
+    <div class="type-sub">
+      <div class="type-sub__title">Sizes &amp; dimensions</div>
+      <div class="type-sub__desc"><strong>Regular</strong> (56px tall, 16px label) is the default for primary, page-level switching; <strong>Small</strong> (46px, 13px) suits denser or secondary contexts such as inside a card. The active underline straddles the list&rsquo;s 2px divider so it reads as a single continuous edge.</div>
+      <div class="cpg-section-outline">
+        <div class="dd-table-wrap"><table class="dd-table">
+          <thead><tr><th>Property</th><th>Regular</th><th>Small</th><th>Token</th></tr></thead>
+          <tbody>${dimRows}</tbody>
+        </table></div>
+      </div>
+    </div>
+
+    <div class="type-sub" style="margin-bottom:0">
+      <div class="type-sub__title">States</div>
+      <div class="type-sub__desc">Every tab item resolves to one of three states, shown here for both sizes with and without the icon.</div>
+      <div class="cpg-section-outline">
+        <div class="spec-grid" style="grid-template-columns:repeat(auto-fit,minmax(440px,1fr))">${stateCells}</div>
+        <div class="dd-table-wrap"><table class="dd-table">
+          <thead><tr><th>State</th><th>Treatment</th></tr></thead>
+          <tbody>${stateNotes}</tbody>
+        </table></div>
+      </div>
+    </div>`;
+}
+
+try { renderTabsCodeTab(); } catch(e){ console.error('tbc-code-tab',e); }
+try { renderTabsPlayground(); } catch(e){ console.error('tbc-playground',e); }
+try { renderTabsPatterns(); } catch(e){ console.error('tbc-patterns',e); }
+try { renderTabsInSitu(); } catch(e){ console.error('tbc-insitu',e); }
+try { renderTabsReference(); } catch(e){ console.error('tbc-reference',e); }
+
+function tbcTabSwitch(tab){
+  const nav = document.getElementById('tbc-tabs-list');
+  if(!nav) return;
+  nav.querySelectorAll('.tab-item').forEach(btn=>btn.classList.toggle('on', btn.getAttribute('data-tbc-tab')===tab));
+  document.querySelectorAll('#s-tabs .tabs-panel[data-tbc-panel]').forEach(p=>p.classList.toggle('on', p.getAttribute('data-tbc-panel')===tab));
+}
 
 /* ============================================================
    TABLES
@@ -26980,6 +27424,7 @@ try { renderSectionChangelogs(); } catch(e){ console.error('section-changelog',e
   {secId:'s-separator', panelId:'sep-changelog-panel'},
   {secId:'s-input-otp', panelId:'otp-changelog-panel'},
   {secId:'s-tables', panelId:'tbl-changelog-panel'},
+  {secId:'s-tabs', panelId:'tbc-changelog-panel'},
 ].forEach(({secId, panelId})=>{
   try {
     const chlog = document.querySelector(`#${secId} > .sec-chlog`);
