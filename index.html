@@ -4800,7 +4800,7 @@ body.home .main{max-width:none;margin:0;padding:0}
       <div class="sec__head">
         <h1 class="sec__title">Lists</h1>
         <div class="sec-header-meta">
-          <span class="comp-ver-badge" style="margin-left:0">v2.0.0</span>
+          <span class="comp-ver-badge" style="margin-left:0">v2.0.1</span>
           <details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-lists">
@@ -5510,7 +5510,7 @@ body.home .main{max-width:none;margin:0;padding:0}
       <div class="sec__head">
         <h1 class="sec__title">Accordion</h1>
         <div class="sec-header-meta">
-          <span class="comp-ver-badge" style="margin-left:0">v1.2.3</span>
+          <span class="comp-ver-badge" style="margin-left:0">v1.2.4</span>
           <details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-accordion">
@@ -5617,7 +5617,7 @@ body.home .main{max-width:none;margin:0;padding:0}
       <div class="sec__head">
         <h1 class="sec__title">Alert</h1>
         <div class="sec-header-meta">
-          <span class="comp-ver-badge" style="margin-left:0">v1.2.0</span>
+          <span class="comp-ver-badge" style="margin-left:0">v1.2.1</span>
           <details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-alert">
@@ -5915,7 +5915,7 @@ body.home .main{max-width:none;margin:0;padding:0}
       <div class="sec__head">
         <h1 class="sec__title">Breadcrumb</h1>
         <div class="sec-header-meta">
-          <span class="comp-ver-badge" style="margin-left:0">v1.1.0</span>
+          <span class="comp-ver-badge" style="margin-left:0">v1.1.1</span>
           <details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-breadcrumb">
@@ -8162,6 +8162,20 @@ function toggleTheme() {
   try { if(typeof renderBshInSitu==='function' && document.getElementById('bsh-insitu')) renderBshInSitu(); } catch(e){}
   try { if(typeof renderBshReference==='function' && document.getElementById('bsh-reference')) renderBshReference(); } catch(e){}
   try { if(typeof renderAccordionPlayground==='function' && document.getElementById('acc-playground')) renderAccordionPlayground(); } catch(e){}
+  try { if(typeof renderAccordionVariants==='function' && document.getElementById('acc-variants')) renderAccordionVariants(); } catch(e){}
+  try { if(typeof renderAccordionInSitu==='function' && document.getElementById('acc-insitu')) renderAccordionInSitu(); } catch(e){}
+  try { if(typeof renderAccordionReference==='function' && document.getElementById('acc-reference')) renderAccordionReference(); } catch(e){}
+  try { if(typeof renderAlertPlayground==='function' && document.getElementById('alrt-playground')) renderAlertPlayground(); } catch(e){}
+  try { if(typeof renderAlertVariants==='function' && document.getElementById('alrt-variants')) renderAlertVariants(); } catch(e){}
+  try { if(typeof renderAlertInSitu==='function' && document.getElementById('alrt-insitu')) renderAlertInSitu(); } catch(e){}
+  try { if(typeof renderAlertReference==='function' && document.getElementById('alrt-reference')) renderAlertReference(); } catch(e){}
+  try { if(typeof renderBreadcrumbPlayground==='function' && document.getElementById('bcr-playground')) renderBreadcrumbPlayground(); } catch(e){}
+  try { if(typeof renderBreadcrumbVariants==='function' && document.getElementById('bcr-variants')) renderBreadcrumbVariants(); } catch(e){}
+  try { if(typeof renderBreadcrumbInSitu==='function' && document.getElementById('bcr-insitu')) renderBreadcrumbInSitu(); } catch(e){}
+  try { if(typeof renderBreadcrumbReference==='function' && document.getElementById('bcr-reference')) renderBreadcrumbReference(); } catch(e){}
+  try { if(typeof renderListPlayground==='function' && document.getElementById('lst-playground')) renderListPlayground(); } catch(e){}
+  try { if(typeof renderListInSitu==='function' && document.getElementById('lst-insitu')) renderListInSitu(); } catch(e){}
+  try { if(typeof renderListReference==='function' && document.getElementById('lst-reference')) renderListReference(); } catch(e){}
   try { if(typeof renderDpPlayground==='function' && document.getElementById('dp-playground')) renderDpPlayground(); } catch(e){}
   try { if(typeof renderDpKeyVariants==='function' && document.getElementById('dp-keyvariants')) renderDpKeyVariants(); } catch(e){}
   try { if(typeof renderDpInSitu==='function' && document.getElementById('dp-insitu')) renderDpInSitu(); } catch(e){}
@@ -12719,9 +12733,12 @@ function renderListInSitu(){
     </div>
     <div class="spec-mock__cap"><b>Audit log panel</b>A chronological feed of system and settlement events.</div>`;
 
-  // 3. Side-by-side detail + activity — one record page combining both
+  // 3. Detail + activity stacked — one record page combining both. Stacked
+  // rather than side-by-side: a real key–value row's fixed-width key column
+  // can't shrink to fit a forced two-up split at every viewport width, and
+  // a stacked layout is the more realistic record-page pattern anyway.
   const combinedMock = `
-    <div class="spec-mock__stage" style="background:${sbg};padding:16px 14px;display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start">
+    <div class="spec-mock__stage" style="background:${sbg};padding:16px 14px;display:flex;flex-direction:column;gap:16px">
       <div>
         <div style="font-size:10.5px;font-weight:700;color:var(--chrome-muted);margin-bottom:8px">DETAILS</div>
         ${makeKvHTML(LST_KV_POOL.slice(0,3), {density:'compact'})}
@@ -12731,7 +12748,7 @@ function renderListInSitu(){
         ${makeTimelineHTML(LST_TL_POOL.slice(0,2), {density:'compact'})}
       </div>
     </div>
-    <div class="spec-mock__cap"><b>Record page</b>Facts on one side, activity on the other &mdash; the two patterns sharing a single screen.</div>`;
+    <div class="spec-mock__cap"><b>Record page</b>Facts up top, activity below &mdash; the two patterns sharing a single screen.</div>`;
 
   root.innerHTML = `
     <div class="cpg-section-heading">
@@ -12739,11 +12756,11 @@ function renderListInSitu(){
       <div class="cpg-layout__desc">Both patterns doing their everyday job &mdash; summarising one record, and showing what happened to it over time.</div>
     </div>
     <div class="cpg-section-block">
-      <div class="spec-insitu-grid">
+      <div class="spec-insitu-grid spec-insitu-grid--2">
         <div class="spec-mock">${detailMock}</div>
         <div class="spec-mock">${feedMock}</div>
-        <div class="spec-mock">${combinedMock}</div>
       </div>
+      <div class="spec-mock" style="margin-top:16px">${combinedMock}</div>
     </div>`;
 }
 
@@ -17289,44 +17306,48 @@ function cbrTabSwitch(tab){
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.82.8';
+const SYSTEM_VERSION = '1.83.8';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
-      {version:'1.82.8', date:'2026-08-21', author:'Mo', title:'Popover playground label spacing fixed', changes:[
+      {version:'1.83.8', date:'2026-08-21', author:'Mo', title:'Popover playground label spacing fixed', changes:[
         ['fixed','"Try the component" playground\'s control labels sit in a shared .btn-pg__clabel column fixed at 60px, sized for short labels like "Icon" or "Size" — "Content type" (and Placement/Footer, for visual consistency) crowded against their pill rows at that width; widened to 82px and added a 6px margin before each pill row for breathing room'],
       ]},
-      {version:'1.82.7', date:'2026-08-21', author:'Mo', title:'Popover Key patterns labels fixed and restyled', changes:[
+      {version:'1.83.7', date:'2026-08-21', author:'Mo', title:'Popover Key patterns labels fixed and restyled', changes:[
         ['fixed','.spec-cell__name has no bottom padding by default (fine for the short single-line labels other components use), so Key patterns\' longer two-part labels ("Info, left-anchored") were wrapping to a second line and getting crushed against the cell edge — added 12px bottom padding and 1.4 line-height'],
         ['changed','Labels split into a bold pattern name ("Info"/"Filter"/"Form") plus a lighter-weight, muted detail ("left-anchored", "right-anchored, no footer") instead of one flat run of equal-weight text, for clearer at-a-glance scanning'],
       ]},
-      {version:'1.82.6', date:'2026-08-21', author:'Mo', title:'Popover hero preview switched to wireframe placeholders', changes:[
+      {version:'1.83.6', date:'2026-08-21', author:'Mo', title:'Popover hero preview switched to wireframe placeholders', changes:[
         ['changed','Trigger label and panel title replaced with .mk-bar wireframe shapes instead of literal copy ("Filter", "Filter transactions"), matching the placeholder-bar convention most other hero previews already use'],
       ]},
-      {version:'1.82.5', date:'2026-08-21', author:'Mo', title:'Popover hero preview simplified', changes:[
+      {version:'1.83.5', date:'2026-08-21', author:'Mo', title:'Popover hero preview simplified', changes:[
         ['changed','Trimmed the hero preview\'s open panel down to just its title — dropped the switch row and Apply-button footer, which read as too busy for a small header thumbnail'],
       ]},
-      {version:'1.82.4', date:'2026-08-21', author:'Mo', title:'Popover hero preview now uses the real component markup', changes:[
+      {version:'1.83.4', date:'2026-08-21', author:'Mo', title:'Popover hero preview now uses the real component markup', changes:[
         ['changed','Hero preview swapped from an abstract two-mk-card mock to the actual .pop/.pop__panel markup — a real "Filter" trigger button above an open panel with its title, a switch row and an Apply button — so the header thumbnail reads unmistakably as this component, matching Switch/Accordion\'s hero previews which also use their real classes rather than a generic mock'],
       ]},
-      {version:'1.82.3', date:'2026-08-21', author:'Mo', title:'Popover Key patterns and States card padding rebalanced', changes:[
+      {version:'1.83.3', date:'2026-08-21', author:'Mo', title:'Popover Key patterns and States card padding rebalanced', changes:[
         ['fixed','Key patterns and Style-tab States cards top-aligned their content with an asymmetric 40px-top/16px-bottom stage padding, so a shorter card sharing a grid row with a taller one dumped all the leftover row height into one big gap below it; switched to symmetric 24px padding with the stage\'s default centered alignment so leftover height now splits evenly above and below'],
       ]},
-      {version:'1.82.2', date:'2026-08-21', author:'Mo', title:'Popover content overflowing its narrow grid cells', changes:[
+      {version:'1.83.2', date:'2026-08-21', author:'Mo', title:'Popover content overflowing its narrow grid cells', changes:[
         ['fixed','Key patterns and Style-tab States grids used the shared .spec-grid default of minmax(120px,1fr) columns, far narrower than the real .pop__panel\'s 244px min-width — panels were clipped/crushed against the cell edge; both grids now use minmax(260px,1fr)'],
         ['fixed','"In context" mockups used the plain 3-column .spec-insitu-grid, also too narrow for a 244px-wide panel — switched to the 2-column .spec-insitu-grid--2 modifier (already used by Accordion) so each mock has enough room'],
       ]},
-      {version:'1.82.1', date:'2026-08-21', author:'Mo', title:'Popover dark mode and hero preview fixes', changes:[
+      {version:'1.83.1', date:'2026-08-21', author:'Mo', title:'Popover dark mode and hero preview fixes', changes:[
         ['fixed','Popover\'s playground/Key patterns/In context/Style-tab stages stayed light-themed after the global dark-mode toggle, because none of renderPopoverPlayground/renderPopoverPatterns/renderPopoverInSitu/renderPopoverReference were wired into toggleTheme()\'s re-render list — added, matching every other tabbed component'],
         ['changed','Hero preview swapped from an absolute-positioned trigger+floating-panel mock (looked broken at the header\'s small scale) to the same stacked two-mk-card pattern already used by Dropdown\'s hero preview — a trigger-row card above a content card'],
       ]},
-      {version:'1.82.0', date:'2026-08-21', author:'Mo', title:'Popover rebuilt with the full Pills-style tabbed treatment', changes:[
+      {version:'1.83.0', date:'2026-08-21', author:'Mo', title:'Popover rebuilt with the full Pills-style tabbed treatment', changes:[
         ['added','Popover (s-popover) converted from a single static "Interactive" + "When to use" page into a full .sec--tabbed page — Overview / Style / Code / Changelog — matching Pills and Empty State: a "Try the component" playground (Content type Info/Filter/Form, Placement Left/Right, and Footer on/off controls, rendered into two synced mounts via shared popg state), a "Key patterns" showcase crossing content type with placement and footer (replacing Pills\' colour-variant slot, since Popover has no colour or size axis), 3 "In context" mockups (table-toolbar filter, right-anchored account menu, dashboard stat info popover), a Style tab (Anatomy, Placement & dimensions, States) and a Code tab with the .code-seg HTML/CSS · Blazor · React TSX switcher'],
         ['added','New .pop__cancel (ghost secondary footer button) and .pop__input (compact text field) CSS classes so the Form content type has a real cancel/save footer and an editable field, alongside the existing .pop__apply'],
         ['changed','The generic click-to-open/outside-click/Escape wiring switched from binding listeners on each .pop found at page load to a single document-level delegated handler, so it also wires up .pop instances the Popover playground renders dynamically — behaviour is unchanged for the existing static popovers'],
         ['added','New ai-ctx tab regenerated via generate-ai-context-tab.mjs for the js-rendered builders (POP_CONTENT_TYPES, popTriggerLabel, popPanelBody, makePopoverHTML, makePopoverEl), moved from the end of the section into the new hero\'s sec-header-meta, matching Pills/Empty State'],
+      ]},
+      {version:'1.82.0', date:'2026-09-02', author:'Mo', title:'Fixed dark-mode toggle gaps in Accordion, Alert, Breadcrumb, Lists; fixed Lists\' Record page mockup clipping', changes:[
+        ['fixed','toggleTheme() was missing the re-render calls for Alert (all 4 mounts) and Breadcrumb (all 4) entirely, for Accordion\'s InSitu/Reference mounts (only its Playground was wired), and for Lists (all 3, added once already but never merged before this branch was cut) — so each page\'s inline stageBg() background stayed on its light-mode value after switching to dark, until the next full page reload. Added the 15 missing calls; verified live that each now repaints its stage immediately on toggle. Carousel\'s, Pagination\'s and Separator\'s equivalent gaps were already fixed independently in concurrent PRs and are unaffected by this change'],
+        ['fixed','Lists\' "Record page" In-context mockup forced a real .dd-kv (fixed-width, non-shrinking 180px key column) into a side-by-side 2-column grid inside an already-narrow .spec-mock cell, overflowing and clipping under .spec-mock\'s overflow:hidden — same root cause as the Input OTP In-context clipping fixed in v1.79.0. Restructured Details/Activity to stack vertically instead of squeezing side by side, which fits at every viewport width without needing to shrink or scale any real component markup'],
       ]},
       {version:'1.81.1', date:'2026-09-02', author:'Mo', title:'Side Nav corners squared off; confirmed full-viewport-height stretch', changes:[
         ['changed','Side Nav (.snav) --sn-radius token changed from 12px to 0 across all colour contexts and both sizes — the panel now renders with square outer corners instead of a rounded card'],
@@ -18729,7 +18750,10 @@ const CHANGELOG = {
         ['added','Pure-CSS hover/focus tooltip with four placements and an icon-button example'],
       ]},
     ]},
-    {secId:'s-accordion', name:'Accordion', version:'1.2.3', entries:[
+    {secId:'s-accordion', name:'Accordion', version:'1.2.4', entries:[
+      {version:'1.2.4', date:'2026-08-21', author:'Mo', title:'Fixed dark-mode toggle not repainting InSitu/Reference', changes:[
+        ['fixed','toggleTheme() only called renderAccordionPlayground — renderAccordionInSitu/Reference were missing, so those two mounts\' stageBg() backgrounds stayed light after switching to dark until a full reload; added the two missing calls (renderAccordionVariants also added for consistency, though it carries no theme-dependent inline colour of its own)'],
+      ]},
       {version:'1.2.3', date:'2026-08-19', author:'Mo', title:'Chevron rebuilt as a DS icon glyph, fixing misalignment', changes:[
         ['fixed','.acc__chev was a plain "›" text character rotated +90deg/-90deg between collapsed/open, which visibly misaligned between the two states because the glyph\'s ink isn\'t centred in its em-box. Replaced it with the shared ICONS registry\'s "chevron-down" SVG (iconSvg(\'chevron-down\')) — a proper vector shape that rotates symmetrically'],
         ['changed','.acc__chev now rests unrotated (icon already points down) when collapsed and rotates 180deg to point up when open. Updated in makeAccEl (playground), ovAcc (Key variants/In-context), heroAcc (Style-tab hero swatch) and the header preview mock — every real accordion instance, not a one-off patch'],
@@ -18768,7 +18792,10 @@ const CHANGELOG = {
         ['added','Native <details> disclosure with single-open and multiple-open variants'],
       ]},
     ]},
-    {secId:'s-alert', name:'Alert', version:'1.2.0', entries:[
+    {secId:'s-alert', name:'Alert', version:'1.2.1', entries:[
+      {version:'1.2.1', date:'2026-08-21', author:'Mo', title:'Fixed dark-mode toggle not repainting the Overview/Style stages', changes:[
+        ['fixed','renderAlertPlayground/Variants/InSitu/Reference were never added to toggleTheme(), so switching to dark left every Alert mount on its light-mode stage background until a full reload; added the four missing calls'],
+      ]},
       {version:'1.2.0', date:'2026-08-07', author:'Helen', title:'Full Pills-page treatment: tabbed layout, playground, In context, Style & Code tab', changes:[
         ['changed','Page restructured from a flat single-panel section to the .sec--tabbed convention — hero with a live two-alert preview, and Overview / Style / Code / Changelog tabs, matching Pills/Switch/Tags/Badges'],
         ['added','Overview: interactive playground (apg state) with Severity and Dismiss controls plus editable Title/Message fields, driving a live .alrt built by makeAlrtEl()'],
@@ -18814,7 +18841,10 @@ const CHANGELOG = {
         ['added','Indeterminate loader in three sizes, plus in-button and inline treatments'],
       ]},
     ]},
-    {secId:'s-breadcrumb', name:'Breadcrumb', version:'1.1.0', entries:[
+    {secId:'s-breadcrumb', name:'Breadcrumb', version:'1.1.1', entries:[
+      {version:'1.1.1', date:'2026-08-21', author:'Mo', title:'Fixed dark-mode toggle not repainting the Overview/Style stages', changes:[
+        ['fixed','renderBreadcrumbPlayground/Variants/InSitu/Reference were never added to toggleTheme(), so switching to dark left every Breadcrumb mount on its light-mode stage background until a full reload; added the four missing calls'],
+      ]},
       {version:'1.1.0', date:'2026-08-11', author:'Helen', title:'Brought to the Pills-page tabbed treatment', changes:[
         ['changed','Converted #s-breadcrumb from a flat .sec section to .sec--tabbed (Overview / Style / Code / Changelog), with a two-column hero (title/version/AI-context left, live 3-step .bcr preview right)'],
         ['added','Overview: interactive playground (bcpg state) with a Trail depth control (2–5 steps, editable labels), driving a live .bcr built by makeBcrEl(); depth beyond 3 auto-collapses into an ellipsis rather than exposing a manual truncation toggle'],
@@ -19789,7 +19819,11 @@ const CHANGELOG = {
         ['added','Interactive playground with real open/select/close, click-outside and Escape-to-dismiss behaviour'],
       ]},
     ]},
-    {secId:'s-lists', name:'Lists', version:'2.0.0', entries:[
+    {secId:'s-lists', name:'Lists', version:'2.0.1', entries:[
+      {version:'2.0.1', date:'2026-08-21', author:'Mo', title:'Fixed dark mode not repainting the Overview/Style stages; fixed Record page mockup clipping', changes:[
+        ['fixed','renderListPlayground/renderListInSitu/renderListReference were never added to the global toggleTheme() dispatcher, so their inline-styled stage backgrounds (set via stageBg(theme) at render time) stayed on their light-mode value after switching to dark until the next full re-render; added the three missing calls'],
+        ['fixed','The "Record page" In-context mockup forced a real .dd-kv (fixed-width, non-shrinking 180px key column) into a side-by-side 2-column split inside an already-narrow .spec-mock grid cell, overflowing and clipping under .spec-mock\'s overflow:hidden. Restructured Details/Activity to stack vertically instead, and moved Detail/Feed to a 2-column .spec-insitu-grid--2 row above it — fits at every viewport width without shrinking or scaling any real component markup'],
+      ]},
       {version:'2.0.0', date:'2026-08-21', author:'Mo', title:'Rebuilt with the full Pills-style tabbed treatment', changes:[
         ['changed','Page restructured from a flat .sec section into a .sec--tabbed page — hero with a live mini preview, and Overview / Style / Code / Changelog tabs (lstTabSwitch), matching Pills/Carousel/Empty State'],
         ['added','"Try the component" playground with a Pattern switcher (Key–value list / Activity timeline) plus pattern-specific controls — Rows and Key column width for the list, Events and Newest event colour for the timeline — and a shared Density (Comfortable/Compact) toggle, rendered into two synced mounts (#lst-playground on Overview, #lst-code-playground on Code) over one shared lpg state — the generalised form of Pills\' PILL_PLAYGROUND_MOUNTS pattern, extended with a pattern axis since Lists holds two structurally different components rather than one with colour/size variants'],
