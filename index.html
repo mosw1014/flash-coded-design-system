@@ -5591,56 +5591,24 @@ body.home .main{max-width:none;margin:0;padding:0}
     <!-- ============================================================
          SKELETON
     ============================================================ -->
-    <section class="sec" id="s-skeleton">
+    <section class="sec sec--tabbed" id="s-skeleton">
+      <div class="sec-hero">
       <div class="sec__head">
-        <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Skeleton loader <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.2</span></h1>
-        <p class="sec__desc">A shimmering placeholder that mirrors content&rsquo;s shape while it loads, so the layout doesn&rsquo;t jump when data arrives. Built from neutral surface tokens and honours <code>prefers-reduced-motion</code>.</p>
-      </div>
-      <div class="type-sub">
-        <div class="type-sub__title">Building blocks</div>
-        <div class="type-sub__desc">Compose skeletons from three primitives &mdash; lines, blocks and circles &mdash; sized to match the real content they stand in for.</div>
-        <div class="sg-stage"><div class="sg-row sg-row--top" style="gap:40px">
-          <div class="sg-swatch" style="width:220px"><span class="sg-swatch__cap">Text lines</span><div style="width:100%"><div class="skl skl--line"></div><div class="skl skl--line"></div><div class="skl skl--line" style="width:70%;margin-bottom:0"></div></div></div>
-          <div class="sg-swatch"><span class="sg-swatch__cap">Circle</span><div class="skl skl--circle" style="width:48px;height:48px"></div></div>
-          <div class="sg-swatch" style="width:160px"><span class="sg-swatch__cap">Block</span><div class="skl skl--block" style="width:100%;margin-bottom:0;height:80px"></div></div>
-        </div></div>
-      </div>
-      <div class="type-sub">
-        <div class="type-sub__title">Composed</div>
-        <div class="type-sub__desc">Real-world groupings: a media row (avatar + two lines) and a content card. Match the skeleton to the component it replaces.</div>
-        <div class="sg-stage"><div class="sg-row sg-row--top" style="gap:34px">
-          <div class="skl-media"><div class="skl skl--circle" style="width:44px;height:44px;flex-shrink:0"></div><div class="skl-media__txt"><div class="skl skl--line"></div><div class="skl skl--line" style="width:60%"></div></div></div>
-          <div class="skl-card"><div class="skl skl--block" style="height:96px"></div><div class="skl skl--title"></div><div class="skl skl--line"></div><div class="skl skl--line" style="width:80%;margin-bottom:0"></div></div>
-        </div></div>
-      </div>
-      <div class="type-sub">
-        <div class="type-sub__title">When to use</div>
-        <div class="type-sub__desc">Skeleton loaders work best when you know the shape of what&rsquo;s coming and the wait is more than a moment.</div>
-        <div class="sel-usage">
-          <div class="sel-usage__card">
-            <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
-            <ul class="sel-usage__list">
-              <li>Mirror the final layout so content doesn&rsquo;t shift on load.</li>
-              <li>Use for lists, tables and cards fetched from the network.</li>
-              <li>Keep the shimmer subtle and stop it for reduced-motion users.</li>
-            </ul>
-          </div>
-          <div class="sel-usage__card">
-            <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don&rsquo;t</div>
-            <ul class="sel-usage__list">
-              <li>Don&rsquo;t use a skeleton for a sub-second load &mdash; it just flickers.</li>
-              <li>Don&rsquo;t use one for a small indeterminate action &mdash; use a spinner.</li>
-              <li>Don&rsquo;t let the placeholder differ wildly from the real content.</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <details class="ai-ctx">
+        <h1 class="sec__title">Skeleton loader</h1>
+        <div class="sec-header-meta">
+          <span class="comp-ver-badge" style="margin-left:0">v2.0.1</span>
+          <details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-skeleton">
 {
-  "status": "static",
+  "status": "js-rendered",
+  "builderFunctions": [
+    "SKL_SHAPES",
+    "SKL_LAYOUTS",
+    "SKL_WIDTHS",
+    "SKL_BLOCKS",
+    "makeSklHTML"
+  ],
   "realClasses": [
     ".skl",
     ".skl--line",
@@ -5652,6 +5620,7 @@ body.home .main{max-width:none;margin:0;padding:0}
     ".skl-card"
   ],
   "css": ".skl { background:linear-gradient(90deg,var(--color-surface-n1) 25%,var(--color-surface-n2) 37%,var(--color-surface-n1) 63%);background-size:200% 100%;animation:skl-shimmer 1.5s ease-in-out infinite;border-radius:6px }\n.skl--line { height:12px;margin-bottom:9px }\n.skl--title { height:18px;width:55%;margin-bottom:14px }\n.skl--circle { border-radius:50% }\n.skl--block { height:120px;border-radius:10px;margin-bottom:14px }\n.skl-card { border:1px solid var(--chrome-border);border-radius:12px;padding:16px;width:280px;max-width:100% }\n.skl-media { display:flex;gap:13px;align-items:center;width:320px;max-width:100% }\n.skl-media__txt { flex:1 }\n.skl-media__txt .skl--line:last-child { margin-bottom:0 }",
+  "js": "const SKL_SHAPES = [\n  {key:'line',   label:'Line'},\n  {key:'circle', label:'Circle'},\n  {key:'block',  label:'Block'},\n  {key:'title',  label:'Title'},\n];\n\nconst SKL_LAYOUTS = [\n  {key:'primitive', label:'Primitive'},\n  {key:'media',     label:'Media row'},\n  {key:'card',       label:'Card'},\n];\n\nconst SKL_WIDTHS = [\n  {key:'sm', label:'Narrow',  px:160},\n  {key:'md', label:'Regular', px:240},\n  {key:'lg', label:'Wide',    px:320},\n];\n\nconst SKL_BLOCKS = [\n  {key:'line',   name:'Line',   use:'Text and paragraph placeholders'},\n  {key:'circle', name:'Circle', use:'Avatar and icon placeholders'},\n  {key:'block',  name:'Block',  use:'Image, chart and media placeholders'},\n  {key:'title',  name:'Title',  use:'A heading-weight line, taller and wider than body text'},\n];\n\nfunction makeSklHTML(layout, shapeKey, widthPx, shimmer){\n  const anim = shimmer ? '' : ' style=\"animation:none\"';\n  if(layout==='media'){\n    return `&lt;div class=\"skl-media\" style=\"width:${widthPx+80}px\"&gt;&lt;div class=\"skl skl--circle\" style=\"width:44px;height:44px;flex-shrink:0\"${anim}&gt;&lt;/div&gt;&lt;div class=\"skl-media__txt\"&gt;&lt;div class=\"skl skl--line\"${anim}&gt;&lt;/div&gt;&lt;div class=\"skl skl--line\" style=\"width:60%\"${anim}&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;`;\n  }\n  if(layout==='card'){\n    return `&lt;div class=\"skl-card\" style=\"width:${widthPx+40}px\"&gt;&lt;div class=\"skl skl--block\" style=\"height:96px\"${anim}&gt;&lt;/div&gt;&lt;div class=\"skl skl--title\"${anim}&gt;&lt;/div&gt;&lt;div class=\"skl skl--line\"${anim}&gt;&lt;/div&gt;&lt;div class=\"skl skl--line\" style=\"width:80%;margin-bottom:0\"${anim}&gt;&lt;/div&gt;&lt;/div&gt;`;\n  }\n  if(shapeKey==='circle') return `&lt;div class=\"skl skl--circle\" style=\"width:48px;height:48px\"${anim}&gt;&lt;/div&gt;`;\n  if(shapeKey==='block')  return `&lt;div class=\"skl skl--block\" style=\"width:${widthPx}px;height:80px;margin-bottom:0\"${anim}&gt;&lt;/div&gt;`;\n  if(shapeKey==='title')  return `&lt;div class=\"skl skl--title\" style=\"width:${widthPx}px;margin-bottom:0\"${anim}&gt;&lt;/div&gt;`;\n  return `&lt;div class=\"skl skl--line\" style=\"width:${widthPx}px;margin-bottom:0\"${anim}&gt;&lt;/div&gt;`;\n}",
   "usage": {
     "do": [
       "Mirror the final layout so content doesn’t shift on load.",
@@ -5664,10 +5633,67 @@ body.home .main{max-width:none;margin:0;padding:0}
       "Don’t let the placeholder differ wildly from the real content."
     ]
   },
-  "contentHash": "f8dde62363cc6cda9736d39a73f206e72a87238ba241d447d26d3a1ede2c2c10"
+  "contentHash": "a51cf56f3f24ba602cb89cb1ab92a674be6b2dc62d6b30cf6d5ac08256d204ad",
+  "note": "makeSklHTML is the minimal real-markup builder (layout+shape+width+shimmer -&gt; .skl/.skl-media/.skl-card HTML string), used directly by the playground and Style tab. SKL_BLOCKS drives the Overview tab's Key building blocks showcase (no colour/size axis exists for this component, unlike Pills). sklg (playground state)/sklgRefresh/getSklCode*/renderSklPlayground/renderSklReference/renderSklInSitu/renderSklBlocks are doc-site-only playground plumbing, excluded."
 }
   </pre>
 </details>
+        </div>
+      </div>
+      <div class="sec-hero__preview"><div class="mk"><div class="skl-card" style="width:64%;overflow:hidden"><div class="skl skl--block" style="height:60px"></div><div class="skl skl--title" style="margin-bottom:10px"></div><div class="skl skl--line"></div><div class="skl skl--line" style="width:70%;margin-bottom:0"></div></div></div></div>
+      </div>
+      <div class="tabs-list sec-tabs" id="skl-tabs-list">
+        <button type="button" class="tab-item on" data-skl-tab="overview" onclick="sklTabSwitch('overview')"><span class="tab-item__inner"><span class="tab-item__label">Overview</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-skl-tab="style" onclick="sklTabSwitch('style')"><span class="tab-item__inner"><span class="tab-item__label">Style</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-skl-tab="code" onclick="sklTabSwitch('code')"><span class="tab-item__inner"><span class="tab-item__label">Code</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-skl-tab="changelog" onclick="sklTabSwitch('changelog')"><span class="tab-item__inner"><span class="tab-item__label">Changelog</span></span><span class="tab-item__line"></span></button>
+      </div>
+      <div class="tabs-panel on" data-skl-panel="overview">
+        <div id="skl-playground" class="type-sub"></div>
+        <div id="skl-blocks" class="type-sub"></div>
+        <div id="skl-insitu" class="type-sub"></div>
+        <div class="type-sub cpg-variants" id="skl-usage">
+          <div class="cpg-section-heading">
+            <div class="cpg-layout__title">Do's and don'ts</div>
+            <div class="cpg-layout__desc">Skeleton loaders work best when you know the shape of what&rsquo;s coming and the wait is more than a moment.</div>
+          </div>
+          <div class="cpg-section-block">
+            <div class="sel-usage">
+              <div class="sel-usage__card">
+                <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
+                <ul class="sel-usage__list">
+                  <li>Mirror the final layout so content doesn&rsquo;t shift on load.</li>
+                  <li>Use for lists, tables and cards fetched from the network.</li>
+                  <li>Keep the shimmer subtle and stop it for reduced-motion users.</li>
+                </ul>
+                <div class="spec-usage-demo" style="gap:10px">
+                  <div class="skl-media"><div class="skl skl--circle" style="width:32px;height:32px;flex-shrink:0"></div><div class="skl-media__txt"><div class="skl skl--line" style="height:9px"></div><div class="skl skl--line" style="width:60%;height:9px;margin-bottom:0"></div></div></div>
+                </div>
+              </div>
+              <div class="sel-usage__card">
+                <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don't</div>
+                <ul class="sel-usage__list">
+                  <li>Don&rsquo;t use a skeleton for a sub-second load &mdash; it just flickers.</li>
+                  <li>Don&rsquo;t use one for a small indeterminate action &mdash; use a spinner.</li>
+                  <li>Don&rsquo;t let the placeholder differ wildly from the real content.</li>
+                </ul>
+                <div class="spec-usage-demo" style="gap:10px">
+                  <div class="skl skl--block" style="width:120px;height:14px;margin-bottom:0;border-radius:999px"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tabs-panel" data-skl-panel="style">
+        <div id="skl-reference" class="type-sub spec-panel spec-stack"></div>
+      </div>
+      <div class="tabs-panel" data-skl-panel="code">
+        <div id="skl-code-playground" class="type-sub spec-panel spec-code-playground"></div>
+        <div id="skl-code-tab" class="type-sub spec-panel"></div>
+      </div>
+      <div class="tabs-panel" data-skl-panel="changelog" id="skl-changelog-panel"></div>
+    </section>
     </section>
 
     <!-- ============================================================
@@ -8013,6 +8039,10 @@ function toggleTheme() {
   try { if(typeof renderEmptyStateScenarios==='function' && document.getElementById('es-scenarios')) renderEmptyStateScenarios(); } catch(e){}
   try { if(typeof renderEmptyStateInSitu==='function' && document.getElementById('es-insitu')) renderEmptyStateInSitu(); } catch(e){}
   try { if(typeof renderEmptyStateReference==='function' && document.getElementById('es-reference')) renderEmptyStateReference(); } catch(e){}
+  try { if(typeof renderSklPlayground==='function' && document.getElementById('skl-playground')) renderSklPlayground(); } catch(e){}
+  try { if(typeof renderSklBlocks==='function' && document.getElementById('skl-blocks')) renderSklBlocks(); } catch(e){}
+  try { if(typeof renderSklInSitu==='function' && document.getElementById('skl-insitu')) renderSklInSitu(); } catch(e){}
+  try { if(typeof renderSklReference==='function' && document.getElementById('skl-reference')) renderSklReference(); } catch(e){}
   try { if(typeof renderPopoverPlayground==='function' && document.getElementById('pop-playground')) renderPopoverPlayground(); } catch(e){}
   try { if(typeof renderPopoverPatterns==='function' && document.getElementById('pop-patterns')) renderPopoverPatterns(); } catch(e){}
   try { if(typeof renderPopoverInSitu==='function' && document.getElementById('pop-insitu')) renderPopoverInSitu(); } catch(e){}
@@ -13311,6 +13341,481 @@ function lstTabSwitch(tab){
 }
 
 /* ============================================================
+   SKELETON LOADER
+   Same tabbed-page treatment as Pills/Empty State (.sec--tabbed):
+   Overview / Style / Code / Changelog, a shared-state playground
+   rendered into two mounts, and a three-language code panel.
+   Skeleton loader has no colour axis (it's built from two neutral
+   surface tokens only) and no discrete size axis either — its own
+   axes are which primitive is shown, whether it's a raw primitive
+   or one of the two composed layouts, the width of the shown
+   shape, and whether the shimmer animation plays. "Key variants"
+   becomes "Key building blocks" (the four primitives), and Style's
+   Size & dimensions folds into Anatomy since there's no size
+   variant to table separately.
+============================================================ */
+const SKL_SHAPES = [
+  {key:'line',   label:'Line'},
+  {key:'circle', label:'Circle'},
+  {key:'block',  label:'Block'},
+  {key:'title',  label:'Title'},
+];
+const SKL_LAYOUTS = [
+  {key:'primitive', label:'Primitive'},
+  {key:'media',     label:'Media row'},
+  {key:'card',       label:'Card'},
+];
+const SKL_WIDTHS = [
+  {key:'sm', label:'Narrow',  px:160},
+  {key:'md', label:'Regular', px:240},
+  {key:'lg', label:'Wide',    px:320},
+];
+
+const SKL_BLOCKS = [
+  {key:'line',   name:'Line',   use:'Text and paragraph placeholders'},
+  {key:'circle', name:'Circle', use:'Avatar and icon placeholders'},
+  {key:'block',  name:'Block',  use:'Image, chart and media placeholders'},
+  {key:'title',  name:'Title',  use:'A heading-weight line, taller and wider than body text'},
+];
+
+/* Minimal real-markup builder: layout+shape+width(px)+shimmer -> .skl HTML string. */
+function makeSklHTML(layout, shapeKey, widthPx, shimmer){
+  const anim = shimmer ? '' : ' style="animation:none"';
+  if(layout==='media'){
+    return `<div class="skl-media" style="width:${widthPx+80}px"><div class="skl skl--circle" style="width:44px;height:44px;flex-shrink:0"${anim}></div><div class="skl-media__txt"><div class="skl skl--line"${anim}></div><div class="skl skl--line" style="width:60%"${anim}></div></div></div>`;
+  }
+  if(layout==='card'){
+    return `<div class="skl-card" style="width:${widthPx+40}px"><div class="skl skl--block" style="height:96px"${anim}></div><div class="skl skl--title"${anim}></div><div class="skl skl--line"${anim}></div><div class="skl skl--line" style="width:80%;margin-bottom:0"${anim}></div></div>`;
+  }
+  if(shapeKey==='circle') return `<div class="skl skl--circle" style="width:48px;height:48px"${anim}></div>`;
+  if(shapeKey==='block')  return `<div class="skl skl--block" style="width:${widthPx}px;height:80px;margin-bottom:0"${anim}></div>`;
+  if(shapeKey==='title')  return `<div class="skl skl--title" style="width:${widthPx}px;margin-bottom:0"${anim}></div>`;
+  return `<div class="skl skl--line" style="width:${widthPx}px;margin-bottom:0"${anim}></div>`;
+}
+
+/* ── SKELETON LOADER PLAYGROUND ── */
+let sklg = { layout:'primitive', shape:'line', width:'md', shimmer:true, theme:'light' };
+
+function getSklCodeHTML(){
+  const w = SKL_WIDTHS.find(x=>x.key===sklg.width)||SKL_WIDTHS[1];
+  const html = makeSklHTML(sklg.layout, sklg.shape, w.px, sklg.shimmer)
+    .replace(/</g,'&#60;').replace(/>/g,'&#62;');
+  const label = sklg.layout==='primitive' ? cap(sklg.shape) : cap(sklg.layout);
+  return `<span class="code-cm">/* Flash · ${cap(sklg.theme)} · ${label} skeleton${sklg.shimmer?'':' · shimmer off'} */</span>
+${html}`;
+}
+
+/* ── CODE PANEL LANGUAGES ──
+   HTML/CSS is the source of truth (real .skl markup). Blazor and React TSX
+   model a single primitive as one DsSkeleton component; the two composed
+   layouts (media row, card) are just several DsSkeleton elements arranged
+   by the consumer, same as the real .skl-media/.skl-card markup does. */
+const SKL_LANGS = [
+  {key:'html',   label:'HTML / CSS', file:'skeleton.html'},
+  {key:'blazor', label:'Blazor',     file:'DsSkeleton.razor'},
+  {key:'tsx',    label:'React TSX',  file:'DsSkeleton.tsx'},
+];
+let sklLang = 'html';
+
+function getSklCodeBlazor(){
+  const w = SKL_WIDTHS.find(x=>x.key===sklg.width)||SKL_WIDTHS[1];
+  const shapePascal = cap(sklg.shape);
+  if(sklg.layout!=='primitive'){
+    const layoutPascal = cap(sklg.layout==='media'?'MediaRow':'card');
+    return `<span class="code-cm">@* Composed layouts are several DsSkeleton elements, not a prop *@</span>
+<span class="code-cm">@* DsSkeleton${layoutPascal}.razor — usage *@</span>
+<span class="code-kw">&#60;DsSkeleton${layoutPascal}</span> <span class="code-kw">/></span>
+
+<span class="code-kw">@code</span> {
+  <span class="code-cm">// composes DsSkeleton Shape="Circle"/"Line"/"Block"/"Title" in the ${sklg.layout==='media'?'.skl-media':'.skl-card'} layout</span>
+}`;
+  }
+  return `<span class="code-cm">@* DsSkeleton.razor — usage *@</span>
+<span class="code-kw">&#60;DsSkeleton</span> <span class="code-attr">Shape</span>=<span class="code-val">"SkeletonShape.${shapePascal}"</span>
+              <span class="code-attr">Width</span>=<span class="code-val">"${w.px}"</span>${sklg.shimmer?'':`\n              <span class="code-attr">Shimmer</span>=<span class="code-val">"false"</span>`} <span class="code-kw">/></span>
+
+<span class="code-cm">@* DsSkeleton.razor — component definition *@</span>
+<span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"@CssClass"</span> <span class="code-attr">style</span>=<span class="code-val">"@WidthStyle"</span><span class="code-kw">>&#60;/div></span>
+
+<span class="code-kw">@code</span> {
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> SkeletonShape Shape { get; set; } = SkeletonShape.Line;
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> <span class="code-cls">int</span>? Width { get; set; }
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> <span class="code-cls">bool</span> Shimmer { get; set; } = <span class="code-kw">true</span>;
+
+  <span class="code-cm">// skl--line / skl--circle / skl--block / skl--title — mapped explicitly</span>
+  <span class="code-kw">private</span> <span class="code-cls">string</span> ShapeClass => Shape <span class="code-kw">switch</span> {
+    SkeletonShape.Circle => <span class="code-val">"circle"</span>, SkeletonShape.Block => <span class="code-val">"block"</span>, SkeletonShape.Title => <span class="code-val">"title"</span>, _ => <span class="code-val">"line"</span>
+  };
+
+  <span class="code-kw">private</span> <span class="code-cls">string</span> CssClass => $<span class="code-val">"skl skl--{ShapeClass}"</span>;
+  <span class="code-kw">private</span> <span class="code-cls">string</span> WidthStyle =>
+    (Width.HasValue ? $<span class="code-val">"width:{Width}px;"</span> : <span class="code-val">""</span>) + (!Shimmer ? <span class="code-val">"animation:none;"</span> : <span class="code-val">""</span>);
+}`;
+}
+
+function getSklCodeTSX(){
+  const w = SKL_WIDTHS.find(x=>x.key===sklg.width)||SKL_WIDTHS[1];
+  if(sklg.layout!=='primitive'){
+    const compName = sklg.layout==='media' ? 'DsSkeletonMediaRow' : 'DsSkeletonCard';
+    return `<span class="code-cm">// Composed layouts are several &#60;DsSkeleton /> elements, not a prop</span>
+<span class="code-cm">// ${compName}.tsx</span>
+<span class="code-kw">import</span> React <span class="code-kw">from</span> <span class="code-val">'react'</span>;
+<span class="code-kw">import</span> { DsSkeleton } <span class="code-kw">from</span> <span class="code-val">'./DsSkeleton'</span>;
+
+<span class="code-kw">export const</span> <span class="code-cls">${compName}</span>: React.FC = () => (
+  ${sklg.layout==='media'
+    ? `&#60;div className=<span class="code-val">"skl-media"</span>>\n    &#60;DsSkeleton shape=<span class="code-val">"circle"</span> width={44} />\n    &#60;div className=<span class="code-val">"skl-media__txt"</span>>\n      &#60;DsSkeleton shape=<span class="code-val">"line"</span> />\n      &#60;DsSkeleton shape=<span class="code-val">"line"</span> width={<span class="code-val">'60%'</span>} />\n    &#60;/div>\n  &#60;/div>`
+    : `&#60;div className=<span class="code-val">"skl-card"</span>>\n    &#60;DsSkeleton shape=<span class="code-val">"block"</span> width={<span class="code-val">'100%'</span>} />\n    &#60;DsSkeleton shape=<span class="code-val">"title"</span> />\n    &#60;DsSkeleton shape=<span class="code-val">"line"</span> />\n    &#60;DsSkeleton shape=<span class="code-val">"line"</span> width={<span class="code-val">'80%'</span>} />\n  &#60;/div>`}
+);`;
+  }
+  return `<span class="code-cm">// DsSkeleton.tsx</span>
+<span class="code-kw">import</span> React <span class="code-kw">from</span> <span class="code-val">'react'</span>;
+
+<span class="code-kw">type</span> <span class="code-cls">SkeletonShape</span> = <span class="code-val">'line'</span> | <span class="code-val">'circle'</span> | <span class="code-val">'block'</span> | <span class="code-val">'title'</span>;
+
+<span class="code-kw">interface</span> <span class="code-cls">DsSkeletonProps</span> {
+  shape?: <span class="code-cls">SkeletonShape</span>;
+  width?: <span class="code-cls">number</span> | <span class="code-cls">string</span>;
+  shimmer?: <span class="code-cls">boolean</span>;
+}
+
+<span class="code-kw">export const</span> <span class="code-cls">DsSkeleton</span>: React.FC&#60;DsSkeletonProps> = ({
+  shape = <span class="code-val">'line'</span>,
+  width,
+  shimmer = <span class="code-kw">true</span>,
+}) => (
+  &#60;div
+    className={\`skl skl--\${shape}\`}
+    style={{ width, ...(!shimmer &amp;&amp; { animation: <span class="code-val">'none'</span> }) }}
+  />
+);
+
+<span class="code-cm">// Usage</span>
+&#60;DsSkeleton shape=<span class="code-val">"${sklg.shape}"</span> width={${w.px}}${sklg.shimmer?'':` shimmer={false}`} />`;
+}
+
+function getSklCode(){
+  return sklLang==='blazor' ? getSklCodeBlazor()
+       : sklLang==='tsx'    ? getSklCodeTSX()
+       : getSklCodeHTML();
+}
+
+function setSklLang(lang){
+  if(!SKL_LANGS.some(l=>l.key===lang)) return;
+  sklLang = lang;
+  document.querySelectorAll('#skl-code-tab .code-seg__btn').forEach(b=>{
+    const on = b.dataset.lang===lang;
+    b.setAttribute('aria-selected', on ? 'true' : 'false');
+    b.setAttribute('tabindex', on ? '0' : '-1');
+  });
+  const file = document.getElementById('skl-lang-file');
+  const meta = SKL_LANGS.find(l=>l.key===lang);
+  if(file && meta) file.textContent = meta.file;
+  const block = document.getElementById('sklg-code-block');
+  if(block) block.innerHTML = getSklCode();
+}
+
+/* Arrow-key navigation, per the WAI-ARIA tablist pattern: the segmented
+   control is one tab stop and Left/Right (plus Home/End) move between
+   languages. */
+function sklLangKeydown(e){
+  const i = SKL_LANGS.findIndex(l=>l.key===sklLang);
+  let n = i;
+  if(e.key==='ArrowLeft')       n = (i - 1 + SKL_LANGS.length) % SKL_LANGS.length;
+  else if(e.key==='ArrowRight') n = (i + 1) % SKL_LANGS.length;
+  else if(e.key==='Home')       n = 0;
+  else if(e.key==='End')        n = SKL_LANGS.length - 1;
+  else return;
+  e.preventDefault();
+  setSklLang(SKL_LANGS[n].key);
+  const btn = document.getElementById('skl-lang-' + SKL_LANGS[n].key);
+  if(btn) btn.focus();
+}
+
+function sklgRefresh(){
+  const w = SKL_WIDTHS.find(x=>x.key===sklg.width)||SKL_WIDTHS[1];
+  document.querySelectorAll('.sklg-stage-el').forEach(stage=>{
+    stage.innerHTML = makeSklHTML(sklg.layout, sklg.shape, w.px, sklg.shimmer);
+  });
+  const block = document.getElementById('sklg-code-block');
+  if(block) block.innerHTML = getSklCode();
+}
+
+/* Skeleton loader Playground renders into more than one mount (the main
+   Overview demo, and a smaller copy on the Code tab) so both stay in
+   sync with the same shared sklg state — same pattern as Pills' ppg. */
+const SKL_PLAYGROUND_MOUNTS = [
+  {rootId:'skl-playground', idSuffix:'', wrap:true, title:'Try the component', desc:'Adjust the filters to test component states.', headingAbove:'Use a skeleton loader to hold the shape of content while it loads, so the layout doesn’t jump when data arrives.'},
+  {rootId:'skl-code-playground', idSuffix:'-code', style:'code', title:'Playground', desc:'Live demo of the component.'},
+];
+
+function renderSklPlayground(){
+  sklg.theme = document.documentElement.getAttribute('data-theme')==='dark' ? 'dark' : 'light';
+  const sbg = stageBg(sklg.theme);
+
+  const layoutBtns = SKL_LAYOUTS.map(l=>`<button class="btn-pg__pill${sklg.layout===l.key?' on':''}" onclick="sklgSet('layout','${l.key}')">${l.label}</button>`).join('');
+  const shapeBtns  = SKL_SHAPES.map(s=>`<button class="btn-pg__pill${sklg.shape===s.key?' on':''}" onclick="sklgSet('shape','${s.key}')"${sklg.layout!=='primitive'?' disabled':''}>${s.label}</button>`).join('');
+  const widthBtns  = SKL_WIDTHS.map(w=>`<button class="btn-pg__pill${sklg.width===w.key?' on':''}" onclick="sklgSet('width','${w.key}')"${sklg.layout!=='primitive'||sklg.shape==='circle'?' disabled':''}>${w.label}</button>`).join('');
+  const shimmerBtns = ['on','off'].map(x=>`<button class="btn-pg__pill${(sklg.shimmer?(x==='on'):(x==='off'))?' on':''}" onclick="sklgSet('shimmer','${x}')">${x==='on'?'Shimmer':'Static'}</button>`).join('');
+
+  SKL_PLAYGROUND_MOUNTS.forEach(mount=>{
+    const root = document.getElementById(mount.rootId);
+    if(!root) return;
+    const s = mount.idSuffix;
+    const demo = `
+      <div class="btn-pg">
+        <div class="btn-pg__stage sklg-stage-el" id="sklg-stage${s}" style="background:${sbg}"></div>
+        <div class="btn-pg__ctrls">
+          <div class="btn-pg__group"><span class="btn-pg__clabel">Layout</span><div class="btn-pg__pill-row">${layoutBtns}</div></div>
+          <div class="btn-pg__group"><span class="btn-pg__clabel">Shape</span><div class="btn-pg__pill-row">${shapeBtns}</div></div>
+          <div class="btn-pg__group"><span class="btn-pg__clabel">Width</span><div class="btn-pg__pill-row">${widthBtns}</div></div>
+          <div class="btn-pg__group"><span class="btn-pg__clabel">Motion</span><div class="btn-pg__pill-row">${shimmerBtns}</div></div>
+        </div>
+      </div>`;
+
+    if(mount.style==='code'){
+      root.innerHTML = `
+        <div class="type-sub__title">${mount.title}</div>
+        <div class="type-sub__desc">${mount.desc}</div>
+        <div class="cpg-section-outline">${demo}</div>`;
+      return;
+    }
+
+    const inner = `
+      <div class="cpg-layout">
+        <div class="cpg-layout__intro">
+          ${mount.wrap ? `<span class="cpg-cursor-icon">${CPG_CURSOR_ICON_SVG}</span>` : ''}
+          <div class="cpg-layout__title">${mount.title}</div>
+          <div class="cpg-layout__desc">${mount.desc}</div>
+        </div>
+        <div class="cpg-layout__demo">${demo}</div>
+      </div>`;
+    const wrapped = mount.wrap ? `<div class="cpg-section-block">${inner}</div>` : inner;
+    root.innerHTML = (mount.headingAbove ? `<div class="cpg-overview-heading"><span class="cpg-overview-heading__icon">${CPG_INFO_ICON_SVG}</span><span>${mount.headingAbove}</span></div>` : '') + wrapped;
+  });
+
+  sklgRefresh();
+}
+
+function renderSklCodeTab(){
+  const root = document.getElementById('skl-code-tab');
+  if(!root) return;
+  root.innerHTML = `
+    <div class="type-sub__title">Code</div>
+    <div class="type-sub__desc">Live snippet matching the current Playground configuration &mdash; switch to Overview to change it.</div>
+    <div class="cpg-section-outline">
+      <div class="code-panel code-panel--bare open">
+        <div class="code-panel__head">
+          <div class="code-seg" role="tablist" aria-label="Code language" onkeydown="sklLangKeydown(event)">
+            ${SKL_LANGS.map(l=>`<button type="button" role="tab" class="code-seg__btn" id="skl-lang-${l.key}" data-lang="${l.key}" aria-selected="${sklLang===l.key?'true':'false'}" aria-controls="sklg-code-block" tabindex="${sklLang===l.key?'0':'-1'}" onclick="setSklLang('${l.key}')">${l.label}</button>`).join('')}
+          </div>
+          <span class="code-lang-file" id="skl-lang-file">${(SKL_LANGS.find(l=>l.key===sklLang)||SKL_LANGS[0]).file}</span>
+          <button class="code-copy-btn" onclick="sklgCopyCode()" id="sklg-copy-btn">Copy</button>
+        </div>
+        <div class="code-body"><div class="code-block" id="sklg-code-block" role="tabpanel" aria-live="polite"></div></div>
+      </div>
+    </div>`;
+}
+
+function renderSklBlocks(){
+  const root = document.getElementById('skl-blocks');
+  if(!root) return;
+  const theme = currentTheme();
+  const sbg = stageBg(theme);
+
+  const stages = {
+    line:   `<div style="width:100%"><div class="skl skl--line"></div><div class="skl skl--line"></div><div class="skl skl--line" style="width:70%;margin-bottom:0"></div></div>`,
+    circle: `<div class="skl skl--circle" style="width:44px;height:44px"></div>`,
+    block:  `<div class="skl skl--block" style="width:100%;height:64px;margin-bottom:0"></div>`,
+    title:  `<div class="skl skl--title" style="width:100%;margin-bottom:0"></div>`,
+  };
+
+  const cells = SKL_BLOCKS.map(b=>`
+    <div class="spec-cell">
+      <div class="spec-cell__stage" style="background:${sbg}">${stages[b.key]}</div>
+      <div class="spec-cell__name">${b.name}</div>
+      <div class="spec-cell__desc">${b.use}</div>
+    </div>`).join('');
+
+  root.innerHTML = `
+    <div class="cpg-section-heading">
+      <div class="cpg-layout__title">Key building blocks</div>
+      <div class="cpg-layout__desc">Four primitives, each standing in for a different kind of content. Combine them to match the real layout underneath.</div>
+    </div>
+    <div class="cpg-section-block">
+      <div class="spec-grid">${cells}</div>
+    </div>`;
+}
+
+function renderSklInSitu(){
+  const root = document.getElementById('skl-insitu');
+  if(!root) return;
+  const theme = currentTheme();
+  const sbg = stageBg(theme);
+
+  // 1. Loading table — header row present, rows replaced by skeleton bars
+  const tableRow = () => `<div style="display:flex;gap:14px;align-items:center;padding:9px 0"><div class="skl skl--line" style="width:34%;margin-bottom:0"></div><div class="skl skl--line" style="width:22%;margin-bottom:0"></div><div class="skl skl--line" style="width:16%;margin-bottom:0;margin-left:auto"></div></div>`;
+  const tableMock = `
+    <div class="spec-mock__stage" style="background:${sbg};padding:0">
+      <div style="display:flex;gap:0;padding:10px 14px;border-bottom:1px solid var(--chrome-border);font-size:10.5px;font-weight:700;color:var(--chrome-muted)">
+        <span style="flex:1">MERCHANT</span><span style="flex:1">REGION</span><span style="flex:0 0 70px;text-align:right">AMOUNT</span>
+      </div>
+      <div style="padding:2px 14px">${tableRow()}${tableRow()}${tableRow()}</div>
+    </div>
+    <div class="spec-mock__cap"><b>Loading table</b>The header row stays put; each body row is a bar per column.</div>`;
+
+  // 2. Loading list — a few media rows (avatar + two lines) stacked
+  const listMock = `
+    <div class="spec-mock__stage" style="background:${sbg};padding:16px 14px;display:flex;flex-direction:column;gap:16px">
+      <div class="skl-media" style="width:100%"><div class="skl skl--circle" style="width:36px;height:36px;flex-shrink:0"></div><div class="skl-media__txt"><div class="skl skl--line" style="height:9px"></div><div class="skl skl--line" style="width:55%;height:9px;margin-bottom:0"></div></div></div>
+      <div class="skl-media" style="width:100%"><div class="skl skl--circle" style="width:36px;height:36px;flex-shrink:0"></div><div class="skl-media__txt"><div class="skl skl--line" style="height:9px"></div><div class="skl skl--line" style="width:70%;height:9px;margin-bottom:0"></div></div></div>
+    </div>
+    <div class="spec-mock__cap"><b>Loading list</b>Each row mirrors an avatar plus a name and a subtitle.</div>`;
+
+  // 3. Loading profile card — block + title + body lines
+  const cardMock = `
+    <div class="spec-mock__stage" style="background:${sbg};padding:16px 14px">
+      <div class="skl-card" style="width:100%;max-width:none"><div class="skl skl--block" style="height:72px"></div><div class="skl skl--title"></div><div class="skl skl--line"></div><div class="skl skl--line" style="width:80%;margin-bottom:0"></div></div>
+    </div>
+    <div class="spec-mock__cap"><b>Loading profile card</b>A cover image, a heading and two lines of body copy.</div>`;
+
+  root.innerHTML = `
+    <div class="cpg-section-heading">
+      <div class="cpg-layout__title">In context</div>
+      <div class="cpg-layout__desc">The same primitives hold the shape of a table, a list and a card while their real content loads.</div>
+    </div>
+    <div class="cpg-section-block">
+      <div class="spec-insitu-grid">
+        <div class="spec-mock">${tableMock}</div>
+        <div class="spec-mock">${listMock}</div>
+        <div class="spec-mock">${cardMock}</div>
+      </div>
+    </div>`;
+}
+
+function sklgSet(key, val){
+  if(key==='shimmer') sklg.shimmer = (val==='on');
+  else sklg[key] = val;
+  renderSklPlayground();
+}
+function sklgCopyCode(){
+  const b = document.getElementById('sklg-code-block');
+  if(!b) return;
+  navigator.clipboard.writeText(b.innerText||b.textContent).catch(()=>{});
+  const btn = document.getElementById('sklg-copy-btn');
+  if(btn){ btn.textContent = 'Copied!'; setTimeout(()=>btn.textContent='Copy', 2000); }
+}
+
+function renderSklReference(){
+  const root = document.getElementById('skl-reference');
+  if(!root) return;
+
+  const theme = currentTheme();
+  const sbg = stageBg(theme);
+
+  /* ---- Anatomy (dimensions folded in — no size axis to table separately) ---- */
+  const heroSkl = `<div class="skl-card" style="width:280px"><div class="skl skl--block" style="height:96px"></div><div class="skl skl--title"></div><div class="skl skl--line"></div><div class="skl skl--line" style="width:80%;margin-bottom:0"></div></div>`;
+
+  const parts = [
+    {num:1, name:'Line',   note:'12px tall, 9px bottom margin. Stands in for a line of body text.',            vis:`<div class="skl skl--line" style="width:120px;margin-bottom:0"></div>`},
+    {num:2, name:'Circle',  note:'A .skl--circle with a 50% radius — sized to the avatar or icon it replaces.', vis:`<div class="skl skl--circle" style="width:40px;height:40px"></div>`},
+    {num:3, name:'Block',  note:'120px tall by default, 10px radius. Stands in for an image, chart or media area.', vis:`<div class="skl skl--block" style="width:120px;height:60px;margin-bottom:0"></div>`},
+    {num:4, name:'Title',  note:'18px tall, 55% width, 14px bottom margin — heavier than a body line.',       vis:`<div class="skl skl--title" style="width:120px;margin-bottom:0"></div>`},
+    {num:5, name:'Shimmer surface', note:'A 200%-wide gradient between two surface tokens, animated across the shape over 1.5s. Every primitive shares this surface.', vis:`<div class="skl skl--block" style="width:60px;height:32px;margin-bottom:0"></div>`},
+  ];
+  const partCards = parts.map(p=>`
+    <div class="spec-part">
+      <div class="spec-part__stage" style="background:${sbg}">${p.vis}</div>
+      <div class="spec-part__body">
+        <div class="spec-part__name"><span class="spec-part__num">${p.num}</span>${p.name}</div>
+        <div class="spec-part__note">${p.note}</div>
+      </div>
+    </div>`).join('');
+
+  /* ---- Composed layouts ---- */
+  const composedCells = [
+    {name:'Media row', note:'Circle + two lines, for an avatar-and-text row.', html:`<div class="skl-media"><div class="skl skl--circle" style="width:40px;height:40px;flex-shrink:0"></div><div class="skl-media__txt"><div class="skl skl--line"></div><div class="skl skl--line" style="width:60%"></div></div></div>`},
+    {name:'Card',       note:'Block + title + two lines, for a content card.', html:`<div class="skl-card" style="width:220px;max-width:100%"><div class="skl skl--block" style="height:72px"></div><div class="skl skl--title"></div><div class="skl skl--line"></div><div class="skl skl--line" style="width:80%;margin-bottom:0"></div></div>`},
+  ].map(c=>`
+    <div class="spec-cell">
+      <div class="spec-cell__stage" style="background:${sbg}">${c.html}</div>
+      <div class="spec-cell__name">${c.name}</div>
+      <div class="spec-cell__desc">${c.note}</div>
+    </div>`).join('');
+
+  /* ---- Tokens & timing (small table — no per-variant colour palette to grid out) ---- */
+  const tokRows = [
+    {name:'Surface start / end', val:'<code>--color-surface-n1</code>'},
+    {name:'Surface midpoint',    val:'<code>--color-surface-n2</code>'},
+    {name:'Shimmer timing',      val:'1.5s, ease-in-out, infinite'},
+    {name:'Base radius',         val:'6px (circle overrides to 50%)'},
+    {name:'Reduced motion',      val:'Animation removed under <code>prefers-reduced-motion: reduce</code>'},
+  ].map(t=>`<tr><td class="dd-table__name">${t.name}</td><td>${t.val}</td></tr>`).join('');
+
+  /* ---- States ---- */
+  const states = [
+    {name:'Shimmering', note:'Default — the gradient animates left to right.', html:`<div class="skl skl--block" style="width:100px;height:40px;margin-bottom:0"></div>`},
+    {name:'Static',     note:'Animation removed, e.g. under prefers-reduced-motion.', html:`<div class="skl skl--block" style="width:100px;height:40px;margin-bottom:0;animation:none"></div>`},
+  ];
+  const stateCells = states.map(s=>`
+    <div class="spec-cell">
+      <div class="spec-cell__stage" style="background:${sbg}">${s.html}</div>
+      <div class="spec-cell__name">${s.name}</div>
+      <div class="spec-cell__desc">${s.note}</div>
+    </div>`).join('');
+
+  root.innerHTML = `
+    <div class="type-sub">
+      <div class="type-sub__title">Anatomy</div>
+      <div class="type-sub__desc">Four primitives share one shimmering surface. There's no size variant — each primitive's dimensions are fixed defaults, adjusted per instance with an inline width.</div>
+      <div class="cpg-section-outline">
+        <div class="spec-hero" style="background:${sbg}">${heroSkl}</div>
+        <div class="spec-parts">${partCards}</div>
+      </div>
+    </div>
+
+    <div class="type-sub">
+      <div class="type-sub__title">Composed layouts</div>
+      <div class="type-sub__desc">Two ready-made groupings combine the primitives into the shapes used most often.</div>
+      <div class="cpg-section-outline">
+        <div class="spec-grid">${composedCells}</div>
+      </div>
+    </div>
+
+    <div class="type-sub">
+      <div class="type-sub__title">Tokens &amp; timing</div>
+      <div class="type-sub__desc">Two neutral surface tokens and one animation timing — there's no per-variant colour palette like Pills' five semantic colours.</div>
+      <div class="cpg-section-outline">
+        <div class="dd-table-wrap"><table class="dd-table">
+          <thead><tr><th>Property</th><th>Value</th></tr></thead>
+          <tbody>${tokRows}</tbody>
+        </table></div>
+      </div>
+    </div>
+
+    <div class="type-sub" style="margin-bottom:0">
+      <div class="type-sub__title">States</div>
+      <div class="type-sub__desc">Beyond the shimmering default, the animation can be turned off entirely.</div>
+      <div class="cpg-section-outline">
+        <div class="spec-grid">${stateCells}</div>
+      </div>
+    </div>`;
+}
+
+try { renderSklCodeTab(); } catch(e){ console.error('skl-code-tab',e); }
+try { renderSklPlayground(); } catch(e){ console.error('skl-playground',e); }
+try { renderSklBlocks(); } catch(e){ console.error('skl-blocks',e); }
+try { renderSklInSitu(); } catch(e){ console.error('skl-insitu',e); }
+try { renderSklReference(); } catch(e){ console.error('skl-reference',e); }
+
+function sklTabSwitch(tab){
+  const nav = document.getElementById('skl-tabs-list');
+  if(!nav) return;
+  nav.querySelectorAll('.tab-item').forEach(btn=>btn.classList.toggle('on', btn.getAttribute('data-skl-tab')===tab));
+  document.querySelectorAll('#s-skeleton .tabs-panel[data-skl-panel]').forEach(p=>p.classList.toggle('on', p.getAttribute('data-skl-panel')===tab));
+}
+
+/* ============================================================
    SEPARATOR
    Same tabbed-page treatment as Pills/Empty State (.sec--tabbed):
    Overview / Style / Code / Changelog, a shared-state playground
@@ -18211,12 +18716,20 @@ function cbrTabSwitch(tab){
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.86.1';
+const SYSTEM_VERSION = '1.87.1';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.87.1', date:'2026-09-04', author:'Mo', title:'Fixed Skeleton loader Overview/Style stages staying light in dark mode', changes:[
+        ['fixed','toggleTheme() never re-rendered Skeleton loader\'s four JS-mounted sections (renderSklPlayground/renderSklBlocks/renderSklInSitu/renderSklReference), so their stage backgrounds — computed once from the theme active at page load via stageBg(theme) — stayed white after switching to dark. Added the same four guarded calls Pills/Empty State already have in toggleTheme()'],
+      ]},
+      {version:'1.87.0', date:'2026-09-04', author:'Mo', title:'Skeleton loader rebuilt with the full Pills-style tabbed treatment', changes:[
+        ['added','Skeleton loader (s-skeleton) converted from a static "Building blocks" + "Composed" + "When to use" page into a full .sec--tabbed page — Overview / Style / Code / Changelog — matching Pills/Empty State/Lists: a "Try the component" playground (Layout: Primitive/Media row/Card, Shape: Line/Circle/Block/Title, Width: Narrow/Regular/Wide, and a Shimmer/Static motion toggle, rendered into two synced mounts via shared sklg state), a "Key building blocks" showcase (Line / Circle / Block / Title, replacing Pills\' colour-variant slot since this component has no colour axis), 3 "In context" mockups (loading table, loading list, loading profile card), a Style tab (Anatomy with dimensions folded in since there\'s no size-variant axis, Composed layouts, a small Tokens & timing table for the two neutral surface tokens, and States: Shimmering/Static) and a Code tab with the .code-seg HTML/CSS · Blazor · React TSX switcher'],
+        ['added','New ai-ctx tab regenerated via generate-ai-context-tab.mjs for the js-rendered builders (SKL_SHAPES, SKL_LAYOUTS, SKL_WIDTHS, SKL_BLOCKS, makeSklHTML), moved from the end of the section into the new hero\'s sec-header-meta, matching Pills/Empty State/Lists'],
+        ['changed','Do/Dont card moved into the Overview tab\'s #skl-usage .cpg-section-block, JS-rendered markup like Pills/Empty State (previously static markup); guidance text unchanged from the original 3 do / 3 dont'],
+      ]},
       {version:'1.86.1', date:'2026-09-04', author:'Mo', title:'Tabs (s-tabs) rebuilt as a full tabbed page, matching Pills and Popover', changes:[
         ['changed','Tabs converted from a single flat page into a .sec--tabbed page — Overview / Style / Code / Changelog — with a hero preview, a "Try the component" playground (size, icon, tab-count, editable labels) mirrored on the Code tab via shared tbcg state, an Overview "Key patterns" grid crossing size × icon (no colour axis on this component), 3 "In context" mockups (detail-page header, card-scoped switcher, icon dashboard switcher), a Style tab (Anatomy / Sizes & dimensions / States) and a Code tab with the HTML/CSS · Blazor · React TSX language switcher'],
         ['changed','toggleTheme() now re-renders Tabs\' four new stages (playground, patterns, in-context, style reference) on every light/dark toggle so they stay in sync with the site theme'],
@@ -19765,7 +20278,19 @@ const CHANGELOG = {
         ['added','Info / Success / Warning / Critical inline banner on the semantic tokens, with a dismissible variant'],
       ]},
     ]},
-    {secId:'s-skeleton', name:'Skeleton loader', version:'1.0.2', entries:[
+    {secId:'s-skeleton', name:'Skeleton loader', version:'2.0.1', entries:[
+      {version:'2.0.1', date:'2026-08-21', author:'Mo', title:'Fixed Overview/Style stages staying light in dark mode', changes:[
+        ['fixed','The four JS-mounted sections (playground, Key building blocks, In context, Style tab reference) never re-rendered on the global dark-mode toggle, so their stage backgrounds stayed white after switching themes. toggleTheme() now calls renderSklPlayground/renderSklBlocks/renderSklInSitu/renderSklReference, the same pattern Pills/Empty State already use'],
+      ]},
+      {version:'2.0.0', date:'2026-08-21', author:'Mo', title:'Rebuilt with the full Pills-style tabbed treatment', changes:[
+        ['added','Overview / Style / Code / Changelog tabs (.sec--tabbed), replacing the flat "Building blocks" / "Composed" / "When to use" layout'],
+        ['added','"Try the component" playground: Layout (Primitive / Media row / Card), Shape (Line / Circle / Block / Title), Width (Narrow / Regular / Wide) and a Shimmer / Static motion toggle, rendered into two synced mounts (Overview and Code) over one shared sklg state'],
+        ['added','"Key building blocks" showcase on Overview — Line, Circle, Block and Title each with a one-line purpose, filling the slot Pills uses for its colour-variant grid (this component has no colour axis)'],
+        ['added','3 "In context" mockups: a loading table, a loading list of media rows, and a loading profile card'],
+        ['added','Style tab: Anatomy (with default dimensions folded in, since there\'s no size-variant axis), Composed layouts (Media row / Card), a small Tokens & timing table (--color-surface-n1/n2 plus the 1.5s shimmer timing), and States (Shimmering / Static)'],
+        ['added','Code tab: HTML/CSS, Blazor and React TSX snippets behind a .code-seg language switcher, live to the current playground configuration'],
+        ['changed','Component version bumped to 2.0.0 for the structural rebuild; secId (s-skeleton) and all CSS classes (.skl, .skl--*, .skl-media, .skl-card) are unchanged'],
+      ]},
       {version:'1.0.2', date:'2026-08-03', author:'Mo', title:'Renamed to Skeleton loader; fixed missing Block variant in Building blocks', changes:[
         ['fixed','The "Block" swatch under Building blocks rendered empty — .sg-swatch is a column flexbox with align-items:flex-start, so the bare .skl--block div (unlike the Text lines swatch, which wraps its lines in a width:100% container) collapsed to 0 width. Added width:100% to the block\'s inline style'],
         ['changed','Section renamed from "Skeleton" to "Skeleton loader" (page title, sidebar nav label, and this changelog entry\'s component name) to describe what the component is for, not just its visual technique; secId (s-skeleton) and all CSS classes (.skl, .skl--*) are unchanged'],
@@ -28080,6 +28605,7 @@ try { renderSectionChangelogs(); } catch(e){ console.error('section-changelog',e
   {secId:'s-nav', panelId:'nav-changelog-panel'},
   {secId:'s-carousel', panelId:'car-changelog-panel'},
   {secId:'s-empty-state', panelId:'es-changelog-panel'},
+  {secId:'s-skeleton', panelId:'skl-changelog-panel'},
   {secId:'s-pagination', panelId:'pag-changelog-panel'},
   {secId:'s-lists', panelId:'lst-changelog-panel'},
   {secId:'s-separator', panelId:'sep-changelog-panel'},
