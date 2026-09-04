@@ -197,6 +197,15 @@ you're unsure.
 - The `CHANGELOG` JS object has two parts: `CHANGELOG.system` (global entries) and
   `CHANGELOG.components` (one array per section, keyed by `secId`). Both need updating for a
   component change, per this repo's `CLAUDE.md`.
+- **All Satoshi text must enable the full stylistic-alternate set — `ss01` through `ss04`.**
+  `font-feature-settings:'ss01' 1,'ss02' 1,'ss03' 1,'ss04' 1` is the sitewide default (declared on
+  `body` and reasserted on any element that redeclares `font-family` to Satoshi, e.g. `.code-seg__btn`,
+  the Text Inputs field/label/helper classes). These four sets are Satoshi's alternate glyphs —
+  `ss01` (alternate G, a, registered sign), `ss02` (alternate g), `ss03` (alternate t), `ss04`
+  (alternate Q) — and all four are the house style, not a per-component choice. Any new component or
+  override that sets `font-family` to `'Satoshi Variable'`/`'Satoshi'` must carry this same
+  `font-feature-settings` declaration rather than relying on inheritance (inheritance breaks the
+  moment `font-family` is redeclared without it) or shipping a partial subset.
 - **Cards at the same hierarchy level must share identical heading typography.** When several
   card instances sit side by side as peers (e.g. three cards in a row, a grid of stat cards), the
   heading inside each one — font-size, weight, line-height, colour — must match exactly across all
