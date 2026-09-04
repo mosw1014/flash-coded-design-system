@@ -1812,6 +1812,8 @@ body.home .main{max-width:none;margin:0;padding:0}
 ================================================================ */
 /* Tabs list — the horizontal strip with the shared bottom divider */
 .tabs-list{display:flex;align-items:flex-start;gap:0;border-bottom:2px solid var(--chrome-border)}
+/* Tabs playground stage — wrap onto a second row instead of scrolling horizontally when the tab count/labels outgrow the stage width */
+.tbcg-stage-el .tabs-list{flex-wrap:wrap;justify-content:center;row-gap:8px}
 
 /* Tab item */
 .tab-item{position:relative;display:flex;flex-direction:column;align-items:stretch;flex-shrink:0;background:none;border:none;padding:0;margin:0;cursor:pointer;font-family:inherit;color:inherit}
@@ -4538,7 +4540,7 @@ body.home .main{max-width:none;margin:0;padding:0}
       <div class="sec__head">
         <h1 class="sec__title">Tabs</h1>
         <div class="sec-header-meta">
-          <span class="comp-ver-badge" style="margin-left:0">v1.3.0</span>
+          <span class="comp-ver-badge" style="margin-left:0">v1.3.1</span>
           <details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-tabs">
@@ -4559,7 +4561,7 @@ body.home .main{max-width:none;margin:0;padding:0}
     ".tab-item__line",
     ".tabs-list"
   ],
-  "css": "/* ================================================================\n   TABS\n================================================================ */\n/* Tabs list — the horizontal strip with the shared bottom divider */\n.tabs-list { display:flex;align-items:flex-start;gap:0;border-bottom:2px solid var(--chrome-border) }\n/* Tab item */\n.tab-item { position:relative;display:flex;flex-direction:column;align-items:stretch;flex-shrink:0;background:none;border:none;padding:0;margin:0;cursor:pointer;font-family:inherit;color:inherit }\n.tab-item__inner { display:flex;align-items:center;justify-content:center;height:56px;gap:8px;padding:4px 20px }\n.tab-item__icon { display:flex;align-items:center;justify-content:center;flex-shrink:0;padding:4px;border-radius:6px;background:var(--color-surface-n2);color:var(--chrome-muted);transition:color .15s ease }\n.tab-item__icon svg { width:12px;height:12px;display:block }\n.tab-item__label { font-size:16px;font-weight:500;line-height:1.25;color:var(--color-text-3);white-space:nowrap;transition:color .15s ease }\n/* active underline — straddles the 2px divider */\n.tab-item__line { position:absolute;left:0;right:0;bottom:-2px;height:4px;border-radius:4px;background:var(--color-surface-inverse);opacity:0;transition:opacity .15s ease }\n/* Hover state — label lifts to primary, icon glyph darkens */\n.tab-item:hover .tab-item__label,\n.tab-item--hover .tab-item__label { color:var(--color-text-1) }\n.tab-item:hover .tab-item__icon,\n.tab-item--hover .tab-item__icon { color:var(--color-text-1) }\n/* Active state — semibold primary label, dark glyph, underline shown */\n.tab-item.on .tab-item__label,\n.tab-item--active .tab-item__label { color:var(--color-text-1);font-weight:650 }\n.tab-item.on .tab-item__icon,\n.tab-item--active .tab-item__icon { color:var(--color-text-1) }\n.tab-item.on .tab-item__line,\n.tab-item--active .tab-item__line { opacity:1 }\n/* Small size */\n.tab-item--sm .tab-item__inner { height:46px;gap:6px;padding:4px 12px }\n.tab-item--sm .tab-item__label { font-size:13px;line-height:1.3 }\n.tab-item--sm .tab-item__icon svg { width:11px;height:11px }\n.tab-item--sm .tab-item__line { bottom:0;height:3px }",
+  "css": "/* ================================================================\n   TABS\n================================================================ */\n/* Tabs list — the horizontal strip with the shared bottom divider */\n.tabs-list { display:flex;align-items:flex-start;gap:0;border-bottom:2px solid var(--chrome-border) }\n/* Tabs playground stage — wrap onto a second row instead of scrolling horizontally when the tab count/labels outgrow the stage width */\n.tbcg-stage-el .tabs-list { flex-wrap:wrap;justify-content:center;row-gap:8px }\n/* Tab item */\n.tab-item { position:relative;display:flex;flex-direction:column;align-items:stretch;flex-shrink:0;background:none;border:none;padding:0;margin:0;cursor:pointer;font-family:inherit;color:inherit }\n.tab-item__inner { display:flex;align-items:center;justify-content:center;height:56px;gap:8px;padding:4px 20px }\n.tab-item__icon { display:flex;align-items:center;justify-content:center;flex-shrink:0;padding:4px;border-radius:6px;background:var(--color-surface-n2);color:var(--chrome-muted);transition:color .15s ease }\n.tab-item__icon svg { width:12px;height:12px;display:block }\n.tab-item__label { font-size:16px;font-weight:500;line-height:1.25;color:var(--color-text-3);white-space:nowrap;transition:color .15s ease }\n/* active underline — straddles the 2px divider */\n.tab-item__line { position:absolute;left:0;right:0;bottom:-2px;height:4px;border-radius:4px;background:var(--color-surface-inverse);opacity:0;transition:opacity .15s ease }\n/* Hover state — label lifts to primary, icon glyph darkens */\n.tab-item:hover .tab-item__label,\n.tab-item--hover .tab-item__label { color:var(--color-text-1) }\n.tab-item:hover .tab-item__icon,\n.tab-item--hover .tab-item__icon { color:var(--color-text-1) }\n/* Active state — semibold primary label, dark glyph, underline shown */\n.tab-item.on .tab-item__label,\n.tab-item--active .tab-item__label { color:var(--color-text-1);font-weight:650 }\n.tab-item.on .tab-item__icon,\n.tab-item--active .tab-item__icon { color:var(--color-text-1) }\n.tab-item.on .tab-item__line,\n.tab-item--active .tab-item__line { opacity:1 }\n/* Small size */\n.tab-item--sm .tab-item__inner { height:46px;gap:6px;padding:4px 12px }\n.tab-item--sm .tab-item__label { font-size:13px;line-height:1.3 }\n.tab-item--sm .tab-item__icon svg { width:11px;height:11px }\n.tab-item--sm .tab-item__line { bottom:0;height:3px }",
   "js": "function tabItem(opts){\n  var tag = opts.el || 'button';\n  var cls = 'tab-item';\n  if(opts.size === 'sm') cls += ' tab-item--sm';\n  if(opts.state === 'hover')  cls += ' tab-item--hover';\n  if(opts.state === 'active') cls += ' tab-item--active';\n  var icon = opts.icon ? '&lt;span class=\"tab-item__icon\"&gt;' + USER_ICON + '&lt;/span&gt;' : '';\n  return '&lt;' + tag + ' type=\"button\" class=\"' + cls + '\"&gt;' +\n           '&lt;span class=\"tab-item__inner\"&gt;' + icon +\n             '&lt;span class=\"tab-item__label\"&gt;' + (opts.label || 'Tab item') + '&lt;/span&gt;' +\n           '&lt;/span&gt;' +\n           '&lt;span class=\"tab-item__line\"&gt;&lt;/span&gt;' +\n         '&lt;/' + tag + '&gt;';\n}\n\nfunction tabsList(items, size){\n  return '&lt;div class=\"tabs-list\"&gt;' + items.map(function(it){\n    it.size = size; return tabItem(it);\n  }).join('') + '&lt;/div&gt;';\n}",
   "usage": {
     "do": [
@@ -4575,7 +4577,7 @@ body.home .main{max-width:none;margin:0;padding:0}
       "Don’t leave the list with no active tab, or with more than one active at once."
     ]
   },
-  "contentHash": "36b4b2883189611b653b6fd8d72387d1d96cfdc23046b6f91076a871b2bb7ab1",
+  "contentHash": "a1902af9fb80b602b7846123d578598e43dd241b0a1969b9e322a3e236a39b89",
   "note": "tabItem is the minimal real-markup builder (label+icon+size+state -&gt; .tab-item HTML string); tabsList composes items into the shared-divider .tabs-list strip. Both are the real component builders and are reused site-wide as the sub-tab nav furniture on every .sec--tabbed page, including this one. TBC_KEY_PATTERNS drives the Overview tab's Key patterns showcase (size x icon is the full variant space — there is no colour axis). tabsPreviewHTML/getTabsCode*/renderTabs*/tbcg*/tbcTabSwitch are doc-site-only playground plumbing, excluded."
 }
   </pre>
@@ -18716,12 +18718,15 @@ function cbrTabSwitch(tab){
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.87.1';
+const SYSTEM_VERSION = '1.87.2';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.87.2', date:'2026-09-04', author:'Mo', title:'Tabs playground no longer scrolls horizontally', changes:[
+        ['fixed','Tabs\' "Try the component" playground stage wrapped its tab bar in an overflow-x:auto scroll container to avoid clipping a wide bar — replaced with a scoped .tbcg-stage-el .tabs-list{flex-wrap:wrap} rule so an over-wide bar wraps onto a second row instead of requiring horizontal scrolling'],
+      ]},
       {version:'1.87.1', date:'2026-09-04', author:'Mo', title:'Fixed Skeleton loader Overview/Style stages staying light in dark mode', changes:[
         ['fixed','toggleTheme() never re-rendered Skeleton loader\'s four JS-mounted sections (renderSklPlayground/renderSklBlocks/renderSklInSitu/renderSklReference), so their stage backgrounds — computed once from the theme active at page load via stageBg(theme) — stayed white after switching to dark. Added the same four guarded calls Pills/Empty State already have in toggleTheme()'],
       ]},
@@ -21259,7 +21264,10 @@ const CHANGELOG = {
         ['added','Live size + colour customiser, a 30-icon library with click-to-copy, and an anatomy/specs table'],
       ]},
     ]},
-    {secId:'s-tabs', name:'Tabs', version:'1.3.0', entries:[
+    {secId:'s-tabs', name:'Tabs', version:'1.3.1', entries:[
+      {version:'1.3.1', date:'2026-09-04', author:'Mo', title:'Playground no longer scrolls horizontally', changes:[
+        ['fixed','The "Try the component" playground stage wrapped its tab bar in an overflow-x:auto scroll container so a wide bar wouldn\'t clip — replaced with a scoped .tbcg-stage-el .tabs-list{flex-wrap:wrap} rule so an over-wide bar wraps onto a second row instead of requiring horizontal scrolling'],
+      ]},
       {version:'1.3.0', date:'2026-09-04', author:'Mo', title:'Tabs converted to a full tabbed page — Overview / Style / Code / Changelog', changes:[
         ['changed','Page rebuilt from a single flat "Interactive/Sizes/With & without icon/States/Anatomy & specs/When to use" scroll into a .sec--tabbed page matching Pills and Popover: a hero with a static illustrative preview, and Overview / Style / Code / Changelog sub-tabs switched by tbcTabSwitch(), all under the unchanged #s-tabs id so deep links keep working'],
         ['added','"Try the component" playground (renderTabsPlayground, mounted at #tbc-playground and mirrored at #tbc-code-playground via shared tbcg state) with controls for Size (Regular/Small), Icon (on/off), a 2–5 tab-count stepper, and a per-tab label text input — the stage itself is clickable to change the active tab, built from the real tabItem/tabsList functions'],
@@ -22458,7 +22466,7 @@ function tabsList(items, size){
 /* Shared state for both playground mounts, same role popg plays for
    Popover. `active` is the selected tab index — the stage is clickable,
    since switching is the whole point of the component. */
-let tbcg = { size:'reg', icon:true, tabCount:4, labels:['Overview','Activity','Settings','More'], active:0, theme:'light' };
+let tbcg = { size:'reg', icon:true, tabCount:3, labels:['Overview','Activity','Settings'], active:0, theme:'light' };
 const TBC_SPARE_LABELS = ['Overview','Activity','Settings','More','Files'];
 
 function tbcEsc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&#60;').replace(/>/g,'&#62;').replace(/"/g,'&quot;'); }
@@ -22477,10 +22485,7 @@ function tbcgItems(){
 
 function tbcgRefresh(){
   document.querySelectorAll('.tbcg-stage-el').forEach(stage=>{
-    /* The stage is a centring flex box; a wide tab bar would be clipped on
-       both edges with no way to reach it, so the list gets its own
-       max-width:100% scroll container. */
-    stage.innerHTML = '<div style="overflow-x:auto;max-width:100%">' + tabsList(tbcgItems(), tbcg.size) + '</div>';
+    stage.innerHTML = tabsList(tbcgItems(), tbcg.size);
     stage.querySelectorAll('.tab-item').forEach((btn,i)=>{
       btn.addEventListener('click', ()=>{ tbcg.active = i; tbcgRefresh(); });
     });
