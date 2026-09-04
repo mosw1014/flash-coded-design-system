@@ -6441,7 +6441,7 @@ body.home .main{max-width:none;margin:0;padding:0}
       <div class="sec__head">
         <h1 class="sec__title">Popover</h1>
         <div class="sec-header-meta">
-          <span class="comp-ver-badge" style="margin-left:0">v2.0.8</span>
+          <span class="comp-ver-badge" style="margin-left:0">v2.0.9</span>
           <details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-popover">
@@ -6488,9 +6488,11 @@ body.home .main{max-width:none;margin:0;padding:0}
         </div>
       </div>
       <div class="sec-hero__preview"><div class="mk"><div class="pop" style="position:static;pointer-events:none" aria-hidden="true">
-        <button class="sg-btn" type="button" tabindex="-1"><span class="mk-bar" style="width:32px;background:currentColor;opacity:.9"></span></button>
-        <div class="pop__panel" style="position:static;opacity:1;transform:none;box-shadow:none;margin-top:8px;min-width:200px">
+        <button class="sg-btn" type="button" tabindex="-1" style="background:transparent;border:1.5px solid var(--chrome-border);color:var(--chrome-txt)"><span class="mk-bar" style="width:32px;background:currentColor;opacity:.8"></span></button>
+        <div class="pop__panel" style="position:static;opacity:1;transform:none;box-shadow:none;margin-top:8px;min-width:200px;padding:12px">
           <div class="pop__title"><span class="mk-bar mk-bar--txt" style="width:70%"></span></div>
+          <div class="pop__row" style="padding:5px 0"><span class="mk-bar" style="width:85%"></span></div>
+          <div class="pop__foot" style="margin-top:10px;padding-top:10px"><button class="pop__apply" type="button" tabindex="-1" style="flex:none;width:64px"><span class="mk-bar" style="width:32px;background:currentColor;opacity:.9;margin:0 auto"></span></button></div>
         </div>
       </div></div></div>
       </div>
@@ -17306,12 +17308,17 @@ function cbrTabSwitch(tab){
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.83.8';
+const SYSTEM_VERSION = '1.83.9';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.83.9', date:'2026-09-04', author:'Mo', title:'Popover hero preview closer to the real anatomy', changes:[
+        ['changed','Hero preview\'s open panel expanded from just a title bar to title + one content-row bar + a footer action, all still wireframe .mk-bar placeholders (no literal copy) — reads closer to the real component\'s title/body/footer anatomy while staying reduced for the small header thumbnail'],
+        ['fixed','The footer action button stretched full-width via .pop__apply\'s real flex:1, reading as an odd wide bar rather than a button; constrained to a fixed 64px width so it reads as a compact action'],
+        ['changed','Trigger button switched from a solid filled treatment to an outlined one (transparent background, chrome-border outline) so it\'s immediately distinguishable from the solid black footer action button below it — the two were reading as the same shape/colour at this small scale'],
+      ]},
       {version:'1.83.8', date:'2026-08-21', author:'Mo', title:'Popover playground label spacing fixed', changes:[
         ['fixed','"Try the component" playground\'s control labels sit in a shared .btn-pg__clabel column fixed at 60px, sized for short labels like "Icon" or "Size" — "Content type" (and Placement/Footer, for visual consistency) crowded against their pill rows at that width; widened to 82px and added a 6px margin before each pill row for breathing room'],
       ]},
@@ -18919,7 +18926,12 @@ const CHANGELOG = {
         ['added','Native range input with a brand fill and live value; continuous, stepped and disabled examples'],
       ]},
     ]},
-    {secId:'s-popover', name:'Popover', version:'2.0.8', entries:[
+    {secId:'s-popover', name:'Popover', version:'2.0.9', entries:[
+      {version:'2.0.9', date:'2026-09-04', author:'Mo', title:'Hero preview closer to the real anatomy', changes:[
+        ['changed','Open panel expanded from just a title bar to title + one content-row bar + a footer action, all still wireframe placeholders — closer to the real title/body/footer anatomy while staying reduced'],
+        ['fixed','Footer action button stretched full-width via .pop__apply\'s real flex:1, reading as an odd wide bar; constrained to a fixed 64px width'],
+        ['changed','Trigger switched to an outlined treatment (transparent background, chrome-border outline) so it\'s distinguishable from the solid black footer action button at this small scale'],
+      ]},
       {version:'2.0.8', date:'2026-08-21', author:'Mo', title:'Playground label spacing fixed', changes:[
         ['fixed','Control labels ("Content type", Placement, Footer) crowded their pill rows at the shared .btn-pg__clabel 60px width, sized for shorter labels elsewhere; widened to 82px with an added 6px margin before each pill row'],
       ]},
