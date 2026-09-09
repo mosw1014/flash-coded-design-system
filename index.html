@@ -3344,9 +3344,9 @@ body.home .main{max-width:none;margin:0;padding:0}
                 <div class="spec-cell">
                   <div class="spec-cell__stage logo-dont" style="background:var(--color-crit-l);display:flex;align-items:center;justify-content:center;gap:14px">
                     <span class="logo-dont__x"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></span>
-                    <span class="icn icn--lg" data-icon="bell" style="color:var(--chrome-txt)"></span>
-                    <span class="icn icn--lg" id="icn-dont-outline" style="color:var(--chrome-txt)"></span>
-                    <span class="icn icn--lg" data-icon="edit" style="color:var(--chrome-txt)"></span>
+                    <div style="display:flex;flex-direction:column;align-items:center;gap:4px"><span class="icn icn--lg" data-icon="bell" style="color:var(--chrome-txt)"></span><span style="font-size:10px;color:var(--chrome-muted)">Solid</span></div>
+                    <div style="display:flex;flex-direction:column;align-items:center;gap:4px"><span class="icn icn--lg" id="icn-dont-outline" style="color:var(--chrome-txt)"></span><span style="font-size:10px;color:var(--chrome-muted)">Outline</span></div>
+                    <div style="display:flex;flex-direction:column;align-items:center;gap:4px"><span class="icn icn--lg" data-icon="edit" style="color:var(--chrome-txt)"></span><span style="font-size:10px;color:var(--chrome-muted)">Solid</span></div>
                   </div>
                   <div class="spec-cell__name"><b class="logo-dont__tag">&#10007; Mixed styles</b></div>
                   <div class="spec-cell__desc">Solid and Outline in the same toolbar. Pick one style per view.</div>
@@ -29724,7 +29724,11 @@ try {
   var icnInsituBtn=document.getElementById('icn-insitu-btn');
   if(icnInsituBtn && typeof makeBtnEl==='function') icnInsituBtn.appendChild(makeBtnEl('flash','light','simple','reg',true,null,null));
   var icnInsituSearch=document.getElementById('icn-insitu-search');
-  if(icnInsituSearch && typeof tiBuildSearchField==='function') icnInsituSearch.appendChild(tiBuildSearchField().el);
+  if(icnInsituSearch && typeof tiBuildSearchField==='function'){
+    var searchBuilt = tiBuildSearchField();
+    searchBuilt.el.style.width = '100%';
+    icnInsituSearch.appendChild(searchBuilt.el);
+  }
   var icnInsituEmpty=document.getElementById('icn-insitu-empty');
   if(icnInsituEmpty && typeof makeEmptyStateHTML==='function') icnInsituEmpty.innerHTML = makeEmptyStateHTML('filter','No results','Try a different filter.', null);
 } catch(e){ console.error('icons-doc-usage',e); }
