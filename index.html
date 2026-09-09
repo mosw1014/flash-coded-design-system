@@ -2961,7 +2961,7 @@ body.home .main{max-width:none;margin:0;padding:0}
             <div class="type-sub__title">Chart &amp; category colours</div>
             <div class="type-sub__desc">Red and deep orange sit last in the order — they read as error/warning, so charts reach for every other colour first.</div>
             <div class="cpg-section-outline">
-              <div class="cht" id="col-chart-mount" style="width:100%;max-width:640px"></div>
+              <div class="cht" id="col-chart-mount" style="width:100%;max-width:640px;padding-left:60px;padding-bottom:60px;overflow:hidden"></div>
               <div class="cat-grid" id="col-cat-strip" style="margin-top:16px"></div>
             </div>
           </div>
@@ -8203,7 +8203,7 @@ body.home .main{max-width:none;margin:0;padding:0}
 // is gone. Light Grey (#F0F0F0) is the same hex as Grey-100 in the Grey
 // family — shown again here as a hero swatch, per the Flash Brand Guide.
 const PRIMARY_HERO = [
-  {name:'Flash Green', hex:'#1dfa0f'},
+  {name:'Flash Green', hex:'#1dfa0f', tag:'Flash Logo'},
   {name:'Green', hex:'#10c504'},
   {name:'Black', hex:'#000000'},
   {name:'Light Grey', hex:'#f0f0f0'},
@@ -8443,7 +8443,7 @@ function renderPrimaryHero() {
     <div class="hero-card" onclick="copy('${c.hex}','${c.name}')">
       <div class="hero-card__swatch" style="background:${c.hex}${c.border ? ';border-bottom:1px solid var(--chrome-border)' : ''}"></div>
       <div class="hero-card__info">
-        <div class="hero-card__name">${c.name}</div>
+        <div class="hero-card__name">${c.name}${c.tag ? ` <span style="display:inline-block;margin-left:4px;padding:1px 7px;border-radius:20px;font-size:10px;font-weight:700;vertical-align:middle;background:var(--color-success-l);color:var(--color-success-h)">${c.tag}</span>` : ''}</div>
         <div class="hero-card__hex">${c.hex.toUpperCase()}</div>
       </div>
     </div>`).join('');
@@ -8659,8 +8659,8 @@ function colDocRenderTokenUsage(){
   </div>`;
   const btnsPreview = `<div style="display:flex;align-items:center;justify-content:center;gap:10px;padding:16px" id="col-usage-btns-row"></div>`;
   const indPreview = `<div style="display:flex;align-items:center;justify-content:center;padding:16px">${ovAlrt({variant:'info', compact:true})}</div>`;
-  const inputPreview = `<div style="display:flex;align-items:center;justify-content:center;padding:16px" id="col-usage-input-row"></div>`;
-  const linksPreview = `<div style="display:flex;align-items:center;justify-content:center;padding:16px;font-size:13px"><a href="#" onclick="return false" style="color:var(--color-link)">Hyperlink example</a></div>`;
+  const inputPreview = `<div style="display:flex;align-items:center;justify-content:center;width:100%;padding:16px" id="col-usage-input-row"></div>`;
+  const linksPreview = `<div style="display:flex;align-items:center;justify-content:center;padding:16px;font-size:13px"><a href="#" onclick="return false" style="color:var(--color-link);text-decoration:underline">Hyperlink example</a></div>`;
 
   mount.innerHTML =
     colDocTokenBlock('Surface', surfacePreview, ['--color-surface-n1','--color-surface-n2','--color-surface-n3']) +
@@ -8678,7 +8678,12 @@ function colDocRenderTokenUsage(){
   }
   const inputRow = document.getElementById('col-usage-input-row');
   if(inputRow){
-    try { inputRow.appendChild(tiBuildSearchField().el); } catch(e){}
+    try {
+      const searchWrap = tiBuildSearchField().el;
+      searchWrap.style.flex = '1 1 auto';
+      searchWrap.style.maxWidth = '400px';
+      inputRow.appendChild(searchWrap);
+    } catch(e){}
   }
 }
 
