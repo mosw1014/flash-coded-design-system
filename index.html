@@ -1052,12 +1052,16 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;font-feature-
 .brand-sw__hex{font-family:'SF Mono',monospace;font-size:11px;opacity:.8}
 .brand-sw__role{font-size:11px;margin-top:6px;opacity:.85;line-height:1.4}
 
-.brand-note{
-  margin-top:14px;padding:12px 16px;border-radius:10px;
-  background:var(--chrome-nav);border-left:3px solid #10c504;
-  font-size:12.5px;line-height:1.55;color:var(--chrome-txt);transition:background .25s;
+/* Logos page note — a subtle tint rather than an accent rule, so it reads as
+   supporting detail. Low-alpha grey so it holds up on both the tinted
+   .cpg-section-block and the transparent .cpg-section-outline. */
+.logo-note{
+  margin-top:16px;padding:13px 16px;border-radius:10px;
+  background:rgba(128,128,128,.09);border:1px solid rgba(128,128,128,.16);
+  font-size:12.5px;line-height:1.55;color:var(--chrome-muted);transition:background .25s;
 }
-.brand-note code{font-family:'SF Mono',monospace;font-size:11px;background:var(--chrome-bg);padding:1px 5px;border-radius:4px}
+.logo-note strong,.logo-note b{color:var(--chrome-txt);font-weight:700}
+.logo-note code{font-family:'SF Mono',monospace;font-size:11px;background:var(--chrome-bg);padding:1px 5px;border-radius:4px}
 
 .brand-type{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 @media(max-width:600px){.brand-type{grid-template-columns:1fr}}
@@ -2426,6 +2430,17 @@ body.home .main{max-width:none;margin:0;padding:0}
 .icn-tile.copied .icn-tile__name{color:var(--color-success-h);font-weight:700}
 /* ---- Logos (Brand) ---- */
 /* Download pill, reused by the asset list */
+.logo-hero-mark{width:150px;max-width:100%;height:auto;display:block}
+.logo-hero-mark--dark{display:none}
+[data-theme="dark"] .logo-hero-mark--light{display:none}
+[data-theme="dark"] .logo-hero-mark--dark{display:block}
+/* Don't-example treatment — a red wash, ringed offenders and a cross badge, so
+   a wrong layout reads as wrong at a glance rather than only in its caption */
+.logo-dont{position:relative}
+.logo-dont__x{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:2;width:36px;height:36px;border-radius:50%;background:var(--color-crit-h);color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 10px rgba(0,0,0,.4)}
+.logo-dont__x svg{width:18px;height:18px;display:block}
+.logo-dont .logo-layout__mark{outline:2px solid var(--color-crit-h);outline-offset:3px}
+.logo-dont__tag{color:var(--color-crit-h)}
 .logo-dl{display:inline-flex;align-items:center;justify-content:center;height:30px;padding:0 14px;border-radius:999px;border:1px solid var(--chrome-border);font-size:11.5px;font-weight:700;color:var(--chrome-txt);text-decoration:none;background:transparent;transition:background .12s,border-color .12s;font-family:inherit;cursor:pointer}
 .logo-dl:hover{background:var(--chrome-hover);border-color:var(--color-text-s)}
 /* Asset list — one row per shipped file: preview, filename, the rule for reaching
@@ -3061,7 +3076,7 @@ body.home .main{max-width:none;margin:0;padding:0}
         <h1 class="sec__title">Logos</h1>
         <p class="sec__desc">The Flash mark and wordmark ship as a fixed set of lockups. The background decides which one you use &mdash; the files are never recoloured, redrawn or rebuilt from type.</p>
         <div class="sec-header-meta">
-          <span class="comp-ver-badge" style="margin-left:0">v1.3.0</span>
+          <span class="comp-ver-badge" style="margin-left:0">v1.3.1</span>
           <details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-logos">
@@ -3069,6 +3084,8 @@ body.home .main{max-width:none;margin:0;padding:0}
   "status": "static",
   "realClasses": [
     ".logo-dl",
+    ".logo-hero-mark",
+    ".logo-note",
     ".logo-list",
     ".logo-list__row",
     ".logo-list__thumb",
@@ -3090,11 +3107,14 @@ body.home .main{max-width:none;margin:0;padding:0}
     ".logo-layout",
     ".logo-layout__mark",
     ".logo-layout__spacer",
+    ".logo-dont",
+    ".logo-dont__x",
+    ".logo-dont__tag",
     ".logo-scale",
     ".logo-scale__item",
     ".logo-scale__cap"
   ],
-  "css": "/* ---- Logos (Brand) ---- */\n/* Download pill, reused by the asset list */\n.logo-dl { display:inline-flex;align-items:center;justify-content:center;height:30px;padding:0 14px;border-radius:999px;border:1px solid var(--chrome-border);font-size:11.5px;font-weight:700;color:var(--chrome-txt);text-decoration:none;background:transparent;transition:background .12s,border-color .12s;font-family:inherit;cursor:pointer }\n.logo-dl:hover { background:var(--chrome-hover);border-color:var(--color-text-s) }\n/* Asset list — one row per shipped file: preview, filename, the rule for reaching\n   for it, and its downloads. A list rather than a card grid so every row reads on\n   the same horizontal rhythm and the rules stay scannable top to bottom. */\n.logo-list { display:flex;flex-direction:column;border:1px solid var(--chrome-border);border-radius:12px;overflow:hidden }\n.logo-list__row { display:grid;grid-template-columns:132px 1fr auto;gap:18px;align-items:center;padding:14px 18px;border-bottom:1px solid var(--chrome-border);transition:background .12s }\n.logo-list__row:last-child { border-bottom:none }\n.logo-list__row:hover { background:var(--chrome-hover) }\n.logo-list__thumb { height:52px;border-radius:8px;border:1px solid rgba(128,128,128,.18);display:flex;align-items:center;justify-content:center;padding:9px }\n.logo-list__thumb img { max-width:100%;max-height:100%;display:block }\n.logo-list__name { font-family:'SF Mono',Consolas,monospace;font-size:12px;font-weight:600;color:var(--chrome-txt);word-break:break-word }\n.logo-list__rule { font-size:12px;color:var(--chrome-muted);line-height:1.5;margin-top:4px }\n.logo-list__actions { display:flex;gap:8px;flex-shrink:0 }\n/* Small square swatch shown wherever a background colour is named */\n.logo-swatch { display:inline-block;width:14px;height:14px;border-radius:3px;border:1px solid rgba(128,128,128,.32);flex-shrink:0;vertical-align:-2px;margin-right:8px }\n/* \"Not shipped as an asset yet\" stage, so a documented format still reads as a\n   real gap rather than being silently omitted or faked with a stand-in file */\n.logo-missing { border:1.5px dashed var(--chrome-border);border-radius:8px }\n.logo-missing__label { font-size:11px;font-weight:700;color:var(--chrome-muted);text-align:center;line-height:1.4 }\n/* Clear-space diagram — always drawn on white, so its rules are hardcoded dark */\n.logo-clear { display:flex;align-items:center;justify-content:center;background:#fff;border-radius:12px;padding:40px 20px }\n.logo-clear__frame { position:relative;border:1.5px dashed rgba(0,0,0,.4);padding:26px }\n.logo-clear__box { border:1px solid rgba(0,0,0,.16) }\n.logo-clear__mark { display:block;height:44px;width:auto }\n.logo-clear__x { position:absolute;font-family:'SF Mono',Consolas,monospace;font-size:10px;font-weight:700;color:rgba(0,0,0,.55) }\n/* Nav placement replica — mirrors this site's real .bar (52px tall, 28px logo, 20px inset) */\n.logo-nav { border:1px solid var(--chrome-border);border-radius:12px;overflow:hidden }\n.logo-nav__bar { height:52px;display:flex;align-items:center;gap:12px;padding:0 20px;background:#12131a }\n.logo-nav__logo { height:28px;width:auto;display:block;flex-shrink:0 }\n.logo-nav__field { flex:1;max-width:280px;height:32px;border-radius:999px;background:rgba(255,255,255,.08);display:flex;align-items:center;padding:0 14px;font-size:11.5px;color:rgba(255,255,255,.45) }\n/* Layout placement mockups — a miniature page, so the logo's position within a\n   real composition is visible rather than described */\n.logo-layout { position:relative;border-radius:8px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.2);display:flex;flex-direction:column;padding:13px;gap:7px }\n.logo-layout__mark { height:17px;width:auto;display:block }\n.logo-layout__spacer { flex:1 }\n/* Size-comparison row — one lockup at three real widths, baseline-aligned */\n.logo-scale { display:flex;align-items:flex-end;justify-content:center;gap:34px;flex-wrap:wrap;background:#fff;border-radius:12px;padding:32px 20px }\n.logo-scale__item { display:flex;flex-direction:column;align-items:center;gap:10px }\n.logo-scale__cap { font-family:'SF Mono',Consolas,monospace;font-size:10.5px;font-weight:700;color:rgba(0,0,0,.55) }",
+  "css": "/* Logos page note — a subtle tint rather than an accent rule, so it reads as\n   supporting detail. Low-alpha grey so it holds up on both the tinted\n   .cpg-section-block and the transparent .cpg-section-outline. */\n.logo-note { margin-top:16px;padding:13px 16px;border-radius:10px;\n  background:rgba(128,128,128,.09);border:1px solid rgba(128,128,128,.16);\n  font-size:12.5px;line-height:1.55;color:var(--chrome-muted);transition:background .25s; }\n.logo-note strong,.logo-note b { color:var(--chrome-txt);font-weight:700 }\n.logo-note code { font-family:'SF Mono',monospace;font-size:11px;background:var(--chrome-bg);padding:1px 5px;border-radius:4px }\n/* ---- Logos (Brand) ---- */\n/* Download pill, reused by the asset list */\n.logo-hero-mark { width:150px;max-width:100%;height:auto;display:block }\n/* Don't-example treatment — a red wash, ringed offenders and a cross badge, so\n   a wrong layout reads as wrong at a glance rather than only in its caption */\n.logo-dont { position:relative }\n.logo-dont__x { position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:2;width:36px;height:36px;border-radius:50%;background:var(--color-crit-h);color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 10px rgba(0,0,0,.4) }\n.logo-dont__x svg { width:18px;height:18px;display:block }\n.logo-dont .logo-layout__mark { outline:2px solid var(--color-crit-h);outline-offset:3px }\n.logo-dont__tag { color:var(--color-crit-h) }\n.logo-dl { display:inline-flex;align-items:center;justify-content:center;height:30px;padding:0 14px;border-radius:999px;border:1px solid var(--chrome-border);font-size:11.5px;font-weight:700;color:var(--chrome-txt);text-decoration:none;background:transparent;transition:background .12s,border-color .12s;font-family:inherit;cursor:pointer }\n.logo-dl:hover { background:var(--chrome-hover);border-color:var(--color-text-s) }\n/* Asset list — one row per shipped file: preview, filename, the rule for reaching\n   for it, and its downloads. A list rather than a card grid so every row reads on\n   the same horizontal rhythm and the rules stay scannable top to bottom. */\n.logo-list { display:flex;flex-direction:column;border:1px solid var(--chrome-border);border-radius:12px;overflow:hidden }\n.logo-list__row { display:grid;grid-template-columns:132px 1fr auto;gap:18px;align-items:center;padding:14px 18px;border-bottom:1px solid var(--chrome-border);transition:background .12s }\n.logo-list__row:last-child { border-bottom:none }\n.logo-list__row:hover { background:var(--chrome-hover) }\n.logo-list__thumb { height:52px;border-radius:8px;border:1px solid rgba(128,128,128,.18);display:flex;align-items:center;justify-content:center;padding:9px }\n.logo-list__thumb img { max-width:100%;max-height:100%;display:block }\n.logo-list__name { font-family:'SF Mono',Consolas,monospace;font-size:12px;font-weight:600;color:var(--chrome-txt);word-break:break-word }\n.logo-list__rule { font-size:12px;color:var(--chrome-muted);line-height:1.5;margin-top:4px }\n.logo-list__actions { display:flex;gap:8px;flex-shrink:0 }\n/* Small square swatch shown wherever a background colour is named */\n.logo-swatch { display:inline-block;width:14px;height:14px;border-radius:3px;border:1px solid rgba(128,128,128,.32);flex-shrink:0;vertical-align:-2px;margin-right:8px }\n/* \"Not shipped as an asset yet\" stage, so a documented format still reads as a\n   real gap rather than being silently omitted or faked with a stand-in file */\n.logo-missing { border:1.5px dashed var(--chrome-border);border-radius:8px }\n.logo-missing__label { font-size:11px;font-weight:700;color:var(--chrome-muted);text-align:center;line-height:1.4 }\n/* Clear-space diagram — always drawn on white, so its rules are hardcoded dark */\n.logo-clear { display:flex;align-items:center;justify-content:center;background:#fff;border-radius:12px;padding:40px 20px }\n.logo-clear__frame { position:relative;border:1.5px dashed rgba(0,0,0,.4);padding:26px }\n.logo-clear__box { border:1px solid rgba(0,0,0,.16) }\n.logo-clear__mark { display:block;height:44px;width:auto }\n.logo-clear__x { position:absolute;font-family:'SF Mono',Consolas,monospace;font-size:10px;font-weight:700;color:rgba(0,0,0,.55) }\n/* Nav placement replica — mirrors this site's real .bar (52px tall, 28px logo, 20px inset) */\n.logo-nav { border:1px solid var(--chrome-border);border-radius:12px;overflow:hidden }\n.logo-nav__bar { height:52px;display:flex;align-items:center;gap:12px;padding:0 20px;background:#12131a }\n.logo-nav__logo { height:28px;width:auto;display:block;flex-shrink:0 }\n.logo-nav__field { flex:1;max-width:280px;height:32px;border-radius:999px;background:rgba(255,255,255,.08);display:flex;align-items:center;padding:0 14px;font-size:11.5px;color:rgba(255,255,255,.45) }\n/* Layout placement mockups — a miniature page, so the logo's position within a\n   real composition is visible rather than described */\n.logo-layout { position:relative;border-radius:8px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.2);display:flex;flex-direction:column;padding:13px;gap:7px }\n.logo-layout__mark { height:17px;width:auto;display:block }\n.logo-layout__spacer { flex:1 }\n/* Size-comparison row — one lockup at three real widths, baseline-aligned */\n.logo-scale { display:flex;align-items:flex-end;justify-content:center;gap:34px;flex-wrap:wrap;background:#fff;border-radius:12px;padding:32px 20px }\n.logo-scale__item { display:flex;flex-direction:column;align-items:center;gap:10px }\n.logo-scale__cap { font-family:'SF Mono',Consolas,monospace;font-size:10.5px;font-weight:700;color:rgba(0,0,0,.55) }",
   "usage": {
     "do": [
       "Pick the variant (Primary, White, Monochrome Black/White) that gives the strongest contrast against its background.",
@@ -3111,17 +3131,16 @@ body.home .main{max-width:none;margin:0;padding:0}
       "Don’t place the logo tighter than its minimum clear space, or shrink it below a legible size."
     ]
   },
-  "contentHash": "5c8c2e6148f034604d6fcda553a0e83406ab39695f0a7905d62cf9a377040ba2",
-  "note": "The real deliverable is the external asset files (assets/logos/*.svg + matching .png), referenced by &lt;img src&gt; — there is no inline SVG or icon-path data const to embed, and no reusable logo component. realClasses here are this page's own documentation furniture (asset list, clear-space diagram, nav replica, layout mockups, size row, colour swatch chip), not a component to copy into a product: reconstruct those from the assets and the rules instead. Page is a foundation-shaped .sec--tabbed page — Overview (anatomy, formats, colour variants) / Usage (do-dont, variant-by-background lookup, clear space, sizing, layout placement, and the real .bar nav implementation) / Assets &amp; Variables / Changelog — with no playground or code tab, since a fixed asset set has no interactive state. Gaps deliberately shown as unshipped rather than faked: icon-only, wordmark-only, the lime-icon variant for #3FB549 medium green, and the FLASH.CO.ZA URL badge. logoTabSwitch is doc-site-only tab-switching plumbing, excluded."
+  "contentHash": "241ee3fc15de275705112de8fb1a52c89d1c7a6ed0fdeac8f036492d17505025",
+  "note": "The real deliverable is the external asset files (assets/logos/*.svg + matching .png), referenced by &lt;img src&gt; — there is no inline SVG or icon-path data const to embed, and no reusable logo component. realClasses here are this page's own documentation furniture (asset list, clear-space diagram, nav replica, layout mockups, don't-treatment, size row, colour swatch chip, note block), not a component to copy into a product: reconstruct those from the assets and the rules instead. Foundation-shaped .sec--tabbed page — Overview (anatomy, formats, colour variants) / Usage / Assets &amp; Variables / Changelog — with no playground or code tab, since a fixed asset set has no interactive state. Usage is ordered by how often each case comes up: product UI (the nav bar, mirroring this site's real .bar at 52px/28px/20px) leads, marketing layouts follow. The logo's colours are baked into each SVG, so anywhere the mark sits on a themed surface it ships as two files swapped by [data-theme] (see .logo-hero-mark) rather than one recoloured asset. Gaps deliberately shown as unshipped rather than faked: icon-only, wordmark-only, the lime-icon variant for #3FB549 medium green, and the FLASH.CO.ZA URL badge. logoTabSwitch is doc-site-only tab-switching plumbing, excluded."
 }
   </pre>
 </details>
         </div>
       </div>
       <div class="sec-hero__preview">
-        <div style="background:#000;width:100%;height:100%;display:flex;align-items:center;justify-content:center">
-          <img src="assets/logos/flash-logo-white.svg" alt="Flash logo" style="width:150px;height:auto">
-        </div>
+        <img class="logo-hero-mark logo-hero-mark--light" src="assets/logos/flash-logo-primary.svg" alt="Flash logo">
+        <img class="logo-hero-mark logo-hero-mark--dark" src="assets/logos/flash-logo-white.svg" alt="Flash logo">
       </div>
       </div>
       <div class="tabs-list sec-tabs" id="logo-tabs-list">
@@ -3132,6 +3151,7 @@ body.home .main{max-width:none;margin:0;padding:0}
       </div>
 
       <div class="tabs-panel on" data-logo-panel="overview">
+        <div class="type-sub">
         <div class="cpg-section-heading">
           <div class="cpg-layout__title">Anatomy</div>
           <div class="cpg-layout__desc">Two fixed parts: a bull silhouette in a circle, and the lowercase <em>flash</em> wordmark. They are supplied together as a lockup &mdash; the spacing between them is part of the asset, not a layout decision.</div>
@@ -3169,7 +3189,8 @@ body.home .main{max-width:none;margin:0;padding:0}
             </div>
           </div>
         </div>
-
+        </div>
+        <div class="type-sub">
         <div class="cpg-section-heading">
           <div class="cpg-layout__title">Formats</div>
           <div class="cpg-layout__desc">Pick the format from the shape of the space you have. Colour rules are identical across all four.</div>
@@ -3197,9 +3218,10 @@ body.home .main{max-width:none;margin:0;padding:0}
             <div class="spec-cell__desc">Text-only lockups, in black or white to suit the background.</div>
           </div>
           </div>
-          <div class="brand-note">Only the horizontal and vertical lockups ship today. Icon-only and wordmark-only assets are documented because layouts call for them &mdash; until the files exist, use the closest full lockup rather than cropping one.</div>
+          <div class="logo-note">Only the horizontal and vertical lockups ship today. Icon-only and wordmark-only assets are documented because layouts call for them &mdash; until the files exist, use the closest full lockup rather than cropping one.</div>
         </div>
-
+        </div>
+        <div class="type-sub">
         <div class="cpg-section-heading">
           <div class="cpg-layout__title">Colour variants</div>
           <div class="cpg-layout__desc">Four treatments, each shown on a background it is actually correct for. Every one exists as both a horizontal and a stacked lockup.</div>
@@ -3224,11 +3246,13 @@ body.home .main{max-width:none;margin:0;padding:0}
           <div class="spec-cell">
             <div class="spec-cell__stage" style="background:#003F1E"><img src="assets/logos/flash-logo-mono-white.svg" alt="Flash logo &mdash; monochrome white" style="height:38px;width:auto;display:block"></div>
             <div class="spec-cell__name">Monochrome white</div>
-            <div class="spec-cell__desc">All white. For dark or photographic backgrounds where colour can’t reproduce.</div>
+            <div class="spec-cell__desc">All white. For dark or photographic backgrounds where a colour circle will clash with the background.</div>
           </div>
           </div>
-          <div class="brand-note"><strong>Never recreate the logo.</strong> Always use the supplied SVG files, keep clear space around it, and use one logo per layout.</div>
+          <div class="logo-note"><strong>Never recreate the logo.</strong> Always use the supplied SVG files, keep clear space around it, and use one logo per layout.</div>
         </div>
+        </div>
+
       </div>
 
       <div class="tabs-panel" data-logo-panel="usage">
@@ -3296,7 +3320,7 @@ body.home .main{max-width:none;margin:0;padding:0}
               <div class="spec-cell__desc"><code>#000000</code> &middot; <code>&mdash;</code><br><b style="color:var(--chrome-txt)">White</b></div>
             </div>
               </div>
-              <div class="brand-note">The standard green icon loses contrast against medium green <code>#3FB549</code>, so that one background takes a lime icon <code>#B2FA00</code> instead. That file isn&rsquo;t in the repo yet &mdash; avoid medium-green backgrounds behind the logo until it is.</div>
+              <div class="logo-note">The standard green icon loses contrast against medium green <code>#3FB549</code>, so that one background takes a lime icon <code>#B2FA00</code> instead. That file isn&rsquo;t in the repo yet &mdash; avoid medium-green backgrounds behind the logo until it is.</div>
             </div>
           </div>
 
@@ -3313,7 +3337,7 @@ body.home .main{max-width:none;margin:0;padding:0}
                   <span class="logo-clear__x" style="right:8px;top:50%;transform:translateY(-50%)">x</span>
                 </div>
               </div>
-              <div class="brand-note">Nothing enters the dashed area &mdash; not body copy, not a container edge, not another logo. Crowding it is the most common way the mark gets weakened.</div>
+              <div class="logo-note">Nothing enters the dashed area &mdash; not body copy, not a container edge, not another logo. Crowding it is the most common way the mark gets weakened.</div>
             </div>
           </div>
 
@@ -3339,8 +3363,31 @@ body.home .main{max-width:none;margin:0;padding:0}
           </div>
 
           <div class="type-sub">
-            <div class="type-sub__title">Placement in a layout</div>
-            <div class="type-sub__desc">One logo per layout, in one of two positions &mdash; top-left as a brand strip, or bottom-right as a closing lockup. Pick one and stay with it.</div>
+            <div class="type-sub__title">In the product UI</div>
+            <div class="type-sub__desc">The nav bar is where the logo appears most often, so it is the case to get right first. This design system&rsquo;s own top bar is the reference implementation &mdash; a horizontal lockup, left-aligned, sized to the bar rather than to the page.</div>
+            <div class="cpg-section-outline">
+              <div class="logo-nav">
+                <div class="logo-nav__bar">
+                  <img class="logo-nav__logo" src="assets/logos/Logo_new.svg" alt="Flash Design nav lockup">
+                  <span class="logo-nav__field">Search components, tokens&hellip;</span>
+                </div>
+              </div>
+              <div class="dd-table-wrap" style="margin-top:16px"><table class="dd-table" style="min-width:0">
+                <thead><tr><th>Rule</th><th>Value</th></tr></thead>
+                <tbody>
+                  <tr><td>Logo height</td><td><code>28px</code> in a <code>52px</code> bar &mdash; 12px clear above and below</td></tr>
+                  <tr><td>Inset from left edge</td><td><code>20px</code>, matching the bar&rsquo;s own padding</td></tr>
+                  <tr><td>Variant</td><td>White wordmark, because the bar is dark in both themes</td></tr>
+                  <tr><td>Format</td><td>Horizontal only &mdash; a 52px bar can&rsquo;t hold the stacked lockup legibly</td></tr>
+                  <tr><td>Behaviour</td><td>Links home. Never a text substitute, never scaled up to fill the bar</td></tr>
+                </tbody>
+              </table></div>
+            </div>
+          </div>
+
+          <div class="type-sub" style="margin-bottom:0">
+            <div class="type-sub__title">In marketing layouts</div>
+            <div class="type-sub__desc">Posters, one-pagers, social cards and slides. One logo per layout, in one of two positions &mdash; top-left as a brand strip, or bottom-right as a closing lockup. Pick one and stay with it.</div>
             <div class="cpg-section-outline">
               <div class="spec-insitu-grid">
                 <div class="spec-mock">
@@ -3367,7 +3414,8 @@ body.home .main{max-width:none;margin:0;padding:0}
                   <div class="spec-mock__cap"><b>Bottom-right closing lockup</b>Social card. The White variant, because the card is black &mdash; the same rule as any other background.</div>
                 </div>
                 <div class="spec-mock">
-                  <div class="spec-mock__stage" style="background:var(--chrome-nav);align-items:center;padding:20px">
+                  <div class="spec-mock__stage logo-dont" style="background:var(--color-crit-l);align-items:center;padding:20px">
+                    <span class="logo-dont__x"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></span>
                     <div class="logo-layout" style="background:#fff;width:132px;aspect-ratio:1/1">
                       <img class="logo-layout__mark" src="assets/logos/flash-logo-primary.svg" alt="First logo">
                       <div class="logo-layout__spacer"></div>
@@ -3376,33 +3424,10 @@ body.home .main{max-width:none;margin:0;padding:0}
                       <img class="logo-layout__mark" src="assets/logos/flash-logo-primary.svg" alt="Second logo" style="align-self:flex-end">
                     </div>
                   </div>
-                  <div class="spec-mock__cap"><b>Don&rsquo;t: two instances</b>Top-left <em>and</em> bottom-right in one layout reads as a mistake. Also never in divider bands, section headers, or mid-layout content.</div>
+                  <div class="spec-mock__cap"><b class="logo-dont__tag">&#10007; Don&rsquo;t: two instances</b>Top-left <em>and</em> bottom-right in one layout reads as a mistake. Also never in divider bands, section headers, or mid-layout content.</div>
                 </div>
               </div>
-            </div>
-          </div>
-
-          <div class="type-sub" style="margin-bottom:0">
-            <div class="type-sub__title">In the Flash UI</div>
-            <div class="type-sub__desc">This design system&rsquo;s own top bar is the reference implementation &mdash; a horizontal lockup, left-aligned, sized to the bar rather than to the page.</div>
-            <div class="cpg-section-outline">
-              <div class="logo-nav">
-                <div class="logo-nav__bar">
-                  <img class="logo-nav__logo" src="assets/logos/Logo_new.svg" alt="Flash Design nav lockup">
-                  <span class="logo-nav__field">Search components, tokens&hellip;</span>
-                </div>
-              </div>
-              <div class="dd-table-wrap" style="margin-top:16px"><table class="dd-table" style="min-width:0">
-                <thead><tr><th>Rule</th><th>Value</th></tr></thead>
-                <tbody>
-                  <tr><td>Logo height</td><td><code>28px</code> in a <code>52px</code> bar &mdash; 12px clear above and below</td></tr>
-                  <tr><td>Inset from left edge</td><td><code>20px</code>, matching the bar&rsquo;s own padding</td></tr>
-                  <tr><td>Variant</td><td>White wordmark, because the bar is dark in both themes</td></tr>
-                  <tr><td>Format</td><td>Horizontal only &mdash; a 52px bar can&rsquo;t hold the stacked lockup legibly</td></tr>
-                  <tr><td>Behaviour</td><td>Links home. Never a text substitute, never scaled up to fill the bar</td></tr>
-                </tbody>
-              </table></div>
-              <div class="brand-note">Every Flash surface &mdash; poster, slide, one-pager, banner, social card, app screen &mdash; must carry the real logo SVG. The word &ldquo;flash&rdquo; set in any typeface is not the logo.</div>
+              <div class="logo-note">Every Flash surface &mdash; poster, slide, one-pager, banner, social card, app screen &mdash; must carry the real logo SVG. The word &ldquo;flash&rdquo; set in any typeface is not the logo.</div>
             </div>
           </div>
         </div>
@@ -3484,7 +3509,7 @@ body.home .main{max-width:none;margin:0;padding:0}
               <div class="logo-list__thumb" style="background:#25262c"><img src="assets/logos/flash-logo-mono-white.svg" alt="flash-logo-mono-white"></div>
               <div>
                 <div class="logo-list__name">flash-logo-mono-white.svg</div>
-                <div class="logo-list__rule"><b style="color:var(--chrome-txt)">Horizontal</b> &middot; All white. Dark or photographic backgrounds where colour can&rsquo;t reproduce.</div>
+                <div class="logo-list__rule"><b style="color:var(--chrome-txt)">Horizontal</b> &middot; All white. Dark or photographic backgrounds where a colour circle will clash with the background.</div>
               </div>
               <div class="logo-list__actions">
                 <a class="logo-dl" href="assets/logos/flash-logo-mono-white.svg" download>SVG</a>
@@ -3503,7 +3528,7 @@ body.home .main{max-width:none;margin:0;padding:0}
               </div>
             </div>
             </div>
-            <div class="brand-note">Not shipped yet, though the rules reference them: an icon-only asset, black and white wordmark-only assets, the lime-icon variant for medium-green backgrounds, and the <code>FLASH.CO.ZA</code> URL badge. Use the closest full lockup instead of approximating one by hand.</div>
+            <div class="logo-note">Not shipped yet, though the rules reference them: an icon-only asset, black and white wordmark-only assets, the lime-icon variant for medium-green backgrounds, and the <code>FLASH.CO.ZA</code> URL badge. Use the closest full lockup instead of approximating one by hand.</div>
           </div>
 
           <div class="type-sub" style="margin-bottom:0">
@@ -19053,12 +19078,20 @@ function cbrTabSwitch(tab){
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.89.0';
+const SYSTEM_VERSION = '1.89.1';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.89.1', date:'2026-09-09', author:'Mo', title:'Logos page polish — UI usage promoted above marketing, spacing and note treatment fixed', changes:[
+        ['changed','Usage now leads with product UI: the nav-bar section moved above the marketing-layout section and was retitled "In the product UI", since the nav is where the mark appears most often. The marketing section became "In marketing layouts" (posters, one-pagers, social cards, slides) and now closes the tab, carrying the logo-is-mandatory note with it'],
+        ['fixed','Overview sections ran together — the three heading/block pairs were bare divs with no bottom margin. Each is now wrapped in .type-sub, restoring the 52px section rhythm the rest of the page uses'],
+        ['changed','Note blocks lost the green left rule for a subtle grey fill (.brand-note renamed .logo-note, now rgba(128,128,128,.09) with a hairline border and no accent bar), so they read as supporting detail rather than as a callout. Low-alpha grey keeps them legible on both the tinted .cpg-section-block and the transparent .cpg-section-outline'],
+        ['changed','The "don\'t: two instances" mockup now reads as wrong at a glance rather than only in its caption: crit-tinted stage, both logo instances ringed in --color-crit-h, a red cross badge over the layout, and a ✗-prefixed caption in the crit colour'],
+        ['changed','Hero preview dropped its hardcoded black panel for the same subtle --chrome-nav ground the component heroes use. Because each lockup\'s colours are baked into its SVG, the hero ships both files and swaps them on [data-theme] (.logo-hero-mark--light/--dark) instead of recolouring one'],
+        ['changed','Monochrome white copy now says it is for backgrounds where a colour circle would clash, rather than where colour "can\'t reproduce" — the actual reason to reach for it, in both the Overview variant grid and the asset list'],
+      ]},
       {version:'1.89.0', date:'2026-09-09', author:'Mo', title:'Logos page restructured for clarity — visual examples throughout, in-context moved into Usage', changes:[
         ['changed','Logos IA reordered around the question each tab answers. Overview is now what the logo IS (Anatomy → Formats → Colour variants); Usage is how to APPLY it (Do/Dont → Match the variant to the background → Clear space → Sizing → Placement in a layout → In the Flash UI); the third tab is renamed "Assets & Variables" and holds only the files and the colour values'],
         ['changed','In-context placement mockups moved out of Overview into Usage, next to the placement rules they demonstrate, and rebuilt as miniature layouts (A4 portrait with a top-left brand strip, black social card with a bottom-right closing lockup, and a "don\'t" showing two instances in one layout) instead of the previous two flat colour panels'],
@@ -20887,7 +20920,15 @@ const CHANGELOG = {
         ['added','Default landing page for the design system'],
       ]},
     ]},
-    {secId:'s-logos', name:'Logos', version:'1.3.0', entries:[
+    {secId:'s-logos', name:'Logos', version:'1.3.1', entries:[
+      {version:'1.3.1', date:'2026-09-09', author:'Mo', title:'UI usage promoted above marketing; spacing, note treatment and hero fixed', changes:[
+        ['changed','Usage leads with product UI — the nav-bar section moved above the marketing section and retitled "In the product UI", since the nav is where the mark appears most often. Marketing became "In marketing layouts" and now closes the tab with the logo-is-mandatory note'],
+        ['fixed','Overview sections ran together; each heading/block pair is now wrapped in .type-sub so the 52px section rhythm applies'],
+        ['changed','Notes swapped the green left rule for a subtle grey fill (.brand-note → .logo-note), so they read as supporting detail rather than a callout'],
+        ['changed','"Don\'t: two instances" mockup now reads as wrong on sight — crit-tinted stage, both instances ringed in --color-crit-h, a red cross badge, and a ✗-prefixed caption'],
+        ['changed','Hero preview uses the same subtle --chrome-nav ground as the component heroes instead of a black panel, swapping between the primary and white lockups on [data-theme] since the colours are baked into each SVG'],
+        ['changed','Monochrome white copy now gives the real reason to use it — backgrounds where a colour circle would clash — in both the variant grid and the asset list'],
+      ]},
       {version:'1.3.0', date:'2026-09-09', author:'Mo', title:'Restructured for clarity — visual examples throughout, in-context moved into Usage', changes:[
         ['changed','IA reordered around what each tab answers: Overview = what the logo is (Anatomy → Formats → Colour variants); Usage = how to apply it (Do/Dont → Match the variant to the background → Clear space → Sizing → Placement in a layout → In the Flash UI); third tab renamed "Assets & Variables" and reduced to the files plus the colour values'],
         ['changed','In-context mockups moved from Overview into Usage, beside the placement rules they illustrate, and rebuilt as miniature layouts — A4 portrait with a top-left brand strip, black social card with a bottom-right closing lockup, and a "don\'t" showing two instances in one layout'],
