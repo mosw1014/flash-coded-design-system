@@ -326,72 +326,8 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;font-feature-
 .coming{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;min-height:110px;border-radius:10px;border:1.5px dashed var(--chrome-border);color:var(--chrome-muted);font-size:13px;font-weight:500;text-align:center;padding:24px;margin-top:28px}
 .coming small{font-size:11px;opacity:.7;font-weight:400}
 
-/* ================================================================
-   COLOUR SECTION SUB-NAV (sticky)
-================================================================ */
-.c-subnav{
-  position:sticky;top:52px;z-index:100;
-  background:var(--chrome-bg);
-  border-bottom:2px solid var(--chrome-border);
-  display:flex;flex-direction:column;
-  margin:0 -48px;padding:0 48px;
-  transition:background .25s,border-color .25s;
-}
-.c-subnav__row1{display:flex;align-items:center;gap:0;padding-top:14px}
-.c-subnav__view{
-  padding:9px 20px;font-size:13px;font-weight:600;
-  border:none;background:transparent;cursor:pointer;
-  font-family:inherit;color:var(--chrome-muted);
-  border-bottom:3px solid transparent;margin-bottom:-2px;
-  transition:all .15s;display:flex;align-items:center;gap:7px;
-}
-.c-subnav__view:hover{color:var(--chrome-txt)}
-.c-subnav__view.on{color:var(--chrome-txt);border-bottom-color:var(--chrome-txt);font-weight:700}
-.c-subnav__vdot{
-  width:8px;height:8px;border-radius:50%;
-  border:2px solid var(--chrome-muted);transition:all .15s;
-}
-
-.c-subnav__count{font-size:10.5px;padding:1px 7px;border-radius:10px;background:var(--chrome-border);color:var(--chrome-muted);font-weight:600;line-height:1.4}
-.c-subnav__view.on .c-subnav__count{background:var(--chrome-txt);color:var(--chrome-bg)}
-
-/* Jump row (only visible in prim view) */
-.c-subnav__row2{
-  display:flex;align-items:center;gap:4px;padding:8px 0;
-  overflow-x:auto;-webkit-overflow-scrolling:touch;
-  scrollbar-width:none;
-}
-.c-subnav__row2::-webkit-scrollbar{display:none}
-.c-subnav__jlabel{
-  font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:1px;
-  color:var(--chrome-muted);white-space:nowrap;margin-right:4px;flex-shrink:0;
-}
-.c-jump{
-  padding:3px 10px;border-radius:20px;font-size:11.5px;font-weight:600;
-  text-decoration:none;color:var(--chrome-muted);
-  border:1.5px solid var(--chrome-border);background:transparent;
-  transition:all .15s;white-space:nowrap;flex-shrink:0;cursor:pointer;
-}
-.c-jump:hover{color:var(--chrome-txt);background:var(--chrome-hover);border-color:var(--chrome-txt)}
-.c-jump.on{background:var(--chrome-accent);border-color:var(--chrome-accent);color:#000}
-#c-row2-sem{display:flex;align-items:center;gap:4px;overflow-x:auto;scrollbar-width:none;padding:8px 0}
-#c-row2-sem::-webkit-scrollbar{display:none}
-
-/* Semantic tab in sub-nav */
-.c-sem-tab{
-  padding:3px 12px;border-radius:20px;font-size:11.5px;font-weight:600;
-  border:none;cursor:pointer;font-family:inherit;color:var(--chrome-muted);
-  background:transparent;border:1.5px solid var(--chrome-border);transition:all .15s;
-  white-space:nowrap;flex-shrink:0;
-}
-.c-sem-tab:hover{color:var(--chrome-txt);background:var(--chrome-hover)}
-.c-sem-tab.on{background:var(--chrome-accent);border-color:var(--chrome-accent);color:#000}
-
-/* ================================================================
-   COLOUR VIEWS (prim / sem)
-================================================================ */
-.c-view{display:none;padding-top:36px}
-.c-view.on{display:block}
+/* c-subnav / c-view retired — see foundation/colours-tabbed: Colours moved to
+   the sec--tabbed pattern, tabs replace the old sticky sub-nav. */
 
 /* ================================================================
    COLOUR FAMILY BLOCKS
@@ -587,7 +523,6 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;font-feature-
   .sidebar{display:none}
   .main{padding:24px 20px}
   .bar__nav{display:none}
-  .c-subnav{margin:0 -20px;padding:0 20px}
 }
 
 /* ================================================================
@@ -2819,43 +2754,15 @@ body.home .main{max-width:none;margin:0;padding:0}
     <!-- ============================================================
          COLOURS
     ============================================================ -->
-    <section class="sec" id="s-colours">
+    <section class="sec sec--tabbed" id="s-colours">
+      <div class="sec-hero">
       <div class="sec__head">
         <div class="sec__eye">Foundations</div>
         <h1 class="sec__title">Colour Tokens</h1>
         <p class="sec__desc">Primitives define the raw scale — semantics map them to named roles. Hover any swatch to inspect; click to copy.</p>
-      </div>
-      <!-- ── STICKY SUB-NAV ── -->
-      <div class="c-subnav" id="c-subnav">
-        <div class="c-subnav__row1">
-          <button class="c-subnav__view on" onclick="cSwitch('prim',this)">
-            Primitives
-            <span class="c-subnav__count" id="prim-count">11 families</span>
-          </button>
-          <button class="c-subnav__view" onclick="cSwitch('sem',this)">
-            Semantics
-            <span class="c-subnav__count">6 groups</span>
-          </button>
-        </div>
-      </div>
-
-      <!-- ── PRIMITIVE VIEW ── -->
-      <div class="c-view on" id="c-prim">
-        <div id="fam-root"></div>
-      </div>
-
-      <!-- ── SEMANTIC VIEW ── -->
-      <div class="c-view" id="c-sem">
-        <div class="sem-wrap">
-          <div class="sem-panel on" id="sem-surface"></div>
-          <div class="sem-panel" id="sem-text"></div>
-          <div class="sem-panel" id="sem-icon"></div>
-          <div class="sem-panel" id="sem-btns"></div>
-          <div class="sem-panel" id="sem-ind"></div>
-          <div class="sem-panel" id="sem-inp"></div>
-        </div>
-      </div>
-      <details class="ai-ctx">
+        <div class="sec-header-meta">
+          <span class="comp-ver-badge" style="margin-left:0">v1.15.0</span>
+          <details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-colours">
 {
@@ -2873,11 +2780,228 @@ body.home .main{max-width:none;margin:0;padding:0}
   ],
   "noReusableClass": true,
   "js": "const FAMILIES = [\n  {\n    id:'green', name:'Green', badge:'Flash Primary', badgeCls:'green',\n    desc:'Flash brand primary. Used for primary button fills, success states, active indicators, and interactive highlights.',\n    swatches:[\n      {s:'Green-50',h:'#eaf9eb'},{s:'Green-400',h:'#59ce61'},\n      {s:'Green-800',h:'#218a29'},{s:'Green-900',h:'#1a6b20'},{s:'Green-1000',h:'#145118'}\n    ]\n  },\n  {\n    id:'bg', name:'Bright green', badge:'Flash Accent', badgeCls:'green',\n    desc:'High-luminosity accent. Used for Flash logo highlights, accent icons, and bright interactive moments.',\n    swatches:[\n      {s:'Bright-green-600',h:'#1ae10e'},{s:'Bright-green-700',h:'#17ca0d'}\n    ]\n  },\n  {\n    id:'grey', name:'Grey', badge:'Neutral Scale', badgeCls:'grey',\n    desc:'Neutral scale used for text hierarchy, borders, surfaces, disabled states, and all brand-agnostic tones.',\n    swatches:[\n      {s:'Grey-50',h:'#f8f8f8'},{s:'Grey-100',h:'#f0f0f0'},\n      {s:'Grey-200',h:'#e6e6e6'},{s:'Grey-400',h:'#dddddd'},\n      {s:'Grey-500',h:'#d1d1d1'},{s:'Grey-700',h:'#a4a4a4'},\n      {s:'Grey-800',h:'#8a8a8a'},{s:'Grey-1000',h:'#414141'},{s:'Grey-1100',h:'#252525'}\n    ]\n  },\n  {\n    id:'yg', name:'Yellow green', badge:'Flash Logo', badgeCls:'lime',\n    desc:'The Flash logo colour. Used as brand tertiary accent, icon fills, and logo-specific applications.',\n    swatches:[\n      {s:'Yellow-green-500-base',h:'#b2fa00',b:true}\n    ]\n  },\n  {\n    id:'dg', name:'Dark green', badge:'Flash Brand Dark', badgeCls:'green',\n    desc:'Deep forest greens. Used for brand dark backgrounds, tinted surface overlays, and high-contrast brand contexts.',\n    swatches:[\n      {s:'Dark-green-750',h:'#203426'},{s:'Dark-green-800',h:'#00240a'}\n    ]\n  },\n  {\n    id:'gb', name:'Grey blue', badge:'Dark Mode Surfaces', badgeCls:'dark',\n    desc:'Cool blue-grey used for dark mode surfaces and borders. Darkest steps are page backgrounds; lighter steps are borders and muted text.',\n    swatches:[\n      {s:'Grey-blue-50',h:'#cbcbd0'},{s:'Grey-blue-100',h:'#a1a3a8'},\n      {s:'Grey-blue-400',h:'#60636d'},\n      {s:'Grey-blue-425',h:'#33343a'},{s:'Grey-blue-450',h:'#2d2e34'},\n      {s:'Grey-blue-500',h:'#25262c'},{s:'Grey-blue-700',h:'#12131a',b:true}\n    ]\n  },\n  {\n    id:'gg', name:'Grey green', badge:'Tinted Surfaces', badgeCls:'green',\n    desc:'Warm green-tinted greys for brand-aware light mode surfaces, nav backgrounds, and subtle tinted cards.',\n    swatches:[\n      {s:'Grey-green-100',h:'#fbfcfb'},{s:'Grey-green-200',h:'#f7f9f8'}\n    ]\n  },\n  {\n    id:'bb', name:'Bright blue', badge:'Links', badgeCls:'blue',\n    desc:'Used for hyperlinks and interactive link states. 700 is the default link colour; 800 is hover. 400/500 are dark mode equivalents.',\n    swatches:[\n      {s:'Bright-blue-400',h:'#6fc2ff'},{s:'Bright-blue-500',h:'#389aff'},\n      {s:'Bright-blue-700',h:'#0062eb',b:true},{s:'Bright-blue-800',h:'#0049d2'}\n    ]\n  },\n  {\n    id:'pb', name:'Pale blue', badge:'Info / Alerts', badgeCls:'blue',\n    desc:'Used exclusively for informational alert states. High-contrast steps for icons; low-contrast steps for backgrounds.',\n    swatches:[\n      {s:'Pale-blue-200',h:'#e4f5ff'},{s:'Pale-blue-300',h:'#daeefd'},\n      {s:'Pale-blue-500',h:'#21a4fc',b:true}\n    ]\n  },\n  {\n    id:'red', name:'Red', badge:'Critical / Error', badgeCls:'red',\n    desc:'Critical and error states. Light steps for backgrounds; 600–700 for icons and text; darkest steps for dark mode error surfaces.',\n    swatches:[\n      {s:'Red-100',h:'#fff4f0'},\n      {s:'Red-600',h:'#eb0029',b:true},\n      {s:'Red-1000',h:'#260505'}\n    ]\n  },\n  {\n    id:'org', name:'Orange', badge:'Warning', badgeCls:'orange',\n    desc:'Warning and cautionary states. Light steps for alert backgrounds; 600 for warning icons and text; 800 for hover/secondary warning.',\n    swatches:[\n      {s:'Orange-100',h:'#fff3e5'},\n      {s:'Orange-600',h:'#ff8900',b:true}\n    ]\n  },\n];\n\nconst CATS = [\n  ['Airtime','#159c5d'],['Data','#9840f7'],['Lotto','#fdd333'],\n  ['Electricity','#ff9900'],['Transfers','#e43e79'],['Payments','#ed0c40'],\n  ['Global','#3d98ed'],['Lifestyle','#25cdb9'],\n  ['RICA','#008a8c'],['Entertainment','#d7285a'],['Gaming','#115da5'],\n  ['Shop2Shop','#001e31'],['Tap2Pay','#faa225'],['Voice OFA','#5756e9'],['Voice NFA','#c43a3a'],\n];\n\nconst SEM = {\n  surface: {\n    title:'Surface', desc:'Controls how layers, cards, and page backgrounds are coloured across themes.',\n    rows:[\n      ['--color-surface-base','#ffffff','#12131a','#ffffff','#12131a','Page / screen background'],\n      ['--color-surface-inverse','#000000','#ffffff','#000000','#ffffff','Inverted fill'],\n      ['--color-surface-n1','#f0f0f0','#25262c','#f8f8f8','#25262c','Cards, panels — level 1'],\n      ['--color-surface-n2','#e6e6e6','#2d2e34','#f0f0f0','#2d2e34','Nested surfaces — level 2'],\n      ['--color-surface-n3','#dddddd','#33343a','#e6e6e6','#33343a','Dividers, tertiary'],\n      ['--color-surface-subtle','#f8f8f8','#12131a','#ffffff','#12131a','Lightest tinted base'],\n      ['--color-surface-t1','#fbfcfb','#00240a','#f8f8f8','#25262c','Brand-hued tinted surface (primary)'],\n      ['--color-surface-t2','#f7f9f8','#203426','#f0f0f0','#2d2e34','Brand-hued tinted surface (secondary)'],\n      ['--color-surface-brand-h','#10c504','#10c504','#ff5f00','#ff5f00','High-contrast brand fill'],\n      ['--color-surface-brand-l','#eaf9eb','#1a6b20','#ffdfcc','#33343a','Low-contrast brand background'],\n    ]\n  },\n  text: {\n    title:'Text &amp; Links', desc:'All text hierarchy tokens and hyperlink colours.',\n    rows:[\n      ['--color-text-1','#000000','#ffffff','#000000','#ffffff','Body copy, headings — primary'],\n      ['--color-text-2','#252525','#f0f0f0','#252525','#f0f0f0','Supporting text'],\n      ['--color-text-3','#414141','#e6e6e6','#414141','#e6e6e6','Captions, metadata'],\n      ['--color-text-s','#8a8a8a','#dddddd','#5f6261','#d1d1d1','Placeholder, inactive'],\n      ['--color-text-m','#a4a4a4','#d1d1d1','#87898e','#8a8a8a','Least prominent text'],\n      ['--color-text-inv','#ffffff','#000000','#ffffff','#000000','Text on brand / inverse backgrounds'],\n      ['--color-link','#0062eb','#6fc2ff','#0062eb','#6fc2ff','Hyperlinks — default'],\n      ['--color-link-h','#0049d2','#389aff','#0049d2','#389aff','Hyperlinks — hover'],\n    ]\n  },\n  icon: {\n    title:'Iconography', desc:'Fill colours for icons across hierarchy and context.',\n    rows:[\n      ['--color-icon-1','#000000','#ffffff','#000000','#ffffff','Default icons'],\n      ['--color-icon-2','#10c504','#10c504','#666875','#a1a3a8','Brand-accented icons'],\n      ['--color-icon-3','#b2fa00','#b2fa00','#ff5f00','#ff5f00','Logo / accent icons'],\n      ['--color-icon-s','#a4a4a4','#d1d1d1','#666875','#8a8a8a','Low-emphasis icons'],\n      ['--color-icon-inv','#ffffff','#000000','#ffffff','#000000','Icons on dark fills'],\n    ]\n  },\n  btns: {\n    title:'Buttons', desc:'Component-level tokens used directly in button variants.',\n    rows:[\n      ['--color-btn-a-bg','#1ae10e','#1ae10e','#000000','#ffffff','Accent button — background'],\n      ['--color-btn-a-bg-h','#17ca0d','#17ca0d','#252525','#f0f0f0','Accent button — hover bg'],\n      ['--color-btn-a-txt','#000000','#000000','#ffffff','#000000','Accent button — label'],\n      ['--color-btn-a-dis','#dddddd','rgba(255,255,255,0.15)','#dddddd','#414141','Accent button — disabled bg'],\n      ['--color-btn-s-bg','#000000','#ffffff','#f0f0f0','#2d2e34','Secondary button — background'],\n      ['--color-btn-s-txt','#ffffff','#000000','#000000','#ffffff','Secondary button — label'],\n      ['--color-btn-o-border','#000000','#ffffff','#000000','#2d2e34','Outlined button — border'],\n      ['--color-btn-o-txt','#000000','#ffffff','#000000','#ffffff','Outlined button — label'],\n    ]\n  },\n  ind: {\n    title:'Indicators', desc:'Status colours for info, success, warning, and critical feedback.',\n    rows:[\n      ['--color-info-h','#21a4fc','#21a4fc','#21a4fc','#21a4fc','Info — icon / text (high contrast)'],\n      ['--color-info-l','#e4f5ff','#daeefd','#e4f5ff','#daeefd','Info — background'],\n      ['--color-success-h','#218a29','#59ce61','#10c504','#10c504','Success — icon / text'],\n      ['--color-success-l','#eaf9eb','#145118','#eaf9eb','#84a895','Success — background'],\n      ['--color-warn-h','#ff8900','#ff8900','#f6bc2f','#f6bc2f','Warning — icon / text'],\n      ['--color-warn-l','#fff3e5','#33343a','#fff3e5','#33343a','Warning — background'],\n      ['--color-crit-h','#eb0029','#eb0029','#c10021','#c10021','Critical — icon / text'],\n      ['--color-crit-l','#fff4f0','#260505','#fff4f0','#260505','Critical — background'],\n    ]\n  },\n  inp: {\n    title:'Inputs', desc:'Form input field colours for backgrounds, borders, text, and interactive states.',\n    rows:[\n      ['--color-input-bg','#f6f6f6','#25262c','#f8f8f8','#414141','Input field background'],\n      ['--color-input-border','#cbcbd0','#60636d','#cbcbd0','#60636d','Input border — default'],\n      ['--color-input-focus','#000000','#ffffff','#000000','#ffffff','Input border — focused'],\n      ['--color-input-cur','#10c504','#10c504','#ff5f00','#ff5f00','Text cursor / caret'],\n      ['--color-input-placeholder','#a1a3a8','#8a8a8a','#87898e','#8a8a8a','Placeholder text'],\n    ]\n  },\n};\n\nconst HEX_PRIM = {\n  '#ffffff':'White', '#000000':'Black',\n  '#10c504':'Green', '#1dfa0f':'Flash Green',\n  '#ff5f00':'1V Orange', '#ffdfcc':'1V Orange 200',\n  '#ffc861':'Yellow 400', '#f6bc2f':'Yellow 500',\n  '#5d4b2b':'Yellow 900', '#965000':'Yellow 1000',\n  '#f6f6f6':'Custom — Input bg',\n  'rgba(255,255,255,0.2)':'Opacity White 20%',\n};\n\nfunction fmtColor(h) {\n  if (!h.startsWith('rgba')) return h;\n  const m = h.match(/rgba\\((\\d+),\\s*(\\d+),\\s*(\\d+),\\s*([\\d.]+)\\)/);\n  if (!m) return h;\n  const hex = '#' + [m[1],m[2],m[3]].map(x=&gt;parseInt(x).toString(16).padStart(2,'0')).join('');\n  const pct = Math.round(parseFloat(m[4])*100);\n  return hex + ' ' + pct + '%';\n}\n\nfunction renderFamily(fam) {\n  const el = document.createElement('div');\n  el.className = 'fam'; el.id = 'fam-' + fam.id;\n  const cards = fam.swatches.map(sw =&gt; {\n    const isOpacity = sw.h.startsWith('rgba');\n    const swatchStyle = isOpacity ? `background:${sw.bg||'#ffffff'};opacity:${parseFloat(sw.h.match(/[\\d.]+(?=\\))/)||1)}` : `background:${sw.h}`;\n    const displayVal = fmtColor(sw.h);\n    return `&lt;div class=\"cat-card\" onclick=\"copy('${sw.h}','${fam.name} ${sw.s}')\"&gt;\n      &lt;div class=\"cat-card__swatch\" style=\"${swatchStyle}\"&gt;&lt;/div&gt;\n      &lt;div class=\"cat-card__info\"&gt;\n        &lt;div class=\"cat-card__name\"&gt;${sw.s}&lt;/div&gt;\n        &lt;div class=\"cat-card__hex\"&gt;${displayVal}&lt;/div&gt;\n      &lt;/div&gt;\n    &lt;/div&gt;`;\n  }).join('');\n\n  el.innerHTML = `\n    &lt;div class=\"fam__head\"&gt;\n      &lt;div class=\"fam__info\"&gt;\n        &lt;div class=\"fam__name\"&gt;${fam.name}&lt;/div&gt;\n        &lt;div class=\"fam__desc\"&gt;${fam.desc}&lt;/div&gt;\n      &lt;/div&gt;\n      &lt;div class=\"fam__badge fam__badge--${fam.badgeCls}\"&gt;${fam.badge}&lt;/div&gt;\n    &lt;/div&gt;\n    &lt;div class=\"cat-grid\"&gt;${cards}&lt;/div&gt;`;\n  return el;\n}\n\nfunction getSemHex(fl,fd,vl,vd) {\n  // Flash brand only; light/dark follows the global theme.\n  return currentTheme()==='dark' ? fd : fl;\n}\n\nfunction renderSemGroup(key) {\n  const group = SEM[key];\n  const panel = document.getElementById('sem-'+key);\n  if (!panel) return;\n\n  const rows = group.rows.map(([v,fl,fd,vl,vd,note]) =&gt; {\n    const hex = getSemHex(fl,fd,vl,vd);\n    const prim = HEX_PRIM[hex] || '';\n    const name = v.replace(/^--/,'');\n    return `&lt;tr&gt;\n      &lt;td&gt;&lt;span class=\"sem-var\" onclick=\"copy('var(${v})','CSS var')\"&gt;${name}&lt;/span&gt;&lt;/td&gt;\n      &lt;td&gt;\n        &lt;div class=\"sem-color-cell\"&gt;\n          &lt;div class=\"sem-swatch\" style=\"background:${hex}\"&gt;&lt;/div&gt;\n          &lt;div class=\"sem-color-meta\"&gt;\n            &lt;span class=\"sem-hex\"&gt;${hex}&lt;/span&gt;\n            ${prim ? `&lt;span class=\"sem-prim\"&gt;${prim}&lt;/span&gt;` : ''}\n          &lt;/div&gt;\n        &lt;/div&gt;\n      &lt;/td&gt;\n      &lt;td class=\"sem-note\"&gt;${note}&lt;/td&gt;\n    &lt;/tr&gt;`;\n  }).join('');\n\n  panel.innerHTML = `\n    &lt;div class=\"sem-group-block\"&gt;\n      &lt;div class=\"sem-group-title\"&gt;${group.title}&lt;/div&gt;\n      &lt;table class=\"sem-table\"&gt;\n        &lt;thead&gt;&lt;tr&gt;\n          &lt;th&gt;Token&lt;/th&gt;\n          &lt;th&gt;Colour · Primitive&lt;/th&gt;\n          &lt;th&gt;Usage&lt;/th&gt;\n        &lt;/tr&gt;&lt;/thead&gt;\n        &lt;tbody&gt;${rows}&lt;/tbody&gt;\n      &lt;/table&gt;\n    &lt;/div&gt;`;\n}\n\nfunction refreshSem() {\n  Object.keys(SEM).forEach(renderSemGroup);\n}",
-  "contentHash": "c2271232130f6a9f0bffded901b0ccde7643c8da85c999a09d6355e7783f4167",
-  "note": "Documents the doc site's primitive/category/semantic color DATA (this section has no reusable component class of its own). These are primitives only — the actual consumable CSS custom properties (--color-surface-n1, --color-btn-p-bg, etc.) are declared in the [data-brand=\"flash\"][data-theme=\"light\"]/[data-theme=\"dark\"] blocks elsewhere in the file (see AI-CONTEXT.md's file-structure notes); SEM here mirrors those tokens for display, it doesn't own them."
+  "usage": {
+    "do": [
+      "Reach for a semantic token (--color-*) in component CSS — never a primitive (--prim-*) directly.",
+      "Treat Flash Green as one standout moment per screen — a single accent button, not a repeated brand colour.",
+      "Check text-on-surface pairings against the Contrast table above before shipping a new combination.",
+      "Pull chart series colours from CHART_COLORS in order — don't hand-pick a subset.",
+      "Use the Desaturated chart set for inactive or secondary series, not a manually lowered opacity."
+    ],
+    "dont": [
+      "Don’t set body copy in Flash Green — it fails contrast on white and reads as a link.",
+      "Don’t place two accent-coloured elements on the same screen — pick the one that matters most.",
+      "Don’t hand-type a hex into SEM — its values are generated from the real CSS custom properties on every commit.",
+      "Don’t reach for red or deep orange early in a chart's series order — they read as error/warning.",
+      "Don’t use Bright Green as a text-on-surface background for paragraph copy."
+    ]
+  },
+  "contentHash": "aff9549eec659544da3e351521effdf9359aed087cd61508f6c3be968440fc6c",
+  "note": "Documents the doc site's primitive/category/semantic color DATA (this section has no reusable component class of its own). These are primitives only — the actual consumable CSS custom properties (--color-surface-n1, --color-btn-p-bg, etc.) are declared in the [data-brand=\"flash\"][data-theme=\"light\"]/[data-theme=\"dark\"] blocks elsewhere in the file (see AI-CONTEXT.md's file-structure notes); SEM here mirrors those tokens for display, it doesn't own them. Foundation-shaped sec--tabbed page: Overview (anatomy, brand colours, family index) / Primitives / Semantics / Usage / Changelog. The colDoc* functions (colDocInit, colDocRefresh, etc.) render the Overview/Usage tabs and are doc-site-only, excluded from builderFunctions."
 }
   </pre>
 </details>
+        </div>
+      </div>
+      <div class="sec-hero__preview">
+        <span style="display:inline-block;width:44px;height:44px;border-radius:10px;background:var(--prim-bg-500)"></span>
+        <span style="display:inline-block;width:44px;height:44px;border-radius:10px;background:var(--prim-green-500)"></span>
+        <span style="display:inline-block;width:44px;height:44px;border-radius:10px;background:var(--prim-yg-500)"></span>
+        <span style="display:inline-block;width:44px;height:44px;border-radius:10px;background:var(--prim-dg-500)"></span>
+        <span style="display:inline-block;width:44px;height:44px;border-radius:10px;background:var(--prim-black)"></span>
+        <span style="display:inline-block;width:44px;height:44px;border-radius:10px;background:var(--prim-white);border:1px solid var(--chrome-border)"></span>
+      </div>
+      </div>
+      <div class="tabs-list sec-tabs" id="colours-tabs-list">
+        <button type="button" class="tab-item on" data-colours-tab="overview" onclick="coloursTabSwitch('overview')"><span class="tab-item__inner"><span class="tab-item__label">Overview</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-colours-tab="primitives" onclick="coloursTabSwitch('primitives')"><span class="tab-item__inner"><span class="tab-item__label">Primitives</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-colours-tab="semantics" onclick="coloursTabSwitch('semantics')"><span class="tab-item__inner"><span class="tab-item__label">Semantics</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-colours-tab="usage" onclick="coloursTabSwitch('usage')"><span class="tab-item__inner"><span class="tab-item__label">Usage</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-colours-tab="changelog" onclick="coloursTabSwitch('changelog')"><span class="tab-item__inner"><span class="tab-item__label">Changelog</span></span><span class="tab-item__line"></span></button>
+      </div>
+
+      <div class="tabs-panel on" data-colours-panel="overview">
+        <div class="type-sub spec-panel spec-stack">
+          <div class="type-sub">
+            <div class="type-sub__title">Anatomy</div>
+            <div class="type-sub__desc">A colour reaches a component in three steps: a primitive is given a role as a semantic token, and the active theme decides which value that role resolves to.</div>
+            <div class="cpg-section-block">
+              <div class="spec-hero" id="col-anatomy-hero" style="display:flex;align-items:center;justify-content:center;gap:18px;flex-wrap:wrap"></div>
+              <div class="spec-parts">
+                <div class="spec-part">
+                  <div class="spec-part__stage" style="display:flex;align-items:center;justify-content:center;min-height:78px"><span style="display:block;width:44px;height:44px;border-radius:10px;background:var(--prim-bg-600)"></span></div>
+                  <div class="spec-part__body">
+                    <div class="spec-part__name"><span class="spec-part__num">1</span>Primitive</div>
+                    <div class="spec-part__note">A raw hex value, e.g. <code>--prim-bg-600</code>, declared once in <code>:root</code>. Never changes between themes.</div>
+                  </div>
+                </div>
+                <div class="spec-part">
+                  <div class="spec-part__stage" style="display:flex;align-items:center;justify-content:center;min-height:78px"><span style="display:block;width:44px;height:44px;border-radius:10px;background:var(--color-btn-a-bg)"></span></div>
+                  <div class="spec-part__body">
+                    <div class="spec-part__name"><span class="spec-part__num">2</span>Semantic token</div>
+                    <div class="spec-part__note">A role, e.g. <code>--color-btn-a-bg</code>, declared once per theme. Points at a primitive, but never at another semantic token.</div>
+                  </div>
+                </div>
+                <div class="spec-part">
+                  <div class="spec-part__stage" style="display:flex;align-items:center;justify-content:center;min-height:78px"><span style="font-size:20px">☀️/🌙</span></div>
+                  <div class="spec-part__body">
+                    <div class="spec-part__name"><span class="spec-part__num">3</span>Theme</div>
+                    <div class="spec-part__note">Light and dark swap which primitive each semantic token resolves to. Primitives themselves never change.</div>
+                  </div>
+                </div>
+                <div class="spec-part">
+                  <div class="spec-part__stage" id="col-anatomy-btn-stage" style="display:flex;align-items:center;justify-content:center;min-height:78px"></div>
+                  <div class="spec-part__body">
+                    <div class="spec-part__name"><span class="spec-part__num">4</span>Component</div>
+                    <div class="spec-part__note">Consumes the semantic token only. This accent button reads <code>--color-btn-a-bg</code> — never <code>--prim-bg-600</code> directly.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="logo-note">Doc-site chrome (this page's own swatches, stages, tables) references <code>--prim-*</code> directly for display purposes — that's expected. Real components consume semantic tokens only; none of the button/card/input/alert CSS in this file references a <code>--prim-*</code> variable.</div>
+            </div>
+          </div>
+          <div class="type-sub">
+            <div class="type-sub__title">Brand colours</div>
+            <div class="type-sub__desc">The primary palette every other family and every semantic token is built from.</div>
+            <div class="cpg-section-block">
+              <div id="col-hero-mount"></div>
+            </div>
+          </div>
+          <div class="type-sub">
+            <div class="type-sub__title">Family index</div>
+            <div class="type-sub__desc">Every primitive family. Click a name to jump to its full swatch set on Primitives.</div>
+            <div class="cpg-section-block">
+              <div class="spec-grid" id="col-fam-index" style="grid-template-columns:repeat(auto-fill,minmax(210px,1fr))"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tabs-panel" data-colours-panel="primitives">
+        <div class="type-sub spec-panel spec-stack">
+          <div class="type-sub">
+            <div class="type-sub__title">Primitives</div>
+            <div class="type-sub__desc">The raw scale. A primitive is a hex value with no assigned role — components never consume these directly, they consume the semantic tokens on the Semantics tab.</div>
+            <div id="fam-root"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tabs-panel" data-colours-panel="semantics">
+        <div class="type-sub spec-panel spec-stack">
+          <div class="type-sub">
+            <div class="type-sub__title">Semantics</div>
+            <div class="type-sub__desc">Named roles, one set per theme. Components consume these tokens — never a primitive — so a theme change only ever touches this layer.</div>
+            <div class="sem-wrap">
+              <div class="sem-panel on" id="sem-surface"></div>
+              <div class="sem-panel" id="sem-text"></div>
+              <div class="sem-panel" id="sem-icon"></div>
+              <div class="sem-panel" id="sem-btns"></div>
+              <div class="sem-panel" id="sem-ind"></div>
+              <div class="sem-panel" id="sem-inp"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tabs-panel" data-colours-panel="usage">
+        <div class="type-sub spec-panel spec-stack">
+          <div class="type-sub">
+            <div class="type-sub__title">Which token for what</div>
+            <div class="type-sub__desc">Each role rendered on a real component through its real builder, with the token it resolves through named beside it.</div>
+            <div class="cpg-section-outline" id="col-usage-tokens"></div>
+          </div>
+          <div class="type-sub">
+            <div class="type-sub__title">Light &amp; dark</div>
+            <div class="type-sub__desc">The same composed fragment, re-scoped by the theme attribute selector on its wrapper.</div>
+            <div class="cpg-section-outline">
+              <div class="spec-insitu-grid spec-insitu-grid--2">
+                <div class="spec-mock">
+                  <div class="spec-mock__stage" data-brand="flash" data-theme="light" id="col-theme-light" style="background:var(--color-surface-base);padding:20px"></div>
+                  <div class="spec-mock__cap"><b>Light</b></div>
+                </div>
+                <div class="spec-mock">
+                  <div class="spec-mock__stage" data-brand="flash" data-theme="dark" id="col-theme-dark" style="background:var(--color-surface-base);padding:20px"></div>
+                  <div class="spec-mock__cap"><b>Dark</b></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="type-sub">
+            <div class="type-sub__title">Contrast</div>
+            <div class="type-sub__desc">Every text token on every surface it's allowed on, checked against WCAG AA — 4.5:1 for body text, 3:1 for large text and UI components. Recomputes on theme toggle.</div>
+            <div class="cpg-section-outline">
+              <div class="dd-table-wrap"><table class="dd-table" id="col-contrast-table">
+                <thead><tr><th>Text token</th><th>On surface</th><th>Ratio</th><th>Result</th></tr></thead>
+                <tbody></tbody>
+              </table></div>
+            </div>
+          </div>
+          <div class="type-sub">
+            <div class="type-sub__title">Brand green</div>
+            <div class="type-sub__desc">Flash Green is the one standout moment per screen — the landing page's "Energy" essence. It loses that meaning the moment it appears twice, or carries body text.</div>
+            <div class="cpg-section-outline">
+              <div class="spec-insitu-grid spec-insitu-grid--2">
+                <div class="spec-mock">
+                  <div class="spec-mock__stage" id="col-green-right" style="background:var(--color-surface-base);display:flex;align-items:center;justify-content:center;min-height:100px"></div>
+                  <div class="spec-mock__cap"><b>Right</b> — one accent button, the single standout action on the screen.</div>
+                </div>
+                <div class="spec-mock">
+                  <div class="spec-mock__stage logo-dont" id="col-green-wrong" style="background:var(--color-crit-l);display:flex;align-items:center;justify-content:center;gap:12px;min-height:100px"></div>
+                  <div class="spec-mock__cap"><b class="logo-dont__tag">✗ Don't:</b> two accent buttons competing for attention.</div>
+                </div>
+              </div>
+              <div class="spec-insitu-grid spec-insitu-grid--2" style="margin-top:14px">
+                <div class="spec-mock">
+                  <div class="spec-mock__stage logo-dont" style="background:#fff;display:flex;align-items:center;justify-content:center;min-height:80px"><span class="logo-dont__x"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M18.3 5.71L12 12.01l-6.3-6.3-1.41 1.41 6.3 6.3-6.3 6.3 1.41 1.41 6.3-6.3 6.3 6.3 1.41-1.41-6.3-6.3 6.3-6.3z"/></svg></span><span style="color:var(--prim-green-500);font-weight:700">Body copy set in Flash Green</span></div>
+                  <div class="spec-mock__cap"><b class="logo-dont__tag">✗ Don't:</b> green body text on white — fails contrast and reads as a link, not brand.</div>
+                </div>
+                <div class="spec-mock">
+                  <div class="spec-mock__stage logo-dont" style="background:var(--prim-bg-500);display:flex;align-items:center;justify-content:center;min-height:80px"><span class="logo-dont__x"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M18.3 5.71L12 12.01l-6.3-6.3-1.41 1.41 6.3 6.3-6.3 6.3 1.41 1.41 6.3-6.3 6.3 6.3 1.41-1.41-6.3-6.3 6.3-6.3z"/></svg></span><span style="color:#000;font-weight:700">Black body copy</span></div>
+                  <div class="spec-mock__cap"><b class="logo-dont__tag">✗ Don't:</b> black body copy on Bright Green — the surface itself is only meant to carry a high-contrast fill, not host paragraph text.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="type-sub">
+            <div class="type-sub__title">Chart &amp; category colours</div>
+            <div class="type-sub__desc">Red and deep orange sit last in the order — they read as error/warning, so charts reach for every other colour first.</div>
+            <div class="cpg-section-outline">
+              <div class="cht" id="col-chart-mount" style="max-width:420px"></div>
+              <div class="cat-grid" id="col-cat-strip" style="margin-top:16px"></div>
+            </div>
+          </div>
+          <div class="type-sub">
+            <div class="type-sub__title">Do's and don'ts</div>
+            <div class="cpg-section-outline">
+              <div class="sel-usage">
+                <div class="sel-usage__card">
+                  <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
+                  <ul class="sel-usage__list">
+                    <li>Reach for a semantic token (<code>--color-*</code>) in component CSS — never a primitive (<code>--prim-*</code>) directly.</li>
+                    <li>Treat Flash Green as one standout moment per screen — a single accent button, not a repeated brand colour.</li>
+                    <li>Check text-on-surface pairings against the Contrast table above before shipping a new combination.</li>
+                    <li>Pull chart series colours from <code>CHART_COLORS</code> in order — don't hand-pick a subset.</li>
+                    <li>Use the Desaturated chart set for inactive or secondary series, not a manually lowered opacity.</li>
+                  </ul>
+                </div>
+                <div class="sel-usage__card">
+                  <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don&rsquo;t</div>
+                  <ul class="sel-usage__list">
+                    <li>Don&rsquo;t set body copy in Flash Green — it fails contrast on white and reads as a link.</li>
+                    <li>Don&rsquo;t place two accent-coloured elements on the same screen — pick the one that matters most.</li>
+                    <li>Don&rsquo;t hand-type a hex into <code>SEM</code> — its values are generated from the real CSS custom properties on every commit.</li>
+                    <li>Don&rsquo;t reach for red or deep orange early in a chart's series order — they read as error/warning.</li>
+                    <li>Don&rsquo;t use Bright Green as a text-on-surface background for paragraph copy.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tabs-panel" data-colours-panel="changelog" id="colours-changelog-panel"></div>
     </section>
 
     <!-- ── FUTURE SESSIONS ── -->
@@ -8462,6 +8586,200 @@ famRoot.appendChild(chartFamDesat);
 renderColorGrid('chart-grid-desat', CHART_COLORS_DESAT, CHART_DESAT_OPACITY);
 
 /* ============================================================
+   COLOURS — OVERVIEW / USAGE TAB BUILDERS (foundation/colours-tabbed)
+   All colDoc* — doc-site-only, illustrative renders for the Colours page's
+   Overview and Usage tabs. Not reusable components; reconstruct from tokens.
+============================================================ */
+function colDocParseRGB(str){
+  str = (str||'').trim();
+  if(str.startsWith('#')){
+    let n = str.length===4 ? '#'+[...str.slice(1)].map(c=>c+c).join('') : str;
+    const num = parseInt(n.slice(1),16);
+    return [num>>16&255, num>>8&255, num&255];
+  }
+  const m = str.match(/rgba?\(([^)]+)\)/);
+  if(m){ const p = m[1].split(',').map(s=>parseFloat(s)); return [p[0]||0,p[1]||0,p[2]||0]; }
+  return [0,0,0];
+}
+function colDocLuminance(rgb){
+  const [r,g,b] = rgb.map(c=>{ c/=255; return c<=0.03928 ? c/12.92 : Math.pow((c+0.055)/1.055,2.4); });
+  return 0.2126*r+0.7152*g+0.0722*b;
+}
+function colDocContrast(hexA, hexB){
+  const l1 = colDocLuminance(colDocParseRGB(hexA)), l2 = colDocLuminance(colDocParseRGB(hexB));
+  const hi = Math.max(l1,l2), lo = Math.min(l1,l2);
+  return (hi+0.05)/(lo+0.05);
+}
+
+function colDocMountAnatomy(){
+  const theme = currentTheme();
+  const hero = document.getElementById('col-anatomy-hero');
+  if(hero){
+    hero.innerHTML = '';
+    const p = document.createElement('span'); p.style.cssText = 'display:block;width:48px;height:48px;border-radius:11px;background:var(--prim-bg-600)';
+    const a1 = document.createElement('span'); a1.textContent = '→'; a1.style.cssText = 'font-size:18px;color:var(--chrome-muted)';
+    const s = document.createElement('span'); s.style.cssText = 'display:block;width:48px;height:48px;border-radius:11px;background:var(--color-btn-a-bg)';
+    const a2 = document.createElement('span'); a2.textContent = '→'; a2.style.cssText = 'font-size:18px;color:var(--chrome-muted)';
+    hero.append(p, a1, s, a2, makeBtnEl('flash', theme, 'accent', 'reg', false, 'Continue'));
+  }
+  const stage = document.getElementById('col-anatomy-btn-stage');
+  if(stage){ stage.innerHTML = ''; stage.appendChild(makeBtnEl('flash', theme, 'accent', 'sm', false, 'Continue')); }
+}
+
+function colDocRenderFamilyIndex(){
+  const mount = document.getElementById('col-fam-index');
+  if(!mount) return;
+  mount.innerHTML = FAMILIES.map(f=>{
+    const strip = f.swatches.slice(0,5).map(sw=>{
+      const bg = sw.h.startsWith('rgba') ? (sw.bg||'#ffffff') : sw.h;
+      return `<span style="display:inline-block;width:16px;height:16px;border-radius:3px;margin-right:2px;background:${bg}"></span>`;
+    }).join('');
+    return `<div class="spec-cell">
+      <div class="spec-cell__stage" style="display:flex;align-items:center;justify-content:center">${strip}</div>
+      <div class="spec-cell__name"><button type="button" onclick="coloursTabSwitch('primitives')" style="background:none;border:none;padding:0;font:inherit;color:inherit;cursor:pointer;text-decoration:underline">${f.name}</button></div>
+      <div class="spec-cell__desc">${f.badge}</div>
+    </div>`;
+  }).join('');
+}
+
+function colDocTokenBlock(name, previewHTML, tokens){
+  const cs = getComputedStyle(document.documentElement);
+  const chips = tokens.map(t=>{
+    const hex = cs.getPropertyValue(t).trim();
+    return `<span class="logo-chip"><span class="logo-swatch" style="background:${hex}"></span>${t.replace(/^--/,'')}<code>${hex}</code></span>`;
+  }).join('');
+  return `<div class="logo-var">
+    <div class="logo-var__head">
+      <div class="logo-var__preview" style="flex:0 0 170px;height:84px">${previewHTML}</div>
+      <div><div class="logo-var__name">${name}</div></div>
+    </div>
+    <div class="logo-var__row">
+      <div class="logo-var__rowlabel logo-var__rowlabel--ok">Tokens</div>
+      <div class="logo-var__chips">${chips}</div>
+    </div>
+  </div>`;
+}
+
+function colDocRenderTokenUsage(){
+  const mount = document.getElementById('col-usage-tokens');
+  if(!mount) return;
+  const theme = currentTheme();
+  const surfacePreview = `<div style="width:100%;height:100%;background:var(--color-surface-n1);border-radius:8px;display:flex;align-items:center;justify-content:center;padding:8px">${cardHTML({title:'Card title', desc:'Nested surface', style:'max-width:150px;transform:scale(.82)'})}</div>`;
+  const textPreview = `<div style="display:flex;flex-direction:column;gap:2px;justify-content:center;height:100%;font-size:12px">
+    <span style="color:var(--color-text-1)">Primary text</span>
+    <span style="color:var(--color-text-2)">Supporting text</span>
+    <span style="color:var(--color-text-3)">Caption text</span>
+  </div>`;
+  const btnsPreview = `<div style="display:flex;align-items:center;gap:8px;height:100%" id="col-usage-btns-row"></div>`;
+  const indPreview = `<div style="display:flex;align-items:center;height:100%">${ovAlrt({variant:'info', compact:true})}</div>`;
+  const inputPreview = `<div style="display:flex;align-items:center;height:100%;width:100%" id="col-usage-input-row"></div>`;
+  const linksPreview = `<div style="display:flex;align-items:center;height:100%;font-size:13px"><a href="#" onclick="return false" style="color:var(--color-link)">Hyperlink example</a></div>`;
+
+  mount.innerHTML =
+    colDocTokenBlock('Surface', surfacePreview, ['--color-surface-n1','--color-surface-n2','--color-surface-n3']) +
+    colDocTokenBlock('Text', textPreview, ['--color-text-1','--color-text-2','--color-text-3']) +
+    colDocTokenBlock('Buttons', btnsPreview, ['--color-btn-a-bg','--color-btn-s-bg','--color-btn-o-border']) +
+    colDocTokenBlock('Indicators', indPreview, ['--color-info-h','--color-success-h','--color-warn-h','--color-crit-h']) +
+    colDocTokenBlock('Inputs', inputPreview, ['--color-input-bg','--color-input-border','--color-input-focus']) +
+    colDocTokenBlock('Links', linksPreview, ['--color-link','--color-link-h']);
+
+  const btnsRow = document.getElementById('col-usage-btns-row');
+  if(btnsRow){
+    btnsRow.appendChild(makeBtnEl('flash', theme, 'accent', 'xs', false, 'Go'));
+    btnsRow.appendChild(makeBtnEl('flash', theme, 'secondary', 'xs', false, 'Go'));
+    btnsRow.appendChild(makeBtnEl('flash', theme, 'simple', 'xs', false, 'Go'));
+  }
+  const inputRow = document.getElementById('col-usage-input-row');
+  if(inputRow){
+    try { inputRow.appendChild(tiBuildSearchField().el); } catch(e){}
+  }
+}
+
+function colDocBuildThemeFragment(theme){
+  return `<div style="display:flex;flex-direction:column;gap:12px;align-items:flex-start">
+    ${cardHTML({title:'Nested card', desc:'Surface &amp; text tokens', style:'max-width:220px'})}
+    <span style="color:var(--color-text-2);font-size:13px">Supporting text — <code>--color-text-2</code></span>
+  </div>`;
+}
+function colDocRenderThemePreviews(){
+  const light = document.getElementById('col-theme-light'), dark = document.getElementById('col-theme-dark');
+  if(light){ light.innerHTML = colDocBuildThemeFragment('light'); light.appendChild(makeBtnEl('flash','light','accent','sm',false,'Continue')); }
+  if(dark){ dark.innerHTML = colDocBuildThemeFragment('dark'); dark.appendChild(makeBtnEl('flash','dark','accent','sm',false,'Continue')); }
+}
+
+const COL_CONTRAST_PAIRS = [
+  ['--color-text-1','--color-surface-base','Body',4.5],
+  ['--color-text-2','--color-surface-base','Body',4.5],
+  ['--color-text-3','--color-surface-base','Body',4.5],
+  ['--color-text-s','--color-surface-base','Large/UI',3],
+  ['--color-text-m','--color-surface-base','Large/UI',3],
+  ['--color-text-1','--color-surface-n1','Body',4.5],
+  ['--color-text-1','--color-surface-n2','Body',4.5],
+  ['--color-text-inv','--color-surface-inverse','Body',4.5],
+  ['--color-link','--color-surface-base','Body',4.5],
+];
+function colDocRenderContrast(){
+  const tbody = document.querySelector('#col-contrast-table tbody');
+  if(!tbody) return;
+  const cs = getComputedStyle(document.documentElement);
+  tbody.innerHTML = COL_CONTRAST_PAIRS.map(([tVar,sVar,kind,threshold])=>{
+    const tHex = cs.getPropertyValue(tVar).trim(), sHex = cs.getPropertyValue(sVar).trim();
+    const ratio = colDocContrast(tHex, sHex);
+    const pass = ratio >= threshold;
+    return `<tr>
+      <td class="dd-table__name">${tVar.replace(/^--/,'')}</td>
+      <td><div class="spec-tok-cell"><span class="spec-tok-sw" style="background:var(${sVar})"></span>${sVar.replace(/^--/,'')}</div></td>
+      <td>${ratio.toFixed(2)}:1</td>
+      <td style="color:${pass?'var(--color-success-h)':'var(--color-crit-h)'};font-weight:700">${pass?'✓ Pass':'✗ Fail'} <span style="font-weight:400;color:var(--chrome-muted)">(${kind} · ${threshold}:1)</span></td>
+    </tr>`;
+  }).join('');
+}
+
+const COL_DONT_X_SVG = '<span class="logo-dont__x"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M18.3 5.71L12 12.01l-6.3-6.3-1.41 1.41 6.3 6.3-6.3 6.3 1.41 1.41 6.3-6.3 6.3 6.3 1.41-1.41-6.3-6.3 6.3-6.3z"/></svg></span>';
+function colDocRenderGreenExamples(){
+  const theme = currentTheme();
+  const right = document.getElementById('col-green-right');
+  if(right){ right.innerHTML=''; right.appendChild(makeBtnEl('flash', theme, 'accent', 'reg', false, 'Continue')); }
+  const wrong = document.getElementById('col-green-wrong');
+  if(wrong){
+    wrong.innerHTML = COL_DONT_X_SVG;
+    wrong.appendChild(makeBtnEl('flash', theme, 'accent', 'reg', false, 'Continue'));
+    wrong.appendChild(makeBtnEl('flash', theme, 'accent', 'reg', false, 'Cancel'));
+  }
+}
+
+function colDocRenderChartUsage(){
+  const mount = document.getElementById('col-chart-mount');
+  if(mount){
+    const data = CHART_COLORS.map(([label],i)=>({label, v: 30 + (i%5)*14}));
+    mount.innerHTML = makeBarChartHTML(data, {series:1});
+    mount.querySelectorAll('.cht__bar').forEach((r,i)=>{ if(CHART_COLORS[i]) r.style.fill = CHART_COLORS[i][1]; });
+  }
+  renderColorGrid('col-cat-strip', CATS);
+}
+
+function colDocInit(){
+  const heroMount = document.getElementById('col-hero-mount');
+  if(heroMount) heroMount.appendChild(renderPrimaryHero());
+  colDocRenderFamilyIndex();
+  colDocMountAnatomy();
+  colDocRenderTokenUsage();
+  colDocRenderThemePreviews();
+  colDocRenderContrast();
+  colDocRenderGreenExamples();
+  colDocRenderChartUsage();
+}
+function colDocRefresh(){
+  colDocMountAnatomy();
+  colDocRenderTokenUsage();
+  colDocRenderContrast();
+  colDocRenderGreenExamples();
+}
+// colDocInit() runs later, once makeBtnEl/cardHTML/ovAlrt/tiBuildSearchField/
+// makeBarChartHTML are all defined further down the file — see near
+// renderSectionChangelogs().
+
+/* ============================================================
    RENDER SEMANTIC TABLES
 ============================================================ */
 
@@ -8563,6 +8881,7 @@ function toggleTheme() {
   document.getElementById('theme-lbl').textContent = isDark?'\u2600 Light':'\u263e Dark';
   // Every themed surface follows the global toggle \u2014 no per-section toggles.
   try { if(typeof refreshSem==='function') refreshSem(); } catch(e){}
+  try { if(typeof colDocRefresh==='function') colDocRefresh(); } catch(e){}
   try { if(typeof renderBtnPlayground==='function' && document.getElementById('btn-playground')) renderBtnPlayground(); } catch(e){}
   try { if(typeof renderBtnKeyVariants==='function' && document.getElementById('btn-keyvariants')) renderBtnKeyVariants(); } catch(e){}
   try { if(typeof renderBtnInSitu==='function' && document.getElementById('btn-insitu')) renderBtnInSitu(); } catch(e){}
@@ -8665,14 +8984,13 @@ function toggleTheme() {
   try { if(typeof renderSldReference==='function' && document.getElementById('sld-reference')) renderSldReference(); } catch(e){}
 }
 
-// Colour view switch (prim / sem)
-function cSwitch(view, btn) {
-  document.querySelectorAll('.c-subnav__view').forEach(b=>b.classList.remove('on'));
-  document.querySelectorAll('.c-view').forEach(v=>v.classList.remove('on'));
-  btn.classList.add('on');
-  document.getElementById('c-'+view).classList.add('on');
-  // Toggle row 2
-
+// Colours tab switch (Overview / Primitives / Semantics / Usage / Changelog)
+// — replaces the retired cSwitch()/c-subnav sticky sub-nav.
+function coloursTabSwitch(tab){
+  const nav = document.getElementById('colours-tabs-list');
+  if(!nav) return;
+  nav.querySelectorAll('.tab-item').forEach(btn=>btn.classList.toggle('on', btn.getAttribute('data-colours-tab')===tab));
+  document.querySelectorAll('#s-colours .tabs-panel[data-colours-panel]').forEach(p=>p.classList.toggle('on', p.getAttribute('data-colours-panel')===tab));
 }
 
 // Semantic tab switch
@@ -19286,12 +19604,18 @@ function cbrTabSwitch(tab){
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.92.2';
+const SYSTEM_VERSION = '1.93.0';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.93.0', date:'2026-09-09', author:'Mo', title:'Colours: full component-page treatment — Overview/Primitives/Semantics/Usage/Changelog tabs, sticky sub-nav retired', changes:[
+        ['changed','#s-colours moved from a plain .sec to .sec--tabbed, matching the Logos page treatment. The sticky Primitives/Semantics sub-nav (#c-subnav, cSwitch(), .c-view wrappers, and the "11 families"/"6 groups" count badges) is retired; the same split is now Primitives/Semantics tabs (coloursTabSwitch()) alongside two new tabs, Overview and Usage, plus a relocated Changelog tab'],
+        ['added','Overview tab: an Anatomy diagram (primitive → semantic token → theme → component, rendered on a real accent button via makeBtnEl), a Brand colours block (renderPrimaryHero() reused), and a Family index grid linking each FAMILIES entry to Primitives'],
+        ['added','Usage tab: "Which token for what" renders Surface/Text/Buttons/Indicators/Inputs/Links each on a real component (cardHTML, makeBtnEl, ovAlrt, tiBuildSearchField) with the resolved hex read via getComputedStyle; a Light & dark side-by-side comparison; a Contrast table computing WCAG AA ratios (4.5:1 body, 3:1 large/UI) live from resolved colours and recomputing on theme toggle; a Brand green section showing the one-accent-per-screen rule with failing mockups (two accent buttons, green body text, black-on-Bright-Green); a Chart & category colours section (CHART_COLORS rendered through the real makeBarChartHTML bar builder, recoloured per-bar to match the true series order); and a fresh Do\'s and don\'ts list'],
+        ['added','Hero preview swatches (--prim-bg-500/green-500/yg-500/dg-500/black/white) and a v1.15.0 badge in .sec-header-meta, matching the Logos hero pattern'],
+      ]},
       {version:'1.92.2', date:'2026-09-09', author:'Mo', title:'Logos: trim two explanatory notes', changes:[
         ['removed','The SVG-only note under the Icon only asset list. The per-row SVG pills already show which formats exist, so the note was restating the list'],
         ['removed','The closing note under Colour usage guidelines restating the two-part contrast test. Each variant block already carries its own reasons per background, so the summary duplicated them'],
@@ -21238,7 +21562,14 @@ const CHANGELOG = {
         ['added','New "Logos" page under the Brand category listing all 8 Flash logo variations (Primary, White, Monochrome Black, Monochrome White — each horizontal and stacked), each downloadable as a transparent SVG or PNG from assets/logos/'],
       ]},
     ]},
-    {secId:'s-colours', name:'Colours', version:'1.14.1', entries:[
+    {secId:'s-colours', name:'Colours', version:'1.15.0', entries:[
+      {version:'1.15.0', date:'2026-09-09', author:'Mo', title:'Full component-page treatment: Overview/Primitives/Semantics/Usage/Changelog tabs', changes:[
+        ['added','Five-tab structure (data-colours-tab, coloursTabSwitch()) replacing the old two-view sticky sub-nav: Overview, Primitives (the moved #fam-root), Semantics (the moved six .sem-panel blocks), Usage, and a relocated Changelog tab (#colours-changelog-panel)'],
+        ['removed','#c-subnav markup, cSwitch(), .c-view wrappers, and the .c-subnav*/.c-view* CSS. The "11 families"/"6 groups" count badges are dropped; tab labels are plain'],
+        ['added','Overview: Anatomy (primitive → semantic token → theme → component, via makeBtnEl), Brand colours (renderPrimaryHero() reused), Family index (FAMILIES rendered as a linked spec-grid)'],
+        ['added','Usage: Which token for what (Surface/Text/Buttons/Indicators/Inputs/Links, each on a real component with its resolved hex read via getComputedStyle), Light & dark comparison, a live-computed WCAG contrast table (4.5:1 body, 3:1 large/UI), Brand green guidance (one accent element per screen, with failing mockups), Chart & category colours (CHART_COLORS through the real makeBarChartHTML builder), and a fresh Do\'s/don\'ts list'],
+        ['changed','Hero now carries a v1.15.0 comp-ver-badge and six --prim-* swatches, matching the Logos hero pattern'],
+      ]},
       {version:'1.14.1', date:'2026-08-11', author:'Mo', title:'Chart Colours reordered so red and deep orange sit last, used only once the rest of the set is exhausted', changes:[
         ['changed','CHART_COLORS is now its own literal 16-colour order rather than spreading CATS directly: Electricity (#ff9900, deep orange), Payments (#ed0c40, red) and Voice NFA (#c43a3a, red) move to the final three slots so charts/data-viz reach for every other colour first — red and deep orange read as error/urgency, so should be used very seldom. Category Colours (CATS) itself is untouched; only the chart-specific palette order changed. Chart Colours — Desaturated inherits the same order automatically'],
         ['changed','"Chart Colours" family description on the Colours page updated to state the seldom-use rule for red/deep orange directly'],
@@ -29314,6 +29645,7 @@ try { renderOtpPlayground(); } catch(e){ console.error('otp-playground',e); }
 try { renderOtpInSitu(); } catch(e){ console.error('otp-insitu',e); }
 try { renderOtpReference(); } catch(e){ console.error('otp-reference',e); }
 try { renderSectionChangelogs(); } catch(e){ console.error('section-changelog',e); }
+try { colDocInit(); } catch(e){ console.error('colours-doc-init', e); }
 
 /* .sec--tabbed pages have their own Changelog tab — relocate the auto-injected
    changelog block (normally placed right after .sec__head) into that panel
@@ -29330,6 +29662,7 @@ try { renderSectionChangelogs(); } catch(e){ console.error('section-changelog',e
   {secId:'s-drawers', panelId:'bsh-changelog-panel'},
   {secId:'s-accordion', panelId:'acc-changelog-panel'},
   {secId:'s-logos', panelId:'logo-changelog-panel'},
+  {secId:'s-colours', panelId:'colours-changelog-panel'},
   {secId:'s-breadcrumb', panelId:'bcr-changelog-panel'},
   {secId:'s-spinner', panelId:'spn-changelog-panel'},
   {secId:'s-buttons', panelId:'btn-changelog-panel'},
