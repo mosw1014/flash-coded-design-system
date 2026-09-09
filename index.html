@@ -774,6 +774,21 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;font-feature-
 .elev-use-text{font-size:11px;color:var(--chrome-muted);line-height:1.5}
 .elev-use-bold{font-size:11px;font-weight:700;color:var(--chrome-txt);margin-bottom:2px}
 
+/* Elevation Usage — one entry per component that carries a level: the real
+   component rendered on a stage, with its selector and match status beside it */
+.elev-doc-uses{display:flex;flex-direction:column;gap:10px}
+.elev-doc-use{display:grid;grid-template-columns:minmax(0,1fr) 172px;border:1px solid var(--chrome-border);border-radius:10px;overflow:hidden}
+.elev-doc-use__stage{display:flex;align-items:center;justify-content:center;min-height:104px;padding:20px;background:var(--chrome-bg)}
+.elev-doc-use__meta{display:flex;flex-direction:column;align-items:flex-start;gap:7px;padding:14px 16px;border-left:1px solid var(--chrome-border);background:var(--chrome-nav)}
+.elev-doc-use__sel{font-family:'SF Mono',Consolas,monospace;font-size:11.5px;font-weight:600;color:var(--chrome-txt);word-break:break-all}
+.elev-doc-use__note{font-size:11.5px;line-height:1.5;color:var(--chrome-muted)}
+.elev-doc-tok{font-family:'SF Mono',Consolas,monospace;font-size:11px;color:var(--chrome-muted);cursor:pointer;transition:color .12s}
+.elev-doc-tok:hover{color:var(--chrome-txt)}
+@media (max-width:700px){
+  .elev-doc-use{grid-template-columns:1fr}
+  .elev-doc-use__meta{border-left:0;border-top:1px solid var(--chrome-border)}
+}
+
 /* ================================================================
    SESSION 4 — BUTTONS
 ================================================================ */
@@ -1810,7 +1825,7 @@ body.home .main{max-width:none;margin:0;padding:0}
 .dpd-field--sm .dpd-caption{font-size:11px}
 
 /* Menu card — attaches under the trigger, real instances float; static swatches lay out inline */
-.dpd-menu{position:absolute;left:0;right:0;top:calc(100% + 6px);z-index:20;max-height:280px;overflow-y:auto;display:flex;flex-direction:column;gap:2px;padding:4px;border-radius:12px;border:1px solid var(--chrome-border);background:var(--color-surface-base);box-shadow:0 8px 24px rgba(0,0,0,.14)}
+.dpd-menu{position:absolute;left:0;right:0;top:calc(100% + 6px);z-index:20;max-height:280px;overflow-y:auto;display:flex;flex-direction:column;gap:2px;padding:4px;border-radius:12px;border:1px solid var(--chrome-border);background:var(--color-surface-base);box-shadow:0 4px 24px 0 rgba(0,0,0,.16)}
 .dpd-menu[hidden]{display:none}
 .dpd-menu--inline{position:static;top:auto;margin-top:6px;box-shadow:0 1px 2px rgba(0,0,0,.1)}
 .dpd-search{display:flex;align-items:center;gap:8px;padding:9px 12px;margin-bottom:2px;border-radius:999px;background:var(--color-surface-n1);color:var(--color-text-3);flex-shrink:0}
@@ -1907,7 +1922,7 @@ body.home .main{max-width:none;margin:0;padding:0}
 .bsh-phone__content{position:absolute;inset:22px 0 0 0;display:flex;align-items:center;justify-content:center;color:var(--chrome-muted);font-size:11.5px;text-align:center;padding:20px}
 .bsh-phone__overlay{position:absolute;inset:0;background:rgba(43,43,43,.5);backdrop-filter:blur(2px);z-index:1}
 
-.bsh-sheet{position:absolute;left:0;right:0;bottom:0;background:var(--color-surface-base);display:flex;flex-direction:column;z-index:2;box-shadow:0 -6px 24px rgba(0,0,0,.16);transition:background .25s}
+.bsh-sheet{position:absolute;left:0;right:0;bottom:0;background:var(--color-surface-base);display:flex;flex-direction:column;z-index:2;box-shadow:0 -8px 48px 0 rgba(0,0,0,.16);transition:background .25s}
 .bsh-sheet--compact{border-radius:20px 20px 0 0}
 .bsh-sheet--full{top:22px;border-radius:0}
 .bsh-sheet--full .bsh-sheet__body{flex:1}
@@ -1984,7 +1999,7 @@ body.home .main{max-width:none;margin:0;padding:0}
 
 /* ---- Tooltip ---- */
 .tip{position:relative;display:inline-flex}
-.tip__bubble{position:absolute;z-index:30;padding:6px 10px;border-radius:8px;background:var(--color-surface-inverse);color:var(--color-text-inv);font-size:12px;font-weight:500;line-height:1.4;white-space:nowrap;pointer-events:none;opacity:0;transition:opacity .15s ease,transform .15s ease;box-shadow:0 6px 18px rgba(0,0,0,.18)}
+.tip__bubble{position:absolute;z-index:30;padding:6px 10px;border-radius:8px;background:var(--color-surface-inverse);color:var(--color-text-inv);font-size:12px;font-weight:500;line-height:1.4;white-space:nowrap;pointer-events:none;opacity:0;transition:opacity .15s ease,transform .15s ease;box-shadow:0 2px 12px 0 rgba(0,0,0,.16)}
 .tip__bubble::after{content:"";position:absolute;width:8px;height:8px;background:var(--color-surface-inverse);transform:rotate(45deg)}
 .tip:hover .tip__bubble,.tip:focus-within .tip__bubble{opacity:1}
 .tip__bubble--top{bottom:calc(100% + 9px);left:50%;transform:translate(-50%,4px)}
@@ -2142,7 +2157,7 @@ body.home .main{max-width:none;margin:0;padding:0}
 
 /* ---- Popover ---- */
 .pop{position:relative;display:inline-block}
-.pop__panel{position:absolute;top:calc(100% + 8px);left:0;z-index:40;min-width:244px;background:var(--chrome-bg);border:1px solid var(--chrome-border);border-radius:12px;box-shadow:0 14px 36px rgba(0,0,0,.18);padding:16px;opacity:0;transform:translateY(-6px);pointer-events:none;transition:opacity .15s ease,transform .15s ease}
+.pop__panel{position:absolute;top:calc(100% + 8px);left:0;z-index:40;min-width:244px;background:var(--chrome-bg);border:1px solid var(--chrome-border);border-radius:12px;box-shadow:0 4px 24px 0 rgba(0,0,0,.16);padding:16px;opacity:0;transform:translateY(-6px);pointer-events:none;transition:opacity .15s ease,transform .15s ease}
 .pop__panel--right{left:auto;right:0}
 .pop.is-open .pop__panel{opacity:1;transform:translateY(0);pointer-events:auto}
 .pop__title{font-size:13px;font-weight:700;color:var(--chrome-txt);margin-bottom:5px}
@@ -3086,28 +3101,384 @@ body.home .main{max-width:none;margin:0;padding:0}
   </pre>
 </details>
     </section>
-    <section class="sec" id="s-elev">
+    <section class="sec sec--tabbed" id="s-elev">
+      <div class="sec-hero">
       <div class="sec__head">
         <div class="sec__eye">Foundations</div>
         <h1 class="sec__title">Elevation</h1>
-        <p class="sec__desc">Five elevation levels, all using <code style="font-family:'SF Mono',monospace;font-size:12px;background:var(--chrome-nav);padding:1px 6px;border-radius:4px">elevation-default: rgba(0,0,0,0.16)</code> with increasing y-offset and blur.</p>
-      </div>
-      <div id="sp-elev" class="type-sub"></div>
-      <details class="ai-ctx">
+        <p class="sec__desc">Five shadow levels used to lift a surface above the page, each with its own y-offset and blur.</p>
+        <div class="sec-header-meta">
+          <span class="comp-ver-badge" style="margin-left:0">v1.1.0</span>
+          <details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-elev">
 {
   "status": "js-rendered",
   "builderFunctions": [
-    "ELEVATION"
+    "ELEVATION",
+    "renderElevLevels"
   ],
   "noReusableClass": true,
-  "js": "const ELEVATION = [\n  {name:'Extra Small (XS)', token:'elevation-xs',  y:1,  blur:4,  use:'Cards, tiles',              eg:'Cards'},\n  {name:'Small (S)',        token:'elevation-s',   y:2,  blur:12, use:'Secondary overlays',         eg:'Tooltips'},\n  {name:'Medium (M)',       token:'elevation-m',   y:4,  blur:24, use:'Contextual overlays',        eg:'Menus, dropdowns'},\n  {name:'Large (L)',        token:'elevation-l',   y:8,  blur:48, use:'Elements above most content',eg:'Dialogs, drawers'},\n  {name:'Extra Large (XL)', token:'elevation-xl',  y:16, blur:80, use:'Highest priority elements',  eg:'Notifications'},\n];",
-  "contentHash": "ff78bdeae832fa397b3f5dd8132013a8a85b3834798a21d2357d634adc550bd3",
-  "note": "Documents the doc site's elevation/shadow-token DATA — this section has no reusable component class of its own. Render logic for the 5 rows is inline in the section's script block, not a separately named builder function, so only the ELEVATION data const is embedded here."
+  "js": "const ELEVATION = [\n  {name:'Extra Small (XS)', token:'elevation-xs',  y:1,  blur:4,  use:'Cards, tiles',              eg:'Cards'},\n  {name:'Small (S)',        token:'elevation-s',   y:2,  blur:12, use:'Secondary overlays',         eg:'Tooltips'},\n  {name:'Medium (M)',       token:'elevation-m',   y:4,  blur:24, use:'Contextual overlays',        eg:'Menus, dropdowns'},\n  {name:'Large (L)',        token:'elevation-l',   y:8,  blur:48, use:'Elements above most content',eg:'Dialogs, drawers'},\n  {name:'Extra Large (XL)', token:'elevation-xl',  y:16, blur:80, use:'Highest priority elements',  eg:'Notifications'},\n];\n\nfunction renderElevLevels(){\n  const mount = document.getElementById('elev-levels-grid');\n  if(!mount) return;\n  const bg = stageBg(currentTheme());\n  mount.innerHTML = ELEVATION.map(e =&gt; {\n    const shadow = `0 ${e.y}px ${e.blur}px 0 rgba(0,0,0,0.16)`;\n    return `&lt;div class=\"spec-cell\"&gt;\n      &lt;div class=\"spec-cell__stage\" style=\"background:${bg};display:flex;align-items:center;justify-content:center;min-height:110px\"&gt;&lt;div style=\"width:70px;height:70px;border-radius:10px;background:var(--color-surface-base);border:1px solid var(--chrome-border);box-shadow:${shadow}\"&gt;&lt;/div&gt;&lt;/div&gt;\n      &lt;div class=\"spec-cell__name\"&gt;${e.name}&lt;/div&gt;\n      &lt;div class=\"spec-cell__desc\"&gt;&lt;code&gt;${e.token}&lt;/code&gt;&lt;br&gt;y ${e.y} &amp;middot; blur ${e.blur}&lt;br&gt;${e.eg}&lt;/div&gt;\n    &lt;/div&gt;`;\n  }).join('');\n}",
+  "usage": {
+    "do": [
+      "Pick the level from what the surface actually is — a card is XS, a menu is M — not from how important it feels.",
+      "Let a component keep one level everywhere it appears, in both light and dark.",
+      "Use z-index to control stacking order; use elevation only to communicate depth visually.",
+      "Reserve XL for the single highest-priority layer on screen at once."
+    ],
+    "dont": [
+      "Don't invent a shadow value outside the five documented levels.",
+      "Don't stack multiple shadows on one surface.",
+      "Don't tint elevation-default — it is always black at 16%.",
+      "Don't apply a shadow to text, an icon, or anything that isn't a surface.",
+      "Don't invent a dark-mode shadow variant — the token defines none."
+    ]
+  },
+  "contentHash": "3c915606825a271d34dd33c48176310ea74ec3611ae7cd057a4e61a3a4af945d",
+  "note": "Documents the doc site's elevation/shadow-token DATA (ELEVATION) and the renderElevLevels() builder for the Overview Levels grid — this section has no reusable component class of its own. The Tokens-tab spec table row builder remains inline in the section's script block, not a separately named function. The 5 token names are not declared as CSS custom properties anywhere in this file; components carry their own hardcoded box-shadow values."
 }
   </pre>
 </details>
+        </div>
+      </div>
+      <div class="sec-hero__preview" style="background:var(--chrome-bg);display:flex;align-items:flex-end;justify-content:center;gap:26px;padding:30px 24px">
+        <div style="background:var(--color-surface-base);border:1px solid var(--chrome-border);border-radius:12px;width:56px;height:56px;box-shadow:0 1px 4px 0 rgba(0,0,0,0.16)"></div>
+        <div style="background:var(--color-surface-base);border:1px solid var(--chrome-border);border-radius:12px;width:74px;height:74px;box-shadow:0 4px 24px 0 rgba(0,0,0,0.16);margin-bottom:10px"></div>
+        <div style="background:var(--color-surface-base);border:1px solid var(--chrome-border);border-radius:12px;width:92px;height:92px;box-shadow:0 16px 80px 0 rgba(0,0,0,0.16);margin-bottom:22px"></div>
+      </div>
+      </div>
+
+      <div class="tabs-list sec-tabs" id="elev-tabs-list">
+        <button type="button" class="tab-item on" data-elev-tab="overview" onclick="elevTabSwitch('overview')"><span class="tab-item__inner"><span class="tab-item__label">Overview</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-elev-tab="usage" onclick="elevTabSwitch('usage')"><span class="tab-item__inner"><span class="tab-item__label">Usage</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-elev-tab="tokens" onclick="elevTabSwitch('tokens')"><span class="tab-item__inner"><span class="tab-item__label">Tokens</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-elev-tab="changelog" onclick="elevTabSwitch('changelog')"><span class="tab-item__inner"><span class="tab-item__label">Changelog</span></span><span class="tab-item__line"></span></button>
+      </div>
+
+      <div class="tabs-panel on" data-elev-panel="overview">
+        <div class="type-sub spec-panel spec-stack">
+
+          <div class="type-sub">
+            <div class="type-sub__title">Anatomy</div>
+            <div class="type-sub__desc">One shadow, four properties — only y-offset and blur ever move. x-axis and spread are always 0.</div>
+            <div class="cpg-section-block">
+              <div class="spec-hero" style="background:var(--chrome-bg);display:flex;align-items:center;justify-content:center;padding:48px 20px">
+                <div style="width:220px;height:120px;border-radius:12px;background:var(--color-surface-base);border:1px solid var(--chrome-border);box-shadow:0 4px 24px 0 rgba(0,0,0,0.16)"></div>
+              </div>
+              <div class="spec-parts">
+                <div class="spec-part">
+                  <div class="spec-part__stage" style="background:var(--chrome-bg);display:flex;align-items:center;justify-content:center;min-height:112px"><div style="width:44px;height:44px;border-radius:8px;background:var(--color-surface-base);border:1px solid var(--chrome-border);box-shadow:0 8px 0 0 rgba(0,0,0,0.16)"></div></div>
+                  <div class="spec-part__body">
+                    <div class="spec-part__name"><span class="spec-part__num">1</span>Y-offset</div>
+                    <div class="spec-part__note">The only offset that moves — x is always 0. Shown here with blur set to 0 so the offset alone is visible.</div>
+                  </div>
+                </div>
+                <div class="spec-part">
+                  <div class="spec-part__stage" style="background:var(--chrome-bg);display:flex;align-items:center;justify-content:center;min-height:112px"><div style="width:44px;height:44px;border-radius:8px;background:var(--color-surface-base);border:1px solid var(--chrome-border);box-shadow:0 0 24px 0 rgba(0,0,0,0.16)"></div></div>
+                  <div class="spec-part__body">
+                    <div class="spec-part__name"><span class="spec-part__num">2</span>Blur</div>
+                    <div class="spec-part__note">Shown here with offset set to 0 so the blur alone is visible.</div>
+                  </div>
+                </div>
+                <div class="spec-part">
+                  <div class="spec-part__stage" style="background:var(--chrome-bg);display:flex;align-items:center;justify-content:center;min-height:112px"><div style="width:44px;height:44px;border-radius:8px;background:rgba(0,0,0,0.16)"></div></div>
+                  <div class="spec-part__body">
+                    <div class="spec-part__name"><span class="spec-part__num">3</span>Colour</div>
+                    <div class="spec-part__note"><code>elevation-default</code> — #000000 at 16%. One colour, used at every level.</div>
+                  </div>
+                </div>
+                <div class="spec-part">
+                  <div class="spec-part__stage" style="background:var(--chrome-bg);display:flex;align-items:center;justify-content:center;min-height:112px"><div style="width:44px;height:44px;border-radius:8px;background:var(--color-surface-base);border:1px solid var(--chrome-border);box-shadow:0 4px 24px 8px rgba(0,0,0,0.16)"></div></div>
+                  <div class="spec-part__body">
+                    <div class="spec-part__name"><span class="spec-part__num">4</span>Spread</div>
+                    <div class="spec-part__note">Always 0. Shown here at 8px to make clear why — it thickens the shadow into a hard-edged halo rather than a soft lift.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="type-sub">
+            <div class="type-sub__title">Levels</div>
+            <div class="type-sub__desc">Five levels, each with its own y-offset and blur. Built at runtime from the same <code>ELEVATION</code> data that renders the Tokens table.</div>
+            <div class="cpg-section-block">
+              <div id="elev-levels-grid" class="spec-grid" style="grid-template-columns:repeat(auto-fill,minmax(200px,1fr))"></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="tabs-panel" data-elev-panel="usage">
+        <div class="type-sub spec-panel spec-stack">
+
+          <div class="type-sub">
+            <div class="type-sub__title">Which level for what</div>
+            <div class="type-sub__desc">Each level, the surfaces it&rsquo;s for, and the components that carry it today.</div>
+            <div class="cpg-section-outline">
+
+              <div class="logo-var">
+                <div class="logo-var__head">
+                  <div class="logo-var__preview" style="background:var(--chrome-bg);border:none;height:70px;padding:14px"><div style="width:40px;height:40px;border-radius:8px;background:var(--color-surface-base);border:1px solid var(--chrome-border);box-shadow:0 1px 4px 0 rgba(0,0,0,0.16)"></div></div>
+                  <div>
+                    <div class="logo-var__name">Extra Small (XS)</div>
+                    <div class="logo-var__desc" style="margin-top:3px"><span class="elev-doc-tok" onclick="copy('elevation-xs','Token name')">elevation-xs</span></div>
+                  </div>
+                </div>
+                <div class="logo-var__row">
+                  <div class="logo-var__rowlabel logo-var__rowlabel--ok">Use for</div>
+                  <div class="logo-var__chips"><span class="logo-chip">Cards</span><span class="logo-chip">Tiles</span></div>
+                </div>
+                <div class="logo-var__row">
+                  <div class="logo-var__rowlabel">Components</div>
+                  <div class="elev-doc-uses"><div class="elev-doc-use__note">No component carries this level today &mdash; cards ship flat.</div></div>
+                </div>
+              </div>
+
+              <div class="logo-var">
+                <div class="logo-var__head">
+                  <div class="logo-var__preview" style="background:var(--chrome-bg);border:none;height:70px;padding:14px"><div style="width:40px;height:40px;border-radius:8px;background:var(--color-surface-base);border:1px solid var(--chrome-border);box-shadow:0 2px 12px 0 rgba(0,0,0,0.16)"></div></div>
+                  <div>
+                    <div class="logo-var__name">Small (S)</div>
+                    <div class="logo-var__desc" style="margin-top:3px"><span class="elev-doc-tok" onclick="copy('elevation-s','Token name')">elevation-s</span></div>
+                  </div>
+                </div>
+                <div class="logo-var__row">
+                  <div class="logo-var__rowlabel logo-var__rowlabel--ok">Use for</div>
+                  <div class="logo-var__chips"><span class="logo-chip">Tooltips</span></div>
+                </div>
+                <div class="logo-var__row">
+                  <div class="logo-var__rowlabel">Components</div>
+                  <div class="elev-doc-uses">
+                    <div class="elev-doc-use">
+                      <div class="elev-doc-use__stage" style="padding:62px 20px 20px"><span class="tip" tabindex="0"><button class="sg-btn" type="button">Copy</button><span class="tip__bubble tip__bubble--top" style="opacity:1;transform:translate(-50%,0)">Copy to clipboard</span></span></div>
+                      <div class="elev-doc-use__meta">
+                        <span class="elev-doc-use__sel">.tip__bubble</span>
+                        <span class="tag tag--sm tag--success">Matches</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="logo-var">
+                <div class="logo-var__head">
+                  <div class="logo-var__preview" style="background:var(--chrome-bg);border:none;height:70px;padding:14px"><div style="width:40px;height:40px;border-radius:8px;background:var(--color-surface-base);border:1px solid var(--chrome-border);box-shadow:0 4px 24px 0 rgba(0,0,0,0.16)"></div></div>
+                  <div>
+                    <div class="logo-var__name">Medium (M)</div>
+                    <div class="logo-var__desc" style="margin-top:3px"><span class="elev-doc-tok" onclick="copy('elevation-m','Token name')">elevation-m</span></div>
+                  </div>
+                </div>
+                <div class="logo-var__row">
+                  <div class="logo-var__rowlabel logo-var__rowlabel--ok">Use for</div>
+                  <div class="logo-var__chips"><span class="logo-chip">Dropdown menus</span><span class="logo-chip">Popovers</span><span class="logo-chip">Dialogs</span></div>
+                </div>
+                <div class="logo-var__row">
+                  <div class="logo-var__rowlabel">Components</div>
+                  <div class="elev-doc-uses">
+                    <div class="elev-doc-use">
+                      <div class="elev-doc-use__stage"><div class="dpd-menu" style="position:relative;top:auto;left:auto;right:auto;width:190px"><div class="dpd-item" style="padding:8px 10px;font-size:12.5px">Option one</div><div class="dpd-item" style="padding:8px 10px;font-size:12.5px">Option two</div></div></div>
+                      <div class="elev-doc-use__meta">
+                        <span class="elev-doc-use__sel">.dpd-menu</span>
+                        <span class="tag tag--sm tag--success">Matches</span>
+                      </div>
+                    </div>
+                    <div class="elev-doc-use">
+                      <div class="elev-doc-use__stage"><div class="pop__panel" style="position:relative;top:auto;left:auto;opacity:1;transform:none;pointer-events:auto;min-width:0;width:216px"><div class="pop__title">About settlements</div><div class="pop__desc">Funds settle on the next business day.</div></div></div>
+                      <div class="elev-doc-use__meta">
+                        <span class="elev-doc-use__sel">.pop__panel</span>
+                        <span class="tag tag--sm tag--success">Matches</span>
+                      </div>
+                    </div>
+                    <div class="elev-doc-use__note">Dialogs land here once Modals ship.</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="logo-var">
+                <div class="logo-var__head">
+                  <div class="logo-var__preview" style="background:var(--chrome-bg);border:none;height:70px;padding:14px"><div style="width:40px;height:40px;border-radius:8px;background:var(--color-surface-base);border:1px solid var(--chrome-border);box-shadow:0 8px 48px 0 rgba(0,0,0,0.16)"></div></div>
+                  <div>
+                    <div class="logo-var__name">Large (L)</div>
+                    <div class="logo-var__desc" style="margin-top:3px"><span class="elev-doc-tok" onclick="copy('elevation-l','Token name')">elevation-l</span></div>
+                  </div>
+                </div>
+                <div class="logo-var__row">
+                  <div class="logo-var__rowlabel logo-var__rowlabel--ok">Use for</div>
+                  <div class="logo-var__chips"><span class="logo-chip">Bottom sheets</span><span class="logo-chip">Drawers</span></div>
+                </div>
+                <div class="logo-var__row">
+                  <div class="logo-var__rowlabel">Components</div>
+                  <div class="elev-doc-uses">
+                    <div class="elev-doc-use">
+                      <div class="elev-doc-use__stage"><div class="bsh-sheet" style="position:relative;inset:auto;width:216px;border-radius:12px 12px 0 0;padding:12px 14px 16px"><div class="bsh-sheet__handle" style="margin:0 auto 10px"></div><div style="font-size:12.5px;font-weight:700">Sheet title</div></div></div>
+                      <div class="elev-doc-use__meta">
+                        <span class="elev-doc-use__sel">.bsh-sheet</span>
+                        <span class="tag tag--sm tag--success">Matches</span>
+                        <span class="elev-doc-use__note">Negative y-offset &mdash; a sheet rises from the bottom.</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="logo-var">
+                <div class="logo-var__head">
+                  <div class="logo-var__preview" style="background:var(--chrome-bg);border:none;height:70px;padding:14px"><div style="width:40px;height:40px;border-radius:8px;background:var(--color-surface-base);border:1px solid var(--chrome-border);box-shadow:0 16px 80px 0 rgba(0,0,0,0.16)"></div></div>
+                  <div>
+                    <div class="logo-var__name">Extra Large (XL)</div>
+                    <div class="logo-var__desc" style="margin-top:3px"><span class="elev-doc-tok" onclick="copy('elevation-xl','Token name')">elevation-xl</span></div>
+                  </div>
+                </div>
+                <div class="logo-var__row">
+                  <div class="logo-var__rowlabel logo-var__rowlabel--ok">Use for</div>
+                  <div class="logo-var__chips"><span class="logo-chip">Notifications</span></div>
+                </div>
+                <div class="logo-var__row">
+                  <div class="logo-var__rowlabel">Components</div>
+                  <div class="elev-doc-uses"><div class="elev-doc-use__note">Nothing ships at this level yet &mdash; Toasts are still to come.</div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="type-sub">
+            <div class="type-sub__title">Light and dark</div>
+            <div class="type-sub__desc">One shadow colour in both themes: black at 16%. Nothing about a level changes in dark.</div>
+            <div class="cpg-section-outline">
+              <div class="spec-insitu-grid spec-insitu-grid--2">
+                <div class="spec-mock">
+                  <div class="spec-mock__stage" style="background:#ffffff;gap:16px;flex-direction:row;align-items:flex-end;justify-content:center">
+                    <div style="width:36px;height:36px;border-radius:8px;background:#fff;border:1px solid var(--chrome-border);box-shadow:0 1px 4px 0 rgba(0,0,0,0.16)"></div>
+                    <div style="width:44px;height:44px;border-radius:8px;background:#fff;border:1px solid var(--chrome-border);box-shadow:0 4px 24px 0 rgba(0,0,0,0.16)"></div>
+                    <div style="width:52px;height:52px;border-radius:8px;background:#fff;border:1px solid var(--chrome-border);box-shadow:0 16px 80px 0 rgba(0,0,0,0.16)"></div>
+                  </div>
+                  <div class="spec-mock__cap"><b>Light</b>XS, M and XL on a white surface.</div>
+                </div>
+                <div class="spec-mock" data-brand="flash" data-theme="dark">
+                  <div class="spec-mock__stage" style="background:#12131a;gap:16px;flex-direction:row;align-items:flex-end;justify-content:center">
+                    <div style="width:36px;height:36px;border-radius:8px;background:var(--color-surface-base);border:1px solid var(--chrome-border);box-shadow:0 1px 4px 0 rgba(0,0,0,0.16)"></div>
+                    <div style="width:44px;height:44px;border-radius:8px;background:var(--color-surface-base);border:1px solid var(--chrome-border);box-shadow:0 4px 24px 0 rgba(0,0,0,0.16)"></div>
+                    <div style="width:52px;height:52px;border-radius:8px;background:var(--color-surface-base);border:1px solid var(--chrome-border);box-shadow:0 16px 80px 0 rgba(0,0,0,0.16)"></div>
+                  </div>
+                  <div class="spec-mock__cap"><b>Dark</b>The same values on <code>#12131a</code>. Faint at XS, readable from M up — there is no dark-mode variant.</div>
+                </div>
+              </div>
+              <div class="logo-note">No level is paired with a surface step. A component keeps the same elevation level in both themes — only its surface token changes.</div>
+            </div>
+          </div>
+
+          <div class="type-sub">
+            <div class="type-sub__title">Stacking order</div>
+            <div class="type-sub__desc">Elevation suggests depth; z-index decides it. The values components declare today:</div>
+            <div class="cpg-section-outline">
+              <div class="dd-table-wrap"><table class="dd-table"><thead><tr><th>Component</th><th>Selector</th><th>z-index</th><th>Level</th></tr></thead><tbody>
+                <tr><td class="dd-table__name">Tooltip</td><td><code>.tip__bubble</code></td><td>30</td><td>elevation-s</td></tr>
+                <tr><td class="dd-table__name">Dropdown menu</td><td><code>.dpd-menu</code></td><td>20</td><td>elevation-m</td></tr>
+                <tr><td class="dd-table__name">Popover</td><td><code>.pop__panel</code></td><td>40</td><td>elevation-m</td></tr>
+                <tr><td class="dd-table__name">Hovercard</td><td><code>.hc__card</code></td><td>30</td><td>&mdash;</td></tr>
+                <tr><td class="dd-table__name">Bottom sheet</td><td><code>.bsh-sheet</code></td><td>2</td><td>elevation-l</td></tr>
+                <tr><td class="dd-table__name">Search results</td><td><code>.bar__search-results</code></td><td>300</td><td>&mdash;</td></tr>
+              </tbody></table></div>
+            </div>
+          </div>
+
+          <div class="type-sub">
+            <div class="type-sub__title">Common mistakes</div>
+            <div class="type-sub__desc">Each one rendered on the real values.</div>
+            <div class="cpg-section-outline">
+              <div class="spec-insitu-grid spec-insitu-grid--2">
+                <div class="spec-mock">
+                  <div class="spec-mock__stage logo-dont" style="background:var(--color-crit-l);align-items:center;justify-content:center">
+                    <span class="logo-dont__x" style="top:10px;right:10px;left:auto;transform:none;width:28px;height:28px"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="width:14px;height:14px"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></span>
+                    <div style="width:150px;padding:16px;border-radius:12px;background:#fff;box-shadow:0 16px 80px 0 rgba(0,0,0,0.16);font-size:12px;font-weight:700">Resting card</div>
+                  </div>
+                  <div class="spec-mock__cap"><b class="logo-dont__tag">&#10007; Don't: elevation-xl on a resting card</b>XL is for the top layer on screen, not everyday content.</div>
+                </div>
+                <div class="spec-mock">
+                  <div class="spec-mock__stage logo-dont" style="background:var(--color-crit-l);align-items:center;justify-content:center">
+                    <span class="logo-dont__x" style="top:10px;right:10px;left:auto;transform:none;width:28px;height:28px"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="width:14px;height:14px"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></span>
+                    <div style="width:150px;height:70px;border-radius:12px;background:#fff;box-shadow:0 4px 24px 0 rgba(0,0,0,0.16), 0 2px 12px 0 rgba(0,0,0,0.16)"></div>
+                  </div>
+                  <div class="spec-mock__cap"><b class="logo-dont__tag">&#10007; Don't: stack two shadows on one surface</b>Pick the one level the surface needs.</div>
+                </div>
+                <div class="spec-mock">
+                  <div class="spec-mock__stage logo-dont" style="background:var(--color-crit-l);align-items:center;justify-content:center">
+                    <span class="logo-dont__x" style="top:10px;right:10px;left:auto;transform:none;width:28px;height:28px"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="width:14px;height:14px"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></span>
+                    <div style="width:150px;height:70px;border-radius:12px;background:#fff;box-shadow:0 4px 24px 0 rgba(29,250,15,0.55)"></div>
+                  </div>
+                  <div class="spec-mock__cap"><b class="logo-dont__tag">&#10007; Don't: tint the shadow</b>The shadow colour is always black at 16%.</div>
+                </div>
+                <div class="spec-mock">
+                  <div class="spec-mock__stage logo-dont" style="background:var(--color-crit-l);align-items:center;justify-content:center">
+                    <span class="logo-dont__x" style="top:10px;right:10px;left:auto;transform:none;width:28px;height:28px"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="width:14px;height:14px"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></span>
+                    <div style="font-size:28px;font-weight:800;color:#111;filter:drop-shadow(0 8px 24px rgba(0,0,0,0.55))">Flash</div>
+                  </div>
+                  <div class="spec-mock__cap"><b class="logo-dont__tag">&#10007; Don't: shadow on text or an icon</b>Elevation lifts surfaces, not content sitting on them.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="type-sub">
+            <div class="type-sub__title">Do's and don'ts</div>
+            <div class="sel-usage">
+              <div class="sel-usage__card">
+                <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
+                <ul class="sel-usage__list">
+                  <li>Pick the level from what the surface actually is — a card is XS, a menu is M — not from how important it feels.</li>
+                  <li>Let a component keep one level everywhere it appears, in both light and dark.</li>
+                  <li>Use z-index to control stacking order; use elevation only to communicate depth visually.</li>
+                  <li>Reserve XL for the single highest-priority layer on screen at once.</li>
+                </ul>
+              </div>
+              <div class="sel-usage__card">
+                <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don't</div>
+                <ul class="sel-usage__list">
+                  <li>Don't invent a shadow value outside the five documented levels.</li>
+                  <li>Don't stack multiple shadows on one surface.</li>
+                  <li>Don't tint <code>elevation-default</code> — it is always black at 16%.</li>
+                  <li>Don't apply a shadow to text, an icon, or anything that isn't a surface.</li>
+                  <li>Don't invent a dark-mode shadow variant — the token defines none.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="tabs-panel" data-elev-panel="tokens">
+        <div class="type-sub spec-panel spec-stack">
+          <div class="type-sub">
+            <div class="type-sub__title">The five levels</div>
+            <div class="type-sub__desc">Click any row to copy its full <code>box-shadow</code> value.</div>
+            <div id="sp-elev" class="type-sub"></div>
+            <div class="logo-note">Design-token names. Not declared as CSS custom properties in this file — copy the box-shadow value.</div>
+          </div>
+          <div class="type-sub">
+            <div class="type-sub__title">Where it's used</div>
+            <div class="type-sub__desc">Documented level against the value each component actually carries on <code>main</code>, post drift-fix.</div>
+            <div class="dd-table-wrap"><table class="dd-table"><thead><tr><th>Component</th><th>Selector</th><th>Documented level</th><th>Actual value</th><th>Status</th></tr></thead><tbody>
+              <tr><td class="dd-table__name">Card (resting)</td><td><code>.card</code></td><td>elevation-xs</td><td><code onclick="copy('none','box-shadow')">none</code></td><td>Drift</td></tr>
+              <tr><td class="dd-table__name">Card, hover</td><td><code>.card--interactive:hover</code></td><td>—</td><td><code onclick="copy('0 8px 24px 0 rgba(0,0,0,0.10)','box-shadow')">0 8px 24px 0 rgba(0,0,0,0.10)</code></td><td>Drift</td></tr>
+              <tr><td class="dd-table__name">Card, active</td><td><code>.card--interactive:active</code></td><td>—</td><td><code onclick="copy('0 2px 8px 0 rgba(0,0,0,0.10)','box-shadow')">0 2px 8px 0 rgba(0,0,0,0.10)</code></td><td>Drift</td></tr>
+              <tr><td class="dd-table__name">Tooltip</td><td><code>.tip__bubble</code></td><td>elevation-s</td><td><code onclick="copy('0 2px 12px 0 rgba(0,0,0,0.16)','box-shadow')">0 2px 12px 0 rgba(0,0,0,0.16)</code></td><td>Matches (fixed)</td></tr>
+              <tr><td class="dd-table__name">Dropdown menu</td><td><code>.dpd-menu</code></td><td>elevation-m</td><td><code onclick="copy('0 4px 24px 0 rgba(0,0,0,0.16)','box-shadow')">0 4px 24px 0 rgba(0,0,0,0.16)</code></td><td>Matches (fixed)</td></tr>
+              <tr><td class="dd-table__name">Dropdown, inline</td><td><code>.dpd-menu--inline</code></td><td>—</td><td><code onclick="copy('0 1px 2px 0 rgba(0,0,0,0.1)','box-shadow')">0 1px 2px 0 rgba(0,0,0,0.1)</code></td><td>Drift</td></tr>
+              <tr><td class="dd-table__name">Popover</td><td><code>.pop__panel</code></td><td>elevation-m</td><td><code onclick="copy('0 4px 24px 0 rgba(0,0,0,0.16)','box-shadow')">0 4px 24px 0 rgba(0,0,0,0.16)</code></td><td>Matches (fixed)</td></tr>
+              <tr><td class="dd-table__name">Hovercard</td><td><code>.hc__card</code></td><td>—</td><td><code onclick="copy('0 14px 36px 0 rgba(0,0,0,0.16)','box-shadow')">0 14px 36px 0 rgba(0,0,0,0.16)</code></td><td>Drift</td></tr>
+              <tr><td class="dd-table__name">Bottom sheet</td><td><code>.bsh-sheet</code></td><td>elevation-l (&minus;y exception)</td><td><code onclick="copy('0 -8px 48px 0 rgba(0,0,0,0.16)','box-shadow')">0 -8px 48px 0 rgba(0,0,0,0.16)</code></td><td>Matches (fixed)</td></tr>
+              <tr><td class="dd-table__name">Chart tooltip</td><td><code>.cht__tip</code></td><td>—</td><td><code onclick="copy('0 4px 14px 0 rgba(0,0,0,0.22)','box-shadow')">0 4px 14px 0 rgba(0,0,0,0.22)</code></td><td>Drift</td></tr>
+              <tr><td class="dd-table__name">Search results</td><td><code>.bar__search-results</code></td><td>—</td><td><code onclick="copy('0 12px 32px 0 rgba(0,0,0,0.28)','box-shadow')">0 12px 32px 0 rgba(0,0,0,0.28)</code></td><td>Drift</td></tr>
+              <tr><td class="dd-table__name">Carousel arrow</td><td><code>.car__arrow</code></td><td>—</td><td><code onclick="copy('0 2px 10px 0 rgba(0,0,0,0.25)','box-shadow')">0 2px 10px 0 rgba(0,0,0,0.25)</code></td><td>Drift</td></tr>
+            </tbody></table></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tabs-panel" data-elev-panel="changelog" id="elev-changelog-panel"></div>
     </section>
 
     <!-- ============================================================
@@ -4927,7 +5298,7 @@ body.home .main{max-width:none;margin:0;padding:0}
       <div class="sec__head">
         <h1 class="sec__title">Bottom Sheets</h1>
         <div class="sec-header-meta">
-          <span class="comp-ver-badge" style="margin-left:0">v1.1.1</span>
+          <span class="comp-ver-badge" style="margin-left:0">v1.1.2</span>
           <details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-drawers">
@@ -4954,7 +5325,7 @@ body.home .main{max-width:none;margin:0;padding:0}
     ".bsh-sheet__footer",
     ".bsh-sheet__footer-row"
   ],
-  "css": ".bsh-sheet { position:absolute;left:0;right:0;bottom:0;background:var(--color-surface-base);display:flex;flex-direction:column;z-index:2;box-shadow:0 -6px 24px rgba(0,0,0,.16);transition:background .25s }\n.bsh-sheet--compact { border-radius:20px 20px 0 0 }\n.bsh-sheet--full { top:22px;border-radius:0 }\n.bsh-sheet--full .bsh-sheet__body { flex:1 }\n.bsh-sheet__handle { width:36px;height:4px;border-radius:2px;background:var(--color-surface-n3);margin:8px auto 0 }\n.bsh-sheet__header { display:flex;align-items:center;gap:8px;padding:10px 16px 12px }\n.bsh-sheet__back,.bsh-sheet__close { background:none;border:none;padding:0;display:inline-flex;align-items:center;color:var(--color-text-1);cursor:pointer;flex-shrink:0 }\n.bsh-sheet__title { flex:1;font-size:14px;font-weight:800;color:var(--color-text-1);overflow:hidden;text-overflow:ellipsis;white-space:nowrap }\n.bsh-sheet__body { padding:0 16px 16px }\n.bsh-sheet__placeholder { border:1.5px dashed var(--chrome-border);border-radius:10px;padding:14px 12px;font-size:11.5px;font-weight:700;color:var(--color-text-s);text-align:center }\n.bsh-sheet__footer { padding:12px 16px;display:flex;gap:6px }\n.bsh-sheet__footer .ds-btn { flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis }\n.bsh-sheet__footer.is-vertical { flex-direction:column }\n.bsh-sheet__footer.is-vertical .ds-btn { flex:none }\n.bsh-sheet__footer.is-mix { flex-direction:column;align-items:stretch;gap:10px }\n.bsh-sheet__footer.is-mix&gt;.ds-btn { flex:none }\n.bsh-sheet__footer-row { display:flex;gap:6px;width:100% }\n.bsh-sheet__footer-row .ds-btn { flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis }\n.bsh-sheet__footer.is-mix&gt;a.ds-btn { align-self:center;flex:none }\n.bsh-ref__header .bsh-sheet__header { padding:10px 14px 0 }",
+  "css": ".bsh-sheet { position:absolute;left:0;right:0;bottom:0;background:var(--color-surface-base);display:flex;flex-direction:column;z-index:2;box-shadow:0 -8px 48px 0 rgba(0,0,0,.16);transition:background .25s }\n.bsh-sheet--compact { border-radius:20px 20px 0 0 }\n.bsh-sheet--full { top:22px;border-radius:0 }\n.bsh-sheet--full .bsh-sheet__body { flex:1 }\n.bsh-sheet__handle { width:36px;height:4px;border-radius:2px;background:var(--color-surface-n3);margin:8px auto 0 }\n.bsh-sheet__header { display:flex;align-items:center;gap:8px;padding:10px 16px 12px }\n.bsh-sheet__back,.bsh-sheet__close { background:none;border:none;padding:0;display:inline-flex;align-items:center;color:var(--color-text-1);cursor:pointer;flex-shrink:0 }\n.bsh-sheet__title { flex:1;font-size:14px;font-weight:800;color:var(--color-text-1);overflow:hidden;text-overflow:ellipsis;white-space:nowrap }\n.bsh-sheet__body { padding:0 16px 16px }\n.bsh-sheet__placeholder { border:1.5px dashed var(--chrome-border);border-radius:10px;padding:14px 12px;font-size:11.5px;font-weight:700;color:var(--color-text-s);text-align:center }\n.bsh-sheet__footer { padding:12px 16px;display:flex;gap:6px }\n.bsh-sheet__footer .ds-btn { flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis }\n.bsh-sheet__footer.is-vertical { flex-direction:column }\n.bsh-sheet__footer.is-vertical .ds-btn { flex:none }\n.bsh-sheet__footer.is-mix { flex-direction:column;align-items:stretch;gap:10px }\n.bsh-sheet__footer.is-mix&gt;.ds-btn { flex:none }\n.bsh-sheet__footer-row { display:flex;gap:6px;width:100% }\n.bsh-sheet__footer-row .ds-btn { flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis }\n.bsh-sheet__footer.is-mix&gt;a.ds-btn { align-self:center;flex:none }\n.bsh-ref__header .bsh-sheet__header { padding:10px 14px 0 }",
   "js": "function bshBuildSheetEl({backArrow, fullScreen, title, body, footerLayout, theme, onClose, onBack}){\n  const wrap = document.createElement('div');\n  wrap.className = 'bsh-sheet ' + (fullScreen ? 'bsh-sheet--full' : 'bsh-sheet--compact');\n\n  const handle = document.createElement('div');\n  handle.className = 'bsh-sheet__handle';\n  wrap.appendChild(handle);\n\n  const header = document.createElement('div');\n  header.className = 'bsh-sheet__header';\n  if(backArrow){\n    const b = document.createElement('button');\n    b.type = 'button'; b.className = 'bsh-sheet__back'; b.setAttribute('aria-label','Back');\n    b.innerHTML = bshIconBack(18,'currentColor');\n    b.onclick = onBack || onClose || null;\n    header.appendChild(b);\n  }\n  const t = document.createElement('span');\n  t.className = 'bsh-sheet__title';\n  t.textContent = title || 'Header title here';\n  header.appendChild(t);\n  const x = document.createElement('button');\n  x.type = 'button'; x.className = 'bsh-sheet__close'; x.setAttribute('aria-label','Close');\n  x.innerHTML = bshIconClose(16,'currentColor');\n  x.onclick = onClose || null;\n  header.appendChild(x);\n  wrap.appendChild(header);\n\n  const bodyEl = document.createElement('div');\n  bodyEl.className = 'bsh-sheet__body';\n  const ph = document.createElement('div');\n  ph.className = 'bsh-sheet__placeholder';\n  ph.textContent = body || 'Content goes here';\n  bodyEl.appendChild(ph);\n  wrap.appendChild(bodyEl);\n\n  wrap.appendChild(bshBuildFooter(footerLayout || 'horizontal', theme));\n  return wrap;\n}\n\nfunction bshBuildFooter(layout, theme){\n  const footer = document.createElement('div');\n  footer.className = 'bsh-sheet__footer' + (layout==='vertical' ? ' is-vertical' : layout==='mix' ? ' is-mix' : '');\n  if(layout==='vertical'){\n    footer.appendChild(makeBtnEl('flash', theme, 'primary', 'reg', false, 'Confirm'));\n    footer.appendChild(makeBtnEl('flash', theme, 'secondary', 'reg', false, 'Cancel'));\n  } else if(layout==='mix'){\n    footer.appendChild(makeBtnEl('flash', theme, 'primary', 'reg', false, 'Confirm'));\n    const row = document.createElement('div');\n    row.className = 'bsh-sheet__footer-row';\n    row.appendChild(makeBtnEl('flash', theme, 'secondary', 'reg', false, 'Save for later'));\n    row.appendChild(makeBtnEl('flash', theme, 'secondary', 'reg', false, 'Cancel'));\n    footer.appendChild(row);\n    footer.appendChild(makeBtnEl('flash', theme, 'link', 'reg', false, 'Learn more'));\n  } else {\n    footer.appendChild(makeBtnEl('flash', theme, 'secondary', 'reg', false, 'Cancel'));\n    footer.appendChild(makeBtnEl('flash', theme, 'primary', 'reg', false, 'Confirm'));\n  }\n  return footer;\n}\n\nfunction bshIconClose(size, color){\n  return `&lt;svg width=\"${size}\" height=\"${size}\" viewBox=\"0 0 24 24\" fill=\"none\"&gt;&lt;path d=\"M6 6l12 12M18 6L6 18\" stroke=\"${color}\" stroke-width=\"2.4\" stroke-linecap=\"round\"/&gt;&lt;/svg&gt;`;\n}\n\nfunction bshIconBack(size, color){\n  return `&lt;svg width=\"${size}\" height=\"${size}\" viewBox=\"0 0 24 24\" fill=\"none\"&gt;&lt;path d=\"M15 5l-7 7 7 7\" stroke=\"${color}\" stroke-width=\"2.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/&gt;&lt;/svg&gt;`;\n}\n\nconst BSH_FOOTER_LAYOUTS = [\n  {key:'horizontal', label:'Horizontal'},\n  {key:'vertical',   label:'Vertical'},\n  {key:'mix',        label:'Mix'},\n];",
   "usage": {
     "do": [
@@ -4970,7 +5341,7 @@ body.home .main{max-width:none;margin:0;padding:0}
       "Don’t bury the primary action below the fold on a full screen sheet — keep the footer pinned."
     ]
   },
-  "contentHash": "d3383c823c76c0d841df7caf1a929c3fd65872a140bdb54962bbdabf39d9145d",
+  "contentHash": "891b05545118f21303709bce3a3c5fa9f36ca0f2a64b4a5eb9eefdfce2950f1b",
   "note": "bshBuildFooter's action buttons reuse makeBtnEl from the Buttons component (see that section's own AI context tab) — not duplicated here. bshBuildHeaderOnlyEl/BSH_HEADER_VARIANTS/.bsh-ref__header power a separate, isolated SheetHeader-only reference grid used by the Style tab's size demo, and bshBuildPhone/.bsh-phone* is a doc-site phone-mockup frame — neither is part of the real reusable sheet, excluded."
 }
   </pre>
@@ -5331,7 +5702,7 @@ body.home .main{max-width:none;margin:0;padding:0}
       <div class="sec__head">
         <h1 class="sec__title">Dropdown</h1>
         <div class="sec-header-meta">
-          <span class="comp-ver-badge" style="margin-left:0">v1.4.0</span>
+          <span class="comp-ver-badge" style="margin-left:0">v1.4.2</span>
           <details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-dropdown">
@@ -5373,7 +5744,7 @@ body.home .main{max-width:none;margin:0;padding:0}
     ".dpd-search",
     ".pop__apply"
   ],
-  "css": "/* ================================================================\n   DROPDOWN\n================================================================ */\n.dpd-field { display:flex;flex-direction:column;gap:4px;width:267px;font-family:inherit }\n.dpd-label { font-size:14px;font-weight:600;color:var(--color-text-1);padding-bottom:2px }\n.dpd-wrap { position:relative }\n.dpd-trigger { display:flex;align-items:center;justify-content:space-between;gap:8px;width:100%;height:48px;padding:0 12px;border-radius:6px;border:2px solid var(--color-input-border);background:var(--color-input-bg);cursor:pointer;font-family:inherit;text-align:left;transition:border-color .15s,background-color .15s }\n.dpd-trigger__text { flex:1 1 auto;min-width:0;font-size:16px;font-weight:600;color:var(--color-text-s);overflow:hidden;text-overflow:ellipsis;white-space:nowrap }\n.dpd-trigger.has-value .dpd-trigger__text { color:var(--color-text-1) }\n.dpd-trigger__chevron { flex-shrink:0;width:12px;height:12px;display:flex;align-items:center;justify-content:center;color:var(--color-text-1);transition:transform .18s ease }\n.dpd-trigger__chevron svg { width:100%;height:100% }\n.dpd-caption { font-size:12px;color:var(--color-text-3) }\n/* hover */\n.dpd-trigger:hover,.dpd-trigger--hover { background:var(--color-surface-n1) }\n/* keyboard focus / open — border switches to the inverse (black in light, white in dark) */\n.dpd-trigger:focus-visible,.dpd-trigger--focus,.dpd-trigger--open { outline:none;border-color:var(--color-input-focus);background:var(--color-surface-base) }\n.dpd-wrap.is-open .dpd-trigger__chevron,.dpd-trigger--open .dpd-trigger__chevron { transform:rotate(180deg) }\n/* Rounded style — pill trigger, border hidden until hover/focus/open */\n.dpd-field--rounded .dpd-trigger { border-radius:999px;border-color:var(--color-input-bg) }\n.dpd-field--rounded .dpd-trigger:hover,.dpd-field--rounded .dpd-trigger--hover { border-color:var(--color-surface-n1) }\n.dpd-field--rounded .dpd-trigger:focus-visible,.dpd-field--rounded .dpd-trigger--focus,.dpd-field--rounded .dpd-trigger--open { border-color:var(--color-input-focus) }\n/* Small size */\n.dpd-field--sm .dpd-trigger { height:40px;padding:0 10px;gap:6px }\n.dpd-field--sm .dpd-trigger__text { font-size:14px }\n.dpd-field--sm .dpd-trigger__chevron { width:10px;height:10px }\n.dpd-field--sm .dpd-label { font-size:13px }\n.dpd-field--sm .dpd-caption { font-size:11px }\n/* Menu card — attaches under the trigger, real instances float; static swatches lay out inline */\n.dpd-menu { position:absolute;left:0;right:0;top:calc(100% + 6px);z-index:20;max-height:280px;overflow-y:auto;display:flex;flex-direction:column;gap:2px;padding:4px;border-radius:12px;border:1px solid var(--chrome-border);background:var(--color-surface-base);box-shadow:0 8px 24px rgba(0,0,0,.14) }\n.dpd-menu[hidden] { display:none }\n.dpd-menu--inline { position:static;top:auto;margin-top:6px;box-shadow:0 1px 2px rgba(0,0,0,.1) }\n.dpd-search { display:flex;align-items:center;gap:8px;padding:9px 12px;margin-bottom:2px;border-radius:999px;background:var(--color-surface-n1);color:var(--color-text-3);flex-shrink:0 }\n.dpd-search svg { width:14px;height:14px;flex-shrink:0 }\n.dpd-search input { flex:1;min-width:0;border:none;background:none;outline:none;font-family:inherit;font-size:13px;color:var(--color-text-1) }\n.dpd-item { display:flex;align-items:center;gap:8px;min-height:44px;padding:8px 10px;border-radius:6px;cursor:pointer;border:none;background:none;width:100%;text-align:left;font-family:inherit;flex-shrink:0 }\n.dpd-item:hover,.dpd-item--hover { background:var(--color-surface-n1) }\n.dpd-item__box { flex-shrink:0;width:18px;height:18px;border-radius:5px;border:2px solid var(--chrome-muted);background-color:var(--color-surface-base);background-repeat:no-repeat;background-position:center;background-size:70%;transition:background-color .15s,border-color .15s }\n.dpd-item__label { flex:1 1 auto;min-width:0;font-size:15px;font-weight:500;color:var(--color-text-1);overflow:hidden;text-overflow:ellipsis;white-space:nowrap }\n.dpd-item.is-selected,.dpd-item--selected { background:var(--color-success-l) }\n.dpd-item.is-selected .dpd-item__box,.dpd-item--selected .dpd-item__box { background-color:var(--color-success-h);border-color:var(--color-success-h);background-image:url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='none' stroke='%23fff' stroke-width='2.3' stroke-linecap='round' stroke-linejoin='round' d='M3.5 8.4l3 3 6-6.6'/%3E%3C/svg%3E\") }\n.dpd-item.is-selected .dpd-item__label,.dpd-item--selected .dpd-item__label { font-weight:700 }\n.dpd-item__check { margin-left:auto;flex-shrink:0;width:16px;height:16px;color:var(--color-success-h);opacity:0;transition:opacity .1s }\n.dpd-item__check svg { display:block;width:100%;height:100% }\n.dpd-item.is-selected .dpd-item__check,.dpd-item--selected .dpd-item__check { opacity:1 }\n.dpd-menu__foot { display:flex;gap:8px;padding:8px 6px 4px;margin-top:2px;border-top:1px solid var(--chrome-border);flex-shrink:0 }\n.dpd-menu__clear { flex:1;background:none;border:1px solid var(--chrome-border);color:var(--chrome-txt);border-radius:8px;padding:8px;font-size:12.5px;font-weight:700;font-family:inherit;cursor:pointer }\n.dpd-menu__clear:hover { background:var(--chrome-hover) }\n.pop__apply { flex:1;background:var(--color-btn-s-bg);color:var(--color-btn-s-txt);border:0;border-radius:8px;padding:8px;font-size:12.5px;font-weight:700;font-family:inherit;cursor:pointer }",
+  "css": "/* ================================================================\n   DROPDOWN\n================================================================ */\n.dpd-field { display:flex;flex-direction:column;gap:4px;width:267px;font-family:inherit }\n.dpd-label { font-size:14px;font-weight:600;color:var(--color-text-1);padding-bottom:2px }\n.dpd-wrap { position:relative }\n.dpd-trigger { display:flex;align-items:center;justify-content:space-between;gap:8px;width:100%;height:48px;padding:0 12px;border-radius:6px;border:2px solid var(--color-input-border);background:var(--color-input-bg);cursor:pointer;font-family:inherit;text-align:left;transition:border-color .15s,background-color .15s }\n.dpd-trigger__text { flex:1 1 auto;min-width:0;font-size:16px;font-weight:600;color:var(--color-text-s);overflow:hidden;text-overflow:ellipsis;white-space:nowrap }\n.dpd-trigger.has-value .dpd-trigger__text { color:var(--color-text-1) }\n.dpd-trigger__chevron { flex-shrink:0;width:12px;height:12px;display:flex;align-items:center;justify-content:center;color:var(--color-text-1);transition:transform .18s ease }\n.dpd-trigger__chevron svg { width:100%;height:100% }\n.dpd-caption { font-size:12px;color:var(--color-text-3) }\n/* hover */\n.dpd-trigger:hover,.dpd-trigger--hover { background:var(--color-surface-n1) }\n/* keyboard focus / open — border switches to the inverse (black in light, white in dark) */\n.dpd-trigger:focus-visible,.dpd-trigger--focus,.dpd-trigger--open { outline:none;border-color:var(--color-input-focus);background:var(--color-surface-base) }\n.dpd-wrap.is-open .dpd-trigger__chevron,.dpd-trigger--open .dpd-trigger__chevron { transform:rotate(180deg) }\n/* Rounded style — pill trigger, border hidden until hover/focus/open */\n.dpd-field--rounded .dpd-trigger { border-radius:999px;border-color:var(--color-input-bg) }\n.dpd-field--rounded .dpd-trigger:hover,.dpd-field--rounded .dpd-trigger--hover { border-color:var(--color-surface-n1) }\n.dpd-field--rounded .dpd-trigger:focus-visible,.dpd-field--rounded .dpd-trigger--focus,.dpd-field--rounded .dpd-trigger--open { border-color:var(--color-input-focus) }\n/* Small size */\n.dpd-field--sm .dpd-trigger { height:40px;padding:0 10px;gap:6px }\n.dpd-field--sm .dpd-trigger__text { font-size:14px }\n.dpd-field--sm .dpd-trigger__chevron { width:10px;height:10px }\n.dpd-field--sm .dpd-label { font-size:13px }\n.dpd-field--sm .dpd-caption { font-size:11px }\n/* Menu card — attaches under the trigger, real instances float; static swatches lay out inline */\n.dpd-menu { position:absolute;left:0;right:0;top:calc(100% + 6px);z-index:20;max-height:280px;overflow-y:auto;display:flex;flex-direction:column;gap:2px;padding:4px;border-radius:12px;border:1px solid var(--chrome-border);background:var(--color-surface-base);box-shadow:0 4px 24px 0 rgba(0,0,0,.16) }\n.dpd-menu[hidden] { display:none }\n.dpd-menu--inline { position:static;top:auto;margin-top:6px;box-shadow:0 1px 2px rgba(0,0,0,.1) }\n.dpd-search { display:flex;align-items:center;gap:8px;padding:9px 12px;margin-bottom:2px;border-radius:999px;background:var(--color-surface-n1);color:var(--color-text-3);flex-shrink:0 }\n.dpd-search svg { width:14px;height:14px;flex-shrink:0 }\n.dpd-search input { flex:1;min-width:0;border:none;background:none;outline:none;font-family:inherit;font-size:13px;color:var(--color-text-1) }\n.dpd-item { display:flex;align-items:center;gap:8px;min-height:44px;padding:8px 10px;border-radius:6px;cursor:pointer;border:none;background:none;width:100%;text-align:left;font-family:inherit;flex-shrink:0 }\n.dpd-item:hover,.dpd-item--hover { background:var(--color-surface-n1) }\n.dpd-item__box { flex-shrink:0;width:18px;height:18px;border-radius:5px;border:2px solid var(--chrome-muted);background-color:var(--color-surface-base);background-repeat:no-repeat;background-position:center;background-size:70%;transition:background-color .15s,border-color .15s }\n.dpd-item__label { flex:1 1 auto;min-width:0;font-size:15px;font-weight:500;color:var(--color-text-1);overflow:hidden;text-overflow:ellipsis;white-space:nowrap }\n.dpd-item.is-selected,.dpd-item--selected { background:var(--color-success-l) }\n.dpd-item.is-selected .dpd-item__box,.dpd-item--selected .dpd-item__box { background-color:var(--color-success-h);border-color:var(--color-success-h);background-image:url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='none' stroke='%23fff' stroke-width='2.3' stroke-linecap='round' stroke-linejoin='round' d='M3.5 8.4l3 3 6-6.6'/%3E%3C/svg%3E\") }\n.dpd-item.is-selected .dpd-item__label,.dpd-item--selected .dpd-item__label { font-weight:700 }\n.dpd-item__check { margin-left:auto;flex-shrink:0;width:16px;height:16px;color:var(--color-success-h);opacity:0;transition:opacity .1s }\n.dpd-item__check svg { display:block;width:100%;height:100% }\n.dpd-item.is-selected .dpd-item__check,.dpd-item--selected .dpd-item__check { opacity:1 }\n.dpd-menu__foot { display:flex;gap:8px;padding:8px 6px 4px;margin-top:2px;border-top:1px solid var(--chrome-border);flex-shrink:0 }\n.dpd-menu__clear { flex:1;background:none;border:1px solid var(--chrome-border);color:var(--chrome-txt);border-radius:8px;padding:8px;font-size:12.5px;font-weight:700;font-family:inherit;cursor:pointer }\n.dpd-menu__clear:hover { background:var(--chrome-hover) }\n.pop__apply { flex:1;background:var(--color-btn-s-bg);color:var(--color-btn-s-txt);border:0;border-radius:8px;padding:8px;font-size:12.5px;font-weight:700;font-family:inherit;cursor:pointer }",
   "js": "function itemHtml(label, selected){\n  return '&lt;button type=\"button\" class=\"dpd-item' + (selected ? ' is-selected' : '') + '\"&gt;' +\n    '&lt;span class=\"dpd-item__label\"&gt;' + label + '&lt;/span&gt;' +\n    '&lt;span class=\"dpd-item__check\"&gt;' + CHECK_ICON + '&lt;/span&gt;' +\n  '&lt;/button&gt;';\n}\n\nfunction itemHtmlCheckbox(label, selected){\n  return '&lt;button type=\"button\" class=\"dpd-item' + (selected ? ' is-selected' : '') + '\"&gt;' +\n    '&lt;span class=\"dpd-item__box\"&gt;&lt;/span&gt;' +\n    '&lt;span class=\"dpd-item__label\"&gt;' + label + '&lt;/span&gt;' +\n  '&lt;/button&gt;';\n}\n\nfunction menuHtml(options, selectedIndex, opts){\n  opts = opts || {};\n  var search = opts.showSearch ? ('&lt;div class=\"dpd-search\"&gt;' + SEARCH_ICON + '&lt;input type=\"text\" placeholder=\"Search\" aria-label=\"Search options\"&gt;&lt;/div&gt;') : '';\n  var items = options.map(function(o, i){ return itemHtml(o, i === selectedIndex); }).join('');\n  return '&lt;div class=\"dpd-menu' + (opts.inline ? ' dpd-menu--inline' : '') + '\"' + (opts.inline ? '' : ' hidden') + '&gt;' + search + items + '&lt;/div&gt;';\n}\n\nfunction triggerHtml(opts){\n  var cls = 'dpd-trigger';\n  if(opts.state === 'hover') cls += ' dpd-trigger--hover';\n  if(opts.state === 'focus') cls += ' dpd-trigger--focus';\n  if(opts.state === 'open')  cls += ' dpd-trigger--open';\n  var hasValue = opts.selectedIndex != null;\n  if(hasValue) cls += ' has-value';\n  var text = hasValue ? opts.options[opts.selectedIndex] : (opts.placeholder || 'Choose an option');\n  return '&lt;button type=\"button\" class=\"' + cls + '\"&gt;&lt;span class=\"dpd-trigger__text\"&gt;' + text + '&lt;/span&gt;&lt;span class=\"dpd-trigger__chevron\"&gt;' + CHEVRON + '&lt;/span&gt;&lt;/button&gt;';\n}\n\nfunction fieldHtml(opts){\n  opts = opts || {};\n  var options = opts.options || OPTIONS;\n  var cls = 'dpd-field';\n  if(opts.style === 'rounded') cls += ' dpd-field--rounded';\n  if(opts.size === 'sm') cls += ' dpd-field--sm';\n  var label   = opts.showLabel   === false ? '' : '&lt;div class=\"dpd-label\"&gt;' + (opts.label || 'Dropdown label') + '&lt;/div&gt;';\n  var caption = opts.showCaption === false ? '' : '&lt;div class=\"dpd-caption\"&gt;' + (opts.caption || 'Assistive caption') + '&lt;/div&gt;';\n  var menu = opts.state === 'open' ? menuHtml(options, opts.selectedIndex, {showSearch: opts.showSearch, inline: true}) : '';\n  return '&lt;div class=\"' + cls + '\"&gt;' + label +\n    '&lt;div class=\"dpd-wrap' + (opts.state === 'open' ? ' is-open' : '') + '\"&gt;' + triggerHtml(Object.assign({}, opts, {options: options})) + menu + '&lt;/div&gt;' +\n    caption +\n  '&lt;/div&gt;';\n}\n\nfunction interactiveFieldHtml(opts){\n  var labelInside = opts.labelPosition === 'inside';\n  var cls = 'dpd-field' + (opts.style === 'rounded' ? ' dpd-field--rounded' : '') + (opts.size === 'sm' ? ' dpd-field--sm' : '');\n  var label = labelInside ? '' : '&lt;div class=\"dpd-label\"&gt;' + (opts.label || 'Dropdown label') + '&lt;/div&gt;';\n  var caption = '&lt;div class=\"dpd-caption\"&gt;' + (opts.caption || 'Assistive caption') + '&lt;/div&gt;';\n  var menu = menuHtml(opts.options, null, {showSearch: opts.showSearch, inline: false});\n  return '&lt;div class=\"' + cls + '\"&gt;' + label +\n    '&lt;div class=\"dpd-wrap\"&gt;' + triggerHtml({options: opts.options, placeholder: opts.placeholder}) + menu + '&lt;/div&gt;' +\n    caption +\n  '&lt;/div&gt;';\n}\n\nfunction wireInteractive(root){\n  var wrap = root.querySelector('.dpd-wrap');\n  var trigger = wrap.querySelector('.dpd-trigger');\n  var menu = wrap.querySelector('.dpd-menu');\n  var textEl = trigger.querySelector('.dpd-trigger__text');\n  function close(){\n    wrap.classList.remove('is-open');\n    trigger.classList.remove('dpd-trigger--open');\n    menu.setAttribute('hidden', '');\n  }\n  function openMenu(){\n    wrap.classList.add('is-open');\n    trigger.classList.add('dpd-trigger--open');\n    menu.removeAttribute('hidden');\n    var search = menu.querySelector('input');\n    if(search) search.focus();\n  }\n  trigger.addEventListener('click', function(e){\n    e.stopPropagation();\n    if(wrap.classList.contains('is-open')) close(); else openMenu();\n  });\n  menu.querySelectorAll('.dpd-item').forEach(function(btn){\n    btn.addEventListener('click', function(e){\n      e.stopPropagation();\n      menu.querySelectorAll('.dpd-item').forEach(function(b){ b.classList.remove('is-selected'); });\n      btn.classList.add('is-selected');\n      textEl.textContent = btn.querySelector('.dpd-item__label').textContent;\n      trigger.classList.add('has-value');\n      close();\n    });\n  });\n  var search = menu.querySelector('input');\n  if(search){\n    search.addEventListener('click', function(e){ e.stopPropagation(); });\n    search.addEventListener('input', function(){\n      var q = search.value.trim().toLowerCase();\n      menu.querySelectorAll('.dpd-item').forEach(function(btn){\n        var txt = btn.querySelector('.dpd-item__label').textContent.toLowerCase();\n        btn.style.display = txt.indexOf(q) &gt; -1 ? '' : 'none';\n      });\n    });\n  }\n  document.addEventListener('click', function(e){\n    if(!wrap.contains(e.target)) close();\n  });\n  document.addEventListener('keydown', function(e){\n    if(e.key === 'Escape' &amp;&amp; wrap.classList.contains('is-open')) close();\n  });\n}\n\nfunction interactiveMultiFieldHtml(opts){\n  var labelInside = opts.labelPosition === 'inside';\n  var cls = 'dpd-field' + (opts.style === 'rounded' ? ' dpd-field--rounded' : '') + (opts.size === 'sm' ? ' dpd-field--sm' : '');\n  var label = labelInside ? '' : '&lt;div class=\"dpd-label\"&gt;' + (opts.label || 'Dropdown label') + '&lt;/div&gt;';\n  var caption = '&lt;div class=\"dpd-caption\"&gt;' + (opts.caption || 'Assistive caption') + '&lt;/div&gt;';\n  var items = opts.options.map(function(o){ return itemHtmlCheckbox(o, false); }).join('');\n  var search = opts.showSearch ? ('&lt;div class=\"dpd-search\"&gt;' + SEARCH_ICON + '&lt;input type=\"text\" placeholder=\"Search\" aria-label=\"Search options\"&gt;&lt;/div&gt;') : '';\n  var foot = '&lt;div class=\"dpd-menu__foot\"&gt;&lt;button type=\"button\" class=\"dpd-menu__clear\"&gt;Clear&lt;/button&gt;&lt;button type=\"button\" class=\"pop__apply\"&gt;Done&lt;/button&gt;&lt;/div&gt;';\n  var menu = '&lt;div class=\"dpd-menu\" hidden&gt;' + search + items + foot + '&lt;/div&gt;';\n  return '&lt;div class=\"' + cls + '\"&gt;' + label +\n    '&lt;div class=\"dpd-wrap\"&gt;' + triggerHtml({options: opts.options, placeholder: opts.placeholder}) + menu + '&lt;/div&gt;' +\n    caption +\n  '&lt;/div&gt;';\n}\n\nfunction wireInteractiveMulti(root, opts){\n  var wrap = root.querySelector('.dpd-wrap');\n  var trigger = wrap.querySelector('.dpd-trigger');\n  var menu = wrap.querySelector('.dpd-menu');\n  var textEl = trigger.querySelector('.dpd-trigger__text');\n  var options = opts.options;\n  var selected = new Set();\n  function close(){\n    wrap.classList.remove('is-open');\n    trigger.classList.remove('dpd-trigger--open');\n    menu.setAttribute('hidden', '');\n  }\n  function openMenu(){\n    wrap.classList.add('is-open');\n    trigger.classList.add('dpd-trigger--open');\n    menu.removeAttribute('hidden');\n    var search = menu.querySelector('input');\n    if(search) search.focus();\n  }\n  function updateTrigger(){\n    if(selected.size === 0){\n      textEl.textContent = opts.placeholder || 'Choose an option';\n      trigger.classList.remove('has-value');\n    } else if(selected.size === 1){\n      textEl.textContent = options[selected.values().next().value];\n      trigger.classList.add('has-value');\n    } else {\n      textEl.textContent = selected.size + ' selected';\n      trigger.classList.add('has-value');\n    }\n  }\n  trigger.addEventListener('click', function(e){\n    e.stopPropagation();\n    if(wrap.classList.contains('is-open')) close(); else openMenu();\n  });\n  var itemEls = Array.prototype.slice.call(menu.querySelectorAll('.dpd-item'));\n  itemEls.forEach(function(btn, i){\n    btn.addEventListener('click', function(e){\n      e.stopPropagation();\n      if(selected.has(i)){ selected.delete(i); btn.classList.remove('is-selected'); }\n      else { selected.add(i); btn.classList.add('is-selected'); }\n      updateTrigger();\n    });\n  });\n  var clearBtn = menu.querySelector('.dpd-menu__clear');\n  if(clearBtn) clearBtn.addEventListener('click', function(e){\n    e.stopPropagation();\n    selected.clear();\n    itemEls.forEach(function(b){ b.classList.remove('is-selected'); });\n    updateTrigger();\n  });\n  var doneBtn = menu.querySelector('.pop__apply');\n  if(doneBtn) doneBtn.addEventListener('click', function(e){ e.stopPropagation(); close(); });\n  var search = menu.querySelector('.dpd-search input');\n  if(search){\n    search.addEventListener('click', function(e){ e.stopPropagation(); });\n    search.addEventListener('input', function(){\n      var q = search.value.trim().toLowerCase();\n      itemEls.forEach(function(btn){\n        var txt = btn.querySelector('.dpd-item__label').textContent.toLowerCase();\n        btn.style.display = txt.indexOf(q) &gt; -1 ? '' : 'none';\n      });\n    });\n  }\n  document.addEventListener('click', function(e){\n    if(!wrap.contains(e.target)) close();\n  });\n  document.addEventListener('keydown', function(e){\n    if(e.key === 'Escape' &amp;&amp; wrap.classList.contains('is-open')) close();\n  });\n  updateTrigger();\n}\n\nvar CHEVRON = '&lt;svg viewBox=\"0 0 12 8\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"&gt;&lt;path d=\"M1 1.5L6 6.5L11 1.5\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/&gt;&lt;/svg&gt;';\n\nvar SEARCH_ICON = '&lt;svg viewBox=\"0 0 16 16\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"&gt;&lt;circle cx=\"7\" cy=\"7\" r=\"5\" stroke=\"currentColor\" stroke-width=\"1.6\"/&gt;&lt;path d=\"M11.5 11.5L15 15\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\"/&gt;&lt;/svg&gt;';\n\nvar CHECK_ICON = '&lt;svg viewBox=\"0 0 16 16\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"&gt;&lt;path d=\"M3 8.5L6.5 12L13 4.5\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/&gt;&lt;/svg&gt;';\n\nvar OPTIONS = ['Airtime &amp; Data','Electricity','Bill Payments','Vouchers','Gaming','Insurance','Lottery','Data Bundles'];",
   "usage": {
     "do": [
@@ -5392,7 +5763,7 @@ body.home .main{max-width:none;margin:0;padding:0}
       "Don’t rely on the placeholder colour alone to signal “required” — pair it with real validation."
     ]
   },
-  "contentHash": "eddb07a2671b65ee45ccb218328023394558eb36e2cc4edbc65652c25e3afb42",
+  "contentHash": "312b79d43d1134fbbc3a361e2822f30ebbc91bd1236672286641b1bcfb410f6b",
   "note": "Canonical builders (itemHtml/itemHtmlCheckbox/menuHtml/triggerHtml/fieldHtml/interactiveFieldHtml/wireInteractive/interactiveMultiFieldHtml/wireInteractiveMulti) are shared by the interactive Overview playground and the static Style-tab specimens. interactiveFieldHtml/interactiveMultiFieldHtml accept opts.labelPosition:'inside' (drops the outer .dpd-label, caller-resolved placeholder stands in for it) or 'outside' (default) — exposed via the playground's Label position control; fieldHtml (Style-tab specimens) is untouched and always renders the outside label. ddpg (playground state)/getDdCode*/render*/DD_* option lists are doc-site-only plumbing, excluded."
 }
   </pre>
@@ -5967,7 +6338,7 @@ body.home .main{max-width:none;margin:0;padding:0}
     <section class="sec" id="s-tooltip">
       <div class="sec__head">
         <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Tooltip <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.1</span></h1>
+        <h1 class="sec__title">Tooltip <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.2</span></h1>
         <p class="sec__desc">A small floating label that explains an element on hover or keyboard focus. Pure CSS &mdash; it appears on <code>:hover</code> and <code>:focus-within</code>, so keyboard users get it too. Reserve it for short, non-essential hints.</p>
       </div>
       <div class="type-sub">
@@ -6025,7 +6396,7 @@ body.home .main{max-width:none;margin:0;padding:0}
     ".tip__bubble--left",
     ".tip__trigger"
   ],
-  "css": "/* ---- Tooltip ---- */\n.tip { position:relative;display:inline-flex }\n.tip__bubble { position:absolute;z-index:30;padding:6px 10px;border-radius:8px;background:var(--color-surface-inverse);color:var(--color-text-inv);font-size:12px;font-weight:500;line-height:1.4;white-space:nowrap;pointer-events:none;opacity:0;transition:opacity .15s ease,transform .15s ease;box-shadow:0 6px 18px rgba(0,0,0,.18) }\n.tip__bubble::after { content:\"\";position:absolute;width:8px;height:8px;background:var(--color-surface-inverse);transform:rotate(45deg) }\n.tip:hover .tip__bubble,.tip:focus-within .tip__bubble { opacity:1 }\n.tip__bubble--top { bottom:calc(100% + 9px);left:50%;transform:translate(-50%,4px) }\n.tip:hover .tip__bubble--top,.tip:focus-within .tip__bubble--top { transform:translate(-50%,0) }\n.tip__bubble--top::after { bottom:-4px;left:50%;margin-left:-4px }\n.tip__bubble--bottom { top:calc(100% + 9px);left:50%;transform:translate(-50%,-4px) }\n.tip:hover .tip__bubble--bottom,.tip:focus-within .tip__bubble--bottom { transform:translate(-50%,0) }\n.tip__bubble--bottom::after { top:-4px;left:50%;margin-left:-4px }\n.tip__bubble--right { left:calc(100% + 9px);top:50%;transform:translate(-4px,-50%) }\n.tip:hover .tip__bubble--right,.tip:focus-within .tip__bubble--right { transform:translate(0,-50%) }\n.tip__bubble--right::after { left:-4px;top:50%;margin-top:-4px }\n.tip__bubble--left { right:calc(100% + 9px);top:50%;transform:translate(4px,-50%) }\n.tip:hover .tip__bubble--left,.tip:focus-within .tip__bubble--left { transform:translate(0,-50%) }\n.tip__bubble--left::after { right:-4px;top:50%;margin-top:-4px }\n.tip__trigger { cursor:default }",
+  "css": "/* ---- Tooltip ---- */\n.tip { position:relative;display:inline-flex }\n.tip__bubble { position:absolute;z-index:30;padding:6px 10px;border-radius:8px;background:var(--color-surface-inverse);color:var(--color-text-inv);font-size:12px;font-weight:500;line-height:1.4;white-space:nowrap;pointer-events:none;opacity:0;transition:opacity .15s ease,transform .15s ease;box-shadow:0 2px 12px 0 rgba(0,0,0,.16) }\n.tip__bubble::after { content:\"\";position:absolute;width:8px;height:8px;background:var(--color-surface-inverse);transform:rotate(45deg) }\n.tip:hover .tip__bubble,.tip:focus-within .tip__bubble { opacity:1 }\n.tip__bubble--top { bottom:calc(100% + 9px);left:50%;transform:translate(-50%,4px) }\n.tip:hover .tip__bubble--top,.tip:focus-within .tip__bubble--top { transform:translate(-50%,0) }\n.tip__bubble--top::after { bottom:-4px;left:50%;margin-left:-4px }\n.tip__bubble--bottom { top:calc(100% + 9px);left:50%;transform:translate(-50%,-4px) }\n.tip:hover .tip__bubble--bottom,.tip:focus-within .tip__bubble--bottom { transform:translate(-50%,0) }\n.tip__bubble--bottom::after { top:-4px;left:50%;margin-left:-4px }\n.tip__bubble--right { left:calc(100% + 9px);top:50%;transform:translate(-4px,-50%) }\n.tip:hover .tip__bubble--right,.tip:focus-within .tip__bubble--right { transform:translate(0,-50%) }\n.tip__bubble--right::after { left:-4px;top:50%;margin-top:-4px }\n.tip__bubble--left { right:calc(100% + 9px);top:50%;transform:translate(4px,-50%) }\n.tip:hover .tip__bubble--left,.tip:focus-within .tip__bubble--left { transform:translate(0,-50%) }\n.tip__bubble--left::after { right:-4px;top:50%;margin-top:-4px }\n.tip__trigger { cursor:default }",
   "usage": {
     "do": [
       "Label icon-only buttons and clarify terse controls.",
@@ -6038,7 +6409,7 @@ body.home .main{max-width:none;margin:0;padding:0}
       "Don’t depend on hover alone on touch devices, where it never fires."
     ]
   },
-  "contentHash": "ccd73883dbf351c0d2e5a719d1e7ec86ad0271768fbb9439ad227421180b818f"
+  "contentHash": "456344c70bddff61a742d96f463307ee5723e35e28bf0c1560562ac9d060fce5"
 }
   </pre>
 </details>
@@ -7019,7 +7390,7 @@ body.home .main{max-width:none;margin:0;padding:0}
       <div class="sec__head">
         <h1 class="sec__title">Popover</h1>
         <div class="sec-header-meta">
-          <span class="comp-ver-badge" style="margin-left:0">v2.0.9</span>
+          <span class="comp-ver-badge" style="margin-left:0">v2.0.10</span>
           <details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-popover">
@@ -7044,7 +7415,7 @@ body.home .main{max-width:none;margin:0;padding:0}
     ".pop__cancel",
     ".pop__input"
   ],
-  "css": "/* ---- Popover ---- */\n.pop { position:relative;display:inline-block }\n.pop__panel { position:absolute;top:calc(100% + 8px);left:0;z-index:40;min-width:244px;background:var(--chrome-bg);border:1px solid var(--chrome-border);border-radius:12px;box-shadow:0 14px 36px rgba(0,0,0,.18);padding:16px;opacity:0;transform:translateY(-6px);pointer-events:none;transition:opacity .15s ease,transform .15s ease }\n.pop__panel--right { left:auto;right:0 }\n.pop.is-open .pop__panel { opacity:1;transform:translateY(0);pointer-events:auto }\n.pop__title { font-size:13px;font-weight:700;color:var(--chrome-txt);margin-bottom:5px }\n.pop__desc { font-size:12.5px;color:var(--chrome-muted);line-height:1.5 }\n.pop__row { display:flex;align-items:center;justify-content:space-between;gap:12px;padding:7px 0;font-size:13px;color:var(--chrome-txt) }\n.pop__foot { display:flex;gap:8px;margin-top:12px;padding-top:12px;border-top:1px solid var(--chrome-border) }\n.pop__apply { flex:1;background:var(--color-btn-s-bg);color:var(--color-btn-s-txt);border:0;border-radius:8px;padding:8px;font-size:12.5px;font-weight:700;font-family:inherit;cursor:pointer }\n.pop__cancel { flex:1;background:transparent;color:var(--chrome-txt);border:1px solid var(--chrome-border);border-radius:8px;padding:8px;font-size:12.5px;font-weight:700;font-family:inherit;cursor:pointer;transition:background .15s }\n.pop__cancel:hover { background:var(--chrome-hover) }\n.pop__input { width:100%;margin-top:2px;background:var(--chrome-bg);border:1px solid var(--chrome-border);border-radius:8px;padding:8px 10px;font-size:12.5px;font-family:inherit;color:var(--chrome-txt) }\n.pop__input:focus-visible { outline:2px solid var(--color-input-focus);outline-offset:1px }",
+  "css": "/* ---- Popover ---- */\n.pop { position:relative;display:inline-block }\n.pop__panel { position:absolute;top:calc(100% + 8px);left:0;z-index:40;min-width:244px;background:var(--chrome-bg);border:1px solid var(--chrome-border);border-radius:12px;box-shadow:0 4px 24px 0 rgba(0,0,0,.16);padding:16px;opacity:0;transform:translateY(-6px);pointer-events:none;transition:opacity .15s ease,transform .15s ease }\n.pop__panel--right { left:auto;right:0 }\n.pop.is-open .pop__panel { opacity:1;transform:translateY(0);pointer-events:auto }\n.pop__title { font-size:13px;font-weight:700;color:var(--chrome-txt);margin-bottom:5px }\n.pop__desc { font-size:12.5px;color:var(--chrome-muted);line-height:1.5 }\n.pop__row { display:flex;align-items:center;justify-content:space-between;gap:12px;padding:7px 0;font-size:13px;color:var(--chrome-txt) }\n.pop__foot { display:flex;gap:8px;margin-top:12px;padding-top:12px;border-top:1px solid var(--chrome-border) }\n.pop__apply { flex:1;background:var(--color-btn-s-bg);color:var(--color-btn-s-txt);border:0;border-radius:8px;padding:8px;font-size:12.5px;font-weight:700;font-family:inherit;cursor:pointer }\n.pop__cancel { flex:1;background:transparent;color:var(--chrome-txt);border:1px solid var(--chrome-border);border-radius:8px;padding:8px;font-size:12.5px;font-weight:700;font-family:inherit;cursor:pointer;transition:background .15s }\n.pop__cancel:hover { background:var(--chrome-hover) }\n.pop__input { width:100%;margin-top:2px;background:var(--chrome-bg);border:1px solid var(--chrome-border);border-radius:8px;padding:8px 10px;font-size:12.5px;font-family:inherit;color:var(--chrome-txt) }\n.pop__input:focus-visible { outline:2px solid var(--color-input-focus);outline-offset:1px }",
   "js": "const POP_CONTENT_TYPES = [\n  {key:'info',   label:'Info'},\n  {key:'filter', label:'Filter'},\n  {key:'form',   label:'Form'},\n];\n\nfunction popTriggerLabel(type){\n  return type==='info' ? 'i' : type==='form' ? 'Rename ▾' : 'Filter ▾';\n}\n\nfunction popPanelBody(type, footer){\n  if(type==='info'){\n    let body = `&lt;div class=\"pop__title\"&gt;About settlements&lt;/div&gt;&lt;div class=\"pop__desc\"&gt;Funds settle to your linked account on the next business day after a sale clears.&lt;/div&gt;`;\n    if(footer) body += `&lt;div class=\"pop__foot\"&gt;&lt;button class=\"pop__apply\" type=\"button\" data-pop-close&gt;Got it&lt;/button&gt;&lt;/div&gt;`;\n    return body;\n  }\n  if(type==='form'){\n    let body = `&lt;div class=\"pop__title\"&gt;Rename report&lt;/div&gt;&lt;input class=\"pop__input\" type=\"text\" value=\"Monthly settlements\"&gt;`;\n    if(footer) body += `&lt;div class=\"pop__foot\"&gt;&lt;button class=\"pop__cancel\" type=\"button\" data-pop-close&gt;Cancel&lt;/button&gt;&lt;button class=\"pop__apply\" type=\"button\" data-pop-close&gt;Save&lt;/button&gt;&lt;/div&gt;`;\n    return body;\n  }\n  let body = `&lt;div class=\"pop__title\"&gt;Filter transactions&lt;/div&gt;\n      &lt;div class=\"pop__row\"&gt;Show refunds &lt;label class=\"sw sw--sm\"&gt;&lt;input type=\"checkbox\" class=\"sw__input\" checked&gt;&lt;span class=\"sw__track\"&gt;&lt;span class=\"sw__thumb\"&gt;&lt;/span&gt;&lt;/span&gt;&lt;/label&gt;&lt;/div&gt;\n      &lt;div class=\"pop__row\"&gt;Only over R100 &lt;label class=\"sw sw--sm\"&gt;&lt;input type=\"checkbox\" class=\"sw__input\"&gt;&lt;span class=\"sw__track\"&gt;&lt;span class=\"sw__thumb\"&gt;&lt;/span&gt;&lt;/span&gt;&lt;/label&gt;&lt;/div&gt;`;\n  if(footer) body += `&lt;div class=\"pop__foot\"&gt;&lt;button class=\"pop__apply\" type=\"button\" data-pop-close&gt;Apply&lt;/button&gt;&lt;/div&gt;`;\n  return body;\n}\n\nfunction makePopoverHTML(type, placement, footer){\n  const trigCls = type==='info' ? 'sg-iconbtn' : 'sg-btn';\n  const trigAria = type==='info' ? ' aria-label=\"More information\"' : '';\n  const panelCls = 'pop__panel' + (placement==='right' ? ' pop__panel--right' : '');\n  return `&lt;div class=\"pop\"&gt;&lt;button class=\"${trigCls}\" type=\"button\" data-pop${trigAria}&gt;${popTriggerLabel(type)}&lt;/button&gt;&lt;div class=\"${panelCls}\"&gt;${popPanelBody(type, footer)}&lt;/div&gt;&lt;/div&gt;`;\n}\n\nfunction makePopoverEl(){\n  const wrap = document.createElement('div');\n  wrap.innerHTML = makePopoverHTML(popg.type, popg.placement, popg.footer);\n  const pop = wrap.firstElementChild;\n  pop.classList.add('is-open');\n  return pop;\n}",
   "usage": {
     "do": [
@@ -7058,7 +7429,7 @@ body.home .main{max-width:none;margin:0;padding:0}
       "Don’t pack a whole form or page into it."
     ]
   },
-  "contentHash": "9a9f4373e0d812cbd44db52e17b71fe1bd97accc26f343662c9f1c98e63bb5d7",
+  "contentHash": "1ea1af60f777846dc87849cac309b09f6e1d4fc0fd054f1e414e982c3cce344a",
   "note": "makePopoverHTML is the minimal real-markup builder (content type+placement+footer -&gt; .pop HTML string); makePopoverEl is the fuller playground version reading shared popg state. POP_KEY_PATTERNS drives the Overview tab's Key patterns showcase (no colour/size axis exists for this component, unlike Pills — placement left/right is the one structural variant). popPreviewHTML/popCodeBody/getPopoverCode*/renderPopover*/popTabSwitch are doc-site-only playground plumbing, excluded. The document-level delegated click handler (open/close/outside-click/Escape) is generic wiring, not a markup builder, but was changed from per-element binding to event delegation so it also wires up popovers the playground renders dynamically."
 }
   </pre>
@@ -8911,6 +9282,7 @@ function toggleTheme() {
   // Every themed surface follows the global toggle \u2014 no per-section toggles.
   try { if(typeof refreshSem==='function') refreshSem(); } catch(e){}
   try { if(typeof colDocRefresh==='function') colDocRefresh(); } catch(e){}
+  try { if(typeof renderElevLevels==='function' && document.getElementById('elev-levels-grid')) renderElevLevels(); } catch(e){}
   try { if(typeof renderBtnPlayground==='function' && document.getElementById('btn-playground')) renderBtnPlayground(); } catch(e){}
   try { if(typeof renderBtnKeyVariants==='function' && document.getElementById('btn-keyvariants')) renderBtnKeyVariants(); } catch(e){}
   try { if(typeof renderBtnInSitu==='function' && document.getElementById('btn-insitu')) renderBtnInSitu(); } catch(e){}
@@ -9631,13 +10003,21 @@ try {
     <div class="bp-grid">${gridCards}</div>`;
 } catch(e){console.error('sp-grid',e);}
 
+// Elevation tab switch (Overview / Usage / Tokens / Changelog)
+function elevTabSwitch(tab){
+  const nav = document.getElementById('elev-tabs-list');
+  if(!nav) return;
+  nav.querySelectorAll('.tab-item').forEach(btn=>btn.classList.toggle('on', btn.getAttribute('data-elev-tab')===tab));
+  document.querySelectorAll('#s-elev .tabs-panel[data-elev-panel]').forEach(p=>p.classList.toggle('on', p.getAttribute('data-elev-panel')===tab));
+}
+
 /* ============================================================
    RENDER — ELEVATION
 ============================================================ */
 try {
   const elevRows = ELEVATION.map(e => {
     const shadow = `0 ${e.y}px ${e.blur}px 0 rgba(0,0,0,0.16)`;
-    return `<div class="elev-row">
+    return `<div class="elev-row" onclick="copy('${shadow}','box-shadow')" style="cursor:pointer">
       <div><div class="elev-preview" style="box-shadow:${shadow}"></div></div>
       <div>
         <div class="elev-level">${e.name}</div>
@@ -9675,6 +10055,24 @@ try {
       ${elevRows}
     </div>`;
 } catch(e){console.error('sp-elev',e);}
+
+/* ============================================================
+   RENDER — ELEVATION LEVELS GRID (Overview tab)
+============================================================ */
+function renderElevLevels(){
+  const mount = document.getElementById('elev-levels-grid');
+  if(!mount) return;
+  const bg = stageBg(currentTheme());
+  mount.innerHTML = ELEVATION.map(e => {
+    const shadow = `0 ${e.y}px ${e.blur}px 0 rgba(0,0,0,0.16)`;
+    return `<div class="spec-cell">
+      <div class="spec-cell__stage" style="background:${bg};display:flex;align-items:center;justify-content:center;min-height:110px"><div style="width:70px;height:70px;border-radius:10px;background:var(--color-surface-base);border:1px solid var(--chrome-border);box-shadow:${shadow}"></div></div>
+      <div class="spec-cell__name">${e.name}</div>
+      <div class="spec-cell__desc"><code>${e.token}</code><br>y ${e.y} &middot; blur ${e.blur}<br>${e.eg}</div>
+    </div>`;
+  }).join('');
+}
+try { renderElevLevels(); } catch(e){console.error('elev-levels-grid',e);}
 /* ============================================================
    SESSION 4 — BUTTONS
 ============================================================ */
@@ -19633,22 +20031,28 @@ function cbrTabSwitch(tab){
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.93.1';
+const SYSTEM_VERSION = '1.93.2';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
-      {version:'1.93.1', date:'2026-09-09', author:'Mo', title:'"Yellow green" removed — it was never the Flash logo colour', changes:[
+      {version:'1.93.2', date:'2026-09-09', author:'Mo', title:'"Yellow green" removed — it was never the Flash logo colour', changes:[
         ['fixed','The "Yellow green" primitive family (#B2FA00, badged "Flash Logo") was factually wrong: the real Flash mark/logo colour is Flash Green (--prim-bg-500, #1DFA0F), already documented correctly as its own swatch. Removed the entire --prim-yg-* primitive scale from :root (11 steps, only -500 was ever referenced), the FAMILIES "yg" entry, and the now-dead .fam__badge--lime CSS'],
         ['fixed','--color-brand-2, --color-icon-3 and --chrome-accent2 (light and dark) pointed at var(--prim-yg-500) — repointed to var(--prim-bg-500), the correct Flash Green primitive. Grepped the whole file first: none of these three tokens were actually consumed by any real component CSS (var(--color-icon-3) etc. had zero matches), so this only changes what a currently-orphaned token resolves to, not any rendered component'],
         ['changed','SEM.icon\'s --color-icon-3 row regenerated via scripts/sync-token-tables.mjs from the corrected CSS (#B2FA00 → #1DFA0F, light and dark)'],
       ]},
-      {version:'1.93.0', date:'2026-09-09', author:'Mo', title:'Colours: full component-page treatment — Overview/Primitives/Semantics/Usage/Changelog tabs, sticky sub-nav retired', changes:[
+      {version:'1.93.1', date:'2026-09-09', author:'Mo', title:'Colours: full component-page treatment — Overview/Primitives/Semantics/Usage/Changelog tabs, sticky sub-nav retired', changes:[
         ['changed','#s-colours moved from a plain .sec to .sec--tabbed, matching the Logos page treatment. The sticky Primitives/Semantics sub-nav (#c-subnav, cSwitch(), .c-view wrappers, and the "11 families"/"6 groups" count badges) is retired; the same split is now Primitives/Semantics tabs (coloursTabSwitch()) alongside two new tabs, Overview and Usage, plus a relocated Changelog tab'],
         ['added','Overview tab: an Anatomy diagram (primitive → semantic token → theme → component, rendered on a real accent button via makeBtnEl), a Brand colours block (renderPrimaryHero() reused), and a Family index grid linking each FAMILIES entry to Primitives'],
         ['added','Usage tab: "Which token for what" renders Surface/Text/Buttons/Indicators/Inputs/Links each on a real component (cardHTML, makeBtnEl, ovAlrt, tiBuildSearchField) with the resolved hex read via getComputedStyle; a Light & dark side-by-side comparison; a Contrast table computing WCAG AA ratios (4.5:1 body, 3:1 large/UI) live from resolved colours and recomputing on theme toggle; a Brand green section showing the one-accent-per-screen rule with failing mockups (two accent buttons, green body text, black-on-Bright-Green); a Chart & category colours section (CHART_COLORS rendered through the real makeBarChartHTML bar builder, recoloured per-bar to match the true series order); and a fresh Do\'s and don\'ts list'],
         ['added','Hero preview swatches (--prim-bg-500/green-500/yg-500/dg-500/black/white) and a v1.15.0 badge in .sec-header-meta, matching the Logos hero pattern'],
+      ]},
+      {version:'1.93.0', date:'2026-09-09', author:'Mo', title:'Elevation: full tabbed component-page treatment', changes:[
+        ['changed','Elevation (s-elev) rebuilt onto the .sec--tabbed pattern used by Logos: Overview (Anatomy, Levels) / Usage (which level for what, light and dark, stacking order, don\'ts, do\'s and don\'ts) / Tokens (the ELEVATION spec table plus a where-it\'s-used table) / Changelog, with a v1.1.0 hero badge and a regenerated ai-ctx tab'],
+        ['fixed','.tip__bubble, .dpd-menu, .pop__panel and .bsh-sheet box-shadow values brought onto their documented elevation level (elevation-s, elevation-m, elevation-m, elevation-l respectively) — each a single box-shadow declaration, no layout change; .bsh-sheet keeps its negative y-offset as the one sanctioned directional exception to elevation-l'],
+        ['added','renderElevLevels() builds the Overview Levels grid from the existing ELEVATION data const at runtime, alongside the pre-existing inline Tokens-table renderer — both re-run on theme toggle'],
+        ['fixed','Every documentation surface on the page now stages a lifted tile on var(--chrome-bg) rather than var(--chrome-nav). In dark theme --chrome-nav (#25262c) is lighter than --color-surface-base (#12131a) — the reverse of light theme — so the tile read as a recess and its shadow was invisible; the ground now matches the surface token in both themes, exactly as the real overlay components do'],
       ]},
       {version:'1.92.2', date:'2026-09-09', author:'Mo', title:'Logos: trim two explanatory notes', changes:[
         ['removed','The SVG-only note under the Icon only asset list. The per-row SVG pills already show which formats exist, so the note was restating the list'],
@@ -21193,7 +21597,10 @@ const CHANGELOG = {
         ['added','Native-checkbox toggle, Regular/Small sizes, Off/On/Disabled states, anatomy specs and usage guidance'],
       ]},
     ]},
-    {secId:'s-tooltip', name:'Tooltip', version:'1.0.1', entries:[
+    {secId:'s-tooltip', name:'Tooltip', version:'1.0.2', entries:[
+      {version:'1.0.2', date:'2026-09-09', author:'Mo', title:'box-shadow aligned to elevation-s', changes:[
+        ['fixed','.tip__bubble box-shadow changed from 0 6px 18px rgba(0,0,0,.18) to 0 2px 12px 0 rgba(0,0,0,0.16), matching the documented elevation-s token (found while building the Elevation tabbed page)'],
+      ]},
       {version:'1.0.1', date:'2026-07-29', author:'Mo', title:'AI context tab added', changes:[
         ['added','AI context tab documenting the real, fully static .tip/.tip__bubble/placement-variant markup, plus its existing "When to use" Do/Dont guidance (3 do / 3 dont)'],
       ]},
@@ -21402,7 +21809,10 @@ const CHANGELOG = {
         ['added','Native range input with a brand fill and live value; continuous, stepped and disabled examples'],
       ]},
     ]},
-    {secId:'s-popover', name:'Popover', version:'2.0.9', entries:[
+    {secId:'s-popover', name:'Popover', version:'2.0.10', entries:[
+      {version:'2.0.10', date:'2026-09-09', author:'Mo', title:'box-shadow aligned to elevation-m', changes:[
+        ['fixed','.pop__panel box-shadow changed from 0 14px 36px rgba(0,0,0,.18) to 0 4px 24px 0 rgba(0,0,0,0.16), matching the documented elevation-m token (found while building the Elevation tabbed page)'],
+      ]},
       {version:'2.0.9', date:'2026-09-04', author:'Mo', title:'Hero preview closer to the real anatomy', changes:[
         ['changed','Open panel expanded from just a title bar to title + one content-row bar + a footer action, all still wireframe placeholders — closer to the real title/body/footer anatomy while staying reduced'],
         ['fixed','Footer action button stretched full-width via .pop__apply\'s real flex:1, reading as an odd wide bar; constrained to a fixed 64px width'],
@@ -21713,7 +22123,15 @@ const CHANGELOG = {
         ['added','8px base scale, spacing tokens, radius tokens, 4-breakpoint grid'],
       ]},
     ]},
-    {secId:'s-elev', name:'Elevation', version:'1.0.1', entries:[
+    {secId:'s-elev', name:'Elevation', version:'1.1.0', entries:[
+      {version:'1.1.0', date:'2026-09-09', author:'Mo', title:'Full tabbed component-page treatment', changes:[
+        ['changed','Rebuilt onto the .sec--tabbed pattern: sec-hero with a 3-surface (XS/M/XL) preview, a 4-tab strip (Overview / Usage / Tokens / Changelog), replacing the single flat .sec__head + list layout'],
+        ['added','Overview — Anatomy (Y-offset, Blur, Colour, Spread shown in isolation) and Levels (the 5 levels rendered live from ELEVATION via the new renderElevLevels())'],
+        ['added','Usage — "Which level for what" gives each level its own block: the level name with its token on a quiet monospace line, a "Use for" chip row, and a "Components" row rendering each real component that carries the level (.tip__bubble, .dpd-menu, .pop__panel, .bsh-sheet) on its own stage, tagged with the real Tag component. Levels nothing carries yet (XS, XL) say so in one line rather than rendering a misleading specimen. Then light/dark behaviour, a z-index stacking table, four rendered Common mistakes, and do\'s/don\'ts last'],
+        ['added','.elev-doc-uses/.elev-doc-use/.elev-doc-use__stage/__meta/__sel/__note and .elev-doc-tok — the Usage tab\'s own layout for pairing a rendered component with its selector and status, collapsing to one column under 700px. Prefixed .elev-doc-* so they can\'t collide with the .elev-* token-table classes'],
+        ['changed','Tokens — the original ELEVATION spec table (.elev-list) moved here unchanged, rows now clickable to copy their full box-shadow string, plus a new where-it\'s-used table listing every component that carries a shadow today, matched or drift'],
+        ['fixed','.tip__bubble, .dpd-menu, .pop__panel and .bsh-sheet box-shadow drift — see those components\' own changelogs'],
+      ]},
       {version:'1.0.1', date:'2026-07-29', author:'Mo', title:'AI context tab added', changes:[
         ['added','AI context tab documenting the real ELEVATION DATA (5 shadow levels); render logic is inline, not a separately named builder'],
       ]},
@@ -22151,7 +22569,10 @@ const CHANGELOG = {
         ['changed','Planned for next session'],
       ]},
     ]},
-    {secId:'s-drawers', name:'Bottom Sheets', version:'1.1.1', entries:[
+    {secId:'s-drawers', name:'Bottom Sheets', version:'1.1.2', entries:[
+      {version:'1.1.2', date:'2026-09-09', author:'Mo', title:'box-shadow aligned to elevation-l', changes:[
+        ['fixed','.bsh-sheet box-shadow changed from 0 -6px 24px rgba(0,0,0,.16) to 0 -8px 48px 0 rgba(0,0,0,0.16), matching the documented elevation-l token; the negative y-offset is kept as the one sanctioned directional exception, since a sheet rises from the bottom (found while building the Elevation tabbed page)'],
+      ]},
       {version:'1.1.1', date:'2026-08-11', author:'Helen', title:'In-context mockups: consistent phone framing, fixed squashed sizing', changes:[
         ['fixed','bshMockFrame: replaced the squat 230×300 frame (thin card border, no status bar) used for the Filter/sort and Quick actions mockups with the same 220×440 phone bezel, rounded corners, and status bar as the Form/detail mockup — all three now share one frame treatment instead of two conflicting ones'],
         ['added','bshMockPageBG: faint placeholder page content (title bar + three list rows) rendered behind the two compact sheets, so they read as overlaying a real screen rather than floating over empty grey space'],
@@ -22368,7 +22789,10 @@ const CHANGELOG = {
         ['added','Interactive playground, size/icon comparisons, a full states matrix and an anatomy/spec table'],
       ]},
     ]},
-    {secId:'s-dropdown', name:'Dropdown', version:'1.4.1', entries:[
+    {secId:'s-dropdown', name:'Dropdown', version:'1.4.2', entries:[
+      {version:'1.4.2', date:'2026-09-09', author:'Mo', title:'box-shadow aligned to elevation-m', changes:[
+        ['fixed','.dpd-menu box-shadow changed from 0 8px 24px rgba(0,0,0,.14) to 0 4px 24px 0 rgba(0,0,0,0.16), matching the documented elevation-m token (found while building the Elevation tabbed page); .dpd-menu--inline\'s own 0 1px 2px rgba(0,0,0,.1) is unchanged and left as drift'],
+      ]},
       {version:'1.4.1', date:'2026-08-19', author:'Mo', title:'ai-ctx tab regenerated to drop leftover PR trivia', changes:[
         ['fixed','ai-ctx tab note ended with a leftover sentence from an earlier PR ("Moved to the .sec--tabbed layout... in this PR.") — regenerated via generate-ai-context-tab.mjs per CLAUDE.md rule 5; CSS/JS/usage content and contentHash unchanged'],
       ]},
@@ -29702,6 +30126,7 @@ try { colDocInit(); } catch(e){ console.error('colours-doc-init', e); }
   {secId:'s-accordion', panelId:'acc-changelog-panel'},
   {secId:'s-logos', panelId:'logo-changelog-panel'},
   {secId:'s-colours', panelId:'colours-changelog-panel'},
+  {secId:'s-elev', panelId:'elev-changelog-panel'},
   {secId:'s-breadcrumb', panelId:'bcr-changelog-panel'},
   {secId:'s-spinner', panelId:'spn-changelog-panel'},
   {secId:'s-buttons', panelId:'btn-changelog-panel'},
