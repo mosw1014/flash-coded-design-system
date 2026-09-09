@@ -29398,18 +29398,6 @@ function iconsTabSwitch(tab){
   if(outlineSpot1) outlineSpot1.innerHTML = iconSvg('bell','outline');
   var outlineSpot2=document.getElementById('icn-dont-outline');
   if(outlineSpot2) outlineSpot2.innerHTML = iconSvg('bell','outline');
-
-  /* Usage > In the product UI — the four real consumers of an icon size,
-     rendered from their own builders (navPanelHtml/makeBtnEl/
-     tiBuildSearchField/makeEmptyStateHTML), not approximated. */
-  var insituNav=document.getElementById('icn-insitu-nav');
-  if(insituNav && typeof navPanelHtml==='function') insituNav.innerHTML = navPanelHtml('white','sm',0,{},false,false,false,false);
-  var insituBtn=document.getElementById('icn-insitu-btn');
-  if(insituBtn && typeof makeBtnEl==='function') insituBtn.appendChild(makeBtnEl('flash','light','simple','reg',true,null,null));
-  var insituSearch=document.getElementById('icn-insitu-search');
-  if(insituSearch && typeof tiBuildSearchField==='function') insituSearch.appendChild(tiBuildSearchField().el);
-  var insituEmpty=document.getElementById('icn-insitu-empty');
-  if(insituEmpty && typeof makeEmptyStateHTML==='function') insituEmpty.innerHTML = makeEmptyStateHTML('filter','No results','Try a different filter.', null);
 })();
 
 /* Navigation / Side Nav — mirrors the Figma SideNav: logo, company info,
@@ -29722,6 +29710,24 @@ try { renderOtpPlayground(); } catch(e){ console.error('otp-playground',e); }
 try { renderOtpInSitu(); } catch(e){ console.error('otp-insitu',e); }
 try { renderOtpReference(); } catch(e){ console.error('otp-reference',e); }
 try { renderSectionChangelogs(); } catch(e){ console.error('section-changelog',e); }
+
+/* Icons > Usage > In the product UI — the four real consumers of an icon
+   size, rendered from their own builders (navPanelHtml/makeBtnEl/
+   tiBuildSearchField/makeEmptyStateHTML), not approximated. Runs here
+   (after Navigation's FLASH_MARK/FLASH_WORDMARK consts and Text Inputs'/
+   Empty State's builders are all initialised) rather than inside the
+   Icons gallery IIFE further up the file, which executes before those
+   consts exist. */
+try {
+  var icnInsituNav=document.getElementById('icn-insitu-nav');
+  if(icnInsituNav && typeof navPanelHtml==='function') icnInsituNav.innerHTML = navPanelHtml('white','sm',0,{},false,false,false,false);
+  var icnInsituBtn=document.getElementById('icn-insitu-btn');
+  if(icnInsituBtn && typeof makeBtnEl==='function') icnInsituBtn.appendChild(makeBtnEl('flash','light','simple','reg',true,null,null));
+  var icnInsituSearch=document.getElementById('icn-insitu-search');
+  if(icnInsituSearch && typeof tiBuildSearchField==='function') icnInsituSearch.appendChild(tiBuildSearchField().el);
+  var icnInsituEmpty=document.getElementById('icn-insitu-empty');
+  if(icnInsituEmpty && typeof makeEmptyStateHTML==='function') icnInsituEmpty.innerHTML = makeEmptyStateHTML('filter','No results','Try a different filter.', null);
+} catch(e){ console.error('icons-doc-usage',e); }
 
 /* .sec--tabbed pages have their own Changelog tab — relocate the auto-injected
    changelog block (normally placed right after .sec__head) into that panel
