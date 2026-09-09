@@ -1066,10 +1066,6 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;font-feature-
 .brand-type__name{font-weight:800;font-size:15px;color:var(--chrome-txt)}
 .brand-type__role{font-size:12.5px;line-height:1.55;color:var(--chrome-muted)}
 
-.brand-logos{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-@media(max-width:720px){.brand-logos{grid-template-columns:1fr}}
-.brand-logo-tile{border-radius:14px;height:110px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
-.brand-logo-tile__cap{font-size:10.5px;font-weight:600}
 
 /* ============================================================
    HOME — Flash Design System landing (fixed light design)
@@ -2429,18 +2425,48 @@ body.home .main{max-width:none;margin:0;padding:0}
 .icn-tile__name{font-size:10.5px;color:var(--chrome-muted);text-align:center;word-break:break-word}
 .icn-tile.copied .icn-tile__name{color:var(--color-success-h);font-weight:700}
 /* ---- Logos (Brand) ---- */
-.logo-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px}
-.logo-card{border:1px solid var(--chrome-border);border-radius:12px;overflow:hidden;background:var(--chrome-bg);display:flex;flex-direction:column}
-.logo-card__stage{display:flex;align-items:center;justify-content:center;padding:28px;min-height:120px;border-bottom:1px solid var(--chrome-border)}
-.logo-card__stage--light{background:#ffffff}
-.logo-card__stage--dark{background:#17181d}
-.logo-card__img{max-width:100%;max-height:96px;display:block}
-.logo-card__meta{padding:12px 14px 14px;display:flex;flex-direction:column;gap:8px}
-.logo-card__name{font-size:13px;font-weight:700;color:var(--chrome-txt)}
-.logo-card__desc{font-size:11.5px;color:var(--chrome-muted);line-height:1.4}
-.logo-card__actions{display:flex;gap:8px;margin-top:2px}
+/* Download pill, reused by the asset list */
 .logo-dl{display:inline-flex;align-items:center;justify-content:center;height:30px;padding:0 14px;border-radius:999px;border:1px solid var(--chrome-border);font-size:11.5px;font-weight:700;color:var(--chrome-txt);text-decoration:none;background:transparent;transition:background .12s,border-color .12s;font-family:inherit;cursor:pointer}
 .logo-dl:hover{background:var(--chrome-hover);border-color:var(--color-text-s)}
+/* Asset list — one row per shipped file: preview, filename, the rule for reaching
+   for it, and its downloads. A list rather than a card grid so every row reads on
+   the same horizontal rhythm and the rules stay scannable top to bottom. */
+.logo-list{display:flex;flex-direction:column;border:1px solid var(--chrome-border);border-radius:12px;overflow:hidden}
+.logo-list__row{display:grid;grid-template-columns:132px 1fr auto;gap:18px;align-items:center;padding:14px 18px;border-bottom:1px solid var(--chrome-border);transition:background .12s}
+.logo-list__row:last-child{border-bottom:none}
+.logo-list__row:hover{background:var(--chrome-hover)}
+.logo-list__thumb{height:52px;border-radius:8px;border:1px solid rgba(128,128,128,.18);display:flex;align-items:center;justify-content:center;padding:9px}
+.logo-list__thumb img{max-width:100%;max-height:100%;display:block}
+.logo-list__name{font-family:'SF Mono',Consolas,monospace;font-size:12px;font-weight:600;color:var(--chrome-txt);word-break:break-word}
+.logo-list__rule{font-size:12px;color:var(--chrome-muted);line-height:1.5;margin-top:4px}
+.logo-list__actions{display:flex;gap:8px;flex-shrink:0}
+@media(max-width:760px){.logo-list__row{grid-template-columns:1fr;gap:12px}}
+/* Small square swatch shown wherever a background colour is named */
+.logo-swatch{display:inline-block;width:14px;height:14px;border-radius:3px;border:1px solid rgba(128,128,128,.32);flex-shrink:0;vertical-align:-2px;margin-right:8px}
+/* "Not shipped as an asset yet" stage, so a documented format still reads as a
+   real gap rather than being silently omitted or faked with a stand-in file */
+.logo-missing{border:1.5px dashed var(--chrome-border);border-radius:8px}
+.logo-missing__label{font-size:11px;font-weight:700;color:var(--chrome-muted);text-align:center;line-height:1.4}
+/* Clear-space diagram — always drawn on white, so its rules are hardcoded dark */
+.logo-clear{display:flex;align-items:center;justify-content:center;background:#fff;border-radius:12px;padding:40px 20px}
+.logo-clear__frame{position:relative;border:1.5px dashed rgba(0,0,0,.4);padding:26px}
+.logo-clear__box{border:1px solid rgba(0,0,0,.16)}
+.logo-clear__mark{display:block;height:44px;width:auto}
+.logo-clear__x{position:absolute;font-family:'SF Mono',Consolas,monospace;font-size:10px;font-weight:700;color:rgba(0,0,0,.55)}
+/* Nav placement replica — mirrors this site's real .bar (52px tall, 28px logo, 20px inset) */
+.logo-nav{border:1px solid var(--chrome-border);border-radius:12px;overflow:hidden}
+.logo-nav__bar{height:52px;display:flex;align-items:center;gap:12px;padding:0 20px;background:#12131a}
+.logo-nav__logo{height:28px;width:auto;display:block;flex-shrink:0}
+.logo-nav__field{flex:1;max-width:280px;height:32px;border-radius:999px;background:rgba(255,255,255,.08);display:flex;align-items:center;padding:0 14px;font-size:11.5px;color:rgba(255,255,255,.45)}
+/* Layout placement mockups — a miniature page, so the logo's position within a
+   real composition is visible rather than described */
+.logo-layout{position:relative;border-radius:8px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.2);display:flex;flex-direction:column;padding:13px;gap:7px}
+.logo-layout__mark{height:17px;width:auto;display:block}
+.logo-layout__spacer{flex:1}
+/* Size-comparison row — one lockup at three real widths, baseline-aligned */
+.logo-scale{display:flex;align-items:flex-end;justify-content:center;gap:34px;flex-wrap:wrap;background:#fff;border-radius:12px;padding:32px 20px}
+.logo-scale__item{display:flex;flex-direction:column;align-items:center;gap:10px}
+.logo-scale__cap{font-family:'SF Mono',Consolas,monospace;font-size:10.5px;font-weight:700;color:rgba(0,0,0,.55)}
 
 /* ---- Navigation / Side Nav ----
    Rebuilt to match the Figma SideNav (node 3608:32365): Regular size mirrors the
@@ -3033,28 +3059,42 @@ body.home .main{max-width:none;margin:0;padding:0}
       <div class="sec__head">
         <div class="sec__eye">Brand</div>
         <h1 class="sec__title">Logos</h1>
-        <p class="sec__desc">The Flash mark and wordmark, in the four supported colour treatments &mdash; each as a horizontal lockup and a stacked lockup. Every tile is downloadable as SVG or PNG.</p>
+        <p class="sec__desc">The Flash mark and wordmark ship as a fixed set of lockups. The background decides which one you use &mdash; the files are never recoloured, redrawn or rebuilt from type.</p>
         <div class="sec-header-meta">
-          <span class="comp-ver-badge" style="margin-left:0">v1.2.0</span>
+          <span class="comp-ver-badge" style="margin-left:0">v1.3.0</span>
           <details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-logos">
 {
   "status": "static",
   "realClasses": [
-    ".logo-grid",
-    ".logo-card",
-    ".logo-card__stage",
-    ".logo-card__stage--light",
-    ".logo-card__stage--dark",
-    ".logo-card__img",
-    ".logo-card__meta",
-    ".logo-card__name",
-    ".logo-card__desc",
-    ".logo-card__actions",
-    ".logo-dl"
+    ".logo-dl",
+    ".logo-list",
+    ".logo-list__row",
+    ".logo-list__thumb",
+    ".logo-list__name",
+    ".logo-list__rule",
+    ".logo-list__actions",
+    ".logo-swatch",
+    ".logo-missing",
+    ".logo-missing__label",
+    ".logo-clear",
+    ".logo-clear__frame",
+    ".logo-clear__box",
+    ".logo-clear__mark",
+    ".logo-clear__x",
+    ".logo-nav",
+    ".logo-nav__bar",
+    ".logo-nav__logo",
+    ".logo-nav__field",
+    ".logo-layout",
+    ".logo-layout__mark",
+    ".logo-layout__spacer",
+    ".logo-scale",
+    ".logo-scale__item",
+    ".logo-scale__cap"
   ],
-  "css": "/* ---- Logos (Brand) ---- */\n.logo-grid { display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px }\n.logo-card { border:1px solid var(--chrome-border);border-radius:12px;overflow:hidden;background:var(--chrome-bg);display:flex;flex-direction:column }\n.logo-card__stage { display:flex;align-items:center;justify-content:center;padding:28px;min-height:120px;border-bottom:1px solid var(--chrome-border) }\n.logo-card__stage--light { background:#ffffff }\n.logo-card__stage--dark { background:#17181d }\n.logo-card__img { max-width:100%;max-height:96px;display:block }\n.logo-card__meta { padding:12px 14px 14px;display:flex;flex-direction:column;gap:8px }\n.logo-card__name { font-size:13px;font-weight:700;color:var(--chrome-txt) }\n.logo-card__desc { font-size:11.5px;color:var(--chrome-muted);line-height:1.4 }\n.logo-card__actions { display:flex;gap:8px;margin-top:2px }\n.logo-dl { display:inline-flex;align-items:center;justify-content:center;height:30px;padding:0 14px;border-radius:999px;border:1px solid var(--chrome-border);font-size:11.5px;font-weight:700;color:var(--chrome-txt);text-decoration:none;background:transparent;transition:background .12s,border-color .12s;font-family:inherit;cursor:pointer }\n.logo-dl:hover { background:var(--chrome-hover);border-color:var(--color-text-s) }",
+  "css": "/* ---- Logos (Brand) ---- */\n/* Download pill, reused by the asset list */\n.logo-dl { display:inline-flex;align-items:center;justify-content:center;height:30px;padding:0 14px;border-radius:999px;border:1px solid var(--chrome-border);font-size:11.5px;font-weight:700;color:var(--chrome-txt);text-decoration:none;background:transparent;transition:background .12s,border-color .12s;font-family:inherit;cursor:pointer }\n.logo-dl:hover { background:var(--chrome-hover);border-color:var(--color-text-s) }\n/* Asset list — one row per shipped file: preview, filename, the rule for reaching\n   for it, and its downloads. A list rather than a card grid so every row reads on\n   the same horizontal rhythm and the rules stay scannable top to bottom. */\n.logo-list { display:flex;flex-direction:column;border:1px solid var(--chrome-border);border-radius:12px;overflow:hidden }\n.logo-list__row { display:grid;grid-template-columns:132px 1fr auto;gap:18px;align-items:center;padding:14px 18px;border-bottom:1px solid var(--chrome-border);transition:background .12s }\n.logo-list__row:last-child { border-bottom:none }\n.logo-list__row:hover { background:var(--chrome-hover) }\n.logo-list__thumb { height:52px;border-radius:8px;border:1px solid rgba(128,128,128,.18);display:flex;align-items:center;justify-content:center;padding:9px }\n.logo-list__thumb img { max-width:100%;max-height:100%;display:block }\n.logo-list__name { font-family:'SF Mono',Consolas,monospace;font-size:12px;font-weight:600;color:var(--chrome-txt);word-break:break-word }\n.logo-list__rule { font-size:12px;color:var(--chrome-muted);line-height:1.5;margin-top:4px }\n.logo-list__actions { display:flex;gap:8px;flex-shrink:0 }\n/* Small square swatch shown wherever a background colour is named */\n.logo-swatch { display:inline-block;width:14px;height:14px;border-radius:3px;border:1px solid rgba(128,128,128,.32);flex-shrink:0;vertical-align:-2px;margin-right:8px }\n/* \"Not shipped as an asset yet\" stage, so a documented format still reads as a\n   real gap rather than being silently omitted or faked with a stand-in file */\n.logo-missing { border:1.5px dashed var(--chrome-border);border-radius:8px }\n.logo-missing__label { font-size:11px;font-weight:700;color:var(--chrome-muted);text-align:center;line-height:1.4 }\n/* Clear-space diagram — always drawn on white, so its rules are hardcoded dark */\n.logo-clear { display:flex;align-items:center;justify-content:center;background:#fff;border-radius:12px;padding:40px 20px }\n.logo-clear__frame { position:relative;border:1.5px dashed rgba(0,0,0,.4);padding:26px }\n.logo-clear__box { border:1px solid rgba(0,0,0,.16) }\n.logo-clear__mark { display:block;height:44px;width:auto }\n.logo-clear__x { position:absolute;font-family:'SF Mono',Consolas,monospace;font-size:10px;font-weight:700;color:rgba(0,0,0,.55) }\n/* Nav placement replica — mirrors this site's real .bar (52px tall, 28px logo, 20px inset) */\n.logo-nav { border:1px solid var(--chrome-border);border-radius:12px;overflow:hidden }\n.logo-nav__bar { height:52px;display:flex;align-items:center;gap:12px;padding:0 20px;background:#12131a }\n.logo-nav__logo { height:28px;width:auto;display:block;flex-shrink:0 }\n.logo-nav__field { flex:1;max-width:280px;height:32px;border-radius:999px;background:rgba(255,255,255,.08);display:flex;align-items:center;padding:0 14px;font-size:11.5px;color:rgba(255,255,255,.45) }\n/* Layout placement mockups — a miniature page, so the logo's position within a\n   real composition is visible rather than described */\n.logo-layout { position:relative;border-radius:8px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.2);display:flex;flex-direction:column;padding:13px;gap:7px }\n.logo-layout__mark { height:17px;width:auto;display:block }\n.logo-layout__spacer { flex:1 }\n/* Size-comparison row — one lockup at three real widths, baseline-aligned */\n.logo-scale { display:flex;align-items:flex-end;justify-content:center;gap:34px;flex-wrap:wrap;background:#fff;border-radius:12px;padding:32px 20px }\n.logo-scale__item { display:flex;flex-direction:column;align-items:center;gap:10px }\n.logo-scale__cap { font-family:'SF Mono',Consolas,monospace;font-size:10.5px;font-weight:700;color:rgba(0,0,0,.55) }",
   "usage": {
     "do": [
       "Pick the variant (Primary, White, Monochrome Black/White) that gives the strongest contrast against its background.",
@@ -3071,15 +3111,15 @@ body.home .main{max-width:none;margin:0;padding:0}
       "Don’t place the logo tighter than its minimum clear space, or shrink it below a legible size."
     ]
   },
-  "contentHash": "ef740a947e60285cb25ca3a169a77c05e94e1a2335b780ba0e8599e3bf1de6d8",
-  "note": "Real content is external asset files (assets/logos/*.svg + matching .png), referenced by &lt;img src&gt;, not inline SVG or a data const. Overview tab reorganises the existing gallery under Formats &amp; colour variants plus a new static In-context mockup pair; Usage tab adds structured guidance (format table, colour-by-background table incl. the lime-on-medium-green exception, clear space, placement, one-logo-per-layout, size table, mandatory-logo rule) alongside the existing Do/Dont card; Tokens/Variables &amp; Assets tab adds a real asset table for the 8 shipped files plus a colour-token table, and explicitly flags gaps not yet shipped as separate files (icon-only, wordmark-only, lime-icon variant, website URL badge). logoTabSwitch is doc-site-only tab-switching plumbing, excluded."
+  "contentHash": "5c8c2e6148f034604d6fcda553a0e83406ab39695f0a7905d62cf9a377040ba2",
+  "note": "The real deliverable is the external asset files (assets/logos/*.svg + matching .png), referenced by &lt;img src&gt; — there is no inline SVG or icon-path data const to embed, and no reusable logo component. realClasses here are this page's own documentation furniture (asset list, clear-space diagram, nav replica, layout mockups, size row, colour swatch chip), not a component to copy into a product: reconstruct those from the assets and the rules instead. Page is a foundation-shaped .sec--tabbed page — Overview (anatomy, formats, colour variants) / Usage (do-dont, variant-by-background lookup, clear space, sizing, layout placement, and the real .bar nav implementation) / Assets &amp; Variables / Changelog — with no playground or code tab, since a fixed asset set has no interactive state. Gaps deliberately shown as unshipped rather than faked: icon-only, wordmark-only, the lime-icon variant for #3FB549 medium green, and the FLASH.CO.ZA URL badge. logoTabSwitch is doc-site-only tab-switching plumbing, excluded."
 }
   </pre>
 </details>
         </div>
       </div>
       <div class="sec-hero__preview">
-        <div class="mk" style="background:#000;width:100%;height:100%;display:flex;align-items:center;justify-content:center">
+        <div style="background:#000;width:100%;height:100%;display:flex;align-items:center;justify-content:center">
           <img src="assets/logos/flash-logo-white.svg" alt="Flash logo" style="width:150px;height:auto">
         </div>
       </div>
@@ -3087,308 +3127,432 @@ body.home .main{max-width:none;margin:0;padding:0}
       <div class="tabs-list sec-tabs" id="logo-tabs-list">
         <button type="button" class="tab-item on" data-logo-tab="overview" onclick="logoTabSwitch('overview')"><span class="tab-item__inner"><span class="tab-item__label">Overview</span></span><span class="tab-item__line"></span></button>
         <button type="button" class="tab-item" data-logo-tab="usage" onclick="logoTabSwitch('usage')"><span class="tab-item__inner"><span class="tab-item__label">Usage</span></span><span class="tab-item__line"></span></button>
-        <button type="button" class="tab-item" data-logo-tab="tokens" onclick="logoTabSwitch('tokens')"><span class="tab-item__inner"><span class="tab-item__label">Tokens, Variables &amp; Assets</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-logo-tab="assets" onclick="logoTabSwitch('assets')"><span class="tab-item__inner"><span class="tab-item__label">Assets &amp; Variables</span></span><span class="tab-item__line"></span></button>
         <button type="button" class="tab-item" data-logo-tab="changelog" onclick="logoTabSwitch('changelog')"><span class="tab-item__inner"><span class="tab-item__label">Changelog</span></span><span class="tab-item__line"></span></button>
       </div>
+
       <div class="tabs-panel on" data-logo-panel="overview">
-      <!-- Brand intro block (moved from Introduction) -->
-      <div class="type-sub">
-        <div class="type-sub__title">The logo</div>
-        <div class="type-sub__desc">A bull silhouette in a green circle, paired with the lowercase <em>flash</em> wordmark. The variant changes with the background so the mark always has contrast.</div>
-        <div class="brand-logos">
-          <div class="brand-logo-tile" style="background:#000">
-            <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTY0IiBoZWlnaHQ9IjYzIiB2aWV3Qm94PSIwIDAgMTY0IDYzIiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8ZyBjbGlwLXBhdGg9InVybCgjY2xpcDBfMjU5OV8zNDQzKSI+CjxwYXRoIGQ9Ik02Mi42OTc0IDMxLjQwMjdDNjIuNjk3NCAzNy42MTM2IDYwLjg1ODggNDMuNjg1IDU3LjQxNDIgNDguODQ5MkM1My45Njk2IDU0LjAxMzQgNDkuMDczNiA1OC4wMzgzIDQzLjM0NTQgNjAuNDE1MUMzNy42MTcyIDYyLjc5MTkgMzEuMzE0IDYzLjQxMzggMjUuMjMzIDYyLjIwMjFDMTkuMTUyIDYwLjk5MDQgMTMuNTY2MiA1Ny45OTk2IDkuMTgyMDQgNTMuNjA3OUM0Ljc5Nzg3IDQ5LjIxNjEgMS44MTIyMSA0My42MjA3IDAuNjAyNjE2IDM3LjUyOTFDLTAuNjA2OTc0IDMxLjQzNzYgMC4wMTM4MTM3IDI1LjEyMzUgMi4zODY1MSAxOS4zODU0QzQuNzU5MjEgMTMuNjQ3MyA4Ljc3NzI0IDguNzQyOSAxMy45MzI1IDUuMjkyMzJDMTkuMDg3NyAxLjg0MTc0IDI1LjE0ODcgNy42MjkzOWUtMDYgMzEuMzQ4OCA3LjYyOTM5ZS0wNkMzOS42NjMgNy42MjkzOWUtMDYgNDcuNjM2NiAzLjMwODUzIDUzLjUxNTYgOS4xOTc2OUM1OS4zOTQ2IDE1LjA4NjggNjIuNjk3NCAyMy4wNzQyIDYyLjY5NzQgMzEuNDAyN1oiIGZpbGw9IiMxREZBMEYiLz4KPHBhdGggZD0iTTUwLjI2MTYgMjYuMzUwN0M0OS4wODkgMjUuNjE4MiA0OC4xMjQ5IDI0LjU5NTIgNDcuNDYyMyAyMy4zODA1QzQ2Ljc5OTcgMjIuMTY1OCA0Ni40NjEgMjAuODAwNCA0Ni40NzkgMTkuNDE2M0M0Ny4wNTA1IDE5LjI3MzkgNDcuNTg0OCAxOS4wMTAxIDQ4LjA0NTUgMTguNjQyNkM0OC41MDYyIDE4LjI3NTEgNDguODgyNiAxNy44MTI2IDQ5LjE0OSAxNy4yODY1QzQ5LjQ2NjEgMTYuNjggNDkuNTgyIDE1Ljk4OCA0OS40Nzk3IDE1LjMxMTFDNDkuMzc3NCAxNC42MzQxIDQ5LjA2MjQgMTQuMDA3NSA0OC41ODA0IDEzLjUyMjFDNDguNTQ3OSAxMy40OTMgNDguNTA3NyAxMy40NzQgNDguNDY0NSAxMy40Njc2QzQ4LjQyMTQgMTMuNDYxMiA0OC4zNzc0IDEzLjQ2NzcgNDguMzM3OSAxMy40ODYxQzQ4LjI5ODQgMTMuNTA0NiA0OC4yNjUyIDEzLjUzNDMgNDguMjQyNCAxMy41NzE1QzQ4LjIxOTUgMTMuNjA4NyA0OC4yMDgxIDEzLjY1MTggNDguMjA5NSAxMy42OTU0QzQ4LjI4MTQgMTQuMDIxMSA0OC4yODY4IDE0LjM1OCA0OC4yMjU0IDE0LjY4NTlDNDguMTY0MSAxNS4wMTM3IDQ4LjAzNzIgMTUuMzI1OCA0Ny44NTI1IDE1LjYwMzRDNDcuNjY3OCAxNS44ODA5IDQ3LjQyOTEgMTYuMTE4MiA0Ny4xNTA1IDE2LjMwMTFDNDYuODcyIDE2LjQ4MzkgNDYuNTU5NSAxNi42MDg0IDQ2LjIzMTcgMTYuNjY3M0M0My42ODIzIDE3LjExOTcgNDEuMDU1MyAxNi42NTQ4IDM4LjgxNDkgMTUuMzU0N0MzNy42MDM1IDE0LjIxNTUgMzcuNDc5OCAxMi44NzgyIDM4LjU2NzYgMTAuNzczMUMzOC41ODc1IDEwLjczMTUgMzguNTk0IDEwLjY4NDcgMzguNTg2MiAxMC42MzkzQzM4LjU3ODQgMTAuNTkzOSAzOC41NTY3IDEwLjU1MiAzOC41MjQyIDEwLjUxOTVDMzguNDkxNyAxMC40ODY5IDM4LjQ0OTkgMTAuNDY1MSAzOC40MDQ1IDEwLjQ1NzNDMzguMzU5MiAxMC40NDk1IDM4LjMxMjUgMTAuNDU2MSAzOC4yNzEgMTAuNDc1OUMzNy40NTQyIDEwLjc5ODEgMzYuNzUgMTEuMzUzOCAzNi4yNDYyIDEyLjA3MzlDMzUuNzQyMyAxMi43OTQgMzUuNDYxIDEzLjY0NjYgMzUuNDM3MyAxNC41MjU2QzM1LjQxMzYgMTUuNDA0NyAzNS42NDg1IDE2LjI3MTMgMzYuMTEyOCAxNy4wMTc2QzM2LjU3NzEgMTcuNzYzOSAzNy4yNTAzIDE4LjM1NjkgMzguMDQ4NSAxOC43MjI4QzMwLjk1MyAyMC45MDIyIDI4LjAzNTcgMTguMjc3MSAxOS45NzYxIDE4LjE1MzNDMTMuMjc2MiAxOC4xNTMzIDExLjY5MzkgMjMuNjUxMiAxMi4wNjQ4IDI5LjM3MjFDMTIuMTU3MiAzMS42NDI1IDEyLjQyMTcgMzMuOTAyNyAxMi44NTU5IDM2LjEzM0MxMy40ODExIDM3LjQ2NSAxMy44NTgxIDM4LjkwMDMgMTMuOTY4NCA0MC4zNjhDMTMuODIgNDEuNTY4NiAxMy44MiA0Mi43ODMxIDEzLjk2ODQgNDMuOTgzN0MxMy45ODkzIDQ0LjEyNTkgMTQuMDUyMyA0NC4yNTg2IDE0LjE0OTMgNDQuMzY0NkMxNC4yNDYyIDQ0LjQ3MDUgMTQuMzcyNyA0NC41NDQ5IDE0LjUxMjMgNDQuNTc4MUMxNS4yMjIxIDQ0Ljc5MDEgMTUuOTc4MiA0NC43OTAxIDE2LjY4NzkgNDQuNTc4MUMxNy4wNTg4IDQ0LjU3ODEgMTcuMzMwOCA0NC4yODA5IDE3LjI1NjYgNDMuOTU4OUMxNi40MTA2IDQwLjkzOTYgMTYuMjAwMSAzNy43NzcgMTYuNjM4NSAzNC42NzE5QzE2LjY0NjEgMzQuNTYzNSAxNi42ODMzIDM0LjQ1OTQgMTYuNzQ1OCAzNC4zNzA3QzE2LjgwODMgMzQuMjgyIDE2Ljg5MzkgMzQuMjEyMiAxNi45OTMzIDM0LjE2ODhDMTcuMDkyNiAzNC4xMjU0IDE3LjIwMiAzNC4xMTAxIDE3LjMwOTQgMzQuMTI0NkMxNy40MTY4IDM0LjEzOTEgMTcuNTE4MyAzNC4xODI3IDE3LjYwMjcgMzQuMjUwOUMxOC43NTIyIDM0LjkxNDYgMTkuNzk0MyAzNS43NDk3IDIwLjY5MyAzNi43Mjc0QzIyLjgyMDMgMzkuMjE4MiAyNC4xODUyIDQyLjI3MDggMjQuNjI0IDQ1LjUxOTJDMjQuNjI4IDQ1LjcyMTcgMjQuNjkxIDQ1LjkxODcgMjQuODA1MiA0Ni4wODU5QzI0LjkxOTQgNDYuMjUzIDI1LjA3OTggNDYuMzgzMiAyNS4yNjY4IDQ2LjQ2MDNDMjUuNjU3NCA0Ni42Mjc5IDI2LjA3NzkgNDYuNzE0MyAyNi41MDI5IDQ2LjcxNDNDMjYuOTI3OSA0Ni43MTQzIDI3LjM0ODQgNDYuNjI3OSAyNy43MzkgNDYuNDYwM0MyNy44NDQ0IDQ2LjQwNDggMjcuOTI5NyA0Ni4zMTc2IDI3Ljk4MjkgNDYuMjExQzI4LjAzNjEgNDYuMTA0MyAyOC4wNTQ2IDQ1Ljk4MzYgMjguMDM1NyA0NS44NjU5QzI3LjM0MzUgNDMuMDkyMiAyNS4xMTg1IDM5LjcyNCAyNC45MjA3IDM2Ljc3NjlDMjQuOTIwNyAzNi4xODI2IDI1LjA5MzcgMzYuMTMzIDI1LjU4ODIgMzYuMjA3M0MyNi4yMDggMzYuMzI0NSAyNi44MzY1IDM2LjM5MDkgMjcuNDY3MSAzNi40MDU1QzI3LjY1NzYgMzYuNDIxMSAyNy44MzQ3IDM2LjUwOTggMjcuOTYxNSAzNi42NTMxQzMwLjcyNjQgMzkuNTkzMSAzMi4zNjQxIDQzLjQxNzkgMzIuNTg0OCA0Ny40NTA5QzMyLjU4MTkgNDcuNTYwNiAzMi42MDQ5IDQ3LjY2OTQgMzIuNjUyMiA0Ny43Njg1QzMyLjY5OTUgNDcuODY3NSAzMi43Njk2IDQ3Ljk1MzkgMzIuODU2NyA0OC4wMjA1QzMzLjYyMzEgNDguNjY0NCAzMy42NDc4IDUwLjEwMDggMzMuNzcxNCA1MS40MTM0QzMzLjc4MjggNTEuNTQ3MyAzMy44MzAxIDUxLjY3NTUgMzMuOTA4NSA1MS43ODQ2QzMzLjk4NjkgNTEuODkzNiAzNC4wOTMzIDUxLjk3OTMgMzQuMjE2NCA1Mi4wMzI1QzM1LjIzMDIgNTIuNDAzNyAzNi4zNDI0IDUyLjQwMzcgMzcuMzU2MyA1Mi4wMzI1QzM3LjQ0MDcgNTIuMDAwOSAzNy41MTI3IDUxLjk0MjggMzcuNTYxNiA1MS44NjdDMzcuNjEwNiA1MS43OTEyIDM3LjYzMzkgNTEuNzAxNiAzNy42MjgyIDUxLjYxMTVDMzcuMjU3MyA0OS4wMTExIDM1LjE1NTkgNDYuODU2NiAzNS42OTk4IDQyLjk5MzFDMzUuNjk5OCA0Mi4xNTExIDM2LjQ0MTUgNDAuOTYyMyAzNi44ODY1IDM5LjQwMjFDMzcuMzEzMSAzNy4wMzU0IDM3LjkzMzIgMzQuNzA3OCAzOC43NDA3IDMyLjQ0M0MzOS40MDgyIDMxLjA4MDkgNDAuOTE2MyAyOS4zNDcyIDQzLjA0MjUgMzAuNTYwOEM0NC4xODQ5IDMxLjM0NzIgNDUuNTcwNCAzMS42OTg2IDQ2Ljk0ODcgMzEuNTUxNEM0Ny44OTMyIDMxLjM0NjkgNDguNzU3MSAzMC44Njk2IDQ5LjQzMzggMzAuMTc4NkM1MC4xMTA0IDI5LjQ4NzUgNTAuNTcgMjguNjEzMSA1MC43NTYgMjcuNjYzMkM1MC44MjA4IDI3LjQxMTMgNTAuODEwOSAyNy4xNDYgNTAuNzI3NSAyNi44OTk3QzUwLjY0NCAyNi42NTMzIDUwLjQ5MDcgMjYuNDM2NyA1MC4yODYyIDI2LjI3NjQiIGZpbGw9ImJsYWNrIi8+CjxwYXRoIGQ9Ik0xMDguNDEgNDIuODE5N0MxMDcuMzkyIDQyLjgxOTcgMTA2LjM5NyA0Mi41MTY5IDEwNS41NTEgNDEuOTQ5OEMxMDQuNzA0IDQxLjM4MjcgMTA0LjA0NSA0MC41NzY3IDEwMy42NTcgMzkuNjM0QzEwMy4yNjggMzguNjkxMyAxMDMuMTY4IDM3LjY1NDMgMTAzLjM2OCAzNi42NTQ0QzEwMy41NjkgMzUuNjU0NSAxMDQuMDYxIDM0LjczNjYgMTA0Ljc4MyAzNC4wMTcyQzEwNS41MDQgMzMuMjk3OCAxMDYuNDIzIDMyLjgwOTIgMTA3LjQyMiAzMi42MTMyQzEwOC40MjEgMzIuNDE3MyAxMDkuNDU2IDMyLjUyMjggMTEwLjM5NSAzMi45MTY1QzExMS4zMzQgMzMuMzEwMiAxMTIuMTM2IDMzLjk3NDMgMTEyLjY5OCAzNC44MjQ2QzExMy4yNiAzNS42NzUgMTEzLjU1NyAzNi42NzM0IDExMy41NTIgMzcuNjkzMkMxMTMuNTUyIDM4LjM2ODUgMTEzLjQxOSAzOS4wMzcyIDExMy4xNiAzOS42NjA4QzExMi45MDIgNDAuMjg0MyAxMTIuNTIzIDQwLjg1MDYgMTEyLjA0NSA0MS4zMjdDMTExLjU2NyA0MS44MDMzIDExMSA0Mi4xODA0IDExMC4zNzYgNDIuNDM2NkMxMDkuNzUyIDQyLjY5MjggMTA5LjA4NCA0Mi44MjMgMTA4LjQxIDQyLjgxOTdaTTExMy40NzggMjYuNDk5MlYyOC4wMzQ3TDExMi4zNDEgMjcuMjkxN0MxMTAuOTc1IDI2LjM5OCAxMDkuMzc0IDI1LjkzMjQgMTA3Ljc0MyAyNS45NTQ0QzEwNC43NjYgMjYuMTQ4MSAxMDEuOTc1IDI3LjQ2OTIgOTkuOTM1MyAyOS42NDkzQzk3Ljg5NTggMzEuODI5NSA5Ni43NjA3IDM0LjcwNTQgOTYuNzYwNyAzNy42OTMyQzk2Ljc2MDcgNDAuNjgxMSA5Ny44OTU4IDQzLjU1NyA5OS45MzUzIDQ1LjczNzFDMTAxLjk3NSA0Ny45MTczIDEwNC43NjYgNDkuMjM4NCAxMDcuNzQzIDQ5LjQzMjFDMTA5LjM3MSA0OS40NTcgMTEwLjk3IDQ5LjAwMDQgMTEyLjM0MSA0OC4xMTk1TDExMy40NzggNDcuNDAxNFY0OC44ODczSDExOS42ODRWMjYuNTk4M0wxMTMuNDc4IDI2LjQ5OTJaIiBmaWxsPSJ3aGl0ZSIvPgo8cGF0aCBkPSJNMTMxLjc5OCA0OS40MzIxQzEyNy44OTIgNDkuMDEzMiAxMjQuMTk2IDQ3LjQ1NDQgMTIxLjE2NyA0NC45NDk0TDEyNC41NzkgNDAuNTY2QzEyNi40NzQgNDIuMTk4NyAxMjguODE4IDQzLjIxNzYgMTMxLjMwMyA0My40ODgzSDEzMS41MDFDMTMyLjU3OCA0My42MTUyIDEzMy42NjEgNDMuMzEyOCAxMzQuNTE3IDQyLjY0NjNDMTM0LjU4NyA0Mi41Njk2IDEzNC42NCA0Mi40Nzk2IDEzNC42NzQgNDIuMzgxN0MxMzQuNzA4IDQyLjI4MzggMTM0LjcyMiA0Mi4xODAxIDEzNC43MTUgNDIuMDc2N0MxMzQuNzA1IDQxLjk2MDggMTM0LjY3MiA0MS44NDgxIDEzNC42MTcgNDEuNzQ1OEMxMzQuNTYxIDQxLjY0MzUgMTM0LjQ4NSA0MS41NTM3IDEzNC4zOTQgNDEuNDgyM0MxMzMuMzI3IDQwLjk2NjcgMTMyLjE4MyA0MC42MzE5IDEzMS4wMDcgNDAuNDkxN0MxMjUuNDY5IDM5LjMwMjkgMTIyLjY3NSAzNi44NTExIDEyMi42NzUgMzMuMTg1OEMxMjIuNjc1IDI5LjUyMDUgMTI2LjA2MiAyNS45NTQzIDEzMi4zNjYgMjUuOTU0M0MxMzUuMzYgMjUuOTYyNCAxMzguMjc2IDI2LjkxNTcgMTQwLjY5OCAyOC42Nzg1TDE0MS4xNDMgMjkuMDVMMTM3Ljc4MSAzNC4wMDMxTDEzNy4yMzcgMzMuNjA2OUMxMzUuNzk3IDMyLjU1MjYgMTM0LjA3NCAzMS45NTcyIDEzMi4yOTIgMzEuODk4QzEzMS4yMjMgMzEuODA3NCAxMzAuMTU3IDMyLjExNjEgMTI5LjMwMSAzMi43NjQ4QzEyOS4xNjMgMzIuOTMxMyAxMjkuMDkzIDMzLjE0MzMgMTI5LjEwMyAzMy4zNTkyQzEyOS4xMjEgMzMuNDY1MyAxMjkuMTYxIDMzLjU2NjUgMTI5LjIyMSAzMy42NTYxQzEyOS4yOCAzMy43NDU3IDEyOS4zNTggMzMuODIxNyAxMjkuNDQ5IDMzLjg3OTJDMTMwLjc2NiAzNC40NDkxIDEzMi4xNTUgMzQuODMyNiAxMzMuNTc4IDM1LjAxODVDMTM4LjIwMSAzNi4wMDkxIDE0MS4yNjcgMzcuNjE4OSAxNDEuMjY3IDQyLjI3NDhDMTQxLjI2NyA0Ni40MTA3IDEzNy4yMzcgNDkuNDMyMSAxMzEuNzI0IDQ5LjQzMjEiIGZpbGw9IndoaXRlIi8+CjxwYXRoIGQ9Ik0xNTYuNjkzIDM2LjMzMTJWNDguODg3M0gxNjMuMjk0VjM0LjU3MjhDMTYzLjM0NSAzMy40NDY0IDE2My4xNjUgMzIuMzIxMyAxNjIuNzY1IDMxLjI2NzRDMTYyLjM2NCAzMC4yMTM1IDE2MS43NTMgMjkuMjUzIDE2MC45NjcgMjguNDQ1MkMxNjAuMTgyIDI3LjYzNzUgMTU5LjIzOSAyNi45OTk4IDE1OC4xOTggMjYuNTcxM0MxNTcuMTU3IDI2LjE0MjkgMTU2LjAzOSAyNS45MzI5IDE1NC45MTMgMjUuOTU0NEMxNTMuNDIgMjUuOTQwNCAxNTEuOTU0IDI2LjM1MjcgMTUwLjY4NiAyNy4xNDMyTDE0OS41NzMgMjcuODYxM1YxMy4zOTgySDE0Mi45NzJWNDguODg3M0gxNDkuNjcyVjM2LjMzMTJDMTQ5LjY3MiAzNS4zODUzIDE1MC4wNDcgMzQuNDc4MiAxNTAuNzE1IDMzLjgwOTRDMTUxLjM4MiAzMy4xNDA2IDE1Mi4yODggMzIuNzY0OSAxNTMuMjMyIDMyLjc2NDlDMTU0LjE3NiAzMi43NjQ5IDE1NS4wODIgMzMuMTQwNiAxNTUuNzQ5IDMzLjgwOTRDMTU2LjQxNyAzNC40NzgyIDE1Ni43OTIgMzUuMzg1MyAxNTYuNzkyIDM2LjMzMTIiIGZpbGw9IndoaXRlIi8+CjxwYXRoIGQ9Ik05NS4wNTg4IDEzLjM5ODJIODguNDU3OFY0OC44ODczSDk1LjA1ODhWMTMuMzk4MloiIGZpbGw9IndoaXRlIi8+CjxwYXRoIGQ9Ik03My42NzQyIDQ4Ljg4NzNWMzIuNDQyOUg2OS4zMjNWMjYuNTQ4N0g3My42NzQyVjIyLjYxMUM3My41NzcxIDIxLjM3NDIgNzMuNzQ5MiAyMC4xMzEyIDc0LjE3ODYgMTguOTY3NkM3NC42MDggMTcuODA0IDc1LjI4NDUgMTYuNzQ3NiA3Ni4xNjE0IDE1Ljg3MTZDNzcuMDM4MyAxNC45OTU1IDc4LjA5NDYgMTQuMzIwNyA3OS4yNTczIDEzLjg5MzdDODAuNDIwMSAxMy40NjY2IDgxLjY2MTUgMTMuMjk3NiA4Mi44OTU4IDEzLjM5ODJIODYuMTA5OFYxOS40OTA1SDgyLjkyMDZDODIuNTM5OCAxOS41MTE2IDgyLjE2NzMgMTkuNjEwNSA4MS44MjYxIDE5Ljc4MTJDODEuNDg0OSAxOS45NTIgODEuMTgyMyAyMC4xOTA5IDgwLjkzNjggMjAuNDgzMkM4MC42OTEzIDIwLjc3NTYgODAuNTA4MSAyMS4xMTUxIDgwLjM5ODYgMjEuNDgxMUM4MC4yODkgMjEuODQ3IDgwLjI1NTUgMjIuMjMxNiA4MC4yOTk5IDIyLjYxMVYyNi41NDg3SDg0LjYwMTdWMzIuNDQyOUg4MC4yOTk5VjQ4Ljg4NzNINzMuNjc0MloiIGZpbGw9IndoaXRlIi8+CjwvZz4KPGRlZnM+CjxjbGlwUGF0aCBpZD0iY2xpcDBfMjU5OV8zNDQzIj4KPHJlY3Qgd2lkdGg9IjE2My4yOTQiIGhlaWdodD0iNjIuODA1NSIgZmlsbD0id2hpdGUiLz4KPC9jbGlwUGF0aD4KPC9kZWZzPgo8L3N2Zz4K" alt="Flash on black" style="height:34px" />
-            <span class="brand-logo-tile__cap" style="color:#fff">On black</span>
-          </div>
-          <div class="brand-logo-tile" style="background:#1DFA0F">
-            <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTY0IiBoZWlnaHQ9IjYzIiB2aWV3Qm94PSIwIDAgMTY0IDYzIiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8ZyBjbGlwLXBhdGg9InVybCgjY2xpcDBfNjIzN18xNDE5KSI+CjxwYXRoIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBkPSJNMzEuMzQ4NCA3LjYyOTM5ZS0wNkMzOS42NjI0IDUuNTY2OThlLTA1IDQ3LjYzNjQgMy4zMDgxNiA1My41MTU0IDkuMTk3MjdDNTkuMzk0MiAxNS4wODYzIDYyLjY5NjkgMjMuMDc0IDYyLjY5NyAzMS40MDI0QzYyLjY5NyAzNy42MTMyIDYwLjg1ODQgNDMuNjg1NSA1Ny40MTM4IDQ4Ljg0OTZDNTMuOTY5MiA1NC4wMTM3IDQ5LjA3MjYgNTguMDM4MyA0My4zNDQ1IDYwLjQxNUMzNy42MTYzIDYyLjc5MTggMzEuMzEzMSA2My40MTM4IDI1LjIzMjEgNjIuMjAyMkMxOS4xNTEyIDYwLjk5MDQgMTMuNTY1NSA1Ny45OTkxIDkuMTgxMzcgNTMuNjA3NEM0Ljc5NzM3IDQ5LjIxNTggMS44MTE4NiA0My42MjA3IDAuNjAyMjY1IDM3LjUyOTNDLTAuNjA3Mjk4IDMxLjQzNzkgMC4wMTI5MDQ0IDI1LjEyMzcgMi4zODU0NyAxOS4zODU3QzQuNzU4MTQgMTMuNjQ3NyA4Ljc3NjIgOC43NDI1NyAxMy45MzE0IDUuMjkyQzE5LjA4NjYgMS44NDE0MiAyNS4xNDgyIDcuNjI5MzllLTA2IDMxLjM0ODQgNy42MjkzOWUtMDZaTTM4LjI3MDIgMTAuNDc1NkMzNy40NTM1IDEwLjc5NzggMzYuNzQ5NiAxMS4zNTQyIDM2LjI0NTggMTIuMDc0MkMzNS43NDIxIDEyLjc5NDIgMzUuNDYxIDEzLjY0NjUgMzUuNDM3MiAxNC41MjU0QzM1LjQxMzUgMTUuNDA0NCAzNS42NDc4IDE2LjI3MTMgMzYuMTEyIDE3LjAxNzZDMzYuNTc2MiAxNy43NjM3IDM3LjI0OTUgMTguMzU2NyAzOC4wNDc2IDE4LjcyMjdDMzAuOTUyNCAyMC45MDE4IDI4LjAzNDggMTguMjc3MiAxOS45NzUzIDE4LjE1MzNDMTMuMjc1NyAxOC4xNTM1IDExLjY5MzMgMjMuNjUxMyAxMi4wNjQyIDI5LjM3MjFDMTIuMTU2NiAzMS42NDI1IDEyLjQyMSAzMy45MDI1IDEyLjg1NTIgMzYuMTMyOEMxMy40ODA0IDM3LjQ2NDggMTMuODU3MiAzOC45MDA0IDEzLjk2NzUgNDAuMzY4MkMxMy44MTkxIDQxLjU2ODYgMTMuODE5MSA0Mi43ODI5IDEzLjk2NzUgNDMuOTgzNEMxMy45ODg0IDQ0LjEyNTYgMTQuMDUyMiA0NC4yNTgzIDE0LjE0OTEgNDQuMzY0M0MxNC4yNDYgNDQuNDcwMSAxNC4zNzIgNDQuNTQ0OSAxNC41MTE0IDQ0LjU3ODFDMTUuMjIxMSA0NC43OTAxIDE1Ljk3NzUgNDQuNzkgMTYuNjg3MiA0NC41NzgxQzE3LjA1OCA0NC41NzgxIDE3LjMzMDYgNDQuMjgwOSAxNy4yNTY2IDQzLjk1OUMxNi40MTA1IDQwLjkzOTYgMTYuMiAzNy43NzcgMTYuNjM4NCAzNC42NzE5QzE2LjY0NiAzNC41NjM2IDE2LjY4MzMgMzQuNDU5OCAxNi43NDU4IDM0LjM3MTFDMTYuODA4NCAzNC4yODI0IDE2Ljg5MzUgMzQuMjEyMyAxNi45OTI5IDM0LjE2OUMxNy4wOTIzIDM0LjEyNTYgMTcuMjAxOSAzNC4xMTA1IDE3LjMwOTMgMzQuMTI1QzE3LjQxNjYgMzQuMTM5NSAxNy41MTggMzQuMTgyOSAxNy42MDIzIDM0LjI1MUMxOC43NTE3IDM0LjkxNDYgMTkuNzkzNCAzNS43NDk5IDIwLjY5MjEgMzYuNzI3NUMyMi44MTk0IDM5LjIxODMgMjQuMTg1IDQyLjI3MTIgMjQuNjIzNyA0NS41MTk1QzI0LjYyNzggNDUuNzIxOSAyNC42OTAzIDQ1LjkxODkgMjQuODA0NCA0Ni4wODU5QzI0LjkxODYgNDYuMjUzMSAyNS4wNzk0IDQ2LjM4MjggMjUuMjY2MyA0Ni40NkMyNS42NTcgNDYuNjI3NiAyNi4wNzc3IDQ2LjcxMzkgMjYuNTAyNyA0Ni43MTM5QzI2LjkyNzUgNDYuNzEzOCAyNy4zNDg0IDQ2LjYyNzUgMjcuNzM5IDQ2LjQ2QzI3Ljg0NDEgNDYuNDA0NSAyNy45MjkgNDYuMzE3NCAyNy45ODIxIDQ2LjIxMDlDMjguMDM1MyA0Ni4xMDQ0IDI4LjA1MzcgNDUuOTgzOSAyOC4wMzQ5IDQ1Ljg2NjJDMjcuMzQyNyA0My4wOTI2IDI1LjExODYgMzkuNzI0MyAyNC45MjA2IDM2Ljc3NzRDMjQuOTIwNiAzNi4xODMgMjUuMDkzMyAzNi4xMzI4IDI1LjU4NzYgMzYuMjA3QzI2LjIwNzQgMzYuMzI0MyAyNi44MzU5IDM2LjM5MDcgMjcuNDY2NSAzNi40MDUzQzI3LjY1NyAzNi40MjA5IDI3LjgzMzkgMzYuNTEwMSAyNy45NjA3IDM2LjY1MzNDMzAuNzI1NSAzOS41OTMzIDMyLjM2NCA0My40MTgyIDMyLjU4NDcgNDcuNDUxMkMzMi41ODE4IDQ3LjU2MDggMzIuNjA0OCA0Ny42Njk2IDMyLjY1MjEgNDcuNzY4NkMzMi42OTkzIDQ3Ljg2NzUgMzIuNzY5MSA0Ny45NTQgMzIuODU2MiA0OC4wMjA1QzMzLjYyMjUgNDguNjY0NCAzMy42NDc2IDUwLjEwMDYgMzMuNzcxMiA1MS40MTMxQzMzLjc4MjYgNTEuNTQ2OCAzMy44Mjk3IDUxLjY3NTIgMzMuOTA3OSA1MS43ODQyQzMzLjk4NjIgNTEuODkzMSAzNC4wOTI2IDUxLjk3OSAzNC4yMTU1IDUyLjAzMjJDMzUuMjI5NCA1Mi40MDM0IDM2LjM0MjQgNTIuNDAzNCAzNy4zNTYyIDUyLjAzMjJDMzcuNDQwNCA1Mi4wMDA1IDM3LjUxMjQgNTEuOTQyOCAzNy41NjEyIDUxLjg2NzJDMzcuNjEwMiA1MS43OTE0IDM3LjYzMzQgNTEuNzAxNCAzNy42Mjc3IDUxLjYxMTNDMzcuMjU2OCA0OS4wMTEgMzUuMTU1MSA0Ni44NTY1IDM1LjY5ODkgNDIuOTkzMkMzNS42OTg5IDQyLjE1MTIgMzYuNDQxNCA0MC45NjI1IDM2Ljg4NjQgMzkuNDAyNEMzNy4zMTMgMzcuMDM1OCAzNy45MzI2IDM0LjcwODEgMzguNzQgMzIuNDQzNEMzOS40MDc0IDMxLjA4MTMgNDAuOTE1NyAyOS4zNDc0IDQzLjA0MTcgMzAuNTYwNkM0NC4xODQgMzEuMzQ2OSA0NS41Njk3IDMxLjY5ODggNDYuOTQ4IDMxLjU1MThDNDcuODkyNCAzMS4zNDcyIDQ4Ljc1NjcgMzAuODY5NyA0OS40MzMzIDMwLjE3ODdDNTAuMTEgMjkuNDg3NyA1MC41Njk3IDI4LjYxMyA1MC43NTU2IDI3LjY2MzFDNTAuODIwNCAyNy40MTEyIDUwLjgxMDcgMjcuMTQ1NyA1MC43MjczIDI2Ljg5OTRDNTAuNjQzOCAyNi42NTMyIDUwLjQ5MDMgMjYuNDM2NyA1MC4yODU5IDI2LjI3NjRMNTAuMDQzNyAyNi4yMUM0OC45NjkzIDI1LjQ4OTYgNDguMDgyOCAyNC41MTk2IDQ3LjQ2MTYgMjMuMzgwOUM0Ni43OTkgMjIuMTY2MiA0Ni40NjAzIDIwLjgwMDEgNDYuNDc4MiAxOS40MTZDNDcuMDQ5NyAxOS4yNzM3IDQ3LjU4NCAxOS4wMSA0OC4wNDQ2IDE4LjY0MjZDNDguNTA1NCAxOC4yNzUxIDQ4Ljg4MTcgMTcuODEyMyA0OS4xNDgyIDE3LjI4NjFDNDkuNDY1MiAxNi42Nzk3IDQ5LjU4MTUgMTUuOTg3NSA0OS40NzkyIDE1LjMxMDZDNDkuMzc2OSAxNC42MzM5IDQ5LjA2MTYgMTQuMDA3NyA0OC41Nzk4IDEzLjUyMjVDNDguNTQ3NSAxMy40OTM0IDQ4LjUwNzUgMTMuNDc0MiA0OC40NjQ2IDEzLjQ2NzhDNDguNDIxNSAxMy40NjE0IDQ4LjM3NzEgMTMuNDY3OSA0OC4zMzc2IDEzLjQ4NjNDNDguMjk4MiAxMy41MDQ4IDQ4LjI2NDcgMTMuNTM0MSA0OC4yNDE5IDEzLjU3MTNDNDguMjE5MSAxMy42MDg1IDQ4LjIwNzMgMTMuNjUxNyA0OC4yMDg3IDEzLjY5NTNDNDguMjgwNSAxNC4wMjA5IDQ4LjI4NjYgMTQuMzU3OCA0OC4yMjUzIDE0LjY4NTZDNDguMTY0IDE1LjAxMzQgNDguMDM3IDE1LjMyNiA0Ny44NTIzIDE1LjYwMzVDNDcuNjY3NiAxNS44ODEgNDcuNDI4NiAxNi4xMTggNDcuMTUwMSAxNi4zMDA4QzQ2Ljg3MTYgMTYuNDgzNiA0Ni41NTg5IDE2LjYwODEgNDYuMjMxMiAxNi42NjdDNDMuNjgxNyAxNy4xMTk0IDQxLjA1NDUgMTYuNjU0NSAzOC44MTQyIDE1LjM1NDVDMzcuNjAzMSAxNC4yMTU0IDM3LjQ3OTYgMTIuODc4MiAzOC41NjcxIDEwLjc3MzRDMzguNTg2OSAxMC43MzIgMzguNTkzNCAxMC42ODUgMzguNTg1NyAxMC42Mzk3QzM4LjU3NzkgMTAuNTk0MyAzOC41NTY1IDEwLjU1MjEgMzguNTI0MSAxMC41MTk1QzM4LjQ5MTYgMTAuNDg2OSAzOC40NDk0IDEwLjQ2NDggMzguNDA0IDEwLjQ1N0MzOC4zNTg3IDEwLjQ0OTMgMzguMzExNyAxMC40NTU3IDM4LjI3MDIgMTAuNDc1NloiIGZpbGw9ImJsYWNrIi8+CjxwYXRoIGQ9Ik0xMDguNDEgNDIuODE5N0MxMDcuMzkxIDQyLjgxOTcgMTA2LjM5NiA0Mi41MTY5IDEwNS41NSA0MS45NDk4QzEwNC43MDQgNDEuMzgyNyAxMDQuMDQ1IDQwLjU3NjcgMTAzLjY1NiAzOS42MzRDMTAzLjI2OCAzOC42OTEzIDEwMy4xNjcgMzcuNjU0MyAxMDMuMzY4IDM2LjY1NDRDMTAzLjU2OCAzNS42NTQ1IDEwNC4wNjEgMzQuNzM2NiAxMDQuNzgyIDM0LjAxNzJDMTA1LjUwNCAzMy4yOTc4IDEwNi40MjIgMzIuODA5MiAxMDcuNDIyIDMyLjYxMzJDMTA4LjQyMSAzMi40MTczIDEwOS40NTUgMzIuNTIyOCAxMTAuMzk1IDMyLjkxNjVDMTExLjMzNCAzMy4zMTAyIDExMi4xMzUgMzMuOTc0MyAxMTIuNjk3IDM0LjgyNDZDMTEzLjI1OSAzNS42NzUgMTEzLjU1NyAzNi42NzM0IDExMy41NTIgMzcuNjkzMkMxMTMuNTUyIDM4LjM2ODUgMTEzLjQxOSAzOS4wMzcyIDExMy4xNiAzOS42NjA4QzExMi45MDEgNDAuMjg0MyAxMTIuNTIyIDQwLjg1MDYgMTEyLjA0NCA0MS4zMjdDMTExLjU2NiA0MS44MDMzIDExMC45OTkgNDIuMTgwNCAxMTAuMzc2IDQyLjQzNjZDMTA5Ljc1MiA0Mi42OTI4IDEwOS4wODQgNDIuODIzIDEwOC40MSA0Mi44MTk3Wk0xMTMuNDc4IDI2LjQ5OTJWMjguMDM0N0wxMTIuMzQgMjcuMjkxN0MxMTAuOTc0IDI2LjM5OCAxMDkuMzczIDI1LjkzMjQgMTA3Ljc0MiAyNS45NTQ0QzEwNC43NjYgMjYuMTQ4MSAxMDEuOTc0IDI3LjQ2OTIgOTkuOTM0OCAyOS42NDkzQzk3Ljg5NTMgMzEuODI5NSA5Ni43NjAzIDM0LjcwNTQgOTYuNzYwMyAzNy42OTMyQzk2Ljc2MDMgNDAuNjgxMSA5Ny44OTUzIDQzLjU1NyA5OS45MzQ4IDQ1LjczNzFDMTAxLjk3NCA0Ny45MTczIDEwNC43NjYgNDkuMjM4NCAxMDcuNzQyIDQ5LjQzMjFDMTA5LjM3IDQ5LjQ1NyAxMTAuOTcgNDkuMDAwNCAxMTIuMzQgNDguMTE5NUwxMTMuNDc4IDQ3LjQwMTRWNDguODg3M0gxMTkuNjgzVjI2LjU5ODNMMTEzLjQ3OCAyNi40OTkyWiIgZmlsbD0iYmxhY2siLz4KPHBhdGggZD0iTTEzMS43OTcgNDkuNDMyMUMxMjcuODkyIDQ5LjAxMzIgMTI0LjE5NSA0Ny40NTQ0IDEyMS4xNjcgNDQuOTQ5NEwxMjQuNTc4IDQwLjU2NkMxMjYuNDczIDQyLjE5ODcgMTI4LjgxOCA0My4yMTc2IDEzMS4zMDMgNDMuNDg4M0gxMzEuNTAxQzEzMi41NzcgNDMuNjE1MiAxMzMuNjYxIDQzLjMxMjggMTM0LjUxNyA0Mi42NDYzQzEzNC41ODYgNDIuNTY5NiAxMzQuNjQgNDIuNDc5NiAxMzQuNjc0IDQyLjM4MTdDMTM0LjcwOCA0Mi4yODM4IDEzNC43MjIgNDIuMTgwMSAxMzQuNzE1IDQyLjA3NjdDMTM0LjcwNSA0MS45NjA4IDEzNC42NzEgNDEuODQ4MSAxMzQuNjE2IDQxLjc0NThDMTM0LjU2MSA0MS42NDM1IDEzNC40ODUgNDEuNTUzNyAxMzQuMzkzIDQxLjQ4MjNDMTMzLjMyNyA0MC45NjY3IDEzMi4xODIgNDAuNjMxOSAxMzEuMDA2IDQwLjQ5MTdDMTI1LjQ2OCAzOS4zMDI5IDEyMi42NzUgMzYuODUxMSAxMjIuNjc1IDMzLjE4NThDMTIyLjY3NSAyOS41MjA1IDEyNi4wNjIgMjUuOTU0MyAxMzIuMzY2IDI1Ljk1NDNDMTM1LjM2IDI1Ljk2MjQgMTM4LjI3NSAyNi45MTU3IDE0MC42OTggMjguNjc4NUwxNDEuMTQzIDI5LjA1TDEzNy43OCAzNC4wMDMxTDEzNy4yMzYgMzMuNjA2OUMxMzUuNzk3IDMyLjU1MjYgMTM0LjA3NCAzMS45NTcyIDEzMi4yOTIgMzEuODk4QzEzMS4yMjIgMzEuODA3NCAxMzAuMTU3IDMyLjExNjEgMTI5LjMgMzIuNzY0OEMxMjkuMTYzIDMyLjkzMTMgMTI5LjA5MiAzMy4xNDMzIDEyOS4xMDMgMzMuMzU5MkMxMjkuMTIxIDMzLjQ2NTMgMTI5LjE2MSAzMy41NjY1IDEyOS4yMiAzMy42NTYxQzEyOS4yOCAzMy43NDU3IDEyOS4zNTggMzMuODIxNyAxMjkuNDQ5IDMzLjg3OTJDMTMwLjc2NSAzNC40NDkxIDEzMi4xNTUgMzQuODMyNiAxMzMuNTc3IDM1LjAxODVDMTM4LjIwMSAzNi4wMDkxIDE0MS4yNjYgMzcuNjE4OSAxNDEuMjY2IDQyLjI3NDhDMTQxLjI2NiA0Ni40MTA3IDEzNy4yMzYgNDkuNDMyMSAxMzEuNzIzIDQ5LjQzMjEiIGZpbGw9ImJsYWNrIi8+CjxwYXRoIGQ9Ik0xNTYuNjkzIDM2LjMzMTJWNDguODg3M0gxNjMuMjk0VjM0LjU3MjhDMTYzLjM0NSAzMy40NDY0IDE2My4xNjQgMzIuMzIxMyAxNjIuNzY0IDMxLjI2NzRDMTYyLjM2NCAzMC4yMTM1IDE2MS43NTIgMjkuMjUzIDE2MC45NjcgMjguNDQ1MkMxNjAuMTgxIDI3LjYzNzUgMTU5LjIzOSAyNi45OTk4IDE1OC4xOTcgMjYuNTcxM0MxNTcuMTU2IDI2LjE0MjkgMTU2LjAzOCAyNS45MzI5IDE1NC45MTMgMjUuOTU0NEMxNTMuNDE5IDI1Ljk0MDQgMTUxLjk1MyAyNi4zNTI3IDE1MC42ODUgMjcuMTQzMkwxNDkuNTczIDI3Ljg2MTNWMTMuMzk4MkgxNDIuOTcyVjQ4Ljg4NzNIMTQ5LjY3MlYzNi4zMzEyQzE0OS42NzIgMzUuMzg1MyAxNTAuMDQ3IDM0LjQ3ODIgMTUwLjcxNCAzMy44MDk0QzE1MS4zODIgMzMuMTQwNiAxNTIuMjg3IDMyLjc2NDkgMTUzLjIzMiAzMi43NjQ5QzE1NC4xNzYgMzIuNzY0OSAxNTUuMDgxIDMzLjE0MDYgMTU1Ljc0OSAzMy44MDk0QzE1Ni40MTcgMzQuNDc4MiAxNTYuNzkyIDM1LjM4NTMgMTU2Ljc5MiAzNi4zMzEyIiBmaWxsPSJibGFjayIvPgo8cGF0aCBkPSJNOTUuMDU5IDEzLjM5ODJIODguNDU4VjQ4Ljg4NzNIOTUuMDU5VjEzLjM5ODJaIiBmaWxsPSJibGFjayIvPgo8cGF0aCBkPSJNNzMuNjc0IDQ4Ljg4NzNWMzIuNDQyOUg2OS4zMjI4VjI2LjU0ODdINzMuNjc0VjIyLjYxMUM3My41NzY5IDIxLjM3NDIgNzMuNzQ4OSAyMC4xMzEyIDc0LjE3ODQgMTguOTY3NkM3NC42MDc4IDE3LjgwNCA3NS4yODQzIDE2Ljc0NzYgNzYuMTYxMSAxNS44NzE2Qzc3LjAzOCAxNC45OTU1IDc4LjA5NDMgMTQuMzIwNyA3OS4yNTcxIDEzLjg5MzdDODAuNDE5OCAxMy40NjY2IDgxLjY2MTIgMTMuMjk3NiA4Mi44OTU2IDEzLjM5ODJIODYuMTA5NlYxOS40OTA1SDgyLjkyMDNDODIuNTM5NSAxOS41MTE2IDgyLjE2NyAxOS42MTA1IDgxLjgyNTkgMTkuNzgxMkM4MS40ODQ3IDE5Ljk1MiA4MS4xODIxIDIwLjE5MDkgODAuOTM2NiAyMC40ODMyQzgwLjY5MSAyMC43NzU2IDgwLjUwNzggMjEuMTE1MSA4MC4zOTgzIDIxLjQ4MTFDODAuMjg4OCAyMS44NDcgODAuMjU1MiAyMi4yMzE2IDgwLjI5OTcgMjIuNjExVjI2LjU0ODdIODQuNjAxNFYzMi40NDI5SDgwLjI5OTdWNDguODg3M0g3My42NzRaIiBmaWxsPSJibGFjayIvPgo8L2c+CjxkZWZzPgo8Y2xpcFBhdGggaWQ9ImNsaXAwXzYyMzdfMTQxOSI+CjxyZWN0IHdpZHRoPSIxNjMuMjk0IiBoZWlnaHQ9IjYyLjgwNTUiIGZpbGw9IndoaXRlIi8+CjwvY2xpcFBhdGg+CjwvZGVmcz4KPC9zdmc+Cg==" alt="Flash on green" style="height:30px" />
-            <span class="brand-logo-tile__cap" style="color:#000">On Flash Green — black mark</span>
-          </div>
-          <div class="brand-logo-tile" style="background:#fff;border:1px solid #e2e2e2">
-            <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTY0IiBoZWlnaHQ9IjYzIiB2aWV3Qm94PSIwIDAgMTY0IDYzIiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8ZyBjbGlwLXBhdGg9InVybCgjY2xpcDBfMjU5OV8zNDI1KSI+CjxwYXRoIGQ9Ik02Mi42OTcxIDMxLjQwMjdDNjIuNjk3MSAzNy42MTM2IDYwLjg1ODYgNDMuNjg1IDU3LjQxMzkgNDguODQ5MkM1My45NjkzIDU0LjAxMzMgNDkuMDczMyA1OC4wMzgzIDQzLjM0NTEgNjAuNDE1MUMzNy42MTY5IDYyLjc5MTkgMzEuMzEzOCA2My40MTM4IDI1LjIzMjggNjIuMjAyMUMxOS4xNTE4IDYwLjk5MDQgMTMuNTY2IDU3Ljk5OTYgOS4xODE4IDUzLjYwNzhDNC43OTc2MyA0OS4yMTYxIDEuODExOTYgNDMuNjIwNiAwLjYwMjM3MiAzNy41MjkxQy0wLjYwNzIxOCAzMS40Mzc2IDAuMDEzNTY5NiAyNS4xMjM1IDIuMzg2MjcgMTkuMzg1NEM0Ljc1ODk2IDEzLjY0NzMgOC43NzY5OSA4Ljc0Mjg4IDEzLjkzMjIgNS4yOTIzQzE5LjA4NzUgMS44NDE3MiAyNS4xNDg0IC03LjYyOTM5ZS0wNiAzMS4zNDg2IC03LjYyOTM5ZS0wNkMzOS42NjI3IC03LjYyOTM5ZS0wNiA0Ny42MzYzIDMuMzA4NTEgNTMuNTE1MyA5LjE5NzY3QzU5LjM5NDMgMTUuMDg2OCA2Mi42OTcxIDIzLjA3NDIgNjIuNjk3MSAzMS40MDI3WiIgZmlsbD0iIzFERkEwRiIvPgo8cGF0aCBkPSJNNTAuMjYyMSAyNi4zNTA3QzQ5LjA4OTUgMjUuNjE4MiA0OC4xMjU0IDI0LjU5NTIgNDcuNDYyOCAyMy4zODA1QzQ2LjgwMDIgMjIuMTY1OCA0Ni40NjE1IDIwLjgwMDQgNDYuNDc5NSAxOS40MTYzQzQ3LjA1MSAxOS4yNzM5IDQ3LjU4NTMgMTkuMDEwMSA0OC4wNDYgMTguNjQyNkM0OC41MDY3IDE4LjI3NTEgNDguODgzMSAxNy44MTI2IDQ5LjE0OTUgMTcuMjg2NUM0OS40NjY2IDE2LjY4IDQ5LjU4MjQgMTUuOTg4IDQ5LjQ4MDIgMTUuMzExMUM0OS4zNzc5IDE0LjYzNDEgNDkuMDYyOSAxNC4wMDc1IDQ4LjU4MDggMTMuNTIyMUM0OC41NDg0IDEzLjQ5MyA0OC41MDgyIDEzLjQ3NCA0OC40NjUgMTMuNDY3NkM0OC40MjE5IDEzLjQ2MTIgNDguMzc3OSAxMy40Njc3IDQ4LjMzODQgMTMuNDg2MUM0OC4yOTg5IDEzLjUwNDYgNDguMjY1NiAxMy41MzQzIDQ4LjI0MjggMTMuNTcxNUM0OC4yMiAxMy42MDg3IDQ4LjIwODYgMTMuNjUxOCA0OC4yMSAxMy42OTU0QzQ4LjI4MTggMTQuMDIxMSA0OC4yODczIDE0LjM1OCA0OC4yMjU5IDE0LjY4NTlDNDguMTY0NiAxNS4wMTM3IDQ4LjAzNzcgMTUuMzI1OCA0Ny44NTMgMTUuNjAzNEM0Ny42NjgzIDE1Ljg4MDkgNDcuNDI5NSAxNi4xMTgyIDQ3LjE1MSAxNi4zMDExQzQ2Ljg3MjUgMTYuNDgzOSA0Ni41NiAxNi42MDg0IDQ2LjIzMjIgMTYuNjY3M0M0My42ODI4IDE3LjExOTcgNDEuMDU1OCAxNi42NTQ4IDM4LjgxNTQgMTUuMzU0N0MzNy42MDQgMTQuMjE1NSAzNy40ODAzIDEyLjg3ODIgMzguNTY4MSAxMC43NzMxQzM4LjU4OCAxMC43MzE1IDM4LjU5NDUgMTAuNjg0NyAzOC41ODY3IDEwLjYzOTNDMzguNTc4OSAxMC41OTM5IDM4LjU1NzIgMTAuNTUyIDM4LjUyNDcgMTAuNTE5NUMzOC40OTIxIDEwLjQ4NjkgMzguNDUwNCAxMC40NjUxIDM4LjQwNSAxMC40NTczQzM4LjM1OTcgMTAuNDQ5NSAzOC4zMTMgMTAuNDU2MSAzOC4yNzE1IDEwLjQ3NTlDMzcuNDU0NyAxMC43OTgxIDM2Ljc1MDUgMTEuMzUzOCAzNi4yNDY3IDEyLjA3MzlDMzUuNzQyOCAxMi43OTQgMzUuNDYxNSAxMy42NDY2IDM1LjQzNzggMTQuNTI1NkMzNS40MTQxIDE1LjQwNDcgMzUuNjQ5IDE2LjI3MTMgMzYuMTEzMyAxNy4wMTc2QzM2LjU3NzYgMTcuNzYzOSAzNy4yNTA3IDE4LjM1NjkgMzguMDQ5IDE4LjcyMjhDMzAuOTUzNSAyMC45MDIyIDI4LjAzNjIgMTguMjc3MSAxOS45NzY2IDE4LjE1MzNDMTMuMjc2NyAxOC4xNTMzIDExLjY5NDQgMjMuNjUxMiAxMi4wNjUzIDI5LjM3MjFDMTIuMTU3NyAzMS42NDI1IDEyLjQyMjIgMzMuOTAyNyAxMi44NTY0IDM2LjEzM0MxMy40ODE2IDM3LjQ2NSAxMy44NTg2IDM4LjkwMDMgMTMuOTY4OSA0MC4zNjhDMTMuODIwNSA0MS41Njg2IDEzLjgyMDUgNDIuNzgzMSAxMy45Njg5IDQzLjk4MzdDMTMuOTg5OCA0NC4xMjU5IDE0LjA1MjggNDQuMjU4NiAxNC4xNDk3IDQ0LjM2NDZDMTQuMjQ2NyA0NC40NzA1IDE0LjM3MzIgNDQuNTQ0OSAxNC41MTI4IDQ0LjU3ODFDMTUuMjIyNiA0NC43OTAxIDE1Ljk3ODcgNDQuNzkwMSAxNi42ODg0IDQ0LjU3ODFDMTcuMDU5MyA0NC41NzgxIDE3LjMzMTIgNDQuMjgwOSAxNy4yNTcxIDQzLjk1ODlDMTYuNDExIDQwLjkzOTYgMTYuMjAwNiAzNy43NzcgMTYuNjM5IDM0LjY3MTlDMTYuNjQ2NiAzNC41NjM1IDE2LjY4MzcgMzQuNDU5NCAxNi43NDYzIDM0LjM3MDdDMTYuODA4OCAzNC4yODIgMTYuODk0NCAzNC4yMTIyIDE2Ljk5MzggMzQuMTY4OEMxNy4wOTMxIDM0LjEyNTQgMTcuMjAyNSAzNC4xMTAxIDE3LjMwOTkgMzQuMTI0NkMxNy40MTczIDM0LjEzOTEgMTcuNTE4NyAzNC4xODI3IDE3LjYwMzIgMzQuMjUwOUMxOC43NTI3IDM0LjkxNDYgMTkuNzk0OCAzNS43NDk3IDIwLjY5MzUgMzYuNzI3NEMyMi44MjA4IDM5LjIxODIgMjQuMTg1NyA0Mi4yNzA4IDI0LjYyNDUgNDUuNTE5MkMyNC42Mjg1IDQ1LjcyMTcgMjQuNjkxNSA0NS45MTg3IDI0LjgwNTcgNDYuMDg1OUMyNC45MTk4IDQ2LjI1MyAyNS4wODAzIDQ2LjM4MzIgMjUuMjY3MiA0Ni40NjAzQzI1LjY1NzkgNDYuNjI3OSAyNi4wNzg0IDQ2LjcxNDMgMjYuNTAzNCA0Ni43MTQzQzI2LjkyODMgNDYuNzE0MyAyNy4zNDg5IDQ2LjYyNzkgMjcuNzM5NSA0Ni40NjAzQzI3Ljg0NDggNDYuNDA0OCAyNy45MzAyIDQ2LjMxNzYgMjcuOTgzNCA0Ni4yMTFDMjguMDM2NiA0Ni4xMDQzIDI4LjA1NSA0NS45ODM2IDI4LjAzNjIgNDUuODY1OUMyNy4zNDM5IDQzLjA5MjIgMjUuMTE4OSAzOS43MjQgMjQuOTIxMiAzNi43NzY5QzI0LjkyMTIgMzYuMTgyNiAyNS4wOTQyIDM2LjEzMyAyNS41ODg3IDM2LjIwNzNDMjYuMjA4NSAzNi4zMjQ1IDI2LjgzNyAzNi4zOTA5IDI3LjQ2NzYgMzYuNDA1NUMyNy42NTgxIDM2LjQyMTEgMjcuODM1MiAzNi41MDk4IDI3Ljk2MiAzNi42NTMxQzMwLjcyNjkgMzkuNTkzMSAzMi4zNjQ2IDQzLjQxNzkgMzIuNTg1MyA0Ny40NTA5QzMyLjU4MjMgNDcuNTYwNiAzMi42MDU0IDQ3LjY2OTQgMzIuNjUyNyA0Ny43Njg1QzMyLjcgNDcuODY3NSAzMi43NzAxIDQ3Ljk1MzkgMzIuODU3MiA0OC4wMjA1QzMzLjYyMzYgNDguNjY0NCAzMy42NDgzIDUwLjEwMDggMzMuNzcxOSA1MS40MTM0QzMzLjc4MzMgNTEuNTQ3MyAzMy44MzA2IDUxLjY3NTUgMzMuOTA5IDUxLjc4NDZDMzMuOTg3NCA1MS44OTM2IDM0LjA5MzggNTEuOTc5MyAzNC4yMTY5IDUyLjAzMjVDMzUuMjMwNyA1Mi40MDM3IDM2LjM0MjkgNTIuNDAzNyAzNy4zNTY3IDUyLjAzMjVDMzcuNDQxMSA1Mi4wMDA5IDM3LjUxMzEgNTEuOTQyOCAzNy41NjIxIDUxLjg2N0MzNy42MTExIDUxLjc5MTIgMzcuNjM0NCA1MS43MDE2IDM3LjYyODcgNTEuNjExNUMzNy4yNTc4IDQ5LjAxMTEgMzUuMTU2NCA0Ni44NTY2IDM1LjcwMDMgNDIuOTkzMUMzNS43MDAzIDQyLjE1MTEgMzYuNDQyIDQwLjk2MjMgMzYuODg3IDM5LjQwMjFDMzcuMzEzNiAzNy4wMzU0IDM3LjkzMzcgMzQuNzA3OCAzOC43NDEyIDMyLjQ0M0MzOS40MDg3IDMxLjA4MDkgNDAuOTE2OCAyOS4zNDcyIDQzLjA0MyAzMC41NjA4QzQ0LjE4NTQgMzEuMzQ3MiA0NS41NzA5IDMxLjY5ODYgNDYuOTQ5MiAzMS41NTE0QzQ3Ljg5MzcgMzEuMzQ2OSA0OC43NTc2IDMwLjg2OTYgNDkuNDM0MiAzMC4xNzg2QzUwLjExMDkgMjkuNDg3NSA1MC41NzA1IDI4LjYxMzEgNTAuNzU2NSAyNy42NjMyQzUwLjgyMTMgMjcuNDExMyA1MC44MTE0IDI3LjE0NiA1MC43Mjc5IDI2Ljg5OTdDNTAuNjQ0NSAyNi42NTMzIDUwLjQ5MTIgMjYuNDM2NyA1MC4yODY3IDI2LjI3NjQiIGZpbGw9ImJsYWNrIi8+CjxwYXRoIGQ9Ik0xMDguNDEgNDIuODE5N0MxMDcuMzkyIDQyLjgxOTcgMTA2LjM5NyA0Mi41MTY5IDEwNS41NTEgNDEuOTQ5OEMxMDQuNzA0IDQxLjM4MjcgMTA0LjA0NSA0MC41NzY3IDEwMy42NTcgMzkuNjM0QzEwMy4yNjggMzguNjkxMyAxMDMuMTY4IDM3LjY1NDMgMTAzLjM2OCAzNi42NTQ0QzEwMy41NjkgMzUuNjU0NSAxMDQuMDYxIDM0LjczNjYgMTA0Ljc4MyAzNC4wMTcyQzEwNS41MDQgMzMuMjk3OCAxMDYuNDIzIDMyLjgwOTIgMTA3LjQyMiAzMi42MTMyQzEwOC40MjEgMzIuNDE3MyAxMDkuNDU2IDMyLjUyMjggMTEwLjM5NSAzMi45MTY1QzExMS4zMzQgMzMuMzEwMiAxMTIuMTM2IDMzLjk3NDMgMTEyLjY5OCAzNC44MjQ2QzExMy4yNiAzNS42NzUgMTEzLjU1NyAzNi42NzM0IDExMy41NTIgMzcuNjkzMkMxMTMuNTUyIDM4LjM2ODUgMTEzLjQxOSAzOS4wMzcyIDExMy4xNiAzOS42NjA4QzExMi45MDIgNDAuMjg0MyAxMTIuNTIzIDQwLjg1MDYgMTEyLjA0NSA0MS4zMjdDMTExLjU2NyA0MS44MDMzIDExMSA0Mi4xODA0IDExMC4zNzYgNDIuNDM2NkMxMDkuNzUyIDQyLjY5MjggMTA5LjA4NCA0Mi44MjMgMTA4LjQxIDQyLjgxOTdaTTExMy40NzggMjYuNDk5MlYyOC4wMzQ3TDExMi4zNDEgMjcuMjkxN0MxMTAuOTc1IDI2LjM5OCAxMDkuMzc0IDI1LjkzMjQgMTA3Ljc0MyAyNS45NTQ0QzEwNC43NjYgMjYuMTQ4MSAxMDEuOTc1IDI3LjQ2OTIgOTkuOTM1MyAyOS42NDkzQzk3Ljg5NTggMzEuODI5NSA5Ni43NjA3IDM0LjcwNTQgOTYuNzYwNyAzNy42OTMyQzk2Ljc2MDcgNDAuNjgxMSA5Ny44OTU4IDQzLjU1NyA5OS45MzUzIDQ1LjczNzFDMTAxLjk3NSA0Ny45MTczIDEwNC43NjYgNDkuMjM4NCAxMDcuNzQzIDQ5LjQzMjFDMTA5LjM3MSA0OS40NTcgMTEwLjk3IDQ5LjAwMDQgMTEyLjM0MSA0OC4xMTk1TDExMy40NzggNDcuNDAxNFY0OC44ODczSDExOS42ODRWMjYuNTk4M0wxMTMuNDc4IDI2LjQ5OTJaIiBmaWxsPSJibGFjayIvPgo8cGF0aCBkPSJNMTMxLjc5OCA0OS40MzIxQzEyNy44OTIgNDkuMDEzMiAxMjQuMTk2IDQ3LjQ1NDQgMTIxLjE2NyA0NC45NDk0TDEyNC41NzkgNDAuNTY2QzEyNi40NzQgNDIuMTk4NyAxMjguODE4IDQzLjIxNzYgMTMxLjMwMyA0My40ODgzSDEzMS41MDFDMTMyLjU3OCA0My42MTUyIDEzMy42NjEgNDMuMzEyOCAxMzQuNTE3IDQyLjY0NjNDMTM0LjU4NyA0Mi41Njk2IDEzNC42NCA0Mi40Nzk2IDEzNC42NzQgNDIuMzgxN0MxMzQuNzA4IDQyLjI4MzggMTM0LjcyMiA0Mi4xODAxIDEzNC43MTUgNDIuMDc2N0MxMzQuNzA1IDQxLjk2MDggMTM0LjY3MiA0MS44NDgxIDEzNC42MTYgNDEuNzQ1OEMxMzQuNTYxIDQxLjY0MzUgMTM0LjQ4NSA0MS41NTM3IDEzNC4zOTMgNDEuNDgyM0MxMzMuMzI3IDQwLjk2NjcgMTMyLjE4MiA0MC42MzE5IDEzMS4wMDYgNDAuNDkxN0MxMjUuNDY5IDM5LjMwMjkgMTIyLjY3NSAzNi44NTExIDEyMi42NzUgMzMuMTg1OEMxMjIuNjc1IDI5LjUyMDUgMTI2LjA2MiAyNS45NTQzIDEzMi4zNjYgMjUuOTU0M0MxMzUuMzYgMjUuOTYyNCAxMzguMjc2IDI2LjkxNTcgMTQwLjY5OCAyOC42Nzg1TDE0MS4xNDMgMjkuMDVMMTM3Ljc4IDM0LjAwMzFMMTM3LjIzNyAzMy42MDY5QzEzNS43OTcgMzIuNTUyNiAxMzQuMDc0IDMxLjk1NzIgMTMyLjI5MiAzMS44OThDMTMxLjIyMiAzMS44MDc0IDEzMC4xNTcgMzIuMTE2MSAxMjkuMzAxIDMyLjc2NDhDMTI5LjE2MyAzMi45MzEzIDEyOS4wOTIgMzMuMTQzMyAxMjkuMTAzIDMzLjM1OTJDMTI5LjEyMSAzMy40NjUzIDEyOS4xNjEgMzMuNTY2NSAxMjkuMjIxIDMzLjY1NjFDMTI5LjI4IDMzLjc0NTcgMTI5LjM1OCAzMy44MjE3IDEyOS40NDkgMzMuODc5MkMxMzAuNzY2IDM0LjQ0OTEgMTMyLjE1NSAzNC44MzI2IDEzMy41NzggMzUuMDE4NUMxMzguMjAxIDM2LjAwOTEgMTQxLjI2NiAzNy42MTg5IDE0MS4yNjYgNDIuMjc0OEMxNDEuMjY2IDQ2LjQxMDcgMTM3LjIzNyA0OS40MzIxIDEzMS43MjMgNDkuNDMyMSIgZmlsbD0iYmxhY2siLz4KPHBhdGggZD0iTTE1Ni42OTMgMzYuMzMxMlY0OC44ODczSDE2My4yOTRWMzQuNTcyOEMxNjMuMzQ1IDMzLjQ0NjQgMTYzLjE2NSAzMi4zMjEzIDE2Mi43NjQgMzEuMjY3NEMxNjIuMzY0IDMwLjIxMzUgMTYxLjc1MiAyOS4yNTMgMTYwLjk2NyAyOC40NDUyQzE2MC4xODEgMjcuNjM3NSAxNTkuMjM5IDI2Ljk5OTggMTU4LjE5OCAyNi41NzEzQzE1Ny4xNTYgMjYuMTQyOSAxNTYuMDM4IDI1LjkzMjkgMTU0LjkxMyAyNS45NTQ0QzE1My40MiAyNS45NDA0IDE1MS45NTMgMjYuMzUyNyAxNTAuNjg1IDI3LjE0MzJMMTQ5LjU3MyAyNy44NjEzVjEzLjM5ODJIMTQyLjk3MlY0OC44ODczSDE0OS42NzJWMzYuMzMxMkMxNDkuNjcyIDM1LjM4NTMgMTUwLjA0NyAzNC40NzgyIDE1MC43MTQgMzMuODA5NEMxNTEuMzgyIDMzLjE0MDYgMTUyLjI4OCAzMi43NjQ5IDE1My4yMzIgMzIuNzY0OUMxNTQuMTc2IDMyLjc2NDkgMTU1LjA4MiAzMy4xNDA2IDE1NS43NDkgMzMuODA5NEMxNTYuNDE3IDM0LjQ3ODIgMTU2Ljc5MiAzNS4zODUzIDE1Ni43OTIgMzYuMzMxMiIgZmlsbD0iYmxhY2siLz4KPHBhdGggZD0iTTk1LjA1OTMgMTMuMzk4Mkg4OC40NTgzVjQ4Ljg4NzNIOTUuMDU5M1YxMy4zOTgyWiIgZmlsbD0iYmxhY2siLz4KPHBhdGggZD0iTTczLjY3NDcgNDguODg3M1YzMi40NDI5SDY5LjMyMzVWMjYuNTQ4N0g3My42NzQ3VjIyLjYxMUM3My41Nzc2IDIxLjM3NDIgNzMuNzQ5NyAyMC4xMzEyIDc0LjE3OTEgMTguOTY3NkM3NC42MDg1IDE3LjgwNCA3NS4yODUgMTYuNzQ3NiA3Ni4xNjE5IDE1Ljg3MTZDNzcuMDM4NyAxNC45OTU1IDc4LjA5NTEgMTQuMzIwNyA3OS4yNTc4IDEzLjg5MzdDODAuNDIwNSAxMy40NjY2IDgxLjY2MiAxMy4yOTc2IDgyLjg5NjMgMTMuMzk4Mkg4Ni4xMTAzVjE5LjQ5MDVIODIuOTIxQzgyLjU0MDMgMTkuNTExNiA4Mi4xNjc4IDE5LjYxMDUgODEuODI2NiAxOS43ODEyQzgxLjQ4NTQgMTkuOTUyIDgxLjE4MjggMjAuMTkwOSA4MC45MzczIDIwLjQ4MzJDODAuNjkxOCAyMC43NzU2IDgwLjUwODYgMjEuMTE1MSA4MC4zOTkgMjEuNDgxMUM4MC4yODk1IDIxLjg0NyA4MC4yNTYgMjIuMjMxNiA4MC4zMDA0IDIyLjYxMVYyNi41NDg3SDg0LjYwMjJWMzIuNDQyOUg4MC4zMDA0VjQ4Ljg4NzNINzMuNjc0N1oiIGZpbGw9ImJsYWNrIi8+CjwvZz4KPGRlZnM+CjxjbGlwUGF0aCBpZD0iY2xpcDBfMjU5OV8zNDI1Ij4KPHJlY3Qgd2lkdGg9IjE2My4yOTQiIGhlaWdodD0iNjIuODA1NSIgZmlsbD0id2hpdGUiLz4KPC9jbGlwUGF0aD4KPC9kZWZzPgo8L3N2Zz4K" alt="Flash on white" style="height:30px" />
-            <span class="brand-logo-tile__cap" style="color:#000">On white — green icon</span>
+        <div class="cpg-section-heading">
+          <div class="cpg-layout__title">Anatomy</div>
+          <div class="cpg-layout__desc">Two fixed parts: a bull silhouette in a circle, and the lowercase <em>flash</em> wordmark. They are supplied together as a lockup &mdash; the spacing between them is part of the asset, not a layout decision.</div>
+        </div>
+        <div class="cpg-section-block">
+          <div class="spec-hero" style="background:#fff"><img src="assets/logos/flash-logo-primary.svg" alt="Flash horizontal lockup" style="width:300px;max-width:100%;height:auto;display:block"></div>
+          <div class="spec-parts">
+            <div class="spec-part">
+              <div class="spec-part__stage" style="background:#fff;display:flex;align-items:center;justify-content:center;min-height:78px"><img src="assets/logos/flash-logo-primary.svg" alt="Bull mark" style="height:44px;width:auto;object-fit:cover;object-position:left;width:44px"></div>
+              <div class="spec-part__body">
+                <div class="spec-part__name"><span class="spec-part__num">1</span>Bull mark</div>
+                <div class="spec-part__note">The silhouette. Never used on its own until an icon-only asset ships.</div>
+              </div>
+            </div>
+            <div class="spec-part">
+              <div class="spec-part__stage" style="background:#fff;display:flex;align-items:center;justify-content:center;min-height:78px"><span style="display:block;width:42px;height:42px;border-radius:50%;background:#1DFA0F"></span></div>
+              <div class="spec-part__body">
+                <div class="spec-part__name"><span class="spec-part__num">2</span>Circle</div>
+                <div class="spec-part__note">Carries the mark. Its fill is what changes between colour variants.</div>
+              </div>
+            </div>
+            <div class="spec-part">
+              <div class="spec-part__stage" style="background:#fff;display:flex;align-items:center;justify-content:center;min-height:78px"><span style="display:block;width:72px;height:34px;overflow:hidden"><img src="assets/logos/flash-logo-primary.svg" alt="Wordmark" style="height:34px;width:auto;display:block;margin-left:-38px"></span></div>
+              <div class="spec-part__body">
+                <div class="spec-part__name"><span class="spec-part__num">3</span>Wordmark</div>
+                <div class="spec-part__note">Lowercase <em>flash</em>. Its height is the unit all clear space is measured in.</div>
+              </div>
+            </div>
+            <div class="spec-part">
+              <div class="spec-part__stage" style="background:#fff;display:flex;align-items:center;justify-content:center;min-height:78px"><img src="assets/logos/flash-logo-primary-stacked.svg" alt="Stacked lockup" style="height:52px;width:auto"></div>
+              <div class="spec-part__body">
+                <div class="spec-part__name"><span class="spec-part__num">4</span>Lockup</div>
+                <div class="spec-part__note">Mark and wordmark at fixed spacing &mdash; horizontal or stacked.</div>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="brand-note">
-          <strong>Never recreate the logo.</strong> Always use the supplied SVG files, keep clear space around it, and use one logo per layout.
+
+        <div class="cpg-section-heading">
+          <div class="cpg-layout__title">Formats</div>
+          <div class="cpg-layout__desc">Pick the format from the shape of the space you have. Colour rules are identical across all four.</div>
+        </div>
+        <div class="cpg-section-block">
+          <div class="spec-grid" style="grid-template-columns:repeat(auto-fill,minmax(210px,1fr))">
+          <div class="spec-cell">
+            <div class="spec-cell__stage" style="background:#fff"><img src="assets/logos/flash-logo-primary.svg" alt="Flash logo &mdash; horizontal lockup" style="height:40px;width:auto;display:block"></div>
+            <div class="spec-cell__name">Horizontal</div>
+            <div class="spec-cell__desc">Default. Wide or landscape spaces &mdash; headers, nav bars.</div>
+          </div>
+          <div class="spec-cell">
+            <div class="spec-cell__stage" style="background:#fff"><img src="assets/logos/flash-logo-primary-stacked.svg" alt="Flash logo &mdash; vertical lockup" style="height:64px;width:auto;display:block"></div>
+            <div class="spec-cell__name">Vertical</div>
+            <div class="spec-cell__desc">Square or portrait spaces &mdash; app icons, social avatars.</div>
+          </div>
+          <div class="spec-cell">
+            <div class="spec-cell__stage logo-missing" style="background:var(--chrome-nav);margin:12px;padding:18px 12px"><span class="logo-missing__label">Not shipped<br>as an asset yet</span></div>
+            <div class="spec-cell__name">Icon only</div>
+            <div class="spec-cell__desc">Favicon, small badges, icon-only contexts.</div>
+          </div>
+          <div class="spec-cell">
+            <div class="spec-cell__stage logo-missing" style="background:var(--chrome-nav);margin:12px;padding:18px 12px"><span class="logo-missing__label">Not shipped<br>as an asset yet</span></div>
+            <div class="spec-cell__name">Wordmark only</div>
+            <div class="spec-cell__desc">Text-only lockups, in black or white to suit the background.</div>
+          </div>
+          </div>
+          <div class="brand-note">Only the horizontal and vertical lockups ship today. Icon-only and wordmark-only assets are documented because layouts call for them &mdash; until the files exist, use the closest full lockup rather than cropping one.</div>
+        </div>
+
+        <div class="cpg-section-heading">
+          <div class="cpg-layout__title">Colour variants</div>
+          <div class="cpg-layout__desc">Four treatments, each shown on a background it is actually correct for. Every one exists as both a horizontal and a stacked lockup.</div>
+        </div>
+        <div class="cpg-section-block">
+          <div class="spec-grid" style="grid-template-columns:repeat(auto-fill,minmax(210px,1fr))">
+          <div class="spec-cell">
+            <div class="spec-cell__stage" style="background:#ffffff"><img src="assets/logos/flash-logo-primary.svg" alt="Flash logo &mdash; primary" style="height:38px;width:auto;display:block"></div>
+            <div class="spec-cell__name">Primary</div>
+            <div class="spec-cell__desc">Green icon, black wordmark. For white and light-grey backgrounds.</div>
+          </div>
+          <div class="spec-cell">
+            <div class="spec-cell__stage" style="background:#000000"><img src="assets/logos/flash-logo-white.svg" alt="Flash logo &mdash; white" style="height:38px;width:auto;display:block"></div>
+            <div class="spec-cell__name">White</div>
+            <div class="spec-cell__desc">Green icon, white wordmark. For black and dark-green backgrounds.</div>
+          </div>
+          <div class="spec-cell">
+            <div class="spec-cell__stage" style="background:#1DFA0F"><img src="assets/logos/flash-logo-mono-black.svg" alt="Flash logo &mdash; monochrome black" style="height:38px;width:auto;display:block"></div>
+            <div class="spec-cell__name">Monochrome black</div>
+            <div class="spec-cell__desc">All black. For Flash Green backgrounds and single-colour print.</div>
+          </div>
+          <div class="spec-cell">
+            <div class="spec-cell__stage" style="background:#003F1E"><img src="assets/logos/flash-logo-mono-white.svg" alt="Flash logo &mdash; monochrome white" style="height:38px;width:auto;display:block"></div>
+            <div class="spec-cell__name">Monochrome white</div>
+            <div class="spec-cell__desc">All white. For dark or photographic backgrounds where colour can’t reproduce.</div>
+          </div>
+          </div>
+          <div class="brand-note"><strong>Never recreate the logo.</strong> Always use the supplied SVG files, keep clear space around it, and use one logo per layout.</div>
         </div>
       </div>
 
-      <div class="cpg-section-heading">
-        <div class="cpg-layout__title">Formats &amp; colour variants</div>
-        <div class="cpg-layout__desc">Four colour treatments, each as a horizontal or stacked lockup &mdash; browse and download the one that matches the background.</div>
+      <div class="tabs-panel" data-logo-panel="usage">
+        <div class="type-sub spec-panel spec-stack">
+          <div class="type-sub">
+            <div class="type-sub__title">Do's and don'ts</div>
+            <div class="type-sub__desc">The mark and wordmark are fixed assets &mdash; treat them as a single unit, not raw material to restyle.</div>
+            <div class="sel-usage">
+              <div class="sel-usage__card">
+                <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
+                <ul class="sel-usage__list">
+                  <li>Pick the variant (Primary, White, Monochrome Black/White) that gives the strongest contrast against its background.</li>
+                  <li>Keep clear space around the logo &mdash; at least the height of the bull mark on every side.</li>
+                  <li>Use the stacked lockup when horizontal space is tight or the container is square; use horizontal everywhere else.</li>
+                  <li>Scale the logo proportionally using the SVG whenever possible for crisp rendering at any size.</li>
+                  <li>When copy sits underneath the horizontal lockup, left-align it to the left edge of the bull&rsquo;s circle, not the wordmark.</li>
+                </ul>
+              </div>
+              <div class="sel-usage__card">
+                <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don&rsquo;t</div>
+                <ul class="sel-usage__list">
+                  <li>Don&rsquo;t place the logo over busy photography, patterned, or low-contrast backgrounds.</li>
+                  <li>Don&rsquo;t recolour, gradient-fill, or apply drop shadows, outlines, or other effects to the mark or wordmark.</li>
+                  <li>Don&rsquo;t stretch, skew, rotate, or otherwise distort the logo&rsquo;s proportions.</li>
+                  <li>Don&rsquo;t redraw, crop, or separate the bull mark from the wordmark outside of the provided lockups.</li>
+                  <li>Don&rsquo;t place the logo tighter than its minimum clear space, or shrink it below a legible size.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="type-sub">
+            <div class="type-sub__title">Match the variant to the background</div>
+            <div class="type-sub__desc">Find the background, use the lockup shown on it. This is a lookup, not a judgement call.</div>
+            <div class="cpg-section-outline">
+              <div class="spec-grid" style="grid-template-columns:repeat(auto-fill,minmax(190px,1fr))">
+            <div class="spec-cell">
+              <div class="spec-cell__stage" style="background:#ffffff"><img src="assets/logos/flash-logo-primary.svg" alt="Flash logo on white" style="height:34px;width:auto;display:block"></div>
+              <div class="spec-cell__name"><span class="logo-swatch" style="background:#FFFFFF"></span>White</div>
+              <div class="spec-cell__desc"><code>#FFFFFF</code> &middot; <code>&mdash;</code><br><b style="color:var(--chrome-txt)">Primary</b></div>
+            </div>
+            <div class="spec-cell">
+              <div class="spec-cell__stage" style="background:#F0F0F0"><img src="assets/logos/flash-logo-primary.svg" alt="Flash logo on light grey" style="height:34px;width:auto;display:block"></div>
+              <div class="spec-cell__name"><span class="logo-swatch" style="background:#F0F0F0"></span>Light grey</div>
+              <div class="spec-cell__desc"><code>#F0F0F0</code> &middot; <code>--prim-grey-100</code><br><b style="color:var(--chrome-txt)">Primary</b></div>
+            </div>
+            <div class="spec-cell">
+              <div class="spec-cell__stage" style="background:#1DFA0F"><img src="assets/logos/flash-logo-mono-black.svg" alt="Flash logo on flash green" style="height:34px;width:auto;display:block"></div>
+              <div class="spec-cell__name"><span class="logo-swatch" style="background:#1DFA0F"></span>Flash Green</div>
+              <div class="spec-cell__desc"><code>#1DFA0F</code> &middot; <code>--prim-bg-500</code><br><b style="color:var(--chrome-txt)">Monochrome black</b></div>
+            </div>
+            <div class="spec-cell">
+              <div class="spec-cell__stage" style="background:#3FB549"><span class="logo-missing__label" style="color:rgba(0,0,0,.62);border:1.5px dashed rgba(0,0,0,.4);border-radius:8px;padding:14px 12px">Lime variant<br>not shipped yet</span></div>
+              <div class="spec-cell__name"><span class="logo-swatch" style="background:#3FB549"></span>Medium green</div>
+              <div class="spec-cell__desc"><code>#3FB549</code> &middot; <span style="opacity:.75">no token</span><br><b style="color:var(--chrome-txt)">Lime icon + white wordmark</b></div>
+            </div>
+            <div class="spec-cell">
+              <div class="spec-cell__stage" style="background:#003F1E"><img src="assets/logos/flash-logo-white.svg" alt="Flash logo on dark forest green" style="height:34px;width:auto;display:block"></div>
+              <div class="spec-cell__name"><span class="logo-swatch" style="background:#003F1E"></span>Dark forest green</div>
+              <div class="spec-cell__desc"><code>#003F1E</code> &middot; <code>--prim-dg-500</code><br><b style="color:var(--chrome-txt)">White</b></div>
+            </div>
+            <div class="spec-cell">
+              <div class="spec-cell__stage" style="background:#000000"><img src="assets/logos/flash-logo-white.svg" alt="Flash logo on black" style="height:34px;width:auto;display:block"></div>
+              <div class="spec-cell__name"><span class="logo-swatch" style="background:#000000"></span>Black</div>
+              <div class="spec-cell__desc"><code>#000000</code> &middot; <code>&mdash;</code><br><b style="color:var(--chrome-txt)">White</b></div>
+            </div>
+              </div>
+              <div class="brand-note">The standard green icon loses contrast against medium green <code>#3FB549</code>, so that one background takes a lime icon <code>#B2FA00</code> instead. That file isn&rsquo;t in the repo yet &mdash; avoid medium-green backgrounds behind the logo until it is.</div>
+            </div>
+          </div>
+
+          <div class="type-sub">
+            <div class="type-sub__title">Clear space</div>
+            <div class="type-sub__desc">Minimum clear space on all four sides equals the height of the wordmark &mdash; shown here as <b>x</b>. It scales with the logo, so the rule holds at every size.</div>
+            <div class="cpg-section-outline">
+              <div class="logo-clear">
+                <div class="logo-clear__frame">
+                  <div class="logo-clear__box"><img class="logo-clear__mark" src="assets/logos/flash-logo-primary.svg" alt="Flash logo with clear space"></div>
+                  <span class="logo-clear__x" style="top:7px;left:50%;transform:translateX(-50%)">x</span>
+                  <span class="logo-clear__x" style="bottom:7px;left:50%;transform:translateX(-50%)">x</span>
+                  <span class="logo-clear__x" style="left:8px;top:50%;transform:translateY(-50%)">x</span>
+                  <span class="logo-clear__x" style="right:8px;top:50%;transform:translateY(-50%)">x</span>
+                </div>
+              </div>
+              <div class="brand-note">Nothing enters the dashed area &mdash; not body copy, not a container edge, not another logo. Crowding it is the most common way the mark gets weakened.</div>
+            </div>
+          </div>
+
+          <div class="type-sub">
+            <div class="type-sub__title">Sizing</div>
+            <div class="type-sub__desc">Size to the context: never so large it competes with the headline, never so small the wordmark stops being legible.</div>
+            <div class="cpg-section-outline">
+              <div class="logo-scale">
+                <div class="logo-scale__item"><img src="assets/logos/flash-logo-primary.svg" alt="140px wide" style="width:140px;height:auto;display:block"><span class="logo-scale__cap">140px &mdash; A4</span></div>
+                <div class="logo-scale__item"><img src="assets/logos/flash-logo-primary.svg" alt="110px wide" style="width:110px;height:auto;display:block"><span class="logo-scale__cap">110px &mdash; social</span></div>
+                <div class="logo-scale__item"><img src="assets/logos/flash-logo-primary.svg" alt="90px wide" style="width:90px;height:auto;display:block"><span class="logo-scale__cap">90px &mdash; slide</span></div>
+              </div>
+              <div class="dd-table-wrap" style="margin-top:16px"><table class="dd-table" style="min-width:0">
+                <thead><tr><th>Context</th><th>Width</th></tr></thead>
+                <tbody>
+              <tr><td>A4 poster / one-pager</td><td><code>120&ndash;140px</code></td></tr>
+              <tr><td>Presentation slide</td><td><code>80&ndash;100px</code></td></tr>
+              <tr><td>Social card (square)</td><td><code>100&ndash;120px</code></td></tr>
+              <tr><td>Email header</td><td><code>100&ndash;120px</code></td></tr>
+                </tbody>
+              </table></div>
+            </div>
+          </div>
+
+          <div class="type-sub">
+            <div class="type-sub__title">Placement in a layout</div>
+            <div class="type-sub__desc">One logo per layout, in one of two positions &mdash; top-left as a brand strip, or bottom-right as a closing lockup. Pick one and stay with it.</div>
+            <div class="cpg-section-outline">
+              <div class="spec-insitu-grid">
+                <div class="spec-mock">
+                  <div class="spec-mock__stage" style="background:var(--chrome-nav);align-items:center;padding:20px">
+                    <div class="logo-layout" style="background:#fff;width:132px;aspect-ratio:1/1.414">
+                      <img class="logo-layout__mark" src="assets/logos/flash-logo-primary.svg" alt="Logo top-left">
+                      <div class="logo-layout__spacer"></div>
+                      <span class="mk-bar mk-bar--txt" style="width:82%"></span>
+                      <span class="mk-bar mk-bar--txt" style="width:58%"></span>
+                      <span class="mk-bar" style="width:70%;height:6px"></span>
+                    </div>
+                  </div>
+                  <div class="spec-mock__cap"><b>Top-left brand strip</b>A4 poster or one-pager. The lockup opens the layout, clear space intact, nothing else in the corner.</div>
+                </div>
+                <div class="spec-mock">
+                  <div class="spec-mock__stage" style="background:var(--chrome-nav);align-items:center;padding:20px">
+                    <div class="logo-layout" style="background:#000;width:132px;aspect-ratio:1/1;align-items:flex-end">
+                      <span class="mk-bar" style="width:74%;height:11px;background:rgba(255,255,255,.9);align-self:flex-start"></span>
+                      <span class="mk-bar" style="width:52%;height:11px;background:rgba(255,255,255,.55);align-self:flex-start"></span>
+                      <div class="logo-layout__spacer"></div>
+                      <img class="logo-layout__mark" src="assets/logos/flash-logo-white.svg" alt="Logo bottom-right">
+                    </div>
+                  </div>
+                  <div class="spec-mock__cap"><b>Bottom-right closing lockup</b>Social card. The White variant, because the card is black &mdash; the same rule as any other background.</div>
+                </div>
+                <div class="spec-mock">
+                  <div class="spec-mock__stage" style="background:var(--chrome-nav);align-items:center;padding:20px">
+                    <div class="logo-layout" style="background:#fff;width:132px;aspect-ratio:1/1">
+                      <img class="logo-layout__mark" src="assets/logos/flash-logo-primary.svg" alt="First logo">
+                      <div class="logo-layout__spacer"></div>
+                      <span class="mk-bar mk-bar--txt" style="width:64%"></span>
+                      <div class="logo-layout__spacer"></div>
+                      <img class="logo-layout__mark" src="assets/logos/flash-logo-primary.svg" alt="Second logo" style="align-self:flex-end">
+                    </div>
+                  </div>
+                  <div class="spec-mock__cap"><b>Don&rsquo;t: two instances</b>Top-left <em>and</em> bottom-right in one layout reads as a mistake. Also never in divider bands, section headers, or mid-layout content.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="type-sub" style="margin-bottom:0">
+            <div class="type-sub__title">In the Flash UI</div>
+            <div class="type-sub__desc">This design system&rsquo;s own top bar is the reference implementation &mdash; a horizontal lockup, left-aligned, sized to the bar rather than to the page.</div>
+            <div class="cpg-section-outline">
+              <div class="logo-nav">
+                <div class="logo-nav__bar">
+                  <img class="logo-nav__logo" src="assets/logos/Logo_new.svg" alt="Flash Design nav lockup">
+                  <span class="logo-nav__field">Search components, tokens&hellip;</span>
+                </div>
+              </div>
+              <div class="dd-table-wrap" style="margin-top:16px"><table class="dd-table" style="min-width:0">
+                <thead><tr><th>Rule</th><th>Value</th></tr></thead>
+                <tbody>
+                  <tr><td>Logo height</td><td><code>28px</code> in a <code>52px</code> bar &mdash; 12px clear above and below</td></tr>
+                  <tr><td>Inset from left edge</td><td><code>20px</code>, matching the bar&rsquo;s own padding</td></tr>
+                  <tr><td>Variant</td><td>White wordmark, because the bar is dark in both themes</td></tr>
+                  <tr><td>Format</td><td>Horizontal only &mdash; a 52px bar can&rsquo;t hold the stacked lockup legibly</td></tr>
+                  <tr><td>Behaviour</td><td>Links home. Never a text substitute, never scaled up to fill the bar</td></tr>
+                </tbody>
+              </table></div>
+              <div class="brand-note">Every Flash surface &mdash; poster, slide, one-pager, banner, social card, app screen &mdash; must carry the real logo SVG. The word &ldquo;flash&rdquo; set in any typeface is not the logo.</div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="type-sub">
-        <div class="type-sub__title">Primary</div>
-        <div class="type-sub__desc">Green mark, black wordmark. Default lockup for light backgrounds.</div>
-        <div class="logo-grid">
-          <div class="logo-card">
-            <div class="logo-card__stage logo-card__stage--light"><img class="logo-card__img" src="assets/logos/flash-logo-primary.svg" alt="Flash logo — Primary"></div>
-            <div class="logo-card__meta">
-              <div class="logo-card__name">Horizontal</div>
-              <div class="logo-card__desc">Mark and wordmark side by side.</div>
-              <div class="logo-card__actions">
+
+      <div class="tabs-panel" data-logo-panel="assets">
+        <div class="type-sub spec-panel spec-stack">
+          <div class="type-sub">
+            <div class="type-sub__title">Assets</div>
+            <div class="type-sub__desc">Eight shipped files in <code>assets/logos/</code>, each previewed on a background it&rsquo;s correct for. SVG for anything that scales; PNG only where SVG isn&rsquo;t supported.</div>
+            <div class="logo-list">
+            <div class="logo-list__row">
+              <div class="logo-list__thumb" style="background:#ffffff"><img src="assets/logos/flash-logo-primary.svg" alt="flash-logo-primary"></div>
+              <div>
+                <div class="logo-list__name">flash-logo-primary.svg</div>
+                <div class="logo-list__rule"><b style="color:var(--chrome-txt)">Horizontal</b> &middot; Green icon, black wordmark. The default &mdash; white and light-grey backgrounds.</div>
+              </div>
+              <div class="logo-list__actions">
                 <a class="logo-dl" href="assets/logos/flash-logo-primary.svg" download>SVG</a>
                 <a class="logo-dl" href="assets/logos/flash-logo-primary.png" download>PNG</a>
               </div>
             </div>
-          </div>
-          <div class="logo-card">
-            <div class="logo-card__stage logo-card__stage--light"><img class="logo-card__img" src="assets/logos/flash-logo-primary-stacked.svg" alt="Flash logo — Primary stacked"></div>
-            <div class="logo-card__meta">
-              <div class="logo-card__name">Stacked</div>
-              <div class="logo-card__desc">Mark above wordmark, for tighter or square spaces.</div>
-              <div class="logo-card__actions">
+            <div class="logo-list__row">
+              <div class="logo-list__thumb" style="background:#ffffff"><img src="assets/logos/flash-logo-primary-stacked.svg" alt="flash-logo-primary-stacked"></div>
+              <div>
+                <div class="logo-list__name">flash-logo-primary-stacked.svg</div>
+                <div class="logo-list__rule"><b style="color:var(--chrome-txt)">Vertical</b> &middot; Same colours, stacked. Only when the space is square or portrait.</div>
+              </div>
+              <div class="logo-list__actions">
                 <a class="logo-dl" href="assets/logos/flash-logo-primary-stacked.svg" download>SVG</a>
                 <a class="logo-dl" href="assets/logos/flash-logo-primary-stacked.png" download>PNG</a>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-      <div class="type-sub">
-        <div class="type-sub__title">White</div>
-        <div class="type-sub__desc">Green mark, white wordmark. For dark or brand-coloured backgrounds.</div>
-        <div class="logo-grid">
-          <div class="logo-card">
-            <div class="logo-card__stage logo-card__stage--dark"><img class="logo-card__img" src="assets/logos/flash-logo-white.svg" alt="Flash logo — White"></div>
-            <div class="logo-card__meta">
-              <div class="logo-card__name">Horizontal</div>
-              <div class="logo-card__desc">Mark and wordmark side by side.</div>
-              <div class="logo-card__actions">
+            <div class="logo-list__row">
+              <div class="logo-list__thumb" style="background:#000000"><img src="assets/logos/flash-logo-white.svg" alt="flash-logo-white"></div>
+              <div>
+                <div class="logo-list__name">flash-logo-white.svg</div>
+                <div class="logo-list__rule"><b style="color:var(--chrome-txt)">Horizontal</b> &middot; Green icon, white wordmark. Black and dark-forest-green backgrounds.</div>
+              </div>
+              <div class="logo-list__actions">
                 <a class="logo-dl" href="assets/logos/flash-logo-white.svg" download>SVG</a>
                 <a class="logo-dl" href="assets/logos/flash-logo-white.png" download>PNG</a>
               </div>
             </div>
-          </div>
-          <div class="logo-card">
-            <div class="logo-card__stage logo-card__stage--dark"><img class="logo-card__img" src="assets/logos/flash-logo-white-stacked.svg" alt="Flash logo — White stacked"></div>
-            <div class="logo-card__meta">
-              <div class="logo-card__name">Stacked</div>
-              <div class="logo-card__desc">Mark above wordmark, for tighter or square spaces.</div>
-              <div class="logo-card__actions">
+            <div class="logo-list__row">
+              <div class="logo-list__thumb" style="background:#000000"><img src="assets/logos/flash-logo-white-stacked.svg" alt="flash-logo-white-stacked"></div>
+              <div>
+                <div class="logo-list__name">flash-logo-white-stacked.svg</div>
+                <div class="logo-list__rule"><b style="color:var(--chrome-txt)">Vertical</b> &middot; Same colours, stacked. Only when the space is square or portrait.</div>
+              </div>
+              <div class="logo-list__actions">
                 <a class="logo-dl" href="assets/logos/flash-logo-white-stacked.svg" download>SVG</a>
                 <a class="logo-dl" href="assets/logos/flash-logo-white-stacked.png" download>PNG</a>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-      <div class="type-sub">
-        <div class="type-sub__title">Monochrome — Black</div>
-        <div class="type-sub__desc">Single-colour black, for contexts where the brand green can't be reproduced.</div>
-        <div class="logo-grid">
-          <div class="logo-card">
-            <div class="logo-card__stage logo-card__stage--light"><img class="logo-card__img" src="assets/logos/flash-logo-mono-black.svg" alt="Flash logo — Monochrome black"></div>
-            <div class="logo-card__meta">
-              <div class="logo-card__name">Horizontal</div>
-              <div class="logo-card__desc">Mark and wordmark side by side.</div>
-              <div class="logo-card__actions">
+            <div class="logo-list__row">
+              <div class="logo-list__thumb" style="background:#1DFA0F"><img src="assets/logos/flash-logo-mono-black.svg" alt="flash-logo-mono-black"></div>
+              <div>
+                <div class="logo-list__name">flash-logo-mono-black.svg</div>
+                <div class="logo-list__rule"><b style="color:var(--chrome-txt)">Horizontal</b> &middot; All black. Flash Green backgrounds, and single-colour print.</div>
+              </div>
+              <div class="logo-list__actions">
                 <a class="logo-dl" href="assets/logos/flash-logo-mono-black.svg" download>SVG</a>
                 <a class="logo-dl" href="assets/logos/flash-logo-mono-black.png" download>PNG</a>
               </div>
             </div>
-          </div>
-          <div class="logo-card">
-            <div class="logo-card__stage logo-card__stage--light"><img class="logo-card__img" src="assets/logos/flash-logo-mono-black-stacked.svg" alt="Flash logo — Monochrome black stacked"></div>
-            <div class="logo-card__meta">
-              <div class="logo-card__name">Stacked</div>
-              <div class="logo-card__desc">Mark above wordmark, for tighter or square spaces.</div>
-              <div class="logo-card__actions">
+            <div class="logo-list__row">
+              <div class="logo-list__thumb" style="background:#1DFA0F"><img src="assets/logos/flash-logo-mono-black-stacked.svg" alt="flash-logo-mono-black-stacked"></div>
+              <div>
+                <div class="logo-list__name">flash-logo-mono-black-stacked.svg</div>
+                <div class="logo-list__rule"><b style="color:var(--chrome-txt)">Vertical</b> &middot; All black, stacked &mdash; the variant for embossing, screen printing and stamps.</div>
+              </div>
+              <div class="logo-list__actions">
                 <a class="logo-dl" href="assets/logos/flash-logo-mono-black-stacked.svg" download>SVG</a>
                 <a class="logo-dl" href="assets/logos/flash-logo-mono-black-stacked.png" download>PNG</a>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-      <div class="type-sub">
-        <div class="type-sub__title">Monochrome — White</div>
-        <div class="type-sub__desc">Single-colour white, for dark or photographic backgrounds where colour can't be reproduced.</div>
-        <div class="logo-grid">
-          <div class="logo-card">
-            <div class="logo-card__stage logo-card__stage--dark"><img class="logo-card__img" src="assets/logos/flash-logo-mono-white.svg" alt="Flash logo — Monochrome white"></div>
-            <div class="logo-card__meta">
-              <div class="logo-card__name">Horizontal</div>
-              <div class="logo-card__desc">Mark and wordmark side by side.</div>
-              <div class="logo-card__actions">
+            <div class="logo-list__row">
+              <div class="logo-list__thumb" style="background:#25262c"><img src="assets/logos/flash-logo-mono-white.svg" alt="flash-logo-mono-white"></div>
+              <div>
+                <div class="logo-list__name">flash-logo-mono-white.svg</div>
+                <div class="logo-list__rule"><b style="color:var(--chrome-txt)">Horizontal</b> &middot; All white. Dark or photographic backgrounds where colour can&rsquo;t reproduce.</div>
+              </div>
+              <div class="logo-list__actions">
                 <a class="logo-dl" href="assets/logos/flash-logo-mono-white.svg" download>SVG</a>
                 <a class="logo-dl" href="assets/logos/flash-logo-mono-white.png" download>PNG</a>
               </div>
             </div>
-          </div>
-          <div class="logo-card">
-            <div class="logo-card__stage logo-card__stage--dark"><img class="logo-card__img" src="assets/logos/flash-logo-mono-white-stacked.svg" alt="Flash logo — Monochrome white stacked"></div>
-            <div class="logo-card__meta">
-              <div class="logo-card__name">Stacked</div>
-              <div class="logo-card__desc">Mark above wordmark, for tighter or square spaces.</div>
-              <div class="logo-card__actions">
+            <div class="logo-list__row">
+              <div class="logo-list__thumb" style="background:#25262c"><img src="assets/logos/flash-logo-mono-white-stacked.svg" alt="flash-logo-mono-white-stacked"></div>
+              <div>
+                <div class="logo-list__name">flash-logo-mono-white-stacked.svg</div>
+                <div class="logo-list__rule"><b style="color:var(--chrome-txt)">Vertical</b> &middot; All white, stacked. Only when the space is square or portrait.</div>
+              </div>
+              <div class="logo-list__actions">
                 <a class="logo-dl" href="assets/logos/flash-logo-mono-white-stacked.svg" download>SVG</a>
                 <a class="logo-dl" href="assets/logos/flash-logo-mono-white-stacked.png" download>PNG</a>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-      <div class="cpg-section-heading">
-        <div class="cpg-layout__title">In context</div>
-        <div class="cpg-layout__desc">The lockup placed the way a real layout uses it &mdash; one instance, clear space respected, colour matched to the background it sits on.</div>
-      </div>
-      <div class="cpg-section-block">
-        <div class="spec-insitu-grid spec-insitu-grid--2">
-          <div class="spec-mock">
-            <div class="spec-mock__stage" style="background:#000;align-items:flex-start;padding:28px">
-              <img src="assets/logos/flash-logo-white.svg" alt="Flash logo on black" style="width:110px;height:auto">
             </div>
-            <div class="spec-mock__cap"><b>Top-left, brand strip</b>White lockup on a black background &mdash; one instance, positioned top-left with clear space equal to the wordmark height on every side.</div>
+            <div class="brand-note">Not shipped yet, though the rules reference them: an icon-only asset, black and white wordmark-only assets, the lime-icon variant for medium-green backgrounds, and the <code>FLASH.CO.ZA</code> URL badge. Use the closest full lockup instead of approximating one by hand.</div>
           </div>
-          <div class="spec-mock">
-            <div class="spec-mock__stage" style="background:#1DFA0F;align-items:flex-end;padding:28px">
-              <img src="assets/logos/flash-logo-primary.svg" alt="Flash logo on Flash Green" style="width:110px;height:auto">
-            </div>
-            <div class="spec-mock__cap"><b>Bottom-right, closing lockup</b>Primary lockup on Flash Green &mdash; the alternative single position for a footer or closing frame. Never combine both positions in the same layout.</div>
+
+          <div class="type-sub" style="margin-bottom:0">
+            <div class="type-sub__title">Colour variables</div>
+            <div class="type-sub__desc">The backgrounds that drive variant selection, plus the lime icon fill. Where a value is already a design token, reference the token &mdash; not the hex.</div>
+            <div class="dd-table-wrap"><table class="dd-table">
+              <thead><tr><th>Colour</th><th>Token</th><th>Used for</th></tr></thead>
+              <tbody>
+              <tr>
+                <td><div class="sem-color-cell"><div class="sem-swatch" style="width:24px;height:24px;border-radius:5px;background:#FFFFFF"></div><span class="sem-hex">#FFFFFF</span></div></td>
+                <td><span style="color:var(--chrome-muted)">&mdash;</span></td>
+                <td>White background &mdash; use the Primary lockup</td>
+              </tr>
+              <tr>
+                <td><div class="sem-color-cell"><div class="sem-swatch" style="width:24px;height:24px;border-radius:5px;background:#F0F0F0"></div><span class="sem-hex">#F0F0F0</span></div></td>
+                <td><code>--prim-grey-100</code></td>
+                <td>Light grey background &mdash; use the Primary lockup</td>
+              </tr>
+              <tr>
+                <td><div class="sem-color-cell"><div class="sem-swatch" style="width:24px;height:24px;border-radius:5px;background:#1DFA0F"></div><span class="sem-hex">#1DFA0F</span></div></td>
+                <td><code>--prim-bg-500</code></td>
+                <td>Flash Green background &mdash; use Monochrome black</td>
+              </tr>
+              <tr>
+                <td><div class="sem-color-cell"><div class="sem-swatch" style="width:24px;height:24px;border-radius:5px;background:#3FB549"></div><span class="sem-hex">#3FB549</span></div></td>
+                <td><span style="color:var(--chrome-muted)">&mdash;</span></td>
+                <td>Medium green background &mdash; the one case needing the lime icon</td>
+              </tr>
+              <tr>
+                <td><div class="sem-color-cell"><div class="sem-swatch" style="width:24px;height:24px;border-radius:5px;background:#B2FA00"></div><span class="sem-hex">#B2FA00</span></div></td>
+                <td><code>--prim-yg-500</code></td>
+                <td>The lime icon fill itself, used only on medium green</td>
+              </tr>
+              <tr>
+                <td><div class="sem-color-cell"><div class="sem-swatch" style="width:24px;height:24px;border-radius:5px;background:#003F1E"></div><span class="sem-hex">#003F1E</span></div></td>
+                <td><code>--prim-dg-500</code></td>
+                <td>Dark forest green background &mdash; use the White lockup</td>
+              </tr>
+              <tr>
+                <td><div class="sem-color-cell"><div class="sem-swatch" style="width:24px;height:24px;border-radius:5px;background:#000000"></div><span class="sem-hex">#000000</span></div></td>
+                <td><span style="color:var(--chrome-muted)">&mdash;</span></td>
+                <td>Black background &mdash; use the White lockup</td>
+              </tr>
+              </tbody>
+            </table></div>
           </div>
         </div>
       </div>
-      </div>
-      <div class="tabs-panel" data-logo-panel="usage">
-      <div class="type-sub">
-        <div class="type-sub__title">Do's and don'ts</div>
-        <div class="type-sub__desc">The mark and wordmark are fixed assets &mdash; treat them as a single unit, not raw material to restyle.</div>
-        <div class="sel-usage">
-          <div class="sel-usage__card">
-            <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
-            <ul class="sel-usage__list">
-              <li>Pick the variant (Primary, White, Monochrome Black/White) that gives the strongest contrast against its background.</li>
-              <li>Keep clear space around the logo &mdash; at least the height of the bull mark on every side.</li>
-              <li>Use the stacked lockup when horizontal space is tight or the container is square; use horizontal everywhere else.</li>
-              <li>Scale the logo proportionally using the SVG whenever possible for crisp rendering at any size.</li>
-              <li>When copy sits underneath the horizontal lockup, left-align it to the left edge of the bull&rsquo;s circle, not the wordmark.</li>
-            </ul>
-          </div>
-          <div class="sel-usage__card">
-            <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don&rsquo;t</div>
-            <ul class="sel-usage__list">
-              <li>Don&rsquo;t place the logo over busy photography, patterned, or low-contrast backgrounds.</li>
-              <li>Don&rsquo;t recolour, gradient-fill, or apply drop shadows, outlines, or other effects to the mark or wordmark.</li>
-              <li>Don&rsquo;t stretch, skew, rotate, or otherwise distort the logo&rsquo;s proportions.</li>
-              <li>Don&rsquo;t redraw, crop, or separate the bull mark from the wordmark outside of the provided lockups.</li>
-              <li>Don&rsquo;t place the logo tighter than its minimum clear space, or shrink it below a legible size.</li>
-            </ul>
-          </div>
-        </div>
-      </div>
 
-      <div class="type-sub">
-        <div class="type-sub__title">Format selection</div>
-        <div class="type-sub__desc">Pick the format by available space &mdash; colour rules are the same across every format.</div>
-        <div class="dd-table-wrap"><table class="dd-table">
-          <thead><tr><th>Format</th><th>When to use</th></tr></thead>
-          <tbody>
-            <tr><td>Horizontal lockup</td><td>Default. Wide or landscape spaces &mdash; headers, nav bars.</td></tr>
-            <tr><td>Vertical lockup</td><td>Square or portrait spaces &mdash; app icons, social avatars.</td></tr>
-            <tr><td>Icon only</td><td>Favicon, small badges, icon-only contexts.</td></tr>
-            <tr><td>Wordmark only (black)</td><td>Text-only lockups on light backgrounds.</td></tr>
-            <tr><td>Wordmark only (white)</td><td>Text-only lockups on dark backgrounds.</td></tr>
-          </tbody>
-        </table></div>
-      </div>
-
-      <div class="type-sub">
-        <div class="type-sub__title">Colour variant by background</div>
-        <div class="type-sub__desc">The icon and wordmark colour is set by the background it sits on &mdash; never chosen freehand.</div>
-        <div class="dd-table-wrap"><table class="dd-table">
-          <thead><tr><th>Background</th><th>Hex</th><th>Logo variant</th></tr></thead>
-          <tbody>
-            <tr><td>White</td><td><code>#FFFFFF</code></td><td>Green icon + black wordmark</td></tr>
-            <tr><td>Light grey</td><td><code>#F0F0F0</code></td><td>Green icon + black wordmark</td></tr>
-            <tr><td>Flash Green (primary)</td><td><code>#1DFA0F</code></td><td>Black icon + black wordmark</td></tr>
-            <tr><td>Medium green</td><td><code>#3FB549</code></td><td><b>Lime icon</b> + white wordmark</td></tr>
-            <tr><td>Dark forest green</td><td><code>#003F1E</code></td><td>Green icon + white wordmark</td></tr>
-            <tr><td>Black</td><td><code>#000000</code></td><td>Green icon + white wordmark</td></tr>
-          </tbody>
-        </table></div>
-        <div class="type-sub__desc" style="margin-top:12px">The standard green icon (<code>#1DFA0F</code>) loses contrast on medium green (<code>#3FB549</code>) &mdash; swap to the lime icon (<code>#B2FA00</code>) on that background only. Default to the horizontal lockup; use vertical only when the space is square or portrait and too narrow for horizontal.</div>
-      </div>
-
-      <div class="type-sub">
-        <div class="type-sub__title">Monochrome variant</div>
-        <div class="type-sub__desc">For single-colour print contexts &mdash; embossing, screen printing, stamps &mdash; use the all-black vertical lockup rather than a colour variant.</div>
-      </div>
-
-      <div class="type-sub">
-        <div class="type-sub__title">Clear space</div>
-        <div class="type-sub__desc">Maintain even clear space on all four sides of the logo, in any format. Minimum clear space equals the height of the wordmark, at any size or placement. Never crowd the logo against other elements, text, or the container edge.</div>
-      </div>
-
-      <div class="type-sub">
-        <div class="type-sub__title">Page placement</div>
-        <div class="dd-table-wrap"><table class="dd-table">
-          <thead><tr><th>Placement</th><th>Description</th></tr></thead>
-          <tbody>
-            <tr><td>Corner</td><td>Logo sits in a page corner, respecting clear space.</td></tr>
-            <tr><td>Edge</td><td>Logo centred on a page edge, respecting clear space.</td></tr>
-            <tr><td>Website URL</td><td>Logo bottom-right, with the <code>FLASH.CO.ZA</code> URL badge immediately to its left &mdash; a <code>#1DFA0F</code> green pill with black text, 96&times;21px.</td></tr>
-          </tbody>
-        </table></div>
-      </div>
-
-      <div class="type-sub">
-        <div class="type-sub__title">One logo per layout</div>
-        <div class="type-sub__desc">A second instance anywhere reads as a mistake. Place it at either top-left of the brand strip, or bottom-right as a closing lockup &mdash; never both. Marketing layouts (A4, posters, social cards) get one or the other, never in divider bands, section headers, or mid-layout. Presentation slides: top-left corner of every slide, 36px from the edge, never repeated elsewhere on the same slide.</div>
-        <div class="dd-table-wrap"><table class="dd-table">
-          <thead><tr><th>Context</th><th>Width</th></tr></thead>
-          <tbody>
-            <tr><td>A4 poster / one-pager</td><td>120&ndash;140px</td></tr>
-            <tr><td>Presentation slide</td><td>80&ndash;100px</td></tr>
-            <tr><td>Social card (square)</td><td>100&ndash;120px</td></tr>
-            <tr><td>Email header</td><td>100&ndash;120px</td></tr>
-          </tbody>
-        </table></div>
-      </div>
-
-      <div class="type-sub" style="margin-bottom:0">
-        <div class="type-sub__title">The logo is mandatory</div>
-        <div class="type-sub__desc">Every Flash visual &mdash; poster, presentation slide, one-pager, banner, social card, HTML layout &mdash; must include the actual Flash logo SVG with the cow icon. Never replace it with the word &ldquo;flash&rdquo; typed in any font, a text-only wordmark without the icon, or a placeholder/approximate reproduction.</div>
-      </div>
-      </div>
-      <div class="tabs-panel" data-logo-panel="tokens">
-      <div class="type-sub">
-        <div class="type-sub__title">Assets</div>
-        <div class="type-sub__desc">Every shipped lockup, downloadable as SVG or PNG from <code>assets/logos/</code>.</div>
-        <div class="dd-table-wrap"><table class="dd-table">
-          <thead><tr><th>Name</th><th>Format</th><th>When to use</th><th>Download</th></tr></thead>
-          <tbody>
-            <tr><td>flash-logo-primary</td><td>Horizontal</td><td>Green icon + black wordmark, on white/light backgrounds.</td><td><a class="logo-dl" href="assets/logos/flash-logo-primary.svg" download>SVG</a> <a class="logo-dl" href="assets/logos/flash-logo-primary.png" download>PNG</a></td></tr>
-            <tr><td>flash-logo-primary-stacked</td><td>Vertical</td><td>Same colours, stacked for square/portrait space.</td><td><a class="logo-dl" href="assets/logos/flash-logo-primary-stacked.svg" download>SVG</a> <a class="logo-dl" href="assets/logos/flash-logo-primary-stacked.png" download>PNG</a></td></tr>
-            <tr><td>flash-logo-white</td><td>Horizontal</td><td>Green icon + white wordmark, on dark/brand backgrounds.</td><td><a class="logo-dl" href="assets/logos/flash-logo-white.svg" download>SVG</a> <a class="logo-dl" href="assets/logos/flash-logo-white.png" download>PNG</a></td></tr>
-            <tr><td>flash-logo-white-stacked</td><td>Vertical</td><td>Same colours, stacked for square/portrait space.</td><td><a class="logo-dl" href="assets/logos/flash-logo-white-stacked.svg" download>SVG</a> <a class="logo-dl" href="assets/logos/flash-logo-white-stacked.png" download>PNG</a></td></tr>
-            <tr><td>flash-logo-mono-black</td><td>Horizontal</td><td>Single-colour black, for print contexts (embossing, stamps).</td><td><a class="logo-dl" href="assets/logos/flash-logo-mono-black.svg" download>SVG</a> <a class="logo-dl" href="assets/logos/flash-logo-mono-black.png" download>PNG</a></td></tr>
-            <tr><td>flash-logo-mono-black-stacked</td><td>Vertical</td><td>Single-colour black, stacked &mdash; the monochrome print variant.</td><td><a class="logo-dl" href="assets/logos/flash-logo-mono-black-stacked.svg" download>SVG</a> <a class="logo-dl" href="assets/logos/flash-logo-mono-black-stacked.png" download>PNG</a></td></tr>
-            <tr><td>flash-logo-mono-white</td><td>Horizontal</td><td>Single-colour white, for dark or photographic backgrounds.</td><td><a class="logo-dl" href="assets/logos/flash-logo-mono-white.svg" download>SVG</a> <a class="logo-dl" href="assets/logos/flash-logo-mono-white.png" download>PNG</a></td></tr>
-            <tr><td>flash-logo-mono-white-stacked</td><td>Vertical</td><td>Single-colour white, stacked.</td><td><a class="logo-dl" href="assets/logos/flash-logo-mono-white-stacked.svg" download>SVG</a> <a class="logo-dl" href="assets/logos/flash-logo-mono-white-stacked.png" download>PNG</a></td></tr>
-          </tbody>
-        </table></div>
-        <div class="type-sub__desc" style="margin-top:12px">Not yet shipped as separate files: an icon-only asset (<code>cow.svg</code>), black/white wordmark-only assets, a lime-icon variant for the medium-green background, and the <code>FLASH.CO.ZA</code> website URL badge. Until these exist, build those cases from the closest lockup above rather than approximating a new asset by hand.</div>
-      </div>
-
-      <div class="type-sub" style="margin-bottom:0">
-        <div class="type-sub__title">Colour variables</div>
-        <div class="type-sub__desc">The background colours that drive variant selection (see Usage). Values already declared as design tokens are named; the rest are raw brand-palette hex with no token yet.</div>
-        <div class="dd-table-wrap"><table class="dd-table">
-          <thead><tr><th>Hex</th><th>Token</th><th>Used for</th></tr></thead>
-          <tbody>
-            <tr><td><code>#FFFFFF</code></td><td>&mdash;</td><td>White background</td></tr>
-            <tr><td><code>#F0F0F0</code></td><td><code>--prim-grey-100</code></td><td>Light grey background</td></tr>
-            <tr><td><code>#1DFA0F</code></td><td><code>--prim-bg-500</code></td><td>Flash Green (primary) background</td></tr>
-            <tr><td><code>#3FB549</code></td><td>&mdash; <span style="color:var(--chrome-muted)">(no token)</span></td><td>Medium green background &mdash; triggers the lime-icon exception</td></tr>
-            <tr><td><code>#B2FA00</code></td><td><code>--prim-yg-500</code></td><td>Lime icon, used only on the medium-green background</td></tr>
-            <tr><td><code>#003F1E</code></td><td><code>--prim-dg-500</code></td><td>Dark forest green background</td></tr>
-            <tr><td><code>#000000</code></td><td>&mdash;</td><td>Black background</td></tr>
-          </tbody>
-        </table></div>
-      </div>
-      </div>
       <div class="tabs-panel" data-logo-panel="changelog" id="logo-changelog-panel"></div>
     </section>
 
@@ -18889,12 +19053,26 @@ function cbrTabSwitch(tab){
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.88.0';
+const SYSTEM_VERSION = '1.89.0';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.89.0', date:'2026-09-09', author:'Mo', title:'Logos page restructured for clarity — visual examples throughout, in-context moved into Usage', changes:[
+        ['changed','Logos IA reordered around the question each tab answers. Overview is now what the logo IS (Anatomy → Formats → Colour variants); Usage is how to APPLY it (Do/Dont → Match the variant to the background → Clear space → Sizing → Placement in a layout → In the Flash UI); the third tab is renamed "Assets & Variables" and holds only the files and the colour values'],
+        ['changed','In-context placement mockups moved out of Overview into Usage, next to the placement rules they demonstrate, and rebuilt as miniature layouts (A4 portrait with a top-left brand strip, black social card with a bottom-right closing lockup, and a "don\'t" showing two instances in one layout) instead of the previous two flat colour panels'],
+        ['added','Real DS-usage example: a replica of this site\'s own .bar top nav with the logo in place, plus a rules table carrying the actual implementation values (28px logo in a 52px bar = 12px clear above/below, 20px left inset matching bar padding, white wordmark for the dark bar, horizontal-only, links home)'],
+        ['added','Anatomy section — a large lockup hero plus four numbered part cards (bull mark, circle, wordmark, lockup), establishing the wordmark as the unit clear space is measured in'],
+        ['added','Visual clear-space diagram: dashed boundary offset from the lockup by one wordmark height, labelled x on all four sides, drawn on a fixed white stage'],
+        ['added','Visual size comparison — the same lockup at 140/110/90px next to the size-by-context table, so the numbers have a referent'],
+        ['changed','"Match the variant to the background" replaces the plain background/hex/variant text table with a visual grid: each cell renders the correct lockup on the actual background colour, with a small square swatch, the hex, and its token'],
+        ['changed','Formats and Colour variants are now visual .spec-cell grids showing real assets rather than prose lists'],
+        ['changed','Assets tab is a consistent visual list (.logo-list) — one row per file: preview on a correct background, filename, format, the rule for reaching for it, and SVG/PNG downloads — replacing the four-column text table'],
+        ['added','Small square colour swatches wherever a colour is named — .logo-swatch chips in the variant grid, and 24px .sem-swatch previews in the Assets tab colour table'],
+        ['changed','Usage and Assets panels wrapped in .spec-panel .spec-stack so their sub-headings render at the 22px spec scale with 72px rhythm, matching the component pages\' Style tab instead of the cramped 15px default'],
+        ['removed','.logo-grid/.logo-card* gallery markup and CSS, and the .brand-logos/.brand-logo-tile base64 tile block — both superseded by the visual format/variant grids and the asset list'],
+      ]},
       {version:'1.88.0', date:'2026-09-09', author:'Mo', title:'Logos rebuilt with the full component-page treatment, adapted for a foundation', changes:[
         ['added','Logos (s-logos) converted from a static page into a .sec--tabbed page with a foundation-appropriate tab set — Overview / Usage / Tokens, Variables & Assets / Changelog — instead of the component pages\' Overview/Style/Code/Changelog, since a foundation has no interactive states/variants for a Style or Code tab to document'],
         ['added','Overview tab: hero preview showing the white lockup on black; existing "The logo" intro and the four colour-variant asset galleries (Primary/White/Monochrome Black/Monochrome White) regrouped under a new "Formats & colour variants" heading; new "In context" section with two real mockups (top-left brand-strip placement on black, bottom-right closing-lockup placement on Flash Green) demonstrating the one-logo-per-layout and clear-space rules'],
@@ -20709,7 +20887,21 @@ const CHANGELOG = {
         ['added','Default landing page for the design system'],
       ]},
     ]},
-    {secId:'s-logos', name:'Logos', version:'1.2.0', entries:[
+    {secId:'s-logos', name:'Logos', version:'1.3.0', entries:[
+      {version:'1.3.0', date:'2026-09-09', author:'Mo', title:'Restructured for clarity — visual examples throughout, in-context moved into Usage', changes:[
+        ['changed','IA reordered around what each tab answers: Overview = what the logo is (Anatomy → Formats → Colour variants); Usage = how to apply it (Do/Dont → Match the variant to the background → Clear space → Sizing → Placement in a layout → In the Flash UI); third tab renamed "Assets & Variables" and reduced to the files plus the colour values'],
+        ['changed','In-context mockups moved from Overview into Usage, beside the placement rules they illustrate, and rebuilt as miniature layouts — A4 portrait with a top-left brand strip, black social card with a bottom-right closing lockup, and a "don\'t" showing two instances in one layout'],
+        ['added','Real DS-usage example: a replica of this site\'s .bar top nav with the logo in place, plus a rules table with the actual values (28px logo in a 52px bar = 12px clear above/below, 20px left inset, white wordmark on the dark bar, horizontal-only, links home)'],
+        ['added','Anatomy section — lockup hero plus four numbered part cards (bull mark, circle, wordmark, lockup), naming the wordmark as the unit clear space is measured in'],
+        ['added','Visual clear-space diagram with a dashed boundary one wordmark-height off the lockup, labelled x on all four sides'],
+        ['added','Visual size comparison at 140/110/90px alongside the size-by-context table'],
+        ['changed','"Match the variant to the background" is now a visual lookup grid — the correct lockup rendered on each real background colour, with a small square swatch, hex and token — replacing the plain text table'],
+        ['changed','Formats and Colour variants render as visual .spec-cell grids of real assets instead of prose lists'],
+        ['changed','Assets is a consistent visual list (.logo-list): preview on a correct background, filename, format, the rule for using it, and SVG/PNG downloads on every row'],
+        ['added','Small square swatches wherever a colour is named — .logo-swatch chips in the variant grid, 24px .sem-swatch previews in the colour table'],
+        ['changed','Usage and Assets panels use .spec-panel .spec-stack so sub-headings render at the 22px spec scale with 72px rhythm, matching the component pages instead of the cramped 15px default'],
+        ['removed','.logo-grid/.logo-card* gallery and the .brand-logos/.brand-logo-tile base64 tiles, with their CSS — superseded by the format/variant grids and the asset list'],
+      ]},
       {version:'1.2.0', date:'2026-09-09', author:'Mo', title:'Rebuilt with the full component-page treatment, adapted for a foundation', changes:[
         ['added','Converted to a .sec--tabbed page with tabs Overview / Usage / Tokens, Variables & Assets / Changelog (not the component pages\' Style/Code, since a foundation has no interactive states or variants to document there)'],
         ['added','Overview: hero preview (white lockup on black); existing intro + four colour-variant galleries regrouped under "Formats & colour variants"; new "In context" section — two real mockups showing the one-logo-per-layout rule (top-left brand strip on black, bottom-right closing lockup on Flash Green)'],
