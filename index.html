@@ -845,6 +845,21 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;font-feature-
 .elev-use-text{font-size:11px;color:var(--chrome-muted);line-height:1.5}
 .elev-use-bold{font-size:11px;font-weight:700;color:var(--chrome-txt);margin-bottom:2px}
 
+/* Elevation Usage — one entry per component that carries a level: the real
+   component rendered on a stage, with its selector and match status beside it */
+.elev-doc-uses{display:flex;flex-direction:column;gap:10px}
+.elev-doc-use{display:grid;grid-template-columns:minmax(0,1fr) 172px;border:1px solid var(--chrome-border);border-radius:10px;overflow:hidden}
+.elev-doc-use__stage{display:flex;align-items:center;justify-content:center;min-height:104px;padding:20px;background:var(--chrome-bg)}
+.elev-doc-use__meta{display:flex;flex-direction:column;align-items:flex-start;gap:7px;padding:14px 16px;border-left:1px solid var(--chrome-border);background:var(--chrome-nav)}
+.elev-doc-use__sel{font-family:'SF Mono',Consolas,monospace;font-size:11.5px;font-weight:600;color:var(--chrome-txt);word-break:break-all}
+.elev-doc-use__note{font-size:11.5px;line-height:1.5;color:var(--chrome-muted)}
+.elev-doc-val{font-family:'SF Mono',Consolas,monospace;font-size:11px;background:var(--chrome-nav);border:1px solid var(--chrome-border);padding:2px 6px;border-radius:5px;color:var(--chrome-txt);cursor:pointer;white-space:nowrap}
+.elev-doc-val:hover{border-color:var(--color-text-s)}
+@media (max-width:700px){
+  .elev-doc-use{grid-template-columns:1fr}
+  .elev-doc-use__meta{border-left:0;border-top:1px solid var(--chrome-border)}
+}
+
 /* ================================================================
    SESSION 4 — BUTTONS
 ================================================================ */
@@ -3026,33 +3041,33 @@ body.home .main{max-width:none;margin:0;padding:0}
             <div class="type-sub__title">Anatomy</div>
             <div class="type-sub__desc">One shadow, four properties — only y-offset and blur ever move. x-axis and spread are always 0.</div>
             <div class="cpg-section-block">
-              <div class="spec-hero" style="background:var(--chrome-bg);display:flex;align-items:center;justify-content:center;padding:56px 20px">
+              <div class="spec-hero" style="background:var(--chrome-bg);display:flex;align-items:center;justify-content:center;padding:48px 20px">
                 <div style="width:220px;height:120px;border-radius:12px;background:var(--color-surface-base);border:1px solid var(--chrome-border);box-shadow:0 4px 24px 0 rgba(0,0,0,0.16)"></div>
               </div>
               <div class="spec-parts">
                 <div class="spec-part">
-                  <div class="spec-part__stage" style="background:var(--chrome-bg);display:flex;align-items:center;justify-content:center;min-height:78px"><div style="width:60px;height:60px;border-radius:8px;background:var(--color-surface-base);box-shadow:0 8px 0 0 rgba(0,0,0,0.16)"></div></div>
+                  <div class="spec-part__stage" style="background:var(--chrome-bg);display:flex;align-items:center;justify-content:center;min-height:112px"><div style="width:44px;height:44px;border-radius:8px;background:var(--color-surface-base);border:1px solid var(--chrome-border);box-shadow:0 8px 0 0 rgba(0,0,0,0.16)"></div></div>
                   <div class="spec-part__body">
                     <div class="spec-part__name"><span class="spec-part__num">1</span>Y-offset</div>
                     <div class="spec-part__note">The only offset that moves — x is always 0. Shown here with blur set to 0 so the offset alone is visible.</div>
                   </div>
                 </div>
                 <div class="spec-part">
-                  <div class="spec-part__stage" style="background:var(--chrome-bg);display:flex;align-items:center;justify-content:center;min-height:78px"><div style="width:60px;height:60px;border-radius:8px;background:var(--color-surface-base);box-shadow:0 0 24px 0 rgba(0,0,0,0.16)"></div></div>
+                  <div class="spec-part__stage" style="background:var(--chrome-bg);display:flex;align-items:center;justify-content:center;min-height:112px"><div style="width:44px;height:44px;border-radius:8px;background:var(--color-surface-base);border:1px solid var(--chrome-border);box-shadow:0 0 24px 0 rgba(0,0,0,0.16)"></div></div>
                   <div class="spec-part__body">
                     <div class="spec-part__name"><span class="spec-part__num">2</span>Blur</div>
                     <div class="spec-part__note">Shown here with offset set to 0 so the blur alone is visible.</div>
                   </div>
                 </div>
                 <div class="spec-part">
-                  <div class="spec-part__stage" style="background:var(--chrome-bg);display:flex;align-items:center;justify-content:center;min-height:78px"><div style="width:60px;height:60px;border-radius:8px;background:rgba(0,0,0,0.16)"></div></div>
+                  <div class="spec-part__stage" style="background:var(--chrome-bg);display:flex;align-items:center;justify-content:center;min-height:112px"><div style="width:44px;height:44px;border-radius:8px;background:rgba(0,0,0,0.16)"></div></div>
                   <div class="spec-part__body">
                     <div class="spec-part__name"><span class="spec-part__num">3</span>Colour</div>
                     <div class="spec-part__note"><code>elevation-default</code> — #000000 at 16%. One colour, used at every level.</div>
                   </div>
                 </div>
                 <div class="spec-part">
-                  <div class="spec-part__stage" style="background:var(--chrome-bg);display:flex;align-items:center;justify-content:center;min-height:78px"><div style="width:60px;height:60px;border-radius:8px;background:var(--color-surface-base);box-shadow:0 4px 24px 8px rgba(0,0,0,0.16)"></div></div>
+                  <div class="spec-part__stage" style="background:var(--chrome-bg);display:flex;align-items:center;justify-content:center;min-height:112px"><div style="width:44px;height:44px;border-radius:8px;background:var(--color-surface-base);border:1px solid var(--chrome-border);box-shadow:0 4px 24px 8px rgba(0,0,0,0.16)"></div></div>
                   <div class="spec-part__body">
                     <div class="spec-part__name"><span class="spec-part__num">4</span>Spread</div>
                     <div class="spec-part__note">Always 0. Shown here at 8px to make clear why — it thickens the shadow into a hard-edged halo rather than a soft lift.</div>
@@ -3078,22 +3093,32 @@ body.home .main{max-width:none;margin:0;padding:0}
 
           <div class="type-sub">
             <div class="type-sub__title">Which level for what</div>
-            <div class="type-sub__desc">Guidance per level — the real components that use it, and the shadow they carry today against the documented value.</div>
+            <div class="type-sub__desc">Each level, the surfaces it&rsquo;s for, and the components that carry it today.</div>
             <div class="cpg-section-outline">
 
               <div class="logo-var">
                 <div class="logo-var__head">
                   <div class="logo-var__preview" style="background:var(--chrome-bg);border:none;height:70px;padding:14px"><div style="width:40px;height:40px;border-radius:8px;background:var(--color-surface-base);border:1px solid var(--chrome-border);box-shadow:0 1px 4px 0 rgba(0,0,0,0.16)"></div></div>
-                  <div><div class="logo-var__name">Extra Small (XS) — elevation-xs</div><div class="logo-var__desc">Resting cards and tiles.</div></div>
+                  <div>
+                    <div class="logo-var__name">Extra Small (XS)</div>
+                    <div class="logo-var__desc" style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-top:5px"><span class="elev-doc-val" onclick="copy('elevation-xs','Token name')">elevation-xs</span><span class="elev-doc-val" onclick="copy('0 1px 4px 0 rgba(0,0,0,0.16)','box-shadow')">0 1px 4px 0 rgba(0,0,0,0.16)</span></div>
+                  </div>
                 </div>
                 <div class="logo-var__row">
                   <div class="logo-var__rowlabel logo-var__rowlabel--ok">Use for</div>
                   <div class="logo-var__chips"><span class="logo-chip">Cards</span><span class="logo-chip">Tiles</span></div>
                 </div>
                 <div class="logo-var__row">
-                  <div class="logo-var__rowlabel logo-var__rowlabel--no">Actual value</div>
-                  <div class="logo-var__chips">
-                    <span class="logo-chip logo-chip__top"><code>.card</code> at rest carries <b style="color:var(--chrome-txt)">no box-shadow</b><span class="logo-chip__why">Drift — documented at elevation-xs, but the base card ships flat; only <code>.card--interactive:hover</code>/<code>:active</code> add a shadow, at 10% not 16%. Left as drift, see PR.</span></span>
+                  <div class="logo-var__rowlabel">Components</div>
+                  <div class="elev-doc-uses">
+                    <div class="elev-doc-use">
+                      <div class="elev-doc-use__stage"><div class="card" style="width:200px"><div class="card__body" style="padding:14px"><div class="card__title" style="margin-bottom:0">Card</div></div></div></div>
+                      <div class="elev-doc-use__meta">
+                        <span class="elev-doc-use__sel">.card</span>
+                        <span class="tag tag--sm tag--error">Drift</span>
+                        <span class="elev-doc-use__note">Ships flat &mdash; no shadow at rest.</span>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -3101,17 +3126,25 @@ body.home .main{max-width:none;margin:0;padding:0}
               <div class="logo-var">
                 <div class="logo-var__head">
                   <div class="logo-var__preview" style="background:var(--chrome-bg);border:none;height:70px;padding:14px"><div style="width:40px;height:40px;border-radius:8px;background:var(--color-surface-base);border:1px solid var(--chrome-border);box-shadow:0 2px 12px 0 rgba(0,0,0,0.16)"></div></div>
-                  <div><div class="logo-var__name">Small (S) — elevation-s</div><div class="logo-var__desc">Secondary overlays.</div></div>
+                  <div>
+                    <div class="logo-var__name">Small (S)</div>
+                    <div class="logo-var__desc" style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-top:5px"><span class="elev-doc-val" onclick="copy('elevation-s','Token name')">elevation-s</span><span class="elev-doc-val" onclick="copy('0 2px 12px 0 rgba(0,0,0,0.16)','box-shadow')">0 2px 12px 0 rgba(0,0,0,0.16)</span></div>
+                  </div>
                 </div>
                 <div class="logo-var__row">
                   <div class="logo-var__rowlabel logo-var__rowlabel--ok">Use for</div>
                   <div class="logo-var__chips"><span class="logo-chip">Tooltips</span></div>
                 </div>
                 <div class="logo-var__row">
-                  <div class="logo-var__rowlabel logo-var__rowlabel--ok">Rendered</div>
-                  <div class="logo-var__chips" style="align-items:center">
-                    <span class="tip" tabindex="0" style="position:relative;display:inline-flex"><button class="sg-btn" type="button">Hover me</button><span class="tip__bubble tip__bubble--top" style="opacity:1;position:relative;pointer-events:auto">Tooltip content</span></span>
-                    <span class="logo-chip"><code onclick="copy('0 2px 12px 0 rgba(0,0,0,0.16)','box-shadow')">0 2px 12px 0 rgba(0,0,0,0.16)</code> — Matches (fixed from <code>0 6px 18px rgba(0,0,0,.18)</code>)</span>
+                  <div class="logo-var__rowlabel">Components</div>
+                  <div class="elev-doc-uses">
+                    <div class="elev-doc-use">
+                      <div class="elev-doc-use__stage" style="padding:62px 20px 20px"><span class="tip" tabindex="0"><button class="sg-btn" type="button">Copy</button><span class="tip__bubble tip__bubble--top" style="opacity:1;transform:translate(-50%,0)">Copy to clipboard</span></span></div>
+                      <div class="elev-doc-use__meta">
+                        <span class="elev-doc-use__sel">.tip__bubble</span>
+                        <span class="tag tag--sm tag--success">Matches</span>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -3119,53 +3152,60 @@ body.home .main{max-width:none;margin:0;padding:0}
               <div class="logo-var">
                 <div class="logo-var__head">
                   <div class="logo-var__preview" style="background:var(--chrome-bg);border:none;height:70px;padding:14px"><div style="width:40px;height:40px;border-radius:8px;background:var(--color-surface-base);border:1px solid var(--chrome-border);box-shadow:0 4px 24px 0 rgba(0,0,0,0.16)"></div></div>
-                  <div><div class="logo-var__name">Medium (M) — elevation-m</div><div class="logo-var__desc">Contextual overlays.</div></div>
-                </div>
-                <div class="logo-var__row">
-                  <div class="logo-var__rowlabel logo-var__rowlabel--ok">Use for</div>
-                  <div class="logo-var__chips"><span class="logo-chip">Dropdown menus</span><span class="logo-chip">Popovers</span></div>
-                </div>
-                <div class="logo-var__row">
-                  <div class="logo-var__rowlabel logo-var__rowlabel--ok">Rendered</div>
-                  <div class="logo-var__chips" style="flex-direction:column;align-items:flex-start;gap:10px">
-                    <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
-                      <div class="dpd-menu" style="position:relative;top:auto;left:auto;right:auto;width:180px">
-                        <div class="dpd-item" style="padding:8px 10px;font-size:12.5px">Option one</div>
-                        <div class="dpd-item" style="padding:8px 10px;font-size:12.5px">Option two</div>
-                      </div>
-                      <span class="logo-chip"><code onclick="copy('0 4px 24px 0 rgba(0,0,0,0.16)','box-shadow')">0 4px 24px 0 rgba(0,0,0,0.16)</code> — Matches (fixed from <code>0 8px 24px rgba(0,0,0,.14)</code>)</span>
-                    </div>
-                    <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
-                      <div class="pop__panel" style="position:relative;top:auto;left:auto;opacity:1;transform:none;pointer-events:auto;min-width:180px">
-                        <div class="pop__title">About settlements</div>
-                      </div>
-                      <span class="logo-chip"><code onclick="copy('0 4px 24px 0 rgba(0,0,0,0.16)','box-shadow')">0 4px 24px 0 rgba(0,0,0,0.16)</code> — Matches (fixed from <code>0 14px 36px rgba(0,0,0,.18)</code>)</span>
-                    </div>
+                  <div>
+                    <div class="logo-var__name">Medium (M)</div>
+                    <div class="logo-var__desc" style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-top:5px"><span class="elev-doc-val" onclick="copy('elevation-m','Token name')">elevation-m</span><span class="elev-doc-val" onclick="copy('0 4px 24px 0 rgba(0,0,0,0.16)','box-shadow')">0 4px 24px 0 rgba(0,0,0,0.16)</span></div>
                   </div>
                 </div>
                 <div class="logo-var__row">
-                  <div class="logo-var__rowlabel">Also</div>
-                  <div class="logo-var__chips">Dialogs sit here too, once the Modal component ships (currently "Coming soon" in the nav) — don't mock one ahead of the real build.</div>
+                  <div class="logo-var__rowlabel logo-var__rowlabel--ok">Use for</div>
+                  <div class="logo-var__chips"><span class="logo-chip">Dropdown menus</span><span class="logo-chip">Popovers</span><span class="logo-chip">Dialogs</span></div>
+                </div>
+                <div class="logo-var__row">
+                  <div class="logo-var__rowlabel">Components</div>
+                  <div class="elev-doc-uses">
+                    <div class="elev-doc-use">
+                      <div class="elev-doc-use__stage"><div class="dpd-menu" style="position:relative;top:auto;left:auto;right:auto;width:190px"><div class="dpd-item" style="padding:8px 10px;font-size:12.5px">Option one</div><div class="dpd-item" style="padding:8px 10px;font-size:12.5px">Option two</div></div></div>
+                      <div class="elev-doc-use__meta">
+                        <span class="elev-doc-use__sel">.dpd-menu</span>
+                        <span class="tag tag--sm tag--success">Matches</span>
+                      </div>
+                    </div>
+                    <div class="elev-doc-use">
+                      <div class="elev-doc-use__stage"><div class="pop__panel" style="position:relative;top:auto;left:auto;opacity:1;transform:none;pointer-events:auto;min-width:0;width:216px"><div class="pop__title">About settlements</div><div class="pop__desc">Funds settle on the next business day.</div></div></div>
+                      <div class="elev-doc-use__meta">
+                        <span class="elev-doc-use__sel">.pop__panel</span>
+                        <span class="tag tag--sm tag--success">Matches</span>
+                      </div>
+                    </div>
+                    <div class="elev-doc-use__note">Dialogs land here once Modals ship.</div>
+                  </div>
                 </div>
               </div>
 
               <div class="logo-var">
                 <div class="logo-var__head">
                   <div class="logo-var__preview" style="background:var(--chrome-bg);border:none;height:70px;padding:14px"><div style="width:40px;height:40px;border-radius:8px;background:var(--color-surface-base);border:1px solid var(--chrome-border);box-shadow:0 8px 48px 0 rgba(0,0,0,0.16)"></div></div>
-                  <div><div class="logo-var__name">Large (L) — elevation-l</div><div class="logo-var__desc">Elements above most content.</div></div>
+                  <div>
+                    <div class="logo-var__name">Large (L)</div>
+                    <div class="logo-var__desc" style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-top:5px"><span class="elev-doc-val" onclick="copy('elevation-l','Token name')">elevation-l</span><span class="elev-doc-val" onclick="copy('0 8px 48px 0 rgba(0,0,0,0.16)','box-shadow')">0 8px 48px 0 rgba(0,0,0,0.16)</span></div>
+                  </div>
                 </div>
                 <div class="logo-var__row">
                   <div class="logo-var__rowlabel logo-var__rowlabel--ok">Use for</div>
                   <div class="logo-var__chips"><span class="logo-chip">Bottom sheets</span><span class="logo-chip">Drawers</span></div>
                 </div>
                 <div class="logo-var__row">
-                  <div class="logo-var__rowlabel logo-var__rowlabel--ok">Rendered</div>
-                  <div class="logo-var__chips" style="align-items:center">
-                    <div class="bsh-sheet" style="position:relative;inset:auto;width:220px;border-radius:12px 12px 0 0;padding:10px 14px">
-                      <div class="bsh-sheet__handle" style="margin:0 auto 8px"></div>
-                      <div style="font-size:12.5px;font-weight:700">Sheet content</div>
+                  <div class="logo-var__rowlabel">Components</div>
+                  <div class="elev-doc-uses">
+                    <div class="elev-doc-use">
+                      <div class="elev-doc-use__stage"><div class="bsh-sheet" style="position:relative;inset:auto;width:216px;border-radius:12px 12px 0 0;padding:12px 14px 16px"><div class="bsh-sheet__handle" style="margin:0 auto 10px"></div><div style="font-size:12.5px;font-weight:700">Sheet title</div></div></div>
+                      <div class="elev-doc-use__meta">
+                        <span class="elev-doc-use__sel">.bsh-sheet</span>
+                        <span class="tag tag--sm tag--success">Matches</span>
+                        <span class="elev-doc-use__note">Negative y-offset &mdash; a sheet rises from the bottom.</span>
+                      </div>
                     </div>
-                    <span class="logo-chip"><code onclick="copy('0 -8px 48px 0 rgba(0,0,0,0.16)','box-shadow')">0 -8px 48px 0 rgba(0,0,0,0.16)</code> — Matches (fixed from <code>0 -6px 24px rgba(0,0,0,.16)</code>) — negative y kept, the one sanctioned directional exception</span>
                   </div>
                 </div>
               </div>
@@ -3173,24 +3213,26 @@ body.home .main{max-width:none;margin:0;padding:0}
               <div class="logo-var">
                 <div class="logo-var__head">
                   <div class="logo-var__preview" style="background:var(--chrome-bg);border:none;height:70px;padding:14px"><div style="width:40px;height:40px;border-radius:8px;background:var(--color-surface-base);border:1px solid var(--chrome-border);box-shadow:0 16px 80px 0 rgba(0,0,0,0.16)"></div></div>
-                  <div><div class="logo-var__name">Extra Large (XL) — elevation-xl</div><div class="logo-var__desc">Highest-priority elements.</div></div>
+                  <div>
+                    <div class="logo-var__name">Extra Large (XL)</div>
+                    <div class="logo-var__desc" style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-top:5px"><span class="elev-doc-val" onclick="copy('elevation-xl','Token name')">elevation-xl</span><span class="elev-doc-val" onclick="copy('0 16px 80px 0 rgba(0,0,0,0.16)','box-shadow')">0 16px 80px 0 rgba(0,0,0,0.16)</span></div>
+                  </div>
                 </div>
                 <div class="logo-var__row">
                   <div class="logo-var__rowlabel logo-var__rowlabel--ok">Use for</div>
                   <div class="logo-var__chips"><span class="logo-chip">Notifications</span></div>
                 </div>
                 <div class="logo-var__row">
-                  <div class="logo-var__rowlabel">Rendered</div>
-                  <div class="logo-var__chips">Toasts are "Coming soon" in the nav — no shipped component to render or measure yet. The doc site's own <code>#toast</code> is site chrome, not this design system's component, so it isn't shown here.</div>
+                  <div class="logo-var__rowlabel">Components</div>
+                  <div class="elev-doc-uses"><div class="elev-doc-use__note">Nothing ships at this level yet &mdash; Toasts are still to come.</div></div>
                 </div>
               </div>
-
             </div>
           </div>
 
           <div class="type-sub">
             <div class="type-sub__title">Light and dark</div>
-            <div class="type-sub__desc">Elevation is shadow-only. The same <code>elevation-default</code> black at 16% is used in both themes — surfaces step via <code>--color-surface-n1/n2/n3</code> independently of shadow.</div>
+            <div class="type-sub__desc">One shadow colour in both themes: black at 16%. Nothing about a level changes in dark.</div>
             <div class="cpg-section-outline">
               <div class="spec-insitu-grid spec-insitu-grid--2">
                 <div class="spec-mock">
@@ -3199,7 +3241,7 @@ body.home .main{max-width:none;margin:0;padding:0}
                     <div style="width:44px;height:44px;border-radius:8px;background:#fff;border:1px solid var(--chrome-border);box-shadow:0 4px 24px 0 rgba(0,0,0,0.16)"></div>
                     <div style="width:52px;height:52px;border-radius:8px;background:#fff;border:1px solid var(--chrome-border);box-shadow:0 16px 80px 0 rgba(0,0,0,0.16)"></div>
                   </div>
-                  <div class="spec-mock__cap"><b>Light</b>XS, M, XL shown at full strength — clearly visible against a white surface.</div>
+                  <div class="spec-mock__cap"><b>Light</b>XS, M and XL on a white surface.</div>
                 </div>
                 <div class="spec-mock" data-brand="flash" data-theme="dark">
                   <div class="spec-mock__stage" style="background:#12131a;gap:16px;flex-direction:row;align-items:flex-end;justify-content:center">
@@ -3207,31 +3249,31 @@ body.home .main{max-width:none;margin:0;padding:0}
                     <div style="width:44px;height:44px;border-radius:8px;background:var(--color-surface-base);border:1px solid var(--chrome-border);box-shadow:0 4px 24px 0 rgba(0,0,0,0.16)"></div>
                     <div style="width:52px;height:52px;border-radius:8px;background:var(--color-surface-base);border:1px solid var(--chrome-border);box-shadow:0 16px 80px 0 rgba(0,0,0,0.16)"></div>
                   </div>
-                  <div class="spec-mock__cap"><b>Dark</b>Same 16% black shadow on <code>#12131a</code> — faint at XS, only really visible at M and up. That's the truth of the token; there's no dark-mode shadow variant.</div>
+                  <div class="spec-mock__cap"><b>Dark</b>The same values on <code>#12131a</code>. Faint at XS, readable from M up — there is no dark-mode variant.</div>
                 </div>
               </div>
-              <div class="logo-note">Overlay backgrounds (<code>.dpd-menu</code>, <code>.pop__panel</code>, <code>.bsh-sheet</code>, <code>.tip__bubble</code>) step via their own surface/inverse tokens on theme change — but none of them switch which elevation level they use between light and dark. No level ↔ surface-step pairing is defined; each component just carries its one documented level in both themes.</div>
+              <div class="logo-note">No level is paired with a surface step. A component keeps the same elevation level in both themes — only its surface token changes.</div>
             </div>
           </div>
 
           <div class="type-sub">
             <div class="type-sub__title">Stacking order</div>
-            <div class="type-sub__desc">Elevation implies depth, but z-index is what actually controls stacking. The real values components declare today:</div>
+            <div class="type-sub__desc">Elevation suggests depth; z-index decides it. The values components declare today:</div>
             <div class="cpg-section-outline">
               <div class="dd-table-wrap"><table class="dd-table"><thead><tr><th>Component</th><th>Selector</th><th>z-index</th><th>Level</th></tr></thead><tbody>
                 <tr><td class="dd-table__name">Tooltip</td><td><code>.tip__bubble</code></td><td>30</td><td>elevation-s</td></tr>
                 <tr><td class="dd-table__name">Dropdown menu</td><td><code>.dpd-menu</code></td><td>20</td><td>elevation-m</td></tr>
                 <tr><td class="dd-table__name">Popover</td><td><code>.pop__panel</code></td><td>40</td><td>elevation-m</td></tr>
-                <tr><td class="dd-table__name">Hovercard</td><td><code>.hc__card</code></td><td>30</td><td>none (drift)</td></tr>
+                <tr><td class="dd-table__name">Hovercard</td><td><code>.hc__card</code></td><td>30</td><td>&mdash;</td></tr>
                 <tr><td class="dd-table__name">Bottom sheet</td><td><code>.bsh-sheet</code></td><td>2</td><td>elevation-l</td></tr>
-                <tr><td class="dd-table__name">Search results</td><td><code>.bar__search-results</code></td><td>300</td><td>none (drift)</td></tr>
+                <tr><td class="dd-table__name">Search results</td><td><code>.bar__search-results</code></td><td>300</td><td>&mdash;</td></tr>
               </tbody></table></div>
             </div>
           </div>
 
           <div class="type-sub">
-            <div class="type-sub__title">Don'ts, rendered</div>
-            <div class="type-sub__desc">Four failures on the real values.</div>
+            <div class="type-sub__title">Common mistakes</div>
+            <div class="type-sub__desc">Each one rendered on the real values.</div>
             <div class="cpg-section-outline">
               <div class="spec-insitu-grid spec-insitu-grid--2">
                 <div class="spec-mock">
@@ -3239,21 +3281,21 @@ body.home .main{max-width:none;margin:0;padding:0}
                     <span class="logo-dont__x"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></span>
                     <div style="width:150px;padding:16px;border-radius:12px;background:#fff;box-shadow:0 16px 80px 0 rgba(0,0,0,0.16);font-size:12px;font-weight:700">Resting card</div>
                   </div>
-                  <div class="spec-mock__cap"><b class="logo-dont__tag">&#10007; Don't: elevation-xl on a resting card</b>XL is reserved for the single highest-priority layer on screen — a notification, not everyday content.</div>
+                  <div class="spec-mock__cap"><b class="logo-dont__tag">&#10007; Don't: elevation-xl on a resting card</b>XL is for the top layer on screen, not everyday content.</div>
                 </div>
                 <div class="spec-mock">
                   <div class="spec-mock__stage logo-dont" style="background:var(--color-crit-l);align-items:center;justify-content:center">
                     <span class="logo-dont__x"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></span>
                     <div style="width:150px;height:70px;border-radius:12px;background:#fff;box-shadow:0 4px 24px 0 rgba(0,0,0,0.16), 0 2px 12px 0 rgba(0,0,0,0.16)"></div>
                   </div>
-                  <div class="spec-mock__cap"><b class="logo-dont__tag">&#10007; Don't: stack two shadows on one surface</b>Pick the single level the surface actually needs, not a blend of two.</div>
+                  <div class="spec-mock__cap"><b class="logo-dont__tag">&#10007; Don't: stack two shadows on one surface</b>Pick the one level the surface needs.</div>
                 </div>
                 <div class="spec-mock">
                   <div class="spec-mock__stage logo-dont" style="background:var(--color-crit-l);align-items:center;justify-content:center">
                     <span class="logo-dont__x"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></span>
                     <div style="width:150px;height:70px;border-radius:12px;background:#fff;box-shadow:0 4px 24px 0 rgba(29,250,15,0.55)"></div>
                   </div>
-                  <div class="spec-mock__cap"><b class="logo-dont__tag">&#10007; Don't: tint the shadow</b><code>elevation-default</code> is always black at 16% — never brand green or any other colour.</div>
+                  <div class="spec-mock__cap"><b class="logo-dont__tag">&#10007; Don't: tint the shadow</b>The shadow colour is always black at 16%.</div>
                 </div>
                 <div class="spec-mock">
                   <div class="spec-mock__stage logo-dont" style="background:var(--color-crit-l);align-items:center;justify-content:center">
@@ -19661,6 +19703,7 @@ const CHANGELOG = {
         ['changed','Elevation (s-elev) rebuilt onto the .sec--tabbed pattern used by Logos: Overview (Anatomy, Levels) / Usage (which level for what, light and dark, stacking order, don\'ts, do\'s and don\'ts) / Tokens (the ELEVATION spec table plus a where-it\'s-used table) / Changelog, with a v1.1.0 hero badge and a regenerated ai-ctx tab'],
         ['fixed','.tip__bubble, .dpd-menu, .pop__panel and .bsh-sheet box-shadow values brought onto their documented elevation level (elevation-s, elevation-m, elevation-m, elevation-l respectively) — each a single box-shadow declaration, no layout change; .bsh-sheet keeps its negative y-offset as the one sanctioned directional exception to elevation-l'],
         ['added','renderElevLevels() builds the Overview Levels grid from the existing ELEVATION data const at runtime, alongside the pre-existing inline Tokens-table renderer — both re-run on theme toggle'],
+        ['fixed','Every documentation surface on the page now stages a lifted tile on var(--chrome-bg) rather than var(--chrome-nav). In dark theme --chrome-nav (#25262c) is lighter than --color-surface-base (#12131a) — the reverse of light theme — so the tile read as a recess and its shadow was invisible; the ground now matches the surface token in both themes, exactly as the real overlay components do'],
       ]},
       {version:'1.92.2', date:'2026-09-09', author:'Mo', title:'Logos: trim two explanatory notes', changes:[
         ['removed','The SVG-only note under the Icon only asset list. The per-row SVG pills already show which formats exist, so the note was restating the list'],
@@ -21723,7 +21766,8 @@ const CHANGELOG = {
       {version:'1.1.0', date:'2026-09-09', author:'Mo', title:'Full tabbed component-page treatment', changes:[
         ['changed','Rebuilt onto the .sec--tabbed pattern: sec-hero with a 3-surface (XS/M/XL) preview, a 4-tab strip (Overview / Usage / Tokens / Changelog), replacing the single flat .sec__head + list layout'],
         ['added','Overview — Anatomy (Y-offset, Blur, Colour, Spread shown in isolation) and Levels (the 5 levels rendered live from ELEVATION via the new renderElevLevels())'],
-        ['added','Usage — which level for what (per-level guidance with the real .tip__bubble, .dpd-menu, .pop__panel and .bsh-sheet rendered and their live box-shadow shown against the documented value), light/dark behaviour, a z-index stacking table, 4 rendered don\'ts, and do\'s/don\'ts'],
+        ['added','Usage — "Which level for what" gives each level its own block: the token name and box-shadow value as copy-on-click chips in the head, a "Use for" chip row, and a "Components" row listing every real component that carries the level (.card, .tip__bubble, .dpd-menu, .pop__panel, .bsh-sheet) rendered on its own stage with the real Tag component marking it Matches or Drift. Then light/dark behaviour, a z-index stacking table, four rendered Common mistakes, and do\'s/don\'ts last'],
+        ['added','.elev-doc-uses/.elev-doc-use/.elev-doc-use__stage/__meta/__sel/__note and .elev-doc-val — the Usage tab\'s own layout for pairing a rendered component with its selector and status, collapsing to one column under 700px. Prefixed .elev-doc-* so they can\'t collide with the .elev-* token-table classes'],
         ['changed','Tokens — the original ELEVATION spec table (.elev-list) moved here unchanged, rows now clickable to copy their full box-shadow string, plus a new where-it\'s-used table listing every component that carries a shadow today, matched or drift'],
         ['fixed','.tip__bubble, .dpd-menu, .pop__panel and .bsh-sheet box-shadow drift — see those components\' own changelogs'],
       ]},
