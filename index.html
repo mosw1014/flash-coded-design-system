@@ -8603,11 +8603,34 @@ function colDocMountAnatomy(){
   const hero = document.getElementById('col-anatomy-hero');
   if(hero){
     hero.innerHTML = '';
-    const p = document.createElement('span'); p.style.cssText = 'display:block;width:48px;height:48px;border-radius:11px;background:var(--prim-bg-600)';
-    const a1 = document.createElement('span'); a1.textContent = '→'; a1.style.cssText = 'font-size:18px;color:var(--chrome-muted)';
-    const s = document.createElement('span'); s.style.cssText = 'display:block;width:48px;height:48px;border-radius:11px;background:var(--color-btn-a-bg)';
-    const a2 = document.createElement('span'); a2.textContent = '→'; a2.style.cssText = 'font-size:18px;color:var(--chrome-muted)';
-    hero.append(p, a1, s, a2, makeBtnEl('flash', theme, 'accent', 'reg', false, 'Continue'));
+    const labeled = (bg, caption, token) => {
+      const wrap = document.createElement('div');
+      wrap.style.cssText = 'display:flex;flex-direction:column;align-items:center;gap:6px';
+      const sw = document.createElement('span');
+      sw.style.cssText = `display:block;width:48px;height:48px;border-radius:11px;background:${bg}`;
+      const cap = document.createElement('div');
+      cap.style.cssText = 'font-size:11px;font-weight:700;color:var(--chrome-txt)';
+      cap.textContent = caption;
+      const tok = document.createElement('code');
+      tok.style.cssText = "font-family:'SF Mono',Consolas,monospace;font-size:10px;color:var(--chrome-muted)";
+      tok.textContent = token;
+      wrap.append(sw, cap, tok);
+      return wrap;
+    };
+    const arrow = () => { const a = document.createElement('span'); a.textContent = '→'; a.style.cssText = 'font-size:18px;color:var(--chrome-muted);align-self:center'; return a; };
+    const compWrap = document.createElement('div');
+    compWrap.style.cssText = 'display:flex;flex-direction:column;align-items:center;gap:6px';
+    const compCap = document.createElement('div');
+    compCap.style.cssText = 'font-size:11px;font-weight:700;color:var(--chrome-txt)';
+    compCap.textContent = 'Component';
+    compWrap.append(makeBtnEl('flash', theme, 'accent', 'reg', false, 'Continue'), compCap);
+    hero.append(
+      labeled('var(--prim-bg-600)', 'Primitive', '--prim-bg-600'),
+      arrow(),
+      labeled('var(--color-btn-a-bg)', 'Semantic token', '--color-btn-a-bg'),
+      arrow(),
+      compWrap
+    );
   }
   const stage = document.getElementById('col-anatomy-btn-stage');
   if(stage){ stage.innerHTML = ''; stage.appendChild(makeBtnEl('flash', theme, 'accent', 'sm', false, 'Continue')); }
