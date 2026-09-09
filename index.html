@@ -3032,7 +3032,7 @@ body.home .main{max-width:none;margin:0;padding:0}
     ]
   },
   "contentHash": "386a5e4988cf30863a9b0b3ed965e62af8ad9760bd801890af23b18976708be2",
-  "note": "iconSvg(name, style) itself is omitted from js: an unrelated local const of the same name inside Text Inputs' search-field builder (tiBuildSearchField) collides with generate-ai-context-tab.mjs's name-based lookup, which would silently grab the wrong declaration. The real function (near ICONS/renderIcons) is a 4-line helper: looks up ICONS[name] (falling back to ICONS.info), picks ovb/od over vb/d when style==='outline' and an od exists, and wraps the viewBox/path data in an &lt;svg fill=\"currentColor\" aria-hidden=\"true\"&gt;. Foundation-shaped .sec--tabbed page: Overview (Anatomy/Sizes/Specs) / Library / Usage (Solid or Outline, Colour, Size by context, In the product UI, Pairing &amp; accessibility, Don'ts rendered, Do's and don'ts) / Code (Customise size &amp; colour playground, Markup, Adding an icon, CSS reference, Licence) / Changelog. Solid/Outline is one shared libStyle state with a single control — the .icn-style-row on the Library tab, where the grid is browsed — driving the Library grid, the Overview sizes row and the Code playground together; Usage &gt; Solid or Outline documents the choice with static side-by-side renders instead of repeating the switch. Spots that must always render the Outline twin regardless of that state opt in via [data-icon-outline=\"name\"]. iconsTabSwitch is doc-site-only plumbing, excluded. --color-icon-3 is documented as reserved for the logo mark, never as a general icon colour choice."
+  "note": "iconSvg(name, style) itself is omitted from js: an unrelated local const of the same name inside Text Inputs' search-field builder (tiBuildSearchField) collides with generate-ai-context-tab.mjs's name-based lookup, which would silently grab the wrong declaration. The real function (near ICONS/renderIcons) is a 4-line helper: looks up ICONS[name] (falling back to ICONS.info), picks ovb/od over vb/d when style==='outline' and an od exists, and wraps the viewBox/path data in an &lt;svg fill=\"currentColor\" aria-hidden=\"true\"&gt;. Foundation-shaped .sec--tabbed page: Overview (Anatomy/Sizes/Specs) / Library / Usage (Solid or Outline, Colour, Size by context, In the product UI, Pairing &amp; accessibility, Don'ts rendered, Do's and don'ts) / Code (Customise size &amp; colour playground, Markup, Adding an icon, CSS reference, Licence) / Changelog. Solid/Outline is one shared libStyle state with a single control — the .icn-style-row on the Library tab — driving the Library grid, the Overview sizes row and the Code playground together; Usage &gt; Solid or Outline documents the choice with static side-by-side renders instead of repeating the switch. Under Outline the grid still renders all 66 icons rather than filtering to the 30 twins: the 36 with no od become genuinely disabled tiles (disabled + aria-disabled, recessed background, dashed border, glyph at opacity .25, struck-through name, cursor:not-allowed) and are not copyable, so which icons exist in both weights is readable at the point of choosing one. Their inline background/border-color also pin over .icn-tile:hover, which would otherwise light a disabled tile up. Spots that must always render the Outline twin regardless of that state opt in via [data-icon-outline=\"name\"]. iconsTabSwitch is doc-site-only plumbing, excluded. --color-icon-3 is documented as reserved for the logo mark, never as a general icon colour choice."
 }
   </pre>
 </details>
@@ -3250,7 +3250,7 @@ body.home .main{max-width:none;margin:0;padding:0}
                 </div>
               </div>
 
-              <div class="logo-note">Outline is a per-icon opt-in, not a page-wide mode: 30 of the 66 entries in <code>ICONS</code> carry an <code>od</code> path. Switch the toggle to Outline and the Library drops to those 30 &mdash; everything else keeps rendering Solid. Check coverage before committing a view to Outline.</div>
+              <div class="logo-note">Outline is a per-icon opt-in, not a page-wide mode: 30 of the 66 entries in <code>ICONS</code> carry an <code>od</code> path. Switch the Library to Outline and the other 36 stay in the grid, greyed out and struck through rather than copyable &mdash; so which icons a view can actually be built from is readable before you commit it to Outline.</div>
             </div>
           </div>
 
@@ -19760,6 +19760,7 @@ const CHANGELOG = {
         ['added','Usage > Pairing & accessibility and Don\'ts, rendered sections show icon+label pairing, a correctly aria-label\'d icon-only button next to an unlabelled critical one, and four rendered failure cases (mixed Solid/Outline, hardcoded fill, icon-only destructive action, stretched icon)'],
         ['added','Usage > Solid or Outline replaces the old Overview Style block: a rendered 48px Solid/Outline pair, per-weight Use-for/Avoid guidance, an emphasis-pair mockup (Solid active row, Outline resting rows) and a coverage mockup marking which of the real side nav\'s six icons have an Outline twin — only bell does, so a nav switched to Outline would still render five of six Solid'],
         ['changed','The Solid/Outline switch (.icn-style-row) moved from Overview to the Library tab, where the grid it filters is actually browsed. Usage > Solid or Outline documents the choice with static side-by-side renders rather than repeating the control, so there is one switch on the page instead of two. setLibStyle() now syncs every .icn-style-row inside #s-icons rather than only the clicked row, so the count is no longer baked into the wiring'],
+        ['changed','Library under Outline no longer filters the grid down to the 30 icons that have a twin. All 66 stay put; the 36 without one become disabled tiles — recessed, dashed, struck through, not copyable — so which icons exist in both weights is visible while choosing one, instead of the coverage gap being expressed as tiles silently vanishing'],
         ['fixed','Library\'s "64 icons…including the Navigation section below" copy was stale on two counts: the Navigation section is now its own page, and ICONS actually holds 66 entries, not 64 — both the static copy and the renderGrid() JS string now read "66 icons for common actions and objects, used throughout this design system"'],
       ]},
       {version:'1.92.2', date:'2026-09-09', author:'Mo', title:'Logos: trim two explanatory notes', changes:[
@@ -22415,6 +22416,8 @@ const CHANGELOG = {
         ['changed','Style moved off Overview: its switch went to Library and its guidance became Usage > "Solid or Outline", which now shows what the old block only asserted: a 48px Solid/Outline pair, Use-for/Avoid chips per weight (Outline avoided at 16px, on icons with no twin, and mixed with Solid), an emphasis-pair mockup and a coverage mockup showing only bell of the side nav\'s six icons has an Outline twin. Sizes copy updated from "Follows the Style toggle above" to "Follows the selected Style"'],
         ['changed','The .icn-style-row switch now sits on the Library tab (keeping its original icn-style-row id) instead of Overview — the grid is the only thing on the page a live Solid/Outline switch changes. setLibStyle() syncs every .icn-style-row inside #s-icons rather than the clicked row only'],
         ['changed','Spots that must always render the Outline twin whatever the toggle says now opt in via [data-icon-outline="name"], filled by a single loop, replacing the per-id icn-anatomy-outline / icn-dont-outline lookups'],
+        ['changed','renderGrid() stopped filtering the grid to iconHasOutline under Outline. It renders all 66 and marks the 36 twin-less ones disabled (disabled + aria-disabled, cursor:not-allowed, dashed border, recessed background, glyph at opacity .25, struck-through name); the click-to-copy handler now binds to .icn-tile:not([disabled]) so they are not copyable. Background and border-color are pinned inline so .icn-tile:hover cannot light a disabled tile up'],
+        ['fixed','The Library count line lost its "Click a tile to copy its name." instruction on load: the static markup carried it but renderGrid() overwrote the element with a shorter string. The JS copy now carries it too'],
         ['fixed','Two rendering faults in the new page: tiBuildSearchField()\'s wrapper had no width, so .ti-search (width:100%) collapsed to content size in the In the product UI mockup; and .logo-dont__x, absolutely centred on its stage, completely covered the icon in every single-content Don\'t cell — the badge is now corner-positioned inline for those four instances'],
       ]},
       {version:'1.3.0', date:'2026-08-12', author:'Mo', title:'Switched from Font Awesome to Material Symbols', changes:[
@@ -29416,17 +29419,30 @@ function iconsTabSwitch(tab){
     var grid=document.getElementById('icn-grid');
     if(!grid) return;
     var names=Object.keys(ICONS).sort();
-    if(libStyle==='outline') names=names.filter(iconHasOutline);
+    var outline=libStyle==='outline';
+    var twins=names.filter(iconHasOutline).length;
     var countNote=document.getElementById('icn-grid-count');
     if(countNote){
-      countNote.textContent = libStyle==='outline'
-        ? names.length+' of '+Object.keys(ICONS).length+' icons have an Outline variant.'
-        : Object.keys(ICONS).length+' icons for common actions and objects, used throughout this design system.';
+      countNote.textContent = outline
+        ? twins+' of '+names.length+' icons have an Outline version — those are the ones you can copy below. The other '+(names.length-twins)+' are struck through and greyed out: Solid only.'
+        : names.length+' icons for common actions and objects, used throughout this design system. Click a tile to copy its name.';
     }
+    /* Outline renders the whole set, not just the twins: an icon with no od
+       stays in the grid as a genuinely disabled tile — recessed surface, dashed
+       border, dimmed glyph, not copyable — instead of dropping out, so which
+       icons exist in both weights is readable at the point of choosing one.
+       Backgrounds and border colours are pinned inline because .icn-tile:hover
+       would otherwise light a disabled tile up on hover. */
     grid.innerHTML = names.map(function(n){
-      return '<button type="button" class="icn-tile" data-name="'+n+'"><span class="icn icn--lg">'+iconSvg(n, libStyle)+'</span><span class="icn-tile__name">'+n+'</span></button>';
+      var off = outline && !iconHasOutline(n);
+      var offStyle = 'border-style:dashed;border-color:var(--chrome-border);background:var(--chrome-nav);cursor:not-allowed';
+      return '<button type="button" class="icn-tile" data-name="'+n+'"'
+        +(off?' disabled aria-disabled="true" title="No Outline version — Solid only" style="'+offStyle+'"':'')+'>'
+        +'<span class="icn icn--lg"'+(off?' style="opacity:.25"':'')+'>'+iconSvg(n, libStyle)+'</span>'
+        +'<span class="icn-tile__name"'+(off?' style="opacity:.45;text-decoration:line-through"':'')+'>'+n+'</span>'
+        +'</button>';
     }).join('');
-    Array.prototype.forEach.call(grid.querySelectorAll('.icn-tile'), function(t){
+    Array.prototype.forEach.call(grid.querySelectorAll('.icn-tile:not([disabled])'), function(t){
       t.addEventListener('click', function(){
         var name=t.getAttribute('data-name');
         navigator.clipboard.writeText(name).catch(function(){});
