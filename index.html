@@ -3036,7 +3036,7 @@ body.home .main{max-width:none;margin:0;padding:0}
         <h1 class="sec__title">Typography</h1>
         <p class="sec__desc">Two typefaces, one scale. Satoshi sets every word of the product interface; Kilimanjaro is for marketing headlines and never appears in the UI.</p>
         <div class="sec-header-meta">
-          <span class="comp-ver-badge" style="margin-left:0">v1.3.0</span>
+          <span class="comp-ver-badge" style="margin-left:0">v1.3.1</span>
           <details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-type">
@@ -3080,7 +3080,7 @@ body.home .main{max-width:none;margin:0;padding:0}
     ]
   },
   "contentHash": "2a7c9de5553690019e693b866f88e83719705acb233e2276bb386de621727c93",
-  "note": "Documents the doc site's typography DATA and this page's own render helpers; the section has no reusable component class of its own. HARD RULE, enforced throughout this page: Satoshi sets every word of the product interface and Kilimanjaro is marketing-only — it must NEVER appear in any UI surface, at any size, in any casing. The only Kilimanjaro consumers in the whole file are .fds-hero__title and .fds-essence__title on the marketing landing page; no product component references it, and anything reskinning or reimplementing this system must keep it that way. Unlike colour, the --font-family-*/--font-weight-*/--font-size-* names in TYPE_TOKEN_GROUPS are NOT declared as CSS custom properties anywhere — components hard-code the literal font-size/font-weight values, so TYPE_TOKEN_GROUPS is itself the source of record and there is no CSS to generate it from (see AI-CONTEXT.md 'File structure notes'). HEADS (the rendered specimens) is the source of truth for heading sizes: TYPE_TOKEN_GROUPS was corrected to match it in v1.3.0, the two now agree on all 14 steps, and there is no heading XS step (XS exists only as the 12px body size). Both faces now also ship as real files in assets/fonts/ (Satoshi-Variable.ttf, Kilimanjaro-Sans-Round2.otf), byte-identical to the base64 @font-face payloads in the first &lt;style&gt; block, which remain in place; Kilimanjaro exists in six rounds in the brand source and only Round 2 is the Flash face. ss01-ss04 are the house style and any element redeclaring font-family must reassert font-feature-settings — the one deliberate exception is the 'Default Satoshi' comparison specimen on the Usage tab. The Usage hierarchy table is measured off the real rendered components with getComputedStyle at runtime instead of transcribed, and derives step and weight names from BODY/HEADS/WEIGHTS, so it cannot drift. Numbered annotation markers use .type-doc-num (a squared, inverted chip) rather than the circular .spec-part__num, so they are never mistaken for a component's own round status icons such as the Alert tick."
+  "note": "Documents the doc site's typography DATA and this page's own render helpers; the section has no reusable component class of its own. HARD RULE, enforced redundantly throughout this page: Satoshi sets every word of the product interface and Kilimanjaro is marketing-only — it must NEVER appear in any UI surface, at any size, in any casing. Stated in the .sec__desc, the Anatomy Typeface card, Two typefaces, the homepage-headline caption, the Heading Scale intro, the Pairing caption itself (not just its section intro), the Do/Dont list, and as a .tag--success/.tag--error badge pair (UI / Not for UI) next to each font row on Fonts &amp; Tokens. Demonstrated by TWO differently-shaped rendered failures on Usage: typeDocRenderNonUi() forces Kilimanjaro onto a real card+button, and a second static failure forces it onto a single nav label beside two Satoshi ones — the rule is shown to hold regardless of UI shape. The only Kilimanjaro consumers in the whole file are .fds-hero__title and .fds-essence__title on the marketing landing page; no product component references it, and anything reskinning or reimplementing this system must keep it that way. Unlike colour, the --font-family-*/--font-weight-*/--font-size-* names in TYPE_TOKEN_GROUPS are NOT declared as CSS custom properties anywhere — components hard-code the literal font-size/font-weight values, so TYPE_TOKEN_GROUPS is itself the source of record and there is no CSS to generate it from (see AI-CONTEXT.md 'File structure notes'). HEADS (the rendered specimens) is the source of truth for heading sizes: TYPE_TOKEN_GROUPS was corrected to match it in v1.3.0, the two now agree on all 14 steps, and there is no heading XS step (XS exists only as the 12px body size). Both faces also ship as real files in assets/fonts/ (Satoshi-Variable.ttf, Kilimanjaro-Sans-Round2.otf), byte-identical to the base64 font-face payloads in the first stylesheet block, which remain in place; Kilimanjaro exists in six rounds in the brand source and only Round 2 is the Flash face. ss01-ss04 are the house style and any element redeclaring font-family must reassert font-feature-settings — the one deliberate exception is the 'Default Satoshi' comparison specimen on the Usage tab. The Usage hierarchy table is measured off the real rendered components with getComputedStyle at runtime instead of transcribed, and derives step and weight names from BODY/HEADS/WEIGHTS, so it cannot drift. Numbered annotation markers use .type-doc-num (a squared, inverted chip) rather than the circular .spec-part__num, so they are never mistaken for a component's own round status icons such as the Alert tick."
 }
   </pre>
 </details>
@@ -3221,7 +3221,7 @@ body.home .main{max-width:none;margin:0;padding:0}
               <div class="spec-insitu-grid spec-insitu-grid--4">
               <div class="spec-mock">
                 <div class="spec-mock__stage" style="background:var(--chrome-bg);justify-content:center;gap:10px"><div style="font-family:'Kilimanjaro','Satoshi',sans-serif;font-feature-settings:'ss01' 1,'ss02' 1,'ss03' 1,'ss04' 1;font-weight:400;font-synthesis:none;font-size:26px;line-height:.95;letter-spacing:-.02em;text-transform:uppercase;color:var(--chrome-txt)">Pay smarter,<br>every day</div><div style="font-family:'Satoshi Variable','Satoshi',sans-serif;font-feature-settings:'ss01' 1,'ss02' 1,'ss03' 1,'ss04' 1;font-weight:500;font-size:13px;line-height:1.4;color:var(--chrome-muted)">Send, receive and track every payment from one account.</div></div>
-                <div class="spec-mock__cap"><b>&#10003; Marketing headline only</b>On a campaign page, Kilimanjaro sets the headline and Satoshi carries the words underneath.</div>
+                <div class="spec-mock__cap"><b>&#10003; Marketing headline only</b>On a campaign page, Kilimanjaro sets the headline and Satoshi carries the words underneath. It never appears in the product UI.</div>
               </div>
               <div class="spec-mock">
                 <div class="spec-mock__stage logo-dont" style="background:var(--color-crit-l);justify-content:center"><span class="logo-dont__x" style="top:12px;right:12px;left:auto;transform:none;width:26px;height:26px"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></span><div style="font-family:'Kilimanjaro','Satoshi',sans-serif;font-feature-settings:'ss01' 1,'ss02' 1,'ss03' 1,'ss04' 1;font-weight:400;font-synthesis:none;font-size:15px;line-height:1.4;letter-spacing:-.01em;text-transform:uppercase;color:var(--chrome-txt)">Send, receive and track every payment from one account, then settle straight into your bank the same day.</div></div>
@@ -3278,6 +3278,10 @@ body.home .main{max-width:none;margin:0;padding:0}
                 <div class="spec-mock__stage logo-dont" style="background:var(--color-crit-l);justify-content:center"><span class="logo-dont__x" style="top:12px;right:12px;left:auto;transform:none;width:26px;height:26px"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></span><div style="font-family:'Satoshi Variable','Satoshi',sans-serif;font-feature-settings:'ss01' 1,'ss02' 1,'ss03' 1,'ss04' 1;font-size:20px;line-height:1.25;color:var(--chrome-txt)"><span style="font-weight:500">Your </span><span style="font-weight:800">transfer</span><span style="font-weight:500"> of </span><span style="font-weight:900">R1,250.00</span><span style="font-weight:500"> cleared.</span></div></div>
                 <div class="spec-mock__cap"><b class="logo-dont__tag">&#10007; One sentence, one weight.</b>Emphasis on every other word is emphasis on nothing.</div>
               </div>
+              <div class="spec-mock">
+                <div class="spec-mock__stage logo-dont" style="background:var(--color-crit-l);flex-direction:row;align-items:baseline;justify-content:center;gap:22px"><span class="logo-dont__x" style="top:12px;right:12px;left:auto;transform:none;width:26px;height:26px"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></span><div style="font-family:'Kilimanjaro','Satoshi',sans-serif;font-feature-settings:'ss01' 1,'ss02' 1,'ss03' 1,'ss04' 1;font-weight:400;font-synthesis:none;font-size:13px;text-transform:uppercase;color:var(--chrome-txt)">Settings</div><div style="font-family:'Satoshi Variable','Satoshi',sans-serif;font-feature-settings:'ss01' 1,'ss02' 1,'ss03' 1,'ss04' 1;font-weight:650;font-size:13px;color:var(--chrome-muted)">Cards</div><div style="font-family:'Satoshi Variable','Satoshi',sans-serif;font-feature-settings:'ss01' 1,'ss02' 1,'ss03' 1,'ss04' 1;font-weight:650;font-size:13px;color:var(--chrome-muted)">Profile</div></div>
+                <div class="spec-mock__cap"><b class="logo-dont__tag">&#10007; Not even one label.</b>A single nav item or tab label in Kilimanjaro is still wrong. The never-in-the-UI rule has no exception for how small or brief the text is.</div>
+              </div>
               </div>
               <div class="spec-mock" style="margin-top:16px">
                 <div class="spec-mock__stage logo-dont" style="background:var(--color-crit-l);align-items:center;justify-content:center;padding:24px">
@@ -3330,7 +3334,7 @@ body.home .main{max-width:none;margin:0;padding:0}
                   <span style="font-family:'Satoshi Variable','Satoshi',sans-serif;font-feature-settings:'ss01' 1,'ss02' 1,'ss03' 1,'ss04' 1;font-weight:900;font-size:34px;line-height:1;color:var(--chrome-txt)">Aa</span>
                 </div>
                 <div>
-                  <div class="logo-list__title">Satoshi Variable</div>
+                  <div class="logo-list__title">Satoshi Variable <span class="tag tag--sm tag--success" style="margin-left:8px;vertical-align:middle;font-weight:800">UI</span></div>
                   <div class="logo-list__rule">Every word of the product interface, plus body copy, labels and most headlines. One file carries Medium through Black.</div>
                   <div class="logo-list__name">Satoshi-Variable.ttf</div>
                 </div>
@@ -3343,7 +3347,7 @@ body.home .main{max-width:none;margin:0;padding:0}
                   <span style="font-family:'Kilimanjaro','Satoshi',sans-serif;font-feature-settings:'ss01' 1,'ss02' 1,'ss03' 1,'ss04' 1;font-weight:400;font-synthesis:none;font-size:34px;line-height:1;letter-spacing:-1px;color:var(--chrome-txt)">AA</span>
                 </div>
                 <div>
-                  <div class="logo-list__title">Kilimanjaro Sans</div>
+                  <div class="logo-list__title">Kilimanjaro Sans <span class="tag tag--sm tag--error" style="margin-left:8px;vertical-align:middle;font-weight:800">Not for UI</span></div>
                   <div class="logo-list__rule">Marketing headlines only, always uppercase, one weight. Never used in the product UI.</div>
                   <div class="logo-list__name">Kilimanjaro-Sans-Round2.otf</div>
                 </div>
@@ -20799,12 +20803,17 @@ function cbrTabSwitch(tab){
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.95.0';
+const SYSTEM_VERSION = '1.95.1';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.95.1', date:'2026-09-10', author:'Mo', title:'Typography: Kilimanjaro-never-in-UI rule made unmissable', changes:[
+        ['changed','The never-in-any-UI rule for Kilimanjaro is now stated redundantly rather than once: the Pairing caption itself now says "It never appears in the product UI" (previously only implied by "On a campaign page"), and the rule already carried by the .sec__desc, the Anatomy Typeface card, Two typefaces, the Heading Scale intro, the Do/Dont list and the Fonts row is unchanged'],
+        ['added','Don\'ts, rendered gained a fourth rendered failure: a real nav row (Settings / Cards / Profile) with the Settings label forced into Kilimanjaro on a --color-crit-l stage, captioned "Not even one label" — distinct from Pairing\'s card-and-button failure, so the rule is demonstrated on two different UI shapes rather than one'],
+        ['added','Fonts & Tokens: each font row on the Fonts tab now carries a .tag badge next to its name — .tag--success "UI" on Satoshi, .tag--error "Not for UI" on Kilimanjaro — so the UI-eligibility split is visible at a glance, not just in the prose beside it'],
+      ]},
       {version:'1.95.0', date:'2026-09-10', author:'Mo', title:'Typography: tabbed foundation page (Overview/Scale/Usage/Fonts & Tokens/Changelog)', changes:[
         ['changed','Typography rebuilt as a .sec--tabbed foundation page matching the Logos and Icons treatment: a .sec-hero (Satoshi Aa + Kilimanjaro AA specimen preview, version badge and the AI context tab in .sec-header-meta) above a five-tab strip — Overview (Anatomy, Two typefaces, Weights) / Scale (Heading Scale, Body Scale, Input text) / Usage / Fonts & Tokens / Changelog. No Style or Code tab: a type scale has no interactive state, so the Scale gets a tab of its own instead'],
         ['added','typeTabSwitch() with data-type-tab/data-type-panel and #type-tabs-list, plus a {secId:\'s-type\', panelId:\'type-changelog-panel\'} entry in the changelog relocation list so the auto-injected .sec-chlog lands inside the Changelog panel rather than between the hero and the tab strip'],
@@ -22883,7 +22892,12 @@ const CHANGELOG = {
         ['added','12 primitive colour families with click-to-copy swatches'],
       ]},
     ]},
-    {secId:'s-type', name:'Typography', version:'1.3.0', entries:[
+    {secId:'s-type', name:'Typography', version:'1.3.1', entries:[
+      {version:'1.3.1', date:'2026-09-10', author:'Mo', title:'Kilimanjaro-never-in-UI rule made unmissable', changes:[
+        ['changed','Usage &gt; Pairing caption strengthened: "&#10003; Marketing headline only" now ends with "It never appears in the product UI." instead of leaving the boundary implied by "On a campaign page"'],
+        ['added','Usage &gt; Don\'ts, rendered: a fourth rendered failure showing Kilimanjaro forced onto a single nav label (Settings, beside Satoshi-set Cards / Profile) on a --color-crit-l stage, captioned "Not even one label" &mdash; the rule now has a second, differently-shaped failing example alongside Pairing\'s card-and-button one'],
+        ['added','Fonts &amp; Tokens &gt; Fonts: a .tag--sm badge next to each face\'s name &mdash; .tag--success "UI" on Satoshi Variable, .tag--error "Not for UI" on Kilimanjaro Sans. Reused the existing Tags component markup; no new stylesheet rule was added for .tag'],
+      ]},
       {version:'1.3.0', date:'2026-09-10', author:'Mo', title:'Tabbed foundation page, and the heading scale reconciled with the token table', changes:[
         ['changed','Rebuilt as a .sec--tabbed page: .sec-hero plus .sec-header-meta (version badge and AI context tab) above a five-tab strip, with every panel body wrapped in .type-sub.spec-panel.spec-stack so section headings step down to 22px. All six JS mounts (#t-face, #t-weights, #t-heads, #t-body, #t-inputs, #t-tokens) and hToggle() moved between panels as a DOM move, keeping their ids and existing render calls intact'],
         ['fixed','HEADS (the rendered specimens) and TYPE_TOKEN_GROUPS (the token table) disagreed on every heading size except 4XL. HEADS is the source of truth, so the token table was corrected to match it — desktop: --font-size-heading-3xl 64px->55px, -2xl 48px->42px, -xl 40px->30px, -l 32px->26px, -m 28px->22px, -s 24px->20px; mobile: -3xl-mobile 46px->48px, -2xl-mobile 36px->35px, -xl-mobile 32px->30px, -l-mobile 28px->24px, -m-mobile 24px->22px, -s-mobile 22px->18px. 4XL (80px desktop / 58px mobile) already agreed and is untouched. The dead TYPE_TOKENS const (declared, never referenced) independently agreed with HEADS'],
