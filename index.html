@@ -2770,7 +2770,7 @@ body.home .main{max-width:none;margin:0;padding:0}
         <h1 class="sec__title">Colour Tokens</h1>
         <p class="sec__desc">Primitives define the raw scale — semantics map them to named roles. Hover any swatch to inspect; click to copy.</p>
         <div class="sec-header-meta">
-          <span class="comp-ver-badge" style="margin-left:0">v1.16.0</span>
+          <span class="comp-ver-badge" style="margin-left:0">v1.16.1</span>
           <details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-colours">
@@ -20566,12 +20566,15 @@ function cbrTabSwitch(tab){
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.95.0';
+const SYSTEM_VERSION = '1.95.1';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.95.1', date:'2026-09-10', author:'Mo', title:'Colours: Anatomy copy rewritten in plain language', changes:[
+        ['fixed','Anatomy\'s explanatory notes and footnote used internal dev shorthand a designer has no reason to know -- \":root\", \"prim\" (as in --prim-grey-100), and unexplained references to the doc site\'s own display chrome. Rewritten throughout: \"raw colour\" instead of primitive/prim, \"job\" instead of role/semantic token in prose, and \"this page\'s own swatches and demo stages\" instead of \"doc-site chrome\". The real --token names stay visible as code labels; only the sentences around them changed'],
+      ]},
       {version:'1.95.0', date:'2026-09-10', author:'Mo', title:'Colours: Anatomy and Light & dark now document chains that are actually real', changes:[
         ['fixed','Anatomy claimed the chain --prim-bg-600 -> --color-btn-a-bg -> accent button. The button never read that token: makeBtnEl/applyBtnColors set an inline --_bg from the BTN_COLORS JS object, and a grep of the whole file found only two references to --color-btn-a-bg, both inside this diagram itself. No green semantic token (--color-brand-2, --color-btn-a-bg, --color-btn-a-bg-h, --color-icon-3) is consumed by any shipping component, so the diagram now walks --prim-grey-100 -> --color-surface-n1 -> a real .avt--icon avatar built by makeAvatarHTML(), which genuinely takes its fill from that token (verified resolving to #f0f0f0 light / #25262c dark)'],
         ['fixed','The Anatomy note claimed "none of the button/card/input/alert CSS in this file references a --prim-* variable." Two real components do: .card__media\'s placeholder gradient (--prim-grey-700/--prim-grey-1000) and .avt__status--off\'s offline dot (--prim-grey-700). The note now states the rule for themed surfaces and names both decorative exceptions'],
@@ -22560,7 +22563,10 @@ const CHANGELOG = {
         ['added','New "Logos" page under the Brand category listing all 8 Flash logo variations (Primary, White, Monochrome Black, Monochrome White — each horizontal and stacked), each downloadable as a transparent SVG or PNG from assets/logos/'],
       ]},
     ]},
-    {secId:'s-colours', name:'Colours', version:'1.16.0', entries:[
+    {secId:'s-colours', name:'Colours', version:'1.16.1', entries:[
+      {version:'1.16.1', date:'2026-09-10', author:'Mo', title:'Anatomy copy rewritten in plain language', changes:[
+        ['fixed','Every explanatory note and the footnote in Anatomy used dev shorthand -- \":root\", \"prim\", \"doc-site chrome\" -- that a designer reading the page has no context for. Reworded in plain English: raw colour value / job / this page\'s own swatches and demo stages, respectively. The actual token names remain visible as code labels, unchanged'],
+      ]},
       {version:'1.16.0', date:'2026-09-10', author:'Mo', title:'Anatomy and Light & dark corrected; chart hover and primitive variable names', changes:[
         ['fixed','Anatomy\'s primitive -> semantic -> component chain was not real. Steps 1, 2 and 4 now use --prim-grey-100, --color-surface-n1 and a real .avt--icon avatar from makeAvatarHTML() instead of --prim-bg-600, --color-btn-a-bg and an accent button that was coloured from the BTN_COLORS JS object rather than from the token beside it. Step 4\'s mount renamed col-anatomy-btn-stage -> col-anatomy-comp-stage, and both near-white swatches gained a --chrome-border outline so they stay visible on a white card'],
         ['fixed','The Anatomy footnote\'s claim that no component CSS references a --prim-* variable now names the two that do — .card__media and .avt__status--off'],
