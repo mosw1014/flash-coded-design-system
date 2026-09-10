@@ -2770,7 +2770,7 @@ body.home .main{max-width:none;margin:0;padding:0}
         <h1 class="sec__title">Colour Tokens</h1>
         <p class="sec__desc">Primitives define the raw scale — semantics map them to named roles. Hover any swatch to inspect; click to copy.</p>
         <div class="sec-header-meta">
-          <span class="comp-ver-badge" style="margin-left:0">v1.16.2</span>
+          <span class="comp-ver-badge" style="margin-left:0">v1.16.3</span>
           <details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-colours">
@@ -2986,8 +2986,9 @@ body.home .main{max-width:none;margin:0;padding:0}
             <div class="type-sub__desc">Series sit at the faded, inactive strength by default and come up to full saturation on hover &mdash; hover a bar to see it. Red and deep orange sit last in the order: they read as error/warning, so charts reach for every other colour first.</div>
             <div class="cpg-section-outline">
               <div class="cht" id="col-chart-mount" style="width:100%;max-width:640px;padding-left:60px;padding-bottom:60px;overflow:hidden"></div>
-              <div class="logo-note" style="margin-bottom:14px">Every series colour below, in palette order, shown at both strengths: <b>left half</b> is the default inactive opacity, <b>right half</b> is the full-strength hover value. Primary Green is used in monochrome graphs, or graphs where there is only one colour.</div>
+              <div class="logo-note" style="margin-bottom:14px">Every series colour below, in palette order, shown at both strengths: <b>left half</b> is the default inactive opacity, <b>right half</b> is the full-strength hover value.</div>
               <div class="cat-grid" id="col-cat-strip"></div>
+              <div class="logo-note" style="margin-top:14px">Primary Green is used in monochrome graphs, or graphs where there is only one colour.</div>
             </div>
           </div>
           <div class="type-sub">
@@ -9540,13 +9541,13 @@ function colDocRenderTokenUsage(){
   const btnsPreview = `<div style="display:flex;align-items:center;justify-content:center;gap:10px;padding:16px" id="col-usage-btns-row"></div>`;
   const indPreview = `<div style="display:flex;align-items:center;justify-content:center;padding:16px">${ovAlrt({variant:'info', compact:true})}</div>`;
   const inputPreview = `<div style="display:flex;align-items:center;justify-content:center;width:100%;padding:16px" id="col-usage-input-row"></div>`;
-  const linksPreview = `<div style="display:flex;align-items:center;justify-content:center;padding:16px;font-size:13px"><a href="#" onclick="return false" style="color:var(--color-link);text-decoration:underline">Hyperlink example</a></div>`;
+  const linksPreview = `<div style="display:flex;align-items:center;justify-content:center;padding:16px;font-size:13px"><a href="#" onclick="return false" style="color:var(--color-link);text-decoration:none">Hyperlink example</a></div>`;
 
   mount.innerHTML =
     colDocTokenBlock('Surface', surfacePreview, ['--color-surface-n1','--color-surface-n2','--color-surface-n3']) +
     colDocTokenBlock('Text', textPreview, ['--color-text-1','--color-text-2','--color-text-3']) +
     colDocTokenBlock('Buttons', btnsPreview, ['--color-btn-a-bg','--color-btn-s-bg','--color-btn-o-border']) +
-    colDocTokenBlock('Indicators', indPreview, ['--color-info-h','--color-success-h','--color-warn-h','--color-crit-h']) +
+    colDocTokenBlock('Indicators', indPreview, ['--color-info-h','--color-info-l','--color-success-h','--color-success-l','--color-warn-h','--color-warn-l','--color-crit-h','--color-crit-l']) +
     colDocTokenBlock('Inputs', inputPreview, ['--color-input-bg','--color-input-border','--color-input-focus']) +
     colDocTokenBlock('Links', linksPreview, ['--color-link','--color-link-h']);
 
@@ -20566,12 +20567,17 @@ function cbrTabSwitch(tab){
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.95.2';
+const SYSTEM_VERSION = '1.95.3';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.95.3', date:'2026-09-10', author:'Mo', title:'Colours Usage: Indicators shows both strengths per state, Chart note split out, link underline removed', changes:[
+        ['added','Usage > Which token for what > Indicators now shows the background token alongside each state\'s icon/text token (--color-info-l, --color-success-l, --color-warn-l, --color-crit-l next to their -h siblings) rather than only the high-contrast four'],
+        ['changed','Chart & category colours: "Primary Green is used in monochrome graphs, or graphs where there is only one colour" moved out of the paragraph about the inactive/hover strength pairing into its own note below the swatch grid, so the two unrelated points read as two points'],
+        ['fixed','Usage > Which token for what > Links\' example hyperlink had an inline text-decoration:underline forcing an underline the real .a/link styling in this system does not use -- removed so the example matches how a link actually renders'],
+      ]},
       {version:'1.95.2', date:'2026-09-10', author:'Mo', title:'Avatar: offline dot now themes correctly; Colours footnote updated to match', changes:[
         ['fixed','.avt__status--off (the grey dot marking an avatar offline) was pinned to the raw --prim-grey-700 hex, so it never adapted between light and dark -- unlike every other themed colour in the system. Repointed to --color-text-m, the muted-grey token already used elsewhere on the same avatar component (the photo-placeholder icon), which resolves to the identical #a4a4a4 in light and correctly lightens to #d1d1d1 in dark'],
         ['fixed','The Colours Anatomy footnote listed the offline dot as a deliberate exception to "components use semantics, not primitives." It no longer is one, now that it is fixed -- the footnote was reworded to name only the one exception that remains, the media card\'s placeholder gradient'],
@@ -22570,7 +22576,12 @@ const CHANGELOG = {
         ['added','New "Logos" page under the Brand category listing all 8 Flash logo variations (Primary, White, Monochrome Black, Monochrome White — each horizontal and stacked), each downloadable as a transparent SVG or PNG from assets/logos/'],
       ]},
     ]},
-    {secId:'s-colours', name:'Colours', version:'1.16.2', entries:[
+    {secId:'s-colours', name:'Colours', version:'1.16.3', entries:[
+      {version:'1.16.3', date:'2026-09-10', author:'Mo', title:'Usage: Indicators shows both strengths, Chart note split out, link underline removed', changes:[
+        ['added','Indicators token block: each state now shows its -l background token beside its -h icon/text token, instead of the -h four alone'],
+        ['changed','Chart & category colours\' "Primary Green is used in monochrome graphs..." note is now its own block, separate from the paragraph explaining the inactive/hover strength pairing'],
+        ['fixed','Links\' example hyperlink no longer forces text-decoration:underline -- it did not match how a real link in this system renders'],
+      ]},
       {version:'1.16.2', date:'2026-09-10', author:'Mo', title:'Anatomy footnote: only one exception remains, worded more directly', changes:[
         ['fixed','The footnote naming .avt__status--off as an exception to "components use a semantic, not a raw colour" is now wrong -- see the matching Avatar 1.2.1 fix. Reworded to name only the media card\'s placeholder gradient, the one exception that is still real, and tightened throughout: "hex colours" for the raw values shown on this page, "semantic" and "raw primitive colour" for the two things a real component chooses between'],
       ]},
