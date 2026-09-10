@@ -2833,7 +2833,7 @@ body.home .main{max-width:none;margin:0;padding:0}
         <div class="type-sub spec-panel spec-stack">
           <div class="type-sub">
             <div class="type-sub__title">Anatomy</div>
-            <div class="type-sub__desc">A colour reaches a component in three steps: a primitive is given a role as a semantic token, and the active theme decides which value that role resolves to.</div>
+            <div class="type-sub__desc">Every colour on screen takes the same path: a raw colour is given a job to do, and the current theme decides what value that job actually holds.</div>
             <div class="cpg-section-block">
               <div class="spec-hero" id="col-anatomy-hero" style="display:flex;align-items:center;justify-content:center;gap:18px;flex-wrap:wrap"></div>
               <div class="spec-parts">
@@ -2841,14 +2841,14 @@ body.home .main{max-width:none;margin:0;padding:0}
                   <div class="spec-part__stage" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;min-height:78px"><span style="display:block;width:44px;height:44px;border-radius:10px;background:var(--prim-grey-100);border:1px solid var(--chrome-border)"></span><code style="font-family:'SF Mono',Consolas,monospace;font-size:10px;color:var(--chrome-muted)">--prim-grey-100</code></div>
                   <div class="spec-part__body">
                     <div class="spec-part__name"><span class="spec-part__num">1</span>Primitive</div>
-                    <div class="spec-part__note">A raw hex value, e.g. <code>--prim-grey-100</code> (<code>#f0f0f0</code>), declared once in <code>:root</code>. Never changes between themes.</div>
+                    <div class="spec-part__note">A raw colour value, with no job assigned yet &mdash; just a hex code, e.g. <code>--prim-grey-100</code> (<code>#f0f0f0</code>). Defined once, and never changes between light and dark.</div>
                   </div>
                 </div>
                 <div class="spec-part">
                   <div class="spec-part__stage" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;min-height:78px"><span style="display:block;width:44px;height:44px;border-radius:10px;background:var(--color-surface-n1);border:1px solid var(--chrome-border)"></span><code style="font-family:'SF Mono',Consolas,monospace;font-size:10px;color:var(--chrome-muted)">--color-surface-n1</code></div>
                   <div class="spec-part__body">
                     <div class="spec-part__name"><span class="spec-part__num">2</span>Semantic token</div>
-                    <div class="spec-part__note">A role, e.g. <code>--color-surface-n1</code>, declared once per theme. Points at a primitive, but never at another semantic token.</div>
+                    <div class="spec-part__note">A named job for a colour &mdash; e.g. <code>--color-surface-n1</code>, &ldquo;the surface a card sits on.&rdquo; Each theme sets its own value for this job, always pointing at a raw colour, never at another job.</div>
                   </div>
                 </div>
                 <div class="spec-part">
@@ -2859,18 +2859,18 @@ body.home .main{max-width:none;margin:0;padding:0}
                   </div>
                   <div class="spec-part__body">
                     <div class="spec-part__name"><span class="spec-part__num">3</span>Theme</div>
-                    <div class="spec-part__note">Light and dark swap which primitive each semantic token resolves to. Primitives themselves never change.</div>
+                    <div class="spec-part__note">Light and dark swap which raw colour each job points to. The raw colours themselves never change.</div>
                   </div>
                 </div>
                 <div class="spec-part">
                   <div class="spec-part__stage" id="col-anatomy-comp-stage" style="display:flex;align-items:center;justify-content:center;min-height:78px"></div>
                   <div class="spec-part__body">
                     <div class="spec-part__name"><span class="spec-part__num">4</span>Component</div>
-                    <div class="spec-part__note">Consumes the semantic token only. This avatar reads <code>--color-surface-n1</code> for its fill &mdash; never <code>--prim-grey-100</code> directly. The skeleton loader and toggle group read the same token.</div>
+                    <div class="spec-part__note">Only ever uses the job, never the raw colour underneath. This avatar&rsquo;s fill comes from <code>--color-surface-n1</code> &mdash; never <code>--prim-grey-100</code> directly. The skeleton loader and toggle group use that same job.</div>
                   </div>
                 </div>
               </div>
-              <div class="logo-note">Doc-site chrome (this page's own swatches, stages, tables) references <code>--prim-*</code> directly for display purposes &mdash; that's expected. Real components take every themed surface, border and text colour from semantic tokens. Two decorative exceptions reach for a primitive directly, because neither is a themed surface: <code>.card__media</code>'s placeholder gradient and <code>.avt__status--off</code>'s offline dot.</div>
+              <div class="logo-note">This page&rsquo;s own swatches and demo stages reference raw colours directly, purely to show them off &mdash; that&rsquo;s expected here. Every real component gets its surface, border and text colour from a job, never a raw colour. Two small exceptions go straight to a raw colour because neither is a themed surface: the placeholder gradient behind a media card, and the grey dot marking someone offline on an avatar.</div>
             </div>
           </div>
           <div class="type-sub">
