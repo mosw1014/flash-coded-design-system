@@ -549,6 +549,17 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;font-feature-
 .sec.active { display: block; }
 
 .type-sub__title{font-size:15px;font-weight:700;color:var(--chrome-txt);margin-bottom:3px}
+/* Typography page documentation furniture: a quiet sub-label for a specimen
+   nested inside a tinted block, the per-weight usage line under each weight
+   column, the highlighted alternate letters in the letterform comparison, and
+   the two-column hierarchy layout (mockup beside its value table). Page-local
+   chrome, not reusable component styling. */
+.type-doc-sublabel{font-size:12.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--chrome-muted);margin-bottom:10px}
+.type-doc-weightuse{margin-top:7px;font-size:11.5px;line-height:1.45;color:var(--chrome-muted)}
+.type-doc-glyph{color:var(--color-info-h)}
+.type-doc-num{display:inline-flex;align-items:center;justify-content:center;flex:none;width:17px;height:17px;margin-right:6px;border-radius:5px;background:var(--chrome-txt);color:var(--chrome-bg);font-size:10.5px;font-weight:800;line-height:1;vertical-align:middle;font-variant-numeric:tabular-nums}
+.type-doc-hier{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px;align-items:start}
+@media(max-width:900px){.type-doc-hier{grid-template-columns:1fr}}
 .type-sub__desc{font-size:12px;color:var(--chrome-muted);margin-bottom:20px;line-height:1.5}
 
 /* Typeface card */
@@ -3025,38 +3036,15 @@ body.home .main{max-width:none;margin:0;padding:0}
     </section>
 
     <!-- ── FUTURE SESSIONS ── -->
-    <section class="sec" id="s-type">
+    <section class="sec sec--tabbed" id="s-type">
+      <div class="sec-hero">
       <div class="sec__head">
         <div class="sec__eye">Foundations</div>
         <h1 class="sec__title">Typography</h1>
-        <p class="sec__desc">Satoshi Variable across both brands. One shared type scale — primitive weight tokens (Medium 500 · Semibold 650 · Bold 800 · Black 900) used as source of truth. Desktop and Mobile heading sets defined separately.</p>
-      </div>
-      <!-- Brand intro block (moved from Introduction) -->
-      <div class="type-sub">
-        <div class="type-sub__title">Typography</div>
-        <div class="type-sub__desc">Two typefaces, clearly divided. Never swap their roles.</div>
-        <div class="brand-type">
-          <div class="brand-type__card">
-            <div class="brand-type__specimen" style="font-weight:900">Aa</div>
-            <div class="brand-type__name">Satoshi</div>
-            <div class="brand-type__role">The workhorse. All app UI, body copy, labels, and most headlines. A variable font spanning Light to Black.</div>
-          </div>
-          <div class="brand-type__card">
-            <div class="brand-type__specimen" style="font-family:'Kilimanjaro';font-weight:400;font-synthesis:none;letter-spacing:-1px">AA</div>
-            <div class="brand-type__name">Kilimanjaro Sans</div>
-            <div class="brand-type__role">Display only. Short, punchy marketing headlines — loud, wide, uppercase. Never body copy.</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Content blocks — populated by JS -->
-      <div id="t-face"    class="type-sub"></div>
-      <div id="t-weights" class="type-sub"></div>
-      <div id="t-heads"   class="type-sub"></div>
-      <div id="t-body"    class="type-sub"></div>
-      <div id="t-inputs"  class="type-sub"></div>
-      <div id="t-tokens"  class="type-sub"></div>
-      <details class="ai-ctx">
+        <p class="sec__desc">Two typefaces, one scale. Satoshi sets every word of the product interface; Kilimanjaro is for marketing headlines and never appears in the UI.</p>
+        <div class="sec-header-meta">
+          <span class="comp-ver-badge" style="margin-left:0">v1.3.1</span>
+          <details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-type">
 {
@@ -3067,15 +3055,322 @@ body.home .main{max-width:none;margin:0;padding:0}
     "BODY",
     "INPUT_STYLES",
     "renderHeadRows",
-    "TYPE_TOKEN_GROUPS"
+    "TYPE_TOKEN_GROUPS",
+    "hToggle",
+    "typeTabSwitch",
+    "typeDocLh",
+    "typeDocLs",
+    "TYPE_DOC_HIER_PARTS",
+    "typeDocSizeStep",
+    "typeDocWeightName",
+    "typeDocRenderScreen",
+    "typeDocRenderViewports",
+    "typeDocRenderPeerCards",
+    "typeDocRenderNonUi"
   ],
   "noReusableClass": true,
-  "js": "const WEIGHTS = [\n  { name:'Medium',   wt:500, desc:'Body copy, UI labels, captions' },\n  { name:'Semibold', wt:650, desc:'Subheadings, emphasized labels' },\n  { name:'Bold',     wt:800, desc:'Strong emphasis, call-outs' },\n  { name:'Black',    wt:900, desc:'Display headings, hero type' },\n];\n\nconst HEADS = {\n  desktop:[\n    { tag:'4XL', size:'80px', wt:900, wLabel:'Black', lh:'100%', ls:'-2px',  text:'The future of payments' },\n    { tag:'3XL', size:'55px', wt:900, wLabel:'Black', lh:'110%', ls:'0',     text:'Pay smarter, every day' },\n    { tag:'2XL', size:'42px', wt:900, wLabel:'Black', lh:'120%', ls:'-1px',  text:'Welcome back to Flash' },\n    { tag:'XL',  size:'30px', wt:900, wLabel:'Black', lh:'100%', ls:'0',     text:'Transaction history' },\n    { tag:'L',   size:'26px', wt:900, wLabel:'Black', lh:'110%', ls:'0',     text:'Payment successful' },\n    { tag:'L - Medium',   size:'26px', wt:500, wLabel:'Medium', lh:'110%', ls:'0',    text:'Payment successful' },\n    { tag:'M',   size:'22px', wt:900, wLabel:'Black', lh:'115%', ls:'0',     text:'Recent activity' },\n    { tag:'M - Medium',   size:'22px', wt:500, wLabel:'Medium', lh:'115%', ls:'0',    text:'Recent activity' },\n    { tag:'S',   size:'20px', wt:900, wLabel:'Black', lh:'115%', ls:'0',     text:'Available balance' },\n    { tag:'S - Medium',   size:'20px', wt:500, wLabel:'Medium', lh:'115%', ls:'0',    text:'Available balance' },\n  ],\n  mobile:[\n    { tag:'4XL', size:'58px', wt:900, wLabel:'Black',    lh:'100%', ls:'-1px', text:'The future of payments' },\n    { tag:'3XL', size:'48px', wt:900, wLabel:'Black',    lh:'100%', ls:'-1px', text:'Pay smarter, every day' },\n    { tag:'2XL', size:'35px', wt:900, wLabel:'Black',    lh:'110%', ls:'0',    text:'Welcome back to Flash' },\n    { tag:'XL',  size:'30px', wt:900, wLabel:'Black',    lh:'110%', ls:'0',    text:'Transaction history' },\n    { tag:'L',   size:'24px', wt:900, wLabel:'Black',    lh:'110%', ls:'0',    text:'Payment successful' },\n    { tag:'L - Medium',   size:'24px', wt:500, wLabel:'Medium',   lh:'110%', ls:'0',    text:'Payment successful' },\n    { tag:'M',   size:'22px', wt:900, wLabel:'Black',    lh:'110%', ls:'0',    text:'Recent activity' },\n    { tag:'M - Medium',   size:'22px', wt:500, wLabel:'Medium',   lh:'110%', ls:'0',    text:'Recent activity' },\n    { tag:'S',   size:'18px', wt:900, wLabel:'Black',    lh:'110%', ls:'0',    text:'Available balance' },\n    { tag:'S - Medium',   size:'18px', wt:500, wLabel:'Medium',   lh:'110%', ls:'0',    text:'Available balance' },\n    { tag:'S',   size:'18px', wt:650, wLabel:'Semibold', lh:'110%', ls:'0',    text:'Available balance' },\n  ]\n};\n\nconst BODY = [\n  { group:'L', px:'16px', lh:'125%', ls:'0', styles:[\n    { wLabel:'Black',    wt:900 },\n    { wLabel:'Bold',     wt:800 },\n    { wLabel:'Semibold', wt:650 },\n    { wLabel:'Medium',   wt:500 },\n  ]},\n  { group:'M', px:'14px', lh:'120%', ls:'0', styles:[\n    { wLabel:'Semibold', wt:650 },\n    { wLabel:'Medium',   wt:500 },\n  ]},\n  { group:'S', px:'13px', lh:'130%', ls:'0', styles:[\n    { wLabel:'Bold',     wt:800 },\n    { wLabel:'Semibold', wt:650 },\n    { wLabel:'Medium',   wt:500 },\n  ]},\n  { group:'XS', px:'12px', lh:'130%', ls:'0', styles:[\n    { wLabel:'Bold',     wt:800 },\n    { wLabel:'Semibold', wt:650 },\n    { wLabel:'Medium',   wt:500 },\n  ]},\n  { group:'XXS', px:'11px', lh:'130%', ls:'0', styles:[\n    { wLabel:'Bold',     wt:800 },\n    { wLabel:'Semibold', wt:650 },\n    { wLabel:'Medium',   wt:500 },\n  ]},\n];\n\nconst INPUT_STYLES = [\n  { label:'Label',   px:'14px', wt:500, wLabel:'Medium',   lh:'120%', ls:'0', specimen:'Card number', token:'--type-input-label' },\n  { label:'Text S',  px:'14px', wt:650, wLabel:'Semibold', lh:'120%', ls:'0', specimen:'4242 4242 4242 4242', token:'--type-input-text' },\n];\n\nfunction renderHeadRows(scale) {\n  return scale.map(h =&gt; `\n    &lt;div class=\"h-row\"&gt;\n      &lt;div class=\"h-row__tag\"&gt;${h.tag}&lt;/div&gt;\n      &lt;div class=\"h-row__divider\"&gt;&lt;/div&gt;\n      &lt;div class=\"h-row__text\" style=\"font-size:${h.size};font-weight:${h.wt};letter-spacing:${h.ls};line-height:${h.lh}\"&gt;${h.text}&lt;/div&gt;\n      &lt;div class=\"h-row__specs\"&gt;\n        &lt;span class=\"h-spec h-spec--size\"&gt;${h.size}&lt;/span&gt;\n        &lt;span class=\"h-spec h-spec--wt\"&gt;${h.wLabel} · ${h.wt}&lt;/span&gt;\n        &lt;span class=\"h-spec\"&gt;lh ${h.lh}&lt;/span&gt;\n        ${h.ls !== '0' ? `&lt;span class=\"h-spec\"&gt;ls ${h.ls}&lt;/span&gt;` : ''}\n      &lt;/div&gt;\n    &lt;/div&gt;`).join('');\n}\n\nconst TYPE_TOKEN_GROUPS = [\n  {\n    title: 'Font Family',\n    rows: [\n      ['--font-family-base',    \"'Satoshi Variable', sans-serif\", 'All UI text — headings, body, labels, inputs'],\n      ['--font-family-mono',    \"'SF Mono', 'Fira Code', monospace\", 'Code snippets, token names, hex values'],\n    ]\n  },\n  {\n    title: 'Font Weights',\n    rows: [\n      ['--font-weight-medium',   '500', 'Body copy, secondary labels, captions'],\n      ['--font-weight-semibold', '650', 'Input labels, UI labels, button text'],\n      ['--font-weight-bold',     '800', 'Headings, emphasis, key data'],\n      ['--font-weight-black',    '900', 'Display headings, hero text'],\n    ]\n  },\n  {\n    title: 'Body Sizes',\n    rows: [\n      ['--font-size-body-l',  '16px', 'Large body — intro paragraphs, featured content'],\n      ['--font-size-body-m',  '14px', 'Default body text, list items, descriptions'],\n      ['--font-size-body-s',  '13px', 'Secondary body, form helper text'],\n      ['--font-size-body-xs', '12px', 'Captions, metadata, badge labels'],\n      ['--font-size-body-xxs','11px', 'Legal text, timestamps, micro labels'],\n    ]\n  },\n  {\n    title: 'Heading Sizes — Desktop',\n    rows: [\n      ['--font-size-heading-4xl', '80px', 'Hero display — marketing, splash screens'],\n      ['--font-size-heading-3xl', '64px', 'Section heroes'],\n      ['--font-size-heading-2xl', '48px', 'Page titles'],\n      ['--font-size-heading-xl',  '40px', 'Section titles'],\n      ['--font-size-heading-l',   '32px', 'Card headlines, modal titles'],\n      ['--font-size-heading-m',   '28px', 'Sub-section headings'],\n      ['--font-size-heading-s',   '24px', 'Component headings'],\n      ['--font-size-heading-xs',  '20px', 'Small headings, list group titles'],\n    ]\n  },\n  {\n    title: 'Heading Sizes — Mobile',\n    rows: [\n      ['--font-size-heading-4xl-mobile', '58px', 'Mobile hero display'],\n      ['--font-size-heading-3xl-mobile', '46px', 'Mobile section heroes'],\n      ['--font-size-heading-2xl-mobile', '36px', 'Mobile page titles'],\n      ['--font-size-heading-xl-mobile',  '32px', 'Mobile section titles'],\n      ['--font-size-heading-l-mobile',   '28px', 'Mobile card headlines'],\n      ['--font-size-heading-m-mobile',   '24px', 'Mobile sub-sections'],\n      ['--font-size-heading-s-mobile',   '22px', 'Mobile component headings'],\n      ['--font-size-heading-xs-mobile',  '20px', 'Mobile small headings'],\n    ]\n  },\n];",
-  "contentHash": "f1392203634aa02d86fda792bb6ebde51d825f29e60a84c8f1b61678689e9afb",
-  "note": "Documents the doc site's typography DATA (font family/weight/size scale, heading/body specs, input-text specs, and the CSS-var token table) — this section has no reusable component class of its own. The actual font-family/weight/size CSS custom properties are declared in :root and per-brand/theme blocks elsewhere in the file; TYPE_TOKEN_GROUPS here mirrors those tokens for display, it doesn't own them."
+  "js": "const WEIGHTS = [\n  { name:'Medium',   wt:500, desc:'Body copy, UI labels, captions' },\n  { name:'Semibold', wt:650, desc:'Subheadings, emphasized labels' },\n  { name:'Bold',     wt:800, desc:'Strong emphasis, call-outs' },\n  { name:'Black',    wt:900, desc:'Display headings, hero type' },\n];\n\nconst HEADS = {\n  desktop:[\n    { tag:'4XL', size:'80px', wt:900, wLabel:'Black', lh:'100%', ls:'-2px',  text:'The future of payments' },\n    { tag:'3XL', size:'55px', wt:900, wLabel:'Black', lh:'110%', ls:'0',     text:'Pay smarter, every day' },\n    { tag:'2XL', size:'42px', wt:900, wLabel:'Black', lh:'120%', ls:'-1px',  text:'Welcome back to Flash' },\n    { tag:'XL',  size:'30px', wt:900, wLabel:'Black', lh:'100%', ls:'0',     text:'Transaction history' },\n    { tag:'L',   size:'26px', wt:900, wLabel:'Black', lh:'110%', ls:'0',     text:'Payment successful' },\n    { tag:'L - Medium',   size:'26px', wt:500, wLabel:'Medium', lh:'110%', ls:'0',    text:'Payment successful' },\n    { tag:'M',   size:'22px', wt:900, wLabel:'Black', lh:'115%', ls:'0',     text:'Recent activity' },\n    { tag:'M - Medium',   size:'22px', wt:500, wLabel:'Medium', lh:'115%', ls:'0',    text:'Recent activity' },\n    { tag:'S',   size:'20px', wt:900, wLabel:'Black', lh:'115%', ls:'0',     text:'Available balance' },\n    { tag:'S - Medium',   size:'20px', wt:500, wLabel:'Medium', lh:'115%', ls:'0',    text:'Available balance' },\n  ],\n  mobile:[\n    { tag:'4XL', size:'58px', wt:900, wLabel:'Black',    lh:'100%', ls:'-1px', text:'The future of payments' },\n    { tag:'3XL', size:'48px', wt:900, wLabel:'Black',    lh:'100%', ls:'-1px', text:'Pay smarter, every day' },\n    { tag:'2XL', size:'35px', wt:900, wLabel:'Black',    lh:'110%', ls:'0',    text:'Welcome back to Flash' },\n    { tag:'XL',  size:'30px', wt:900, wLabel:'Black',    lh:'110%', ls:'0',    text:'Transaction history' },\n    { tag:'L',   size:'24px', wt:900, wLabel:'Black',    lh:'110%', ls:'0',    text:'Payment successful' },\n    { tag:'L - Medium',   size:'24px', wt:500, wLabel:'Medium',   lh:'110%', ls:'0',    text:'Payment successful' },\n    { tag:'M',   size:'22px', wt:900, wLabel:'Black',    lh:'110%', ls:'0',    text:'Recent activity' },\n    { tag:'M - Medium',   size:'22px', wt:500, wLabel:'Medium',   lh:'110%', ls:'0',    text:'Recent activity' },\n    { tag:'S',   size:'18px', wt:900, wLabel:'Black',    lh:'110%', ls:'0',    text:'Available balance' },\n    { tag:'S - Medium',   size:'18px', wt:500, wLabel:'Medium',   lh:'110%', ls:'0',    text:'Available balance' },\n    { tag:'S',   size:'18px', wt:650, wLabel:'Semibold', lh:'110%', ls:'0',    text:'Available balance' },\n  ]\n};\n\nconst BODY = [\n  { group:'L', px:'16px', lh:'125%', ls:'0', styles:[\n    { wLabel:'Black',    wt:900 },\n    { wLabel:'Bold',     wt:800 },\n    { wLabel:'Semibold', wt:650 },\n    { wLabel:'Medium',   wt:500 },\n  ]},\n  { group:'M', px:'14px', lh:'120%', ls:'0', styles:[\n    { wLabel:'Semibold', wt:650 },\n    { wLabel:'Medium',   wt:500 },\n  ]},\n  { group:'S', px:'13px', lh:'130%', ls:'0', styles:[\n    { wLabel:'Bold',     wt:800 },\n    { wLabel:'Semibold', wt:650 },\n    { wLabel:'Medium',   wt:500 },\n  ]},\n  { group:'XS', px:'12px', lh:'130%', ls:'0', styles:[\n    { wLabel:'Bold',     wt:800 },\n    { wLabel:'Semibold', wt:650 },\n    { wLabel:'Medium',   wt:500 },\n  ]},\n  { group:'XXS', px:'11px', lh:'130%', ls:'0', styles:[\n    { wLabel:'Bold',     wt:800 },\n    { wLabel:'Semibold', wt:650 },\n    { wLabel:'Medium',   wt:500 },\n  ]},\n];\n\nconst INPUT_STYLES = [\n  { label:'Label',   px:'14px', wt:500, wLabel:'Medium',   lh:'120%', ls:'0', specimen:'Card number', token:'--type-input-label' },\n  { label:'Text S',  px:'14px', wt:650, wLabel:'Semibold', lh:'120%', ls:'0', specimen:'4242 4242 4242 4242', token:'--type-input-text' },\n];\n\nfunction renderHeadRows(scale) {\n  return scale.map(h =&gt; `\n    &lt;div class=\"h-row\"&gt;\n      &lt;div class=\"h-row__tag\"&gt;${h.tag}&lt;/div&gt;\n      &lt;div class=\"h-row__divider\"&gt;&lt;/div&gt;\n      &lt;div class=\"h-row__text\" style=\"font-size:${h.size};font-weight:${h.wt};letter-spacing:${h.ls};line-height:${h.lh}\"&gt;${h.text}&lt;/div&gt;\n      &lt;div class=\"h-row__specs\"&gt;\n        &lt;span class=\"h-spec h-spec--size\"&gt;${h.size}&lt;/span&gt;\n        &lt;span class=\"h-spec h-spec--wt\"&gt;${h.wLabel} · ${h.wt}&lt;/span&gt;\n        &lt;span class=\"h-spec\"&gt;Line height ${typeDocLh(h.lh)}&lt;/span&gt;\n        ${h.ls !== '0' ? `&lt;span class=\"h-spec\"&gt;Letter spacing ${typeDocLs(h.ls)}&lt;/span&gt;` : ''}\n      &lt;/div&gt;\n    &lt;/div&gt;`).join('');\n}\n\nconst TYPE_TOKEN_GROUPS = [\n  {\n    title: 'Font Family',\n    rows: [\n      ['--font-family-base',    \"'Satoshi Variable', sans-serif\", 'All UI text — headings, body, labels, inputs'],\n      ['--font-family-mono',    \"'SF Mono', 'Fira Code', monospace\", 'Code snippets, token names, hex values'],\n    ]\n  },\n  {\n    title: 'Font Weights',\n    rows: [\n      ['--font-weight-medium',   '500', 'Body copy, secondary labels, captions'],\n      ['--font-weight-semibold', '650', 'Input labels, UI labels, button text'],\n      ['--font-weight-bold',     '800', 'Headings, emphasis, key data'],\n      ['--font-weight-black',    '900', 'Display headings, hero text'],\n    ]\n  },\n  {\n    title: 'Body Sizes',\n    rows: [\n      ['--font-size-body-l',  '16px', 'Large body — intro paragraphs, featured content'],\n      ['--font-size-body-m',  '14px', 'Default body text, list items, descriptions'],\n      ['--font-size-body-s',  '13px', 'Secondary body, form helper text'],\n      ['--font-size-body-xs', '12px', 'Captions, metadata, badge labels'],\n      ['--font-size-body-xxs','11px', 'Legal text, timestamps, micro labels'],\n    ]\n  },\n  {\n    title: 'Heading Sizes — Desktop',\n    rows: [\n      ['--font-size-heading-4xl', '80px', 'Hero display — marketing, splash screens'],\n      ['--font-size-heading-3xl', '55px', 'Section heroes'],\n      ['--font-size-heading-2xl', '42px', 'Page titles'],\n      ['--font-size-heading-xl',  '30px', 'Section titles'],\n      ['--font-size-heading-l',   '26px', 'Card headlines, modal titles'],\n      ['--font-size-heading-m',   '22px', 'Sub-section headings'],\n      ['--font-size-heading-s',   '20px', 'Component headings'],\n    ]\n  },\n  {\n    title: 'Heading Sizes — Mobile',\n    rows: [\n      ['--font-size-heading-4xl-mobile', '58px', 'Mobile hero display'],\n      ['--font-size-heading-3xl-mobile', '48px', 'Mobile section heroes'],\n      ['--font-size-heading-2xl-mobile', '35px', 'Mobile page titles'],\n      ['--font-size-heading-xl-mobile',  '30px', 'Mobile section titles'],\n      ['--font-size-heading-l-mobile',   '24px', 'Mobile card headlines'],\n      ['--font-size-heading-m-mobile',   '22px', 'Mobile sub-sections'],\n      ['--font-size-heading-s-mobile',   '18px', 'Mobile component headings'],\n    ]\n  },\n];\n\nfunction hToggle(id, btn) {\n  document.querySelectorAll('.h-toggle__btn').forEach(b=&gt;b.classList.remove('on'));\n  document.querySelectorAll('.h-view').forEach(v=&gt;v.classList.remove('on'));\n  btn.classList.add('on');\n  document.getElementById('hv-'+id).classList.add('on');\n}\n\nfunction typeTabSwitch(tab){\n  const nav = document.getElementById('type-tabs-list');\n  if(!nav) return;\n  nav.querySelectorAll('.tab-item').forEach(btn=&gt;btn.classList.toggle('on', btn.getAttribute('data-type-tab')===tab));\n  document.querySelectorAll('#s-type .tabs-panel[data-type-panel]').forEach(p=&gt;p.classList.toggle('on', p.getAttribute('data-type-panel')===tab));\n}\n\nfunction typeDocLh(v){ return String(Math.round(parseFloat(v))/100); }\n\nfunction typeDocLs(v){ return String(v).replace('-','\\u2212'); }\n\nconst TYPE_DOC_HIER_PARTS = [\n  {n:1, where:'Card title',       find:TYPE_DOC_CARD_TITLE},\n  {n:2, where:'Card description', find:'card__desc'},\n  {n:3, where:'Button label',     find:'ds-btn'},\n  {n:4, where:'Alert title',      find:'alrt__title'},\n  {n:5, where:'Input label',      find:'ti-search-label'},\n  {n:6, where:'Pill label',       find:'pill'},\n];\n\nfunction typeDocSizeStep(px){\n  const size = px + 'px';\n  const b = BODY.find(g =&gt; g.px === size);\n  if(b) return 'Body ' + b.group;\n  const h = HEADS.desktop.find(x =&gt; x.size === size) || HEADS.mobile.find(x =&gt; x.size === size);\n  if(h) return 'Heading ' + h.tag.split(' ')[0];\n  return 'Off scale';\n}\n\nfunction typeDocWeightName(w){\n  const m = WEIGHTS.find(x =&gt; String(x.wt) === String(w));\n  return m ? `${m.name} (${w})` : `${w} (off scale)`;\n}\n\nfunction typeDocRenderScreen(){\n  const stage = document.getElementById('type-doc-screen');\n  const rows  = document.getElementById('type-doc-hier-rows');\n  if(!stage || !rows) return;\n  const th = currentTheme();\n  stage.style.background = stageBg(th);\n  stage.style.setProperty('--cpg-stage-bg', stageBg(th));\n  stage.innerHTML = '';\n\n  const add = (html) =&gt; {\n    const d = document.createElement('div');\n    d.innerHTML = String(html).trim();\n    const el = d.firstElementChild;\n    if(el) stage.appendChild(el);\n    return el;\n  };\n\n  add(cardHTML({title:'Available balance', desc:'Updated a moment ago', style:'width:100%;max-width:none'}));\n  add(ovAlrt({variant:'success', title:'Payment received', message:'R1,250.00 has been settled to your account.'}));\n\n  const inputRow = document.createElement('div');\n  inputRow.style.cssText = 'display:flex;align-items:center;gap:9px';\n  inputRow.appendChild(typeDocNumEl(5));\n  const search = tiBuildSearchField();\n  search.el.style.flex = '1 1 auto';\n  search.el.style.minWidth = '0';\n  inputRow.appendChild(search.el);\n  stage.appendChild(inputRow);\n\n  const actions = document.createElement('div');\n  actions.style.cssText = 'display:flex;align-items:center;gap:9px;flex-wrap:wrap';\n  actions.appendChild(typeDocNumEl(3));\n  actions.appendChild(makeBtnEl('flash', th, 'primary', 'reg', false, 'Send payment'));\n  actions.appendChild(typeDocNumEl(6));\n  const pillWrap = document.createElement('div');\n  pillWrap.innerHTML = makePillHTML(PILL_VARIANTS.find(v =&gt; v.key === 'success'), 'reg', th).trim();\n  if(pillWrap.firstElementChild) actions.appendChild(pillWrap.firstElementChild);\n  stage.appendChild(actions);\n\n  [[1,TYPE_DOC_CARD_TITLE],[2,'card__desc'],[4,'alrt__title']].forEach(([n, cls]) =&gt; {\n    const el = stage.querySelector('.' + cls);\n    if(el) el.insertAdjacentHTML('afterbegin', typeDocNumHTML(n));\n  });\n\n  rows.innerHTML = TYPE_DOC_HIER_PARTS.map(part =&gt; {\n    const el = stage.querySelector('.' + part.find);\n    if(!el) return '';\n    const cs = getComputedStyle(el);\n    const px = Math.round(parseFloat(cs.fontSize) * 10) / 10;\n    return `&lt;tr&gt;\n        &lt;td class=\"dd-table__name\"&gt;${typeDocNumHTML(part.n)}${part.where}&lt;/td&gt;\n        &lt;td&gt;${px}px&lt;/td&gt;\n        &lt;td&gt;${typeDocWeightName(cs.fontWeight)}&lt;/td&gt;\n        &lt;td&gt;${typeDocSizeStep(px)}&lt;/td&gt;\n      &lt;/tr&gt;`;\n  }).join('');\n}\n\nfunction typeDocRenderViewports(){\n  const mount = document.getElementById('type-doc-viewports');\n  if(!mount) return;\n  const face = \"font-family:'Satoshi Variable','Satoshi',sans-serif;font-feature-settings:'ss01' 1,'ss02' 1,'ss03' 1,'ss04' 1\";\n  const cell = (h, label, tag) =&gt; `\n      &lt;div class=\"spec-mock\"&gt;\n        &lt;div class=\"spec-mock__stage\" style=\"background:var(--chrome-bg);justify-content:center;overflow:hidden\"&gt;\n          &lt;div style=\"${face};font-weight:${h.wt};font-size:${h.size};line-height:${h.lh};letter-spacing:${h.ls};color:var(--chrome-txt)\"&gt;${h.text}&lt;/div&gt;\n        &lt;/div&gt;\n        &lt;div class=\"spec-mock__cap\"&gt;&lt;b&gt;${label}&lt;/b&gt;Heading ${tag} &amp;middot; ${h.size}&lt;/div&gt;\n      &lt;/div&gt;`;\n  mount.innerHTML = ['4XL','3XL','2XL'].map(tag =&gt; {\n    const d = HEADS.desktop.find(h =&gt; h.tag === tag);\n    const m = HEADS.mobile.find(h =&gt; h.tag === tag);\n    if(!d || !m) return '';\n    return `&lt;div class=\"spec-insitu-grid spec-insitu-grid--2\" style=\"margin-bottom:16px\"&gt;${cell(d,'Desktop',tag)}${cell(m,'Mobile',tag)}&lt;/div&gt;`;\n  }).join('');\n}\n\nfunction typeDocRenderPeerCards(){\n  const mount = document.getElementById('type-doc-peercards');\n  if(!mount) return;\n  const w = 'width:172px;max-width:172px';\n  mount.innerHTML =\n    cardHTML({title:'Payments', desc:'Send and receive money.', style:w}) +\n    cardHTML({title:'Cards',    desc:'Manage your cards.',      style:w}) +\n    cardHTML({title:'Settings', desc:'Update your details.',    style:w});\n  // The third heading is deliberately a step out of line with its two peers —\n  // this block is the failing example the caption calls out.\n  const titles = mount.querySelectorAll('.' + TYPE_DOC_CARD_TITLE);\n  if(titles[2]) titles[2].setAttribute('style','font-size:22px;font-weight:900;margin-bottom:5px');\n}\n\nfunction typeDocRenderNonUi(){\n  const mount = document.getElementById('type-doc-nonui');\n  if(!mount) return;\n  const th = currentTheme();\n  mount.style.setProperty('--cpg-stage-bg', stageBg(th));\n  mount.style.cssText += ';display:flex;gap:14px;align-items:center;flex-wrap:wrap;justify-content:center';\n  mount.innerHTML = '';\n  const card = document.createElement('div');\n  card.innerHTML = cardHTML({title:'Available balance', desc:'Updated a moment ago', style:'width:210px;max-width:210px'}).trim();\n  if(card.firstElementChild) mount.appendChild(card.firstElementChild);\n  mount.appendChild(makeBtnEl('flash', th, 'primary', 'reg', false, 'Send payment'));\n  // Force the display face onto real interface text — the failure this block documents.\n  // Properties are set individually so the builders' own inline custom properties survive.\n  mount.querySelectorAll('.' + TYPE_DOC_CARD_TITLE + ', .card__desc, .ds-btn').forEach(el =&gt; {\n    el.style.fontFamily = \"'Kilimanjaro','Satoshi',sans-serif\";\n    el.style.fontWeight = '400';\n    el.style.fontSynthesis = 'none';\n    el.style.textTransform = 'uppercase';\n    el.style.setProperty('font-feature-settings', \"'ss01' 1,'ss02' 1,'ss03' 1,'ss04' 1\");\n  });\n}\n\nfunction typeDocRenderPeerCards(){\n  const mount = document.getElementById('type-doc-peercards');\n  if(!mount) return;\n  const w = 'width:172px;max-width:172px';\n  mount.innerHTML =\n    cardHTML({title:'Payments', desc:'Send and receive money.', style:w}) +\n    cardHTML({title:'Cards',    desc:'Manage your cards.',      style:w}) +\n    cardHTML({title:'Settings', desc:'Update your details.',    style:w});\n  // The third heading is deliberately a step out of line with its two peers —\n  // this block is the failing example the caption calls out.\n  const titles = mount.querySelectorAll('.' + TYPE_DOC_CARD_TITLE);\n  if(titles[2]) titles[2].setAttribute('style','font-size:22px;font-weight:900;margin-bottom:5px');\n}\n\ntry { typeDocRenderScreen(); }    catch(e){ console.error('type-doc-screen', e); }\ntry { typeDocRenderViewports(); } catch(e){ console.error('type-doc-viewports', e); }\ntry { typeDocRenderPeerCards(); } catch(e){ console.error('type-doc-peercards', e); }\ntry { typeDocRenderNonUi(); }     catch(e){ console.error('type-doc-nonui', e); }\n\n&lt;/script&gt;\n&lt;/body&gt;\n&lt;/html&gt;",
+  "usage": {
+    "do": [
+      "Use Satoshi for every word in the product interface.",
+      "Pick a step from the scale, not a size between two.",
+      "Use Black for headings, Medium for body copy.",
+      "Keep peer headings on the same step and weight.",
+      "Save Kilimanjaro for marketing headlines, uppercase and short."
+    ],
+    "dont": [
+      "Don’t put Kilimanjaro anywhere in the product UI.",
+      "Don’t set a paragraph in Kilimanjaro, or use mixed case.",
+      "Don’t thicken type by outlining it — use Black.",
+      "Don’t mix three weights in one sentence.",
+      "Don’t set the wordmark in type — use the logo file."
+    ]
+  },
+  "contentHash": "2a7c9de5553690019e693b866f88e83719705acb233e2276bb386de621727c93",
+  "note": "Documents the doc site's typography DATA and this page's own render helpers; the section has no reusable component class of its own. HARD RULE, enforced redundantly throughout this page: Satoshi sets every word of the product interface and Kilimanjaro is marketing-only — it must NEVER appear in any UI surface, at any size, in any casing. Stated in the .sec__desc, the Anatomy Typeface card, Two typefaces, the homepage-headline caption, the Heading Scale intro, the Pairing caption itself (not just its section intro), the Do/Dont list, and as a .tag--success/.tag--error badge pair (UI / Not for UI) next to each font row on Fonts &amp; Tokens. Demonstrated by TWO differently-shaped rendered failures on Usage: typeDocRenderNonUi() forces Kilimanjaro onto a real card+button, and a second static failure forces it onto a single nav label beside two Satoshi ones — the rule is shown to hold regardless of UI shape. The only Kilimanjaro consumers in the whole file are .fds-hero__title and .fds-essence__title on the marketing landing page; no product component references it, and anything reskinning or reimplementing this system must keep it that way. Unlike colour, the --font-family-*/--font-weight-*/--font-size-* names in TYPE_TOKEN_GROUPS are NOT declared as CSS custom properties anywhere — components hard-code the literal font-size/font-weight values, so TYPE_TOKEN_GROUPS is itself the source of record and there is no CSS to generate it from (see AI-CONTEXT.md 'File structure notes'). HEADS (the rendered specimens) is the source of truth for heading sizes: TYPE_TOKEN_GROUPS was corrected to match it in v1.3.0, the two now agree on all 14 steps, and there is no heading XS step (XS exists only as the 12px body size). Both faces also ship as real files in assets/fonts/ (Satoshi-Variable.ttf, Kilimanjaro-Sans-Round2.otf), byte-identical to the base64 font-face payloads in the first stylesheet block, which remain in place; Kilimanjaro exists in six rounds in the brand source and only Round 2 is the Flash face. ss01-ss04 are the house style and any element redeclaring font-family must reassert font-feature-settings — the one deliberate exception is the 'Default Satoshi' comparison specimen on the Usage tab. The Usage hierarchy table is measured off the real rendered components with getComputedStyle at runtime instead of transcribed, and derives step and weight names from BODY/HEADS/WEIGHTS, so it cannot drift. Numbered annotation markers use .type-doc-num (a squared, inverted chip) rather than the circular .spec-part__num, so they are never mistaken for a component's own round status icons such as the Alert tick."
 }
   </pre>
 </details>
+        </div>
+      </div>
+      <div class="sec-hero__preview" style="gap:22px">
+        <span style="font-family:'Satoshi Variable','Satoshi',sans-serif;font-feature-settings:'ss01' 1,'ss02' 1,'ss03' 1,'ss04' 1;font-weight:900;font-size:100px;line-height:1;letter-spacing:-2px;color:var(--chrome-txt)">Aa</span>
+        <span style="font-family:'Kilimanjaro','Satoshi',sans-serif;font-feature-settings:'ss01' 1,'ss02' 1,'ss03' 1,'ss04' 1;font-weight:400;font-synthesis:none;font-size:100px;line-height:1;letter-spacing:-1px;color:var(--chrome-txt)">AA</span>
+      </div>
+      </div>
+      <div class="tabs-list sec-tabs" id="type-tabs-list">
+        <button type="button" class="tab-item on" data-type-tab="overview" onclick="typeTabSwitch('overview')"><span class="tab-item__inner"><span class="tab-item__label">Overview</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-type-tab="scale" onclick="typeTabSwitch('scale')"><span class="tab-item__inner"><span class="tab-item__label">Scale</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-type-tab="usage" onclick="typeTabSwitch('usage')"><span class="tab-item__inner"><span class="tab-item__label">Usage</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-type-tab="fonts" onclick="typeTabSwitch('fonts')"><span class="tab-item__inner"><span class="tab-item__label">Fonts &amp; Tokens</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-type-tab="changelog" onclick="typeTabSwitch('changelog')"><span class="tab-item__inner"><span class="tab-item__label">Changelog</span></span><span class="tab-item__line"></span></button>
+      </div>
+
+      <div class="tabs-panel on" data-type-panel="overview">
+        <div class="type-sub spec-panel spec-stack">
+
+          <div class="type-sub">
+            <div class="type-sub__title">Anatomy</div>
+            <div class="type-sub__desc">Every line of Flash type is four decisions: which typeface, which weight, which size step, and how tightly it sits.</div>
+            <div class="cpg-section-block">
+              <div class="spec-hero" style="background:var(--chrome-bg);flex-direction:column;align-items:flex-start;gap:18px;padding:36px 32px">
+                <div>
+                  <div class="spec-mock__label">Heading L &middot; 26px &middot; Black</div>
+                  <div style="font-family:'Satoshi Variable','Satoshi',sans-serif;font-feature-settings:'ss01' 1,'ss02' 1,'ss03' 1,'ss04' 1;font-weight:900;font-size:26px;line-height:1.1;color:var(--chrome-txt)">Payment successful</div>
+                </div>
+                <div>
+                  <div class="spec-mock__label">Body M &middot; 14px &middot; Medium</div>
+                  <div style="font-family:'Satoshi Variable','Satoshi',sans-serif;font-feature-settings:'ss01' 1,'ss02' 1,'ss03' 1,'ss04' 1;font-weight:500;font-size:14px;line-height:1.2;color:var(--chrome-muted)">Your transfer to Thabo Mokoena cleared at 14:32.</div>
+                </div>
+              </div>
+              <div class="spec-parts">
+            <div class="spec-part">
+              <div class="spec-part__stage" style="background:var(--chrome-bg);height:auto;min-height:66px;padding:14px 8px;flex-wrap:wrap;overflow:hidden"><span style="display:inline-flex;align-items:flex-start;justify-content:center;flex-wrap:wrap;gap:6px 16px;max-width:100%"><span style="display:inline-flex;flex-direction:column;align-items:center;gap:4px"><span style="font-family:'Satoshi Variable','Satoshi',sans-serif;font-feature-settings:'ss01' 1,'ss02' 1,'ss03' 1,'ss04' 1;font-weight:900;font-size:30px;line-height:1;color:var(--chrome-txt)">Aa</span><span class="spec-mock__label">Satoshi</span></span><span style="display:inline-flex;flex-direction:column;align-items:center;gap:4px"><span style="font-family:'Kilimanjaro','Satoshi',sans-serif;font-feature-settings:'ss01' 1,'ss02' 1,'ss03' 1,'ss04' 1;font-weight:400;font-synthesis:none;font-size:30px;line-height:1;letter-spacing:-1px;color:var(--chrome-txt)">Aa</span><span class="spec-mock__label">Kilimanjaro</span></span></span></div>
+              <div class="spec-part__body">
+                <div class="spec-part__name"><span class="spec-part__num">1</span>Typeface</div>
+                <div class="spec-part__note">Satoshi does all the work. Kilimanjaro is marketing-only and never appears in the product UI.</div>
+              </div>
+            </div>
+            <div class="spec-part">
+              <div class="spec-part__stage" style="background:var(--chrome-bg);height:auto;min-height:66px;padding:14px 8px;flex-wrap:wrap;overflow:hidden"><span style="display:inline-flex;align-items:flex-start;justify-content:center;flex-wrap:wrap;gap:8px 14px;max-width:100%"><span style="display:inline-flex;flex-direction:column;align-items:center;gap:4px"><span style="font-family:'Satoshi Variable','Satoshi',sans-serif;font-feature-settings:'ss01' 1,'ss02' 1,'ss03' 1,'ss04' 1;font-weight:500;font-size:23px;line-height:1;color:var(--chrome-txt)">Aa</span><span class="spec-mock__label">Medium</span></span><span style="display:inline-flex;flex-direction:column;align-items:center;gap:4px"><span style="font-family:'Satoshi Variable','Satoshi',sans-serif;font-feature-settings:'ss01' 1,'ss02' 1,'ss03' 1,'ss04' 1;font-weight:650;font-size:23px;line-height:1;color:var(--chrome-txt)">Aa</span><span class="spec-mock__label">Semibold</span></span><span style="display:inline-flex;flex-direction:column;align-items:center;gap:4px"><span style="font-family:'Satoshi Variable','Satoshi',sans-serif;font-feature-settings:'ss01' 1,'ss02' 1,'ss03' 1,'ss04' 1;font-weight:800;font-size:23px;line-height:1;color:var(--chrome-txt)">Aa</span><span class="spec-mock__label">Bold</span></span><span style="display:inline-flex;flex-direction:column;align-items:center;gap:4px"><span style="font-family:'Satoshi Variable','Satoshi',sans-serif;font-feature-settings:'ss01' 1,'ss02' 1,'ss03' 1,'ss04' 1;font-weight:900;font-size:23px;line-height:1;color:var(--chrome-txt)">Aa</span><span class="spec-mock__label">Black</span></span></span></div>
+              <div class="spec-part__body">
+                <div class="spec-part__name"><span class="spec-part__num">2</span>Weight</div>
+                <div class="spec-part__note">Four weights, Medium through Black. All four are Satoshi.</div>
+              </div>
+            </div>
+            <div class="spec-part">
+              <div class="spec-part__stage" style="background:var(--chrome-bg);height:auto;min-height:66px;padding:14px 8px;flex-wrap:wrap;overflow:hidden"><span style="display:inline-flex;align-items:flex-start;justify-content:center;flex-wrap:wrap;gap:8px 12px;max-width:100%"><span style="display:inline-flex;flex-direction:column;align-items:center;gap:4px"><span style="font-family:'Satoshi Variable','Satoshi',sans-serif;font-feature-settings:'ss01' 1,'ss02' 1,'ss03' 1,'ss04' 1;font-weight:900;font-size:22px;line-height:1;color:var(--chrome-txt)">Flash</span><span class="spec-mock__label">Heading M</span></span><span style="display:inline-flex;flex-direction:column;align-items:center;gap:4px"><span style="font-family:'Satoshi Variable','Satoshi',sans-serif;font-feature-settings:'ss01' 1,'ss02' 1,'ss03' 1,'ss04' 1;font-weight:900;font-size:16px;line-height:1;color:var(--chrome-txt)">Flash</span><span class="spec-mock__label">Body L</span></span><span style="display:inline-flex;flex-direction:column;align-items:center;gap:4px"><span style="font-family:'Satoshi Variable','Satoshi',sans-serif;font-feature-settings:'ss01' 1,'ss02' 1,'ss03' 1,'ss04' 1;font-weight:900;font-size:12px;line-height:1;color:var(--chrome-txt)">Flash</span><span class="spec-mock__label">Body XS</span></span></span></div>
+              <div class="spec-part__body">
+                <div class="spec-part__name"><span class="spec-part__num">3</span>Size step</div>
+                <div class="spec-part__note">Headings come in a desktop and a mobile size; body copy has five.</div>
+              </div>
+            </div>
+            <div class="spec-part">
+              <div class="spec-part__stage" style="background:var(--chrome-bg);height:auto;min-height:66px;padding:14px 8px;flex-wrap:wrap;overflow:hidden"><span style="font-family:'Satoshi Variable','Satoshi',sans-serif;font-feature-settings:'ss01' 1,'ss02' 1,'ss03' 1,'ss04' 1;font-weight:900;font-size:20px;line-height:1.2;letter-spacing:-1px;color:var(--chrome-txt);text-align:center">Welcome back<br>to Flash</span></div>
+              <div class="spec-part__body">
+                <div class="spec-part__name"><span class="spec-part__num">4</span>Spacing</div>
+                <div class="spec-part__note">Line height 1.2 &middot; Letter spacing &minus;1px</div>
+              </div>
+            </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="type-sub">
+            <div class="type-sub__title">Two typefaces</div>
+            <div class="type-sub__desc">Strictly divided: Satoshi for the product interface, Kilimanjaro for marketing headlines. Never swap their roles.</div>
+            <div class="cpg-section-block">
+              <div class="brand-type">
+                <div class="brand-type__card">
+                  <div class="brand-type__specimen" style="font-weight:900">Aa</div>
+                  <div class="brand-type__name">Satoshi</div>
+                  <div class="brand-type__role">The workhorse. All app UI, body copy, labels, and most headlines. A variable font spanning Light to Black.</div>
+                </div>
+                <div class="brand-type__card">
+                  <div class="brand-type__specimen" style="font-family:'Kilimanjaro';font-weight:400;font-synthesis:none;letter-spacing:-1px">AA</div>
+                  <div class="brand-type__name">Kilimanjaro Sans</div>
+                  <div class="brand-type__role">Display only. Short, punchy marketing headlines &mdash; loud, wide, uppercase. Never body copy, and never anywhere in the product UI.</div>
+                </div>
+              </div>
+              <div id="t-face" class="type-sub" style="margin:26px 0 0"></div>
+              <div class="spec-mock" style="margin-top:26px">
+                <div class="spec-mock__stage" style="background:#000;justify-content:flex-end;padding:28px 26px;min-height:180px">
+                  <h3 class="fds-hero__title" style="font-size:46px;margin:0;font-feature-settings:'ss01' 1,'ss02' 1,'ss03' 1,'ss04' 1">The future<br>of <span class="fds-hero__title-accent">payments</span></h3>
+                </div>
+                <div class="spec-mock__cap"><b>Where Kilimanjaro lives</b>Marketing surfaces only &mdash; this is the public homepage headline, not a product screen. It is the only place in this system that uses the face.</div>
+              </div>
+            </div>
+          </div>
+
+          <div id="t-weights" class="type-sub" style="margin-bottom:0"></div>
+        </div>
+      </div>
+
+      <div class="tabs-panel" data-type-panel="scale">
+        <div class="type-sub spec-panel spec-stack">
+          <div id="t-heads"  class="type-sub"></div>
+          <div id="t-body"   class="type-sub"></div>
+          <div id="t-inputs" class="type-sub" style="margin-bottom:0"></div>
+        </div>
+      </div>
+
+      <div class="tabs-panel" data-type-panel="usage">
+        <div class="type-sub spec-panel spec-stack">
+
+          <div class="type-sub">
+            <div class="type-sub__title">Hierarchy in a real screen</div>
+            <div class="type-sub__desc">Three sizes and two weights cover a whole screen. Every word of it is Satoshi.</div>
+            <div class="cpg-section-outline">
+              <div class="type-doc-hier">
+                <div class="spec-mock">
+                  <div class="spec-mock__stage" id="type-doc-screen" style="gap:16px;justify-content:flex-start"></div>
+                  <div class="spec-mock__cap"><b>One payment screen</b>Every piece of text on it, numbered.</div>
+                </div>
+                <div class="dd-table-wrap"><table class="dd-table" style="min-width:0">
+                  <thead><tr><th>Where</th><th>Size</th><th>Weight</th><th>Step</th></tr></thead>
+                  <tbody id="type-doc-hier-rows"></tbody>
+                </table></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="type-sub">
+            <div class="type-sub__title">Pairing the two faces</div>
+            <div class="type-sub__desc">Kilimanjaro sets marketing headlines and nothing else. Everything inside the product interface is Satoshi, without exception.</div>
+            <div class="cpg-section-outline">
+              <div class="spec-mock" style="margin-bottom:16px">
+                <div class="spec-mock__stage logo-dont" style="background:var(--color-crit-l);align-items:center;justify-content:center;padding:26px">
+                  <span class="logo-dont__x" style="top:12px;right:12px;left:auto;transform:none;width:26px;height:26px"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></span>
+                  <div id="type-doc-nonui"></div>
+                </div>
+                <div class="spec-mock__cap"><b class="logo-dont__tag">&#10007; Never in the product UI</b>The same card and button from the screen above, set in Kilimanjaro. No product surface uses the display face &mdash; not a heading, not a label, not a single word. If you see it in an interface, it is a bug.</div>
+              </div>
+              <div class="spec-insitu-grid spec-insitu-grid--4">
+              <div class="spec-mock">
+                <div class="spec-mock__stage" style="background:var(--chrome-bg);justify-content:center;gap:10px"><div style="font-family:'Kilimanjaro','Satoshi',sans-serif;font-feature-settings:'ss01' 1,'ss02' 1,'ss03' 1,'ss04' 1;font-weight:400;font-synthesis:none;font-size:26px;line-height:.95;letter-spacing:-.02em;text-transform:uppercase;color:var(--chrome-txt)">Pay smarter,<br>every day</div><div style="font-family:'Satoshi Variable','Satoshi',sans-serif;font-feature-settings:'ss01' 1,'ss02' 1,'ss03' 1,'ss04' 1;font-weight:500;font-size:13px;line-height:1.4;color:var(--chrome-muted)">Send, receive and track every payment from one account.</div></div>
+                <div class="spec-mock__cap"><b>&#10003; Marketing headline only</b>On a campaign page, Kilimanjaro sets the headline and Satoshi carries the words underneath. It never appears in the product UI.</div>
+              </div>
+              <div class="spec-mock">
+                <div class="spec-mock__stage logo-dont" style="background:var(--color-crit-l);justify-content:center"><span class="logo-dont__x" style="top:12px;right:12px;left:auto;transform:none;width:26px;height:26px"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></span><div style="font-family:'Kilimanjaro','Satoshi',sans-serif;font-feature-settings:'ss01' 1,'ss02' 1,'ss03' 1,'ss04' 1;font-weight:400;font-synthesis:none;font-size:15px;line-height:1.4;letter-spacing:-.01em;text-transform:uppercase;color:var(--chrome-txt)">Send, receive and track every payment from one account, then settle straight into your bank the same day.</div></div>
+                <div class="spec-mock__cap"><b class="logo-dont__tag">&#10007; Never for paragraphs</b>It is a display face. Past a few words it stops being readable.</div>
+              </div>
+              <div class="spec-mock">
+                <div class="spec-mock__stage logo-dont" style="background:var(--color-crit-l);justify-content:center"><span class="logo-dont__x" style="top:12px;right:12px;left:auto;transform:none;width:26px;height:26px"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></span><div style="font-family:'Kilimanjaro','Satoshi',sans-serif;font-feature-settings:'ss01' 1,'ss02' 1,'ss03' 1,'ss04' 1;font-weight:400;font-synthesis:none;font-size:26px;line-height:.95;letter-spacing:-.02em;color:var(--chrome-txt)">Pay smarter,<br>every day</div></div>
+                <div class="spec-mock__cap"><b class="logo-dont__tag">&#10007; Always uppercase</b>Kilimanjaro is drawn for capitals. Mixed case is never correct.</div>
+              </div>
+              <div class="spec-mock">
+                <div class="spec-mock__stage logo-dont" style="background:var(--color-crit-l);justify-content:center"><span class="logo-dont__x" style="top:12px;right:12px;left:auto;transform:none;width:26px;height:26px"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></span><div style="font-family:'Kilimanjaro','Satoshi',sans-serif;font-feature-settings:'ss01' 1,'ss02' 1,'ss03' 1,'ss04' 1;font-weight:400;font-synthesis:none;font-size:13px;line-height:1.4;text-transform:uppercase;color:var(--chrome-txt)">Available balance</div><div style="font-family:'Kilimanjaro','Satoshi',sans-serif;font-feature-settings:'ss01' 1,'ss02' 1,'ss03' 1,'ss04' 1;font-weight:400;font-synthesis:none;font-size:13px;line-height:1.4;text-transform:uppercase;color:var(--chrome-muted)">Updated a moment ago</div></div>
+                <div class="spec-mock__cap"><b class="logo-dont__tag">&#10007; Never at body size</b>Below headline sizes the letterforms collapse. Use Satoshi.</div>
+              </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="type-sub">
+            <div class="type-sub__title">Desktop and mobile</div>
+            <div class="type-sub__desc">The three largest steps shrink on a phone. Everything below them stays the same.</div>
+            <div class="cpg-section-outline">
+              <div id="type-doc-viewports"></div>
+            </div>
+          </div>
+
+          <div class="type-sub">
+            <div class="type-sub__title">The Flash letterforms</div>
+            <div class="type-sub__desc">Satoshi ships alternate shapes for a handful of letters, and Flash always uses them.</div>
+            <div class="cpg-section-outline">
+              <div class="spec-insitu-grid spec-insitu-grid--2">
+              <div class="spec-mock">
+                <div class="spec-mock__stage" style="background:var(--chrome-bg);justify-content:center;align-items:center"><span style="font-family:'Satoshi Variable','Satoshi',sans-serif;font-feature-settings:'ss01' 1,'ss02' 1,'ss03' 1,'ss04' 1;font-weight:900;font-size:58px;line-height:1;color:var(--chrome-txt)"><span class="type-doc-glyph">G</span><span class="type-doc-glyph">a</span>u<span class="type-doc-glyph">t</span>en<span class="type-doc-glyph">g</span></span></div>
+                <div class="spec-mock__cap"><b>Flash letterforms</b>The four highlighted letters take their alternate shapes. This is how Flash type looks.</div>
+              </div>
+              <div class="spec-mock">
+                <div class="spec-mock__stage" style="background:var(--chrome-bg);justify-content:center;align-items:center"><span style="font-family:'Satoshi Variable','Satoshi',sans-serif;font-feature-settings:normal;font-weight:900;font-size:58px;line-height:1;color:var(--chrome-txt)"><span class="type-doc-glyph">G</span><span class="type-doc-glyph">a</span>u<span class="type-doc-glyph">t</span>en<span class="type-doc-glyph">g</span></span></div>
+                <div class="spec-mock__cap"><b>Default Satoshi</b>The same four letters in their ordinary shapes. Flash never looks like this.</div>
+              </div>
+              </div>
+              <div class="logo-note">Always on. If a heading looks like plain Satoshi, the setting has been lost &mdash; flag it to design.</div>
+            </div>
+          </div>
+
+          <div class="type-sub">
+            <div class="type-sub__title">Don&rsquo;ts, rendered</div>
+            <div class="type-sub__desc">Four ways type goes wrong, shown going wrong.</div>
+            <div class="cpg-section-outline">
+              <div class="spec-insitu-grid spec-insitu-grid--2">
+              <div class="spec-mock">
+                <div class="spec-mock__stage logo-dont" style="background:var(--color-crit-l);justify-content:center;gap:14px"><span class="logo-dont__x" style="top:12px;right:12px;left:auto;transform:none;width:26px;height:26px"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></span><div><div class="spec-mock__label">Medium, outlined to fake weight</div><div style="font-family:'Satoshi Variable','Satoshi',sans-serif;font-feature-settings:'ss01' 1,'ss02' 1,'ss03' 1,'ss04' 1;font-weight:500;font-size:26px;line-height:1.1;-webkit-text-stroke:.9px currentColor;color:var(--chrome-txt)">Payment successful</div></div><div><div class="spec-mock__label">Black, the real weight</div><div style="font-family:'Satoshi Variable','Satoshi',sans-serif;font-feature-settings:'ss01' 1,'ss02' 1,'ss03' 1,'ss04' 1;font-weight:900;font-size:26px;line-height:1.1;color:var(--chrome-txt)">Payment successful</div></div></div>
+                <div class="spec-mock__cap"><b class="logo-dont__tag">&#10007; Faked bold. Use Black instead.</b>Outlining a lighter weight thickens the letters and ruins their shape.</div>
+              </div>
+              <div class="spec-mock">
+                <div class="spec-mock__stage logo-dont" style="background:var(--color-crit-l);justify-content:center"><span class="logo-dont__x" style="top:12px;right:12px;left:auto;transform:none;width:26px;height:26px"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></span><div style="font-family:'Satoshi Variable','Satoshi',sans-serif;font-feature-settings:'ss01' 1,'ss02' 1,'ss03' 1,'ss04' 1;font-size:20px;line-height:1.25;color:var(--chrome-txt)"><span style="font-weight:500">Your </span><span style="font-weight:800">transfer</span><span style="font-weight:500"> of </span><span style="font-weight:900">R1,250.00</span><span style="font-weight:500"> cleared.</span></div></div>
+                <div class="spec-mock__cap"><b class="logo-dont__tag">&#10007; One sentence, one weight.</b>Emphasis on every other word is emphasis on nothing.</div>
+              </div>
+              <div class="spec-mock">
+                <div class="spec-mock__stage logo-dont" style="background:var(--color-crit-l);flex-direction:row;align-items:baseline;justify-content:center;gap:22px"><span class="logo-dont__x" style="top:12px;right:12px;left:auto;transform:none;width:26px;height:26px"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></span><div style="font-family:'Kilimanjaro','Satoshi',sans-serif;font-feature-settings:'ss01' 1,'ss02' 1,'ss03' 1,'ss04' 1;font-weight:400;font-synthesis:none;font-size:13px;text-transform:uppercase;color:var(--chrome-txt)">Settings</div><div style="font-family:'Satoshi Variable','Satoshi',sans-serif;font-feature-settings:'ss01' 1,'ss02' 1,'ss03' 1,'ss04' 1;font-weight:650;font-size:13px;color:var(--chrome-muted)">Cards</div><div style="font-family:'Satoshi Variable','Satoshi',sans-serif;font-feature-settings:'ss01' 1,'ss02' 1,'ss03' 1,'ss04' 1;font-weight:650;font-size:13px;color:var(--chrome-muted)">Profile</div></div>
+                <div class="spec-mock__cap"><b class="logo-dont__tag">&#10007; Not even one label.</b>A single nav item or tab label in Kilimanjaro is still wrong. The never-in-the-UI rule has no exception for how small or brief the text is.</div>
+              </div>
+              </div>
+              <div class="spec-mock" style="margin-top:16px">
+                <div class="spec-mock__stage logo-dont" style="background:var(--color-crit-l);align-items:center;justify-content:center;padding:24px">
+                  <span class="logo-dont__x" style="top:12px;right:12px;left:auto;transform:none;width:26px;height:26px"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></span>
+                  <div id="type-doc-peercards" style="display:flex;gap:14px;flex-wrap:wrap;justify-content:center"></div>
+                </div>
+                <div class="spec-mock__cap"><b class="logo-dont__tag">&#10007; Peer headings share a step.</b>Three cards side by side, one heading a step larger. It reads as the important one when all three are equal.</div>
+              </div>
+              <div class="logo-note">And never set the wordmark in type &mdash; &ldquo;flash&rdquo; typed in Satoshi at any weight is not the logo. See Logos for the real files.</div>
+            </div>
+          </div>
+
+          <div class="type-sub" style="margin-bottom:0">
+            <div class="type-sub__title">Do's and don'ts</div>
+            <div class="type-sub__desc">The scale is a fixed set of steps. Pick one, don&rsquo;t interpolate.</div>
+            <div class="sel-usage">
+              <div class="sel-usage__card">
+                <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
+                <ul class="sel-usage__list">
+                  <li>Use Satoshi for every word in the product interface.</li>
+                  <li>Pick a step from the scale, not a size between two.</li>
+                  <li>Use Black for headings, Medium for body copy.</li>
+                  <li>Keep peer headings on the same step and weight.</li>
+                  <li>Save Kilimanjaro for marketing headlines, uppercase and short.</li>
+                </ul>
+              </div>
+              <div class="sel-usage__card">
+                <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don&rsquo;t</div>
+                <ul class="sel-usage__list">
+                  <li>Don&rsquo;t put Kilimanjaro anywhere in the product UI.</li>
+                  <li>Don&rsquo;t set a paragraph in Kilimanjaro, or use mixed case.</li>
+                  <li>Don&rsquo;t thicken type by outlining it &mdash; use Black.</li>
+                  <li>Don&rsquo;t mix three weights in one sentence.</li>
+                  <li>Don&rsquo;t set the wordmark in type &mdash; use the logo file.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tabs-panel" data-type-panel="fonts">
+        <div class="type-sub spec-panel spec-stack">
+          <div class="type-sub">
+            <div class="type-sub__title">Fonts</div>
+            <div class="type-sub__desc">The two faces this system runs on. Install both before you open a Flash template.</div>
+            <div class="logo-list">
+              <div class="logo-list__row">
+                <div class="logo-list__thumb" style="background:var(--chrome-bg);display:flex;align-items:center;justify-content:center">
+                  <span style="font-family:'Satoshi Variable','Satoshi',sans-serif;font-feature-settings:'ss01' 1,'ss02' 1,'ss03' 1,'ss04' 1;font-weight:900;font-size:34px;line-height:1;color:var(--chrome-txt)">Aa</span>
+                </div>
+                <div>
+                  <div class="logo-list__title">Satoshi Variable <span class="tag tag--sm tag--success" style="margin-left:8px;vertical-align:middle;font-weight:800">UI</span></div>
+                  <div class="logo-list__rule">Every word of the product interface, plus body copy, labels and most headlines. One file carries Medium through Black.</div>
+                  <div class="logo-list__name">Satoshi-Variable.ttf</div>
+                </div>
+                <div class="logo-list__actions">
+                  <a class="logo-dl" href="assets/fonts/Satoshi-Variable.ttf" download><svg viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M480-336 288-528l51-51 105 105v-342h72v342l105-105 51 51-192 192ZM252-192q-29.7 0-50.85-21.15Q180-234.3 180-264v-96h72v96h456v-96h72v96q0 29.7-21.15 50.85Q737.7-192 708-192H252Z"/></svg>TTF</a>
+                </div>
+              </div>
+              <div class="logo-list__row">
+                <div class="logo-list__thumb" style="background:var(--chrome-bg);display:flex;align-items:center;justify-content:center">
+                  <span style="font-family:'Kilimanjaro','Satoshi',sans-serif;font-feature-settings:'ss01' 1,'ss02' 1,'ss03' 1,'ss04' 1;font-weight:400;font-synthesis:none;font-size:34px;line-height:1;letter-spacing:-1px;color:var(--chrome-txt)">AA</span>
+                </div>
+                <div>
+                  <div class="logo-list__title">Kilimanjaro Sans <span class="tag tag--sm tag--error" style="margin-left:8px;vertical-align:middle;font-weight:800">Not for UI</span></div>
+                  <div class="logo-list__rule">Marketing headlines only, always uppercase, one weight. Never used in the product UI.</div>
+                  <div class="logo-list__name">Kilimanjaro-Sans-Round2.otf</div>
+                </div>
+                <div class="logo-list__actions">
+                  <a class="logo-dl" href="assets/fonts/Kilimanjaro-Sans-Round2.otf" download><svg viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M480-336 288-528l51-51 105 105v-342h72v342l105-105 51 51-192 192ZM252-192q-29.7 0-50.85-21.15Q180-234.3 180-264v-96h72v96h456v-96h72v96q0 29.7-21.15 50.85Q737.7-192 708-192H252Z"/></svg>OTF</a>
+                </div>
+              </div>
+            </div>
+            <div class="logo-note">These are the exact files this site renders with. Kilimanjaro comes in several rounds &mdash; Round 2 is the Flash one.</div>
+          </div>
+
+          <div id="t-tokens" class="type-sub" style="margin-bottom:0"></div>
+        </div>
+      </div>
+
+      <div class="tabs-panel" data-type-panel="changelog" id="type-changelog-panel"></div>
     </section>
     <section class="sec" id="s-spacing">
       <div class="sec__head">
@@ -9824,6 +10119,9 @@ function toggleTheme() {
   try { if(typeof renderBtnInSitu==='function' && document.getElementById('btn-insitu')) renderBtnInSitu(); } catch(e){}
   try { if(typeof renderBtnReference==='function' && document.getElementById('btn-reference')) renderBtnReference(); } catch(e){}
   try { if(typeof renderTextInputsSection==='function' && document.getElementById('ti-playground')) renderTextInputsSection(); } catch(e){}
+  try { if(typeof typeDocRenderScreen==='function' && document.getElementById('type-doc-screen')) typeDocRenderScreen(); } catch(e){}
+  try { if(typeof typeDocRenderPeerCards==='function' && document.getElementById('type-doc-peercards')) typeDocRenderPeerCards(); } catch(e){}
+  try { if(typeof typeDocRenderNonUi==='function' && document.getElementById('type-doc-nonui')) typeDocRenderNonUi(); } catch(e){}
   try { if(typeof renderPillPlayground==='function' && document.getElementById('pill-playground')) renderPillPlayground(); } catch(e){}
   try { if(typeof renderPillVariants==='function' && document.getElementById('pill-variants')) renderPillVariants(); } catch(e){}
   try { if(typeof renderPillInSitu==='function' && document.getElementById('pill-insitu')) renderPillInSitu(); } catch(e){}
@@ -10139,9 +10437,8 @@ const TYPE_TOKENS = [
    SESSION 2 RENDER — wrapped in try-catch blocks
 ============================================================ */
 try { document.getElementById('t-face').innerHTML = `
-  <div class="type-sub__title">Typeface</div>
+  <div class="type-doc-sublabel">Satoshi, every letter</div>
   <div class="tf-card">
-    <div class="tf-card__name">Satoshi</div>
     <div class="tf-card__specimen">ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz 0123456789</div>
   </div>`;
 } catch(e){console.error('t-face',e);}
@@ -10151,7 +10448,9 @@ try { document.getElementById('t-face').innerHTML = `
 ============================================================ */
 try {
   const wEl = document.getElementById('t-weights');
-  wEl.innerHTML = `<div class="type-sub__title">Weights</div><div class="w-cols" id="w-cols"></div>`;
+  wEl.innerHTML = `<div class="type-sub__title">Weights</div>
+    <div class="type-sub__desc">Four weights, each with a job. Reach for the name &mdash; the number is only there so it can be typed in.</div>
+    <div class="w-cols" id="w-cols"></div>`;
   const wCols = document.getElementById('w-cols');
   WEIGHTS.forEach(w => {
     const d = document.createElement('div');
@@ -10159,7 +10458,8 @@ try {
     d.innerHTML = `
       <div class="w-col__specimen" style="font-weight:${w.wt}">Flash</div>
       <div class="w-col__name">${w.name}</div>
-      <div class="w-col__num">${w.wt}</div>`;
+      <div class="w-col__num">${w.wt}</div>
+      <div class="type-doc-weightuse">${w.desc}</div>`;
     wCols.appendChild(d);
   });
 } catch(e){console.error('t-weights',e);}
@@ -10167,6 +10467,12 @@ try {
 /* ============================================================
    RENDER — HEADING SCALE
 ============================================================ */
+/* Spec chips read as words on the page, not as CSS shorthand: the data keeps
+   line height as a percentage string and letter spacing with an ASCII hyphen,
+   these turn them into "1.15" and a real minus sign for display. */
+function typeDocLh(v){ return String(Math.round(parseFloat(v))/100); }
+function typeDocLs(v){ return String(v).replace('-','\u2212'); }
+
 function renderHeadRows(scale) {
   return scale.map(h => `
     <div class="h-row">
@@ -10176,8 +10482,8 @@ function renderHeadRows(scale) {
       <div class="h-row__specs">
         <span class="h-spec h-spec--size">${h.size}</span>
         <span class="h-spec h-spec--wt">${h.wLabel} · ${h.wt}</span>
-        <span class="h-spec">lh ${h.lh}</span>
-        ${h.ls !== '0' ? `<span class="h-spec">ls ${h.ls}</span>` : ''}
+        <span class="h-spec">Line height ${typeDocLh(h.lh)}</span>
+        ${h.ls !== '0' ? `<span class="h-spec">Letter spacing ${typeDocLs(h.ls)}</span>` : ''}
       </div>
     </div>`).join('');
 }
@@ -10185,7 +10491,7 @@ function renderHeadRows(scale) {
 try {
   document.getElementById('t-heads').innerHTML = `
     <div class="type-sub__title">Heading Scale</div>
-    <div class="type-sub__desc">Two separate scales for desktop and mobile. Both use Satoshi Variable Black (900) for most sizes, with Medium (500) variants at L, M, and S for reduced-emphasis headings.</div>
+    <div class="type-sub__desc">Pick the set from the layout, not the device &mdash; the desktop sizes on a wide screen, the mobile sizes on a phone. Every step on this tab is Satoshi; Kilimanjaro is not part of the scale.</div>
     <div class="h-toggle-row">
       <span class="h-toggle-label">Viewport</span>
       <div class="h-toggle">
@@ -10205,7 +10511,7 @@ try {
   const bodyEl = document.getElementById('t-body');
   bodyEl.innerHTML = `
     <div class="type-sub__title">Body Scale</div>
-    <div class="type-sub__desc">Five sizes from L (16px) down to XXS (11px). Each size has up to four weights. Body M is the default reading size.</div>
+    <div class="type-sub__desc">Five sizes from 16px down to 11px &mdash; Body M is the default reading size, and everything under it is for supporting detail.</div>
     <div id="b-groups"></div>`;
   const bGroups = document.getElementById('b-groups');
   BODY.forEach(g => {
@@ -10216,7 +10522,7 @@ try {
         <div class="b-row__specimen" style="font-size:${g.px};font-weight:${s.wt};line-height:${g.lh}">${spec}</div>
         <div class="b-row__specs">
           <span class="b-spec"><strong>${s.wt}</strong></span>
-          <span class="b-spec">lh ${g.lh}</span>
+          <span class="b-spec">Line height ${typeDocLh(g.lh)}</span>
         </div>
       </div>`).join('');
     const d = document.createElement('div');
@@ -10225,7 +10531,7 @@ try {
       <div class="b-group__header">
         <span class="b-group__tag">${g.group}</span>
         <span class="b-group__px">${g.px}</span>
-        <span class="b-group__meta">lh ${g.lh} · ls ${g.ls}</span>
+        <span class="b-group__meta">Line height ${typeDocLh(g.lh)}</span>
       </div>
       ${rows}`;
     bGroups.appendChild(d);
@@ -10237,8 +10543,8 @@ try {
 ============================================================ */
 try {
   document.getElementById('t-inputs').innerHTML = `
-    <div class="type-sub__title">Input Styles</div>
-    <div class="type-sub__desc">Two dedicated input-specific text styles used in all form components. Both at 14px — label uses Medium, field text uses Semibold.</div>
+    <div class="type-sub__title">Input text</div>
+    <div class="type-sub__desc">Both sit at 14px &mdash; Medium for the label, Semibold for whatever the person types.</div>
     <div class="inp-rows">
       ${INPUT_STYLES.map(s => `
         <div class="inp-row">
@@ -10248,7 +10554,7 @@ try {
           <div class="inp-row__specs">
             <span class="b-spec"><strong>${s.px}</strong></span>
             <span class="b-spec h-spec--wt">${s.wLabel} · ${s.wt}</span>
-            <span class="b-spec">lh ${s.lh}</span>
+            <span class="b-spec">Line height ${typeDocLh(s.lh)}</span>
             <span class="b-spec" style="font-family:'SF Mono',monospace;color:var(--chrome-muted)">${s.token}</span>
           </div>
         </div>`).join('')}
@@ -10289,26 +10595,24 @@ const TYPE_TOKEN_GROUPS = [
     title: 'Heading Sizes — Desktop',
     rows: [
       ['--font-size-heading-4xl', '80px', 'Hero display — marketing, splash screens'],
-      ['--font-size-heading-3xl', '64px', 'Section heroes'],
-      ['--font-size-heading-2xl', '48px', 'Page titles'],
-      ['--font-size-heading-xl',  '40px', 'Section titles'],
-      ['--font-size-heading-l',   '32px', 'Card headlines, modal titles'],
-      ['--font-size-heading-m',   '28px', 'Sub-section headings'],
-      ['--font-size-heading-s',   '24px', 'Component headings'],
-      ['--font-size-heading-xs',  '20px', 'Small headings, list group titles'],
+      ['--font-size-heading-3xl', '55px', 'Section heroes'],
+      ['--font-size-heading-2xl', '42px', 'Page titles'],
+      ['--font-size-heading-xl',  '30px', 'Section titles'],
+      ['--font-size-heading-l',   '26px', 'Card headlines, modal titles'],
+      ['--font-size-heading-m',   '22px', 'Sub-section headings'],
+      ['--font-size-heading-s',   '20px', 'Component headings'],
     ]
   },
   {
     title: 'Heading Sizes — Mobile',
     rows: [
       ['--font-size-heading-4xl-mobile', '58px', 'Mobile hero display'],
-      ['--font-size-heading-3xl-mobile', '46px', 'Mobile section heroes'],
-      ['--font-size-heading-2xl-mobile', '36px', 'Mobile page titles'],
-      ['--font-size-heading-xl-mobile',  '32px', 'Mobile section titles'],
-      ['--font-size-heading-l-mobile',   '28px', 'Mobile card headlines'],
-      ['--font-size-heading-m-mobile',   '24px', 'Mobile sub-sections'],
-      ['--font-size-heading-s-mobile',   '22px', 'Mobile component headings'],
-      ['--font-size-heading-xs-mobile',  '20px', 'Mobile small headings'],
+      ['--font-size-heading-3xl-mobile', '48px', 'Mobile section heroes'],
+      ['--font-size-heading-2xl-mobile', '35px', 'Mobile page titles'],
+      ['--font-size-heading-xl-mobile',  '30px', 'Mobile section titles'],
+      ['--font-size-heading-l-mobile',   '24px', 'Mobile card headlines'],
+      ['--font-size-heading-m-mobile',   '22px', 'Mobile sub-sections'],
+      ['--font-size-heading-s-mobile',   '18px', 'Mobile component headings'],
     ]
   },
 ];
@@ -10332,7 +10636,7 @@ try {
   }).join('');
   document.getElementById('t-tokens').innerHTML = `
     <div class="type-sub__title">Type Tokens</div>
-    <div class="type-sub__desc">CSS variables for font family, weights, and sizes.</div>
+    <div class="type-sub__desc">The names design and development share for every size and weight. Use them when you hand over.</div>
     <table class="tok-table">
       <thead><tr><th>Token</th><th>Value</th><th>Usage</th></tr></thead>
       <tbody>${tokGroupHtml}</tbody>
@@ -10342,6 +10646,13 @@ try {
 /* ============================================================
    HEADING TOGGLE
 ============================================================ */
+function typeTabSwitch(tab){
+  const nav = document.getElementById('type-tabs-list');
+  if(!nav) return;
+  nav.querySelectorAll('.tab-item').forEach(btn=>btn.classList.toggle('on', btn.getAttribute('data-type-tab')===tab));
+  document.querySelectorAll('#s-type .tabs-panel[data-type-panel]').forEach(p=>p.classList.toggle('on', p.getAttribute('data-type-panel')===tab));
+}
+
 function hToggle(id, btn) {
   document.querySelectorAll('.h-toggle__btn').forEach(b=>b.classList.remove('on'));
   document.querySelectorAll('.h-view').forEach(v=>v.classList.remove('on'));
@@ -20567,12 +20878,27 @@ function cbrTabSwitch(tab){
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.95.3';
+const SYSTEM_VERSION = '1.95.5';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.95.5', date:'2026-09-10', author:'Mo', title:'Typography: Kilimanjaro-never-in-UI rule made unmissable', changes:[
+        ['changed','The never-in-any-UI rule for Kilimanjaro is now stated redundantly rather than once: the Pairing caption itself now says "It never appears in the product UI" (previously only implied by "On a campaign page"), and the rule already carried by the .sec__desc, the Anatomy Typeface card, Two typefaces, the Heading Scale intro, the Do/Dont list and the Fonts row is unchanged'],
+        ['added','Don\'ts, rendered gained a fourth rendered failure: a real nav row (Settings / Cards / Profile) with the Settings label forced into Kilimanjaro on a --color-crit-l stage, captioned "Not even one label" — distinct from Pairing\'s card-and-button failure, so the rule is demonstrated on two different UI shapes rather than one'],
+        ['added','Fonts & Tokens: each font row on the Fonts tab now carries a .tag badge next to its name — .tag--success "UI" on Satoshi, .tag--error "Not for UI" on Kilimanjaro — so the UI-eligibility split is visible at a glance, not just in the prose beside it'],
+      ]},
+      {version:'1.95.4', date:'2026-09-10', author:'Mo', title:'Typography: tabbed foundation page (Overview/Scale/Usage/Fonts & Tokens/Changelog)', changes:[
+        ['changed','Typography rebuilt as a .sec--tabbed foundation page matching the Logos and Icons treatment: a .sec-hero (Satoshi Aa + Kilimanjaro AA specimen preview, version badge and the AI context tab in .sec-header-meta) above a five-tab strip — Overview (Anatomy, Two typefaces, Weights) / Scale (Heading Scale, Body Scale, Input text) / Usage / Fonts & Tokens / Changelog. No Style or Code tab: a type scale has no interactive state, so the Scale gets a tab of its own instead'],
+        ['added','typeTabSwitch() with data-type-tab/data-type-panel and #type-tabs-list, plus a {secId:\'s-type\', panelId:\'type-changelog-panel\'} entry in the changelog relocation list so the auto-injected .sec-chlog lands inside the Changelog panel rather than between the hero and the tab strip'],
+        ['fixed','HEADS (the rendered specimens) and TYPE_TOKEN_GROUPS (the token table) disagreed on every heading size except 4XL. HEADS is the source of truth, so the token table was corrected to match it — desktop: --font-size-heading-3xl 64px->55px, -2xl 48px->42px, -xl 40px->30px, -l 32px->26px, -m 28px->22px, -s 24px->20px; mobile: -3xl-mobile 46px->48px, -2xl-mobile 36px->35px, -xl-mobile 32px->30px, -l-mobile 28px->24px, -m-mobile 24px->22px, -s-mobile 22px->18px. 4XL (80px desktop / 58px mobile) already agreed and is untouched. The dead TYPE_TOKENS const (declared, never referenced) independently agreed with HEADS'],
+        ['removed','--font-size-heading-xs (20px) and --font-size-heading-xs-mobile (20px) from TYPE_TOKEN_GROUPS — there is no heading XS step and the specimens never had one. XS exists only as the 12px body size, so the token table was advertising a step the system does not have'],
+        ['added','Usage tab documents type by rendering it rather than asserting it: a numbered payment-screen mockup composed from the real cardHTML/ovAlrt/makeBtnEl/tiBuildSearchField/makePillHTML builders beside a four-column Where/Size/Weight/Step table, Kilimanjaro pairing right-and-wrong cases, the three largest steps at desktop vs mobile size, an alternates-on vs alternates-off letterform comparison, four rendered don\'ts on --color-crit-l stages, and the page\'s first .sel-usage Do/Don\'t block'],
+        ['changed','Typography now states the Satoshi/Kilimanjaro split as a hard rule rather than a stylistic preference: Kilimanjaro is marketing-only and never appears in any product UI surface, at any size or casing. Stated on every documentation tab, demonstrated by a rendered failing example on Usage, and recorded in the section\'s AI context note so tooling reskinning this system keeps it that way'],
+        ['added','assets/fonts/ — Satoshi-Variable.ttf and Kilimanjaro-Sans-Round2.otf, the first font files to ship in the repo, wired to the Fonts tab download links. Both verified byte-identical to the base64 font-face payloads already in the first stylesheet block, which are left in place'],
+        ['added','typeDocRenderScreen() measures the hierarchy table off the real rendered components with getComputedStyle at runtime and derives step and weight names from BODY/HEADS/WEIGHTS, so the published numbers cannot drift from what the page paints. It surfaced four components sitting off the documented scales: .card__title at 15px and .pill at 12.5px are off the body size scale, and font-weight 700 on .ds-btn/.alrt__title/.pill plus the inherited 400 on .card__desc are not Flash weight steps (500/650/800/900). Recorded, not changed, on this branch'],
+      ]},
       {version:'1.95.3', date:'2026-09-10', author:'Mo', title:'Colours Usage: Indicators shows both strengths per state, Chart note split out, link underline removed', changes:[
         ['added','Usage > Which token for what > Indicators now shows the background token alongside each state\'s icon/text token (--color-info-l, --color-success-l, --color-warn-l, --color-crit-l next to their -h siblings) rather than only the high-contrast four'],
         ['changed','Chart & category colours: "Primary Green is used in monochrome graphs, or graphs where there is only one colour" moved out of the paragraph about the inactive/hover strength pairing into its own note below the swatch grid, so the two unrelated points read as two points'],
@@ -22683,7 +23009,33 @@ const CHANGELOG = {
         ['added','12 primitive colour families with click-to-copy swatches'],
       ]},
     ]},
-    {secId:'s-type', name:'Typography', version:'1.2.0', entries:[
+    {secId:'s-type', name:'Typography', version:'1.3.1', entries:[
+      {version:'1.3.1', date:'2026-09-10', author:'Mo', title:'Kilimanjaro-never-in-UI rule made unmissable', changes:[
+        ['changed','Usage &gt; Pairing caption strengthened: "&#10003; Marketing headline only" now ends with "It never appears in the product UI." instead of leaving the boundary implied by "On a campaign page"'],
+        ['added','Usage &gt; Don\'ts, rendered: a fourth rendered failure showing Kilimanjaro forced onto a single nav label (Settings, beside Satoshi-set Cards / Profile) on a --color-crit-l stage, captioned "Not even one label" &mdash; the rule now has a second, differently-shaped failing example alongside Pairing\'s card-and-button one'],
+        ['added','Fonts &amp; Tokens &gt; Fonts: a .tag--sm badge next to each face\'s name &mdash; .tag--success "UI" on Satoshi Variable, .tag--error "Not for UI" on Kilimanjaro Sans. Reused the existing Tags component markup; no new stylesheet rule was added for .tag'],
+      ]},
+      {version:'1.3.0', date:'2026-09-10', author:'Mo', title:'Tabbed foundation page, and the heading scale reconciled with the token table', changes:[
+        ['changed','Rebuilt as a .sec--tabbed page: .sec-hero plus .sec-header-meta (version badge and AI context tab) above a five-tab strip, with every panel body wrapped in .type-sub.spec-panel.spec-stack so section headings step down to 22px. All six JS mounts (#t-face, #t-weights, #t-heads, #t-body, #t-inputs, #t-tokens) and hToggle() moved between panels as a DOM move, keeping their ids and existing render calls intact'],
+        ['fixed','HEADS (the rendered specimens) and TYPE_TOKEN_GROUPS (the token table) disagreed on every heading size except 4XL. HEADS is the source of truth, so the token table was corrected to match it — desktop: --font-size-heading-3xl 64px->55px, -2xl 48px->42px, -xl 40px->30px, -l 32px->26px, -m 28px->22px, -s 24px->20px; mobile: -3xl-mobile 46px->48px, -2xl-mobile 36px->35px, -xl-mobile 32px->30px, -l-mobile 28px->24px, -m-mobile 24px->22px, -s-mobile 22px->18px. 4XL (80px desktop / 58px mobile) already agreed and is untouched. The dead TYPE_TOKENS const (declared, never referenced) independently agreed with HEADS'],
+        ['removed','--font-size-heading-xs (20px) and --font-size-heading-xs-mobile (20px) from TYPE_TOKEN_GROUPS — there is no heading XS step and the specimens never had one. XS exists only as the 12px body size, so the token table was advertising a step the system does not have'],
+        ['changed','Kilimanjaro guidance hardened from \'display only\' to an explicit never-in-any-UI rule, now stated on all four documentation tabs: the .sec__desc, the Anatomy Typeface card, Two typefaces, the homepage-headline caption, the Heading Scale intro, Pairing, the Do/Dont lists and the Fonts row. Checked against the file first — .fds-hero__title and .fds-essence__title on the marketing landing page are the only Kilimanjaro consumers anywhere, and no product component references it'],
+        ['added','Usage &gt; Pairing now opens with a rendered failure rather than a rule: typeDocRenderNonUi() rebuilds the card and button from the hierarchy screen with cardHTML/makeBtnEl and forces Kilimanjaro onto them on a --color-crit-l stage, captioned \'Never in the product UI\''],
+        ['added','Step labels on the Anatomy specimens, so a reader can name what they are looking at: the hero lines are labelled Heading L / 26px / Black and Body M / 14px / Medium, and the Typeface, Weight and Size step stages label each specimen (Satoshi and Kilimanjaro, Medium through Black, Heading M / Body L / Body XS). The stages wrap and grow rather than clipping their labels'],
+        ['changed','Numbered annotation markers in the hierarchy mockup and its table now use a squared, inverted .type-doc-num chip instead of the circular .spec-part__num. The Alert success tick sat immediately beside badge 4 and read as another number, so the annotation layer is now visually distinct from any component\'s own round status icon. The Anatomy part cards keep .spec-part__num, which sits beside no such icon'],
+        ['added','Overview > Anatomy: a .spec-hero showing one Heading L over one Body M line at their real values, plus four .spec-part cards (Typeface, Weight, Size step, Spacing) whose stages are rendered specimens rather than descriptions'],
+        ['added','Usage > Hierarchy in a real screen: a .spec-mock built from the real cardHTML/ovAlrt/makeBtnEl/tiBuildSearchField/makePillHTML builders with .spec-part__num badges 1-6, beside a four-column .dd-table whose Size/Weight/Step cells typeDocRenderScreen() measures with getComputedStyle and maps back onto BODY/HEADS/WEIGHTS. Values off the scale read Off scale rather than being rounded to the nearest step'],
+        ['added','Usage > Pairing the two faces (one correct Kilimanjaro headline plus three failing cases on --color-crit-l stages), Desktop and mobile (the three largest steps rendered at both sizes from the corrected HEADS by typeDocRenderViewports()), The Flash letterforms (Gauteng set twice — once with the ss01-ss04 alternates, once with font-feature-settings:normal — with the four affected letters highlighted), and Don\'ts, rendered (faked bold vs real Black, three weights in one sentence, and peer card headings out of step via typeDocRenderPeerCards())'],
+        ['added','First .sel-usage Do/Don\'t block on this page — five each, every line backed by a rendered example above it. This populates the AI context tab\'s previously absent usage field'],
+        ['added','Fonts & Tokens > Fonts: two .logo-list rows for Satoshi Variable and Kilimanjaro Sans with specimen thumbs and working .logo-dl download links, plus the font files themselves under assets/fonts/ — Satoshi-Variable.ttf and Kilimanjaro-Sans-Round2.otf. Both are byte-identical (sha256-verified) to the base64 font-face payloads already embedded in the first stylesheet block, so downloading one hands you exactly the file the site renders with. The embedding is untouched — the files are additional, not a replacement. Kilimanjaro exists in six rounds in the brand source and only Round 2 matches what Flash actually renders, so it is the only one shipped and the row names it explicitly. No licence text is shown because none was supplied with the files'],
+        ['changed','.sec__desc rewritten to "Two typefaces, one scale. Satoshi for everything, Kilimanjaro for headlines." — the old copy claimed the scale ran "across both brands", but data-brand="flash" is the only brand in the file'],
+        ['changed','#t-tokens description no longer claims the type tokens are "CSS variables for font family, weights, and sizes" — they are not declared as CSS custom properties anywhere in the file. It now reads "The names design and development share for every size and weight. Use them when you hand over."'],
+        ['changed','Specimen chips on the Scale tab now read as words rather than CSS shorthand, for a designer and marketer audience: renderHeadRows and the body/input rows print "Line height 1.15" and "Letter spacing -2px" (with a real minus sign) via the new typeDocLh/typeDocLs helpers, replacing "lh 115%" and "ls -2px"'],
+        ['changed','#t-heads, #t-body and #t-inputs descriptions cut to one sentence each that says which set to reach for, and #t-inputs retitled from "Input Styles" to "Input text"'],
+        ['added','WEIGHTS.desc is now rendered under each weight column (.type-doc-weightuse), so all four weights carry their job on the page instead of only in the data'],
+        ['changed','#t-face now sits under the Satoshi card inside Overview > Two typefaces, introduced by a quiet .type-doc-sublabel instead of its own 22px title, and its duplicate .tf-card__name was dropped since the adjacent brand card already names the face'],
+        ['added','Page-local .type-doc-sublabel/.type-doc-weightuse/.type-doc-glyph/.type-doc-hier CSS. No new stylesheet rule on this page names a component class owned by another section\'s AI context tab — overrides on rendered components are applied inline, including moving the .logo-dont__x cross badge off centre so it stops covering the specimen it marks'],
+      ]},
       {version:'1.2.0', date:'2026-09-02', author:'Mo', title:'All four Satoshi stylistic alternates now on by default', changes:[
         ['added','ss02 (alternate g) and ss04 (alternate Q) enabled sitewide on top of the existing ss01 (alternate G/a/registered sign) and ss03 (alternate t) — Satoshi now always renders with its full alternate glyph set: font-feature-settings:\'ss01\' 1,\'ss02\' 1,\'ss03\' 1,\'ss04\' 1'],
       ]},
@@ -30787,6 +31139,7 @@ try {
   {secId:'s-drawers', panelId:'bsh-changelog-panel'},
   {secId:'s-accordion', panelId:'acc-changelog-panel'},
   {secId:'s-logos', panelId:'logo-changelog-panel'},
+  {secId:'s-type', panelId:'type-changelog-panel'},
   {secId:'s-colours', panelId:'colours-changelog-panel'},
   {secId:'s-elev', panelId:'elev-changelog-panel'},
   {secId:'s-icons', panelId:'icons-changelog-panel'},
@@ -31218,6 +31571,165 @@ if(/Mac|iPhone|iPad/.test(navigator.platform || navigator.userAgent)){
   var kbdEl2 = document.getElementById('nav-search-kbd');
   if(kbdEl2) kbdEl2.textContent = 'Ctrl K';
 }
+
+/* ============================================================
+   TYPOGRAPHY — USAGE TAB RENDERS
+   The hierarchy table is measured off the real rendered components
+   at runtime rather than transcribed, so it cannot drift from what
+   the page actually paints. Step and weight names are derived from
+   the BODY / HEADS / WEIGHTS data, so correcting the scale updates
+   the table with no edit here. Class names are held without their
+   leading dot so no documentation rule or comment ever claims a
+   component selector that belongs to another section's context tab.
+============================================================ */
+const TYPE_DOC_CARD_TITLE = 'card__title';
+const TYPE_DOC_HIER_PARTS = [
+  {n:1, where:'Card title',       find:TYPE_DOC_CARD_TITLE},
+  {n:2, where:'Card description', find:'card__desc'},
+  {n:3, where:'Button label',     find:'ds-btn'},
+  {n:4, where:'Alert title',      find:'alrt__title'},
+  {n:5, where:'Input label',      find:'ti-search-label'},
+  {n:6, where:'Pill label',       find:'pill'},
+];
+
+function typeDocNumHTML(n){
+  return `<span class="type-doc-num">${n}</span>`;
+}
+function typeDocNumEl(n){
+  const d = document.createElement('div');
+  d.innerHTML = typeDocNumHTML(n).trim();
+  return d.firstElementChild;
+}
+function typeDocSizeStep(px){
+  const size = px + 'px';
+  const b = BODY.find(g => g.px === size);
+  if(b) return 'Body ' + b.group;
+  const h = HEADS.desktop.find(x => x.size === size) || HEADS.mobile.find(x => x.size === size);
+  if(h) return 'Heading ' + h.tag.split(' ')[0];
+  return 'Off scale';
+}
+function typeDocWeightName(w){
+  const m = WEIGHTS.find(x => String(x.wt) === String(w));
+  return m ? `${m.name} (${w})` : `${w} (off scale)`;
+}
+
+function typeDocRenderScreen(){
+  const stage = document.getElementById('type-doc-screen');
+  const rows  = document.getElementById('type-doc-hier-rows');
+  if(!stage || !rows) return;
+  const th = currentTheme();
+  stage.style.background = stageBg(th);
+  stage.style.setProperty('--cpg-stage-bg', stageBg(th));
+  stage.innerHTML = '';
+
+  const add = (html) => {
+    const d = document.createElement('div');
+    d.innerHTML = String(html).trim();
+    const el = d.firstElementChild;
+    if(el) stage.appendChild(el);
+    return el;
+  };
+
+  add(cardHTML({title:'Available balance', desc:'Updated a moment ago', style:'width:100%;max-width:none'}));
+  add(ovAlrt({variant:'success', title:'Payment received', message:'R1,250.00 has been settled to your account.'}));
+
+  const inputRow = document.createElement('div');
+  inputRow.style.cssText = 'display:flex;align-items:center;gap:9px';
+  inputRow.appendChild(typeDocNumEl(5));
+  const search = tiBuildSearchField();
+  search.el.style.flex = '1 1 auto';
+  search.el.style.minWidth = '0';
+  inputRow.appendChild(search.el);
+  stage.appendChild(inputRow);
+
+  const actions = document.createElement('div');
+  actions.style.cssText = 'display:flex;align-items:center;gap:9px;flex-wrap:wrap';
+  actions.appendChild(typeDocNumEl(3));
+  actions.appendChild(makeBtnEl('flash', th, 'primary', 'reg', false, 'Send payment'));
+  actions.appendChild(typeDocNumEl(6));
+  const pillWrap = document.createElement('div');
+  pillWrap.innerHTML = makePillHTML(PILL_VARIANTS.find(v => v.key === 'success'), 'reg', th).trim();
+  if(pillWrap.firstElementChild) actions.appendChild(pillWrap.firstElementChild);
+  stage.appendChild(actions);
+
+  [[1,TYPE_DOC_CARD_TITLE],[2,'card__desc'],[4,'alrt__title']].forEach(([n, cls]) => {
+    const el = stage.querySelector('.' + cls);
+    if(el) el.insertAdjacentHTML('afterbegin', typeDocNumHTML(n));
+  });
+
+  rows.innerHTML = TYPE_DOC_HIER_PARTS.map(part => {
+    const el = stage.querySelector('.' + part.find);
+    if(!el) return '';
+    const cs = getComputedStyle(el);
+    const px = Math.round(parseFloat(cs.fontSize) * 10) / 10;
+    return `<tr>
+        <td class="dd-table__name">${typeDocNumHTML(part.n)}${part.where}</td>
+        <td>${px}px</td>
+        <td>${typeDocWeightName(cs.fontWeight)}</td>
+        <td>${typeDocSizeStep(px)}</td>
+      </tr>`;
+  }).join('');
+}
+
+function typeDocRenderViewports(){
+  const mount = document.getElementById('type-doc-viewports');
+  if(!mount) return;
+  const face = "font-family:'Satoshi Variable','Satoshi',sans-serif;font-feature-settings:'ss01' 1,'ss02' 1,'ss03' 1,'ss04' 1";
+  const cell = (h, label, tag) => `
+      <div class="spec-mock">
+        <div class="spec-mock__stage" style="background:var(--chrome-bg);justify-content:center;overflow:hidden">
+          <div style="${face};font-weight:${h.wt};font-size:${h.size};line-height:${h.lh};letter-spacing:${h.ls};color:var(--chrome-txt)">${h.text}</div>
+        </div>
+        <div class="spec-mock__cap"><b>${label}</b>Heading ${tag} &middot; ${h.size}</div>
+      </div>`;
+  mount.innerHTML = ['4XL','3XL','2XL'].map(tag => {
+    const d = HEADS.desktop.find(h => h.tag === tag);
+    const m = HEADS.mobile.find(h => h.tag === tag);
+    if(!d || !m) return '';
+    return `<div class="spec-insitu-grid spec-insitu-grid--2" style="margin-bottom:16px">${cell(d,'Desktop',tag)}${cell(m,'Mobile',tag)}</div>`;
+  }).join('');
+}
+
+function typeDocRenderNonUi(){
+  const mount = document.getElementById('type-doc-nonui');
+  if(!mount) return;
+  const th = currentTheme();
+  mount.style.setProperty('--cpg-stage-bg', stageBg(th));
+  mount.style.cssText += ';display:flex;gap:14px;align-items:center;flex-wrap:wrap;justify-content:center';
+  mount.innerHTML = '';
+  const card = document.createElement('div');
+  card.innerHTML = cardHTML({title:'Available balance', desc:'Updated a moment ago', style:'width:210px;max-width:210px'}).trim();
+  if(card.firstElementChild) mount.appendChild(card.firstElementChild);
+  mount.appendChild(makeBtnEl('flash', th, 'primary', 'reg', false, 'Send payment'));
+  // Force the display face onto real interface text — the failure this block documents.
+  // Properties are set individually so the builders' own inline custom properties survive.
+  mount.querySelectorAll('.' + TYPE_DOC_CARD_TITLE + ', .card__desc, .ds-btn').forEach(el => {
+    el.style.fontFamily = "'Kilimanjaro','Satoshi',sans-serif";
+    el.style.fontWeight = '400';
+    el.style.fontSynthesis = 'none';
+    el.style.textTransform = 'uppercase';
+    el.style.setProperty('font-feature-settings', "'ss01' 1,'ss02' 1,'ss03' 1,'ss04' 1");
+  });
+}
+
+function typeDocRenderPeerCards(){
+  const mount = document.getElementById('type-doc-peercards');
+  if(!mount) return;
+  const w = 'width:172px;max-width:172px';
+  mount.innerHTML =
+    cardHTML({title:'Payments', desc:'Send and receive money.', style:w}) +
+    cardHTML({title:'Cards',    desc:'Manage your cards.',      style:w}) +
+    cardHTML({title:'Settings', desc:'Update your details.',    style:w});
+  // The third heading is deliberately a step out of line with its two peers —
+  // this block is the failing example the caption calls out.
+  const titles = mount.querySelectorAll('.' + TYPE_DOC_CARD_TITLE);
+  if(titles[2]) titles[2].setAttribute('style','font-size:22px;font-weight:900;margin-bottom:5px');
+}
+
+try { typeDocRenderScreen(); }    catch(e){ console.error('type-doc-screen', e); }
+try { typeDocRenderViewports(); } catch(e){ console.error('type-doc-viewports', e); }
+try { typeDocRenderPeerCards(); } catch(e){ console.error('type-doc-peercards', e); }
+try { typeDocRenderNonUi(); }     catch(e){ console.error('type-doc-nonui', e); }
 
 </script>
 </body>
