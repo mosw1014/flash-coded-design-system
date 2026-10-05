@@ -5916,7 +5916,7 @@ body.home .main{max-width:none;margin:0;padding:0}
       <div class="sec__head">
         <h1 class="sec__title">Toasts</h1>
         <div class="sec-header-meta">
-          <span class="comp-ver-badge" style="margin-left:0">v1.0.1</span>
+          <span class="comp-ver-badge" style="margin-left:0">v1.0.2</span>
           <details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-toasts">
@@ -18814,7 +18814,7 @@ function makeToastHTML(o){
    phase: 'shown' (resting, no timer — the default so the stage is never empty),
           'live'  (entered via Show toast; auto-dismiss timer running),
           'gone'  (dismissed; stage offers Show toast again). */
-let tstPg = { type:'pos', layout:'action-close', showCaption:true, caption:'', message:'', action:'', duration:'short', placement:'bottom', theme:'light', phase:'shown' };
+let tstPg = { type:'pos', layout:'action-close', showCaption:true, caption:'', message:'', action:'', placement:'bottom', theme:'light', phase:'shown' };
 let tstPgTimer = null, tstPgStarted = 0, tstPgRemaining = 0;
 
 function tstPgClearTimer(){ if(tstPgTimer){ clearTimeout(tstPgTimer); tstPgTimer = null; } }
@@ -18847,7 +18847,9 @@ function tstPgDismiss(){
 function tstPgShow(){
   tstPg.phase = 'live';
   tstPgRefresh();
-  const d = TST_DURATIONS.find(x=>x.key===tstPg.duration) || TST_DURATIONS[0];
+  /* Duration follows the Behaviour rules: 7s when there's an action, 4s otherwise. */
+  const hasAction = tstPg.layout==='action' || tstPg.layout==='action-close' || tstPg.layout==='stack';
+  const d = TST_DURATIONS.find(x=>x.key===(hasAction ? 'long' : 'short'));
   tstPgStartTimer(d.ms);
 }
 
@@ -18885,9 +18887,6 @@ function tstPgRefresh(){
   });
   document.querySelectorAll('.tstpg-cap-input-el').forEach(inp=>{ if(document.activeElement !== inp) inp.value = tstPg.caption; inp.placeholder = t.caption; inp.disabled = !tstPg.showCaption; });
   document.querySelectorAll('.tstpg-msg-input-el').forEach(inp=>{ if(document.activeElement !== inp) inp.value = tstPg.message; inp.placeholder = t.message; });
-  document.querySelectorAll('.tstpg-note-el').forEach(n=>{
-    n.style.display = (tstPg.duration==='sticky' && tstPg.layout==='none') ? '' : 'none';
-  });
   const block = document.getElementById('tstpg-code-block');
   if(block) block.innerHTML = getTstCode();
 }
@@ -18904,7 +18903,6 @@ function renderTstPlayground(){
   const typeBtns = TST_TYPES.map(t=>pill(tstPg.type===t.key, `tstPgSet('type','${t.key}')`, t.label)).join('');
   const layBtns  = TST_LAYOUTS.map(l=>pill(tstPg.layout===l.key, `tstPgSet('layout','${l.key}')`, l.label)).join('');
   const capBtns  = [['on','Show'],['off','Hide']].map(([k,l])=>pill((tstPg.showCaption?'on':'off')===k, `tstPgSet('showCaption','${k}')`, l)).join('');
-  const durBtns  = TST_DURATIONS.map(d=>pill(tstPg.duration===d.key, `tstPgSet('duration','${d.key}')`, d.label)).join('');
   const posBtns  = [['bottom','Bottom'],['top','Top']].map(([k,l])=>pill(tstPg.placement===k, `tstPgSet('placement','${k}')`, l)).join('');
 
   TST_PLAYGROUND_MOUNTS.forEach(mount=>{
@@ -18926,7 +18924,6 @@ function renderTstPlayground(){
           <div class="btn-pg__group"><span class="btn-pg__clabel">Type</span><div class="btn-pg__pill-row">${typeBtns}</div></div>
           <div class="btn-pg__group"><span class="btn-pg__clabel">Actions</span><div class="btn-pg__pill-row">${layBtns}</div></div>
           <div class="btn-pg__group"><span class="btn-pg__clabel">Caption</span><div class="btn-pg__pill-row">${capBtns}</div></div>
-          <div class="btn-pg__group"><span class="btn-pg__clabel">Duration</span><div class="btn-pg__pill-row">${durBtns}</div><span class="tstpg-note-el" style="display:none;font-size:11.5px;color:var(--chrome-muted)">A persistent toast needs a close or action button &mdash; otherwise it can never leave.</span></div>
           <div class="btn-pg__group"><span class="btn-pg__clabel">Placement</span><div class="btn-pg__pill-row">${posBtns}</div></div>
           <div class="btn-pg__group"><span class="btn-pg__clabel">Caption text</span><input class="cpg-label-input tstpg-cap-input-el" id="tstpg-cap-input${s}" value="${tstEsc(tstPg.caption)}" maxlength="30" oninput="tstPgSetText('caption',this.value)"></div>
           <div class="btn-pg__group"><span class="btn-pg__clabel">Message</span><input class="cpg-label-input tstpg-msg-input-el" id="tstpg-msg-input${s}" value="${tstEsc(tstPg.message)}" maxlength="80" oninput="tstPgSetText('message',this.value)"></div>
@@ -18976,9 +18973,8 @@ let tstLang = 'html';
 
 function tstCodeParts(){
   const t = TST_TYPES.find(x=>x.key===tstPg.type) || TST_TYPES[0];
-  const d = TST_DURATIONS.find(x=>x.key===tstPg.duration) || TST_DURATIONS[0];
   return {
-    t, d,
+    t,
     cap: tstPg.showCaption ? tstEsc(tstPg.caption || t.caption) : '',
     msg: tstEsc(tstPg.message || t.message),
     act: tstEsc(tstPg.action || (tstPg.layout==='stack' ? 'Retry download' : t.action)),
@@ -19003,7 +18999,7 @@ function getTstCodeHTML(){
   else if(p.acts===1) acts = btn(p.act);
   if(p.hasX) acts += xBtn;
   const actsBlock = acts ? `\n    ${tag('div','tst__acts')}${acts}\n    ${close('div')}` : '';
-  return `<span class="code-cm">&#60;!-- Flash &middot; ${p.t.label} toast &middot; ${p.d.ms ? 'auto-dismiss after ' + p.d.ms + 'ms' : 'persistent until dismissed'} --></span>
+  return `<span class="code-cm">&#60;!-- Flash &middot; ${p.t.label} toast --></span>
 ${tag('div', regionCls, live)}
   ${tag('div', 'tst tst--' + p.t.key + (tstPg.layout==='stack' ? ' tst--stack' : '') + ' tst--in')}
     ${tag('div','tst__main')}${ico}
@@ -19024,7 +19020,7 @@ function getTstCodeBlazor(){
   const layPascal = {none:'None', close:'Close', action:'Action', 'action-close':'ActionAndClose', stack:'TwoActions'}[tstPg.layout];
   const opt = (k,v) => `\n         <span class="code-attr">${k}</span>=<span class="code-val">"${v}"</span>`;
   return `<span class="code-cm">@* DsToast.razor &mdash; usage *@</span>
-<span class="code-kw">&#60;DsToast</span> <span class="code-attr">Type</span>=<span class="code-val">"ToastType.${typePascal}"</span>${opt('Actions','ToastActions.' + layPascal)}${p.cap ? opt('Caption', p.cap) : ''}${opt('Message', p.msg)}${p.acts ? opt('ActionLabel', p.act) : ''}${opt('DurationMs', p.d.ms)}${opt('OnAction','HandleAction')}${opt('OnDismiss','HandleDismiss')} <span class="code-kw">/></span>
+<span class="code-kw">&#60;DsToast</span> <span class="code-attr">Type</span>=<span class="code-val">"ToastType.${typePascal}"</span>${opt('Actions','ToastActions.' + layPascal)}${p.cap ? opt('Caption', p.cap) : ''}${opt('Message', p.msg)}${p.acts ? opt('ActionLabel', p.act) : ''}${opt('OnAction','HandleAction')}${opt('OnDismiss','HandleDismiss')} <span class="code-kw">/></span>
 
 <span class="code-cm">@* DsToast.razor &mdash; component definition (rendered inside a .tst-region) *@</span>
 <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"@CssClass"</span> <span class="code-attr">@onmouseenter</span>=<span class="code-val">"Pause"</span> <span class="code-attr">@onmouseleave</span>=<span class="code-val">"Resume"</span><span class="code-kw">></span>
@@ -19072,7 +19068,6 @@ function getTstCodeTSX(){
   if(p.cap) props.push(`caption=<span class="code-val">"${p.cap}"</span>`);
   props.push(`message=<span class="code-val">"${p.msg}"</span>`);
   if(p.acts) props.push(`actionLabel=<span class="code-val">"${p.act}"</span>`);
-  props.push(`durationMs={${p.d.ms}}`);
   return `<span class="code-cm">// DsToast.tsx</span>
 <span class="code-kw">import</span> React, { useEffect, useRef, useState } <span class="code-kw">from</span> <span class="code-val">'react'</span>;
 
@@ -21505,12 +21500,16 @@ function cbrTabSwitch(tab){
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.96.2';
+const SYSTEM_VERSION = '1.96.3';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.96.3', date:'2026-10-05', author:'Mo', title:'Toasts: Duration control removed from the playground and code snippets', changes:[
+        ['removed','Toasts playground (Overview and Code tabs): the Duration control (Short 4s / Long 7s / Persistent) and its "persistent toast needs a close button" hint. Show toast now picks the duration from the Behaviour rules: 7s when the toast has an action, 4s when it doesn\'t'],
+        ['removed','Toasts code snippets: the auto-dismiss note in the HTML comment, DurationMs in the Blazor usage, and durationMs in the React usage. The component definitions keep their duration parameter with its 4000ms default'],
+      ]},
       {version:'1.96.2', date:'2026-10-05', author:'Mo', title:'Fixed every page after Elevation rendering below a screen of blank space', changes:[
         ['fixed','The Elevation XL row edit in 1.96.1 (removing the .tst example) left two orphan closing </div> tags behind. The browser used them to close the .main column early, so every section after Elevation (Icons, Logos, Buttons and all component pages) fell outside the layout and rendered below a full screen of empty space with no sidebar. Removed the two orphan tags; the file now parses with every section back inside .main'],
       ]},
@@ -24161,7 +24160,11 @@ const CHANGELOG = {
         ['added','Usage guidance for when to reach for a bottom sheet vs. a dialog'],
       ]},
     ]},
-    {secId:'s-toasts', name:'Toasts', version:'1.0.1', entries:[
+    {secId:'s-toasts', name:'Toasts', version:'1.0.2', entries:[
+      {version:'1.0.2', date:'2026-10-05', author:'Mo', title:'Duration control removed from the playground and code', changes:[
+        ['removed','Playground: the Duration control and its persistent-toast hint. Show toast now uses the Behaviour rules: 7s with an action, 4s without'],
+        ['removed','Code: duration removed from the HTML comment, the Blazor usage (DurationMs) and the React usage (durationMs). The component definitions keep their duration parameter, defaulting to 4000ms'],
+      ]},
       {version:'1.0.1', date:'2026-10-05', author:'Mo', title:'Padding fixes in Colour variants and In context previews', changes:[
         ['fixed','Removed the drop shadow from every toast type, as in Figma. The Size & dimensions table now lists Elevation as None'],
         ['removed','Overview > In context: the placeholder bottom-navigation strip under the toast in each phone mockup'],
