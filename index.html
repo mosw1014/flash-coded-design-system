@@ -2054,6 +2054,50 @@ body.home .main{max-width:none;margin:0;padding:0}
    light text unreadable — give the info alert a deep-navy tint in dark only. */
 [data-theme="dark"] .alrt--info{background:var(--prim-sup-blue-3)}
 
+/* ---- Toast (Figma: Alert, Style=Snackbar or inline) ----
+   Solid status fills that keep their identity across themes, so the four status
+   types read straight off primitives and only the two neutral types flip with the
+   theme. Each type sets four local custom properties: fill, text and icon, action
+   fill, action label. Floats at elevation-xl, the Notifications level. */
+.tst{--tst-bg:var(--prim-grey-1100);--tst-fg:var(--prim-white);--tst-act-bg:var(--prim-black);--tst-act-fg:var(--prim-white);--tst-act-shadow:none;--tst-act-hov:rgba(255,255,255,.14);display:flex;flex-direction:row;align-items:center;width:344px;max-width:100%;min-height:48px;border-radius:12px;background:var(--tst-bg);color:var(--tst-fg);box-shadow:0 16px 80px 0 rgba(0,0,0,.16);overflow:hidden;text-align:left;line-height:1.3}
+.tst__main{display:flex;align-items:center;flex:1;min-width:0}
+.tst__ico{flex-shrink:0;width:18px;height:18px;margin-left:12px;display:block;color:inherit}
+.tst__ico svg{display:block;width:100%;height:100%}
+.tst__bd{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px;padding:12px;overflow-wrap:anywhere}
+.tst__cap{font-size:11px;font-weight:500}
+.tst__msg{font-size:13px;font-weight:650}
+.tst__acts{display:flex;align-items:center;justify-content:flex-end;gap:6px;flex-shrink:0;padding-right:12px}
+.tst__act{font-family:inherit;font-size:12px;font-weight:800;line-height:1.3;white-space:nowrap;border:0;border-radius:56px;padding:10px 12px;background:var(--tst-act-bg);color:var(--tst-act-fg);box-shadow:var(--tst-act-shadow);cursor:pointer;transition:background-image .15s}
+.tst__act:hover{background-image:linear-gradient(var(--tst-act-hov),var(--tst-act-hov))}
+.tst__act:focus-visible,.tst__x:focus-visible{outline:2px solid currentColor;outline-offset:-4px}
+.tst__x{flex-shrink:0;display:flex;align-items:center;justify-content:center;width:46px;height:46px;margin-right:-12px;padding:16px;border:0;border-radius:12px;background:none;color:inherit;cursor:pointer}
+.tst__x svg{display:block;width:14px;height:14px}
+.tst__act + .tst__x{margin-left:-6px}
+.tst--stack{flex-direction:column;align-items:stretch;padding-bottom:12px}
+.tst--stack .tst__main{width:100%}
+.tst--stack .tst__acts{padding-right:12px}
+.tst--pos{--tst-bg:var(--prim-green-800);--tst-fg:var(--prim-white);--tst-act-bg:rgba(0,0,0,.2);--tst-act-fg:var(--prim-white)}
+.tst--info{--tst-bg:var(--prim-bb-700);--tst-fg:var(--prim-white);--tst-act-bg:rgba(0,0,0,.2);--tst-act-fg:var(--prim-white)}
+.tst--warn{--tst-bg:var(--prim-yel-500);--tst-fg:var(--prim-black);--tst-act-bg:rgba(255,255,255,.4);--tst-act-fg:var(--prim-black);--tst-act-hov:rgba(255,255,255,.25)}
+.tst--crit{--tst-bg:var(--prim-red-700);--tst-fg:var(--prim-white);--tst-act-bg:rgba(0,0,0,.2);--tst-act-fg:var(--prim-white)}
+.tst--neutral{--tst-bg:var(--prim-grey-1100);--tst-fg:var(--color-text-inv);--tst-act-bg:var(--color-surface-inverse);--tst-act-fg:var(--color-text-inv)}
+.tst--light{--tst-bg:var(--color-surface-n1);--tst-fg:var(--color-text-1);--tst-act-bg:var(--color-surface-base);--tst-act-fg:var(--color-text-1);--tst-act-shadow:0 1px 1px rgba(0,0,0,.1);--tst-act-hov:rgba(0,0,0,.05)}
+/* Dark theme: the dark Neutral toast would sink into a dark page, so it inverts
+   to a light fill; its action and label tokens already flip on their own. */
+[data-theme="dark"] .tst--neutral{--tst-bg:var(--prim-grey-100);--tst-act-shadow:0 1px 1px rgba(0,0,0,.1);--tst-act-hov:rgba(0,0,0,.08)}
+[data-theme="dark"] .tst--light{--tst-act-hov:rgba(255,255,255,.08)}
+.tst-region{position:fixed;z-index:900;left:50%;bottom:16px;transform:translateX(-50%);width:min(344px,calc(100% - 16px));display:flex;flex-direction:column;align-items:center;gap:8px;pointer-events:none}
+.tst-region--top{bottom:auto;top:16px;flex-direction:column-reverse}
+.tst-region .tst{pointer-events:auto;width:100%}
+.tst--in{animation:tst-in .22s cubic-bezier(.2,.8,.2,1) both}
+.tst--out{animation:tst-out .16s ease-in both}
+.tst-region--top .tst--in{--tst-shift-dir:-1}
+@keyframes tst-in{from{opacity:0;transform:translateY(calc(var(--tst-shift,16px) * var(--tst-shift-dir,1)))}to{opacity:1;transform:none}}
+@keyframes tst-out{from{opacity:1;transform:none}to{opacity:0;transform:scale(calc(1 - var(--tst-shrink,.04)))}}
+@media (prefers-reduced-motion:reduce){:root{--tst-shift:0px;--tst-shrink:0}}
+.tst-hero-mock{display:flex;flex-direction:column;align-items:center;gap:8px;width:100%;padding:0 18px}
+.tst-hero-mock .tst{box-shadow:0 8px 24px rgba(0,0,0,.12)}
+
 /* ---- Skeleton ---- */
 @keyframes skl-shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
 .skl{background:linear-gradient(90deg,var(--color-surface-n1) 25%,var(--color-surface-n2) 37%,var(--color-surface-n1) 63%);background-size:200% 100%;animation:skl-shimmer 1.5s ease-in-out infinite;border-radius:6px}
@@ -3115,7 +3159,7 @@ body.home .main{max-width:none;margin:0;padding:0}
         <h1 class="sec__title">Elevation</h1>
         <p class="sec__desc">Five shadow levels used to lift a surface above the page, each with its own y-offset and blur.</p>
         <div class="sec-header-meta">
-          <span class="comp-ver-badge" style="margin-left:0">v1.1.0</span>
+          <span class="comp-ver-badge" style="margin-left:0">v1.1.1</span>
           <details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-elev">
@@ -3344,7 +3388,15 @@ body.home .main{max-width:none;margin:0;padding:0}
                 </div>
                 <div class="logo-var__row">
                   <div class="logo-var__rowlabel">Components</div>
-                  <div class="elev-doc-uses"><div class="elev-doc-use__note">Nothing ships at this level yet &mdash; Toasts are still to come.</div></div>
+                  <div class="elev-doc-uses">
+                    <div class="elev-doc-use">
+                      <div class="elev-doc-use__stage"><div class="tst tst--neutral" style="width:216px"><div class="tst__main"><div class="tst__bd"><div class="tst__msg">Voucher removed</div></div></div><div class="tst__acts"><button class="tst__act" type="button" tabindex="-1">Undo</button></div></div></div>
+                      <div class="elev-doc-use__meta">
+                        <span class="elev-doc-use__sel">.tst</span>
+                        <span class="tag tag--sm tag--success">Matches</span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -5865,17 +5917,133 @@ body.home .main{max-width:none;margin:0;padding:0}
       </div>
       <div class="tabs-panel" data-bsh-panel="changelog" id="bsh-changelog-panel"></div>
     </section>
-    <section class="sec" id="s-toasts"><div class="sec__head"><div class="sec__eye">Components</div><h1 class="sec__title">Toasts &amp; Snackbars</h1></div><div class="coming">Coming in a future session</div>
-      <details class="ai-ctx">
+    <!-- ============================================================
+         TOASTS
+    ============================================================ -->
+    <section class="sec sec--tabbed" id="s-toasts">
+      <div class="sec-hero">
+      <div class="sec__head">
+        <h1 class="sec__title">Toasts</h1>
+        <div class="sec-header-meta">
+          <span class="comp-ver-badge" style="margin-left:0">v1.0.0</span>
+          <details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-toasts">
 {
-  "status": "placeholder",
-  "contentHash": "9cabb5c229cc53066088a92e765d3e782a57fe31444d4963bff402621ff7095f",
-  "note": "Not built yet — section is a stub (\"Coming in a future session\"). No real markup, CSS, or JS exists to extract; don't reconstruct a Toasts component from this section. Note: an unrelated doc-site-only #toast/.toast clipboard-copy indicator exists elsewhere in the file (used by the global copy() helper) — that is NOT this component."
+  "status": "js-rendered",
+  "builderFunctions": [
+    "TST_ICONS",
+    "TST_TYPES",
+    "TST_LAYOUTS",
+    "TST_DURATIONS",
+    "tstEsc",
+    "makeToastHTML"
+  ],
+  "realClasses": [
+    ".tst",
+    ".tst__main",
+    ".tst__ico",
+    ".tst__bd",
+    ".tst__cap",
+    ".tst__msg",
+    ".tst__acts",
+    ".tst__act",
+    ".tst__x",
+    ".tst--stack",
+    ".tst--pos",
+    ".tst--info",
+    ".tst--warn",
+    ".tst--crit",
+    ".tst--neutral",
+    ".tst--light",
+    ".tst-region",
+    ".tst-region--top",
+    ".tst--in",
+    ".tst--out",
+    ".tst-hero-mock"
+  ],
+  "css": "/* ---- Toast (Figma: Alert, Style=Snackbar or inline) ----\n   Solid status fills that keep their identity across themes, so the four status\n   types read straight off primitives and only the two neutral types flip with the\n   theme. Each type sets four local custom properties: fill, text and icon, action\n   fill, action label. Floats at elevation-xl, the Notifications level. */\n.tst { --tst-bg:var(--prim-grey-1100);--tst-fg:var(--prim-white);--tst-act-bg:var(--prim-black);--tst-act-fg:var(--prim-white);--tst-act-shadow:none;--tst-act-hov:rgba(255,255,255,.14);display:flex;flex-direction:row;align-items:center;width:344px;max-width:100%;min-height:48px;border-radius:12px;background:var(--tst-bg);color:var(--tst-fg);box-shadow:0 16px 80px 0 rgba(0,0,0,.16);overflow:hidden;text-align:left;line-height:1.3 }\n.tst__main { display:flex;align-items:center;flex:1;min-width:0 }\n.tst__ico { flex-shrink:0;width:18px;height:18px;margin-left:12px;display:block;color:inherit }\n.tst__ico svg { display:block;width:100%;height:100% }\n.tst__bd { flex:1;min-width:0;display:flex;flex-direction:column;gap:2px;padding:12px;overflow-wrap:anywhere }\n.tst__cap { font-size:11px;font-weight:500 }\n.tst__msg { font-size:13px;font-weight:650 }\n.tst__acts { display:flex;align-items:center;justify-content:flex-end;gap:6px;flex-shrink:0;padding-right:12px }\n.tst__act { font-family:inherit;font-size:12px;font-weight:800;line-height:1.3;white-space:nowrap;border:0;border-radius:56px;padding:10px 12px;background:var(--tst-act-bg);color:var(--tst-act-fg);box-shadow:var(--tst-act-shadow);cursor:pointer;transition:background-image .15s }\n.tst__act:hover { background-image:linear-gradient(var(--tst-act-hov),var(--tst-act-hov)) }\n.tst__act:focus-visible,.tst__x:focus-visible { outline:2px solid currentColor;outline-offset:-4px }\n.tst__x { flex-shrink:0;display:flex;align-items:center;justify-content:center;width:46px;height:46px;margin-right:-12px;padding:16px;border:0;border-radius:12px;background:none;color:inherit;cursor:pointer }\n.tst__x svg { display:block;width:14px;height:14px }\n.tst__act + .tst__x { margin-left:-6px }\n.tst--stack { flex-direction:column;align-items:stretch;padding-bottom:12px }\n.tst--stack .tst__main { width:100% }\n.tst--stack .tst__acts { padding-right:12px }\n.tst--pos { --tst-bg:var(--prim-green-800);--tst-fg:var(--prim-white);--tst-act-bg:rgba(0,0,0,.2);--tst-act-fg:var(--prim-white) }\n.tst--info { --tst-bg:var(--prim-bb-700);--tst-fg:var(--prim-white);--tst-act-bg:rgba(0,0,0,.2);--tst-act-fg:var(--prim-white) }\n.tst--warn { --tst-bg:var(--prim-yel-500);--tst-fg:var(--prim-black);--tst-act-bg:rgba(255,255,255,.4);--tst-act-fg:var(--prim-black);--tst-act-hov:rgba(255,255,255,.25) }\n.tst--crit { --tst-bg:var(--prim-red-700);--tst-fg:var(--prim-white);--tst-act-bg:rgba(0,0,0,.2);--tst-act-fg:var(--prim-white) }\n.tst--neutral { --tst-bg:var(--prim-grey-1100);--tst-fg:var(--color-text-inv);--tst-act-bg:var(--color-surface-inverse);--tst-act-fg:var(--color-text-inv) }\n.tst--light { --tst-bg:var(--color-surface-n1);--tst-fg:var(--color-text-1);--tst-act-bg:var(--color-surface-base);--tst-act-fg:var(--color-text-1);--tst-act-shadow:0 1px 1px rgba(0,0,0,.1);--tst-act-hov:rgba(0,0,0,.05) }\n/* Dark theme: the dark Neutral toast would sink into a dark page, so it inverts\n   to a light fill; its action and label tokens already flip on their own. */\n[data-theme=\"dark\"] .tst--neutral { --tst-bg:var(--prim-grey-100);--tst-act-shadow:0 1px 1px rgba(0,0,0,.1);--tst-act-hov:rgba(0,0,0,.08) }\n[data-theme=\"dark\"] .tst--light { --tst-act-hov:rgba(255,255,255,.08) }\n.tst-region { position:fixed;z-index:900;left:50%;bottom:16px;transform:translateX(-50%);width:min(344px,calc(100% - 16px));display:flex;flex-direction:column;align-items:center;gap:8px;pointer-events:none }\n.tst-region--top { bottom:auto;top:16px;flex-direction:column-reverse }\n.tst-region .tst { pointer-events:auto;width:100% }\n.tst--in { animation:tst-in .22s cubic-bezier(.2,.8,.2,1) both }\n.tst--out { animation:tst-out .16s ease-in both }\n.tst-region--top .tst--in { --tst-shift-dir:-1 }\n.tst-hero-mock { display:flex;flex-direction:column;align-items:center;gap:8px;width:100%;padding:0 18px }\n.tst-hero-mock .tst { box-shadow:0 8px 24px rgba(0,0,0,.12) }",
+  "js": "const TST_ICONS = {\n  tick:  '&lt;svg viewBox=\"0 0 24 24\" fill=\"currentColor\" aria-hidden=\"true\"&gt;&lt;path fill-rule=\"evenodd\" d=\"M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm4.7 7.7-5.6 5.6a1 1 0 0 1-1.4 0l-2.4-2.4a1 1 0 1 1 1.4-1.4l1.7 1.7 4.9-4.9a1 1 0 1 1 1.4 1.4Z\"/&gt;&lt;/svg&gt;',\n  info:  '&lt;svg viewBox=\"0 0 24 24\" fill=\"currentColor\" aria-hidden=\"true\"&gt;&lt;path fill-rule=\"evenodd\" d=\"M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm1 15a1 1 0 1 1-2 0v-5a1 1 0 1 1 2 0v5Zm-1-8.25a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5Z\"/&gt;&lt;/svg&gt;',\n  warn:  '&lt;svg viewBox=\"0 0 24 24\" fill=\"currentColor\" aria-hidden=\"true\"&gt;&lt;path fill-rule=\"evenodd\" d=\"M10.27 3.5a2 2 0 0 1 3.46 0l8.66 15a2 2 0 0 1-1.73 3H3.34a2 2 0 0 1-1.73-3l8.66-15ZM12 9a1 1 0 0 0-1 1v4a1 1 0 1 0 2 0v-4a1 1 0 0 0-1-1Zm0 7.25a1.25 1.25 0 1 0 0 2.5 1.25 1.25 0 0 0 0-2.5Z\"/&gt;&lt;/svg&gt;',\n  close: '&lt;svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.6\" stroke-linecap=\"round\" aria-hidden=\"true\"&gt;&lt;path d=\"M5 5l14 14M19 5 5 19\"/&gt;&lt;/svg&gt;',\n};\n\nconst TST_TYPES = [\n  {key:'pos',     label:'Positive',      icon:'tick', caption:'Airtime',    message:'R50 sent to 082 555 0134',          action:'View',  use:'Confirms something finished the way the person expected.',\n   light:{bg:'#218A29', fg:'#FFFFFF', act:'rgba(0,0,0,0.2)'},       dark:{bg:'#218A29', fg:'#FFFFFF', act:'rgba(0,0,0,0.2)'},       tok:{bg:'--prim-green-800', fg:'--prim-white'}},\n  {key:'info',    label:'Info',          icon:'info', caption:'Statements', message:'Your June statement is ready',      action:'Open',  use:'A neutral update worth knowing. Nothing needs fixing.',\n   light:{bg:'#0062EB', fg:'#FFFFFF', act:'rgba(0,0,0,0.2)'},       dark:{bg:'#0062EB', fg:'#FFFFFF', act:'rgba(0,0,0,0.2)'},       tok:{bg:'--prim-bb-700', fg:'--prim-white'}},\n  {key:'warn',    label:'Warning',       icon:'warn', caption:'Connection', message:'You’re offline. Changes will sync later', action:'Retry', use:'Something could go wrong if ignored, but nothing has failed yet.',\n   light:{bg:'#F6BC2F', fg:'#000000', act:'rgba(255,255,255,0.4)'}, dark:{bg:'#F6BC2F', fg:'#000000', act:'rgba(255,255,255,0.4)'}, tok:{bg:'--prim-yel-500', fg:'--prim-black'}},\n  {key:'crit',    label:'Critical',      icon:'warn', caption:'Payment',    message:'Couldn’t reach the bank',      action:'Retry', use:'An action just failed. Pair it with Retry, and keep it until it’s dismissed.',\n   light:{bg:'#C10021', fg:'#FFFFFF', act:'rgba(0,0,0,0.2)'},       dark:{bg:'#C10021', fg:'#FFFFFF', act:'rgba(0,0,0,0.2)'},       tok:{bg:'--prim-red-700', fg:'--prim-white'}},\n  {key:'neutral', label:'Neutral',       icon:null,   caption:'Cart',       message:'Voucher removed',                   action:'Undo',  use:'The everyday default: a plain confirmation with no status attached.',\n   light:{bg:'#252525', fg:'#FFFFFF', act:'#000000'},               dark:{bg:'#F0F0F0', fg:'#000000', act:'#FFFFFF'},               tok:{bg:'--prim-grey-1100 / --prim-grey-100', fg:'--color-text-inv'}},\n  {key:'light',   label:'Neutral light', icon:null,   caption:'Clipboard',  message:'Account number copied',             action:'Undo',  use:'A quieter neutral for light, busy screens where a dark bar would shout.',\n   light:{bg:'#F0F0F0', fg:'#000000', act:'#FFFFFF'},               dark:{bg:'#25262C', fg:'#FFFFFF', act:'#12131A'},               tok:{bg:'--color-surface-n1', fg:'--color-text-1'}},\n];\n\nconst TST_LAYOUTS = [\n  {key:'none',         label:'None',           name:'No actions',            use:'Status only. Leaves on its own.'},\n  {key:'close',        label:'Close',          name:'Close icon',            use:'Lets the person clear it early.'},\n  {key:'action',       label:'Action',         name:'Short action',          use:'One short verb, like Retry or Undo.'},\n  {key:'action-close', label:'Action + close', name:'Short action &amp; close',  use:'An action, plus a way out without taking it.'},\n  {key:'stack',        label:'Two actions',    name:'Two actions / long label', use:'Longer labels or two choices drop onto their own row.'},\n];\n\nconst TST_DURATIONS = [\n  {key:'short',  label:'Short · 4s', ms:4000},\n  {key:'long',   label:'Long · 7s',  ms:7000},\n  {key:'sticky', label:'Persistent',      ms:0},\n];\n\nfunction tstEsc(s){ return String(s).replace(/&amp;/g,'&amp;amp;').replace(/&lt;/g,'&amp;#60;').replace(/&gt;/g,'&amp;#62;').replace(/\\x22/g,'&amp;quot;'); }\n\nfunction makeToastHTML(o){\n  const t = TST_TYPES.find(x=&gt;x.key===o.type) || TST_TYPES[0];\n  const layout = o.layout || 'none';\n  const cap = o.caption != null ? o.caption : t.caption;\n  const msg = o.message != null &amp;&amp; o.message !== '' ? o.message : t.message;\n  const inert = o.demo ? ' tabindex=\"-1\"' : '';\n  const ico = t.icon ? `&lt;span class=\"tst__ico\"&gt;${TST_ICONS[t.icon]}&lt;/span&gt;` : '';\n  const capHTML = (o.showCaption !== false &amp;&amp; cap) ? `&lt;div class=\"tst__cap\"&gt;${tstEsc(cap)}&lt;/div&gt;` : '';\n  const act = label =&gt; `&lt;button class=\"tst__act\" type=\"button\"${inert}&gt;${tstEsc(label)}&lt;/button&gt;`;\n  const x = `&lt;button class=\"tst__x\" type=\"button\" aria-label=\"Dismiss\"${inert}&gt;${TST_ICONS.close}&lt;/button&gt;`;\n  const primary = o.action || (layout==='stack' ? 'Retry download' : t.action);\n  let acts = '';\n  if(layout==='close')             acts = x;\n  else if(layout==='action')       acts = act(primary);\n  else if(layout==='action-close') acts = act(primary) + x;\n  else if(layout==='stack')        acts = act(o.secondary || 'Dismiss') + act(primary);\n  const style = o.style ? ` style=\"${o.style}\"` : '';\n  const stack = layout==='stack' ? ' tst--stack' : '';\n  const actsHTML = acts ? '&lt;div class=\"tst__acts\"&gt;' + acts + '&lt;/div&gt;' : '';\n  return `&lt;div class=\"tst tst--${t.key}${stack}\"${style}&gt;&lt;div class=\"tst__main\"&gt;${ico}&lt;div class=\"tst__bd\"&gt;${capHTML}&lt;div class=\"tst__msg\"&gt;${tstEsc(msg)}&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;${actsHTML}&lt;/div&gt;`;\n}",
+  "usage": {
+    "do": [
+      "Use a toast to confirm an action the person just took — airtime sent, changes saved, voucher removed.",
+      "Keep the message to one short line, and add the caption only when it gives useful context.",
+      "Offer one clear action, like Undo or Retry, when the person may want to reverse or repeat what happened."
+    ],
+    "dont": [
+      "Don't put the only way to finish a task inside a toast — it disappears before some people can reach it.",
+      "Don't use a toast for a form error the person has to fix — put an inline alert next to the field instead.",
+      "Don't show more than one toast at a time on mobile — queue them, newest after the current one leaves."
+    ]
+  },
+  "contentHash": "5deac57c345fc0e54f8bdceed09b182ef49b6dd9d6b02903c245b4f2c5c8092f",
+  "note": "makeToastHTML is the real-markup builder (type+layout+caption+message+action -&gt; .tst HTML string); TST_ICONS holds the four 24-grid inline icons (tick-in-circle, info, warning, close) drawn to match the Figma New Icons set, kept local because the shared ICONS const is declared later in the file. Colour is pure CSS: each .tst--{type} sets --tst-bg/--tst-fg/--tst-act-bg/--tst-act-fg; status types use primitives on purpose (solid fills identical in both themes), only .tst--neutral has a [data-theme=dark] override. Behaviour lives outside the class list: auto-dismiss 4000ms (message only) / 7000ms (with action) / persistent, pause on hover+focus, region role=status aria-live=polite (role=alert for crit). The extractor skips @-rules, so the @keyframes tst-in / tst-out and the prefers-reduced-motion block (:root{--tst-shift:0px;--tst-shrink:0}) are NOT in css below — copy them from the stylesheet alongside .tst--in/.tst--out. tstPg (playground state)/tstPg*/getTstCode*/renderTst*/tstTabSwitch are doc-site-only playground plumbing, excluded."
 }
   </pre>
 </details>
+        </div>
+      </div>
+      <div class="sec-hero__preview">
+        <div class="tst-hero-mock">
+          <div class="tst tst--pos" style="width:100%"><div class="tst__main"><span class="tst__ico"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm4.7 7.7-5.6 5.6a1 1 0 0 1-1.4 0l-2.4-2.4a1 1 0 1 1 1.4-1.4l1.7 1.7 4.9-4.9a1 1 0 1 1 1.4 1.4Z"/></svg></span><div class="tst__bd"><div class="tst__cap">Airtime</div><div class="tst__msg">R50 sent to 082 555 0134</div></div></div></div>
+          <div class="tst tst--neutral" style="width:100%"><div class="tst__main"><div class="tst__bd"><div class="tst__msg">Voucher removed</div></div></div><div class="tst__acts"><button class="tst__act" type="button" tabindex="-1">Undo</button></div></div>
+        </div>
+      </div>
+      </div>
+      <div class="tabs-list sec-tabs" id="tst-tabs-list">
+        <button type="button" class="tab-item on" data-tst-tab="overview" onclick="tstTabSwitch('overview')"><span class="tab-item__inner"><span class="tab-item__label">Overview</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-tst-tab="style" onclick="tstTabSwitch('style')"><span class="tab-item__inner"><span class="tab-item__label">Style</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-tst-tab="code" onclick="tstTabSwitch('code')"><span class="tab-item__inner"><span class="tab-item__label">Code</span></span><span class="tab-item__line"></span></button>
+        <button type="button" class="tab-item" data-tst-tab="changelog" onclick="tstTabSwitch('changelog')"><span class="tab-item__inner"><span class="tab-item__label">Changelog</span></span><span class="tab-item__line"></span></button>
+      </div>
+      <div class="tabs-panel on" data-tst-panel="overview">
+        <div id="tst-playground" class="type-sub"></div>
+        <div id="tst-variants" class="type-sub"></div>
+        <div id="tst-layouts" class="type-sub"></div>
+        <div id="tst-behaviour" class="type-sub"></div>
+        <div id="tst-insitu" class="type-sub"></div>
+        <div id="tst-which" class="type-sub"></div>
+        <div class="type-sub cpg-variants" id="tst-usage">
+          <div class="cpg-section-heading">
+            <div class="cpg-layout__title">Do's and don'ts</div>
+            <div class="cpg-layout__desc">A toast confirms something that already happened, then leaves on its own. If the person has to read it, fix something, or make a choice, it belongs somewhere that stays on screen.</div>
+          </div>
+          <div class="cpg-section-block">
+            <div class="sel-usage">
+              <div class="sel-usage__card">
+                <div class="sel-usage__tag sel-usage__tag--do">&#10003; Do</div>
+                <ul class="sel-usage__list">
+                  <li>Use a toast to confirm an action the person just took &mdash; airtime sent, changes saved, voucher removed.</li>
+                  <li>Keep the message to one short line, and add the caption only when it gives useful context.</li>
+                  <li>Offer one clear action, like Undo or Retry, when the person may want to reverse or repeat what happened.</li>
+                </ul>
+                <div class="spec-usage-demo" style="display:block">
+                  <div class="tst tst--pos" style="width:100%;box-shadow:none"><div class="tst__main"><span class="tst__ico"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm4.7 7.7-5.6 5.6a1 1 0 0 1-1.4 0l-2.4-2.4a1 1 0 1 1 1.4-1.4l1.7 1.7 4.9-4.9a1 1 0 1 1 1.4 1.4Z"/></svg></span><div class="tst__bd"><div class="tst__cap">Airtime</div><div class="tst__msg">R50 sent to 082 555 0134</div></div></div></div>
+                </div>
+              </div>
+              <div class="sel-usage__card">
+                <div class="sel-usage__tag sel-usage__tag--dont">&#10007; Don't</div>
+                <ul class="sel-usage__list">
+                  <li>Don't put the only way to finish a task inside a toast &mdash; it disappears before some people can reach it.</li>
+                  <li>Don't use a toast for a form error the person has to fix &mdash; put an inline alert next to the field instead.</li>
+                  <li>Don't show more than one toast at a time on mobile &mdash; queue them, newest after the current one leaves.</li>
+                </ul>
+                <div class="spec-usage-demo" style="display:block">
+                  <div class="tst tst--crit" style="width:100%;box-shadow:none"><div class="tst__main"><span class="tst__ico"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M10.27 3.5a2 2 0 0 1 3.46 0l8.66 15a2 2 0 0 1-1.73 3H3.34a2 2 0 0 1-1.73-3l8.66-15ZM12 9a1 1 0 0 0-1 1v4a1 1 0 1 0 2 0v-4a1 1 0 0 0-1-1Zm0 7.25a1.25 1.25 0 1 0 0 2.5 1.25 1.25 0 0 0 0-2.5Z"/></svg></span><div class="tst__bd"><div class="tst__msg">ID number must be 13 digits. Fix field 3 and confirm your date of birth to continue.</div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tabs-panel" data-tst-panel="style">
+        <div id="tst-reference" class="type-sub spec-panel spec-stack"></div>
+      </div>
+      <div class="tabs-panel" data-tst-panel="code">
+        <div id="tst-code-playground" class="type-sub spec-panel spec-code-playground"></div>
+        <div id="tst-code-tab" class="type-sub spec-panel"></div>
+      </div>
+      <div class="tabs-panel" data-tst-panel="changelog" id="tst-changelog-panel"></div>
     </section>
     <section class="sec sec--tabbed" id="s-nav">
       <div class="sec-hero">
@@ -6996,9 +7164,9 @@ body.home .main{max-width:none;margin:0;padding:0}
     <section class="sec sec--tabbed" id="s-alert">
       <div class="sec-hero">
       <div class="sec__head">
-        <h1 class="sec__title">Alert</h1>
+        <h1 class="sec__title">Inline Alert</h1>
         <div class="sec-header-meta">
-          <span class="comp-ver-badge" style="margin-left:0">v1.2.1</span>
+          <span class="comp-ver-badge" style="margin-left:0">v1.2.2</span>
           <details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-alert">
@@ -9895,6 +10063,11 @@ function toggleTheme() {
   try { if(typeof renderAlertVariants==='function' && document.getElementById('alrt-variants')) renderAlertVariants(); } catch(e){}
   try { if(typeof renderAlertInSitu==='function' && document.getElementById('alrt-insitu')) renderAlertInSitu(); } catch(e){}
   try { if(typeof renderAlertReference==='function' && document.getElementById('alrt-reference')) renderAlertReference(); } catch(e){}
+  try { if(typeof renderTstPlayground==='function' && document.getElementById('tst-playground')) renderTstPlayground(); } catch(e){}
+  try { if(typeof renderTstVariants==='function' && document.getElementById('tst-variants')) renderTstVariants(); } catch(e){}
+  try { if(typeof renderTstLayouts==='function' && document.getElementById('tst-layouts')) renderTstLayouts(); } catch(e){}
+  try { if(typeof renderTstInSitu==='function' && document.getElementById('tst-insitu')) renderTstInSitu(); } catch(e){}
+  try { if(typeof renderTstReference==='function' && document.getElementById('tst-reference')) renderTstReference(); } catch(e){}
   try { if(typeof renderBreadcrumbPlayground==='function' && document.getElementById('bcr-playground')) renderBreadcrumbPlayground(); } catch(e){}
   try { if(typeof renderBreadcrumbVariants==='function' && document.getElementById('bcr-variants')) renderBreadcrumbVariants(); } catch(e){}
   try { if(typeof renderBreadcrumbInSitu==='function' && document.getElementById('bcr-insitu')) renderBreadcrumbInSitu(); } catch(e){}
@@ -18571,6 +18744,778 @@ function alrtTabSwitch(tab){
 }
 
 /* ============================================================
+   TOASTS
+   Same tabbed-page treatment as Alert/Pills/Avatar (.sec--tabbed).
+   Built from the Figma "Alert" component, Style=Snackbar or inline:
+   six types (Positive, Info, Warning, Critical, Neutral, Neutral light)
+   crossed with five action layouts. Colour lives entirely in CSS
+   (.tst--pos/info/warn/crit/neutral/light set local --tst-* custom
+   properties), so the builder only toggles classes. Unlike Alert, a
+   toast is behavioural — it enters, times out, pauses on hover and
+   leaves — so the playground runs that timing for real.
+============================================================ */
+const TST_ICONS = {
+  tick:  '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm4.7 7.7-5.6 5.6a1 1 0 0 1-1.4 0l-2.4-2.4a1 1 0 1 1 1.4-1.4l1.7 1.7 4.9-4.9a1 1 0 1 1 1.4 1.4Z"/></svg>',
+  info:  '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm1 15a1 1 0 1 1-2 0v-5a1 1 0 1 1 2 0v5Zm-1-8.25a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5Z"/></svg>',
+  warn:  '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M10.27 3.5a2 2 0 0 1 3.46 0l8.66 15a2 2 0 0 1-1.73 3H3.34a2 2 0 0 1-1.73-3l8.66-15ZM12 9a1 1 0 0 0-1 1v4a1 1 0 1 0 2 0v-4a1 1 0 0 0-1-1Zm0 7.25a1.25 1.25 0 1 0 0 2.5 1.25 1.25 0 0 0 0-2.5Z"/></svg>',
+  close: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M5 5l14 14M19 5 5 19"/></svg>',
+};
+
+const TST_TYPES = [
+  {key:'pos',     label:'Positive',      icon:'tick', caption:'Airtime',    message:'R50 sent to 082 555 0134',          action:'View',  use:'Confirms something finished the way the person expected.',
+   light:{bg:'#218A29', fg:'#FFFFFF', act:'rgba(0,0,0,0.2)'},       dark:{bg:'#218A29', fg:'#FFFFFF', act:'rgba(0,0,0,0.2)'},       tok:{bg:'--prim-green-800', fg:'--prim-white'}},
+  {key:'info',    label:'Info',          icon:'info', caption:'Statements', message:'Your June statement is ready',      action:'Open',  use:'A neutral update worth knowing. Nothing needs fixing.',
+   light:{bg:'#0062EB', fg:'#FFFFFF', act:'rgba(0,0,0,0.2)'},       dark:{bg:'#0062EB', fg:'#FFFFFF', act:'rgba(0,0,0,0.2)'},       tok:{bg:'--prim-bb-700', fg:'--prim-white'}},
+  {key:'warn',    label:'Warning',       icon:'warn', caption:'Connection', message:'You’re offline. Changes will sync later', action:'Retry', use:'Something could go wrong if ignored, but nothing has failed yet.',
+   light:{bg:'#F6BC2F', fg:'#000000', act:'rgba(255,255,255,0.4)'}, dark:{bg:'#F6BC2F', fg:'#000000', act:'rgba(255,255,255,0.4)'}, tok:{bg:'--prim-yel-500', fg:'--prim-black'}},
+  {key:'crit',    label:'Critical',      icon:'warn', caption:'Payment',    message:'Couldn’t reach the bank',      action:'Retry', use:'An action just failed. Pair it with Retry, and keep it until it’s dismissed.',
+   light:{bg:'#C10021', fg:'#FFFFFF', act:'rgba(0,0,0,0.2)'},       dark:{bg:'#C10021', fg:'#FFFFFF', act:'rgba(0,0,0,0.2)'},       tok:{bg:'--prim-red-700', fg:'--prim-white'}},
+  {key:'neutral', label:'Neutral',       icon:null,   caption:'Cart',       message:'Voucher removed',                   action:'Undo',  use:'The everyday default: a plain confirmation with no status attached.',
+   light:{bg:'#252525', fg:'#FFFFFF', act:'#000000'},               dark:{bg:'#F0F0F0', fg:'#000000', act:'#FFFFFF'},               tok:{bg:'--prim-grey-1100 / --prim-grey-100', fg:'--color-text-inv'}},
+  {key:'light',   label:'Neutral light', icon:null,   caption:'Clipboard',  message:'Account number copied',             action:'Undo',  use:'A quieter neutral for light, busy screens where a dark bar would shout.',
+   light:{bg:'#F0F0F0', fg:'#000000', act:'#FFFFFF'},               dark:{bg:'#25262C', fg:'#FFFFFF', act:'#12131A'},               tok:{bg:'--color-surface-n1', fg:'--color-text-1'}},
+];
+
+const TST_LAYOUTS = [
+  {key:'none',         label:'None',           name:'No actions',            use:'Status only. Leaves on its own.'},
+  {key:'close',        label:'Close',          name:'Close icon',            use:'Lets the person clear it early.'},
+  {key:'action',       label:'Action',         name:'Short action',          use:'One short verb, like Retry or Undo.'},
+  {key:'action-close', label:'Action + close', name:'Short action & close',  use:'An action, plus a way out without taking it.'},
+  {key:'stack',        label:'Two actions',    name:'Two actions / long label', use:'Longer labels or two choices drop onto their own row.'},
+];
+
+const TST_DURATIONS = [
+  {key:'short',  label:'Short · 4s', ms:4000},
+  {key:'long',   label:'Long · 7s',  ms:7000},
+  {key:'sticky', label:'Persistent',      ms:0},
+];
+
+/* \x22 (double quote) is written as an escape so the AI-context extractor's
+   bracket matcher doesn't read a bare quote inside the regex as a string opener. */
+function tstEsc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&#60;').replace(/>/g,'&#62;').replace(/\x22/g,'&quot;'); }
+
+/* Real toast markup. o = {type, layout, caption, message, action, secondary,
+   showCaption, demo, style}. demo:true takes the buttons out of the tab order
+   for illustrative copies that aren't meant to be operated. */
+function makeToastHTML(o){
+  const t = TST_TYPES.find(x=>x.key===o.type) || TST_TYPES[0];
+  const layout = o.layout || 'none';
+  const cap = o.caption != null ? o.caption : t.caption;
+  const msg = o.message != null && o.message !== '' ? o.message : t.message;
+  const inert = o.demo ? ' tabindex="-1"' : '';
+  const ico = t.icon ? `<span class="tst__ico">${TST_ICONS[t.icon]}</span>` : '';
+  const capHTML = (o.showCaption !== false && cap) ? `<div class="tst__cap">${tstEsc(cap)}</div>` : '';
+  const act = label => `<button class="tst__act" type="button"${inert}>${tstEsc(label)}</button>`;
+  const x = `<button class="tst__x" type="button" aria-label="Dismiss"${inert}>${TST_ICONS.close}</button>`;
+  const primary = o.action || (layout==='stack' ? 'Retry download' : t.action);
+  let acts = '';
+  if(layout==='close')             acts = x;
+  else if(layout==='action')       acts = act(primary);
+  else if(layout==='action-close') acts = act(primary) + x;
+  else if(layout==='stack')        acts = act(o.secondary || 'Dismiss') + act(primary);
+  const style = o.style ? ` style="${o.style}"` : '';
+  const stack = layout==='stack' ? ' tst--stack' : '';
+  const actsHTML = acts ? '<div class="tst__acts">' + acts + '</div>' : '';
+  return `<div class="tst tst--${t.key}${stack}"${style}><div class="tst__main">${ico}<div class="tst__bd">${capHTML}<div class="tst__msg">${tstEsc(msg)}</div></div></div>${actsHTML}</div>`;
+}
+
+/* ── TOAST PLAYGROUND ──
+   phase: 'shown' (resting, no timer — the default so the stage is never empty),
+          'live'  (entered via Show toast; auto-dismiss timer running),
+          'gone'  (dismissed; stage offers Show toast again). */
+let tstPg = { type:'pos', layout:'action-close', showCaption:true, caption:'', message:'', action:'', duration:'short', placement:'bottom', theme:'light', phase:'shown' };
+let tstPgTimer = null, tstPgStarted = 0, tstPgRemaining = 0;
+
+function tstPgClearTimer(){ if(tstPgTimer){ clearTimeout(tstPgTimer); tstPgTimer = null; } }
+
+function tstPgStartTimer(ms){
+  tstPgClearTimer();
+  if(!ms) return;
+  tstPgRemaining = ms;
+  tstPgStarted = Date.now();
+  tstPgTimer = setTimeout(tstPgDismiss, ms);
+}
+function tstPgPause(){
+  if(!tstPgTimer) return;
+  tstPgRemaining = Math.max(0, tstPgRemaining - (Date.now() - tstPgStarted));
+  tstPgClearTimer();
+}
+function tstPgResume(){
+  if(tstPg.phase !== 'live' || tstPgTimer || !tstPgRemaining) return;
+  tstPgStarted = Date.now();
+  tstPgTimer = setTimeout(tstPgDismiss, tstPgRemaining);
+}
+
+function tstPgDismiss(){
+  tstPgClearTimer();
+  const live = document.querySelectorAll('.tstpg-stage-el .tst');
+  live.forEach(el=>{ el.classList.remove('tst--in'); el.classList.add('tst--out'); });
+  setTimeout(()=>{ tstPg.phase = 'gone'; tstPgRefresh(); }, live.length ? 170 : 0);
+}
+
+function tstPgShow(){
+  tstPg.phase = 'live';
+  tstPgRefresh();
+  const d = TST_DURATIONS.find(x=>x.key===tstPg.duration) || TST_DURATIONS[0];
+  tstPgStartTimer(d.ms);
+}
+
+function tstPgToastHTML(){
+  return makeToastHTML({type:tstPg.type, layout:tstPg.layout, showCaption:tstPg.showCaption,
+    caption:tstPg.caption || null, message:tstPg.message, action:tstPg.action || null});
+}
+
+function tstPgRefresh(){
+  const t = TST_TYPES.find(x=>x.key===tstPg.type) || TST_TYPES[0];
+  const urgent = tstPg.type==='crit';
+  document.querySelectorAll('.tstpg-stage-el').forEach(stage=>{
+    const region = stage.querySelector('.tstpg-region');
+    if(!region) return;
+    region.className = `tst-region tstpg-region${tstPg.placement==='top' ? ' tst-region--top' : ''}`;
+    region.setAttribute('style', 'position:absolute');
+    region.setAttribute('role', urgent ? 'alert' : 'status');
+    if(urgent) region.removeAttribute('aria-live'); else region.setAttribute('aria-live', 'polite');
+    const replay = stage.querySelector('.tstpg-replay');
+    if(tstPg.phase === 'gone'){
+      region.innerHTML = '';
+      if(replay) replay.style.display = '';
+      return;
+    }
+    if(replay) replay.style.display = 'none';
+    region.innerHTML = tstPgToastHTML();
+    const el = region.querySelector('.tst');
+    if(tstPg.phase === 'live') el.classList.add('tst--in');
+    el.addEventListener('mouseenter', tstPgPause);
+    el.addEventListener('mouseleave', tstPgResume);
+    el.addEventListener('focusin', tstPgPause);
+    el.addEventListener('focusout', tstPgResume);
+    el.querySelectorAll('.tst__x, .tst__act').forEach(b=>b.addEventListener('click', tstPgDismiss));
+    el.addEventListener('keydown', e=>{ if(e.key==='Escape') tstPgDismiss(); });
+  });
+  document.querySelectorAll('.tstpg-cap-input-el').forEach(inp=>{ if(document.activeElement !== inp) inp.value = tstPg.caption; inp.placeholder = t.caption; inp.disabled = !tstPg.showCaption; });
+  document.querySelectorAll('.tstpg-msg-input-el').forEach(inp=>{ if(document.activeElement !== inp) inp.value = tstPg.message; inp.placeholder = t.message; });
+  document.querySelectorAll('.tstpg-note-el').forEach(n=>{
+    n.style.display = (tstPg.duration==='sticky' && tstPg.layout==='none') ? '' : 'none';
+  });
+  const block = document.getElementById('tstpg-code-block');
+  if(block) block.innerHTML = getTstCode();
+}
+
+const TST_PLAYGROUND_MOUNTS = [
+  {rootId:'tst-playground', idSuffix:'', wrap:true, title:'Try the component', desc:'Change the settings, then press Show toast to watch it enter, time out and leave. Hover over it to pause the timer.', headingAbove:'A toast briefly confirms what just happened, then gets out of the way.'},
+  {rootId:'tst-code-playground', idSuffix:'-code', style:'code', title:'Playground', desc:'Live demo of the component.'},
+];
+
+function renderTstPlayground(){
+  tstPg.theme = currentTheme();
+  const sbg = stageBg(tstPg.theme);
+  const pill = (on, call, label) => `<button class="btn-pg__pill${on?' on':''}" onclick="${call}">${label}</button>`;
+  const typeBtns = TST_TYPES.map(t=>pill(tstPg.type===t.key, `tstPgSet('type','${t.key}')`, t.label)).join('');
+  const layBtns  = TST_LAYOUTS.map(l=>pill(tstPg.layout===l.key, `tstPgSet('layout','${l.key}')`, l.label)).join('');
+  const capBtns  = [['on','Show'],['off','Hide']].map(([k,l])=>pill((tstPg.showCaption?'on':'off')===k, `tstPgSet('showCaption','${k}')`, l)).join('');
+  const durBtns  = TST_DURATIONS.map(d=>pill(tstPg.duration===d.key, `tstPgSet('duration','${d.key}')`, d.label)).join('');
+  const posBtns  = [['bottom','Bottom'],['top','Top']].map(([k,l])=>pill(tstPg.placement===k, `tstPgSet('placement','${k}')`, l)).join('');
+
+  TST_PLAYGROUND_MOUNTS.forEach(mount=>{
+    const root = document.getElementById(mount.rootId);
+    if(!root) return;
+    const s = mount.idSuffix;
+    const demo = `
+      <div class="btn-pg">
+        <div class="btn-pg__stage tstpg-stage-el" id="tstpg-stage${s}" style="background:${sbg};position:relative;min-height:240px;overflow:hidden;padding:0">
+          <div aria-hidden="true" style="position:absolute;inset:18px 18px auto;display:flex;flex-direction:column;gap:10px;opacity:.7">
+            <span class="spec-mock__bar" style="display:block;width:40%;height:10px;border-radius:5px;background:var(--color-surface-n2)"></span>
+            <span class="spec-mock__bar" style="display:block;width:85%;height:9px;border-radius:5px;background:var(--color-surface-n2)"></span>
+            <span class="spec-mock__bar" style="display:block;width:70%;height:9px;border-radius:5px;background:var(--color-surface-n2)"></span>
+          </div>
+          <div class="tst-region tstpg-region" style="position:absolute"></div>
+          <button class="cpg-reset tstpg-replay" style="display:none;position:absolute;left:50%;top:50%;transform:translate(-50%,-50%)" onclick="tstPgShow()">&#9654;&nbsp;&nbsp;Show toast again</button>
+        </div>
+        <div class="btn-pg__ctrls">
+          <div class="btn-pg__group"><span class="btn-pg__clabel">Type</span><div class="btn-pg__pill-row">${typeBtns}</div></div>
+          <div class="btn-pg__group"><span class="btn-pg__clabel">Actions</span><div class="btn-pg__pill-row">${layBtns}</div></div>
+          <div class="btn-pg__group"><span class="btn-pg__clabel">Caption</span><div class="btn-pg__pill-row">${capBtns}</div></div>
+          <div class="btn-pg__group"><span class="btn-pg__clabel">Duration</span><div class="btn-pg__pill-row">${durBtns}</div><span class="tstpg-note-el" style="display:none;font-size:11.5px;color:var(--chrome-muted)">A persistent toast needs a close or action button &mdash; otherwise it can never leave.</span></div>
+          <div class="btn-pg__group"><span class="btn-pg__clabel">Placement</span><div class="btn-pg__pill-row">${posBtns}</div></div>
+          <div class="btn-pg__group"><span class="btn-pg__clabel">Caption text</span><input class="cpg-label-input tstpg-cap-input-el" id="tstpg-cap-input${s}" value="${tstEsc(tstPg.caption)}" maxlength="30" oninput="tstPgSetText('caption',this.value)"></div>
+          <div class="btn-pg__group"><span class="btn-pg__clabel">Message</span><input class="cpg-label-input tstpg-msg-input-el" id="tstpg-msg-input${s}" value="${tstEsc(tstPg.message)}" maxlength="80" oninput="tstPgSetText('message',this.value)"></div>
+          <div class="btn-pg__group"><span class="btn-pg__clabel">Preview</span><div class="btn-pg__pill-row"><button class="btn-pg__pill on" onclick="tstPgShow()">&#9654;&nbsp;Show toast</button></div></div>
+        </div>
+      </div>`;
+
+    if(mount.style==='code'){
+      root.innerHTML = `
+        <div class="type-sub__title">${mount.title}</div>
+        <div class="type-sub__desc">${mount.desc}</div>
+        <div class="cpg-section-outline">${demo}</div>`;
+      return;
+    }
+    const inner = `
+      <div class="cpg-layout">
+        <div class="cpg-layout__intro">
+          ${mount.wrap ? `<span class="cpg-cursor-icon">${CPG_CURSOR_ICON_SVG}</span>` : ''}
+          <div class="cpg-layout__title">${mount.title}</div>
+          <div class="cpg-layout__desc">${mount.desc}</div>
+        </div>
+        <div class="cpg-layout__demo">${demo}</div>
+      </div>`;
+    const wrapped = mount.wrap ? `<div class="cpg-section-block">${inner}</div>` : inner;
+    root.innerHTML = (mount.headingAbove ? `<div class="cpg-overview-heading"><span class="cpg-overview-heading__icon">${CPG_INFO_ICON_SVG}</span><span>${mount.headingAbove}</span></div>` : '') + wrapped;
+  });
+
+  tstPgRefresh();
+}
+
+function tstPgSet(key, val){
+  if(key==='showCaption') tstPg.showCaption = (val==='on');
+  else tstPg[key] = val;
+  tstPgClearTimer();
+  tstPg.phase = 'shown';
+  renderTstPlayground();
+}
+function tstPgSetText(key, val){ tstPg[key] = val; tstPgRefresh(); }
+
+/* ── TOAST CODE ── */
+const TST_LANGS = [
+  {key:'html',   label:'HTML / CSS', file:'toast.html'},
+  {key:'blazor', label:'Blazor',     file:'DsToast.razor'},
+  {key:'tsx',    label:'React TSX',  file:'DsToast.tsx'},
+];
+let tstLang = 'html';
+
+function tstCodeParts(){
+  const t = TST_TYPES.find(x=>x.key===tstPg.type) || TST_TYPES[0];
+  const d = TST_DURATIONS.find(x=>x.key===tstPg.duration) || TST_DURATIONS[0];
+  return {
+    t, d,
+    cap: tstPg.showCaption ? tstEsc(tstPg.caption || t.caption) : '',
+    msg: tstEsc(tstPg.message || t.message),
+    act: tstEsc(tstPg.action || (tstPg.layout==='stack' ? 'Retry download' : t.action)),
+    hasX: tstPg.layout==='close' || tstPg.layout==='action-close',
+    acts: tstPg.layout==='stack' ? 2 : (tstPg.layout==='action' || tstPg.layout==='action-close') ? 1 : 0,
+  };
+}
+
+function getTstCodeHTML(){
+  const p = tstCodeParts();
+  const tag = (name, cls, extra) => `<span class="code-kw">&#60;${name}</span> <span class="code-cls">class</span>=<span class="code-val">"${cls}"</span>${extra||''}<span class="code-kw">></span>`;
+  const close = name => `<span class="code-kw">&#60;/${name}></span>`;
+  const attr = (k,v) => ` <span class="code-attr">${k}</span>=<span class="code-val">"${v}"</span>`;
+  const live = p.t.key==='crit' ? attr('role','alert') : attr('role','status') + attr('aria-live','polite');
+  const regionCls = 'tst-region' + (tstPg.placement==='top' ? ' tst-region--top' : '');
+  const ico = p.t.icon ? `\n      ${tag('span','tst__ico')}<span class="code-cm">&#60;!-- 18px ${p.t.icon==='tick'?'tick-in-circle':p.t.icon==='info'?'info':'warning'} icon, fill: currentColor --></span>${close('span')}` : '';
+  const capLine = p.cap ? `\n        ${tag('div','tst__cap')}${p.cap}${close('div')}` : '';
+  const btn = label => `\n      ${tag('button','tst__act',attr('type','button'))}${label}${close('button')}`;
+  const xBtn = `\n      ${tag('button','tst__x',attr('type','button')+attr('aria-label','Dismiss'))}<span class="code-cm">&#60;!-- 14px close icon --></span>${close('button')}`;
+  let acts = '';
+  if(p.acts===2) acts = btn('Dismiss') + btn(p.act);
+  else if(p.acts===1) acts = btn(p.act);
+  if(p.hasX) acts += xBtn;
+  const actsBlock = acts ? `\n    ${tag('div','tst__acts')}${acts}\n    ${close('div')}` : '';
+  return `<span class="code-cm">&#60;!-- Flash &middot; ${p.t.label} toast &middot; ${p.d.ms ? 'auto-dismiss after ' + p.d.ms + 'ms' : 'persistent until dismissed'} --></span>
+${tag('div', regionCls, live)}
+  ${tag('div', 'tst tst--' + p.t.key + (tstPg.layout==='stack' ? ' tst--stack' : '') + ' tst--in')}
+    ${tag('div','tst__main')}${ico}
+      ${tag('div','tst__bd')}${capLine}
+        ${tag('div','tst__msg')}${p.msg}${close('div')}
+      ${close('div')}
+    ${close('div')}${actsBlock}
+  ${close('div')}
+${close('div')}
+
+<span class="code-cm">// Swap tst--in for tst--out to leave, then remove the node ~160ms later.
+// Pause the timer on mouseenter / focusin and resume on mouseleave / focusout.</span>`;
+}
+
+function getTstCodeBlazor(){
+  const p = tstCodeParts();
+  const typePascal = {pos:'Positive', info:'Info', warn:'Warning', crit:'Critical', neutral:'Neutral', light:'NeutralLight'}[p.t.key];
+  const layPascal = {none:'None', close:'Close', action:'Action', 'action-close':'ActionAndClose', stack:'TwoActions'}[tstPg.layout];
+  const opt = (k,v) => `\n         <span class="code-attr">${k}</span>=<span class="code-val">"${v}"</span>`;
+  return `<span class="code-cm">@* DsToast.razor &mdash; usage *@</span>
+<span class="code-kw">&#60;DsToast</span> <span class="code-attr">Type</span>=<span class="code-val">"ToastType.${typePascal}"</span>${opt('Actions','ToastActions.' + layPascal)}${p.cap ? opt('Caption', p.cap) : ''}${opt('Message', p.msg)}${p.acts ? opt('ActionLabel', p.act) : ''}${opt('DurationMs', p.d.ms)}${opt('OnAction','HandleAction')}${opt('OnDismiss','HandleDismiss')} <span class="code-kw">/></span>
+
+<span class="code-cm">@* DsToast.razor &mdash; component definition (rendered inside a .tst-region) *@</span>
+<span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"@CssClass"</span> <span class="code-attr">@onmouseenter</span>=<span class="code-val">"Pause"</span> <span class="code-attr">@onmouseleave</span>=<span class="code-val">"Resume"</span><span class="code-kw">></span>
+  <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"tst__main"</span><span class="code-kw">></span>
+    <span class="code-kw">@if</span> (Icon != <span class="code-kw">null</span>) { <span class="code-kw">&#60;span</span> <span class="code-cls">class</span>=<span class="code-val">"tst__ico"</span><span class="code-kw">></span>@Icon<span class="code-kw">&#60;/span></span> }
+    <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"tst__bd"</span><span class="code-kw">></span>
+      <span class="code-kw">@if</span> (!<span class="code-cls">string</span>.IsNullOrEmpty(Caption)) { <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"tst__cap"</span><span class="code-kw">></span>@Caption<span class="code-kw">&#60;/div></span> }
+      <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"tst__msg"</span><span class="code-kw">></span>@Message<span class="code-kw">&#60;/div></span>
+    <span class="code-kw">&#60;/div></span>
+  <span class="code-kw">&#60;/div></span>
+  <span class="code-kw">@if</span> (Actions != ToastActions.None) {
+    <span class="code-kw">&#60;div</span> <span class="code-cls">class</span>=<span class="code-val">"tst__acts"</span><span class="code-kw">></span>
+      <span class="code-kw">@if</span> (Actions == ToastActions.TwoActions) { <span class="code-kw">&#60;button</span> <span class="code-cls">class</span>=<span class="code-val">"tst__act"</span> <span class="code-attr">@onclick</span>=<span class="code-val">"Dismiss"</span><span class="code-kw">></span>Dismiss<span class="code-kw">&#60;/button></span> }
+      <span class="code-kw">@if</span> (Actions != ToastActions.Close) { <span class="code-kw">&#60;button</span> <span class="code-cls">class</span>=<span class="code-val">"tst__act"</span> <span class="code-attr">@onclick</span>=<span class="code-val">"Act"</span><span class="code-kw">></span>@ActionLabel<span class="code-kw">&#60;/button></span> }
+      <span class="code-kw">@if</span> (Actions <span class="code-kw">is</span> ToastActions.Close <span class="code-kw">or</span> ToastActions.ActionAndClose) {
+        <span class="code-kw">&#60;button</span> <span class="code-cls">class</span>=<span class="code-val">"tst__x"</span> <span class="code-attr">aria-label</span>=<span class="code-val">"Dismiss"</span> <span class="code-attr">@onclick</span>=<span class="code-val">"Dismiss"</span><span class="code-kw">></span>@CloseIcon<span class="code-kw">&#60;/button></span>
+      }
+    <span class="code-kw">&#60;/div></span>
+  }
+<span class="code-kw">&#60;/div></span>
+
+<span class="code-kw">@code</span> {
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> ToastType Type { get; set; } = ToastType.Neutral;
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> ToastActions Actions { get; set; } = ToastActions.None;
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> <span class="code-cls">string</span>? Caption { get; set; }
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> <span class="code-cls">string</span> Message { get; set; } = <span class="code-val">""</span>;
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> <span class="code-cls">string</span> ActionLabel { get; set; } = <span class="code-val">"Retry"</span>;
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> <span class="code-cls">int</span> DurationMs { get; set; } = <span class="code-val">4000</span>; <span class="code-cm">// 0 = persistent</span>
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> EventCallback OnAction { get; set; }
+  [<span class="code-cls">Parameter</span>] <span class="code-kw">public</span> EventCallback OnDismiss { get; set; }
+
+  <span class="code-kw">private</span> <span class="code-cls">string</span> TypeClass => Type <span class="code-kw">switch</span> {
+    ToastType.Positive => <span class="code-val">"pos"</span>, ToastType.Info => <span class="code-val">"info"</span>, ToastType.Warning => <span class="code-val">"warn"</span>,
+    ToastType.Critical => <span class="code-val">"crit"</span>, ToastType.NeutralLight => <span class="code-val">"light"</span>, _ => <span class="code-val">"neutral"</span>
+  };
+  <span class="code-kw">private</span> <span class="code-cls">string</span> CssClass => $<span class="code-val">"tst tst--{TypeClass}{(Actions == ToastActions.TwoActions ? " tst--stack" : "")} tst--in"</span>;
+  <span class="code-cm">// Icon / CloseIcon: RenderFragments holding the 18px status icon and 14px close icon.
+  // Pause / Resume stop and restart a timer for the remaining DurationMs; on expiry, call Dismiss.</span>
+}`;
+}
+
+function getTstCodeTSX(){
+  const p = tstCodeParts();
+  const props = [`type=<span class="code-val">"${p.t.key}"</span>`, `actions=<span class="code-val">"${tstPg.layout}"</span>`];
+  if(p.cap) props.push(`caption=<span class="code-val">"${p.cap}"</span>`);
+  props.push(`message=<span class="code-val">"${p.msg}"</span>`);
+  if(p.acts) props.push(`actionLabel=<span class="code-val">"${p.act}"</span>`);
+  props.push(`durationMs={${p.d.ms}}`);
+  return `<span class="code-cm">// DsToast.tsx</span>
+<span class="code-kw">import</span> React, { useEffect, useRef, useState } <span class="code-kw">from</span> <span class="code-val">'react'</span>;
+
+<span class="code-kw">type</span> <span class="code-cls">ToastType</span> = <span class="code-val">'pos'</span> | <span class="code-val">'info'</span> | <span class="code-val">'warn'</span> | <span class="code-val">'crit'</span> | <span class="code-val">'neutral'</span> | <span class="code-val">'light'</span>;
+<span class="code-kw">type</span> <span class="code-cls">ToastActions</span> = <span class="code-val">'none'</span> | <span class="code-val">'close'</span> | <span class="code-val">'action'</span> | <span class="code-val">'action-close'</span> | <span class="code-val">'stack'</span>;
+
+<span class="code-kw">interface</span> <span class="code-cls">DsToastProps</span> {
+  type?: <span class="code-cls">ToastType</span>;
+  actions?: <span class="code-cls">ToastActions</span>;
+  caption?: <span class="code-cls">string</span>;
+  message: <span class="code-cls">string</span>;
+  actionLabel?: <span class="code-cls">string</span>;
+  durationMs?: <span class="code-cls">number</span>; <span class="code-cm">// 0 = persistent</span>
+  icon?: React.ReactNode;    <span class="code-cm">// 18px status icon</span>
+  onAction?: () => <span class="code-cls">void</span>;
+  onDismiss: () => <span class="code-cls">void</span>;
+}
+
+<span class="code-kw">export const</span> <span class="code-cls">DsToast</span>: React.FC&#60;DsToastProps> = ({
+  type = <span class="code-val">'neutral'</span>, actions = <span class="code-val">'none'</span>, caption, message,
+  actionLabel = <span class="code-val">'Retry'</span>, durationMs = <span class="code-val">4000</span>, icon, onAction, onDismiss,
+}) => {
+  <span class="code-kw">const</span> [leaving, setLeaving] = useState(<span class="code-kw">false</span>);
+  <span class="code-kw">const</span> timer = useRef&#60;<span class="code-cls">number</span>>(), left = useRef(durationMs), started = useRef(<span class="code-val">0</span>);
+
+  <span class="code-kw">const</span> dismiss = () => { setLeaving(<span class="code-kw">true</span>); window.setTimeout(onDismiss, <span class="code-val">160</span>); };
+  <span class="code-kw">const</span> resume = () => { <span class="code-kw">if</span> (!durationMs) <span class="code-kw">return</span>; started.current = Date.now(); timer.current = window.setTimeout(dismiss, left.current); };
+  <span class="code-kw">const</span> pause = () => { window.clearTimeout(timer.current); left.current -= Date.now() - started.current; };
+  useEffect(() => { resume(); <span class="code-kw">return</span> () => window.clearTimeout(timer.current); }, []);
+
+  <span class="code-kw">const</span> showX = actions === <span class="code-val">'close'</span> || actions === <span class="code-val">'action-close'</span>;
+  <span class="code-kw">const</span> showAct = actions === <span class="code-val">'action'</span> || actions === <span class="code-val">'action-close'</span> || actions === <span class="code-val">'stack'</span>;
+
+  <span class="code-kw">return</span> (
+    &#60;div className={\`tst tst--\${type}\${actions === <span class="code-val">'stack'</span> ? <span class="code-val">' tst--stack'</span> : <span class="code-val">''</span>} \${leaving ? <span class="code-val">'tst--out'</span> : <span class="code-val">'tst--in'</span>}\`}
+         onMouseEnter={pause} onMouseLeave={resume} onFocus={pause} onBlur={resume}
+         onKeyDown={e => e.key === <span class="code-val">'Escape'</span> &amp;&amp; dismiss()}>
+      &#60;div className=<span class="code-val">"tst__main"</span>>
+        {icon &amp;&amp; &#60;span className=<span class="code-val">"tst__ico"</span>>{icon}&#60;/span>}
+        &#60;div className=<span class="code-val">"tst__bd"</span>>
+          {caption &amp;&amp; &#60;div className=<span class="code-val">"tst__cap"</span>>{caption}&#60;/div>}
+          &#60;div className=<span class="code-val">"tst__msg"</span>>{message}&#60;/div>
+        &#60;/div>
+      &#60;/div>
+      {actions !== <span class="code-val">'none'</span> &amp;&amp; (
+        &#60;div className=<span class="code-val">"tst__acts"</span>>
+          {actions === <span class="code-val">'stack'</span> &amp;&amp; &#60;button className=<span class="code-val">"tst__act"</span> type=<span class="code-val">"button"</span> onClick={dismiss}>Dismiss&#60;/button>}
+          {showAct &amp;&amp; &#60;button className=<span class="code-val">"tst__act"</span> type=<span class="code-val">"button"</span> onClick={() => { onAction?.(); dismiss(); }}>{actionLabel}&#60;/button>}
+          {showX &amp;&amp; &#60;button className=<span class="code-val">"tst__x"</span> type=<span class="code-val">"button"</span> aria-label=<span class="code-val">"Dismiss"</span> onClick={dismiss}>&#215;&#60;/button>}
+        &#60;/div>
+      )}
+    &#60;/div>
+  );
+};
+
+<span class="code-cm">// Usage &mdash; render inside one shared region:
+// &#60;div className="tst-region" role="${p.t.key==='crit' ? 'alert' : 'status'}"${p.t.key==='crit' ? '' : ' aria-live="polite"'}>&#8230;&#60;/div></span>
+&#60;DsToast ${props.join(' ')} onDismiss={remove} />`;
+}
+
+function getTstCode(){
+  return tstLang==='blazor' ? getTstCodeBlazor()
+       : tstLang==='tsx'    ? getTstCodeTSX()
+       : getTstCodeHTML();
+}
+
+function setTstLang(lang){
+  if(!TST_LANGS.some(l=>l.key===lang)) return;
+  tstLang = lang;
+  document.querySelectorAll('#tst-code-tab .code-seg__btn').forEach(b=>{
+    const on = b.dataset.lang===lang;
+    b.setAttribute('aria-selected', on ? 'true' : 'false');
+    b.setAttribute('tabindex', on ? '0' : '-1');
+  });
+  const file = document.getElementById('tst-lang-file');
+  const meta = TST_LANGS.find(l=>l.key===lang);
+  if(file && meta) file.textContent = meta.file;
+  const block = document.getElementById('tstpg-code-block');
+  if(block) block.innerHTML = getTstCode();
+}
+
+function tstLangKeydown(e){
+  const i = TST_LANGS.findIndex(l=>l.key===tstLang);
+  let n = i;
+  if(e.key==='ArrowLeft')       n = (i - 1 + TST_LANGS.length) % TST_LANGS.length;
+  else if(e.key==='ArrowRight') n = (i + 1) % TST_LANGS.length;
+  else if(e.key==='Home')       n = 0;
+  else if(e.key==='End')        n = TST_LANGS.length - 1;
+  else return;
+  e.preventDefault();
+  setTstLang(TST_LANGS[n].key);
+  const btn = document.getElementById('tst-lang-' + TST_LANGS[n].key);
+  if(btn) btn.focus();
+}
+
+function renderTstCodeTab(){
+  const root = document.getElementById('tst-code-tab');
+  if(!root) return;
+  root.innerHTML = `
+    <div class="type-sub__title">Code</div>
+    <div class="type-sub__desc">Live snippet matching the current Playground configuration &mdash; switch to Overview to change it.</div>
+    <div class="cpg-section-outline">
+      <div class="code-panel code-panel--bare open">
+        <div class="code-panel__head">
+          <div class="code-seg" role="tablist" aria-label="Code language" onkeydown="tstLangKeydown(event)">
+            ${TST_LANGS.map(l=>`<button type="button" role="tab" class="code-seg__btn" id="tst-lang-${l.key}" data-lang="${l.key}" aria-selected="${tstLang===l.key?'true':'false'}" aria-controls="tstpg-code-block" tabindex="${tstLang===l.key?'0':'-1'}" onclick="setTstLang('${l.key}')">${l.label}</button>`).join('')}
+          </div>
+          <span class="code-lang-file" id="tst-lang-file">${(TST_LANGS.find(l=>l.key===tstLang)||TST_LANGS[0]).file}</span>
+          <button class="code-copy-btn" onclick="tstPgCopyCode()" id="tstpg-copy-btn">Copy</button>
+        </div>
+        <div class="code-body"><div class="code-block" id="tstpg-code-block" role="tabpanel" aria-live="polite"></div></div>
+      </div>
+    </div>`;
+}
+
+function tstPgCopyCode(){
+  const b = document.getElementById('tstpg-code-block');
+  if(!b) return;
+  navigator.clipboard.writeText(b.innerText||b.textContent).catch(()=>{});
+  const btn = document.getElementById('tstpg-copy-btn');
+  if(btn){ btn.textContent = 'Copied!'; setTimeout(()=>btn.textContent='Copy', 2000); }
+}
+
+/* ── TOAST OVERVIEW SECTIONS ── */
+const TST_FLAT = 'width:100%;box-shadow:none';
+
+function renderTstVariants(){
+  const root = document.getElementById('tst-variants');
+  if(!root) return;
+  const cells = TST_TYPES.map(t=>`
+    <div class="spec-cell">
+      <div class="spec-cell__stage" style="display:block;padding:14px">${makeToastHTML({type:t.key, demo:true, style:TST_FLAT})}</div>
+      <div class="spec-cell__name">${t.label}</div>
+      <div class="spec-cell__desc">${t.use}</div>
+    </div>`).join('');
+  root.innerHTML = `
+    <div class="cpg-section-heading">
+      <div class="cpg-layout__title">Key variants</div>
+      <div class="cpg-layout__desc">Six types. Four carry a status and an icon; the two neutrals are for plain confirmations with no status. Pick the type for what actually happened, not for how loud you want it to look.</div>
+    </div>
+    <div class="cpg-section-block">
+      <div class="spec-grid" style="grid-template-columns:repeat(auto-fill,minmax(260px,1fr))">${cells}</div>
+    </div>`;
+}
+
+function renderTstLayouts(){
+  const root = document.getElementById('tst-layouts');
+  if(!root) return;
+  const cells = TST_LAYOUTS.map(l=>`
+    <div class="spec-cell">
+      <div class="spec-cell__stage" style="display:block;padding:14px">${makeToastHTML({type:'neutral', layout:l.key, demo:true, style:TST_FLAT, action:l.key==='stack'?null:'Retry', message:'Download failed', caption:'Statements'})}</div>
+      <div class="spec-cell__name">${l.name}</div>
+      <div class="spec-cell__desc">${l.use}</div>
+    </div>`).join('');
+  root.innerHTML = `
+    <div class="cpg-section-heading">
+      <div class="cpg-layout__title">Key layouts</div>
+      <div class="cpg-layout__desc">Five ways to arrange the actions, the same across every type. One short action sits on the same line as the message. Two actions, or a label too long to share the line, move onto their own row underneath.</div>
+    </div>
+    <div class="cpg-section-block">
+      <div class="spec-grid" style="grid-template-columns:repeat(auto-fill,minmax(260px,1fr))">${cells}</div>
+    </div>`;
+}
+
+const TST_TIMING = [
+  ['Message only',            '4 seconds',               'Enough time to read one short line.'],
+  ['With an action',          '7 seconds',               'Extra time to decide, then reach the button.'],
+  ['Critical, with Retry',    'Stays until dismissed',   'A failure the person needs to notice. Always give it a close or action button.'],
+  ['Hovered or focused',      'Timer pauses',            'Picks up again with the time that was left once the pointer or focus moves away.'],
+];
+
+const TST_RULES = [
+  ['Placement',      'Bottom centre, 16px above the bottom navigation or home indicator. Move it to the top only when a fixed bottom button would be covered.'],
+  ['Width',          'Mobile: the full screen width minus 8px on each side (344px on a 360px screen). Larger screens: a fixed 344px.'],
+  ['One at a time',  'Mobile shows one toast at a time. A new one waits until the current one leaves. Larger screens may stack up to three, 8px apart, newest closest to the edge.'],
+  ['Dismissal',      'Leaves on its own once the time runs out. The close icon, a swipe on touch screens, or Escape while it has focus clears it early. Pressing its action also dismisses it.'],
+  ['Motion',         'Slides 16px in from its edge while fading in (220ms). Fades out with a slight shrink (160ms). With reduced motion turned on, it only fades.'],
+  ['Focus',          'Never moves keyboard focus onto the toast. Anything its action does must also be possible somewhere that stays on screen, such as Undo in the history.'],
+  ['Screen readers', 'Lives in one shared region with role="status", so the message is read out without interrupting. Critical toasts use role="alert" so they are read out straight away.'],
+  ['Don’t cover',    'Never covers the keyboard, the bottom navigation or a screen’s main button. Lift it above them instead.'],
+];
+
+function renderTstBehaviour(){
+  const root = document.getElementById('tst-behaviour');
+  if(!root) return;
+  const timing = TST_TIMING.map(r=>`<tr><td class="dd-table__name">${r[0]}</td><td style="white-space:nowrap">${r[1]}</td><td>${r[2]}</td></tr>`).join('');
+  const rules = TST_RULES.map(r=>`<tr><td class="dd-table__name" style="white-space:nowrap">${r[0]}</td><td>${tstEsc(r[1])}</td></tr>`).join('');
+  root.innerHTML = `
+    <div class="cpg-section-heading">
+      <div class="cpg-layout__title">Behaviour</div>
+      <div class="cpg-layout__desc">A toast is mostly about timing: long enough to read, gone before it gets in the way. These rules apply to every type and layout.</div>
+    </div>
+    <div class="cpg-section-block">
+      <div class="dd-table-wrap"><table class="dd-table">
+        <thead><tr><th>Toast</th><th>Stays for</th><th>Why</th></tr></thead>
+        <tbody>${timing}</tbody>
+      </table></div>
+      <div class="dd-table-wrap" style="margin-top:16px"><table class="dd-table">
+        <thead><tr><th>Rule</th><th>Guideline</th></tr></thead>
+        <tbody>${rules}</tbody>
+      </table></div>
+    </div>`;
+}
+
+function renderTstInSitu(){
+  const root = document.getElementById('tst-insitu');
+  if(!root) return;
+  const sbg = stageBg(currentTheme());
+  const bars = `
+      <div class="spec-mock__row"><span class="spec-mock__bar" style="width:45%"></span><span class="spec-mock__spacer"></span><span class="spec-mock__bar" style="width:24px"></span></div>
+      <div class="spec-mock__row"><span class="spec-mock__bar" style="width:80%"></span></div>
+      <div class="spec-mock__row"><span class="spec-mock__bar" style="width:62%"></span></div>`;
+  const nav = `<div aria-hidden="true" style="display:flex;justify-content:space-around;padding:10px 0 2px;border-top:1px solid var(--chrome-border);margin:0 -20px -22px;background:${sbg}">${'<span class="spec-mock__bar" style="width:18px;height:18px;border-radius:6px"></span>'.repeat(4)}</div>`;
+  const mock = (toast, cap) => `
+    <div class="spec-mock">
+      <div class="spec-mock__stage" style="background:${sbg};justify-content:flex-start">
+        ${bars}
+        <div style="flex:1"></div>
+        ${toast}
+        ${nav}
+      </div>
+      <div class="spec-mock__cap">${cap}</div>
+    </div>`;
+  root.innerHTML = `
+    <div class="cpg-section-heading">
+      <div class="cpg-layout__title">In context</div>
+      <div class="cpg-layout__desc">Three everyday jobs: confirming that something worked, offering a quick way back, and owning up when something failed.</div>
+    </div>
+    <div class="cpg-section-block">
+      <div class="spec-insitu-grid">
+        ${mock(makeToastHTML({type:'pos', demo:true, style:'width:100%;box-shadow:0 8px 24px rgba(0,0,0,.14)'}), '<b>Confirming an action</b>Airtime went through. Positive type, no buttons, gone after 4 seconds.')}
+        ${mock(makeToastHTML({type:'neutral', layout:'action', demo:true, caption:'', showCaption:false, style:'width:100%;box-shadow:0 8px 24px rgba(0,0,0,.14)'}), '<b>Offering Undo</b>A voucher was removed. Neutral type with one action, held for 7 seconds.')}
+        ${mock(makeToastHTML({type:'crit', layout:'action-close', demo:true, style:'width:100%;box-shadow:0 8px 24px rgba(0,0,0,.14)'}), '<b>Recovering from a failure</b>The bank didn’t respond. Critical type with Retry and close, stays until dismissed.')}
+      </div>
+    </div>`;
+}
+
+function renderTstWhich(){
+  const root = document.getElementById('tst-which');
+  if(!root) return;
+  const link = (id, label) => `<a href="javascript:void(0)" onclick="showSection('${id}')" style="color:var(--color-link);font-weight:700;text-decoration:none">${label}</a>`;
+  const rows = [
+    ['Toast',                           'Confirming something the person just did, or a short system update',      'No &mdash; leaves after a few seconds', 'Airtime sent &middot; Voucher removed (Undo)'],
+    [link('s-alert','Inline Alert'),    'A status tied to a specific part of the page, such as a form or a card',   'Yes, until the cause is fixed',          'Bank account number is 3 digits short'],
+    [link('s-drawers','Bottom Sheet'),  'A decision or input that has to happen before moving on',                 'Yes, until the person responds',         'Confirm a R1,250 payout'],
+  ].map(r=>`<tr><td class="dd-table__name" style="white-space:nowrap">${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td><td>${r[3]}</td></tr>`).join('');
+  root.innerHTML = `
+    <div class="cpg-section-heading">
+      <div class="cpg-layout__title">When to use which</div>
+      <div class="cpg-layout__desc">Toasts and inline alerts share the same four status colours but do different jobs. The real question is whether the message has to stay on screen.</div>
+    </div>
+    <div class="cpg-section-block">
+      <div class="dd-table-wrap"><table class="dd-table" style="min-width:620px">
+        <thead><tr><th>Component</th><th>Use it for</th><th>Stays on screen?</th><th>Example</th></tr></thead>
+        <tbody>${rows}</tbody>
+      </table></div>
+    </div>`;
+}
+
+/* ── TOAST STYLE TAB ── */
+function renderTstReference(){
+  const root = document.getElementById('tst-reference');
+  if(!root) return;
+  const theme = currentTheme();
+  const sbg = stageBg(theme);
+
+  const hero = makeToastHTML({type:'pos', layout:'action-close', demo:true, action:'View'});
+  const pv = 'display:inline-flex;align-items:center;justify-content:center;border-radius:8px;padding:8px 10px;background:#218A29;color:#fff';
+  const parts = [
+    {num:1, name:'Container', note:'12px corners, 48px minimum height, filled with the type’s colour.', vis:`<span style="display:block;width:96px;height:30px;border-radius:8px;background:#218A29"></span>`},
+    {num:2, name:'Icon',      note:'18px, status types only. The two neutrals have none.',                 vis:`<span style="${pv}"><span class="tst__ico" style="margin:0;color:#fff">${TST_ICONS.tick}</span></span>`},
+    {num:3, name:'Caption',   note:'Optional. 11px Medium. One or two words of context.',                    vis:`<span style="${pv};font-size:11px;font-weight:500">Airtime</span>`},
+    {num:4, name:'Message',   note:'13px Semibold. One short line saying what happened.',                    vis:`<span style="${pv};font-size:13px;font-weight:650">R50 sent</span>`},
+    {num:5, name:'Action',    note:'Optional pill button. One or two words, like Retry or Undo.',            vis:`<span style="${pv};padding:6px"><span class="tst__act" style="display:inline-block;--tst-act-bg:rgba(0,0,0,.2);--tst-act-fg:#fff">View</span></span>`},
+    {num:6, name:'Close',     note:'Optional. 14px icon inside a 46px square tap area.',                     vis:`<span style="${pv};padding:4px"><span class="tst__x" style="margin:0;width:30px;height:30px;padding:8px">${TST_ICONS.close}</span></span>`},
+  ];
+  const partCards = parts.map(p=>`
+    <div class="spec-part">
+      <div class="spec-part__stage" style="background:${sbg}">${p.vis}</div>
+      <div class="spec-part__body">
+        <div class="spec-part__name"><span class="spec-part__num">${p.num}</span>${p.name}</div>
+        <div class="spec-part__note">${p.note}</div>
+      </div>
+    </div>`).join('');
+
+  const variantCells = TST_TYPES.map(t=>`
+    <div class="spec-cell">
+      <div class="spec-cell__stage" style="display:block;padding:14px">${makeToastHTML({type:t.key, layout:'action', demo:true, style:TST_FLAT})}</div>
+      <div class="spec-cell__name">${t.label}</div>
+    </div>`).join('');
+
+  const sw = (bg, over) => `<span class="spec-tok-sw" style="background:${over ? `linear-gradient(${over},${over}),${bg}` : bg}"></span>`;
+  const tokCell = (l, d, lBg, dBg, isAct) => {
+    const fmt = v => v.startsWith('#') ? v.toUpperCase() : v;
+    let html = `<div class="spec-tok-cell">${sw(isAct ? lBg : l, isAct ? l : null)}<code>${fmt(l)}</code></div>`;
+    if(d.toLowerCase() !== l.toLowerCase()){
+      html += `<div class="spec-tok-cell" style="margin-top:6px">${sw(isAct ? dBg : d, isAct ? d : null)}<code>${fmt(d)}</code><span style="color:var(--chrome-muted);font-size:11px">dark</span></div>`;
+    }
+    return html;
+  };
+  const tokRows = TST_TYPES.map(t=>`
+    <tr>
+      <td class="dd-table__name">${t.label}</td>
+      <td>${tokCell(t.light.bg, t.dark.bg)}<div style="margin-top:4px;color:var(--chrome-muted);font-size:11px"><code>${t.tok.bg}</code></div></td>
+      <td>${tokCell(t.light.fg, t.dark.fg)}<div style="margin-top:4px;color:var(--chrome-muted);font-size:11px"><code>${t.tok.fg}</code></div></td>
+      <td>${tokCell(t.light.act, t.dark.act, t.light.bg, t.dark.bg, true)}</td>
+    </tr>`).join('');
+
+  const dims = [
+    ['Corner radius',          '12px'],
+    ['Minimum height',         '48px (one line, no caption)'],
+    ['Width',                  '344px; on mobile, screen width minus 8px each side'],
+    ['Text padding',           '12px on every side'],
+    ['Icon',                   '18px, 12px in from the left edge'],
+    ['Caption to message gap', '2px'],
+    ['Action button',          '12px left/right, 10px top/bottom padding, 56px corners'],
+    ['Gap between actions',    '6px'],
+    ['Close button',           '14px icon in a 46 &times; 46px tap area'],
+    ['Two-action row',         '12px padding right and bottom, buttons aligned right'],
+    ['Elevation',              '<code>elevation-xl</code> &mdash; 0 16px 80px rgba(0,0,0,0.16)'],
+  ].map(r=>`<tr><td class="dd-table__name">${r[0]}</td><td>${r[1]}</td></tr>`).join('');
+
+  const type = [
+    ['Caption', '11px', '500 Medium',    '1.3'],
+    ['Message', '13px', '650 Semibold',  '1.3'],
+    ['Action',  '12px', '800 Extra bold', '1.3'],
+  ].map(r=>`<tr><td class="dd-table__name">${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td><td>${r[3]}</td></tr>`).join('');
+
+  const motion = [
+    ['Enter',            '220ms, cubic-bezier(.2,.8,.2,1)', 'Slides 16px in from its edge and fades in (<code>.tst--in</code>)'],
+    ['Exit',             '160ms, ease-in',                  'Fades out and shrinks to 96% (<code>.tst--out</code>)'],
+    ['Reduced motion',   'Same timings',                    'Fade only &mdash; no slide, no shrink'],
+    ['Short duration',   '4000ms',                          'Message only'],
+    ['Long duration',    '7000ms',                          'Has an action'],
+    ['Stack gap',        '8px',                             'Between toasts in the region (larger screens only)'],
+    ['Offset from edge', '16px',                            'Region distance from the bottom or top of the screen'],
+  ].map(r=>`<tr><td class="dd-table__name">${r[0]}</td><td style="white-space:nowrap"><code>${r[1]}</code></td><td>${r[2]}</td></tr>`).join('');
+
+  const hoverAct = makeToastHTML({type:'neutral', layout:'action', demo:true, style:TST_FLAT, message:'Voucher removed', showCaption:false, action:'Undo'})
+    .replace('class="tst__act"', 'class="tst__act" style="background-image:linear-gradient(var(--tst-act-hov),var(--tst-act-hov))"');
+  const focusAct = makeToastHTML({type:'neutral', layout:'action', demo:true, style:TST_FLAT, message:'Voucher removed', showCaption:false, action:'Undo'})
+    .replace('class="tst__act"', 'class="tst__act" style="outline:2px solid currentColor;outline-offset:-4px"');
+  const states = [
+    {name:'Default',       note:'Resting, timer running.',                        html:makeToastHTML({type:'neutral', layout:'action', demo:true, style:TST_FLAT, message:'Voucher removed', showCaption:false, action:'Undo'})},
+    {name:'Action hover',  note:'The button gets a light overlay; the timer pauses.', html:hoverAct},
+    {name:'Keyboard focus', note:'A 2px ring in the text colour, inset 4px.',     html:focusAct},
+  ].map(s=>`
+    <div class="spec-cell">
+      <div class="spec-cell__stage" style="display:block;padding:14px">${s.html}</div>
+      <div class="spec-cell__name">${s.name}</div>
+      <div class="spec-cell__desc">${s.note}</div>
+    </div>`).join('');
+
+  root.innerHTML = `
+    <div class="type-sub">
+      <div class="type-sub__title">Anatomy</div>
+      <div class="type-sub__desc">A toast is a solid, rounded bar. It holds an optional status icon, an optional caption and a one-line message, with up to two actions and a close button on the right.</div>
+      <div class="cpg-section-outline">
+        <div class="spec-hero" style="background:${sbg}">${hero}</div>
+        <div class="spec-parts">${partCards}</div>
+      </div>
+    </div>
+
+    <div class="type-sub">
+      <div class="type-sub__title">Colour variants</div>
+      <div class="type-sub__desc">The four status types are solid fills that stay the same in light and dark, so the white or black text on them always has enough contrast. Only the two neutrals change with the theme. In dark mode, Neutral turns light so it doesn&rsquo;t disappear into a dark page.</div>
+      <div class="cpg-section-outline">
+        <div class="spec-grid" style="grid-template-columns:repeat(auto-fill,minmax(260px,1fr))">${variantCells}</div>
+        <div class="dd-table-wrap" style="margin-top:16px"><table class="dd-table" style="min-width:560px">
+          <thead><tr><th>Type</th><th>Fill</th><th>Text &amp; icon</th><th>Action fill</th></tr></thead>
+          <tbody>${tokRows}</tbody>
+        </table></div>
+      </div>
+    </div>
+
+    <div class="type-sub">
+      <div class="type-sub__title">Size &amp; dimensions</div>
+      <div class="type-sub__desc">Toasts come in one size. Height grows with the caption and with the two-action row underneath.</div>
+      <div class="cpg-section-outline">
+        <div class="dd-table-wrap"><table class="dd-table">
+          <thead><tr><th>Property</th><th>Value</th></tr></thead>
+          <tbody>${dims}</tbody>
+        </table></div>
+      </div>
+    </div>
+
+    <div class="type-sub">
+      <div class="type-sub__title">Typography</div>
+      <div class="type-sub__desc">Satoshi throughout, with the house stylistic sets (ss01&ndash;ss04) on, like every other Satoshi text.</div>
+      <div class="cpg-section-outline">
+        <div class="dd-table-wrap"><table class="dd-table">
+          <thead><tr><th>Element</th><th>Size</th><th>Weight</th><th>Line height</th></tr></thead>
+          <tbody>${type}</tbody>
+        </table></div>
+      </div>
+    </div>
+
+    <div class="type-sub">
+      <div class="type-sub__title">Tokens &amp; timing</div>
+      <div class="type-sub__desc">Motion and duration values behind the behaviour rules on the Overview tab.</div>
+      <div class="cpg-section-outline">
+        <div class="dd-table-wrap"><table class="dd-table">
+          <thead><tr><th>Property</th><th>Value</th><th>Used for</th></tr></thead>
+          <tbody>${motion}</tbody>
+        </table></div>
+      </div>
+    </div>
+
+    <div class="type-sub" style="margin-bottom:0">
+      <div class="type-sub__title">States</div>
+      <div class="type-sub__desc">The toast itself isn&rsquo;t interactive &mdash; its action and close buttons are.</div>
+      <div class="cpg-section-outline">
+        <div class="spec-grid" style="grid-template-columns:repeat(auto-fill,minmax(260px,1fr))">${states}</div>
+      </div>
+    </div>`;
+}
+
+try { renderTstCodeTab(); } catch(e){ console.error('tst-code-tab',e); }
+try { renderTstPlayground(); } catch(e){ console.error('tst-playground',e); }
+try { renderTstVariants(); } catch(e){ console.error('tst-variants',e); }
+try { renderTstLayouts(); } catch(e){ console.error('tst-layouts',e); }
+try { renderTstBehaviour(); } catch(e){ console.error('tst-behaviour',e); }
+try { renderTstInSitu(); } catch(e){ console.error('tst-insitu',e); }
+try { renderTstWhich(); } catch(e){ console.error('tst-which',e); }
+try { renderTstReference(); } catch(e){ console.error('tst-reference',e); }
+
+function tstTabSwitch(tab){
+  const nav = document.getElementById('tst-tabs-list');
+  if(!nav) return;
+  nav.querySelectorAll('.tab-item').forEach(btn=>btn.classList.toggle('on', btn.getAttribute('data-tst-tab')===tab));
+  document.querySelectorAll('#s-toasts .tabs-panel[data-tst-panel]').forEach(p=>p.classList.toggle('on', p.getAttribute('data-tst-panel')===tab));
+}
+
+/* ============================================================
    ACCORDION — brought to the Pills-page tabbed treatment.
    Accordion has no colour-variant axis (unlike Pill) — its one
    real behavioural axis is single-open vs multiple-open, which
@@ -20567,12 +21512,19 @@ function cbrTabSwitch(tab){
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.95.3';
+const SYSTEM_VERSION = '1.96.0';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.96.0', date:'2026-10-05', author:'Mo', title:'Toasts page built; Alert and Toasts grouped under a new Alerts dropdown', changes:[
+        ['added','Toasts (s-toasts) is now a full .sec--tabbed page built from the Figma Alert component (Style=Snackbar or inline): six types (Positive, Info, Warning, Critical, Neutral, Neutral light) crossed with five action layouts, replacing the "Coming in a future session" stub'],
+        ['added','New reusable .tst / .tst__main / .tst__ico / .tst__bd / .tst__cap / .tst__msg / .tst__acts / .tst__act / .tst__x classes, .tst--stack for the two-action row, .tst-region (+ --top) for placement, and .tst--in / .tst--out enter and exit motion that falls back to a plain fade under prefers-reduced-motion'],
+        ['changed','Sidebar: Alert and Toasts now sit together under a new "Alerts" dropdown (a NAV sub-group, the same pattern as Cards and Charts). The existing Alert page moved in unchanged as "Inline Alert", and Toasts dropped its "Coming soon" tag'],
+        ['changed','Components landing: the Toasts card preview now shows a solid toast bar with an action pill instead of a near-copy of the Alert card'],
+        ['changed','Elevation: the XL (Notifications) level now lists .tst as a real component at that level, replacing the "Nothing ships at this level yet" note'],
+      ]},
       {version:'1.95.3', date:'2026-09-10', author:'Mo', title:'Colours Usage: Indicators shows both strengths per state, Chart note split out, link underline removed', changes:[
         ['added','Usage > Which token for what > Indicators now shows the background token alongside each state\'s icon/text token (--color-info-l, --color-success-l, --color-warn-l, --color-crit-l next to their -h siblings) rather than only the high-contrast four'],
         ['changed','Chart & category colours: "Primary Green is used in monochrome graphs, or graphs where there is only one colour" moved out of the paragraph about the inactive/hover strength pairing into its own note below the swatch grid, so the two unrelated points read as two points'],
@@ -22221,7 +23173,10 @@ const CHANGELOG = {
         ['added','Native <details> disclosure with single-open and multiple-open variants'],
       ]},
     ]},
-    {secId:'s-alert', name:'Alert', version:'1.2.1', entries:[
+    {secId:'s-alert', name:'Inline Alert', version:'1.2.2', entries:[
+      {version:'1.2.2', date:'2026-10-05', author:'Mo', title:'Renamed to Inline Alert and moved under the new Alerts dropdown', changes:[
+        ['changed','Page title and sidebar label changed from "Alert" to "Inline Alert", and the page now sits under a new "Alerts" dropdown next to Toasts. The new name separates it from Toasts, which share the same four status colours. Section id (s-alert), classes (.alrt*) and content are unchanged, so existing links and tooling still resolve'],
+      ]},
       {version:'1.2.1', date:'2026-08-21', author:'Mo', title:'Fixed dark-mode toggle not repainting the Overview/Style stages', changes:[
         ['fixed','renderAlertPlayground/Variants/InSitu/Reference were never added to toggleTheme(), so switching to dark left every Alert mount on its light-mode stage background until a full reload; added the four missing calls'],
       ]},
@@ -22714,7 +23669,10 @@ const CHANGELOG = {
         ['added','8px base scale, spacing tokens, radius tokens, 4-breakpoint grid'],
       ]},
     ]},
-    {secId:'s-elev', name:'Elevation', version:'1.1.0', entries:[
+    {secId:'s-elev', name:'Elevation', version:'1.1.1', entries:[
+      {version:'1.1.1', date:'2026-10-05', author:'Mo', title:'XL level now lists Toasts as a real component', changes:[
+        ['changed','Usage tab, Extra Large (XL) "Components" row: replaced the "Nothing ships at this level yet — Toasts are still to come" note with a rendered .tst example and a Matches tag, now that Toasts ship at elevation-xl (0 16px 80px rgba(0,0,0,0.16))'],
+      ]},
       {version:'1.1.0', date:'2026-09-09', author:'Mo', title:'Full tabbed component-page treatment', changes:[
         ['changed','Rebuilt onto the .sec--tabbed pattern: sec-hero with a 3-surface (XS/M/XL) preview, a 4-tab strip (Overview / Usage / Tokens / Changelog), replacing the single flat .sec__head + list layout'],
         ['added','Overview — Anatomy (Y-offset, Blur, Colour, Spread shown in isolation) and Levels (the 5 levels rendered live from ELEVATION via the new renderElevLevels())'],
@@ -23194,7 +24152,17 @@ const CHANGELOG = {
         ['added','Usage guidance for when to reach for a bottom sheet vs. a dialog'],
       ]},
     ]},
-    {secId:'s-toasts', name:'Toasts & Snackbars', version:'0.0.0', entries:[
+    {secId:'s-toasts', name:'Toasts', version:'1.0.0', entries:[
+      {version:'1.0.0', date:'2026-10-05', author:'Mo', title:'Initial release: tabbed page built from the Figma Snackbar component', changes:[
+        ['added','Six types, matching Figma: Positive (--prim-green-800), Info (--prim-bb-700), Warning (--prim-yel-500, black text), Critical (--prim-red-700), Neutral (--prim-grey-1100) and Neutral light (--color-surface-n1). Status types are solid fills that stay the same in both themes; in dark mode Neutral inverts to a light fill and Neutral light follows the surface tokens'],
+        ['added','Five action layouts, matching Figma: none, close icon, short action, short action + close, and two actions / long label (.tst--stack moves the buttons onto their own right-aligned row)'],
+        ['added','Specs taken from Figma: 12px radius, 48px minimum height, 12px text padding, 18px icon, 11px/500 caption, 13px/650 message, 12px/800 pill actions (10px/12px padding, 56px radius, 6px gap), 14px close icon in a 46px tap area; floats at elevation-xl'],
+        ['added','Overview: playground (tstPg state) with Type, Actions, Caption, Duration (4s / 7s / Persistent), Placement (bottom / top) and editable caption/message. Show toast plays the real enter, auto-dismiss and exit; the timer pauses on hover or focus and resumes with the time that was left; close, action and Escape dismiss early'],
+        ['added','Overview: Key variants, Key layouts, a Behaviour section (timing table plus placement, width, one-at-a-time stacking, dismissal, motion, focus, screen-reader and do-not-cover rules), In context mockups (confirmation, Undo, failure with Retry), a When to use which table (Toast vs Inline Alert vs Bottom Sheet), and Do\'s and don\'ts'],
+        ['added','Style: Anatomy (Container, Icon, Caption, Message, Action, Close), Colour variants with a Fill / Text & icon / Action fill token table showing light and dark values, Size & dimensions, Typography, Tokens & timing, and States (default, action hover, keyboard focus)'],
+        ['added','Code: live snippet synced to the playground with an HTML / Blazor / React TSX switcher (TST_LANGS, setTstLang, tstLangKeydown). The region uses role="status" with aria-live="polite", and Critical uses role="alert"'],
+        ['changed','AI context tab regenerated from "placeholder" to "js-rendered" now that real markup, CSS and builders exist; the section was renamed from "Toasts & Snackbars" to "Toasts" to match the nav'],
+      ]},
       {version:'0.0.0', date:'2026-07-29', author:'Mo', title:'Placeholder AI context tab added', changes:[
         ['added','Placeholder AI context tab (status: "placeholder") flagging that this section has no real markup yet — prevents tooling from trying to extract a Toasts component that doesn\'t exist; notes the unrelated doc-site-only #toast/.toast clipboard-copy indicator elsewhere in the file is not this component'],
       ]},
@@ -30784,6 +31752,7 @@ try {
   {secId:'s-tags',   panelId:'tag-changelog-panel'},
   {secId:'s-badges', panelId:'badge-changelog-panel'},
   {secId:'s-alert',  panelId:'alrt-changelog-panel'},
+  {secId:'s-toasts', panelId:'tst-changelog-panel'},
   {secId:'s-drawers', panelId:'bsh-changelog-panel'},
   {secId:'s-accordion', panelId:'acc-changelog-panel'},
   {secId:'s-logos', panelId:'logo-changelog-panel'},
@@ -30855,7 +31824,10 @@ const NAV = [
     intro:'Flexible, reusable building blocks for Flash apps and sites. Every component shares the same tokens, spacing and states — pick one to see its playground, specs and code.',
     items:[
       {id:'s-accordion',    label:'Accordion',           desc:'Collapsible stacked sections.'},
-      {id:'s-alert',        label:'Alert',               desc:'Inline messages for status and feedback.'},
+      {label:'Alerts', items:[
+        {id:'s-alert',        label:'Inline Alert',  desc:'Status messages that sit beside the content they describe.'},
+        {id:'s-toasts',       label:'Toasts',        desc:'Brief confirmations that appear, then leave on their own.'},
+      ]},
       {id:'s-avatar',       label:'Avatar',              desc:'User and brand identity marks.'},
       {id:'s-badges',       label:'Badges',              desc:'Counts, avatars and status markers.'},
       {id:'s-drawers',      label:'Bottom Sheets',       desc:'Panels that slide up from the bottom edge.'},
@@ -30896,7 +31868,6 @@ const NAV = [
       {id:'s-tabs',         label:'Tabs',                desc:'Switch between related views.'},
       {id:'s-tags',         label:'Tags',                desc:'Read-only category and metadata labels.'},
       {id:'s-inputs',       label:'Text Inputs',         desc:'Text, search and password fields.'},
-      {id:'s-toasts',       label:'Toasts', tag:'Coming soon',  desc:'Transient status notifications.'},
       {id:'s-toggle-group', label:'Toggle Group',        desc:'Segmented single / multi choice.'},
       {id:'s-tooltip',      label:'Tooltip',             desc:'Brief on-hover hints.'},
     ]},
@@ -30956,7 +31927,7 @@ const MOCKS = {
   's-toggle-group': '<div class="mk-seg"><span>Day</span><span class="on">Week</span><span>Month</span></div>',
   's-tooltip': '<div class="mk-tip">Tooltip</div>',
   's-modals': '<div class="mk-card" style="width:72%;padding:14px;display:flex;flex-direction:column;gap:9px"><span class="mk-bar mk-bar--txt" style="width:55%;height:12px"></span><span class="mk-bar" style="width:95%"></span><span class="mk-bar" style="width:80%"></span><div style="display:flex;gap:8px;justify-content:flex-end;margin-top:4px"><span class="mk-pill mk-pill--ghost" style="height:26px;font-size:11px">Cancel</span><span class="mk-pill mk-pill--dark" style="height:26px;font-size:11px">OK</span></div></div>',
-  's-toasts': '<div class="mk-card" style="width:82%;padding:12px;display:flex;align-items:center;gap:10px;border-left:4px solid var(--color-brand)"><span class="mk-glyph" style="width:18px;height:18px;color:var(--color-brand)">'+iconSvg('check')+'</span><div style="flex:1;display:flex;flex-direction:column;gap:5px"><span class="mk-bar mk-bar--txt" style="width:50%"></span><span class="mk-bar" style="width:80%"></span></div></div>',
+  's-toasts': '<div style="width:82%;padding:12px 10px 12px 14px;display:flex;align-items:center;gap:10px;border-radius:12px;background:var(--chrome-txt);box-shadow:0 8px 24px rgba(0,0,0,.14)"><div style="flex:1;display:flex;flex-direction:column;gap:6px"><span class="mk-bar" style="width:40%;background:var(--chrome-bg);opacity:.55"></span><span class="mk-bar" style="width:78%;background:var(--chrome-bg)"></span></div><span style="width:46px;height:26px;border-radius:999px;background:var(--chrome-bg);opacity:.22;flex-shrink:0"></span></div>',
 };
 function lpMock(id){ return MOCKS[id] || '<div class="mk-sk"><div class="mk-sk__row"></div><div class="mk-sk__row s2"></div><div class="mk-sk__row s3"></div></div>'; }
 
