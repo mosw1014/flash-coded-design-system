@@ -19291,21 +19291,19 @@ function renderTstInSitu(){
   if(!root) return;
   const sbg = stageBg(currentTheme());
   /* A mini phone screen: inset content at the top, then the toast with the
-     8px side gutters and 16px lift it gets in the product, then a bottom nav. */
+     8px side gutters and 16px lift it gets in the product. */
   const bars = `
       <div style="display:flex;flex-direction:column;gap:10px;padding:18px 16px 0">
         <div class="spec-mock__row"><span class="spec-mock__bar" style="width:45%"></span><span class="spec-mock__spacer"></span><span class="spec-mock__bar" style="width:24px"></span></div>
         <div class="spec-mock__row"><span class="spec-mock__bar" style="width:80%"></span></div>
         <div class="spec-mock__row"><span class="spec-mock__bar" style="width:62%"></span></div>
       </div>`;
-  const nav = `<div aria-hidden="true" style="display:flex;justify-content:space-around;padding:12px 16px 14px;border-top:1px solid var(--chrome-border)">${'<span class="spec-mock__bar" style="width:18px;height:18px;border-radius:6px"></span>'.repeat(4)}</div>`;
   const mock = (toast, cap) => `
     <div class="spec-mock">
       <div class="spec-mock__stage" style="background:${sbg};padding:0;gap:0;justify-content:flex-start;min-height:236px">
         ${bars}
         <div style="flex:1;min-height:24px"></div>
         <div style="padding:0 8px 16px">${toast}</div>
-        ${nav}
       </div>
       <div class="spec-mock__cap">${cap}</div>
     </div>`;
@@ -21523,6 +21521,7 @@ const CHANGELOG = {
     version: SYSTEM_VERSION,
     entries: [
       {version:'1.96.1', date:'2026-10-05', author:'Mo', title:'Toasts: padding fixes in Colour variants and In context previews', changes:[
+        ['removed','Toasts Overview, In context: the placeholder bottom-navigation strip under the toast in each phone mockup'],
         ['fixed','Toasts Style tab, Colour variants: the type label under each swatch sat on the cell\'s bottom border because .spec-cell__name only pads its bottom when a description follows it -- added 12px bottom padding to those labels'],
         ['fixed','Toasts Overview, In context: rebuilt the phone mockups so the content, toast and bottom nav share consistent insets (16px content, 8px toast gutters, 16px above the nav, 12/14px nav padding) instead of a full-bleed nav and edge-to-edge toast; the grid now wraps below 260px per card so toasts aren\'t squeezed at mid widths'],
         ['fixed','.tst__bd overflow-wrap changed from anywhere to break-word, so a toast in a narrow container wraps between words instead of splitting words mid-letter'],
@@ -24163,6 +24162,7 @@ const CHANGELOG = {
     ]},
     {secId:'s-toasts', name:'Toasts', version:'1.0.1', entries:[
       {version:'1.0.1', date:'2026-10-05', author:'Mo', title:'Padding fixes in Colour variants and In context previews', changes:[
+        ['removed','Overview > In context: the placeholder bottom-navigation strip under the toast in each phone mockup'],
         ['fixed','Style > Colour variants: type labels had no bottom padding (no description underneath them) -- added 12px so they no longer sit on the cell edge'],
         ['fixed','Overview > In context: phone mockups now use consistent insets -- 16px around the content, 8px side gutters and a 16px lift for the toast, 12/14px padding on the bottom nav -- replacing a nav that bled to the card edges and a toast that ran edge to edge. Cards wrap when narrower than 260px'],
         ['fixed','.tst__bd uses overflow-wrap:break-word instead of anywhere, so long text wraps between words rather than mid-word in narrow containers'],
