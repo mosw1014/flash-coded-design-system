@@ -3158,7 +3158,7 @@ body.home .main{max-width:none;margin:0;padding:0}
         <h1 class="sec__title">Elevation</h1>
         <p class="sec__desc">Five shadow levels used to lift a surface above the page, each with its own y-offset and blur.</p>
         <div class="sec-header-meta">
-          <span class="comp-ver-badge" style="margin-left:0">v1.1.2</span>
+          <span class="comp-ver-badge" style="margin-left:0">v1.1.3</span>
           <details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-elev">
@@ -3388,8 +3388,6 @@ body.home .main{max-width:none;margin:0;padding:0}
                 <div class="logo-var__row">
                   <div class="logo-var__rowlabel">Components</div>
                   <div class="elev-doc-uses"><div class="elev-doc-use__note">Nothing ships at this level yet &mdash; Toasts are flat, with no shadow.</div></div>
-                    </div>
-                  </div>
                 </div>
               </div>
             </div>
@@ -21507,12 +21505,15 @@ function cbrTabSwitch(tab){
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.96.1';
+const SYSTEM_VERSION = '1.96.2';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.96.2', date:'2026-10-05', author:'Mo', title:'Fixed every page after Elevation rendering below a screen of blank space', changes:[
+        ['fixed','The Elevation XL row edit in 1.96.1 (removing the .tst example) left two orphan closing </div> tags behind. The browser used them to close the .main column early, so every section after Elevation (Icons, Logos, Buttons and all component pages) fell outside the layout and rendered below a full screen of empty space with no sidebar. Removed the two orphan tags; the file now parses with every section back inside .main'],
+      ]},
       {version:'1.96.1', date:'2026-10-05', author:'Mo', title:'Toasts: padding fixes in Colour variants and In context previews', changes:[
         ['fixed','Removed the drop shadow from every toast type (Neutral light had it removed first): the base .tst box-shadow, the hero preview shadow and the inline shadows on the In context mockups and landing card are gone, matching Figma, where toasts are flat'],
         ['removed','Toasts Overview, In context: the placeholder bottom-navigation strip under the toast in each phone mockup'],
@@ -23671,7 +23672,10 @@ const CHANGELOG = {
         ['added','8px base scale, spacing tokens, radius tokens, 4-breakpoint grid'],
       ]},
     ]},
-    {secId:'s-elev', name:'Elevation', version:'1.1.2', entries:[
+    {secId:'s-elev', name:'Elevation', version:'1.1.3', entries:[
+      {version:'1.1.3', date:'2026-10-05', author:'Mo', title:'Fixed broken page layout after the XL row edit', changes:[
+        ['fixed','Removed two orphan closing </div> tags left in the Usage tab\'s Extra Large (XL) Components row by the 1.1.2 edit. They closed the page\'s main column early and pushed every later page below a screen of blank space'],
+      ]},
       {version:'1.1.2', date:'2026-10-05', author:'Mo', title:'XL level no longer lists Toasts', changes:[
         ['changed','Usage tab, Extra Large (XL) Components row: removed the .tst example added in 1.1.1, since toasts are now flat with no shadow. The note now reads "Nothing ships at this level yet — Toasts are flat, with no shadow."'],
       ]},
