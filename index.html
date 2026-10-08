@@ -824,6 +824,35 @@ body{font-family:'Satoshi Variable','Satoshi',system-ui,sans-serif;font-feature-
 /* Don't-mocks: re-point the variables, so the mistake is rendered on real values */
 .elev-scene--flat{--elevation-surface-xs:var(--color-surface-base);--elevation-surface-m:var(--color-surface-base);--elevation-surface-l:var(--color-surface-base);--elevation-xs:0 1px 4px 0 rgba(0,0,0,0.16);--elevation-m:0 4px 24px 0 rgba(0,0,0,0.16);--elevation-l-up:0 -8px 48px 0 rgba(0,0,0,0.16)}
 .elev-scene--inverted{--elevation-surface-xs:var(--color-surface-n3)}
+/* Theme-aware copy: show only the sentence for the page's current theme */
+:root[data-theme="dark"] .elev-only-light{display:none}
+:root:not([data-theme="dark"]) .elev-only-dark{display:none}
+/* Which-level-for-what token readout — the line that carries depth in this theme leads */
+.elev-toks{display:flex;flex-direction:column;gap:5px;margin-top:6px}
+.elev-tok-line{display:flex;align-items:center;flex-wrap:wrap;gap:6px;font-size:11px;color:var(--chrome-muted)}
+.elev-tok-line__k{min-width:52px;font-size:9.5px;font-weight:700;letter-spacing:.5px;text-transform:uppercase}
+.elev-tok-line:first-child .elev-tok-line__k{color:var(--chrome-accent-text)}
+.elev-tok-line:first-child .elev-doc-tok{color:var(--chrome-txt);font-weight:600}
+.elev-tok-line__v{font-family:'SF Mono',Consolas,monospace;font-size:10.5px}
+.elev-tok-sw{width:12px;height:12px;border-radius:3px;border:1px solid var(--chrome-border);flex-shrink:0}
+/* CSS variables table — the Light and Dark columns are each rendered in their own theme scope */
+.elev-vt thead th.elev-vt__th-mode{padding-top:10px;padding-bottom:10px}
+.elev-vt__mode{display:inline-flex;align-items:center;gap:6px;padding:4px 11px;border-radius:20px;font-size:10.5px;letter-spacing:.6px}
+.elev-vt__mode--light{background:var(--prim-white);color:var(--prim-black)}
+.elev-vt__mode--dark{background:var(--prim-gb-500);color:var(--prim-white);border:1px solid rgba(255,255,255,.18)}
+.elev-vt tbody tr:hover{background:transparent}
+.elev-vt td.elev-vt__var{width:32%}
+.elev-vt td.elev-vt__var .elev-doc-tok{font-size:12px;font-weight:600;color:var(--chrome-txt)}
+.elev-vt__role{font-size:11px;font-weight:500;color:var(--chrome-muted);margin-top:3px}
+.elev-vt td.elev-vt__cell{background:var(--chrome-bg);color:var(--chrome-txt);border-left:1px solid var(--chrome-border)}
+.elev-vt__val{display:flex;align-items:center;gap:12px}
+.elev-vt__stage{width:58px;height:40px;flex-shrink:0;display:flex;align-items:center;justify-content:center;border-radius:8px;overflow:hidden;background:var(--elevation-surface-0);border:1px solid var(--chrome-border)}
+.elev-vt__tile{width:30px;height:20px;border-radius:5px}
+.elev-vt__main{font-family:'SF Mono',Consolas,monospace;font-size:12px;font-weight:600}
+.elev-vt__sub{font-family:'SF Mono',Consolas,monospace;font-size:10.5px;color:var(--chrome-muted);margin-top:2px}
+.elev-vt__none{display:inline-block;padding:0 8px;border-radius:20px;border:1px dashed var(--chrome-muted);font-size:11px;line-height:18px}
+.elev-vt tbody tr.elev-vt__group td{padding:9px 16px;background:var(--chrome-nav);font-size:10.5px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--chrome-muted)}
+.elev-vt__gn{margin-left:8px;font-family:'SF Mono',Consolas,monospace;font-weight:500;letter-spacing:0;text-transform:none}
 @media (max-width:700px){
   .elev-doc-use{grid-template-columns:1fr}
   .elev-doc-use__meta{border-left:0;border-top:1px solid var(--chrome-border)}
@@ -1866,7 +1895,7 @@ body.home .main{max-width:none;margin:0;padding:0}
 .dpd-field--sm .dpd-caption{font-size:11px}
 
 /* Menu card — attaches under the trigger, real instances float; static swatches lay out inline */
-.dpd-menu{position:absolute;left:0;right:0;top:calc(100% + 6px);z-index:20;max-height:280px;overflow-y:auto;display:flex;flex-direction:column;gap:2px;padding:4px;border-radius:12px;border:1px solid var(--chrome-border);background:var(--color-surface-base);box-shadow:0 4px 24px 0 rgba(0,0,0,.16)}
+.dpd-menu{position:absolute;left:0;right:0;top:calc(100% + 6px);z-index:20;max-height:280px;overflow-y:auto;display:flex;flex-direction:column;gap:2px;padding:4px;border-radius:12px;border:1px solid var(--chrome-border);background:var(--elevation-surface-m);box-shadow:var(--elevation-m)}
 .dpd-menu[hidden]{display:none}
 .dpd-menu--inline{position:static;top:auto;margin-top:6px;box-shadow:0 1px 2px rgba(0,0,0,.1)}
 .dpd-search{display:flex;align-items:center;gap:8px;padding:9px 12px;margin-bottom:2px;border-radius:999px;background:var(--color-surface-n1);color:var(--color-text-3);flex-shrink:0}
@@ -1963,7 +1992,7 @@ body.home .main{max-width:none;margin:0;padding:0}
 .bsh-phone__content{position:absolute;inset:22px 0 0 0;display:flex;align-items:center;justify-content:center;color:var(--chrome-muted);font-size:11.5px;text-align:center;padding:20px}
 .bsh-phone__overlay{position:absolute;inset:0;background:rgba(43,43,43,.5);backdrop-filter:blur(2px);z-index:1}
 
-.bsh-sheet{position:absolute;left:0;right:0;bottom:0;background:var(--color-surface-base);display:flex;flex-direction:column;z-index:2;box-shadow:0 -8px 48px 0 rgba(0,0,0,.16);transition:background .25s}
+.bsh-sheet{position:absolute;left:0;right:0;bottom:0;background:var(--elevation-surface-l);display:flex;flex-direction:column;z-index:2;box-shadow:var(--elevation-l-up);transition:background .25s}
 .bsh-sheet--compact{border-radius:20px 20px 0 0}
 .bsh-sheet--full{top:22px;border-radius:0}
 .bsh-sheet--full .bsh-sheet__body{flex:1}
@@ -1983,7 +2012,7 @@ body.home .main{max-width:none;margin:0;padding:0}
 .bsh-sheet__footer-row .ds-btn{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis}
 .bsh-sheet__footer.is-mix>a.ds-btn{align-self:center;flex:none}
 
-.bsh-ref__header{width:260px;background:var(--color-surface-base);border:1px solid var(--chrome-border);border-radius:20px 20px 0 0;padding-bottom:10px;transition:background .25s}
+.bsh-ref__header{width:260px;background:var(--elevation-surface-l);border:1px solid var(--chrome-border);border-radius:20px 20px 0 0;padding-bottom:10px;transition:background .25s}
 .bsh-ref__header.is-dialog{border-radius:16px}
 .bsh-ref__header .bsh-sheet__header{padding:10px 14px 0}
 .bsh-ref__header .bsh-phone__status{height:auto;padding:8px 14px 0}
@@ -2040,7 +2069,7 @@ body.home .main{max-width:none;margin:0;padding:0}
 
 /* ---- Tooltip ---- */
 .tip{position:relative;display:inline-flex}
-.tip__bubble{position:absolute;z-index:30;padding:6px 10px;border-radius:8px;background:var(--color-surface-inverse);color:var(--color-text-inv);font-size:12px;font-weight:500;line-height:1.4;white-space:nowrap;pointer-events:none;opacity:0;transition:opacity .15s ease,transform .15s ease;box-shadow:0 2px 12px 0 rgba(0,0,0,.16)}
+.tip__bubble{position:absolute;z-index:30;padding:6px 10px;border-radius:8px;background:var(--color-surface-inverse);color:var(--color-text-inv);font-size:12px;font-weight:500;line-height:1.4;white-space:nowrap;pointer-events:none;opacity:0;transition:opacity .15s ease,transform .15s ease;box-shadow:var(--elevation-s)}
 .tip__bubble::after{content:"";position:absolute;width:8px;height:8px;background:var(--color-surface-inverse);transform:rotate(45deg)}
 .tip:hover .tip__bubble,.tip:focus-within .tip__bubble{opacity:1}
 .tip__bubble--top{bottom:calc(100% + 9px);left:50%;transform:translate(-50%,4px)}
@@ -2241,7 +2270,7 @@ body.home .main{max-width:none;margin:0;padding:0}
 
 /* ---- Popover ---- */
 .pop{position:relative;display:inline-block}
-.pop__panel{position:absolute;top:calc(100% + 8px);left:0;z-index:40;min-width:244px;background:var(--chrome-bg);border:1px solid var(--chrome-border);border-radius:12px;box-shadow:0 4px 24px 0 rgba(0,0,0,.16);padding:16px;opacity:0;transform:translateY(-6px);pointer-events:none;transition:opacity .15s ease,transform .15s ease}
+.pop__panel{position:absolute;top:calc(100% + 8px);left:0;z-index:40;min-width:244px;background:var(--elevation-surface-m);border:1px solid var(--chrome-border);border-radius:12px;box-shadow:var(--elevation-m);padding:16px;opacity:0;transform:translateY(-6px);pointer-events:none;transition:opacity .15s ease,transform .15s ease}
 .pop__panel--right{left:auto;right:0}
 .pop.is-open .pop__panel{opacity:1;transform:translateY(0);pointer-events:auto}
 .pop__title{font-size:13px;font-weight:700;color:var(--chrome-txt);margin-bottom:5px}
@@ -2266,7 +2295,7 @@ body.home .main{max-width:none;margin:0;padding:0}
 .otp-msg--err{color:var(--color-crit-h);font-weight:600}
 /* ---- Card ---- */
 .card-grid{display:flex;flex-wrap:wrap;gap:20px}
-.card{background:var(--chrome-bg);border:1px solid var(--chrome-border);border-radius:14px;overflow:hidden;width:300px;max-width:100%;transition:background .25s,border-color .15s,box-shadow .15s,transform .15s;display:flex;flex-direction:column}
+.card{background:var(--elevation-surface-xs);border:1px solid var(--chrome-border);border-radius:14px;overflow:hidden;width:300px;max-width:100%;transition:background .25s,border-color .15s,box-shadow .15s,transform .15s;display:flex;flex-direction:column}
 .card__media{height:132px;background:linear-gradient(135deg,var(--prim-grey-700),var(--prim-grey-1000));flex-shrink:0}
 .card__body{padding:18px;flex:1}
 .card__title{font-size:15px;font-weight:800;color:var(--chrome-txt);margin-bottom:5px}
@@ -2325,7 +2354,7 @@ body.home .main{max-width:none;margin:0;padding:0}
 .cht-legend__dot{width:10px;height:10px;border-radius:3px;flex-shrink:0}
 .cht-donut-val{fill:var(--chrome-txt);font-weight:800}
 .cht-donut-lab{fill:var(--chrome-muted)}
-.cht__tip{position:absolute;z-index:5;pointer-events:none;background:var(--color-surface-inverse);color:var(--color-text-inv);font-size:11.5px;font-weight:600;padding:5px 9px;border-radius:7px;white-space:nowrap;opacity:0;transform:translate(-50%,-100%);transition:opacity .12s;box-shadow:0 4px 14px rgba(0,0,0,.22)}
+.cht__tip{position:absolute;z-index:5;pointer-events:none;background:var(--color-surface-inverse);color:var(--color-text-inv);font-size:11.5px;font-weight:600;padding:5px 9px;border-radius:7px;white-space:nowrap;opacity:0;transform:translate(-50%,-100%);transition:opacity .12s;box-shadow:var(--elevation-s)}
 .cht__tip.show{opacity:1}
 .cht__tip b{font-weight:800}
 /* ---- Progress meter / Distribution bars (Charts) ---- */
@@ -2400,7 +2429,7 @@ body.home .main{max-width:none;margin:0;padding:0}
 /* ---- Hover card ---- */
 .hc{position:relative;display:inline-block}
 .hc__trigger{color:var(--color-link);font-weight:600;cursor:pointer;text-decoration:underline;text-underline-offset:2px;background:none;border:0;font-family:inherit;font-size:inherit;padding:0}
-.hc__card{position:absolute;top:calc(100% + 8px);left:0;z-index:30;width:268px;background:var(--chrome-bg);border:1px solid var(--chrome-border);border-radius:12px;box-shadow:0 14px 36px rgba(0,0,0,.16);padding:16px;opacity:0;transform:translateY(-6px) scale(.98);transform-origin:top left;pointer-events:none;transition:opacity .18s ease,transform .18s ease}
+.hc__card{position:absolute;top:calc(100% + 8px);left:0;z-index:30;width:268px;background:var(--elevation-surface-m);border:1px solid var(--chrome-border);border-radius:12px;box-shadow:var(--elevation-m);padding:16px;opacity:0;transform:translateY(-6px) scale(.98);transform-origin:top left;pointer-events:none;transition:opacity .18s ease,transform .18s ease}
 .hc:hover .hc__card,.hc:focus-within .hc__card{opacity:1;transform:translateY(0) scale(1);pointer-events:auto;transition-delay:.2s}
 /* .is-open pins the card open — for a programmatic open, and for showing the revealed state statically */
 .hc.is-open .hc__card{opacity:1;transform:translateY(0) scale(1);pointer-events:auto;transition-delay:0s}
@@ -3199,7 +3228,7 @@ body.home .main{max-width:none;margin:0;padding:0}
         <h1 class="sec__title">Elevation</h1>
         <p class="sec__desc">Five levels that lift a surface above the page. In light mode a shadow carries the depth; in dark mode the surface itself steps lighter, and the shadow becomes a secondary edge.</p>
         <div class="sec-header-meta">
-          <span class="comp-ver-badge" style="margin-left:0">v1.2.0</span>
+          <span class="comp-ver-badge" style="margin-left:0">v1.3.0</span>
           <details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-elev">
@@ -3208,11 +3237,17 @@ body.home .main{max-width:none;margin:0;padding:0}
   "builderFunctions": [
     "ELEVATION",
     "renderElevLevels",
+    "renderElevTokens",
     "elevVarValue",
+    "elevLv",
+    "elevShadowParts",
+    "elevShadowText",
+    "elevSurfaceAlias",
+    "renderElevDocToks",
     "renderElevDark"
   ],
   "noReusableClass": true,
-  "js": "const ELEVATION = [\n  {name:'Extra Small (XS)', token:'elevation-xs',  y:1,  blur:4,  dark:'n1', use:'Cards, tiles',              eg:'Cards'},\n  {name:'Small (S)',        token:'elevation-s',   y:2,  blur:12, dark:'n1', use:'Secondary overlays',         eg:'Tooltips'},\n  {name:'Medium (M)',       token:'elevation-m',   y:4,  blur:24, dark:'n2', use:'Contextual overlays',        eg:'Menus, dropdowns'},\n  {name:'Large (L)',        token:'elevation-l',   y:8,  blur:48, dark:'n3', use:'Elements above most content',eg:'Dialogs, drawers'},\n  {name:'Extra Large (XL)', token:'elevation-xl',  y:16, blur:80, dark:'n3', use:'Highest priority elements',  eg:'Notifications'},\n];\n\nfunction renderElevLevels(){\n  const mount = document.getElementById('elev-levels-grid');\n  if(!mount) return;\n  mount.innerHTML = ELEVATION.map(e =&gt; {\n    const lv = e.token.replace('elevation-','');\n    return `&lt;div class=\"spec-cell\"&gt;\n      &lt;div class=\"spec-cell__stage\" style=\"background:var(--elevation-surface-0);display:flex;align-items:center;justify-content:center;min-height:110px\"&gt;&lt;div style=\"width:70px;height:70px;border-radius:10px;background:var(--elevation-surface-${lv});border:1px solid var(--chrome-border);box-shadow:var(--${e.token})\"&gt;&lt;/div&gt;&lt;/div&gt;\n      &lt;div class=\"spec-cell__name\"&gt;${e.name}&lt;/div&gt;\n      &lt;div class=\"spec-cell__desc\"&gt;&lt;code&gt;--${e.token}&lt;/code&gt;&lt;br&gt;y ${e.y} &amp;middot; blur ${e.blur} &amp;middot; dark surface ${e.dark}&lt;br&gt;${e.eg}&lt;/div&gt;\n    &lt;/div&gt;`;\n  }).join('');\n}\n\nfunction elevVarValue(theme, name){\n  const probe = document.createElement('div');\n  probe.setAttribute('data-brand','flash');\n  probe.setAttribute('data-theme',theme);\n  probe.style.display = 'none';\n  document.body.appendChild(probe);\n  const val = getComputedStyle(probe).getPropertyValue(name).trim();\n  probe.remove();\n  return val;\n}\n\nfunction renderElevDark(){\n  const ladder = document.getElementById('elev-dark-ladder');\n  if(ladder){\n    // Page first, then one step per distinct dark surface; levels sharing a grey merge\n    const steps = [{name:'Page', key:'0', dark:'base', eg:'Page background'}];\n    ELEVATION.forEach(e =&gt; {\n      const lv = e.token.replace('elevation-','');\n      const last = steps[steps.length-1];\n      if(last.dark === e.dark){ last.name += ' \\u00b7 ' + lv.toUpperCase(); last.eg += ', ' + e.eg.toLowerCase(); }\n      else steps.push({name:lv.toUpperCase(), key:lv, dark:e.dark, eg:e.eg});\n    });\n    ladder.innerHTML = steps.map((st, i) =&gt; `&lt;div class=\"elev-ladder__step\" style=\"min-height:${84 + i*24}px;background:var(--elevation-surface-${st.key});box-shadow:${st.key==='0' ? 'none' : `var(--elevation-${st.key})`}\"&gt;\n      &lt;div class=\"elev-ladder__lvl\"&gt;${st.name}&lt;/div&gt;\n      &lt;div class=\"elev-ladder__tok\"&gt;--color-surface-&lt;wbr&gt;${st.dark}&lt;/div&gt;\n      &lt;div class=\"elev-ladder__tok\"&gt;${elevVarValue('dark','--color-surface-'+st.dark)}&lt;/div&gt;\n      &lt;div class=\"elev-ladder__eg\"&gt;${st.eg}&lt;/div&gt;\n    &lt;/div&gt;`).join('');\n  }\n  const vars = document.getElementById('elev-vars-table');\n  if(vars){\n    const names = ['--elevation-default'];\n    ELEVATION.forEach(e =&gt; { names.push('--'+e.token); if(e.token==='elevation-l') names.push('--elevation-l-up'); });\n    names.push('--elevation-surface-0');\n    ELEVATION.forEach(e =&gt; names.push('--elevation-surface-'+e.token.replace('elevation-','')));\n    vars.innerHTML = names.map(n =&gt; `&lt;tr&gt;&lt;td class=\"dd-table__name\"&gt;&lt;code onclick=\"copy('var(${n})','CSS variable')\" style=\"cursor:pointer\"&gt;${n}&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;${elevVarValue('light',n)}&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;${elevVarValue('dark',n)}&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;`).join('');\n  }\n}",
+  "js": "const ELEVATION = [\n  {name:'Extra Small (XS)', token:'elevation-xs',  y:1,  blur:4,  dark:'n1', use:'Cards, tiles',              eg:'Cards'},\n  {name:'Small (S)',        token:'elevation-s',   y:2,  blur:12, dark:'n1', use:'Secondary overlays',         eg:'Tooltips'},\n  {name:'Medium (M)',       token:'elevation-m',   y:4,  blur:24, dark:'n2', use:'Contextual overlays',        eg:'Menus, dropdowns'},\n  {name:'Large (L)',        token:'elevation-l',   y:8,  blur:48, dark:'n3', use:'Elements above most content',eg:'Dialogs, drawers'},\n  {name:'Extra Large (XL)', token:'elevation-xl',  y:16, blur:80, dark:'n3', use:'Highest priority elements',  eg:'Notifications'},\n];\n\nfunction renderElevLevels(){\n  const mount = document.getElementById('elev-levels-grid');\n  if(!mount) return;\n  const theme = currentTheme();\n  mount.innerHTML = ELEVATION.map(e =&gt; {\n    const lv = elevLv(e);\n    const alias = elevSurfaceAlias(theme, lv);\n    // Lead with what carries the depth in this theme: the shadow in light, the surface in dark\n    const desc = theme==='dark'\n      ? `&lt;code&gt;--elevation-surface-${lv}&lt;/code&gt;&lt;br&gt;--color-surface-${alias} &amp;middot; ${elevVarValue('dark','--color-surface-'+alias)}&lt;br&gt;shadow ${elevShadowText('dark','--'+e.token)}&lt;br&gt;${e.eg}`\n      : `&lt;code&gt;--${e.token}&lt;/code&gt;&lt;br&gt;${elevShadowText('light','--'+e.token)}&lt;br&gt;${e.eg}`;\n    return `&lt;div class=\"spec-cell\"&gt;\n      &lt;div class=\"spec-cell__stage\" style=\"background:var(--elevation-surface-0);display:flex;align-items:center;justify-content:center;min-height:110px\"&gt;&lt;div style=\"width:70px;height:70px;border-radius:10px;background:var(--elevation-surface-${lv});border:1px solid var(--chrome-border);box-shadow:var(--${e.token})\"&gt;&lt;/div&gt;&lt;/div&gt;\n      &lt;div class=\"spec-cell__name\"&gt;${e.name}&lt;/div&gt;\n      &lt;div class=\"spec-cell__desc\"&gt;${desc}&lt;/div&gt;\n    &lt;/div&gt;`;\n  }).join('');\n}\n\nfunction renderElevTokens(){\n  const mount = document.getElementById('sp-elev');\n  if(!mount) return;\n  const dark = currentTheme()==='dark';\n  const theme = dark ? 'dark' : 'light';\n  const elevRows = ELEVATION.map(e =&gt; {\n    const lv = elevLv(e);\n    const sh = elevShadowParts(elevVarValue(theme, '--'+e.token));\n    const copyVar = dark ? `--elevation-surface-${lv}` : `--${e.token}`;\n    let mid;\n    if(dark){\n      const alias = elevSurfaceAlias('dark', lv);\n      const hex = elevVarValue('dark', '--color-surface-'+alias);\n      mid = `&lt;div class=\"elev-colour\"&gt;\n        &lt;div class=\"elev-col-dot\" style=\"background:${hex}\"&gt;&lt;/div&gt;\n        &lt;div class=\"elev-col-info\"&gt;\n          &lt;div class=\"elev-col-val\"&gt;${hex}&lt;/div&gt;\n          &lt;div class=\"elev-col-token\"&gt;--color-surface-${alias}&lt;/div&gt;\n        &lt;/div&gt;\n      &lt;/div&gt;\n      &lt;div class=\"elev-colour\"&gt;\n        &lt;div class=\"elev-col-info\"&gt;\n          &lt;div class=\"elev-col-val\"&gt;${sh ? `y ${sh.y} &amp;middot; blur ${sh.blur} &amp;middot; ${sh.pct}%` : 'none'}&lt;/div&gt;\n          &lt;div class=\"elev-col-token\"&gt;--${e.token}&lt;/div&gt;\n        &lt;/div&gt;\n      &lt;/div&gt;`;\n    } else {\n      mid = `&lt;div class=\"elev-effects\"&gt;\n        &lt;div class=\"elev-prop\"&gt;&lt;span class=\"elev-prop-label\"&gt;x-axis&lt;/span&gt;&lt;span class=\"elev-prop-val\"&gt;0&lt;/span&gt;&lt;/div&gt;\n        &lt;div class=\"elev-prop\"&gt;&lt;span class=\"elev-prop-label\"&gt;y-axis&lt;/span&gt;&lt;span class=\"elev-prop-val\"&gt;${e.y}&lt;/span&gt;&lt;/div&gt;\n        &lt;div class=\"elev-prop\"&gt;&lt;span class=\"elev-prop-label\"&gt;blur&lt;/span&gt;&lt;span class=\"elev-prop-val\"&gt;${e.blur}&lt;/span&gt;&lt;/div&gt;\n        &lt;div class=\"elev-prop\"&gt;&lt;span class=\"elev-prop-label\"&gt;spread&lt;/span&gt;&lt;span class=\"elev-prop-val\"&gt;0&lt;/span&gt;&lt;/div&gt;\n      &lt;/div&gt;\n      &lt;div class=\"elev-colour\"&gt;\n        &lt;div class=\"elev-col-dot\"&gt;&lt;/div&gt;\n        &lt;div class=\"elev-col-info\"&gt;\n          &lt;div class=\"elev-col-val\"&gt;#000000 &amp;nbsp;|&amp;nbsp; ${sh ? sh.pct : 16}%&lt;/div&gt;\n          &lt;div class=\"elev-col-token\"&gt;--elevation-default&lt;/div&gt;\n        &lt;/div&gt;\n      &lt;/div&gt;`;\n    }\n    return `&lt;div class=\"elev-row\" onclick=\"copy('var(${copyVar})','CSS variable')\" style=\"cursor:pointer\"&gt;\n      &lt;div&gt;&lt;div class=\"elev-preview\" style=\"background:var(--elevation-surface-${lv});box-shadow:var(--${e.token})\"&gt;&lt;/div&gt;&lt;/div&gt;\n      &lt;div&gt;\n        &lt;div class=\"elev-level\"&gt;${e.name}&lt;/div&gt;\n        &lt;div class=\"elev-token\"&gt;${copyVar}&lt;/div&gt;\n      &lt;/div&gt;\n      ${mid}\n      &lt;div&gt;\n        &lt;div class=\"elev-use-bold\"&gt;${e.eg}&lt;/div&gt;\n        &lt;div class=\"elev-use-text\"&gt;${e.use}&lt;/div&gt;\n      &lt;/div&gt;\n    &lt;/div&gt;`;\n  }).join('');\n\n  mount.innerHTML = `\n    &lt;div class=\"elev-list\"&gt;\n      &lt;div class=\"elev-head\"&gt;\n        &lt;div class=\"elev-head-cell\"&gt;&lt;/div&gt;\n        &lt;div class=\"elev-head-cell\"&gt;Level&lt;/div&gt;\n        &lt;div class=\"elev-head-cell\"&gt;${dark ? 'Surface' : 'Effects'}&lt;/div&gt;\n        &lt;div class=\"elev-head-cell\"&gt;${dark ? 'Shadow' : 'Colour'}&lt;/div&gt;\n        &lt;div class=\"elev-head-cell\"&gt;Usage&lt;/div&gt;\n      &lt;/div&gt;\n      ${elevRows}\n    &lt;/div&gt;`;\n}\n\nfunction elevVarValue(theme, name){\n  const probe = document.createElement('div');\n  probe.setAttribute('data-brand','flash');\n  probe.setAttribute('data-theme',theme);\n  probe.style.display = 'none';\n  document.body.appendChild(probe);\n  const val = getComputedStyle(probe).getPropertyValue(name).trim();\n  probe.remove();\n  return val;\n}\n\nfunction elevLv(e){ return e.token.replace('elevation-',''); }\n\nfunction elevShadowParts(v){\n  const m = /^0(?:px)? (-?\\d+)(?:px)? (\\d+)(?:px)? 0(?:px)? rgba\\(0,\\s*0,\\s*0,\\s*([\\d.]+)\\)$/.exec((v||'').trim());\n  return m ? {y:+m[1], blur:+m[2], pct:Math.round(parseFloat(m[3])*100)} : null;\n}\n\nfunction elevShadowText(theme, name){\n  const p = elevShadowParts(elevVarValue(theme, name));\n  return p ? `y ${p.y} &amp;middot; blur ${p.blur} &amp;middot; ${p.pct}%` : 'none';\n}\n\nfunction elevSurfaceAlias(theme, lv){\n  if(theme!=='dark' || lv==='0') return 'base';\n  return ELEVATION.find(e =&gt; elevLv(e)===lv).dark;\n}\n\nfunction renderElevDocToks(){\n  const theme = currentTheme();\n  document.querySelectorAll('#s-elev [data-elev-toks]').forEach(el =&gt; {\n    const lv = el.getAttribute('data-elev-toks');\n    const alias = elevSurfaceAlias(theme, lv);\n    const hex = elevVarValue(theme, '--color-surface-'+alias);\n    const surface = `&lt;div class=\"elev-tok-line\"&gt;&lt;span class=\"elev-tok-line__k\"&gt;Surface&lt;/span&gt;&lt;span class=\"elev-tok-sw\" style=\"background:${hex}\"&gt;&lt;/span&gt;&lt;span class=\"elev-doc-tok\" onclick=\"copy('var(--elevation-surface-${lv})','CSS variable')\"&gt;--elevation-surface-${lv}&lt;/span&gt;&lt;span class=\"elev-tok-line__v\"&gt;&amp;rarr; --color-surface-${alias} &amp;middot; ${hex}&lt;/span&gt;&lt;/div&gt;`;\n    const shadow = `&lt;div class=\"elev-tok-line\"&gt;&lt;span class=\"elev-tok-line__k\"&gt;Shadow&lt;/span&gt;&lt;span class=\"elev-doc-tok\" onclick=\"copy('var(--elevation-${lv})','CSS variable')\"&gt;--elevation-${lv}&lt;/span&gt;&lt;span class=\"elev-tok-line__v\"&gt;${elevShadowText(theme,'--elevation-'+lv)}&lt;/span&gt;&lt;/div&gt;`;\n    el.innerHTML = theme==='dark' ? surface + shadow : shadow + surface;\n  });\n}\n\nfunction renderElevDark(){\n  const ladder = document.getElementById('elev-dark-ladder');\n  if(ladder){\n    // Page first, then one step per distinct dark surface; levels sharing a grey merge\n    const steps = [{name:'Page', key:'0', dark:'base', eg:'Page background'}];\n    ELEVATION.forEach(e =&gt; {\n      const lv = e.token.replace('elevation-','');\n      const last = steps[steps.length-1];\n      if(last.dark === e.dark){ last.name += ' \\u00b7 ' + lv.toUpperCase(); last.eg += ', ' + e.eg.toLowerCase(); }\n      else steps.push({name:lv.toUpperCase(), key:lv, dark:e.dark, eg:e.eg});\n    });\n    ladder.innerHTML = steps.map((st, i) =&gt; `&lt;div class=\"elev-ladder__step\" style=\"min-height:${84 + i*24}px;background:var(--elevation-surface-${st.key});box-shadow:${st.key==='0' ? 'none' : `var(--elevation-${st.key})`}\"&gt;\n      &lt;div class=\"elev-ladder__lvl\"&gt;${st.name}&lt;/div&gt;\n      &lt;div class=\"elev-ladder__tok\"&gt;--color-surface-&lt;wbr&gt;${st.dark}&lt;/div&gt;\n      &lt;div class=\"elev-ladder__tok\"&gt;${elevVarValue('dark','--color-surface-'+st.dark)}&lt;/div&gt;\n      &lt;div class=\"elev-ladder__eg\"&gt;${st.eg}&lt;/div&gt;\n    &lt;/div&gt;`).join('');\n  }\n  const vars = document.getElementById('elev-vars-table');\n  if(vars){\n    const shadowRows = [];\n    ELEVATION.forEach(e =&gt; {\n      shadowRows.push({name:'--'+e.token, role:e.eg, kind:'shadow', lv:elevLv(e)});\n      if(e.token==='elevation-l') shadowRows.push({name:'--elevation-l-up', role:'Bottom sheets (casts upward)', kind:'shadow', lv:'l'});\n    });\n    const groups = [\n      {title:'Shadow colour', note:'one per theme', rows:[{name:'--elevation-default', role:'Every shadow', kind:'colour', lv:'0'}]},\n      {title:'Shadows', note:'box-shadow', rows:shadowRows},\n      {title:'Surfaces', note:'background', rows:[{name:'--elevation-surface-0', role:'Page', kind:'surface', lv:'0'}]\n        .concat(ELEVATION.map(e =&gt; ({name:'--elevation-surface-'+elevLv(e), role:e.eg, kind:'surface', lv:elevLv(e)})))},\n    ];\n    // Each value cell is drawn inside its own theme scope, with a mini stage on the page colour of that theme\n    const cell = (theme, r) =&gt; {\n      const raw = elevVarValue(theme, r.name);\n      let tile, main, sub;\n      if(r.kind==='colour'){\n        const pct = Math.round(parseFloat((/,\\s*([\\d.]+)\\)/.exec(raw)||[0,0])[1])*100);\n        tile = `&lt;span class=\"elev-vt__tile\" style=\"background:var(${r.name})\"&gt;&lt;/span&gt;`;\n        main = `black ${pct}%`; sub = raw;\n      } else if(r.kind==='shadow'){\n        const p = elevShadowParts(raw);\n        tile = `&lt;span class=\"elev-vt__tile\" style=\"background:var(--elevation-surface-${r.lv});box-shadow:var(${r.name})\"&gt;&lt;/span&gt;`;\n        main = p ? `y ${p.y} &amp;middot; blur ${p.blur}` : `&lt;span class=\"elev-vt__none\"&gt;none&lt;/span&gt;`;\n        sub = p ? `black ${p.pct}%` : 'surface step only';\n      } else {\n        tile = `&lt;span class=\"elev-vt__tile\" style=\"background:var(${r.name});border:1px solid var(--chrome-border)\"&gt;&lt;/span&gt;`;\n        main = raw; sub = `--color-surface-${elevSurfaceAlias(theme, r.lv)}`;\n      }\n      return `&lt;td class=\"elev-vt__cell\" data-brand=\"flash\" data-theme=\"${theme}\"&gt;&lt;div class=\"elev-vt__val\"&gt;&lt;span class=\"elev-vt__stage\"&gt;${tile}&lt;/span&gt;&lt;div&gt;&lt;div class=\"elev-vt__main\"&gt;${main}&lt;/div&gt;&lt;div class=\"elev-vt__sub\"&gt;${sub}&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/td&gt;`;\n    };\n    vars.innerHTML = groups.map(g =&gt; `&lt;tr class=\"elev-vt__group\"&gt;&lt;td colspan=\"3\"&gt;${g.title}&lt;span class=\"elev-vt__gn\"&gt;${g.note}&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;` +\n      g.rows.map(r =&gt; `&lt;tr&gt;&lt;td class=\"elev-vt__var\"&gt;&lt;span class=\"elev-doc-tok\" onclick=\"copy('var(${r.name})','CSS variable')\"&gt;${r.name}&lt;/span&gt;&lt;div class=\"elev-vt__role\"&gt;${r.role}&lt;/div&gt;&lt;/td&gt;${cell('light', r)}${cell('dark', r)}&lt;/tr&gt;`).join('')\n    ).join('');\n  }\n}",
   "usage": {
     "do": [
       "Pick the level from what the surface actually is — a card is XS, a menu is M — not from how important it feels.",
@@ -3231,8 +3266,8 @@ body.home .main{max-width:none;margin:0;padding:0}
       "Don't use pure black (#000000) for a dark surface, or a grey lighter than --color-surface-n3 to make something feel important."
     ]
   },
-  "contentHash": "dbba3bce19d5380a0321280f94789e84cd157b1d86d77c7777269269076436c4",
-  "note": "Documents the elevation DATA (ELEVATION, including each level's dark surface step), renderElevLevels() for the Overview Levels grid, and renderElevDark()/elevVarValue() for the dark-mode ladder and the Tokens-tab CSS variables table (values read back live from the theme blocks). No reusable component class of its own. The elevation tokens ARE declared as CSS custom properties in both [data-brand=\"flash\"][data-theme] blocks: --elevation-default (shadow colour: black 16% light / 48% dark), --elevation-xs/-s/-m/-l/-l-up/-xl (full box-shadow; --elevation-xs is none in dark) and --elevation-surface-0/-xs/-s/-m/-l/-xl (background: --color-surface-base in light; in dark base / n1 / n1 / n2 / n3 / n3). Pair a surface's background and shadow from the same level. Components still carry their own hardcoded box-shadow values and have not adopted these variables yet. The Tokens-tab spec table row builder remains inline in the section's script block."
+  "contentHash": "53a2929ee9ce983881d644924f1fc20928fc3583ec489203e7ad87d37d59bc56",
+  "note": "Documents the elevation DATA (ELEVATION, including each level's dark surface step) and its theme-aware builders: renderElevLevels() (Overview Levels grid), renderElevDocToks() (Usage level-header token readouts), renderElevTokens() (Tokens five-levels table) — all three lead with the shadow in light and the surface colour in dark and re-run on theme toggle — and renderElevDark() (dark ladder + CSS variables table, each value cell drawn in its own data-theme scope). Values are read back live from the theme blocks via elevVarValue(); elevShadowParts/elevShadowText/elevSurfaceAlias/elevLv are formatting helpers. No reusable component class of its own. The elevation tokens ARE declared as CSS custom properties in both [data-brand=\"flash\"][data-theme] blocks: --elevation-default (shadow colour: black 16% light / 48% dark), --elevation-xs/-s/-m/-l/-l-up/-xl (full box-shadow; --elevation-xs is none in dark) and --elevation-surface-0/-xs/-s/-m/-l/-xl (background: --color-surface-base in light; in dark base / n1 / n1 / n2 / n3 / n3). Pair a surface's background and shadow from the same level. Adopted by .card (surface only, flat), .dpd-menu/.pop__panel/.hc__card (M), .bsh-sheet (L surface + l-up), and .tip__bubble/.cht__tip (S shadow on an inverse fill)."
 }
   </pre>
 </details>
@@ -3297,7 +3332,7 @@ body.home .main{max-width:none;margin:0;padding:0}
 
           <div class="type-sub">
             <div class="type-sub__title">Levels</div>
-            <div class="type-sub__desc">Five levels, each with its own y-offset and blur, and in dark mode its own surface step. Built at runtime from the same <code>ELEVATION</code> data that renders the Tokens table &mdash; switch the theme to see both.</div>
+            <div class="type-sub__desc"><span class="elev-only-light">In light, each level is a shadow &mdash; its own y-offset and blur, in black at 16%. Every level sits on the white base surface.</span><span class="elev-only-dark">In dark, each level is a surface step &mdash; the grey does the lifting, with a black 48% shadow as a secondary edge (none at XS).</span> Built at runtime from the same <code>ELEVATION</code> data as the Tokens table &mdash; switch the theme to compare.</div>
             <div class="cpg-section-block">
               <div id="elev-levels-grid" class="spec-grid" style="grid-template-columns:repeat(auto-fill,minmax(200px,1fr))"></div>
             </div>
@@ -3319,7 +3354,7 @@ body.home .main{max-width:none;margin:0;padding:0}
 
           <div class="type-sub">
             <div class="type-sub__title">Which level for what</div>
-            <div class="type-sub__desc">Each level, the surfaces it&rsquo;s for, and the components that carry it today.</div>
+            <div class="type-sub__desc">Each level, the surfaces it&rsquo;s for, and the components that carry it today. The token readout follows the theme: <span class="elev-only-light">in light the shadow leads</span><span class="elev-only-dark">in dark the surface colour leads</span>.</div>
             <div class="cpg-section-outline">
 
               <div class="logo-var">
@@ -3327,7 +3362,7 @@ body.home .main{max-width:none;margin:0;padding:0}
                   <div class="logo-var__preview" style="background:var(--chrome-bg);border:none;height:70px;padding:14px"><div style="width:40px;height:40px;border-radius:8px;background:var(--elevation-surface-xs);border:1px solid var(--chrome-border);box-shadow:var(--elevation-xs)"></div></div>
                   <div>
                     <div class="logo-var__name">Extra Small (XS)</div>
-                    <div class="logo-var__desc" style="margin-top:3px"><span class="elev-doc-tok" onclick="copy('var(--elevation-xs)','CSS variable')">--elevation-xs</span></div>
+                    <div class="elev-toks" data-elev-toks="xs"></div>
                   </div>
                 </div>
                 <div class="logo-var__row">
@@ -3335,12 +3370,17 @@ body.home .main{max-width:none;margin:0;padding:0}
                   <div class="logo-var__chips"><span class="logo-chip">Cards</span><span class="logo-chip">Tiles</span></div>
                 </div>
                 <div class="logo-var__row">
-                  <div class="logo-var__rowlabel">Dark surface</div>
-                  <div class="elev-doc-use__note"><span class="elev-doc-tok" onclick="copy('var(--elevation-surface-xs)','CSS variable')">--elevation-surface-xs</span> &rarr; <code>--color-surface-n1</code></div>
-                </div>
-                <div class="logo-var__row">
                   <div class="logo-var__rowlabel">Components</div>
-                  <div class="elev-doc-uses"><div class="elev-doc-use__note">No component carries this level today &mdash; cards ship flat.</div></div>
+                  <div class="elev-doc-uses">
+                    <div class="elev-doc-use">
+                      <div class="elev-doc-use__stage"><div class="card" style="width:216px"><div class="card__body" style="padding:14px 16px"><div class="card__title" style="font-size:13px">Card title</div><div class="card__desc" style="font-size:12px">Resting card on the XS surface.</div></div></div></div>
+                      <div class="elev-doc-use__meta">
+                        <span class="elev-doc-use__sel">.card</span>
+                        <span class="tag tag--sm tag--success">Matches</span>
+                        <span class="elev-doc-use__note">Surface only &mdash; cards stay flat in light, and XS has no shadow in dark.</span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
 
@@ -3349,16 +3389,12 @@ body.home .main{max-width:none;margin:0;padding:0}
                   <div class="logo-var__preview" style="background:var(--chrome-bg);border:none;height:70px;padding:14px"><div style="width:40px;height:40px;border-radius:8px;background:var(--elevation-surface-s);border:1px solid var(--chrome-border);box-shadow:var(--elevation-s)"></div></div>
                   <div>
                     <div class="logo-var__name">Small (S)</div>
-                    <div class="logo-var__desc" style="margin-top:3px"><span class="elev-doc-tok" onclick="copy('var(--elevation-s)','CSS variable')">--elevation-s</span></div>
+                    <div class="elev-toks" data-elev-toks="s"></div>
                   </div>
                 </div>
                 <div class="logo-var__row">
                   <div class="logo-var__rowlabel logo-var__rowlabel--ok">Use for</div>
                   <div class="logo-var__chips"><span class="logo-chip">Tooltips</span></div>
-                </div>
-                <div class="logo-var__row">
-                  <div class="logo-var__rowlabel">Dark surface</div>
-                  <div class="elev-doc-use__note"><span class="elev-doc-tok" onclick="copy('var(--elevation-surface-s)','CSS variable')">--elevation-surface-s</span> &rarr; <code>--color-surface-n1</code> &mdash; Tooltips use the inverse surface and skip this</div>
                 </div>
                 <div class="logo-var__row">
                   <div class="logo-var__rowlabel">Components</div>
@@ -3368,8 +3404,10 @@ body.home .main{max-width:none;margin:0;padding:0}
                       <div class="elev-doc-use__meta">
                         <span class="elev-doc-use__sel">.tip__bubble</span>
                         <span class="tag tag--sm tag--success">Matches</span>
+                        <span class="elev-doc-use__note">Inverse surface &mdash; takes the shadow only.</span>
                       </div>
                     </div>
+                    <div class="elev-doc-use__note">Chart tooltips (<code>.cht__tip</code>) carry this level the same way.</div>
                   </div>
                 </div>
               </div>
@@ -3379,16 +3417,12 @@ body.home .main{max-width:none;margin:0;padding:0}
                   <div class="logo-var__preview" style="background:var(--chrome-bg);border:none;height:70px;padding:14px"><div style="width:40px;height:40px;border-radius:8px;background:var(--elevation-surface-m);border:1px solid var(--chrome-border);box-shadow:var(--elevation-m)"></div></div>
                   <div>
                     <div class="logo-var__name">Medium (M)</div>
-                    <div class="logo-var__desc" style="margin-top:3px"><span class="elev-doc-tok" onclick="copy('var(--elevation-m)','CSS variable')">--elevation-m</span></div>
+                    <div class="elev-toks" data-elev-toks="m"></div>
                   </div>
                 </div>
                 <div class="logo-var__row">
                   <div class="logo-var__rowlabel logo-var__rowlabel--ok">Use for</div>
                   <div class="logo-var__chips"><span class="logo-chip">Dropdown menus</span><span class="logo-chip">Popovers</span><span class="logo-chip">Dialogs</span></div>
-                </div>
-                <div class="logo-var__row">
-                  <div class="logo-var__rowlabel">Dark surface</div>
-                  <div class="elev-doc-use__note"><span class="elev-doc-tok" onclick="copy('var(--elevation-surface-m)','CSS variable')">--elevation-surface-m</span> &rarr; <code>--color-surface-n2</code></div>
                 </div>
                 <div class="logo-var__row">
                   <div class="logo-var__rowlabel">Components</div>
@@ -3407,7 +3441,7 @@ body.home .main{max-width:none;margin:0;padding:0}
                         <span class="tag tag--sm tag--success">Matches</span>
                       </div>
                     </div>
-                    <div class="elev-doc-use__note">Dialogs land here once Modals ship.</div>
+                    <div class="elev-doc-use__note">Hovercards (<code>.hc__card</code>) carry this level too. Dialogs land here once Modals ship.</div>
                   </div>
                 </div>
               </div>
@@ -3417,16 +3451,12 @@ body.home .main{max-width:none;margin:0;padding:0}
                   <div class="logo-var__preview" style="background:var(--chrome-bg);border:none;height:70px;padding:14px"><div style="width:40px;height:40px;border-radius:8px;background:var(--elevation-surface-l);border:1px solid var(--chrome-border);box-shadow:var(--elevation-l)"></div></div>
                   <div>
                     <div class="logo-var__name">Large (L)</div>
-                    <div class="logo-var__desc" style="margin-top:3px"><span class="elev-doc-tok" onclick="copy('var(--elevation-l)','CSS variable')">--elevation-l</span></div>
+                    <div class="elev-toks" data-elev-toks="l"></div>
                   </div>
                 </div>
                 <div class="logo-var__row">
                   <div class="logo-var__rowlabel logo-var__rowlabel--ok">Use for</div>
                   <div class="logo-var__chips"><span class="logo-chip">Bottom sheets</span><span class="logo-chip">Drawers</span></div>
-                </div>
-                <div class="logo-var__row">
-                  <div class="logo-var__rowlabel">Dark surface</div>
-                  <div class="elev-doc-use__note"><span class="elev-doc-tok" onclick="copy('var(--elevation-surface-l)','CSS variable')">--elevation-surface-l</span> &rarr; <code>--color-surface-n3</code></div>
                 </div>
                 <div class="logo-var__row">
                   <div class="logo-var__rowlabel">Components</div>
@@ -3448,7 +3478,7 @@ body.home .main{max-width:none;margin:0;padding:0}
                   <div class="logo-var__preview" style="background:var(--chrome-bg);border:none;height:70px;padding:14px"><div style="width:40px;height:40px;border-radius:8px;background:var(--elevation-surface-xl);border:1px solid var(--chrome-border);box-shadow:var(--elevation-xl)"></div></div>
                   <div>
                     <div class="logo-var__name">Extra Large (XL)</div>
-                    <div class="logo-var__desc" style="margin-top:3px"><span class="elev-doc-tok" onclick="copy('var(--elevation-xl)','CSS variable')">--elevation-xl</span></div>
+                    <div class="elev-toks" data-elev-toks="xl"></div>
                   </div>
                 </div>
                 <div class="logo-var__row">
@@ -3456,12 +3486,8 @@ body.home .main{max-width:none;margin:0;padding:0}
                   <div class="logo-var__chips"><span class="logo-chip">Notifications</span></div>
                 </div>
                 <div class="logo-var__row">
-                  <div class="logo-var__rowlabel">Dark surface</div>
-                  <div class="elev-doc-use__note"><span class="elev-doc-tok" onclick="copy('var(--elevation-surface-xl)','CSS variable')">--elevation-surface-xl</span> &rarr; <code>--color-surface-n3</code> &mdash; Toasts keep their own status fill</div>
-                </div>
-                <div class="logo-var__row">
                   <div class="logo-var__rowlabel">Components</div>
-                  <div class="elev-doc-uses"><div class="elev-doc-use__note">Nothing ships at this level yet &mdash; Toasts are flat, with no shadow.</div></div>
+                  <div class="elev-doc-uses"><div class="elev-doc-use__note">Nothing ships at this level yet &mdash; Toasts are flat, with no shadow, and keep their own status fill.</div></div>
                 </div>
               </div>
             </div>
@@ -3544,7 +3570,7 @@ body.home .main{max-width:none;margin:0;padding:0}
                 <tr><td class="dd-table__name">Tooltip</td><td><code>.tip__bubble</code></td><td>30</td><td>elevation-s</td></tr>
                 <tr><td class="dd-table__name">Dropdown menu</td><td><code>.dpd-menu</code></td><td>20</td><td>elevation-m</td></tr>
                 <tr><td class="dd-table__name">Popover</td><td><code>.pop__panel</code></td><td>40</td><td>elevation-m</td></tr>
-                <tr><td class="dd-table__name">Hovercard</td><td><code>.hc__card</code></td><td>30</td><td>&mdash;</td></tr>
+                <tr><td class="dd-table__name">Hovercard</td><td><code>.hc__card</code></td><td>30</td><td>elevation-m</td></tr>
                 <tr><td class="dd-table__name">Bottom sheet</td><td><code>.bsh-sheet</code></td><td>2</td><td>elevation-l</td></tr>
                 <tr><td class="dd-table__name">Search results</td><td><code>.bar__search-results</code></td><td>300</td><td>&mdash;</td></tr>
               </tbody></table></div>
@@ -3645,31 +3671,31 @@ body.home .main{max-width:none;margin:0;padding:0}
         <div class="type-sub spec-panel spec-stack">
           <div class="type-sub">
             <div class="type-sub__title">The five levels</div>
-            <div class="type-sub__desc">Click any row to copy its CSS variable. Colour opacity is light / dark; in dark, XS has no shadow.</div>
+            <div class="type-sub__desc"><span class="elev-only-light">Light: each level is its shadow, on the white base surface. Click a row to copy its shadow variable.</span><span class="elev-only-dark">Dark: each level is its surface colour, with a black 48% shadow as a secondary edge. Click a row to copy its surface variable.</span></div>
             <div id="sp-elev" class="type-sub"></div>
             <div class="logo-note">Declared as CSS custom properties in both theme blocks. Click a row to copy its <code>var()</code>.</div>
           </div>
           <div class="type-sub">
             <div class="type-sub__title">CSS variables</div>
-            <div class="type-sub__desc">Every elevation variable and what it resolves to in each theme, read live from the theme blocks. Click a name to copy its <code>var()</code>.</div>
-            <div class="dd-table-wrap"><table class="dd-table"><thead><tr><th>Variable</th><th>Light</th><th>Dark</th></tr></thead><tbody id="elev-vars-table"></tbody></table></div>
+            <div class="type-sub__desc">Every elevation variable side by side. The Light column is always drawn in light and the Dark column in dark, whatever theme the page is in, with a live preview of each value. Values are read from the theme blocks. Click a name to copy its <code>var()</code>.</div>
+            <div class="dd-table-wrap"><table class="dd-table elev-vt"><thead><tr><th>Variable</th><th class="elev-vt__th-mode"><span class="elev-vt__mode elev-vt__mode--light">&#9728; Light</span></th><th class="elev-vt__th-mode"><span class="elev-vt__mode elev-vt__mode--dark">&#9790; Dark</span></th></tr></thead><tbody id="elev-vars-table"></tbody></table></div>
           </div>
           <div class="type-sub">
             <div class="type-sub__title">Where it's used</div>
-            <div class="type-sub__desc">Documented level against the value each component actually carries on <code>main</code>, post drift-fix. No component uses the elevation variables yet, so in dark every lifted surface below still sits on the page colour.</div>
-            <div class="dd-table-wrap"><table class="dd-table"><thead><tr><th>Component</th><th>Selector</th><th>Documented level</th><th>Actual value</th><th>Status</th><th>Dark surface</th></tr></thead><tbody>
-              <tr><td class="dd-table__name">Card (resting)</td><td><code>.card</code></td><td>elevation-xs</td><td><code onclick="copy('none','box-shadow')">none</code></td><td>Drift</td><td>Not adopted</td></tr>
-              <tr><td class="dd-table__name">Card, hover</td><td><code>.card--interactive:hover</code></td><td>—</td><td><code onclick="copy('0 8px 24px 0 rgba(0,0,0,0.10)','box-shadow')">0 8px 24px 0 rgba(0,0,0,0.10)</code></td><td>Drift</td><td>Not adopted</td></tr>
-              <tr><td class="dd-table__name">Card, active</td><td><code>.card--interactive:active</code></td><td>—</td><td><code onclick="copy('0 2px 8px 0 rgba(0,0,0,0.10)','box-shadow')">0 2px 8px 0 rgba(0,0,0,0.10)</code></td><td>Drift</td><td>Not adopted</td></tr>
-              <tr><td class="dd-table__name">Tooltip</td><td><code>.tip__bubble</code></td><td>elevation-s</td><td><code onclick="copy('0 2px 12px 0 rgba(0,0,0,0.16)','box-shadow')">0 2px 12px 0 rgba(0,0,0,0.16)</code></td><td>Matches (fixed)</td><td>Inverse (exempt)</td></tr>
-              <tr><td class="dd-table__name">Dropdown menu</td><td><code>.dpd-menu</code></td><td>elevation-m</td><td><code onclick="copy('0 4px 24px 0 rgba(0,0,0,0.16)','box-shadow')">0 4px 24px 0 rgba(0,0,0,0.16)</code></td><td>Matches (fixed)</td><td>Not adopted</td></tr>
-              <tr><td class="dd-table__name">Dropdown, inline</td><td><code>.dpd-menu--inline</code></td><td>—</td><td><code onclick="copy('0 1px 2px 0 rgba(0,0,0,0.1)','box-shadow')">0 1px 2px 0 rgba(0,0,0,0.1)</code></td><td>Drift</td><td>Not adopted</td></tr>
-              <tr><td class="dd-table__name">Popover</td><td><code>.pop__panel</code></td><td>elevation-m</td><td><code onclick="copy('0 4px 24px 0 rgba(0,0,0,0.16)','box-shadow')">0 4px 24px 0 rgba(0,0,0,0.16)</code></td><td>Matches (fixed)</td><td>Not adopted</td></tr>
-              <tr><td class="dd-table__name">Hovercard</td><td><code>.hc__card</code></td><td>—</td><td><code onclick="copy('0 14px 36px 0 rgba(0,0,0,0.16)','box-shadow')">0 14px 36px 0 rgba(0,0,0,0.16)</code></td><td>Drift</td><td>Not adopted</td></tr>
-              <tr><td class="dd-table__name">Bottom sheet</td><td><code>.bsh-sheet</code></td><td>elevation-l (&minus;y exception)</td><td><code onclick="copy('0 -8px 48px 0 rgba(0,0,0,0.16)','box-shadow')">0 -8px 48px 0 rgba(0,0,0,0.16)</code></td><td>Matches (fixed)</td><td>Not adopted</td></tr>
-              <tr><td class="dd-table__name">Chart tooltip</td><td><code>.cht__tip</code></td><td>—</td><td><code onclick="copy('0 4px 14px 0 rgba(0,0,0,0.22)','box-shadow')">0 4px 14px 0 rgba(0,0,0,0.22)</code></td><td>Drift</td><td>Inverse (exempt)</td></tr>
-              <tr><td class="dd-table__name">Search results</td><td><code>.bar__search-results</code></td><td>—</td><td><code onclick="copy('0 12px 32px 0 rgba(0,0,0,0.28)','box-shadow')">0 12px 32px 0 rgba(0,0,0,0.28)</code></td><td>Drift</td><td>Not adopted</td></tr>
-              <tr><td class="dd-table__name">Carousel arrow</td><td><code>.car__arrow</code></td><td>—</td><td><code onclick="copy('0 2px 10px 0 rgba(0,0,0,0.25)','box-shadow')">0 2px 10px 0 rgba(0,0,0,0.25)</code></td><td>Drift</td><td>Button fill (exempt)</td></tr>
+            <div class="type-sub__desc">Documented level against what each component actually carries on <code>main</code>. Every floating surface now takes its background and shadow from the elevation variables; the remaining drift is state shadows and non-surface controls.</div>
+            <div class="dd-table-wrap"><table class="dd-table"><thead><tr><th>Component</th><th>Selector</th><th>Level</th><th>Background</th><th>Shadow</th><th>Status</th></tr></thead><tbody>
+              <tr><td class="dd-table__name">Card (resting)</td><td><code>.card</code></td><td>elevation-xs</td><td><code onclick="copy('var(--elevation-surface-xs)','Value')">var(--elevation-surface-xs)</code></td><td>none (flat)</td><td>Matches</td></tr>
+              <tr><td class="dd-table__name">Card, hover</td><td><code>.card--interactive:hover</code></td><td>&mdash;</td><td>inherits</td><td><code onclick="copy('0 8px 24px 0 rgba(0,0,0,0.10)','Value')">0 8px 24px 0 rgba(0,0,0,0.10)</code></td><td>Drift</td></tr>
+              <tr><td class="dd-table__name">Card, active</td><td><code>.card--interactive:active</code></td><td>&mdash;</td><td>inherits</td><td><code onclick="copy('0 2px 8px 0 rgba(0,0,0,0.10)','Value')">0 2px 8px 0 rgba(0,0,0,0.10)</code></td><td>Drift</td></tr>
+              <tr><td class="dd-table__name">Tooltip</td><td><code>.tip__bubble</code></td><td>elevation-s</td><td>--color-surface-inverse (exempt)</td><td><code onclick="copy('var(--elevation-s)','Value')">var(--elevation-s)</code></td><td>Matches</td></tr>
+              <tr><td class="dd-table__name">Dropdown menu</td><td><code>.dpd-menu</code></td><td>elevation-m</td><td><code onclick="copy('var(--elevation-surface-m)','Value')">var(--elevation-surface-m)</code></td><td><code onclick="copy('var(--elevation-m)','Value')">var(--elevation-m)</code></td><td>Matches</td></tr>
+              <tr><td class="dd-table__name">Dropdown, inline</td><td><code>.dpd-menu--inline</code></td><td>&mdash;</td><td>inherits</td><td><code onclick="copy('0 1px 2px 0 rgba(0,0,0,0.1)','Value')">0 1px 2px 0 rgba(0,0,0,0.1)</code></td><td>Drift</td></tr>
+              <tr><td class="dd-table__name">Popover</td><td><code>.pop__panel</code></td><td>elevation-m</td><td><code onclick="copy('var(--elevation-surface-m)','Value')">var(--elevation-surface-m)</code></td><td><code onclick="copy('var(--elevation-m)','Value')">var(--elevation-m)</code></td><td>Matches</td></tr>
+              <tr><td class="dd-table__name">Hovercard</td><td><code>.hc__card</code></td><td>elevation-m</td><td><code onclick="copy('var(--elevation-surface-m)','Value')">var(--elevation-surface-m)</code></td><td><code onclick="copy('var(--elevation-m)','Value')">var(--elevation-m)</code></td><td>Matches</td></tr>
+              <tr><td class="dd-table__name">Bottom sheet</td><td><code>.bsh-sheet</code></td><td>elevation-l (&minus;y)</td><td><code onclick="copy('var(--elevation-surface-l)','Value')">var(--elevation-surface-l)</code></td><td><code onclick="copy('var(--elevation-l-up)','Value')">var(--elevation-l-up)</code></td><td>Matches</td></tr>
+              <tr><td class="dd-table__name">Chart tooltip</td><td><code>.cht__tip</code></td><td>elevation-s</td><td>--color-surface-inverse (exempt)</td><td><code onclick="copy('var(--elevation-s)','Value')">var(--elevation-s)</code></td><td>Matches</td></tr>
+              <tr><td class="dd-table__name">Carousel arrow</td><td><code>.car__arrow</code></td><td>&mdash;</td><td>button fill (exempt)</td><td><code onclick="copy('0 2px 10px 0 rgba(0,0,0,0.25)','Value')">0 2px 10px 0 rgba(0,0,0,0.25)</code></td><td>Drift</td></tr>
+              <tr><td class="dd-table__name">Search results</td><td><code>.bar__search-results</code></td><td>&mdash;</td><td>chrome-bg</td><td><code onclick="copy('0 12px 32px 0 rgba(0,0,0,0.28)','Value')">0 12px 32px 0 rgba(0,0,0,0.28)</code></td><td>Doc-site chrome</td></tr>
             </tbody></table></div>
           </div>
         </div>
@@ -5562,7 +5588,7 @@ body.home .main{max-width:none;margin:0;padding:0}
       <div class="sec__head">
         <h1 class="sec__title">Basic Cards</h1>
         <div class="sec-header-meta">
-          <span class="comp-ver-badge" style="margin-left:0">v1.3.0</span>
+          <span class="comp-ver-badge" style="margin-left:0">v1.4.0</span>
           <details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-cards-basic">
@@ -5582,7 +5608,7 @@ body.home .main{max-width:none;margin:0;padding:0}
     ".card-btn",
     ".card-btn--ghost"
   ],
-  "css": "/* ---- Card ---- */\n.card-grid { display:flex;flex-wrap:wrap;gap:20px }\n.card { background:var(--chrome-bg);border:1px solid var(--chrome-border);border-radius:14px;overflow:hidden;width:300px;max-width:100%;transition:background .25s,border-color .15s,box-shadow .15s,transform .15s;display:flex;flex-direction:column }\n.card__body { padding:18px;flex:1 }\n.card__title { font-size:15px;font-weight:800;color:var(--chrome-txt);margin-bottom:5px }\n.card__desc { font-size:13px;line-height:1.55;color:var(--chrome-muted) }\n.card__body p { font-size:13px;line-height:1.6;color:var(--chrome-txt);margin-top:12px }\n.card__foot { display:flex;gap:10px;align-items:center;padding:14px 18px;border-top:1px solid var(--chrome-border) }\n.card__foot--end { justify-content:flex-end }\n/* Force states — static previews of the interactive card's real hover/focus/pressed treatment */\n.card.f-hover { border-color:var(--color-text-s);box-shadow:0 8px 24px rgba(0,0,0,.10);transform:translateY(-2px) }\n.card.f-focus { border-color:var(--color-text-s);box-shadow:0 0 0 3px var(--color-input-focus) }\n.card.f-press { border-color:var(--color-text-s);box-shadow:0 2px 8px rgba(0,0,0,.10);transform:translateY(0) scale(.99) }\n.card-btn { background:var(--color-btn-s-bg);color:var(--color-btn-s-txt);border:0;border-radius:8px;padding:8px 16px;font-size:13px;font-weight:700;font-family:inherit;cursor:pointer;transition:opacity .15s }\n.card-btn:hover { opacity:.85 }\n.card-btn--ghost { background:transparent;color:var(--chrome-txt);border:1px solid var(--chrome-border) }\n.card-btn--ghost:hover { opacity:1;background:var(--chrome-hover) }",
+  "css": "/* ---- Card ---- */\n.card-grid { display:flex;flex-wrap:wrap;gap:20px }\n.card { background:var(--elevation-surface-xs);border:1px solid var(--chrome-border);border-radius:14px;overflow:hidden;width:300px;max-width:100%;transition:background .25s,border-color .15s,box-shadow .15s,transform .15s;display:flex;flex-direction:column }\n.card__body { padding:18px;flex:1 }\n.card__title { font-size:15px;font-weight:800;color:var(--chrome-txt);margin-bottom:5px }\n.card__desc { font-size:13px;line-height:1.55;color:var(--chrome-muted) }\n.card__body p { font-size:13px;line-height:1.6;color:var(--chrome-txt);margin-top:12px }\n.card__foot { display:flex;gap:10px;align-items:center;padding:14px 18px;border-top:1px solid var(--chrome-border) }\n.card__foot--end { justify-content:flex-end }\n/* Force states — static previews of the interactive card's real hover/focus/pressed treatment */\n.card.f-hover { border-color:var(--color-text-s);box-shadow:0 8px 24px rgba(0,0,0,.10);transform:translateY(-2px) }\n.card.f-focus { border-color:var(--color-text-s);box-shadow:0 0 0 3px var(--color-input-focus) }\n.card.f-press { border-color:var(--color-text-s);box-shadow:0 2px 8px rgba(0,0,0,.10);transform:translateY(0) scale(.99) }\n.card-btn { background:var(--color-btn-s-bg);color:var(--color-btn-s-txt);border:0;border-radius:8px;padding:8px 16px;font-size:13px;font-weight:700;font-family:inherit;cursor:pointer;transition:opacity .15s }\n.card-btn:hover { opacity:.85 }\n.card-btn--ghost { background:transparent;color:var(--chrome-txt);border:1px solid var(--chrome-border) }\n.card-btn--ghost:hover { opacity:1;background:var(--chrome-hover) }",
   "js": "function cardHTML(o){\n  o = o || {};\n  const cls = ['card'];\n  if(o.interactive) cls.push('card--interactive');\n  if(o.force) cls.push('f-' + o.force);\n  const attrs = o.interactive ? ' tabindex=\"0\" role=\"button\"' : '';\n  let html = '';\n  if(o.media) html += `&lt;div class=\"card__media\"${o.mediaStyle?` style=\"${o.mediaStyle}\"`:''}&gt;&lt;/div&gt;`;\n  let body = '';\n  if(o.title) body += `&lt;div class=\"card__title\"&gt;${cardEsc(o.title)}&lt;/div&gt;`;\n  if(o.desc)  body += `&lt;div class=\"card__desc\"&gt;${cardEsc(o.desc)}&lt;/div&gt;`;\n  html += `&lt;div class=\"card__body\"&gt;${body}&lt;/div&gt;`;\n  if(o.foot){\n    const ghost = o.ghost ? `&lt;button class=\"card-btn card-btn--ghost\" type=\"button\" tabindex=\"-1\"&gt;${cardEsc(o.ghostLabel||'Cancel')}&lt;/button&gt;` : '';\n    html += `&lt;div class=\"card__foot card__foot--end\"&gt;${ghost}&lt;button class=\"card-btn\" type=\"button\" tabindex=\"-1\"&gt;${cardEsc(o.actionLabel||'Save')}&lt;/button&gt;&lt;/div&gt;`;\n  }\n  return `&lt;div class=\"${cls.join(' ')}\"${attrs} style=\"${o.style||''}\"&gt;${html}&lt;/div&gt;`;\n}",
   "usage": {
     "do": [
@@ -5596,7 +5622,7 @@ body.home .main{max-width:none;margin:0;padding:0}
       "Don’t put several competing primary actions in one footer."
     ]
   },
-  "contentHash": "f5e77761c6ed7dcefc333052920f02c6aa6f0c6a35f5dc2ab4e2948aef5dc007",
+  "contentHash": "491ac302ca147b6cde88f8502b74c28df727ad7c4c559df3d173d4125cbe22a8",
   "note": "Page is now a .sec--tabbed Overview/Style/Code/Changelog page whose demos are all built by the shared cardHTML builder — the static HTML is just empty mounts (#cbasic-playground/-keystates/-insitu/-reference/-code-tab). cardHTML is the canonical real-markup builder shared by every Cards sub-page; CARD_PAGES / CARD_PG / renderCardPlayground / renderCardKeyStates / renderCardInSitu / renderCardReference / renderCardCodeTab / cardTabSwitch are doc-site-only playground plumbing, excluded. This page's token table is the shared card surface base — the same base applies to every card variant in this group (Media, Interactive, Stat, Hover)."
 }
   </pre>
@@ -5659,7 +5685,7 @@ body.home .main{max-width:none;margin:0;padding:0}
       <div class="sec__head">
         <h1 class="sec__title">Media Cards</h1>
         <div class="sec-header-meta">
-          <span class="comp-ver-badge" style="margin-left:0">v1.1.0</span>
+          <span class="comp-ver-badge" style="margin-left:0">v1.2.0</span>
           <details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-cards-media">
@@ -5678,7 +5704,7 @@ body.home .main{max-width:none;margin:0;padding:0}
     ".card__foot--end",
     ".card-btn"
   ],
-  "css": ".card { background:var(--chrome-bg);border:1px solid var(--chrome-border);border-radius:14px;overflow:hidden;width:300px;max-width:100%;transition:background .25s,border-color .15s,box-shadow .15s,transform .15s;display:flex;flex-direction:column }\n.card__media { height:132px;background:linear-gradient(135deg,var(--prim-grey-700),var(--prim-grey-1000));flex-shrink:0 }\n.card__body { padding:18px;flex:1 }\n.card__title { font-size:15px;font-weight:800;color:var(--chrome-txt);margin-bottom:5px }\n.card__desc { font-size:13px;line-height:1.55;color:var(--chrome-muted) }\n.card__body p { font-size:13px;line-height:1.6;color:var(--chrome-txt);margin-top:12px }\n.card__foot { display:flex;gap:10px;align-items:center;padding:14px 18px;border-top:1px solid var(--chrome-border) }\n.card__foot--end { justify-content:flex-end }\n/* Force states — static previews of the interactive card's real hover/focus/pressed treatment */\n.card.f-hover { border-color:var(--color-text-s);box-shadow:0 8px 24px rgba(0,0,0,.10);transform:translateY(-2px) }\n.card.f-focus { border-color:var(--color-text-s);box-shadow:0 0 0 3px var(--color-input-focus) }\n.card.f-press { border-color:var(--color-text-s);box-shadow:0 2px 8px rgba(0,0,0,.10);transform:translateY(0) scale(.99) }\n.card-btn { background:var(--color-btn-s-bg);color:var(--color-btn-s-txt);border:0;border-radius:8px;padding:8px 16px;font-size:13px;font-weight:700;font-family:inherit;cursor:pointer;transition:opacity .15s }\n.card-btn:hover { opacity:.85 }",
+  "css": ".card { background:var(--elevation-surface-xs);border:1px solid var(--chrome-border);border-radius:14px;overflow:hidden;width:300px;max-width:100%;transition:background .25s,border-color .15s,box-shadow .15s,transform .15s;display:flex;flex-direction:column }\n.card__media { height:132px;background:linear-gradient(135deg,var(--prim-grey-700),var(--prim-grey-1000));flex-shrink:0 }\n.card__body { padding:18px;flex:1 }\n.card__title { font-size:15px;font-weight:800;color:var(--chrome-txt);margin-bottom:5px }\n.card__desc { font-size:13px;line-height:1.55;color:var(--chrome-muted) }\n.card__body p { font-size:13px;line-height:1.6;color:var(--chrome-txt);margin-top:12px }\n.card__foot { display:flex;gap:10px;align-items:center;padding:14px 18px;border-top:1px solid var(--chrome-border) }\n.card__foot--end { justify-content:flex-end }\n/* Force states — static previews of the interactive card's real hover/focus/pressed treatment */\n.card.f-hover { border-color:var(--color-text-s);box-shadow:0 8px 24px rgba(0,0,0,.10);transform:translateY(-2px) }\n.card.f-focus { border-color:var(--color-text-s);box-shadow:0 0 0 3px var(--color-input-focus) }\n.card.f-press { border-color:var(--color-text-s);box-shadow:0 2px 8px rgba(0,0,0,.10);transform:translateY(0) scale(.99) }\n.card-btn { background:var(--color-btn-s-bg);color:var(--color-btn-s-txt);border:0;border-radius:8px;padding:8px 16px;font-size:13px;font-weight:700;font-family:inherit;cursor:pointer;transition:opacity .15s }\n.card-btn:hover { opacity:.85 }",
   "js": "function cardHTML(o){\n  o = o || {};\n  const cls = ['card'];\n  if(o.interactive) cls.push('card--interactive');\n  if(o.force) cls.push('f-' + o.force);\n  const attrs = o.interactive ? ' tabindex=\"0\" role=\"button\"' : '';\n  let html = '';\n  if(o.media) html += `&lt;div class=\"card__media\"${o.mediaStyle?` style=\"${o.mediaStyle}\"`:''}&gt;&lt;/div&gt;`;\n  let body = '';\n  if(o.title) body += `&lt;div class=\"card__title\"&gt;${cardEsc(o.title)}&lt;/div&gt;`;\n  if(o.desc)  body += `&lt;div class=\"card__desc\"&gt;${cardEsc(o.desc)}&lt;/div&gt;`;\n  html += `&lt;div class=\"card__body\"&gt;${body}&lt;/div&gt;`;\n  if(o.foot){\n    const ghost = o.ghost ? `&lt;button class=\"card-btn card-btn--ghost\" type=\"button\" tabindex=\"-1\"&gt;${cardEsc(o.ghostLabel||'Cancel')}&lt;/button&gt;` : '';\n    html += `&lt;div class=\"card__foot card__foot--end\"&gt;${ghost}&lt;button class=\"card-btn\" type=\"button\" tabindex=\"-1\"&gt;${cardEsc(o.actionLabel||'Save')}&lt;/button&gt;&lt;/div&gt;`;\n  }\n  return `&lt;div class=\"${cls.join(' ')}\"${attrs} style=\"${o.style||''}\"&gt;${html}&lt;/div&gt;`;\n}",
   "usage": {
     "do": [
@@ -5692,7 +5718,7 @@ body.home .main{max-width:none;margin:0;padding:0}
       "Don’t crop the image so tightly the subject is unclear."
     ]
   },
-  "contentHash": "163c3e5b5683c7a81a3ff86416bdba6daa22a3cd86f2ea7fb42daa4c20bccedc",
+  "contentHash": "9653387956057fc0e8dd85d0cc17af9f422924201a8332fb8577fc5eefbdb6fb",
   "note": "Page is now a .sec--tabbed page; demos are built by the shared cardHTML builder (media:true adds .card__media) — the static HTML is just empty mounts. .card__media is a plain gradient placeholder in this demo; a real integration substitutes an actual image and keeps everything else. Split out of the former combined Cards page (v1.1.0)."
 }
   </pre>
@@ -5755,7 +5781,7 @@ body.home .main{max-width:none;margin:0;padding:0}
       <div class="sec__head">
         <h1 class="sec__title">Interactive Cards</h1>
         <div class="sec-header-meta">
-          <span class="comp-ver-badge" style="margin-left:0">v1.1.0</span>
+          <span class="comp-ver-badge" style="margin-left:0">v1.2.0</span>
           <details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-cards-interactive">
@@ -5771,7 +5797,7 @@ body.home .main{max-width:none;margin:0;padding:0}
     ".card__title",
     ".card__desc"
   ],
-  "css": ".card { background:var(--chrome-bg);border:1px solid var(--chrome-border);border-radius:14px;overflow:hidden;width:300px;max-width:100%;transition:background .25s,border-color .15s,box-shadow .15s,transform .15s;display:flex;flex-direction:column }\n.card__body { padding:18px;flex:1 }\n.card__title { font-size:15px;font-weight:800;color:var(--chrome-txt);margin-bottom:5px }\n.card__desc { font-size:13px;line-height:1.55;color:var(--chrome-muted) }\n.card__body p { font-size:13px;line-height:1.6;color:var(--chrome-txt);margin-top:12px }\n.card--interactive { cursor:pointer }\n.card--interactive:hover { border-color:var(--color-text-s);box-shadow:0 8px 24px rgba(0,0,0,.10);transform:translateY(-2px) }\n.card--interactive:active { border-color:var(--color-text-s);box-shadow:0 2px 8px rgba(0,0,0,.10);transform:translateY(0) scale(.99) }\n.card--interactive:focus-visible { outline:none;border-color:var(--color-text-s);box-shadow:0 0 0 3px var(--color-input-focus) }\n/* Force states — static previews of the interactive card's real hover/focus/pressed treatment */\n.card.f-hover { border-color:var(--color-text-s);box-shadow:0 8px 24px rgba(0,0,0,.10);transform:translateY(-2px) }\n.card.f-focus { border-color:var(--color-text-s);box-shadow:0 0 0 3px var(--color-input-focus) }\n.card.f-press { border-color:var(--color-text-s);box-shadow:0 2px 8px rgba(0,0,0,.10);transform:translateY(0) scale(.99) }",
+  "css": ".card { background:var(--elevation-surface-xs);border:1px solid var(--chrome-border);border-radius:14px;overflow:hidden;width:300px;max-width:100%;transition:background .25s,border-color .15s,box-shadow .15s,transform .15s;display:flex;flex-direction:column }\n.card__body { padding:18px;flex:1 }\n.card__title { font-size:15px;font-weight:800;color:var(--chrome-txt);margin-bottom:5px }\n.card__desc { font-size:13px;line-height:1.55;color:var(--chrome-muted) }\n.card__body p { font-size:13px;line-height:1.6;color:var(--chrome-txt);margin-top:12px }\n.card--interactive { cursor:pointer }\n.card--interactive:hover { border-color:var(--color-text-s);box-shadow:0 8px 24px rgba(0,0,0,.10);transform:translateY(-2px) }\n.card--interactive:active { border-color:var(--color-text-s);box-shadow:0 2px 8px rgba(0,0,0,.10);transform:translateY(0) scale(.99) }\n.card--interactive:focus-visible { outline:none;border-color:var(--color-text-s);box-shadow:0 0 0 3px var(--color-input-focus) }\n/* Force states — static previews of the interactive card's real hover/focus/pressed treatment */\n.card.f-hover { border-color:var(--color-text-s);box-shadow:0 8px 24px rgba(0,0,0,.10);transform:translateY(-2px) }\n.card.f-focus { border-color:var(--color-text-s);box-shadow:0 0 0 3px var(--color-input-focus) }\n.card.f-press { border-color:var(--color-text-s);box-shadow:0 2px 8px rgba(0,0,0,.10);transform:translateY(0) scale(.99) }",
   "js": "function cardHTML(o){\n  o = o || {};\n  const cls = ['card'];\n  if(o.interactive) cls.push('card--interactive');\n  if(o.force) cls.push('f-' + o.force);\n  const attrs = o.interactive ? ' tabindex=\"0\" role=\"button\"' : '';\n  let html = '';\n  if(o.media) html += `&lt;div class=\"card__media\"${o.mediaStyle?` style=\"${o.mediaStyle}\"`:''}&gt;&lt;/div&gt;`;\n  let body = '';\n  if(o.title) body += `&lt;div class=\"card__title\"&gt;${cardEsc(o.title)}&lt;/div&gt;`;\n  if(o.desc)  body += `&lt;div class=\"card__desc\"&gt;${cardEsc(o.desc)}&lt;/div&gt;`;\n  html += `&lt;div class=\"card__body\"&gt;${body}&lt;/div&gt;`;\n  if(o.foot){\n    const ghost = o.ghost ? `&lt;button class=\"card-btn card-btn--ghost\" type=\"button\" tabindex=\"-1\"&gt;${cardEsc(o.ghostLabel||'Cancel')}&lt;/button&gt;` : '';\n    html += `&lt;div class=\"card__foot card__foot--end\"&gt;${ghost}&lt;button class=\"card-btn\" type=\"button\" tabindex=\"-1\"&gt;${cardEsc(o.actionLabel||'Save')}&lt;/button&gt;&lt;/div&gt;`;\n  }\n  return `&lt;div class=\"${cls.join(' ')}\"${attrs} style=\"${o.style||''}\"&gt;${html}&lt;/div&gt;`;\n}",
   "usage": {
     "do": [
@@ -5785,7 +5811,7 @@ body.home .main{max-width:none;margin:0;padding:0}
       "Don’t rely on hover alone — make sure focus and touch both work."
     ]
   },
-  "contentHash": "30a9c8d32ddc5474e7b47915777b5ef70f83af3c65dcc08b256bcefdc32a376b",
+  "contentHash": "cf3ae9cdfb70accfe67d195deeeeb26d162384f4ac4f7f76fcc352c47296f1a6",
   "note": "Page is now a .sec--tabbed page; demos are built by the shared cardHTML builder (interactive:true adds .card--interactive plus role=button/tabindex=0) — the static HTML is just empty mounts. Hover, active and focus-visible are pure CSS; .card.f-hover/.f-focus/.f-press are documentation-only forced-state classes (same idea as .ds-btn's) used to show those states statically, not something to ship. Split out of the former combined Cards page (v1.1.0)."
 }
   </pre>
@@ -5956,7 +5982,7 @@ body.home .main{max-width:none;margin:0;padding:0}
       <div class="sec__head">
         <h1 class="sec__title">Bottom Sheets</h1>
         <div class="sec-header-meta">
-          <span class="comp-ver-badge" style="margin-left:0">v1.1.2</span>
+          <span class="comp-ver-badge" style="margin-left:0">v1.2.0</span>
           <details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-drawers">
@@ -5983,7 +6009,7 @@ body.home .main{max-width:none;margin:0;padding:0}
     ".bsh-sheet__footer",
     ".bsh-sheet__footer-row"
   ],
-  "css": ".bsh-sheet { position:absolute;left:0;right:0;bottom:0;background:var(--color-surface-base);display:flex;flex-direction:column;z-index:2;box-shadow:0 -8px 48px 0 rgba(0,0,0,.16);transition:background .25s }\n.bsh-sheet--compact { border-radius:20px 20px 0 0 }\n.bsh-sheet--full { top:22px;border-radius:0 }\n.bsh-sheet--full .bsh-sheet__body { flex:1 }\n.bsh-sheet__handle { width:36px;height:4px;border-radius:2px;background:var(--color-surface-n3);margin:8px auto 0 }\n.bsh-sheet__header { display:flex;align-items:center;gap:8px;padding:10px 16px 12px }\n.bsh-sheet__back,.bsh-sheet__close { background:none;border:none;padding:0;display:inline-flex;align-items:center;color:var(--color-text-1);cursor:pointer;flex-shrink:0 }\n.bsh-sheet__title { flex:1;font-size:14px;font-weight:800;color:var(--color-text-1);overflow:hidden;text-overflow:ellipsis;white-space:nowrap }\n.bsh-sheet__body { padding:0 16px 16px }\n.bsh-sheet__placeholder { border:1.5px dashed var(--chrome-border);border-radius:10px;padding:14px 12px;font-size:11.5px;font-weight:700;color:var(--color-text-s);text-align:center }\n.bsh-sheet__footer { padding:12px 16px;display:flex;gap:6px }\n.bsh-sheet__footer .ds-btn { flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis }\n.bsh-sheet__footer.is-vertical { flex-direction:column }\n.bsh-sheet__footer.is-vertical .ds-btn { flex:none }\n.bsh-sheet__footer.is-mix { flex-direction:column;align-items:stretch;gap:10px }\n.bsh-sheet__footer.is-mix&gt;.ds-btn { flex:none }\n.bsh-sheet__footer-row { display:flex;gap:6px;width:100% }\n.bsh-sheet__footer-row .ds-btn { flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis }\n.bsh-sheet__footer.is-mix&gt;a.ds-btn { align-self:center;flex:none }\n.bsh-ref__header .bsh-sheet__header { padding:10px 14px 0 }",
+  "css": ".bsh-sheet { position:absolute;left:0;right:0;bottom:0;background:var(--elevation-surface-l);display:flex;flex-direction:column;z-index:2;box-shadow:var(--elevation-l-up);transition:background .25s }\n.bsh-sheet--compact { border-radius:20px 20px 0 0 }\n.bsh-sheet--full { top:22px;border-radius:0 }\n.bsh-sheet--full .bsh-sheet__body { flex:1 }\n.bsh-sheet__handle { width:36px;height:4px;border-radius:2px;background:var(--color-surface-n3);margin:8px auto 0 }\n.bsh-sheet__header { display:flex;align-items:center;gap:8px;padding:10px 16px 12px }\n.bsh-sheet__back,.bsh-sheet__close { background:none;border:none;padding:0;display:inline-flex;align-items:center;color:var(--color-text-1);cursor:pointer;flex-shrink:0 }\n.bsh-sheet__title { flex:1;font-size:14px;font-weight:800;color:var(--color-text-1);overflow:hidden;text-overflow:ellipsis;white-space:nowrap }\n.bsh-sheet__body { padding:0 16px 16px }\n.bsh-sheet__placeholder { border:1.5px dashed var(--chrome-border);border-radius:10px;padding:14px 12px;font-size:11.5px;font-weight:700;color:var(--color-text-s);text-align:center }\n.bsh-sheet__footer { padding:12px 16px;display:flex;gap:6px }\n.bsh-sheet__footer .ds-btn { flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis }\n.bsh-sheet__footer.is-vertical { flex-direction:column }\n.bsh-sheet__footer.is-vertical .ds-btn { flex:none }\n.bsh-sheet__footer.is-mix { flex-direction:column;align-items:stretch;gap:10px }\n.bsh-sheet__footer.is-mix&gt;.ds-btn { flex:none }\n.bsh-sheet__footer-row { display:flex;gap:6px;width:100% }\n.bsh-sheet__footer-row .ds-btn { flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis }\n.bsh-sheet__footer.is-mix&gt;a.ds-btn { align-self:center;flex:none }\n.bsh-ref__header .bsh-sheet__header { padding:10px 14px 0 }",
   "js": "function bshBuildSheetEl({backArrow, fullScreen, title, body, footerLayout, theme, onClose, onBack}){\n  const wrap = document.createElement('div');\n  wrap.className = 'bsh-sheet ' + (fullScreen ? 'bsh-sheet--full' : 'bsh-sheet--compact');\n\n  const handle = document.createElement('div');\n  handle.className = 'bsh-sheet__handle';\n  wrap.appendChild(handle);\n\n  const header = document.createElement('div');\n  header.className = 'bsh-sheet__header';\n  if(backArrow){\n    const b = document.createElement('button');\n    b.type = 'button'; b.className = 'bsh-sheet__back'; b.setAttribute('aria-label','Back');\n    b.innerHTML = bshIconBack(18,'currentColor');\n    b.onclick = onBack || onClose || null;\n    header.appendChild(b);\n  }\n  const t = document.createElement('span');\n  t.className = 'bsh-sheet__title';\n  t.textContent = title || 'Header title here';\n  header.appendChild(t);\n  const x = document.createElement('button');\n  x.type = 'button'; x.className = 'bsh-sheet__close'; x.setAttribute('aria-label','Close');\n  x.innerHTML = bshIconClose(16,'currentColor');\n  x.onclick = onClose || null;\n  header.appendChild(x);\n  wrap.appendChild(header);\n\n  const bodyEl = document.createElement('div');\n  bodyEl.className = 'bsh-sheet__body';\n  const ph = document.createElement('div');\n  ph.className = 'bsh-sheet__placeholder';\n  ph.textContent = body || 'Content goes here';\n  bodyEl.appendChild(ph);\n  wrap.appendChild(bodyEl);\n\n  wrap.appendChild(bshBuildFooter(footerLayout || 'horizontal', theme));\n  return wrap;\n}\n\nfunction bshBuildFooter(layout, theme){\n  const footer = document.createElement('div');\n  footer.className = 'bsh-sheet__footer' + (layout==='vertical' ? ' is-vertical' : layout==='mix' ? ' is-mix' : '');\n  if(layout==='vertical'){\n    footer.appendChild(makeBtnEl('flash', theme, 'primary', 'reg', false, 'Confirm'));\n    footer.appendChild(makeBtnEl('flash', theme, 'secondary', 'reg', false, 'Cancel'));\n  } else if(layout==='mix'){\n    footer.appendChild(makeBtnEl('flash', theme, 'primary', 'reg', false, 'Confirm'));\n    const row = document.createElement('div');\n    row.className = 'bsh-sheet__footer-row';\n    row.appendChild(makeBtnEl('flash', theme, 'secondary', 'reg', false, 'Save for later'));\n    row.appendChild(makeBtnEl('flash', theme, 'secondary', 'reg', false, 'Cancel'));\n    footer.appendChild(row);\n    footer.appendChild(makeBtnEl('flash', theme, 'link', 'reg', false, 'Learn more'));\n  } else {\n    footer.appendChild(makeBtnEl('flash', theme, 'secondary', 'reg', false, 'Cancel'));\n    footer.appendChild(makeBtnEl('flash', theme, 'primary', 'reg', false, 'Confirm'));\n  }\n  return footer;\n}\n\nfunction bshIconClose(size, color){\n  return `&lt;svg width=\"${size}\" height=\"${size}\" viewBox=\"0 0 24 24\" fill=\"none\"&gt;&lt;path d=\"M6 6l12 12M18 6L6 18\" stroke=\"${color}\" stroke-width=\"2.4\" stroke-linecap=\"round\"/&gt;&lt;/svg&gt;`;\n}\n\nfunction bshIconBack(size, color){\n  return `&lt;svg width=\"${size}\" height=\"${size}\" viewBox=\"0 0 24 24\" fill=\"none\"&gt;&lt;path d=\"M15 5l-7 7 7 7\" stroke=\"${color}\" stroke-width=\"2.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/&gt;&lt;/svg&gt;`;\n}\n\nconst BSH_FOOTER_LAYOUTS = [\n  {key:'horizontal', label:'Horizontal'},\n  {key:'vertical',   label:'Vertical'},\n  {key:'mix',        label:'Mix'},\n];",
   "usage": {
     "do": [
@@ -5999,7 +6025,7 @@ body.home .main{max-width:none;margin:0;padding:0}
       "Don’t bury the primary action below the fold on a full screen sheet — keep the footer pinned."
     ]
   },
-  "contentHash": "891b05545118f21303709bce3a3c5fa9f36ca0f2a64b4a5eb9eefdfce2950f1b",
+  "contentHash": "3dd8bca5a055ae57bf8c3fc6ccdd554b52ebda77ea099cc6ed696261fbb40edb",
   "note": "bshBuildFooter's action buttons reuse makeBtnEl from the Buttons component (see that section's own AI context tab) — not duplicated here. bshBuildHeaderOnlyEl/BSH_HEADER_VARIANTS/.bsh-ref__header power a separate, isolated SheetHeader-only reference grid used by the Style tab's size demo, and bshBuildPhone/.bsh-phone* is a doc-site phone-mockup frame — neither is part of the real reusable sheet, excluded."
 }
   </pre>
@@ -6476,7 +6502,7 @@ body.home .main{max-width:none;margin:0;padding:0}
       <div class="sec__head">
         <h1 class="sec__title">Dropdown</h1>
         <div class="sec-header-meta">
-          <span class="comp-ver-badge" style="margin-left:0">v1.4.2</span>
+          <span class="comp-ver-badge" style="margin-left:0">v1.5.0</span>
           <details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-dropdown">
@@ -6518,7 +6544,7 @@ body.home .main{max-width:none;margin:0;padding:0}
     ".dpd-search",
     ".pop__apply"
   ],
-  "css": "/* ================================================================\n   DROPDOWN\n================================================================ */\n.dpd-field { display:flex;flex-direction:column;gap:4px;width:267px;font-family:inherit }\n.dpd-label { font-size:14px;font-weight:600;color:var(--color-text-1);padding-bottom:2px }\n.dpd-wrap { position:relative }\n.dpd-trigger { display:flex;align-items:center;justify-content:space-between;gap:8px;width:100%;height:48px;padding:0 12px;border-radius:6px;border:2px solid var(--color-input-border);background:var(--color-input-bg);cursor:pointer;font-family:inherit;text-align:left;transition:border-color .15s,background-color .15s }\n.dpd-trigger__text { flex:1 1 auto;min-width:0;font-size:16px;font-weight:600;color:var(--color-text-s);overflow:hidden;text-overflow:ellipsis;white-space:nowrap }\n.dpd-trigger.has-value .dpd-trigger__text { color:var(--color-text-1) }\n.dpd-trigger__chevron { flex-shrink:0;width:12px;height:12px;display:flex;align-items:center;justify-content:center;color:var(--color-text-1);transition:transform .18s ease }\n.dpd-trigger__chevron svg { width:100%;height:100% }\n.dpd-caption { font-size:12px;color:var(--color-text-3) }\n/* hover */\n.dpd-trigger:hover,.dpd-trigger--hover { background:var(--color-surface-n1) }\n/* keyboard focus / open — border switches to the inverse (black in light, white in dark) */\n.dpd-trigger:focus-visible,.dpd-trigger--focus,.dpd-trigger--open { outline:none;border-color:var(--color-input-focus);background:var(--color-surface-base) }\n.dpd-wrap.is-open .dpd-trigger__chevron,.dpd-trigger--open .dpd-trigger__chevron { transform:rotate(180deg) }\n/* Rounded style — pill trigger, border hidden until hover/focus/open */\n.dpd-field--rounded .dpd-trigger { border-radius:999px;border-color:var(--color-input-bg) }\n.dpd-field--rounded .dpd-trigger:hover,.dpd-field--rounded .dpd-trigger--hover { border-color:var(--color-surface-n1) }\n.dpd-field--rounded .dpd-trigger:focus-visible,.dpd-field--rounded .dpd-trigger--focus,.dpd-field--rounded .dpd-trigger--open { border-color:var(--color-input-focus) }\n/* Small size */\n.dpd-field--sm .dpd-trigger { height:40px;padding:0 10px;gap:6px }\n.dpd-field--sm .dpd-trigger__text { font-size:14px }\n.dpd-field--sm .dpd-trigger__chevron { width:10px;height:10px }\n.dpd-field--sm .dpd-label { font-size:13px }\n.dpd-field--sm .dpd-caption { font-size:11px }\n/* Menu card — attaches under the trigger, real instances float; static swatches lay out inline */\n.dpd-menu { position:absolute;left:0;right:0;top:calc(100% + 6px);z-index:20;max-height:280px;overflow-y:auto;display:flex;flex-direction:column;gap:2px;padding:4px;border-radius:12px;border:1px solid var(--chrome-border);background:var(--color-surface-base);box-shadow:0 4px 24px 0 rgba(0,0,0,.16) }\n.dpd-menu[hidden] { display:none }\n.dpd-menu--inline { position:static;top:auto;margin-top:6px;box-shadow:0 1px 2px rgba(0,0,0,.1) }\n.dpd-search { display:flex;align-items:center;gap:8px;padding:9px 12px;margin-bottom:2px;border-radius:999px;background:var(--color-surface-n1);color:var(--color-text-3);flex-shrink:0 }\n.dpd-search svg { width:14px;height:14px;flex-shrink:0 }\n.dpd-search input { flex:1;min-width:0;border:none;background:none;outline:none;font-family:inherit;font-size:13px;color:var(--color-text-1) }\n.dpd-item { display:flex;align-items:center;gap:8px;min-height:44px;padding:8px 10px;border-radius:6px;cursor:pointer;border:none;background:none;width:100%;text-align:left;font-family:inherit;flex-shrink:0 }\n.dpd-item:hover,.dpd-item--hover { background:var(--color-surface-n1) }\n.dpd-item__box { flex-shrink:0;width:18px;height:18px;border-radius:5px;border:2px solid var(--chrome-muted);background-color:var(--color-surface-base);background-repeat:no-repeat;background-position:center;background-size:70%;transition:background-color .15s,border-color .15s }\n.dpd-item__label { flex:1 1 auto;min-width:0;font-size:15px;font-weight:500;color:var(--color-text-1);overflow:hidden;text-overflow:ellipsis;white-space:nowrap }\n.dpd-item.is-selected,.dpd-item--selected { background:var(--color-success-l) }\n.dpd-item.is-selected .dpd-item__box,.dpd-item--selected .dpd-item__box { background-color:var(--color-success-h);border-color:var(--color-success-h);background-image:url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='none' stroke='%23fff' stroke-width='2.3' stroke-linecap='round' stroke-linejoin='round' d='M3.5 8.4l3 3 6-6.6'/%3E%3C/svg%3E\") }\n.dpd-item.is-selected .dpd-item__label,.dpd-item--selected .dpd-item__label { font-weight:700 }\n.dpd-item__check { margin-left:auto;flex-shrink:0;width:16px;height:16px;color:var(--color-success-h);opacity:0;transition:opacity .1s }\n.dpd-item__check svg { display:block;width:100%;height:100% }\n.dpd-item.is-selected .dpd-item__check,.dpd-item--selected .dpd-item__check { opacity:1 }\n.dpd-menu__foot { display:flex;gap:8px;padding:8px 6px 4px;margin-top:2px;border-top:1px solid var(--chrome-border);flex-shrink:0 }\n.dpd-menu__clear { flex:1;background:none;border:1px solid var(--chrome-border);color:var(--chrome-txt);border-radius:8px;padding:8px;font-size:12.5px;font-weight:700;font-family:inherit;cursor:pointer }\n.dpd-menu__clear:hover { background:var(--chrome-hover) }\n.pop__apply { flex:1;background:var(--color-btn-s-bg);color:var(--color-btn-s-txt);border:0;border-radius:8px;padding:8px;font-size:12.5px;font-weight:700;font-family:inherit;cursor:pointer }",
+  "css": "/* ================================================================\n   DROPDOWN\n================================================================ */\n.dpd-field { display:flex;flex-direction:column;gap:4px;width:267px;font-family:inherit }\n.dpd-label { font-size:14px;font-weight:600;color:var(--color-text-1);padding-bottom:2px }\n.dpd-wrap { position:relative }\n.dpd-trigger { display:flex;align-items:center;justify-content:space-between;gap:8px;width:100%;height:48px;padding:0 12px;border-radius:6px;border:2px solid var(--color-input-border);background:var(--color-input-bg);cursor:pointer;font-family:inherit;text-align:left;transition:border-color .15s,background-color .15s }\n.dpd-trigger__text { flex:1 1 auto;min-width:0;font-size:16px;font-weight:600;color:var(--color-text-s);overflow:hidden;text-overflow:ellipsis;white-space:nowrap }\n.dpd-trigger.has-value .dpd-trigger__text { color:var(--color-text-1) }\n.dpd-trigger__chevron { flex-shrink:0;width:12px;height:12px;display:flex;align-items:center;justify-content:center;color:var(--color-text-1);transition:transform .18s ease }\n.dpd-trigger__chevron svg { width:100%;height:100% }\n.dpd-caption { font-size:12px;color:var(--color-text-3) }\n/* hover */\n.dpd-trigger:hover,.dpd-trigger--hover { background:var(--color-surface-n1) }\n/* keyboard focus / open — border switches to the inverse (black in light, white in dark) */\n.dpd-trigger:focus-visible,.dpd-trigger--focus,.dpd-trigger--open { outline:none;border-color:var(--color-input-focus);background:var(--color-surface-base) }\n.dpd-wrap.is-open .dpd-trigger__chevron,.dpd-trigger--open .dpd-trigger__chevron { transform:rotate(180deg) }\n/* Rounded style — pill trigger, border hidden until hover/focus/open */\n.dpd-field--rounded .dpd-trigger { border-radius:999px;border-color:var(--color-input-bg) }\n.dpd-field--rounded .dpd-trigger:hover,.dpd-field--rounded .dpd-trigger--hover { border-color:var(--color-surface-n1) }\n.dpd-field--rounded .dpd-trigger:focus-visible,.dpd-field--rounded .dpd-trigger--focus,.dpd-field--rounded .dpd-trigger--open { border-color:var(--color-input-focus) }\n/* Small size */\n.dpd-field--sm .dpd-trigger { height:40px;padding:0 10px;gap:6px }\n.dpd-field--sm .dpd-trigger__text { font-size:14px }\n.dpd-field--sm .dpd-trigger__chevron { width:10px;height:10px }\n.dpd-field--sm .dpd-label { font-size:13px }\n.dpd-field--sm .dpd-caption { font-size:11px }\n/* Menu card — attaches under the trigger, real instances float; static swatches lay out inline */\n.dpd-menu { position:absolute;left:0;right:0;top:calc(100% + 6px);z-index:20;max-height:280px;overflow-y:auto;display:flex;flex-direction:column;gap:2px;padding:4px;border-radius:12px;border:1px solid var(--chrome-border);background:var(--elevation-surface-m);box-shadow:var(--elevation-m) }\n.dpd-menu[hidden] { display:none }\n.dpd-menu--inline { position:static;top:auto;margin-top:6px;box-shadow:0 1px 2px rgba(0,0,0,.1) }\n.dpd-search { display:flex;align-items:center;gap:8px;padding:9px 12px;margin-bottom:2px;border-radius:999px;background:var(--color-surface-n1);color:var(--color-text-3);flex-shrink:0 }\n.dpd-search svg { width:14px;height:14px;flex-shrink:0 }\n.dpd-search input { flex:1;min-width:0;border:none;background:none;outline:none;font-family:inherit;font-size:13px;color:var(--color-text-1) }\n.dpd-item { display:flex;align-items:center;gap:8px;min-height:44px;padding:8px 10px;border-radius:6px;cursor:pointer;border:none;background:none;width:100%;text-align:left;font-family:inherit;flex-shrink:0 }\n.dpd-item:hover,.dpd-item--hover { background:var(--color-surface-n1) }\n.dpd-item__box { flex-shrink:0;width:18px;height:18px;border-radius:5px;border:2px solid var(--chrome-muted);background-color:var(--color-surface-base);background-repeat:no-repeat;background-position:center;background-size:70%;transition:background-color .15s,border-color .15s }\n.dpd-item__label { flex:1 1 auto;min-width:0;font-size:15px;font-weight:500;color:var(--color-text-1);overflow:hidden;text-overflow:ellipsis;white-space:nowrap }\n.dpd-item.is-selected,.dpd-item--selected { background:var(--color-success-l) }\n.dpd-item.is-selected .dpd-item__box,.dpd-item--selected .dpd-item__box { background-color:var(--color-success-h);border-color:var(--color-success-h);background-image:url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='none' stroke='%23fff' stroke-width='2.3' stroke-linecap='round' stroke-linejoin='round' d='M3.5 8.4l3 3 6-6.6'/%3E%3C/svg%3E\") }\n.dpd-item.is-selected .dpd-item__label,.dpd-item--selected .dpd-item__label { font-weight:700 }\n.dpd-item__check { margin-left:auto;flex-shrink:0;width:16px;height:16px;color:var(--color-success-h);opacity:0;transition:opacity .1s }\n.dpd-item__check svg { display:block;width:100%;height:100% }\n.dpd-item.is-selected .dpd-item__check,.dpd-item--selected .dpd-item__check { opacity:1 }\n.dpd-menu__foot { display:flex;gap:8px;padding:8px 6px 4px;margin-top:2px;border-top:1px solid var(--chrome-border);flex-shrink:0 }\n.dpd-menu__clear { flex:1;background:none;border:1px solid var(--chrome-border);color:var(--chrome-txt);border-radius:8px;padding:8px;font-size:12.5px;font-weight:700;font-family:inherit;cursor:pointer }\n.dpd-menu__clear:hover { background:var(--chrome-hover) }\n.pop__apply { flex:1;background:var(--color-btn-s-bg);color:var(--color-btn-s-txt);border:0;border-radius:8px;padding:8px;font-size:12.5px;font-weight:700;font-family:inherit;cursor:pointer }",
   "js": "function itemHtml(label, selected){\n  return '&lt;button type=\"button\" class=\"dpd-item' + (selected ? ' is-selected' : '') + '\"&gt;' +\n    '&lt;span class=\"dpd-item__label\"&gt;' + label + '&lt;/span&gt;' +\n    '&lt;span class=\"dpd-item__check\"&gt;' + CHECK_ICON + '&lt;/span&gt;' +\n  '&lt;/button&gt;';\n}\n\nfunction itemHtmlCheckbox(label, selected){\n  return '&lt;button type=\"button\" class=\"dpd-item' + (selected ? ' is-selected' : '') + '\"&gt;' +\n    '&lt;span class=\"dpd-item__box\"&gt;&lt;/span&gt;' +\n    '&lt;span class=\"dpd-item__label\"&gt;' + label + '&lt;/span&gt;' +\n  '&lt;/button&gt;';\n}\n\nfunction menuHtml(options, selectedIndex, opts){\n  opts = opts || {};\n  var search = opts.showSearch ? ('&lt;div class=\"dpd-search\"&gt;' + SEARCH_ICON + '&lt;input type=\"text\" placeholder=\"Search\" aria-label=\"Search options\"&gt;&lt;/div&gt;') : '';\n  var items = options.map(function(o, i){ return itemHtml(o, i === selectedIndex); }).join('');\n  return '&lt;div class=\"dpd-menu' + (opts.inline ? ' dpd-menu--inline' : '') + '\"' + (opts.inline ? '' : ' hidden') + '&gt;' + search + items + '&lt;/div&gt;';\n}\n\nfunction triggerHtml(opts){\n  var cls = 'dpd-trigger';\n  if(opts.state === 'hover') cls += ' dpd-trigger--hover';\n  if(opts.state === 'focus') cls += ' dpd-trigger--focus';\n  if(opts.state === 'open')  cls += ' dpd-trigger--open';\n  var hasValue = opts.selectedIndex != null;\n  if(hasValue) cls += ' has-value';\n  var text = hasValue ? opts.options[opts.selectedIndex] : (opts.placeholder || 'Choose an option');\n  return '&lt;button type=\"button\" class=\"' + cls + '\"&gt;&lt;span class=\"dpd-trigger__text\"&gt;' + text + '&lt;/span&gt;&lt;span class=\"dpd-trigger__chevron\"&gt;' + CHEVRON + '&lt;/span&gt;&lt;/button&gt;';\n}\n\nfunction fieldHtml(opts){\n  opts = opts || {};\n  var options = opts.options || OPTIONS;\n  var cls = 'dpd-field';\n  if(opts.style === 'rounded') cls += ' dpd-field--rounded';\n  if(opts.size === 'sm') cls += ' dpd-field--sm';\n  var label   = opts.showLabel   === false ? '' : '&lt;div class=\"dpd-label\"&gt;' + (opts.label || 'Dropdown label') + '&lt;/div&gt;';\n  var caption = opts.showCaption === false ? '' : '&lt;div class=\"dpd-caption\"&gt;' + (opts.caption || 'Assistive caption') + '&lt;/div&gt;';\n  var menu = opts.state === 'open' ? menuHtml(options, opts.selectedIndex, {showSearch: opts.showSearch, inline: true}) : '';\n  return '&lt;div class=\"' + cls + '\"&gt;' + label +\n    '&lt;div class=\"dpd-wrap' + (opts.state === 'open' ? ' is-open' : '') + '\"&gt;' + triggerHtml(Object.assign({}, opts, {options: options})) + menu + '&lt;/div&gt;' +\n    caption +\n  '&lt;/div&gt;';\n}\n\nfunction interactiveFieldHtml(opts){\n  var labelInside = opts.labelPosition === 'inside';\n  var cls = 'dpd-field' + (opts.style === 'rounded' ? ' dpd-field--rounded' : '') + (opts.size === 'sm' ? ' dpd-field--sm' : '');\n  var label = labelInside ? '' : '&lt;div class=\"dpd-label\"&gt;' + (opts.label || 'Dropdown label') + '&lt;/div&gt;';\n  var caption = '&lt;div class=\"dpd-caption\"&gt;' + (opts.caption || 'Assistive caption') + '&lt;/div&gt;';\n  var menu = menuHtml(opts.options, null, {showSearch: opts.showSearch, inline: false});\n  return '&lt;div class=\"' + cls + '\"&gt;' + label +\n    '&lt;div class=\"dpd-wrap\"&gt;' + triggerHtml({options: opts.options, placeholder: opts.placeholder}) + menu + '&lt;/div&gt;' +\n    caption +\n  '&lt;/div&gt;';\n}\n\nfunction wireInteractive(root){\n  var wrap = root.querySelector('.dpd-wrap');\n  var trigger = wrap.querySelector('.dpd-trigger');\n  var menu = wrap.querySelector('.dpd-menu');\n  var textEl = trigger.querySelector('.dpd-trigger__text');\n  function close(){\n    wrap.classList.remove('is-open');\n    trigger.classList.remove('dpd-trigger--open');\n    menu.setAttribute('hidden', '');\n  }\n  function openMenu(){\n    wrap.classList.add('is-open');\n    trigger.classList.add('dpd-trigger--open');\n    menu.removeAttribute('hidden');\n    var search = menu.querySelector('input');\n    if(search) search.focus();\n  }\n  trigger.addEventListener('click', function(e){\n    e.stopPropagation();\n    if(wrap.classList.contains('is-open')) close(); else openMenu();\n  });\n  menu.querySelectorAll('.dpd-item').forEach(function(btn){\n    btn.addEventListener('click', function(e){\n      e.stopPropagation();\n      menu.querySelectorAll('.dpd-item').forEach(function(b){ b.classList.remove('is-selected'); });\n      btn.classList.add('is-selected');\n      textEl.textContent = btn.querySelector('.dpd-item__label').textContent;\n      trigger.classList.add('has-value');\n      close();\n    });\n  });\n  var search = menu.querySelector('input');\n  if(search){\n    search.addEventListener('click', function(e){ e.stopPropagation(); });\n    search.addEventListener('input', function(){\n      var q = search.value.trim().toLowerCase();\n      menu.querySelectorAll('.dpd-item').forEach(function(btn){\n        var txt = btn.querySelector('.dpd-item__label').textContent.toLowerCase();\n        btn.style.display = txt.indexOf(q) &gt; -1 ? '' : 'none';\n      });\n    });\n  }\n  document.addEventListener('click', function(e){\n    if(!wrap.contains(e.target)) close();\n  });\n  document.addEventListener('keydown', function(e){\n    if(e.key === 'Escape' &amp;&amp; wrap.classList.contains('is-open')) close();\n  });\n}\n\nfunction interactiveMultiFieldHtml(opts){\n  var labelInside = opts.labelPosition === 'inside';\n  var cls = 'dpd-field' + (opts.style === 'rounded' ? ' dpd-field--rounded' : '') + (opts.size === 'sm' ? ' dpd-field--sm' : '');\n  var label = labelInside ? '' : '&lt;div class=\"dpd-label\"&gt;' + (opts.label || 'Dropdown label') + '&lt;/div&gt;';\n  var caption = '&lt;div class=\"dpd-caption\"&gt;' + (opts.caption || 'Assistive caption') + '&lt;/div&gt;';\n  var items = opts.options.map(function(o){ return itemHtmlCheckbox(o, false); }).join('');\n  var search = opts.showSearch ? ('&lt;div class=\"dpd-search\"&gt;' + SEARCH_ICON + '&lt;input type=\"text\" placeholder=\"Search\" aria-label=\"Search options\"&gt;&lt;/div&gt;') : '';\n  var foot = '&lt;div class=\"dpd-menu__foot\"&gt;&lt;button type=\"button\" class=\"dpd-menu__clear\"&gt;Clear&lt;/button&gt;&lt;button type=\"button\" class=\"pop__apply\"&gt;Done&lt;/button&gt;&lt;/div&gt;';\n  var menu = '&lt;div class=\"dpd-menu\" hidden&gt;' + search + items + foot + '&lt;/div&gt;';\n  return '&lt;div class=\"' + cls + '\"&gt;' + label +\n    '&lt;div class=\"dpd-wrap\"&gt;' + triggerHtml({options: opts.options, placeholder: opts.placeholder}) + menu + '&lt;/div&gt;' +\n    caption +\n  '&lt;/div&gt;';\n}\n\nfunction wireInteractiveMulti(root, opts){\n  var wrap = root.querySelector('.dpd-wrap');\n  var trigger = wrap.querySelector('.dpd-trigger');\n  var menu = wrap.querySelector('.dpd-menu');\n  var textEl = trigger.querySelector('.dpd-trigger__text');\n  var options = opts.options;\n  var selected = new Set();\n  function close(){\n    wrap.classList.remove('is-open');\n    trigger.classList.remove('dpd-trigger--open');\n    menu.setAttribute('hidden', '');\n  }\n  function openMenu(){\n    wrap.classList.add('is-open');\n    trigger.classList.add('dpd-trigger--open');\n    menu.removeAttribute('hidden');\n    var search = menu.querySelector('input');\n    if(search) search.focus();\n  }\n  function updateTrigger(){\n    if(selected.size === 0){\n      textEl.textContent = opts.placeholder || 'Choose an option';\n      trigger.classList.remove('has-value');\n    } else if(selected.size === 1){\n      textEl.textContent = options[selected.values().next().value];\n      trigger.classList.add('has-value');\n    } else {\n      textEl.textContent = selected.size + ' selected';\n      trigger.classList.add('has-value');\n    }\n  }\n  trigger.addEventListener('click', function(e){\n    e.stopPropagation();\n    if(wrap.classList.contains('is-open')) close(); else openMenu();\n  });\n  var itemEls = Array.prototype.slice.call(menu.querySelectorAll('.dpd-item'));\n  itemEls.forEach(function(btn, i){\n    btn.addEventListener('click', function(e){\n      e.stopPropagation();\n      if(selected.has(i)){ selected.delete(i); btn.classList.remove('is-selected'); }\n      else { selected.add(i); btn.classList.add('is-selected'); }\n      updateTrigger();\n    });\n  });\n  var clearBtn = menu.querySelector('.dpd-menu__clear');\n  if(clearBtn) clearBtn.addEventListener('click', function(e){\n    e.stopPropagation();\n    selected.clear();\n    itemEls.forEach(function(b){ b.classList.remove('is-selected'); });\n    updateTrigger();\n  });\n  var doneBtn = menu.querySelector('.pop__apply');\n  if(doneBtn) doneBtn.addEventListener('click', function(e){ e.stopPropagation(); close(); });\n  var search = menu.querySelector('.dpd-search input');\n  if(search){\n    search.addEventListener('click', function(e){ e.stopPropagation(); });\n    search.addEventListener('input', function(){\n      var q = search.value.trim().toLowerCase();\n      itemEls.forEach(function(btn){\n        var txt = btn.querySelector('.dpd-item__label').textContent.toLowerCase();\n        btn.style.display = txt.indexOf(q) &gt; -1 ? '' : 'none';\n      });\n    });\n  }\n  document.addEventListener('click', function(e){\n    if(!wrap.contains(e.target)) close();\n  });\n  document.addEventListener('keydown', function(e){\n    if(e.key === 'Escape' &amp;&amp; wrap.classList.contains('is-open')) close();\n  });\n  updateTrigger();\n}\n\nvar CHEVRON = '&lt;svg viewBox=\"0 0 12 8\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"&gt;&lt;path d=\"M1 1.5L6 6.5L11 1.5\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/&gt;&lt;/svg&gt;';\n\nvar SEARCH_ICON = '&lt;svg viewBox=\"0 0 16 16\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"&gt;&lt;circle cx=\"7\" cy=\"7\" r=\"5\" stroke=\"currentColor\" stroke-width=\"1.6\"/&gt;&lt;path d=\"M11.5 11.5L15 15\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\"/&gt;&lt;/svg&gt;';\n\nvar CHECK_ICON = '&lt;svg viewBox=\"0 0 16 16\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"&gt;&lt;path d=\"M3 8.5L6.5 12L13 4.5\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/&gt;&lt;/svg&gt;';\n\nvar OPTIONS = ['Airtime &amp; Data','Electricity','Bill Payments','Vouchers','Gaming','Insurance','Lottery','Data Bundles'];",
   "usage": {
     "do": [
@@ -6537,7 +6563,7 @@ body.home .main{max-width:none;margin:0;padding:0}
       "Don’t rely on the placeholder colour alone to signal “required” — pair it with real validation."
     ]
   },
-  "contentHash": "312b79d43d1134fbbc3a361e2822f30ebbc91bd1236672286641b1bcfb410f6b",
+  "contentHash": "3cd02968f15c16831f8dabf33b92c623a448ef4f2325debc04e8110ca06b0b9c",
   "note": "Canonical builders (itemHtml/itemHtmlCheckbox/menuHtml/triggerHtml/fieldHtml/interactiveFieldHtml/wireInteractive/interactiveMultiFieldHtml/wireInteractiveMulti) are shared by the interactive Overview playground and the static Style-tab specimens. interactiveFieldHtml/interactiveMultiFieldHtml accept opts.labelPosition:'inside' (drops the outer .dpd-label, caller-resolved placeholder stands in for it) or 'outside' (default) — exposed via the playground's Label position control; fieldHtml (Style-tab specimens) is untouched and always renders the outside label. ddpg (playground state)/getDdCode*/render*/DD_* option lists are doc-site-only plumbing, excluded."
 }
   </pre>
@@ -7112,7 +7138,7 @@ body.home .main{max-width:none;margin:0;padding:0}
     <section class="sec" id="s-tooltip">
       <div class="sec__head">
         <div class="sec__eye">Components</div>
-        <h1 class="sec__title">Tooltip <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.0.2</span></h1>
+        <h1 class="sec__title">Tooltip <span class="comp-ver-badge" style="vertical-align:middle;margin-left:6px">v1.1.0</span></h1>
         <p class="sec__desc">A small floating label that explains an element on hover or keyboard focus. Pure CSS &mdash; it appears on <code>:hover</code> and <code>:focus-within</code>, so keyboard users get it too. Reserve it for short, non-essential hints.</p>
       </div>
       <div class="type-sub">
@@ -7170,7 +7196,7 @@ body.home .main{max-width:none;margin:0;padding:0}
     ".tip__bubble--left",
     ".tip__trigger"
   ],
-  "css": "/* ---- Tooltip ---- */\n.tip { position:relative;display:inline-flex }\n.tip__bubble { position:absolute;z-index:30;padding:6px 10px;border-radius:8px;background:var(--color-surface-inverse);color:var(--color-text-inv);font-size:12px;font-weight:500;line-height:1.4;white-space:nowrap;pointer-events:none;opacity:0;transition:opacity .15s ease,transform .15s ease;box-shadow:0 2px 12px 0 rgba(0,0,0,.16) }\n.tip__bubble::after { content:\"\";position:absolute;width:8px;height:8px;background:var(--color-surface-inverse);transform:rotate(45deg) }\n.tip:hover .tip__bubble,.tip:focus-within .tip__bubble { opacity:1 }\n.tip__bubble--top { bottom:calc(100% + 9px);left:50%;transform:translate(-50%,4px) }\n.tip:hover .tip__bubble--top,.tip:focus-within .tip__bubble--top { transform:translate(-50%,0) }\n.tip__bubble--top::after { bottom:-4px;left:50%;margin-left:-4px }\n.tip__bubble--bottom { top:calc(100% + 9px);left:50%;transform:translate(-50%,-4px) }\n.tip:hover .tip__bubble--bottom,.tip:focus-within .tip__bubble--bottom { transform:translate(-50%,0) }\n.tip__bubble--bottom::after { top:-4px;left:50%;margin-left:-4px }\n.tip__bubble--right { left:calc(100% + 9px);top:50%;transform:translate(-4px,-50%) }\n.tip:hover .tip__bubble--right,.tip:focus-within .tip__bubble--right { transform:translate(0,-50%) }\n.tip__bubble--right::after { left:-4px;top:50%;margin-top:-4px }\n.tip__bubble--left { right:calc(100% + 9px);top:50%;transform:translate(4px,-50%) }\n.tip:hover .tip__bubble--left,.tip:focus-within .tip__bubble--left { transform:translate(0,-50%) }\n.tip__bubble--left::after { right:-4px;top:50%;margin-top:-4px }\n.tip__trigger { cursor:default }",
+  "css": "/* ---- Tooltip ---- */\n.tip { position:relative;display:inline-flex }\n.tip__bubble { position:absolute;z-index:30;padding:6px 10px;border-radius:8px;background:var(--color-surface-inverse);color:var(--color-text-inv);font-size:12px;font-weight:500;line-height:1.4;white-space:nowrap;pointer-events:none;opacity:0;transition:opacity .15s ease,transform .15s ease;box-shadow:var(--elevation-s) }\n.tip__bubble::after { content:\"\";position:absolute;width:8px;height:8px;background:var(--color-surface-inverse);transform:rotate(45deg) }\n.tip:hover .tip__bubble,.tip:focus-within .tip__bubble { opacity:1 }\n.tip__bubble--top { bottom:calc(100% + 9px);left:50%;transform:translate(-50%,4px) }\n.tip:hover .tip__bubble--top,.tip:focus-within .tip__bubble--top { transform:translate(-50%,0) }\n.tip__bubble--top::after { bottom:-4px;left:50%;margin-left:-4px }\n.tip__bubble--bottom { top:calc(100% + 9px);left:50%;transform:translate(-50%,-4px) }\n.tip:hover .tip__bubble--bottom,.tip:focus-within .tip__bubble--bottom { transform:translate(-50%,0) }\n.tip__bubble--bottom::after { top:-4px;left:50%;margin-left:-4px }\n.tip__bubble--right { left:calc(100% + 9px);top:50%;transform:translate(-4px,-50%) }\n.tip:hover .tip__bubble--right,.tip:focus-within .tip__bubble--right { transform:translate(0,-50%) }\n.tip__bubble--right::after { left:-4px;top:50%;margin-top:-4px }\n.tip__bubble--left { right:calc(100% + 9px);top:50%;transform:translate(4px,-50%) }\n.tip:hover .tip__bubble--left,.tip:focus-within .tip__bubble--left { transform:translate(0,-50%) }\n.tip__bubble--left::after { right:-4px;top:50%;margin-top:-4px }\n.tip__trigger { cursor:default }",
   "usage": {
     "do": [
       "Label icon-only buttons and clarify terse controls.",
@@ -7183,7 +7209,7 @@ body.home .main{max-width:none;margin:0;padding:0}
       "Don’t depend on hover alone on touch devices, where it never fires."
     ]
   },
-  "contentHash": "456344c70bddff61a742d96f463307ee5723e35e28bf0c1560562ac9d060fce5"
+  "contentHash": "e3191ac1bc3345b20a83b49237e848d1b7c89c52e2523188ba54259596c9813e"
 }
   </pre>
 </details>
@@ -8164,7 +8190,7 @@ body.home .main{max-width:none;margin:0;padding:0}
       <div class="sec__head">
         <h1 class="sec__title">Popover</h1>
         <div class="sec-header-meta">
-          <span class="comp-ver-badge" style="margin-left:0">v2.0.10</span>
+          <span class="comp-ver-badge" style="margin-left:0">v2.1.0</span>
           <details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-popover">
@@ -8189,7 +8215,7 @@ body.home .main{max-width:none;margin:0;padding:0}
     ".pop__cancel",
     ".pop__input"
   ],
-  "css": "/* ---- Popover ---- */\n.pop { position:relative;display:inline-block }\n.pop__panel { position:absolute;top:calc(100% + 8px);left:0;z-index:40;min-width:244px;background:var(--chrome-bg);border:1px solid var(--chrome-border);border-radius:12px;box-shadow:0 4px 24px 0 rgba(0,0,0,.16);padding:16px;opacity:0;transform:translateY(-6px);pointer-events:none;transition:opacity .15s ease,transform .15s ease }\n.pop__panel--right { left:auto;right:0 }\n.pop.is-open .pop__panel { opacity:1;transform:translateY(0);pointer-events:auto }\n.pop__title { font-size:13px;font-weight:700;color:var(--chrome-txt);margin-bottom:5px }\n.pop__desc { font-size:12.5px;color:var(--chrome-muted);line-height:1.5 }\n.pop__row { display:flex;align-items:center;justify-content:space-between;gap:12px;padding:7px 0;font-size:13px;color:var(--chrome-txt) }\n.pop__foot { display:flex;gap:8px;margin-top:12px;padding-top:12px;border-top:1px solid var(--chrome-border) }\n.pop__apply { flex:1;background:var(--color-btn-s-bg);color:var(--color-btn-s-txt);border:0;border-radius:8px;padding:8px;font-size:12.5px;font-weight:700;font-family:inherit;cursor:pointer }\n.pop__cancel { flex:1;background:transparent;color:var(--chrome-txt);border:1px solid var(--chrome-border);border-radius:8px;padding:8px;font-size:12.5px;font-weight:700;font-family:inherit;cursor:pointer;transition:background .15s }\n.pop__cancel:hover { background:var(--chrome-hover) }\n.pop__input { width:100%;margin-top:2px;background:var(--chrome-bg);border:1px solid var(--chrome-border);border-radius:8px;padding:8px 10px;font-size:12.5px;font-family:inherit;color:var(--chrome-txt) }\n.pop__input:focus-visible { outline:2px solid var(--color-input-focus);outline-offset:1px }",
+  "css": "/* ---- Popover ---- */\n.pop { position:relative;display:inline-block }\n.pop__panel { position:absolute;top:calc(100% + 8px);left:0;z-index:40;min-width:244px;background:var(--elevation-surface-m);border:1px solid var(--chrome-border);border-radius:12px;box-shadow:var(--elevation-m);padding:16px;opacity:0;transform:translateY(-6px);pointer-events:none;transition:opacity .15s ease,transform .15s ease }\n.pop__panel--right { left:auto;right:0 }\n.pop.is-open .pop__panel { opacity:1;transform:translateY(0);pointer-events:auto }\n.pop__title { font-size:13px;font-weight:700;color:var(--chrome-txt);margin-bottom:5px }\n.pop__desc { font-size:12.5px;color:var(--chrome-muted);line-height:1.5 }\n.pop__row { display:flex;align-items:center;justify-content:space-between;gap:12px;padding:7px 0;font-size:13px;color:var(--chrome-txt) }\n.pop__foot { display:flex;gap:8px;margin-top:12px;padding-top:12px;border-top:1px solid var(--chrome-border) }\n.pop__apply { flex:1;background:var(--color-btn-s-bg);color:var(--color-btn-s-txt);border:0;border-radius:8px;padding:8px;font-size:12.5px;font-weight:700;font-family:inherit;cursor:pointer }\n.pop__cancel { flex:1;background:transparent;color:var(--chrome-txt);border:1px solid var(--chrome-border);border-radius:8px;padding:8px;font-size:12.5px;font-weight:700;font-family:inherit;cursor:pointer;transition:background .15s }\n.pop__cancel:hover { background:var(--chrome-hover) }\n.pop__input { width:100%;margin-top:2px;background:var(--chrome-bg);border:1px solid var(--chrome-border);border-radius:8px;padding:8px 10px;font-size:12.5px;font-family:inherit;color:var(--chrome-txt) }\n.pop__input:focus-visible { outline:2px solid var(--color-input-focus);outline-offset:1px }",
   "js": "const POP_CONTENT_TYPES = [\n  {key:'info',   label:'Info'},\n  {key:'filter', label:'Filter'},\n  {key:'form',   label:'Form'},\n];\n\nfunction popTriggerLabel(type){\n  return type==='info' ? 'i' : type==='form' ? 'Rename ▾' : 'Filter ▾';\n}\n\nfunction popPanelBody(type, footer){\n  if(type==='info'){\n    let body = `&lt;div class=\"pop__title\"&gt;About settlements&lt;/div&gt;&lt;div class=\"pop__desc\"&gt;Funds settle to your linked account on the next business day after a sale clears.&lt;/div&gt;`;\n    if(footer) body += `&lt;div class=\"pop__foot\"&gt;&lt;button class=\"pop__apply\" type=\"button\" data-pop-close&gt;Got it&lt;/button&gt;&lt;/div&gt;`;\n    return body;\n  }\n  if(type==='form'){\n    let body = `&lt;div class=\"pop__title\"&gt;Rename report&lt;/div&gt;&lt;input class=\"pop__input\" type=\"text\" value=\"Monthly settlements\"&gt;`;\n    if(footer) body += `&lt;div class=\"pop__foot\"&gt;&lt;button class=\"pop__cancel\" type=\"button\" data-pop-close&gt;Cancel&lt;/button&gt;&lt;button class=\"pop__apply\" type=\"button\" data-pop-close&gt;Save&lt;/button&gt;&lt;/div&gt;`;\n    return body;\n  }\n  let body = `&lt;div class=\"pop__title\"&gt;Filter transactions&lt;/div&gt;\n      &lt;div class=\"pop__row\"&gt;Show refunds &lt;label class=\"sw sw--sm\"&gt;&lt;input type=\"checkbox\" class=\"sw__input\" checked&gt;&lt;span class=\"sw__track\"&gt;&lt;span class=\"sw__thumb\"&gt;&lt;/span&gt;&lt;/span&gt;&lt;/label&gt;&lt;/div&gt;\n      &lt;div class=\"pop__row\"&gt;Only over R100 &lt;label class=\"sw sw--sm\"&gt;&lt;input type=\"checkbox\" class=\"sw__input\"&gt;&lt;span class=\"sw__track\"&gt;&lt;span class=\"sw__thumb\"&gt;&lt;/span&gt;&lt;/span&gt;&lt;/label&gt;&lt;/div&gt;`;\n  if(footer) body += `&lt;div class=\"pop__foot\"&gt;&lt;button class=\"pop__apply\" type=\"button\" data-pop-close&gt;Apply&lt;/button&gt;&lt;/div&gt;`;\n  return body;\n}\n\nfunction makePopoverHTML(type, placement, footer){\n  const trigCls = type==='info' ? 'sg-iconbtn' : 'sg-btn';\n  const trigAria = type==='info' ? ' aria-label=\"More information\"' : '';\n  const panelCls = 'pop__panel' + (placement==='right' ? ' pop__panel--right' : '');\n  return `&lt;div class=\"pop\"&gt;&lt;button class=\"${trigCls}\" type=\"button\" data-pop${trigAria}&gt;${popTriggerLabel(type)}&lt;/button&gt;&lt;div class=\"${panelCls}\"&gt;${popPanelBody(type, footer)}&lt;/div&gt;&lt;/div&gt;`;\n}\n\nfunction makePopoverEl(){\n  const wrap = document.createElement('div');\n  wrap.innerHTML = makePopoverHTML(popg.type, popg.placement, popg.footer);\n  const pop = wrap.firstElementChild;\n  pop.classList.add('is-open');\n  return pop;\n}",
   "usage": {
     "do": [
@@ -8203,7 +8229,7 @@ body.home .main{max-width:none;margin:0;padding:0}
       "Don’t pack a whole form or page into it."
     ]
   },
-  "contentHash": "1ea1af60f777846dc87849cac309b09f6e1d4fc0fd054f1e414e982c3cce344a",
+  "contentHash": "6bacf7335f116644ebe0c867dd9dbd082d10716eefcba86ae5b1686dd18e8594",
   "note": "makePopoverHTML is the minimal real-markup builder (content type+placement+footer -&gt; .pop HTML string); makePopoverEl is the fuller playground version reading shared popg state. POP_KEY_PATTERNS drives the Overview tab's Key patterns showcase (no colour/size axis exists for this component, unlike Pills — placement left/right is the one structural variant). popPreviewHTML/popCodeBody/getPopoverCode*/renderPopover*/popTabSwitch are doc-site-only playground plumbing, excluded. The document-level delegated click handler (open/close/outside-click/Escape) is generic wiring, not a markup builder, but was changed from per-element binding to event delegation so it also wires up popovers the playground renders dynamically."
 }
   </pre>
@@ -8377,7 +8403,7 @@ body.home .main{max-width:none;margin:0;padding:0}
       <div class="sec__head">
         <h1 class="sec__title">Bar Charts</h1>
         <div class="sec-header-meta">
-          <span class="comp-ver-badge" style="margin-left:0">v1.5.0</span>
+          <span class="comp-ver-badge" style="margin-left:0">v1.5.1</span>
 <details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-charts-bar">
@@ -8400,7 +8426,7 @@ body.home .main{max-width:none;margin:0;padding:0}
     ".cht-legend__item",
     ".cht-legend__dot"
   ],
-  "css": "/* ---- Chart (Flash palette + interactive) ---- */\n.cht { position:relative;border:1px solid var(--chrome-border);border-radius:14px;padding:20px 22px;background:var(--chrome-bg);width:380px;max-width:100%;\n  --c1:var(--prim-green-500);--c2:var(--prim-sup-blue-1);--c3:var(--prim-sup-purple-4);--c4:var(--prim-sup-pink-1);--c5:var(--prim-sup-orange-1) }\n.cht__cap { font-size:13px;font-weight:700;color:var(--chrome-txt);margin-bottom:2px }\n.cht__sub { font-size:11.5px;color:var(--chrome-muted);margin-bottom:16px }\n.cht svg { display:block;width:100%;height:auto;overflow:visible }\n.cht__bar { fill:var(--c1);opacity:.25;transition:fill .15s,opacity .15s;cursor:pointer }\n.cht__bar.on { opacity:1 }\n.cht svg.is-hot .cht__line { opacity:1 }\n.cht__axis { fill:var(--chrome-muted);font-size:10px;font-family:inherit }\n.cht__val { fill:var(--chrome-txt);font-size:10px;font-weight:700;font-family:inherit }\n.cht-legend { display:flex;flex-wrap:wrap;gap:8px 14px;margin-top:16px }\n.cht-legend__item { display:inline-flex;align-items:center;gap:7px;font-size:12px;color:var(--chrome-txt);cursor:pointer;padding:2px 5px;border-radius:6px;transition:background .12s }\n.cht-legend__item:hover { background:var(--chrome-hover) }\n.cht-legend__dot { width:10px;height:10px;border-radius:3px;flex-shrink:0 }\n.cht__tip { position:absolute;z-index:5;pointer-events:none;background:var(--color-surface-inverse);color:var(--color-text-inv);font-size:11.5px;font-weight:600;padding:5px 9px;border-radius:7px;white-space:nowrap;opacity:0;transform:translate(-50%,-100%);transition:opacity .12s;box-shadow:0 4px 14px rgba(0,0,0,.22) }\n.cht__tip.show { opacity:1 }\n.cht__tip b { font-weight:800 }",
+  "css": "/* ---- Chart (Flash palette + interactive) ---- */\n.cht { position:relative;border:1px solid var(--chrome-border);border-radius:14px;padding:20px 22px;background:var(--chrome-bg);width:380px;max-width:100%;\n  --c1:var(--prim-green-500);--c2:var(--prim-sup-blue-1);--c3:var(--prim-sup-purple-4);--c4:var(--prim-sup-pink-1);--c5:var(--prim-sup-orange-1) }\n.cht__cap { font-size:13px;font-weight:700;color:var(--chrome-txt);margin-bottom:2px }\n.cht__sub { font-size:11.5px;color:var(--chrome-muted);margin-bottom:16px }\n.cht svg { display:block;width:100%;height:auto;overflow:visible }\n.cht__bar { fill:var(--c1);opacity:.25;transition:fill .15s,opacity .15s;cursor:pointer }\n.cht__bar.on { opacity:1 }\n.cht svg.is-hot .cht__line { opacity:1 }\n.cht__axis { fill:var(--chrome-muted);font-size:10px;font-family:inherit }\n.cht__val { fill:var(--chrome-txt);font-size:10px;font-weight:700;font-family:inherit }\n.cht-legend { display:flex;flex-wrap:wrap;gap:8px 14px;margin-top:16px }\n.cht-legend__item { display:inline-flex;align-items:center;gap:7px;font-size:12px;color:var(--chrome-txt);cursor:pointer;padding:2px 5px;border-radius:6px;transition:background .12s }\n.cht-legend__item:hover { background:var(--chrome-hover) }\n.cht-legend__dot { width:10px;height:10px;border-radius:3px;flex-shrink:0 }\n.cht__tip { position:absolute;z-index:5;pointer-events:none;background:var(--color-surface-inverse);color:var(--color-text-inv);font-size:11.5px;font-weight:600;padding:5px 9px;border-radius:7px;white-space:nowrap;opacity:0;transform:translate(-50%,-100%);transition:opacity .12s;box-shadow:var(--elevation-s) }\n.cht__tip.show { opacity:1 }\n.cht__tip b { font-weight:800 }",
   "js": "function chtFmt(n){ return n&gt;=1000 ? (n/1000).toFixed(1).replace(/\\.0$/,'')+'k' : ''+n; }\n\nfunction makeBarChartHTML(data, opts){\n  opts = opts || {};\n  const series = opts.series || 1;\n  const W=340,H=180,padT=20,padB=22,padX=6, cw=W-padX*2, ch=H-padT-padB;\n  const n = data.length;\n  const allVals = series===2 ? data.flatMap(d=&gt;[d.v,d.v2]) : data.map(d=&gt;d.v);\n  const max = Math.max.apply(null, allVals) || 1;\n  const groupGap=10, barGap=series===2?3:0;\n  const bw = series===2 ? ((cw-groupGap*(n-1))/n - barGap)/2 : (cw-groupGap*(n-1))/n;\n  let s='';\n  data.forEach((d,i)=&gt;{\n    const step = series===2 ? bw*2+barGap : bw;\n    const gx = padX + i*(step+groupGap);\n    const bh1 = d.v/max*ch, y1 = padT+ch-bh1;\n    s += `&lt;rect class=\"cht__bar\" data-i=\"${i}\" data-s=\"0\" data-v=\"${chtFmt(d.v)}\" data-label=\"${series===2?'This year &amp;middot; ':''}${cardEsc(d.label)}\" x=\"${gx.toFixed(1)}\" y=\"${y1.toFixed(1)}\" width=\"${bw.toFixed(1)}\" height=\"${bh1.toFixed(1)}\" rx=\"3\" style=\"fill:${CHT_PAL[0]}\"/&gt;`;\n    s += `&lt;text class=\"cht__val\" x=\"${(gx+bw/2).toFixed(1)}\" y=\"${(y1-6).toFixed(1)}\" text-anchor=\"middle\"&gt;${chtFmt(d.v)}&lt;/text&gt;`;\n    if(series===2){\n      const bh2 = d.v2/max*ch, y2 = padT+ch-bh2, x2 = gx+bw+barGap;\n      s += `&lt;rect class=\"cht__bar\" data-i=\"${i}\" data-s=\"1\" data-v=\"${chtFmt(d.v2)}\" data-label=\"Last year &amp;middot; ${cardEsc(d.label)}\" x=\"${x2.toFixed(1)}\" y=\"${y2.toFixed(1)}\" width=\"${bw.toFixed(1)}\" height=\"${bh2.toFixed(1)}\" rx=\"3\" style=\"fill:${CHT_PAL[1]}\"/&gt;`;\n      s += `&lt;text class=\"cht__val\" x=\"${(x2+bw/2).toFixed(1)}\" y=\"${(y2-6).toFixed(1)}\" text-anchor=\"middle\"&gt;${chtFmt(d.v2)}&lt;/text&gt;`;\n    }\n    const lx = gx + (series===2 ? bw+barGap/2 : bw/2);\n    s += `&lt;text class=\"cht__axis\" x=\"${lx.toFixed(1)}\" y=\"${H-7}\" text-anchor=\"middle\"&gt;${cardEsc(d.label)}&lt;/text&gt;`;\n  });\n  const legend = series===2 ? `&lt;div class=\"cht-legend\"&gt;&lt;span class=\"cht-legend__item\"&gt;&lt;span class=\"cht-legend__dot\" style=\"background:${CHT_PAL[0]}\"&gt;&lt;/span&gt;This year&lt;/span&gt;&lt;span class=\"cht-legend__item\"&gt;&lt;span class=\"cht-legend__dot\" style=\"background:${CHT_PAL[1]}\"&gt;&lt;/span&gt;Last year&lt;/span&gt;&lt;/div&gt;` : '';\n  return `&lt;svg viewBox=\"0 0 ${W} ${H}\" role=\"img\" aria-label=\"Bar chart\"&gt;${s}&lt;/svg&gt;${legend}`;\n}\n\nfunction bindChartInteractivity(root){\n  root.querySelectorAll('.cht').forEach(card=&gt;{\n    const svg = card.querySelector('svg');\n    if(!svg) return;\n    const tip = chtMkTip(card);\n    const legend = card.querySelector('.cht-legend');\n    function hot(el){\n      svg.classList.add('is-hot');\n      if(el.classList.contains('cht__seg')){\n        el.classList.add('on');\n        const sw = +el.getAttribute('stroke-width');\n        el.setAttribute('stroke-width', sw+5);\n        const valEl = svg.querySelector('.cht-donut-val'), labEl = svg.querySelector('.cht-donut-lab');\n        if(valEl) valEl.textContent = el.dataset.pct+'%';\n        if(labEl) labEl.textContent = el.dataset.label;\n      } else if(el.classList.contains('cht__hit')){\n        const dots = svg.querySelectorAll(`.cht__dot[data-i=\"${el.dataset.i}\"]`);\n        dots.forEach(d=&gt;{ d.classList.add('on'); d.setAttribute('r','5.5'); });\n        const label = dots[0] ? dots[0].dataset.label : '';\n        const vals = Array.from(dots).map(d=&gt;d.dataset.v).join(' / ');\n        chtMoveTip(tip, card, dots[dots.length-1]||el, `&lt;b&gt;${vals}&lt;/b&gt; &amp;middot; ${label}`);\n      } else {\n        el.classList.add('on');\n        chtMoveTip(tip, card, el, `&lt;b&gt;${el.dataset.v}&lt;/b&gt; &amp;middot; ${el.dataset.label}`);\n      }\n    }\n    function cool(el){\n      svg.classList.remove('is-hot');\n      if(el.classList.contains('cht__seg')){\n        el.classList.remove('on');\n        const sw = +el.getAttribute('stroke-width')-5;\n        el.setAttribute('stroke-width', sw);\n        const valEl = svg.querySelector('.cht-donut-val'), labEl = svg.querySelector('.cht-donut-lab');\n        if(valEl) valEl.textContent = svg.dataset.total;\n        if(labEl) labEl.textContent = svg.dataset.unit;\n      } else if(el.classList.contains('cht__hit')){\n        svg.querySelectorAll(`.cht__dot[data-i=\"${el.dataset.i}\"]`).forEach(d=&gt;{ d.classList.remove('on'); d.setAttribute('r','3.5'); });\n        tip.classList.remove('show');\n      } else {\n        el.classList.remove('on');\n        tip.classList.remove('show');\n      }\n    }\n    svg.querySelectorAll('.cht__bar,.cht__hit,.cht__seg').forEach(el=&gt;{\n      el.addEventListener('mouseenter', ()=&gt;hot(el));\n      el.addEventListener('mouseleave', ()=&gt;cool(el));\n    });\n    if(legend) legend.querySelectorAll('.cht-legend__item[data-i]').forEach(li=&gt;{\n      const seg = svg.querySelector(`.cht__seg[data-i=\"${li.dataset.i}\"]`);\n      if(!seg) return;\n      li.addEventListener('mouseenter', ()=&gt;hot(seg));\n      li.addEventListener('mouseleave', ()=&gt;cool(seg));\n    });\n  });\n}",
   "usage": {
     "do": [
@@ -8417,7 +8443,7 @@ body.home .main{max-width:none;margin:0;padding:0}
       "Don’t reach for red or deep orange — they read as error/warning. Use them very seldom, only once every other chart colour is exhausted."
     ]
   },
-  "contentHash": "cec6102250f3427c75001b9aadc6f3c10d49846beebbe1c8b6ed4e48aa3fd480",
+  "contentHash": "4f1e4f16b1189480bdd23509c6782e8c74bad559f8c5c9f516c971e517a97f6e",
   "note": "Rebuilt as a .sec--tabbed page (CHART_PAGES config array, generalising CARD_PAGES). makeBarChartHTML(data,{series}) is the real, parameterized bar-chart builder; chtFmt/bindChartInteractivity are shared helpers reused by every chart type in this group. CHART_PAGES/CHART_PG/renderChart*/chartTabSwitch/chartpgSet are doc-site-only playground plumbing, excluded."
 }
   </pre>
@@ -8480,7 +8506,7 @@ body.home .main{max-width:none;margin:0;padding:0}
       <div class="sec__head">
         <h1 class="sec__title">Line &amp; Area Charts</h1>
         <div class="sec-header-meta">
-          <span class="comp-ver-badge" style="margin-left:0">v1.2.0</span>
+          <span class="comp-ver-badge" style="margin-left:0">v1.2.1</span>
 <details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-charts-line">
@@ -8506,7 +8532,7 @@ body.home .main{max-width:none;margin:0;padding:0}
     ".cht-legend__item",
     ".cht-legend__dot"
   ],
-  "css": "/* ---- Chart (Flash palette + interactive) ---- */\n.cht { position:relative;border:1px solid var(--chrome-border);border-radius:14px;padding:20px 22px;background:var(--chrome-bg);width:380px;max-width:100%;\n  --c1:var(--prim-green-500);--c2:var(--prim-sup-blue-1);--c3:var(--prim-sup-purple-4);--c4:var(--prim-sup-pink-1);--c5:var(--prim-sup-orange-1) }\n.cht__cap { font-size:13px;font-weight:700;color:var(--chrome-txt);margin-bottom:2px }\n.cht__sub { font-size:11.5px;color:var(--chrome-muted);margin-bottom:16px }\n.cht svg { display:block;width:100%;height:auto;overflow:visible }\n.cht__line { fill:none;stroke:var(--c1);stroke-width:2.5;stroke-linejoin:round;stroke-linecap:round;opacity:.25;transition:opacity .15s }\n.cht svg.is-hot .cht__line { opacity:1 }\n.cht__area { fill:url(#chtAreaGrad) }\n.cht__dot { fill:var(--chrome-bg);stroke:var(--c1);stroke-width:2.5;opacity:.25;transition:fill .12s,opacity .12s }\n.cht__dot.on { fill:var(--c1);opacity:1 }\n.cht__hit { fill:transparent;cursor:pointer }\n.cht__axis { fill:var(--chrome-muted);font-size:10px;font-family:inherit }\n.cht__val { fill:var(--chrome-txt);font-size:10px;font-weight:700;font-family:inherit }\n.cht-legend { display:flex;flex-wrap:wrap;gap:8px 14px;margin-top:16px }\n.cht-legend__item { display:inline-flex;align-items:center;gap:7px;font-size:12px;color:var(--chrome-txt);cursor:pointer;padding:2px 5px;border-radius:6px;transition:background .12s }\n.cht-legend__item:hover { background:var(--chrome-hover) }\n.cht-legend__dot { width:10px;height:10px;border-radius:3px;flex-shrink:0 }\n.cht__tip { position:absolute;z-index:5;pointer-events:none;background:var(--color-surface-inverse);color:var(--color-text-inv);font-size:11.5px;font-weight:600;padding:5px 9px;border-radius:7px;white-space:nowrap;opacity:0;transform:translate(-50%,-100%);transition:opacity .12s;box-shadow:0 4px 14px rgba(0,0,0,.22) }\n.cht__tip.show { opacity:1 }\n.cht__tip b { font-weight:800 }",
+  "css": "/* ---- Chart (Flash palette + interactive) ---- */\n.cht { position:relative;border:1px solid var(--chrome-border);border-radius:14px;padding:20px 22px;background:var(--chrome-bg);width:380px;max-width:100%;\n  --c1:var(--prim-green-500);--c2:var(--prim-sup-blue-1);--c3:var(--prim-sup-purple-4);--c4:var(--prim-sup-pink-1);--c5:var(--prim-sup-orange-1) }\n.cht__cap { font-size:13px;font-weight:700;color:var(--chrome-txt);margin-bottom:2px }\n.cht__sub { font-size:11.5px;color:var(--chrome-muted);margin-bottom:16px }\n.cht svg { display:block;width:100%;height:auto;overflow:visible }\n.cht__line { fill:none;stroke:var(--c1);stroke-width:2.5;stroke-linejoin:round;stroke-linecap:round;opacity:.25;transition:opacity .15s }\n.cht svg.is-hot .cht__line { opacity:1 }\n.cht__area { fill:url(#chtAreaGrad) }\n.cht__dot { fill:var(--chrome-bg);stroke:var(--c1);stroke-width:2.5;opacity:.25;transition:fill .12s,opacity .12s }\n.cht__dot.on { fill:var(--c1);opacity:1 }\n.cht__hit { fill:transparent;cursor:pointer }\n.cht__axis { fill:var(--chrome-muted);font-size:10px;font-family:inherit }\n.cht__val { fill:var(--chrome-txt);font-size:10px;font-weight:700;font-family:inherit }\n.cht-legend { display:flex;flex-wrap:wrap;gap:8px 14px;margin-top:16px }\n.cht-legend__item { display:inline-flex;align-items:center;gap:7px;font-size:12px;color:var(--chrome-txt);cursor:pointer;padding:2px 5px;border-radius:6px;transition:background .12s }\n.cht-legend__item:hover { background:var(--chrome-hover) }\n.cht-legend__dot { width:10px;height:10px;border-radius:3px;flex-shrink:0 }\n.cht__tip { position:absolute;z-index:5;pointer-events:none;background:var(--color-surface-inverse);color:var(--color-text-inv);font-size:11.5px;font-weight:600;padding:5px 9px;border-radius:7px;white-space:nowrap;opacity:0;transform:translate(-50%,-100%);transition:opacity .12s;box-shadow:var(--elevation-s) }\n.cht__tip.show { opacity:1 }\n.cht__tip b { font-weight:800 }",
   "js": "function chtFmt(n){ return n&gt;=1000 ? (n/1000).toFixed(1).replace(/\\.0$/,'')+'k' : ''+n; }\n\nfunction makeLineChartHTML(dataSets, opts){\n  opts = opts || {};\n  const filled = !!opts.filled;\n  const W=340,H=168,padT=22,padB=22,padX=10, cw=W-padX*2, ch=H-padT-padB;\n  const n = dataSets[0].length;\n  const max = Math.max.apply(null, dataSets.flat().map(d=&gt;d.v)) || 1;\n  const xs = i =&gt; padX + (n&lt;=1?0:i/(n-1)*cw);\n  const ys = v =&gt; padT + ch - (max ? v/max*ch : 0);\n  let defs='', areas='', lines='', dots='', vals='';\n  dataSets.forEach((data,si)=&gt;{\n    const color = CHT_PAL[si];\n    if(filled &amp;&amp; si===0){\n      defs += `&lt;defs&gt;&lt;linearGradient id=\"chtAreaGrad\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"&gt;&lt;stop offset=\"0\" stop-color=\"${color}\" stop-opacity=\"0.32\"/&gt;&lt;stop offset=\"1\" stop-color=\"${color}\" stop-opacity=\"0\"/&gt;&lt;/linearGradient&gt;&lt;/defs&gt;`;\n      let d = 'M '+xs(0).toFixed(1)+','+(padT+ch).toFixed(1);\n      data.forEach((dd,i)=&gt;{ d += ' L '+xs(i).toFixed(1)+','+ys(dd.v).toFixed(1); });\n      d += ' L '+xs(n-1).toFixed(1)+','+(padT+ch).toFixed(1)+' Z';\n      areas += `&lt;path class=\"cht__area\" d=\"${d}\"/&gt;`;\n    }\n    const pts = data.map((dd,i)=&gt;xs(i).toFixed(1)+','+ys(dd.v).toFixed(1)).join(' ');\n    lines += `&lt;polyline class=\"cht__line\" data-s=\"${si}\" points=\"${pts}\" style=\"stroke:${color}\"/&gt;`;\n    dots += data.map((dd,i)=&gt;`&lt;circle class=\"cht__dot\" data-i=\"${i}\" data-s=\"${si}\" data-v=\"${chtFmt(dd.v)}\" data-label=\"${cardEsc(dd.label)}\" cx=\"${xs(i).toFixed(1)}\" cy=\"${ys(dd.v).toFixed(1)}\" r=\"3.5\" style=\"stroke:${color}\"/&gt;`).join('');\n    if(si===0) vals += data.map((dd,i)=&gt;`&lt;text class=\"cht__val\" x=\"${xs(i).toFixed(1)}\" y=\"${(ys(dd.v)-8).toFixed(1)}\" text-anchor=\"middle\"&gt;${chtFmt(dd.v)}&lt;/text&gt;`).join('');\n  });\n  const hits = dataSets[0].map((dd,i)=&gt;{\n    const x0 = i===0 ? 0 : (xs(i-1)+xs(i))/2, x1 = i===n-1 ? W : (xs(i)+xs(i+1))/2;\n    return `&lt;rect class=\"cht__hit\" data-i=\"${i}\" x=\"${x0.toFixed(1)}\" y=\"0\" width=\"${(x1-x0).toFixed(1)}\" height=\"${(padT+ch).toFixed(1)}\"/&gt;`;\n  }).join('');\n  const labs = dataSets[0].map((dd,i)=&gt;`&lt;text class=\"cht__axis\" x=\"${xs(i).toFixed(1)}\" y=\"${H-7}\" text-anchor=\"middle\"&gt;${cardEsc(dd.label)}&lt;/text&gt;`).join('');\n  const legend = dataSets.length&gt;1 ? `&lt;div class=\"cht-legend\"&gt;${dataSets.map((_,si)=&gt;`&lt;span class=\"cht-legend__item\"&gt;&lt;span class=\"cht-legend__dot\" style=\"background:${CHT_PAL[si]}\"&gt;&lt;/span&gt;${si===0?'This year':'Last year'}&lt;/span&gt;`).join('')}&lt;/div&gt;` : '';\n  return `&lt;svg viewBox=\"0 0 ${W} ${H}\" role=\"img\" aria-label=\"Line chart\"&gt;${defs}${areas}${lines}${dots}${vals}${labs}${hits}&lt;/svg&gt;${legend}`;\n}\n\nfunction bindChartInteractivity(root){\n  root.querySelectorAll('.cht').forEach(card=&gt;{\n    const svg = card.querySelector('svg');\n    if(!svg) return;\n    const tip = chtMkTip(card);\n    const legend = card.querySelector('.cht-legend');\n    function hot(el){\n      svg.classList.add('is-hot');\n      if(el.classList.contains('cht__seg')){\n        el.classList.add('on');\n        const sw = +el.getAttribute('stroke-width');\n        el.setAttribute('stroke-width', sw+5);\n        const valEl = svg.querySelector('.cht-donut-val'), labEl = svg.querySelector('.cht-donut-lab');\n        if(valEl) valEl.textContent = el.dataset.pct+'%';\n        if(labEl) labEl.textContent = el.dataset.label;\n      } else if(el.classList.contains('cht__hit')){\n        const dots = svg.querySelectorAll(`.cht__dot[data-i=\"${el.dataset.i}\"]`);\n        dots.forEach(d=&gt;{ d.classList.add('on'); d.setAttribute('r','5.5'); });\n        const label = dots[0] ? dots[0].dataset.label : '';\n        const vals = Array.from(dots).map(d=&gt;d.dataset.v).join(' / ');\n        chtMoveTip(tip, card, dots[dots.length-1]||el, `&lt;b&gt;${vals}&lt;/b&gt; &amp;middot; ${label}`);\n      } else {\n        el.classList.add('on');\n        chtMoveTip(tip, card, el, `&lt;b&gt;${el.dataset.v}&lt;/b&gt; &amp;middot; ${el.dataset.label}`);\n      }\n    }\n    function cool(el){\n      svg.classList.remove('is-hot');\n      if(el.classList.contains('cht__seg')){\n        el.classList.remove('on');\n        const sw = +el.getAttribute('stroke-width')-5;\n        el.setAttribute('stroke-width', sw);\n        const valEl = svg.querySelector('.cht-donut-val'), labEl = svg.querySelector('.cht-donut-lab');\n        if(valEl) valEl.textContent = svg.dataset.total;\n        if(labEl) labEl.textContent = svg.dataset.unit;\n      } else if(el.classList.contains('cht__hit')){\n        svg.querySelectorAll(`.cht__dot[data-i=\"${el.dataset.i}\"]`).forEach(d=&gt;{ d.classList.remove('on'); d.setAttribute('r','3.5'); });\n        tip.classList.remove('show');\n      } else {\n        el.classList.remove('on');\n        tip.classList.remove('show');\n      }\n    }\n    svg.querySelectorAll('.cht__bar,.cht__hit,.cht__seg').forEach(el=&gt;{\n      el.addEventListener('mouseenter', ()=&gt;hot(el));\n      el.addEventListener('mouseleave', ()=&gt;cool(el));\n    });\n    if(legend) legend.querySelectorAll('.cht-legend__item[data-i]').forEach(li=&gt;{\n      const seg = svg.querySelector(`.cht__seg[data-i=\"${li.dataset.i}\"]`);\n      if(!seg) return;\n      li.addEventListener('mouseenter', ()=&gt;hot(seg));\n      li.addEventListener('mouseleave', ()=&gt;cool(seg));\n    });\n  });\n}",
   "usage": {
     "do": [
@@ -8523,7 +8549,7 @@ body.home .main{max-width:none;margin:0;padding:0}
       "Don’t reach for red or deep orange — they read as error/warning. Use them very seldom, only once every other chart colour is exhausted."
     ]
   },
-  "contentHash": "acc13b503a0827b92ea4e7a8bfc6dcf06597534d0cf129964ce46852a5908359",
+  "contentHash": "847ce6c7054a09f4761a31b91e3517ea88d652a5209c384abc01a400cdceaae7",
   "note": "Rebuilt as a .sec--tabbed page (CHART_PAGES config array, generalising CARD_PAGES). makeLineChartHTML(dataSets,{filled}) is the real, parameterized line/area builder — dataSets is an array of series, so it also drives the two-series mode; chtFmt/bindChartInteractivity are shared helpers reused by every chart type in this group. CHART_PAGES/CHART_PG/renderChart*/chartTabSwitch/chartpgSet are doc-site-only playground plumbing, excluded."
 }
   </pre>
@@ -8586,7 +8612,7 @@ body.home .main{max-width:none;margin:0;padding:0}
       <div class="sec__head">
         <h1 class="sec__title">Donut Charts</h1>
         <div class="sec-header-meta">
-          <span class="comp-ver-badge" style="margin-left:0">v1.2.0</span>
+          <span class="comp-ver-badge" style="margin-left:0">v1.2.1</span>
 <details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-charts-donut">
@@ -8609,7 +8635,7 @@ body.home .main{max-width:none;margin:0;padding:0}
     ".cht-donut-lab",
     ".cht__tip"
   ],
-  "css": "/* ---- Chart (Flash palette + interactive) ---- */\n.cht { position:relative;border:1px solid var(--chrome-border);border-radius:14px;padding:20px 22px;background:var(--chrome-bg);width:380px;max-width:100%;\n  --c1:var(--prim-green-500);--c2:var(--prim-sup-blue-1);--c3:var(--prim-sup-purple-4);--c4:var(--prim-sup-pink-1);--c5:var(--prim-sup-orange-1) }\n.cht__cap { font-size:13px;font-weight:700;color:var(--chrome-txt);margin-bottom:2px }\n.cht__sub { font-size:11.5px;color:var(--chrome-muted);margin-bottom:16px }\n.cht svg { display:block;width:100%;height:auto;overflow:visible }\n.cht svg.is-hot .cht__line { opacity:1 }\n.cht__seg { transition:opacity .18s,stroke-width .18s;cursor:pointer;opacity:.25 }\n.cht__seg.on { opacity:1 }\n.cht-legend { display:flex;flex-wrap:wrap;gap:8px 14px;margin-top:16px }\n.cht-legend__item { display:inline-flex;align-items:center;gap:7px;font-size:12px;color:var(--chrome-txt);cursor:pointer;padding:2px 5px;border-radius:6px;transition:background .12s }\n.cht-legend__item:hover { background:var(--chrome-hover) }\n.cht-legend__dot { width:10px;height:10px;border-radius:3px;flex-shrink:0 }\n.cht-donut-val { fill:var(--chrome-txt);font-weight:800 }\n.cht-donut-lab { fill:var(--chrome-muted) }\n.cht__tip { position:absolute;z-index:5;pointer-events:none;background:var(--color-surface-inverse);color:var(--color-text-inv);font-size:11.5px;font-weight:600;padding:5px 9px;border-radius:7px;white-space:nowrap;opacity:0;transform:translate(-50%,-100%);transition:opacity .12s;box-shadow:0 4px 14px rgba(0,0,0,.22) }\n.cht__tip.show { opacity:1 }\n.cht__tip b { font-weight:800 }",
+  "css": "/* ---- Chart (Flash palette + interactive) ---- */\n.cht { position:relative;border:1px solid var(--chrome-border);border-radius:14px;padding:20px 22px;background:var(--chrome-bg);width:380px;max-width:100%;\n  --c1:var(--prim-green-500);--c2:var(--prim-sup-blue-1);--c3:var(--prim-sup-purple-4);--c4:var(--prim-sup-pink-1);--c5:var(--prim-sup-orange-1) }\n.cht__cap { font-size:13px;font-weight:700;color:var(--chrome-txt);margin-bottom:2px }\n.cht__sub { font-size:11.5px;color:var(--chrome-muted);margin-bottom:16px }\n.cht svg { display:block;width:100%;height:auto;overflow:visible }\n.cht svg.is-hot .cht__line { opacity:1 }\n.cht__seg { transition:opacity .18s,stroke-width .18s;cursor:pointer;opacity:.25 }\n.cht__seg.on { opacity:1 }\n.cht-legend { display:flex;flex-wrap:wrap;gap:8px 14px;margin-top:16px }\n.cht-legend__item { display:inline-flex;align-items:center;gap:7px;font-size:12px;color:var(--chrome-txt);cursor:pointer;padding:2px 5px;border-radius:6px;transition:background .12s }\n.cht-legend__item:hover { background:var(--chrome-hover) }\n.cht-legend__dot { width:10px;height:10px;border-radius:3px;flex-shrink:0 }\n.cht-donut-val { fill:var(--chrome-txt);font-weight:800 }\n.cht-donut-lab { fill:var(--chrome-muted) }\n.cht__tip { position:absolute;z-index:5;pointer-events:none;background:var(--color-surface-inverse);color:var(--color-text-inv);font-size:11.5px;font-weight:600;padding:5px 9px;border-radius:7px;white-space:nowrap;opacity:0;transform:translate(-50%,-100%);transition:opacity .12s;box-shadow:var(--elevation-s) }\n.cht__tip.show { opacity:1 }\n.cht__tip b { font-weight:800 }",
   "js": "function chtFmt(n){ return n&gt;=1000 ? (n/1000).toFixed(1).replace(/\\.0$/,'')+'k' : ''+n; }\n\nfunction makeDonutChartHTML(data, opts){\n  opts = opts || {};\n  const unit = opts.unit || 'txns';\n  const c=90,r=62,sw=24, total=data.reduce((a,x)=&gt;a+x.v,0)||1, circ=2*Math.PI*r;\n  let acc=0, segs='';\n  data.forEach((x,i)=&gt;{\n    const frac = x.v/total, len = frac*circ, off = -acc*circ, pct = Math.round(frac*100);\n    segs += `&lt;circle class=\"cht__seg\" data-i=\"${i}\" data-v=\"${chtFmt(x.v)}\" data-pct=\"${pct}\" data-label=\"${cardEsc(x.label)}\" cx=\"${c}\" cy=\"${c}\" r=\"${r}\" fill=\"none\" style=\"stroke:${CHT_PAL[i%CHT_PAL.length]}\" stroke-width=\"${sw}\" stroke-dasharray=\"${len.toFixed(2)} ${(circ-len).toFixed(2)}\" stroke-dashoffset=\"${off.toFixed(2)}\" transform=\"rotate(-90 ${c} ${c})\"/&gt;`;\n    acc += frac;\n  });\n  const legend = opts.legend===false ? '' : `&lt;div class=\"cht-legend\"&gt;${data.map((x,i)=&gt;`&lt;span class=\"cht-legend__item\" data-i=\"${i}\"&gt;&lt;span class=\"cht-legend__dot\" style=\"background:${CHT_PAL[i%CHT_PAL.length]}\"&gt;&lt;/span&gt;${cardEsc(x.label)} &amp;middot; ${chtFmt(x.v)} &amp;middot; ${Math.round(x.v/total*100)}%&lt;/span&gt;`).join('')}&lt;/div&gt;`;\n  return `&lt;svg viewBox=\"0 0 180 180\" width=\"180\" role=\"img\" aria-label=\"Donut chart\" data-total=\"${chtFmt(total)}\" data-unit=\"${cardEsc(unit)}\"&gt;${segs}&lt;text class=\"cht-donut-val\" x=\"90\" y=\"88\" text-anchor=\"middle\" font-size=\"26\"&gt;${chtFmt(total)}&lt;/text&gt;&lt;text class=\"cht-donut-lab\" x=\"90\" y=\"106\" text-anchor=\"middle\" font-size=\"10\"&gt;${cardEsc(unit)}&lt;/text&gt;&lt;/svg&gt;${legend}`;\n}\n\nfunction bindChartInteractivity(root){\n  root.querySelectorAll('.cht').forEach(card=&gt;{\n    const svg = card.querySelector('svg');\n    if(!svg) return;\n    const tip = chtMkTip(card);\n    const legend = card.querySelector('.cht-legend');\n    function hot(el){\n      svg.classList.add('is-hot');\n      if(el.classList.contains('cht__seg')){\n        el.classList.add('on');\n        const sw = +el.getAttribute('stroke-width');\n        el.setAttribute('stroke-width', sw+5);\n        const valEl = svg.querySelector('.cht-donut-val'), labEl = svg.querySelector('.cht-donut-lab');\n        if(valEl) valEl.textContent = el.dataset.pct+'%';\n        if(labEl) labEl.textContent = el.dataset.label;\n      } else if(el.classList.contains('cht__hit')){\n        const dots = svg.querySelectorAll(`.cht__dot[data-i=\"${el.dataset.i}\"]`);\n        dots.forEach(d=&gt;{ d.classList.add('on'); d.setAttribute('r','5.5'); });\n        const label = dots[0] ? dots[0].dataset.label : '';\n        const vals = Array.from(dots).map(d=&gt;d.dataset.v).join(' / ');\n        chtMoveTip(tip, card, dots[dots.length-1]||el, `&lt;b&gt;${vals}&lt;/b&gt; &amp;middot; ${label}`);\n      } else {\n        el.classList.add('on');\n        chtMoveTip(tip, card, el, `&lt;b&gt;${el.dataset.v}&lt;/b&gt; &amp;middot; ${el.dataset.label}`);\n      }\n    }\n    function cool(el){\n      svg.classList.remove('is-hot');\n      if(el.classList.contains('cht__seg')){\n        el.classList.remove('on');\n        const sw = +el.getAttribute('stroke-width')-5;\n        el.setAttribute('stroke-width', sw);\n        const valEl = svg.querySelector('.cht-donut-val'), labEl = svg.querySelector('.cht-donut-lab');\n        if(valEl) valEl.textContent = svg.dataset.total;\n        if(labEl) labEl.textContent = svg.dataset.unit;\n      } else if(el.classList.contains('cht__hit')){\n        svg.querySelectorAll(`.cht__dot[data-i=\"${el.dataset.i}\"]`).forEach(d=&gt;{ d.classList.remove('on'); d.setAttribute('r','3.5'); });\n        tip.classList.remove('show');\n      } else {\n        el.classList.remove('on');\n        tip.classList.remove('show');\n      }\n    }\n    svg.querySelectorAll('.cht__bar,.cht__hit,.cht__seg').forEach(el=&gt;{\n      el.addEventListener('mouseenter', ()=&gt;hot(el));\n      el.addEventListener('mouseleave', ()=&gt;cool(el));\n    });\n    if(legend) legend.querySelectorAll('.cht-legend__item[data-i]').forEach(li=&gt;{\n      const seg = svg.querySelector(`.cht__seg[data-i=\"${li.dataset.i}\"]`);\n      if(!seg) return;\n      li.addEventListener('mouseenter', ()=&gt;hot(seg));\n      li.addEventListener('mouseleave', ()=&gt;cool(seg));\n    });\n  });\n}",
   "usage": {
     "do": [
@@ -8626,7 +8652,7 @@ body.home .main{max-width:none;margin:0;padding:0}
       "Don’t reach for red or deep orange — they read as error/warning. Use them very seldom, only once every other chart colour is exhausted."
     ]
   },
-  "contentHash": "5483fdcad1a3e1a983b672247d31d9127cfc94b9fc6930a14a3a47c416191708",
+  "contentHash": "667d4198d6a46fef349c8363264b6d1ce65dca808d1be3914fedb518d79606c3",
   "note": "Rebuilt as a .sec--tabbed page (CHART_PAGES config array, generalising CARD_PAGES). makeDonutChartHTML(data,{legend,unit}) is the real, parameterized donut builder (variable segment count, legend toggle); chtFmt/bindChartInteractivity are shared helpers reused by every chart type in this group. CHART_PAGES/CHART_PG/renderChart*/chartTabSwitch/chartpgSet are doc-site-only playground plumbing, excluded."
 }
   </pre>
@@ -9018,7 +9044,7 @@ body.home .main{max-width:none;margin:0;padding:0}
       <div class="sec__head">
         <h1 class="sec__title">Hover Cards</h1>
         <div class="sec-header-meta">
-          <span class="comp-ver-badge" style="margin-left:0">v1.1.0</span>
+          <span class="comp-ver-badge" style="margin-left:0">v1.2.0</span>
           <details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-cards-hover">
@@ -9038,7 +9064,7 @@ body.home .main{max-width:none;margin:0;padding:0}
     ".avt",
     ".avt--lg"
   ],
-  "css": "/* ---- Avatar ---- */\n.avt { display:inline-flex;align-items:center;justify-content:center;border-radius:50%;background:var(--color-surface-n2);color:var(--color-text-2);font-weight:700;flex-shrink:0;position:relative;line-height:1;user-select:none;text-transform:uppercase }\n.avt img { width:100%;height:100%;object-fit:cover;display:block;border-radius:50% }\n.avt--lg { width:56px;height:56px;font-size:19px }\n/* ---- Hover card ---- */\n.hc { position:relative;display:inline-block }\n.hc__trigger { color:var(--color-link);font-weight:600;cursor:pointer;text-decoration:underline;text-underline-offset:2px;background:none;border:0;font-family:inherit;font-size:inherit;padding:0 }\n.hc__card { position:absolute;top:calc(100% + 8px);left:0;z-index:30;width:268px;background:var(--chrome-bg);border:1px solid var(--chrome-border);border-radius:12px;box-shadow:0 14px 36px rgba(0,0,0,.16);padding:16px;opacity:0;transform:translateY(-6px) scale(.98);transform-origin:top left;pointer-events:none;transition:opacity .18s ease,transform .18s ease }\n.hc:hover .hc__card,.hc:focus-within .hc__card { opacity:1;transform:translateY(0) scale(1);pointer-events:auto;transition-delay:.2s }\n/* .is-open pins the card open — for a programmatic open, and for showing the revealed state statically */\n.hc.is-open .hc__card { opacity:1;transform:translateY(0) scale(1);pointer-events:auto;transition-delay:0s }\n.hc__row { display:flex;gap:12px;align-items:center;margin-bottom:11px }\n.hc__name { font-size:14px;font-weight:800;color:var(--chrome-txt) }\n.hc__handle { font-size:12px;color:var(--chrome-muted) }\n.hc__meta { font-size:12.5px;color:var(--chrome-muted);line-height:1.55 }",
+  "css": "/* ---- Avatar ---- */\n.avt { display:inline-flex;align-items:center;justify-content:center;border-radius:50%;background:var(--color-surface-n2);color:var(--color-text-2);font-weight:700;flex-shrink:0;position:relative;line-height:1;user-select:none;text-transform:uppercase }\n.avt img { width:100%;height:100%;object-fit:cover;display:block;border-radius:50% }\n.avt--lg { width:56px;height:56px;font-size:19px }\n/* ---- Hover card ---- */\n.hc { position:relative;display:inline-block }\n.hc__trigger { color:var(--color-link);font-weight:600;cursor:pointer;text-decoration:underline;text-underline-offset:2px;background:none;border:0;font-family:inherit;font-size:inherit;padding:0 }\n.hc__card { position:absolute;top:calc(100% + 8px);left:0;z-index:30;width:268px;background:var(--elevation-surface-m);border:1px solid var(--chrome-border);border-radius:12px;box-shadow:var(--elevation-m);padding:16px;opacity:0;transform:translateY(-6px) scale(.98);transform-origin:top left;pointer-events:none;transition:opacity .18s ease,transform .18s ease }\n.hc:hover .hc__card,.hc:focus-within .hc__card { opacity:1;transform:translateY(0) scale(1);pointer-events:auto;transition-delay:.2s }\n/* .is-open pins the card open — for a programmatic open, and for showing the revealed state statically */\n.hc.is-open .hc__card { opacity:1;transform:translateY(0) scale(1);pointer-events:auto;transition-delay:0s }\n.hc__row { display:flex;gap:12px;align-items:center;margin-bottom:11px }\n.hc__name { font-size:14px;font-weight:800;color:var(--chrome-txt) }\n.hc__handle { font-size:12px;color:var(--chrome-muted) }\n.hc__meta { font-size:12.5px;color:var(--chrome-muted);line-height:1.55 }",
   "js": "function cardHoverHTML(o){\n  o = o || {};\n  const avatar = o.avatar===false ? '' : `&lt;span class=\"avt avt--lg\"&gt;${cardEsc(o.initials||'RB')}&lt;/span&gt;`;\n  const meta = o.meta ? `&lt;span class=\"hc__meta\"&gt;${cardEsc(o.meta)}&lt;/span&gt;` : '';\n  const style = o.inert ? `pointer-events:none${o.style?';'+o.style:''}` : o.style;\n  const tabindex = o.inert ? ' tabindex=\"-1\"' : '';\n  return `&lt;span class=\"hc${o.open?' is-open':''}\"${style?` style=\"${style}\"`:''}&gt;\n      &lt;button class=\"hc__trigger\" type=\"button\"${tabindex}&gt;${cardEsc(o.trigger||'@rethabile')}&lt;/button&gt;\n      &lt;span class=\"hc__card\"${o.cardStyle?` style=\"${o.cardStyle}\"`:''}&gt;\n        &lt;span class=\"hc__row\"&gt;${avatar}&lt;span&gt;&lt;span class=\"hc__name\" style=\"display:block\"&gt;${cardEsc(o.name||'Rethabile Beng')}&lt;/span&gt;&lt;span class=\"hc__handle\"&gt;${cardEsc(o.handle||'@rethabile · Finance ops')}&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;\n        ${meta}\n      &lt;/span&gt;\n    &lt;/span&gt;`;\n}",
   "usage": {
     "do": [
@@ -9052,7 +9078,7 @@ body.home .main{max-width:none;margin:0;padding:0}
       "Don’t pack interactive-heavy flows inside — use a popover or page."
     ]
   },
-  "contentHash": "eb25586247920d59ec83a3402c5e30e5ea94f694072bf2ceca6290b1cc02255e",
+  "contentHash": "cca4073bed14d7638c80e5e9ac0b735a9188eb0e078ce6307dd8b222c060f445",
   "note": "Page is a .sec--tabbed page; demos are built by the shared cardHoverHTML builder — the static HTML is just empty mounts. The reveal itself is pure CSS (:hover/:focus-within with a transition-delay for the short open delay) — no JS; .hc.is-open pins it open for a programmatic open and for documenting the revealed state statically. cardHoverHTML's inert option adds pointer-events:none + tabindex=-1 so a paired 'at rest' example in a docs grid can't be triggered by a real hover and overlap its neighbour. Moved under the Cards sub-group as its Hover Cards child; id renamed from s-hover-card to s-cards-hover."
 }
   </pre>
@@ -10125,6 +10151,8 @@ function toggleTheme() {
   try { if(typeof refreshSem==='function') refreshSem(); } catch(e){}
   try { if(typeof colDocRefresh==='function') colDocRefresh(); } catch(e){}
   try { if(typeof renderElevLevels==='function' && document.getElementById('elev-levels-grid')) renderElevLevels(); } catch(e){}
+  try { if(typeof renderElevTokens==='function') renderElevTokens(); } catch(e){}
+  try { if(typeof renderElevDocToks==='function') renderElevDocToks(); } catch(e){}
   try { if(typeof renderBtnPlayground==='function' && document.getElementById('btn-playground')) renderBtnPlayground(); } catch(e){}
   try { if(typeof renderBtnKeyVariants==='function' && document.getElementById('btn-keyvariants')) renderBtnKeyVariants(); } catch(e){}
   try { if(typeof renderBtnInSitu==='function' && document.getElementById('btn-insitu')) renderBtnInSitu(); } catch(e){}
@@ -10862,16 +10890,34 @@ function elevTabSwitch(tab){
 /* ============================================================
    RENDER — ELEVATION
 ============================================================ */
-try {
+function renderElevTokens(){
+  const mount = document.getElementById('sp-elev');
+  if(!mount) return;
+  const dark = currentTheme()==='dark';
+  const theme = dark ? 'dark' : 'light';
   const elevRows = ELEVATION.map(e => {
-    const lv = e.token.replace('elevation-','');
-    return `<div class="elev-row" onclick="copy('var(--${e.token})','CSS variable')" style="cursor:pointer">
-      <div><div class="elev-preview" style="background:var(--elevation-surface-${lv});box-shadow:var(--${e.token})"></div></div>
-      <div>
-        <div class="elev-level">${e.name}</div>
-        <div class="elev-token">--${e.token}</div>
+    const lv = elevLv(e);
+    const sh = elevShadowParts(elevVarValue(theme, '--'+e.token));
+    const copyVar = dark ? `--elevation-surface-${lv}` : `--${e.token}`;
+    let mid;
+    if(dark){
+      const alias = elevSurfaceAlias('dark', lv);
+      const hex = elevVarValue('dark', '--color-surface-'+alias);
+      mid = `<div class="elev-colour">
+        <div class="elev-col-dot" style="background:${hex}"></div>
+        <div class="elev-col-info">
+          <div class="elev-col-val">${hex}</div>
+          <div class="elev-col-token">--color-surface-${alias}</div>
+        </div>
       </div>
-      <div class="elev-effects">
+      <div class="elev-colour">
+        <div class="elev-col-info">
+          <div class="elev-col-val">${sh ? `y ${sh.y} &middot; blur ${sh.blur} &middot; ${sh.pct}%` : 'none'}</div>
+          <div class="elev-col-token">--${e.token}</div>
+        </div>
+      </div>`;
+    } else {
+      mid = `<div class="elev-effects">
         <div class="elev-prop"><span class="elev-prop-label">x-axis</span><span class="elev-prop-val">0</span></div>
         <div class="elev-prop"><span class="elev-prop-label">y-axis</span><span class="elev-prop-val">${e.y}</span></div>
         <div class="elev-prop"><span class="elev-prop-label">blur</span><span class="elev-prop-val">${e.blur}</span></div>
@@ -10880,10 +10926,18 @@ try {
       <div class="elev-colour">
         <div class="elev-col-dot"></div>
         <div class="elev-col-info">
-          <div class="elev-col-val">#000000 &nbsp;|&nbsp; 16% / 48%</div>
+          <div class="elev-col-val">#000000 &nbsp;|&nbsp; ${sh ? sh.pct : 16}%</div>
           <div class="elev-col-token">--elevation-default</div>
         </div>
+      </div>`;
+    }
+    return `<div class="elev-row" onclick="copy('var(${copyVar})','CSS variable')" style="cursor:pointer">
+      <div><div class="elev-preview" style="background:var(--elevation-surface-${lv});box-shadow:var(--${e.token})"></div></div>
+      <div>
+        <div class="elev-level">${e.name}</div>
+        <div class="elev-token">${copyVar}</div>
       </div>
+      ${mid}
       <div>
         <div class="elev-use-bold">${e.eg}</div>
         <div class="elev-use-text">${e.use}</div>
@@ -10891,18 +10945,19 @@ try {
     </div>`;
   }).join('');
 
-  document.getElementById('sp-elev').innerHTML = `
+  mount.innerHTML = `
     <div class="elev-list">
       <div class="elev-head">
         <div class="elev-head-cell"></div>
         <div class="elev-head-cell">Level</div>
-        <div class="elev-head-cell">Effects</div>
-        <div class="elev-head-cell">Colour</div>
+        <div class="elev-head-cell">${dark ? 'Surface' : 'Effects'}</div>
+        <div class="elev-head-cell">${dark ? 'Shadow' : 'Colour'}</div>
         <div class="elev-head-cell">Usage</div>
       </div>
       ${elevRows}
     </div>`;
-} catch(e){console.error('sp-elev',e);}
+}
+try { renderElevTokens(); } catch(e){console.error('sp-elev',e);}
 
 /* ============================================================
    RENDER — ELEVATION LEVELS GRID (Overview tab)
@@ -10910,12 +10965,18 @@ try {
 function renderElevLevels(){
   const mount = document.getElementById('elev-levels-grid');
   if(!mount) return;
+  const theme = currentTheme();
   mount.innerHTML = ELEVATION.map(e => {
-    const lv = e.token.replace('elevation-','');
+    const lv = elevLv(e);
+    const alias = elevSurfaceAlias(theme, lv);
+    // Lead with what carries the depth in this theme: the shadow in light, the surface in dark
+    const desc = theme==='dark'
+      ? `<code>--elevation-surface-${lv}</code><br>--color-surface-${alias} &middot; ${elevVarValue('dark','--color-surface-'+alias)}<br>shadow ${elevShadowText('dark','--'+e.token)}<br>${e.eg}`
+      : `<code>--${e.token}</code><br>${elevShadowText('light','--'+e.token)}<br>${e.eg}`;
     return `<div class="spec-cell">
       <div class="spec-cell__stage" style="background:var(--elevation-surface-0);display:flex;align-items:center;justify-content:center;min-height:110px"><div style="width:70px;height:70px;border-radius:10px;background:var(--elevation-surface-${lv});border:1px solid var(--chrome-border);box-shadow:var(--${e.token})"></div></div>
       <div class="spec-cell__name">${e.name}</div>
-      <div class="spec-cell__desc"><code>--${e.token}</code><br>y ${e.y} &middot; blur ${e.blur} &middot; dark surface ${e.dark}<br>${e.eg}</div>
+      <div class="spec-cell__desc">${desc}</div>
     </div>`;
   }).join('');
 }
@@ -10937,6 +10998,38 @@ function elevVarValue(theme, name){
   return val;
 }
 
+function elevLv(e){ return e.token.replace('elevation-',''); }
+
+// '0 4px 24px 0 rgba(0,0,0,0.48)' -> {y:4, blur:24, pct:48}; 'none' -> null
+function elevShadowParts(v){
+  const m = /^0(?:px)? (-?\d+)(?:px)? (\d+)(?:px)? 0(?:px)? rgba\(0,\s*0,\s*0,\s*([\d.]+)\)$/.exec((v||'').trim());
+  return m ? {y:+m[1], blur:+m[2], pct:Math.round(parseFloat(m[3])*100)} : null;
+}
+function elevShadowText(theme, name){
+  const p = elevShadowParts(elevVarValue(theme, name));
+  return p ? `y ${p.y} &middot; blur ${p.blur} &middot; ${p.pct}%` : 'none';
+}
+// The --color-surface-* step a level's surface resolves to in a theme
+function elevSurfaceAlias(theme, lv){
+  if(theme!=='dark' || lv==='0') return 'base';
+  return ELEVATION.find(e => elevLv(e)===lv).dark;
+}
+
+// Which-level-for-what header readouts — surface and shadow tokens, leading
+// with whichever carries the depth in the current theme
+function renderElevDocToks(){
+  const theme = currentTheme();
+  document.querySelectorAll('#s-elev [data-elev-toks]').forEach(el => {
+    const lv = el.getAttribute('data-elev-toks');
+    const alias = elevSurfaceAlias(theme, lv);
+    const hex = elevVarValue(theme, '--color-surface-'+alias);
+    const surface = `<div class="elev-tok-line"><span class="elev-tok-line__k">Surface</span><span class="elev-tok-sw" style="background:${hex}"></span><span class="elev-doc-tok" onclick="copy('var(--elevation-surface-${lv})','CSS variable')">--elevation-surface-${lv}</span><span class="elev-tok-line__v">&rarr; --color-surface-${alias} &middot; ${hex}</span></div>`;
+    const shadow = `<div class="elev-tok-line"><span class="elev-tok-line__k">Shadow</span><span class="elev-doc-tok" onclick="copy('var(--elevation-${lv})','CSS variable')">--elevation-${lv}</span><span class="elev-tok-line__v">${elevShadowText(theme,'--elevation-'+lv)}</span></div>`;
+    el.innerHTML = theme==='dark' ? surface + shadow : shadow + surface;
+  });
+}
+try { renderElevDocToks(); } catch(e){console.error('elev-doc-toks',e);}
+
 function renderElevDark(){
   const ladder = document.getElementById('elev-dark-ladder');
   if(ladder){
@@ -10957,11 +11050,39 @@ function renderElevDark(){
   }
   const vars = document.getElementById('elev-vars-table');
   if(vars){
-    const names = ['--elevation-default'];
-    ELEVATION.forEach(e => { names.push('--'+e.token); if(e.token==='elevation-l') names.push('--elevation-l-up'); });
-    names.push('--elevation-surface-0');
-    ELEVATION.forEach(e => names.push('--elevation-surface-'+e.token.replace('elevation-','')));
-    vars.innerHTML = names.map(n => `<tr><td class="dd-table__name"><code onclick="copy('var(${n})','CSS variable')" style="cursor:pointer">${n}</code></td><td><code>${elevVarValue('light',n)}</code></td><td><code>${elevVarValue('dark',n)}</code></td></tr>`).join('');
+    const shadowRows = [];
+    ELEVATION.forEach(e => {
+      shadowRows.push({name:'--'+e.token, role:e.eg, kind:'shadow', lv:elevLv(e)});
+      if(e.token==='elevation-l') shadowRows.push({name:'--elevation-l-up', role:'Bottom sheets (casts upward)', kind:'shadow', lv:'l'});
+    });
+    const groups = [
+      {title:'Shadow colour', note:'one per theme', rows:[{name:'--elevation-default', role:'Every shadow', kind:'colour', lv:'0'}]},
+      {title:'Shadows', note:'box-shadow', rows:shadowRows},
+      {title:'Surfaces', note:'background', rows:[{name:'--elevation-surface-0', role:'Page', kind:'surface', lv:'0'}]
+        .concat(ELEVATION.map(e => ({name:'--elevation-surface-'+elevLv(e), role:e.eg, kind:'surface', lv:elevLv(e)})))},
+    ];
+    // Each value cell is drawn inside its own theme scope, with a mini stage on the page colour of that theme
+    const cell = (theme, r) => {
+      const raw = elevVarValue(theme, r.name);
+      let tile, main, sub;
+      if(r.kind==='colour'){
+        const pct = Math.round(parseFloat((/,\s*([\d.]+)\)/.exec(raw)||[0,0])[1])*100);
+        tile = `<span class="elev-vt__tile" style="background:var(${r.name})"></span>`;
+        main = `black ${pct}%`; sub = raw;
+      } else if(r.kind==='shadow'){
+        const p = elevShadowParts(raw);
+        tile = `<span class="elev-vt__tile" style="background:var(--elevation-surface-${r.lv});box-shadow:var(${r.name})"></span>`;
+        main = p ? `y ${p.y} &middot; blur ${p.blur}` : `<span class="elev-vt__none">none</span>`;
+        sub = p ? `black ${p.pct}%` : 'surface step only';
+      } else {
+        tile = `<span class="elev-vt__tile" style="background:var(${r.name});border:1px solid var(--chrome-border)"></span>`;
+        main = raw; sub = `--color-surface-${elevSurfaceAlias(theme, r.lv)}`;
+      }
+      return `<td class="elev-vt__cell" data-brand="flash" data-theme="${theme}"><div class="elev-vt__val"><span class="elev-vt__stage">${tile}</span><div><div class="elev-vt__main">${main}</div><div class="elev-vt__sub">${sub}</div></div></div></td>`;
+    };
+    vars.innerHTML = groups.map(g => `<tr class="elev-vt__group"><td colspan="3">${g.title}<span class="elev-vt__gn">${g.note}</span></td></tr>` +
+      g.rows.map(r => `<tr><td class="elev-vt__var"><span class="elev-doc-tok" onclick="copy('var(${r.name})','CSS variable')">${r.name}</span><div class="elev-vt__role">${r.role}</div></td>${cell('light', r)}${cell('dark', r)}</tr>`).join('')
+    ).join('');
   }
 }
 try { renderElevDark(); } catch(e){console.error('elev-dark',e);}
@@ -21692,12 +21813,17 @@ function cbrTabSwitch(tab){
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.97.0';
+const SYSTEM_VERSION = '1.98.0';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.98.0', date:'2026-10-08', author:'Mo', title:'Floating components migrated to the --elevation-* variables; Elevation readouts follow the theme', changes:[
+        ['changed','.dpd-menu, .pop__panel and .hc__card now use var(--elevation-surface-m) + var(--elevation-m); .bsh-sheet uses var(--elevation-surface-l) + var(--elevation-l-up); .card uses var(--elevation-surface-xs) and stays flat; .tip__bubble and .cht__tip shadows use var(--elevation-s) on their inverse fill. In dark, every floating surface now steps off the page (n1 / n2 / n3) instead of sitting on #12131a'],
+        ['changed','.hc__card shadow moved from the undocumented 0 14px 36px to elevation-m, and .cht__tip from 0 4px 14px rgba(0,0,0,.22) to elevation-s — the two visible light-mode changes in this release'],
+        ['changed','Elevation page: Levels, Which-level headers and the Tokens five-levels table now lead with the surface colour token in dark and the shadow in light; the CSS variables table is rebuilt with grouped rows and side-by-side Light and Dark columns rendered in their own themes'],
+      ]},
       {version:'1.97.0', date:'2026-10-08', author:'Mo', title:'Elevation: dark-mode elevation via lighter surfaces, plus --elevation-* CSS variables', changes:[
         ['added','--elevation-default, --elevation-xs/-s/-m/-l/-l-up/-xl (box-shadow) and --elevation-surface-0/-xs/-s/-m/-l/-xl (background) declared in both the [data-theme="light"] and [data-theme="dark"] token blocks, so a component gets the right elevation in both themes from two variables, with no dark-mode override of its own'],
         ['changed','Dark-mode elevation now lifts with surface lightness instead of relying on the shadow: XS/S sit on --color-surface-n1 (#25262c), M on --color-surface-n2 (#2d2e34), L/XL on --color-surface-n3 (#33343a), over the --color-surface-base page (#12131a). In light every level stays on --color-surface-base'],
@@ -23041,7 +23167,10 @@ const CHANGELOG = {
     ]
   },
   components: [
-    {secId:'s-charts-bar', name:'Bar Charts', version:'1.5.0', entries:[
+    {secId:'s-charts-bar', name:'Bar Charts', version:'1.5.1', entries:[
+      {version:'1.5.1', date:'2026-10-08', author:'Mo', title:'Chart tooltip shadow takes the elevation S variable', changes:[
+        ['changed','.cht__tip box-shadow changed from 0 4px 14px rgba(0,0,0,.22) to var(--elevation-s) (0 2px 12px 0, black 16% light / 48% dark), putting the chart tooltip on the same documented level as .tip__bubble. Background stays --color-surface-inverse'],
+      ]},
       {version:'1.5.0', date:'2026-08-12', author:'Helen', title:'Rebuilt as a tabbed page with an interactive playground', changes:[
         ['changed','Restructured from a flat .sec into .sec--tabbed: a .sec-hero (title + live preview), Overview / Style / Code / Changelog tabs'],
         ['added','New makeBarChartHTML(data,{series}) builder — parameterized categories (2 or 6) and a two-series grouped-bar mode ("This year vs last year") with a legend, replacing the old fixed 7-month static demo'],
@@ -23089,7 +23218,10 @@ const CHANGELOG = {
         ['added','Interactive inline-SVG bar, line, area and donut charts rendered from data, Flash colour palette, with hover tooltips, dim-the-rest emphasis, donut pop-out and an interactive legend'],
       ]},
     ]},
-    {secId:'s-charts-line', name:'Line & Area Charts', version:'1.2.0', entries:[
+    {secId:'s-charts-line', name:'Line & Area Charts', version:'1.2.1', entries:[
+      {version:'1.2.1', date:'2026-10-08', author:'Mo', title:'Chart tooltip shadow takes the elevation S variable', changes:[
+        ['changed','.cht__tip box-shadow changed from 0 4px 14px rgba(0,0,0,.22) to var(--elevation-s) (0 2px 12px 0, black 16% light / 48% dark), putting the chart tooltip on the same documented level as .tip__bubble. Background stays --color-surface-inverse'],
+      ]},
       {version:'1.2.0', date:'2026-08-12', author:'Helen', title:'Rebuilt as a tabbed page with an interactive playground', changes:[
         ['changed','Restructured from a flat .sec into .sec--tabbed: a .sec-hero (title + live preview), Overview / Style / Code / Changelog tabs'],
         ['added','New makeLineChartHTML(dataSets,{filled}) builder — parameterized point count (4 or 7), line vs. area fill, and a two-series mode (fill disabled when plotting two lines, per the existing Don\'t rule)'],
@@ -23117,7 +23249,10 @@ const CHANGELOG = {
         ['added','Line & Area Charts — carved out of the former combined Charts page into its own section, with a "When to use" tailored to trend charts specifically'],
       ]},
     ]},
-    {secId:'s-charts-donut', name:'Donut Charts', version:'1.2.0', entries:[
+    {secId:'s-charts-donut', name:'Donut Charts', version:'1.2.1', entries:[
+      {version:'1.2.1', date:'2026-10-08', author:'Mo', title:'Chart tooltip shadow takes the elevation S variable', changes:[
+        ['changed','.cht__tip box-shadow changed from 0 4px 14px rgba(0,0,0,.22) to var(--elevation-s) (0 2px 12px 0, black 16% light / 48% dark), putting the chart tooltip on the same documented level as .tip__bubble. Background stays --color-surface-inverse'],
+      ]},
       {version:'1.2.0', date:'2026-08-12', author:'Helen', title:'Rebuilt as a tabbed page with an interactive playground', changes:[
         ['changed','Restructured from a flat .sec into .sec--tabbed: a .sec-hero (title + live preview), Overview / Style / Code / Changelog tabs'],
         ['added','New makeDonutChartHTML(data,{legend,unit}) builder — parameterized segment count (3/4/5) and a legend visibility toggle, replacing the old fixed 4-slice static demo'],
@@ -23224,7 +23359,11 @@ const CHANGELOG = {
         ['added','Interactive month-grid calendar (month nav, today marker, day select) and a date-picker field that opens it in a popover'],
       ]},
     ]},
-    {secId:'s-cards-hover', name:'Hover Cards', version:'1.1.0', entries:[
+    {secId:'s-cards-hover', name:'Hover Cards', version:'1.2.0', entries:[
+      {version:'1.2.0', date:'2026-10-08', author:'Mo', title:'Hover card moves onto elevation M', changes:[
+        ['changed','.hc__card background changed from var(--chrome-bg) to var(--elevation-surface-m), and box-shadow from the undocumented 0 14px 36px rgba(0,0,0,.16) to var(--elevation-m) (0 4px 24px 0, black 16% light / 48% dark) — a slightly tighter shadow in light, and an n2 (#2d2e34) surface in dark'],
+        ['changed','Tokens table: Surface row now reads elevation-surface-m and Shadow row elevation-m, replacing chrome-bg and the raw shadow value'],
+      ]},
       {version:'1.1.0', date:'2026-08-12', author:'Helen', title:'Rebuilt as a tabbed page, matching Pills/Buttons\' structure', changes:[
         ['changed','Section restructured from a flat .sec into .sec--tabbed with a .sec-hero and Overview / Style / Code / Changelog tabs (cardTabSwitch(\'s-cards-hover\', tab))'],
         ['added','.hc.is-open pins the card open, so the revealed state can be documented statically instead of only existing under a live pointer \u2014 and so a consumer can open one programmatically'],
@@ -23316,7 +23455,10 @@ const CHANGELOG = {
         ['added','Native-checkbox toggle, Regular/Small sizes, Off/On/Disabled states, anatomy specs and usage guidance'],
       ]},
     ]},
-    {secId:'s-tooltip', name:'Tooltip', version:'1.0.2', entries:[
+    {secId:'s-tooltip', name:'Tooltip', version:'1.1.0', entries:[
+      {version:'1.1.0', date:'2026-10-08', author:'Mo', title:'Bubble shadow takes the elevation S variable', changes:[
+        ['changed','.tip__bubble box-shadow changed from 0 2px 12px 0 rgba(0,0,0,.16) to var(--elevation-s) — unchanged in light, black 48% in dark. Background stays --color-surface-inverse, which already separates the bubble in both themes'],
+      ]},
       {version:'1.0.2', date:'2026-09-09', author:'Mo', title:'box-shadow aligned to elevation-s', changes:[
         ['fixed','.tip__bubble box-shadow changed from 0 6px 18px rgba(0,0,0,.18) to 0 2px 12px 0 rgba(0,0,0,0.16), matching the documented elevation-s token (found while building the Elevation tabbed page)'],
       ]},
@@ -23534,7 +23676,10 @@ const CHANGELOG = {
         ['added','Native range input with a brand fill and live value; continuous, stepped and disabled examples'],
       ]},
     ]},
-    {secId:'s-popover', name:'Popover', version:'2.0.10', entries:[
+    {secId:'s-popover', name:'Popover', version:'2.1.0', entries:[
+      {version:'2.1.0', date:'2026-10-08', author:'Mo', title:'Panel takes the elevation M surface and shadow variables', changes:[
+        ['changed','.pop__panel background changed from var(--chrome-bg) to var(--elevation-surface-m) and box-shadow from 0 4px 24px 0 rgba(0,0,0,.16) to var(--elevation-m). Light is unchanged; in dark the panel now sits on --color-surface-n2 (#2d2e34) with a black 48% shadow'],
+      ]},
       {version:'2.0.10', date:'2026-09-09', author:'Mo', title:'box-shadow aligned to elevation-m', changes:[
         ['fixed','.pop__panel box-shadow changed from 0 14px 36px rgba(0,0,0,.18) to 0 4px 24px 0 rgba(0,0,0,0.16), matching the documented elevation-m token (found while building the Elevation tabbed page)'],
       ]},
@@ -23869,7 +24014,16 @@ const CHANGELOG = {
         ['added','8px base scale, spacing tokens, radius tokens, 4-breakpoint grid'],
       ]},
     ]},
-    {secId:'s-elev', name:'Elevation', version:'1.2.0', entries:[
+    {secId:'s-elev', name:'Elevation', version:'1.3.0', entries:[
+      {version:'1.3.0', date:'2026-10-08', author:'Mo', title:'Components migrated to the elevation variables; Levels, Which-level and Tokens readouts follow the theme; CSS variables table redesigned', changes:[
+        ['changed','Overview, Levels: each cell now leads with what carries the depth in the current theme — in light the shadow variable and its y/blur/16%, in dark --elevation-surface-* with its --color-surface-* step and hex, then the 48% shadow (none at XS). The section description swaps with the theme too, via new .elev-only-light / .elev-only-dark spans'],
+        ['changed','Usage, Which level for what: each level header now shows both its Surface and Shadow tokens with a colour swatch and resolved value, rendered by the new renderElevDocToks(); the shadow line leads in light, the surface line leads in dark. The separate "Dark surface" rows added in 1.2.0 are removed as redundant'],
+        ['changed','Usage, Which level for what: XS now renders a real .card on its surface; S notes the tooltip takes the shadow only and that .cht__tip carries the level; M notes .hc__card carries the level'],
+        ['changed','Tokens, The five levels: the inline table builder is now renderElevTokens() and re-runs on theme toggle. In dark its columns become Surface (swatch, hex, --color-surface-*) and Shadow, and a row click copies var(--elevation-surface-*); light keeps Effects and Colour'],
+        ['changed','Tokens, CSS variables: rebuilt as a grouped table (Shadow colour / Shadows / Surfaces) with Light and Dark pill headers. Each value cell renders inside its own data-theme scope, so the Light column is always light and the Dark column always dark, with a mini preview of the swatch or shadow on that theme\'s page colour beside the formatted value (y/blur, black %, hex, --color-surface-* alias). New .elev-vt* classes'],
+        ['changed','Tokens, Where it\'s used: rewritten with separate Background and Shadow columns. .card, .tip__bubble, .dpd-menu, .pop__panel, .hc__card, .bsh-sheet and .cht__tip now read Matches on the variables; card hover/active, .dpd-menu--inline and .car__arrow remain Drift; .bar__search-results is marked doc-site chrome'],
+        ['changed','Usage, Stacking order: Hovercard level changed from — to elevation-m'],
+      ]},
       {version:'1.2.0', date:'2026-10-08', author:'Mo', title:'Dark-mode elevation: lighter surfaces per level, stronger shadow, and applicable CSS variables', changes:[
         ['added','CSS custom properties in both theme blocks: --elevation-default (black 16% light / 48% dark), --elevation-xs/-s/-m/-l/-xl plus --elevation-l-up for the bottom sheet\'s upward shadow, and --elevation-surface-0/-xs/-s/-m/-l/-xl. The five token names were previously design-token names only, not declared in CSS'],
         ['changed','Dark mode: each level now steps its surface one existing grey lighter — page --color-surface-base #12131a, XS/S --color-surface-n1 #25262c, M --color-surface-n2 #2d2e34, L/XL --color-surface-n3 #33343a. Three lifted greys for five levels, so XS/S and L/XL share a grey and the shadow tells each pair apart. Every dark text token stays above 8:1 on the lightest step'],
@@ -24263,7 +24417,11 @@ const CHANGELOG = {
         ['added','Light & dark mode reference grid, shown side by side'],
       ]},
     ]},
-    {secId:'s-cards-basic', name:'Basic Cards', version:'1.3.0', entries:[
+    {secId:'s-cards-basic', name:'Basic Cards', version:'1.4.0', entries:[
+      {version:'1.4.0', date:'2026-10-08', author:'Mo', title:'Card surface takes the elevation XS surface variable', changes:[
+        ['changed','.card background changed from var(--chrome-bg) to var(--elevation-surface-xs): white in light as before, --color-surface-n1 (#25262c) in dark so a resting card lifts off the page. Cards stay flat — no shadow added. Shared across Basic, Media and Interactive cards'],
+        ['changed','Tokens table Surface row now reads elevation-surface-xs instead of chrome-bg'],
+      ]},
       {version:'1.3.0', date:'2026-08-12', author:'Helen', title:'Rebuilt as a tabbed page, matching Pills/Buttons\' structure', changes:[
         ['changed','Section restructured from a flat .sec into .sec--tabbed with a .sec-hero (title + live preview) and Overview / Style / Code / Changelog tabs (cardTabSwitch(\'s-cards-basic\', tab))'],
         ['added','"Try the component" playground with Description / Footer / Secondary toggles and a Title field, rendered into two synced mounts (#cbasic-playground on Overview, #cbasic-code-playground on Code) over one shared CARD_PG state \u2014 the generalised form of Pills\' PILL_PLAYGROUND_MOUNTS'],
@@ -24286,7 +24444,10 @@ const CHANGELOG = {
         ['added','Card surface — basic, with footer actions (primary black), media band and interactive/hoverable variants, plus specs and usage guidance'],
       ]},
     ]},
-    {secId:'s-cards-media', name:'Media Cards', version:'1.1.0', entries:[
+    {secId:'s-cards-media', name:'Media Cards', version:'1.2.0', entries:[
+      {version:'1.2.0', date:'2026-10-08', author:'Mo', title:'Card surface takes the elevation XS surface variable', changes:[
+        ['changed','.card background changed from var(--chrome-bg) to var(--elevation-surface-xs) — white in light, --color-surface-n1 (#25262c) in dark; Tokens table Surface row reads elevation-surface-xs'],
+      ]},
       {version:'1.1.0', date:'2026-08-12', author:'Helen', title:'Rebuilt as a tabbed page, matching Pills/Buttons\' structure', changes:[
         ['changed','Section restructured from a flat .sec into .sec--tabbed with a .sec-hero and Overview / Style / Code / Changelog tabs (cardTabSwitch(\'s-cards-media\', tab))'],
         ['added','"Try the component" playground with Media band / Description / Footer toggles and a Title field, in two synced mounts (#cmedia-playground, #cmedia-code-playground)'],
@@ -24300,7 +24461,10 @@ const CHANGELOG = {
         ['added','Media Cards — carved out of the former combined Cards page into its own section, with a "When to use" tailored to the media band specifically'],
       ]},
     ]},
-    {secId:'s-cards-interactive', name:'Interactive Cards', version:'1.1.0', entries:[
+    {secId:'s-cards-interactive', name:'Interactive Cards', version:'1.2.0', entries:[
+      {version:'1.2.0', date:'2026-10-08', author:'Mo', title:'Card surface takes the elevation XS surface variable', changes:[
+        ['changed','.card background changed from var(--chrome-bg) to var(--elevation-surface-xs) — white in light, --color-surface-n1 (#25262c) in dark; Tokens table Surface row reads elevation-surface-xs. The hover and pressed shadows are unchanged'],
+      ]},
       {version:'1.1.0', date:'2026-08-12', author:'Helen', title:'Rebuilt as a tabbed page, matching Pills/Buttons\' structure', changes:[
         ['changed','Section restructured from a flat .sec into .sec--tabbed with a .sec-hero and Overview / Style / Code / Changelog tabs (cardTabSwitch(\'s-cards-interactive\', tab))'],
         ['added','.card--interactive:focus-visible \u2014 a 3px color-input-focus ring. The page already told implementers to add role="button" and tabindex="0", but there was no visible focus treatment for the keyboard users that enabled; .card--interactive:active added for a real pressed treatment'],
@@ -24337,7 +24501,11 @@ const CHANGELOG = {
         ['changed','Planned for next session'],
       ]},
     ]},
-    {secId:'s-drawers', name:'Bottom Sheets', version:'1.1.2', entries:[
+    {secId:'s-drawers', name:'Bottom Sheets', version:'1.2.0', entries:[
+      {version:'1.2.0', date:'2026-10-08', author:'Mo', title:'Sheet takes the elevation L surface and upward shadow variables', changes:[
+        ['changed','.bsh-sheet background changed from var(--color-surface-base) to var(--elevation-surface-l) and box-shadow from 0 -8px 48px 0 rgba(0,0,0,.16) to var(--elevation-l-up). Light is unchanged; in dark the sheet now sits on --color-surface-n3 (#33343a) with a black 48% upward shadow'],
+        ['changed','.bsh-ref__header (the Style tab\'s header reference) background follows to var(--elevation-surface-l) so it matches the real sheet'],
+      ]},
       {version:'1.1.2', date:'2026-09-09', author:'Mo', title:'box-shadow aligned to elevation-l', changes:[
         ['fixed','.bsh-sheet box-shadow changed from 0 -6px 24px rgba(0,0,0,.16) to 0 -8px 48px 0 rgba(0,0,0,0.16), matching the documented elevation-l token; the negative y-offset is kept as the one sanctioned directional exception, since a sheet rises from the bottom (found while building the Elevation tabbed page)'],
       ]},
@@ -24593,7 +24761,10 @@ const CHANGELOG = {
         ['added','Interactive playground, size/icon comparisons, a full states matrix and an anatomy/spec table'],
       ]},
     ]},
-    {secId:'s-dropdown', name:'Dropdown', version:'1.4.2', entries:[
+    {secId:'s-dropdown', name:'Dropdown', version:'1.5.0', entries:[
+      {version:'1.5.0', date:'2026-10-08', author:'Mo', title:'Menu takes the elevation M surface and shadow variables', changes:[
+        ['changed','.dpd-menu background changed from var(--color-surface-base) to var(--elevation-surface-m) and box-shadow from 0 4px 24px 0 rgba(0,0,0,.16) to var(--elevation-m). Light is unchanged; in dark the menu now sits on --color-surface-n2 (#2d2e34) with a black 48% shadow instead of on the page colour'],
+      ]},
       {version:'1.4.2', date:'2026-09-09', author:'Mo', title:'box-shadow aligned to elevation-m', changes:[
         ['fixed','.dpd-menu box-shadow changed from 0 8px 24px rgba(0,0,0,.14) to 0 4px 24px 0 rgba(0,0,0,0.16), matching the documented elevation-m token (found while building the Elevation tabbed page); .dpd-menu--inline\'s own 0 1px 2px rgba(0,0,0,.1) is unchanged and left as drift'],
       ]},
@@ -28299,7 +28470,7 @@ const CARD_BASE_TOKEN_HEAD = ['Property','Value','Token'];
 const CARD_BASE_TOKEN_ROWS = [
   ['Corner radius','14px','&mdash;'],
   ['Border','1px solid','<code>chrome-border</code>'],
-  ['Surface','Base background','<code>chrome-bg</code>'],
+  ['Surface','Elevation XS surface &mdash; white in light, n1 in dark','<code>elevation-surface-xs</code>'],
   ['Body padding','18px','<code>spacing-225</code>'],
   ['Title','15px / 800','<code>chrome-txt</code>'],
   ['Description','13px / 1.55','<code>chrome-muted</code>'],
@@ -29127,8 +29298,8 @@ ${s.desc==='on' ? `        <span class="code-attr">Description</span>=<span clas
          table:cardTokenTable(CARD_BASE_TOKEN_HEAD, [
            ['Corner radius','12px','&mdash;'],
            ['Border','1px solid','<code>chrome-border</code>'],
-           ['Surface','Base background','<code>chrome-bg</code>'],
-           ['Shadow','0 14px 36px rgba(0,0,0,.16)','&mdash;'],
+           ['Surface','Elevation M surface &mdash; white in light, n2 in dark','<code>elevation-surface-m</code>'],
+           ['Shadow','Elevation M &mdash; 0 4px 24px, black 16% light / 48% dark','<code>elevation-m</code>'],
            ['Trigger','600 weight, underlined','<code>color-link</code>'],
            ['Name','14px / 800','<code>chrome-txt</code>'],
            ['Handle','12px','<code>chrome-muted</code>'],
