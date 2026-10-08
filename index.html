@@ -1987,10 +1987,13 @@ body.home .main{max-width:none;margin:0;padding:0}
 /* ================================================================
    BOTTOM SHEETS
 ================================================================ */
-.bsh-phone{position:relative;width:260px;height:520px;border-radius:30px;overflow:hidden;background:var(--color-surface-n1);border:6px solid var(--chrome-txt);box-shadow:0 12px 30px rgba(0,0,0,.18);flex-shrink:0;transition:background .25s,border-color .25s}
+/* Device frame: a black bezel in both themes (a white one glares in dark mode) with a 1px
+   chrome-border ring so the outline still reads on a dark page. isolation keeps the scrim's
+   backdrop blur inside the rounded screen; --bsh-screen-r is the inner radius (30px - 6px bezel) */
+.bsh-phone{position:relative;width:260px;height:520px;border-radius:30px;overflow:hidden;background:var(--color-surface-n1);border:6px solid var(--prim-black);box-shadow:0 0 0 1px var(--chrome-border),0 12px 30px rgba(0,0,0,.18);isolation:isolate;--bsh-screen-r:24px;flex-shrink:0;transition:background .25s,border-color .25s}
 .bsh-phone__status{display:flex;align-items:center;justify-content:flex-end;gap:5px;height:22px;padding:0 12px;position:relative;z-index:1}
 .bsh-phone__content{position:absolute;inset:22px 0 0 0;display:flex;align-items:center;justify-content:center;color:var(--chrome-muted);font-size:11.5px;text-align:center;padding:20px}
-.bsh-phone__overlay{position:absolute;inset:0;background:rgba(43,43,43,.5);backdrop-filter:blur(2px);z-index:1}
+.bsh-phone__overlay{position:absolute;inset:0;border-radius:var(--bsh-screen-r,24px);background:rgba(43,43,43,.5);backdrop-filter:blur(2px);z-index:1}
 
 .bsh-sheet{position:absolute;left:0;right:0;bottom:0;background:var(--elevation-surface-l);display:flex;flex-direction:column;z-index:2;box-shadow:var(--elevation-l-up);transition:background .25s}
 .bsh-sheet--compact{border-radius:20px 20px 0 0}
@@ -5982,7 +5985,7 @@ body.home .main{max-width:none;margin:0;padding:0}
       <div class="sec__head">
         <h1 class="sec__title">Bottom Sheets</h1>
         <div class="sec-header-meta">
-          <span class="comp-ver-badge" style="margin-left:0">v1.2.0</span>
+          <span class="comp-ver-badge" style="margin-left:0">v1.2.1</span>
           <details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-drawers">
@@ -21813,12 +21816,16 @@ function cbrTabSwitch(tab){
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.98.0';
+const SYSTEM_VERSION = '1.98.1';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.98.1', date:'2026-10-08', author:'Mo', title:'Bottom Sheets: phone bezel no longer white in dark, scrim blur clipped to the rounded screen', changes:[
+        ['fixed','Bottom sheet phone frames (.bsh-phone and the In-context mock frames): the 6–7px bezel used var(--chrome-txt), which turns pure white in dark mode. It is now var(--prim-black) in both themes, with a 1px var(--chrome-border) ring so the outline still reads on a dark page'],
+        ['fixed','.bsh-phone__overlay (the blurred scrim behind an open sheet) was a square layer inside the rounded screen, so its backdrop blur ignored the rounded corners and smeared the bezel into the screen edge. It now takes the screen\'s inner radius, and the frame isolates it'],
+      ]},
       {version:'1.98.0', date:'2026-10-08', author:'Mo', title:'Floating components migrated to the --elevation-* variables; Elevation readouts follow the theme', changes:[
         ['changed','.dpd-menu, .pop__panel and .hc__card now use var(--elevation-surface-m) + var(--elevation-m); .bsh-sheet uses var(--elevation-surface-l) + var(--elevation-l-up); .card uses var(--elevation-surface-xs) and stays flat; .tip__bubble and .cht__tip shadows use var(--elevation-s) on their inverse fill. In dark, every floating surface now steps off the page (n1 / n2 / n3) instead of sitting on #12131a'],
         ['changed','.hc__card shadow moved from the undocumented 0 14px 36px to elevation-m, and .cht__tip from 0 4px 14px rgba(0,0,0,.22) to elevation-s — the two visible light-mode changes in this release'],
@@ -24501,7 +24508,11 @@ const CHANGELOG = {
         ['changed','Planned for next session'],
       ]},
     ]},
-    {secId:'s-drawers', name:'Bottom Sheets', version:'1.2.0', entries:[
+    {secId:'s-drawers', name:'Bottom Sheets', version:'1.2.1', entries:[
+      {version:'1.2.1', date:'2026-10-08', author:'Mo', title:'Phone bezel dark in both themes; scrim blur clipped to the rounded screen', changes:[
+        ['fixed','.bsh-phone border changed from 6px solid var(--chrome-txt) (white in dark mode) to 6px solid var(--prim-black), plus a 1px var(--chrome-border) ring in its box-shadow so the device edge stays visible on the dark stage; the three In-context mock frames get the same treatment at 7px'],
+        ['fixed','.bsh-phone__overlay now has border-radius:var(--bsh-screen-r) (24px; 25px in the mock frames) and the frames set isolation:isolate, so the backdrop blur of the open-sheet scrim is clipped to the rounded screen instead of showing square corners and a light haze from the bezel'],
+      ]},
       {version:'1.2.0', date:'2026-10-08', author:'Mo', title:'Sheet takes the elevation L surface and upward shadow variables', changes:[
         ['changed','.bsh-sheet background changed from var(--color-surface-base) to var(--elevation-surface-l) and box-shadow from 0 -8px 48px 0 rgba(0,0,0,.16) to var(--elevation-l-up). Light is unchanged; in dark the sheet now sits on --color-surface-n3 (#33343a) with a black 48% upward shadow'],
         ['changed','.bsh-ref__header (the Style tab\'s header reference) background follows to var(--elevation-surface-l) so it matches the real sheet'],
@@ -25473,7 +25484,7 @@ function bshMockFrame(sheetHTML, theme, isFull){
   const color = theme==='dark' ? '#fff' : '#000';
   const status = `<div class="bsh-phone__status" style="height:22px;padding:0 14px">${bshStatusBarHTML(color)}</div>`;
   const bg = isFull ? '' : bshMockPageBG();
-  return `<div style="position:relative;width:220px;height:440px;margin:0 auto;border-radius:32px;overflow:hidden;background:var(--color-surface-n1);border:7px solid var(--chrome-txt);box-shadow:0 14px 30px rgba(0,0,0,.18)">${status}${bg}${sheetHTML}</div>`;
+  return `<div style="position:relative;width:220px;height:440px;margin:0 auto;border-radius:32px;overflow:hidden;isolation:isolate;--bsh-screen-r:25px;background:var(--color-surface-n1);border:7px solid var(--prim-black);box-shadow:0 0 0 1px var(--chrome-border),0 14px 30px rgba(0,0,0,.18)">${status}${bg}${sheetHTML}</div>`;
 }
 
 function bshMockOptionRow(label, selected){
