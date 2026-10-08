@@ -150,12 +150,11 @@
   --chrome-txt:var(--prim-white); --chrome-muted:var(--prim-grey-400);
   --chrome-border:var(--prim-gb-425); --chrome-hover:rgba(255,255,255,0.05);
   --chrome-active:rgba(255,255,255,0.12);
-  /* Elevation — dark: the surface carries depth (each level steps one grey lighter);
-     the shadow is a secondary edge, so it is stronger and XS drops it entirely */
-  --elevation-default:rgba(0,0,0,0.48);
-  --elevation-xs:none; --elevation-s:0 2px 12px 0 var(--elevation-default);
-  --elevation-m:0 4px 24px 0 var(--elevation-default); --elevation-l:0 8px 48px 0 var(--elevation-default);
-  --elevation-l-up:0 -8px 48px 0 var(--elevation-default); --elevation-xl:0 16px 80px 0 var(--elevation-default);
+  /* Elevation — dark: no shadows at all. The surface carries the depth, each level
+     stepping one grey lighter; every shadow variable resolves to none */
+  --elevation-default:transparent;
+  --elevation-xs:none; --elevation-s:none; --elevation-m:none;
+  --elevation-l:none; --elevation-l-up:none; --elevation-xl:none;
   --elevation-surface-0:var(--color-surface-base);
   --elevation-surface-xs:var(--color-surface-n1); --elevation-surface-s:var(--color-surface-n1);
   --elevation-surface-m:var(--color-surface-n2); --elevation-surface-l:var(--color-surface-n3);
@@ -3229,9 +3228,9 @@ body.home .main{max-width:none;margin:0;padding:0}
       <div class="sec__head">
         <div class="sec__eye">Foundations</div>
         <h1 class="sec__title">Elevation</h1>
-        <p class="sec__desc">Five levels that lift a surface above the page. In light mode a shadow carries the depth; in dark mode the surface itself steps lighter, and the shadow becomes a secondary edge.</p>
+        <p class="sec__desc">Five levels that lift a surface above the page. In light mode a shadow carries the depth; in dark mode there are no shadows &mdash; the surface itself steps lighter.</p>
         <div class="sec-header-meta">
-          <span class="comp-ver-badge" style="margin-left:0">v1.3.0</span>
+          <span class="comp-ver-badge" style="margin-left:0">v1.4.0</span>
           <details class="ai-ctx">
   <summary>AI context</summary>
   <pre data-ai-context="s-elev">
@@ -3245,32 +3244,33 @@ body.home .main{max-width:none;margin:0;padding:0}
     "elevLv",
     "elevShadowParts",
     "elevShadowText",
+    "elevContrast",
     "elevSurfaceAlias",
     "renderElevDocToks",
     "renderElevDark"
   ],
   "noReusableClass": true,
-  "js": "const ELEVATION = [\n  {name:'Extra Small (XS)', token:'elevation-xs',  y:1,  blur:4,  dark:'n1', use:'Cards, tiles',              eg:'Cards'},\n  {name:'Small (S)',        token:'elevation-s',   y:2,  blur:12, dark:'n1', use:'Secondary overlays',         eg:'Tooltips'},\n  {name:'Medium (M)',       token:'elevation-m',   y:4,  blur:24, dark:'n2', use:'Contextual overlays',        eg:'Menus, dropdowns'},\n  {name:'Large (L)',        token:'elevation-l',   y:8,  blur:48, dark:'n3', use:'Elements above most content',eg:'Dialogs, drawers'},\n  {name:'Extra Large (XL)', token:'elevation-xl',  y:16, blur:80, dark:'n3', use:'Highest priority elements',  eg:'Notifications'},\n];\n\nfunction renderElevLevels(){\n  const mount = document.getElementById('elev-levels-grid');\n  if(!mount) return;\n  const theme = currentTheme();\n  mount.innerHTML = ELEVATION.map(e =&gt; {\n    const lv = elevLv(e);\n    const alias = elevSurfaceAlias(theme, lv);\n    // Lead with what carries the depth in this theme: the shadow in light, the surface in dark\n    const desc = theme==='dark'\n      ? `&lt;code&gt;--elevation-surface-${lv}&lt;/code&gt;&lt;br&gt;--color-surface-${alias} &amp;middot; ${elevVarValue('dark','--color-surface-'+alias)}&lt;br&gt;shadow ${elevShadowText('dark','--'+e.token)}&lt;br&gt;${e.eg}`\n      : `&lt;code&gt;--${e.token}&lt;/code&gt;&lt;br&gt;${elevShadowText('light','--'+e.token)}&lt;br&gt;${e.eg}`;\n    return `&lt;div class=\"spec-cell\"&gt;\n      &lt;div class=\"spec-cell__stage\" style=\"background:var(--elevation-surface-0);display:flex;align-items:center;justify-content:center;min-height:110px\"&gt;&lt;div style=\"width:70px;height:70px;border-radius:10px;background:var(--elevation-surface-${lv});border:1px solid var(--chrome-border);box-shadow:var(--${e.token})\"&gt;&lt;/div&gt;&lt;/div&gt;\n      &lt;div class=\"spec-cell__name\"&gt;${e.name}&lt;/div&gt;\n      &lt;div class=\"spec-cell__desc\"&gt;${desc}&lt;/div&gt;\n    &lt;/div&gt;`;\n  }).join('');\n}\n\nfunction renderElevTokens(){\n  const mount = document.getElementById('sp-elev');\n  if(!mount) return;\n  const dark = currentTheme()==='dark';\n  const theme = dark ? 'dark' : 'light';\n  const elevRows = ELEVATION.map(e =&gt; {\n    const lv = elevLv(e);\n    const sh = elevShadowParts(elevVarValue(theme, '--'+e.token));\n    const copyVar = dark ? `--elevation-surface-${lv}` : `--${e.token}`;\n    let mid;\n    if(dark){\n      const alias = elevSurfaceAlias('dark', lv);\n      const hex = elevVarValue('dark', '--color-surface-'+alias);\n      mid = `&lt;div class=\"elev-colour\"&gt;\n        &lt;div class=\"elev-col-dot\" style=\"background:${hex}\"&gt;&lt;/div&gt;\n        &lt;div class=\"elev-col-info\"&gt;\n          &lt;div class=\"elev-col-val\"&gt;${hex}&lt;/div&gt;\n          &lt;div class=\"elev-col-token\"&gt;--color-surface-${alias}&lt;/div&gt;\n        &lt;/div&gt;\n      &lt;/div&gt;\n      &lt;div class=\"elev-colour\"&gt;\n        &lt;div class=\"elev-col-info\"&gt;\n          &lt;div class=\"elev-col-val\"&gt;${sh ? `y ${sh.y} &amp;middot; blur ${sh.blur} &amp;middot; ${sh.pct}%` : 'none'}&lt;/div&gt;\n          &lt;div class=\"elev-col-token\"&gt;--${e.token}&lt;/div&gt;\n        &lt;/div&gt;\n      &lt;/div&gt;`;\n    } else {\n      mid = `&lt;div class=\"elev-effects\"&gt;\n        &lt;div class=\"elev-prop\"&gt;&lt;span class=\"elev-prop-label\"&gt;x-axis&lt;/span&gt;&lt;span class=\"elev-prop-val\"&gt;0&lt;/span&gt;&lt;/div&gt;\n        &lt;div class=\"elev-prop\"&gt;&lt;span class=\"elev-prop-label\"&gt;y-axis&lt;/span&gt;&lt;span class=\"elev-prop-val\"&gt;${e.y}&lt;/span&gt;&lt;/div&gt;\n        &lt;div class=\"elev-prop\"&gt;&lt;span class=\"elev-prop-label\"&gt;blur&lt;/span&gt;&lt;span class=\"elev-prop-val\"&gt;${e.blur}&lt;/span&gt;&lt;/div&gt;\n        &lt;div class=\"elev-prop\"&gt;&lt;span class=\"elev-prop-label\"&gt;spread&lt;/span&gt;&lt;span class=\"elev-prop-val\"&gt;0&lt;/span&gt;&lt;/div&gt;\n      &lt;/div&gt;\n      &lt;div class=\"elev-colour\"&gt;\n        &lt;div class=\"elev-col-dot\"&gt;&lt;/div&gt;\n        &lt;div class=\"elev-col-info\"&gt;\n          &lt;div class=\"elev-col-val\"&gt;#000000 &amp;nbsp;|&amp;nbsp; ${sh ? sh.pct : 16}%&lt;/div&gt;\n          &lt;div class=\"elev-col-token\"&gt;--elevation-default&lt;/div&gt;\n        &lt;/div&gt;\n      &lt;/div&gt;`;\n    }\n    return `&lt;div class=\"elev-row\" onclick=\"copy('var(${copyVar})','CSS variable')\" style=\"cursor:pointer\"&gt;\n      &lt;div&gt;&lt;div class=\"elev-preview\" style=\"background:var(--elevation-surface-${lv});box-shadow:var(--${e.token})\"&gt;&lt;/div&gt;&lt;/div&gt;\n      &lt;div&gt;\n        &lt;div class=\"elev-level\"&gt;${e.name}&lt;/div&gt;\n        &lt;div class=\"elev-token\"&gt;${copyVar}&lt;/div&gt;\n      &lt;/div&gt;\n      ${mid}\n      &lt;div&gt;\n        &lt;div class=\"elev-use-bold\"&gt;${e.eg}&lt;/div&gt;\n        &lt;div class=\"elev-use-text\"&gt;${e.use}&lt;/div&gt;\n      &lt;/div&gt;\n    &lt;/div&gt;`;\n  }).join('');\n\n  mount.innerHTML = `\n    &lt;div class=\"elev-list\"&gt;\n      &lt;div class=\"elev-head\"&gt;\n        &lt;div class=\"elev-head-cell\"&gt;&lt;/div&gt;\n        &lt;div class=\"elev-head-cell\"&gt;Level&lt;/div&gt;\n        &lt;div class=\"elev-head-cell\"&gt;${dark ? 'Surface' : 'Effects'}&lt;/div&gt;\n        &lt;div class=\"elev-head-cell\"&gt;${dark ? 'Shadow' : 'Colour'}&lt;/div&gt;\n        &lt;div class=\"elev-head-cell\"&gt;Usage&lt;/div&gt;\n      &lt;/div&gt;\n      ${elevRows}\n    &lt;/div&gt;`;\n}\n\nfunction elevVarValue(theme, name){\n  const probe = document.createElement('div');\n  probe.setAttribute('data-brand','flash');\n  probe.setAttribute('data-theme',theme);\n  probe.style.display = 'none';\n  document.body.appendChild(probe);\n  const val = getComputedStyle(probe).getPropertyValue(name).trim();\n  probe.remove();\n  return val;\n}\n\nfunction elevLv(e){ return e.token.replace('elevation-',''); }\n\nfunction elevShadowParts(v){\n  const m = /^0(?:px)? (-?\\d+)(?:px)? (\\d+)(?:px)? 0(?:px)? rgba\\(0,\\s*0,\\s*0,\\s*([\\d.]+)\\)$/.exec((v||'').trim());\n  return m ? {y:+m[1], blur:+m[2], pct:Math.round(parseFloat(m[3])*100)} : null;\n}\n\nfunction elevShadowText(theme, name){\n  const p = elevShadowParts(elevVarValue(theme, name));\n  return p ? `y ${p.y} &amp;middot; blur ${p.blur} &amp;middot; ${p.pct}%` : 'none';\n}\n\nfunction elevSurfaceAlias(theme, lv){\n  if(theme!=='dark' || lv==='0') return 'base';\n  return ELEVATION.find(e =&gt; elevLv(e)===lv).dark;\n}\n\nfunction renderElevDocToks(){\n  const theme = currentTheme();\n  document.querySelectorAll('#s-elev [data-elev-toks]').forEach(el =&gt; {\n    const lv = el.getAttribute('data-elev-toks');\n    const alias = elevSurfaceAlias(theme, lv);\n    const hex = elevVarValue(theme, '--color-surface-'+alias);\n    const surface = `&lt;div class=\"elev-tok-line\"&gt;&lt;span class=\"elev-tok-line__k\"&gt;Surface&lt;/span&gt;&lt;span class=\"elev-tok-sw\" style=\"background:${hex}\"&gt;&lt;/span&gt;&lt;span class=\"elev-doc-tok\" onclick=\"copy('var(--elevation-surface-${lv})','CSS variable')\"&gt;--elevation-surface-${lv}&lt;/span&gt;&lt;span class=\"elev-tok-line__v\"&gt;&amp;rarr; --color-surface-${alias} &amp;middot; ${hex}&lt;/span&gt;&lt;/div&gt;`;\n    const shadow = `&lt;div class=\"elev-tok-line\"&gt;&lt;span class=\"elev-tok-line__k\"&gt;Shadow&lt;/span&gt;&lt;span class=\"elev-doc-tok\" onclick=\"copy('var(--elevation-${lv})','CSS variable')\"&gt;--elevation-${lv}&lt;/span&gt;&lt;span class=\"elev-tok-line__v\"&gt;${elevShadowText(theme,'--elevation-'+lv)}&lt;/span&gt;&lt;/div&gt;`;\n    el.innerHTML = theme==='dark' ? surface + shadow : shadow + surface;\n  });\n}\n\nfunction renderElevDark(){\n  const ladder = document.getElementById('elev-dark-ladder');\n  if(ladder){\n    // Page first, then one step per distinct dark surface; levels sharing a grey merge\n    const steps = [{name:'Page', key:'0', dark:'base', eg:'Page background'}];\n    ELEVATION.forEach(e =&gt; {\n      const lv = e.token.replace('elevation-','');\n      const last = steps[steps.length-1];\n      if(last.dark === e.dark){ last.name += ' \\u00b7 ' + lv.toUpperCase(); last.eg += ', ' + e.eg.toLowerCase(); }\n      else steps.push({name:lv.toUpperCase(), key:lv, dark:e.dark, eg:e.eg});\n    });\n    ladder.innerHTML = steps.map((st, i) =&gt; `&lt;div class=\"elev-ladder__step\" style=\"min-height:${84 + i*24}px;background:var(--elevation-surface-${st.key});box-shadow:${st.key==='0' ? 'none' : `var(--elevation-${st.key})`}\"&gt;\n      &lt;div class=\"elev-ladder__lvl\"&gt;${st.name}&lt;/div&gt;\n      &lt;div class=\"elev-ladder__tok\"&gt;--color-surface-&lt;wbr&gt;${st.dark}&lt;/div&gt;\n      &lt;div class=\"elev-ladder__tok\"&gt;${elevVarValue('dark','--color-surface-'+st.dark)}&lt;/div&gt;\n      &lt;div class=\"elev-ladder__eg\"&gt;${st.eg}&lt;/div&gt;\n    &lt;/div&gt;`).join('');\n  }\n  const vars = document.getElementById('elev-vars-table');\n  if(vars){\n    const shadowRows = [];\n    ELEVATION.forEach(e =&gt; {\n      shadowRows.push({name:'--'+e.token, role:e.eg, kind:'shadow', lv:elevLv(e)});\n      if(e.token==='elevation-l') shadowRows.push({name:'--elevation-l-up', role:'Bottom sheets (casts upward)', kind:'shadow', lv:'l'});\n    });\n    const groups = [\n      {title:'Shadow colour', note:'one per theme', rows:[{name:'--elevation-default', role:'Every shadow', kind:'colour', lv:'0'}]},\n      {title:'Shadows', note:'box-shadow', rows:shadowRows},\n      {title:'Surfaces', note:'background', rows:[{name:'--elevation-surface-0', role:'Page', kind:'surface', lv:'0'}]\n        .concat(ELEVATION.map(e =&gt; ({name:'--elevation-surface-'+elevLv(e), role:e.eg, kind:'surface', lv:elevLv(e)})))},\n    ];\n    // Each value cell is drawn inside its own theme scope, with a mini stage on the page colour of that theme\n    const cell = (theme, r) =&gt; {\n      const raw = elevVarValue(theme, r.name);\n      let tile, main, sub;\n      if(r.kind==='colour'){\n        const pct = Math.round(parseFloat((/,\\s*([\\d.]+)\\)/.exec(raw)||[0,0])[1])*100);\n        tile = `&lt;span class=\"elev-vt__tile\" style=\"background:var(${r.name})\"&gt;&lt;/span&gt;`;\n        main = `black ${pct}%`; sub = raw;\n      } else if(r.kind==='shadow'){\n        const p = elevShadowParts(raw);\n        tile = `&lt;span class=\"elev-vt__tile\" style=\"background:var(--elevation-surface-${r.lv});box-shadow:var(${r.name})\"&gt;&lt;/span&gt;`;\n        main = p ? `y ${p.y} &amp;middot; blur ${p.blur}` : `&lt;span class=\"elev-vt__none\"&gt;none&lt;/span&gt;`;\n        sub = p ? `black ${p.pct}%` : 'surface step only';\n      } else {\n        tile = `&lt;span class=\"elev-vt__tile\" style=\"background:var(${r.name});border:1px solid var(--chrome-border)\"&gt;&lt;/span&gt;`;\n        main = raw; sub = `--color-surface-${elevSurfaceAlias(theme, r.lv)}`;\n      }\n      return `&lt;td class=\"elev-vt__cell\" data-brand=\"flash\" data-theme=\"${theme}\"&gt;&lt;div class=\"elev-vt__val\"&gt;&lt;span class=\"elev-vt__stage\"&gt;${tile}&lt;/span&gt;&lt;div&gt;&lt;div class=\"elev-vt__main\"&gt;${main}&lt;/div&gt;&lt;div class=\"elev-vt__sub\"&gt;${sub}&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/td&gt;`;\n    };\n    vars.innerHTML = groups.map(g =&gt; `&lt;tr class=\"elev-vt__group\"&gt;&lt;td colspan=\"3\"&gt;${g.title}&lt;span class=\"elev-vt__gn\"&gt;${g.note}&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;` +\n      g.rows.map(r =&gt; `&lt;tr&gt;&lt;td class=\"elev-vt__var\"&gt;&lt;span class=\"elev-doc-tok\" onclick=\"copy('var(${r.name})','CSS variable')\"&gt;${r.name}&lt;/span&gt;&lt;div class=\"elev-vt__role\"&gt;${r.role}&lt;/div&gt;&lt;/td&gt;${cell('light', r)}${cell('dark', r)}&lt;/tr&gt;`).join('')\n    ).join('');\n  }\n}",
+  "js": "const ELEVATION = [\n  {name:'Extra Small (XS)', token:'elevation-xs',  y:1,  blur:4,  dark:'n1', use:'Cards, tiles',              eg:'Cards'},\n  {name:'Small (S)',        token:'elevation-s',   y:2,  blur:12, dark:'n1', use:'Secondary overlays',         eg:'Tooltips'},\n  {name:'Medium (M)',       token:'elevation-m',   y:4,  blur:24, dark:'n2', use:'Contextual overlays',        eg:'Menus, dropdowns'},\n  {name:'Large (L)',        token:'elevation-l',   y:8,  blur:48, dark:'n3', use:'Elements above most content',eg:'Dialogs, drawers'},\n  {name:'Extra Large (XL)', token:'elevation-xl',  y:16, blur:80, dark:'n3', use:'Highest priority elements',  eg:'Notifications'},\n];\n\nfunction renderElevLevels(){\n  const mount = document.getElementById('elev-levels-grid');\n  if(!mount) return;\n  const theme = currentTheme();\n  mount.innerHTML = ELEVATION.map(e =&gt; {\n    const lv = elevLv(e);\n    const alias = elevSurfaceAlias(theme, lv);\n    // Lead with what carries the depth in this theme: the shadow in light, the surface in dark\n    const desc = theme==='dark'\n      ? `&lt;code&gt;--elevation-surface-${lv}&lt;/code&gt;&lt;br&gt;--color-surface-${alias} &amp;middot; ${elevVarValue('dark','--color-surface-'+alias)}&lt;br&gt;no shadow&lt;br&gt;${e.eg}`\n      : `&lt;code&gt;--${e.token}&lt;/code&gt;&lt;br&gt;${elevShadowText('light','--'+e.token)}&lt;br&gt;${e.eg}`;\n    return `&lt;div class=\"spec-cell\"&gt;\n      &lt;div class=\"spec-cell__stage\" style=\"background:var(--elevation-surface-0);display:flex;align-items:center;justify-content:center;min-height:110px\"&gt;&lt;div style=\"width:70px;height:70px;border-radius:10px;background:var(--elevation-surface-${lv});border:1px solid var(--chrome-border);box-shadow:var(--${e.token})\"&gt;&lt;/div&gt;&lt;/div&gt;\n      &lt;div class=\"spec-cell__name\"&gt;${e.name}&lt;/div&gt;\n      &lt;div class=\"spec-cell__desc\"&gt;${desc}&lt;/div&gt;\n    &lt;/div&gt;`;\n  }).join('');\n}\n\nfunction renderElevTokens(){\n  const mount = document.getElementById('sp-elev');\n  if(!mount) return;\n  const dark = currentTheme()==='dark';\n  const theme = dark ? 'dark' : 'light';\n  const elevRows = ELEVATION.map(e =&gt; {\n    const lv = elevLv(e);\n    const sh = elevShadowParts(elevVarValue(theme, '--'+e.token));\n    const copyVar = dark ? `--elevation-surface-${lv}` : `--${e.token}`;\n    let mid;\n    if(dark){\n      const alias = elevSurfaceAlias('dark', lv);\n      const hex = elevVarValue('dark', '--color-surface-'+alias);\n      mid = `&lt;div class=\"elev-colour\"&gt;\n        &lt;div class=\"elev-col-dot\" style=\"background:${hex}\"&gt;&lt;/div&gt;\n        &lt;div class=\"elev-col-info\"&gt;\n          &lt;div class=\"elev-col-val\"&gt;${hex}&lt;/div&gt;\n          &lt;div class=\"elev-col-token\"&gt;--color-surface-${alias}&lt;/div&gt;\n        &lt;/div&gt;\n      &lt;/div&gt;\n      &lt;div class=\"elev-colour\"&gt;\n        &lt;div class=\"elev-col-info\"&gt;\n          &lt;div class=\"elev-col-val\"&gt;${elevContrast(hex, elevVarValue('dark','--color-surface-base')).toFixed(2)}:1&lt;/div&gt;\n          &lt;div class=\"elev-col-token\"&gt;vs page &amp;middot; no shadow&lt;/div&gt;\n        &lt;/div&gt;\n      &lt;/div&gt;`;\n    } else {\n      mid = `&lt;div class=\"elev-effects\"&gt;\n        &lt;div class=\"elev-prop\"&gt;&lt;span class=\"elev-prop-label\"&gt;x-axis&lt;/span&gt;&lt;span class=\"elev-prop-val\"&gt;0&lt;/span&gt;&lt;/div&gt;\n        &lt;div class=\"elev-prop\"&gt;&lt;span class=\"elev-prop-label\"&gt;y-axis&lt;/span&gt;&lt;span class=\"elev-prop-val\"&gt;${e.y}&lt;/span&gt;&lt;/div&gt;\n        &lt;div class=\"elev-prop\"&gt;&lt;span class=\"elev-prop-label\"&gt;blur&lt;/span&gt;&lt;span class=\"elev-prop-val\"&gt;${e.blur}&lt;/span&gt;&lt;/div&gt;\n        &lt;div class=\"elev-prop\"&gt;&lt;span class=\"elev-prop-label\"&gt;spread&lt;/span&gt;&lt;span class=\"elev-prop-val\"&gt;0&lt;/span&gt;&lt;/div&gt;\n      &lt;/div&gt;\n      &lt;div class=\"elev-colour\"&gt;\n        &lt;div class=\"elev-col-dot\"&gt;&lt;/div&gt;\n        &lt;div class=\"elev-col-info\"&gt;\n          &lt;div class=\"elev-col-val\"&gt;#000000 &amp;nbsp;|&amp;nbsp; ${sh ? sh.pct : 16}%&lt;/div&gt;\n          &lt;div class=\"elev-col-token\"&gt;--elevation-default&lt;/div&gt;\n        &lt;/div&gt;\n      &lt;/div&gt;`;\n    }\n    return `&lt;div class=\"elev-row\" onclick=\"copy('var(${copyVar})','CSS variable')\" style=\"cursor:pointer\"&gt;\n      &lt;div&gt;&lt;div class=\"elev-preview\" style=\"background:var(--elevation-surface-${lv});box-shadow:var(--${e.token})\"&gt;&lt;/div&gt;&lt;/div&gt;\n      &lt;div&gt;\n        &lt;div class=\"elev-level\"&gt;${e.name}&lt;/div&gt;\n        &lt;div class=\"elev-token\"&gt;${copyVar}&lt;/div&gt;\n      &lt;/div&gt;\n      ${mid}\n      &lt;div&gt;\n        &lt;div class=\"elev-use-bold\"&gt;${e.eg}&lt;/div&gt;\n        &lt;div class=\"elev-use-text\"&gt;${e.use}&lt;/div&gt;\n      &lt;/div&gt;\n    &lt;/div&gt;`;\n  }).join('');\n\n  mount.innerHTML = `\n    &lt;div class=\"elev-list\"&gt;\n      &lt;div class=\"elev-head\"&gt;\n        &lt;div class=\"elev-head-cell\"&gt;&lt;/div&gt;\n        &lt;div class=\"elev-head-cell\"&gt;Level&lt;/div&gt;\n        &lt;div class=\"elev-head-cell\"&gt;${dark ? 'Surface' : 'Effects'}&lt;/div&gt;\n        &lt;div class=\"elev-head-cell\"&gt;${dark ? 'Lift' : 'Colour'}&lt;/div&gt;\n        &lt;div class=\"elev-head-cell\"&gt;Usage&lt;/div&gt;\n      &lt;/div&gt;\n      ${elevRows}\n    &lt;/div&gt;`;\n}\n\nfunction elevVarValue(theme, name){\n  const probe = document.createElement('div');\n  probe.setAttribute('data-brand','flash');\n  probe.setAttribute('data-theme',theme);\n  probe.style.display = 'none';\n  document.body.appendChild(probe);\n  const val = getComputedStyle(probe).getPropertyValue(name).trim();\n  probe.remove();\n  return val;\n}\n\nfunction elevLv(e){ return e.token.replace('elevation-',''); }\n\nfunction elevShadowParts(v){\n  const m = /^0(?:px)? (-?\\d+)(?:px)? (\\d+)(?:px)? 0(?:px)? rgba\\(0,\\s*0,\\s*0,\\s*([\\d.]+)\\)$/.exec((v||'').trim());\n  return m ? {y:+m[1], blur:+m[2], pct:Math.round(parseFloat(m[3])*100)} : null;\n}\n\nfunction elevShadowText(theme, name){\n  const p = elevShadowParts(elevVarValue(theme, name));\n  return p ? `y ${p.y} &amp;middot; blur ${p.blur} &amp;middot; ${p.pct}%` : 'none';\n}\n\nfunction elevContrast(a, b){\n  const lum = h =&gt; { const c = [1,3,5].map(i =&gt; parseInt(h.slice(i,i+2),16)/255).map(x =&gt; x&lt;=0.03928 ? x/12.92 : Math.pow((x+0.055)/1.055,2.4)); return 0.2126*c[0]+0.7152*c[1]+0.0722*c[2]; };\n  const la = lum(a), lb = lum(b);\n  return (Math.max(la,lb)+0.05)/(Math.min(la,lb)+0.05);\n}\n\nfunction elevSurfaceAlias(theme, lv){\n  if(theme!=='dark' || lv==='0') return 'base';\n  return ELEVATION.find(e =&gt; elevLv(e)===lv).dark;\n}\n\nfunction renderElevDocToks(){\n  const theme = currentTheme();\n  document.querySelectorAll('#s-elev [data-elev-toks]').forEach(el =&gt; {\n    const lv = el.getAttribute('data-elev-toks');\n    const alias = elevSurfaceAlias(theme, lv);\n    const hex = elevVarValue(theme, '--color-surface-'+alias);\n    const surface = `&lt;div class=\"elev-tok-line\"&gt;&lt;span class=\"elev-tok-line__k\"&gt;Surface&lt;/span&gt;&lt;span class=\"elev-tok-sw\" style=\"background:${hex}\"&gt;&lt;/span&gt;&lt;span class=\"elev-doc-tok\" onclick=\"copy('var(--elevation-surface-${lv})','CSS variable')\"&gt;--elevation-surface-${lv}&lt;/span&gt;&lt;span class=\"elev-tok-line__v\"&gt;&amp;rarr; --color-surface-${alias} &amp;middot; ${hex}&lt;/span&gt;&lt;/div&gt;`;\n    const shadow = `&lt;div class=\"elev-tok-line\"&gt;&lt;span class=\"elev-tok-line__k\"&gt;Shadow&lt;/span&gt;&lt;span class=\"elev-doc-tok\" onclick=\"copy('var(--elevation-${lv})','CSS variable')\"&gt;--elevation-${lv}&lt;/span&gt;&lt;span class=\"elev-tok-line__v\"&gt;${theme==='dark' ? 'none &amp;middot; shadows are light mode only' : elevShadowText(theme,'--elevation-'+lv)}&lt;/span&gt;&lt;/div&gt;`;\n    el.innerHTML = theme==='dark' ? surface + shadow : shadow + surface;\n  });\n}\n\nfunction renderElevDark(){\n  const ladder = document.getElementById('elev-dark-ladder');\n  if(ladder){\n    // Page first, then one step per distinct dark surface; levels sharing a grey merge\n    const steps = [{name:'Page', key:'0', dark:'base', eg:'Page background'}];\n    ELEVATION.forEach(e =&gt; {\n      const lv = e.token.replace('elevation-','');\n      const last = steps[steps.length-1];\n      if(last.dark === e.dark){ last.name += ' \\u00b7 ' + lv.toUpperCase(); last.eg += ', ' + e.eg.toLowerCase(); }\n      else steps.push({name:lv.toUpperCase(), key:lv, dark:e.dark, eg:e.eg});\n    });\n    ladder.innerHTML = steps.map((st, i) =&gt; `&lt;div class=\"elev-ladder__step\" style=\"min-height:${84 + i*24}px;background:var(--elevation-surface-${st.key});box-shadow:${st.key==='0' ? 'none' : `var(--elevation-${st.key})`}\"&gt;\n      &lt;div class=\"elev-ladder__lvl\"&gt;${st.name}&lt;/div&gt;\n      &lt;div class=\"elev-ladder__tok\"&gt;--color-surface-&lt;wbr&gt;${st.dark}&lt;/div&gt;\n      &lt;div class=\"elev-ladder__tok\"&gt;${elevVarValue('dark','--color-surface-'+st.dark)}&lt;/div&gt;\n      &lt;div class=\"elev-ladder__eg\"&gt;${st.eg}&lt;/div&gt;\n    &lt;/div&gt;`).join('');\n  }\n  const vars = document.getElementById('elev-vars-table');\n  if(vars){\n    const shadowRows = [];\n    ELEVATION.forEach(e =&gt; {\n      shadowRows.push({name:'--'+e.token, role:e.eg, kind:'shadow', lv:elevLv(e)});\n      if(e.token==='elevation-l') shadowRows.push({name:'--elevation-l-up', role:'Bottom sheets (casts upward)', kind:'shadow', lv:'l'});\n    });\n    const groups = [\n      {title:'Shadow colour', note:'light mode only', rows:[{name:'--elevation-default', role:'Every shadow', kind:'colour', lv:'0'}]},\n      {title:'Shadows', note:'box-shadow', rows:shadowRows},\n      {title:'Surfaces', note:'background', rows:[{name:'--elevation-surface-0', role:'Page', kind:'surface', lv:'0'}]\n        .concat(ELEVATION.map(e =&gt; ({name:'--elevation-surface-'+elevLv(e), role:e.eg, kind:'surface', lv:elevLv(e)})))},\n    ];\n    // Each value cell is drawn inside its own theme scope, with a mini stage on the page colour of that theme\n    const cell = (theme, r) =&gt; {\n      const raw = elevVarValue(theme, r.name);\n      let tile, main, sub;\n      if(r.kind==='colour'){\n        const a = /,\\s*([\\d.]+)\\)/.exec(raw);\n        tile = `&lt;span class=\"elev-vt__tile\" style=\"background:var(${r.name})\"&gt;&lt;/span&gt;`;\n        main = a &amp;&amp; parseFloat(a[1]) &gt; 0 ? `black ${Math.round(parseFloat(a[1])*100)}%` : `&lt;span class=\"elev-vt__none\"&gt;none&lt;/span&gt;`;\n        sub = a &amp;&amp; parseFloat(a[1]) &gt; 0 ? raw : 'no shadows in dark';\n      } else if(r.kind==='shadow'){\n        const p = elevShadowParts(raw);\n        tile = `&lt;span class=\"elev-vt__tile\" style=\"background:var(--elevation-surface-${r.lv});box-shadow:var(${r.name})\"&gt;&lt;/span&gt;`;\n        main = p ? `y ${p.y} &amp;middot; blur ${p.blur}` : `&lt;span class=\"elev-vt__none\"&gt;none&lt;/span&gt;`;\n        sub = p ? `black ${p.pct}%` : (theme==='dark' ? 'no shadows in dark' : 'flat');\n      } else {\n        tile = `&lt;span class=\"elev-vt__tile\" style=\"background:var(${r.name});border:1px solid var(--chrome-border)\"&gt;&lt;/span&gt;`;\n        main = raw; sub = `--color-surface-${elevSurfaceAlias(theme, r.lv)}`;\n      }\n      return `&lt;td class=\"elev-vt__cell\" data-brand=\"flash\" data-theme=\"${theme}\"&gt;&lt;div class=\"elev-vt__val\"&gt;&lt;span class=\"elev-vt__stage\"&gt;${tile}&lt;/span&gt;&lt;div&gt;&lt;div class=\"elev-vt__main\"&gt;${main}&lt;/div&gt;&lt;div class=\"elev-vt__sub\"&gt;${sub}&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/td&gt;`;\n    };\n    vars.innerHTML = groups.map(g =&gt; `&lt;tr class=\"elev-vt__group\"&gt;&lt;td colspan=\"3\"&gt;${g.title}&lt;span class=\"elev-vt__gn\"&gt;${g.note}&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;` +\n      g.rows.map(r =&gt; `&lt;tr&gt;&lt;td class=\"elev-vt__var\"&gt;&lt;span class=\"elev-doc-tok\" onclick=\"copy('var(${r.name})','CSS variable')\"&gt;${r.name}&lt;/span&gt;&lt;div class=\"elev-vt__role\"&gt;${r.role}&lt;/div&gt;&lt;/td&gt;${cell('light', r)}${cell('dark', r)}&lt;/tr&gt;`).join('')\n    ).join('');\n  }\n}",
   "usage": {
     "do": [
       "Pick the level from what the surface actually is — a card is XS, a menu is M — not from how important it feels.",
       "Let a component keep one level everywhere it appears, in both light and dark.",
       "Pair a surface’s background and shadow from the same level — --elevation-surface-m with --elevation-m.",
-      "In dark, let the lighter surface carry the depth and treat the shadow as a secondary edge.",
+      "In dark, let the lighter surface carry all of the depth — the shadow variables resolve to none.",
       "Use z-index to control stacking order; use elevation only to communicate depth visually.",
       "Reserve XL for the single highest-priority layer on screen at once."
     ],
     "dont": [
       "Don't invent a shadow value outside the five documented levels.",
       "Don't stack multiple shadows on one surface.",
-      "Don't tint elevation-default — it is always black: 16% in light, 48% in dark.",
+      "Don't tint elevation-default — it is always black at 16%, and only used in light mode.",
       "Don't apply a shadow to text, an icon, or anything that isn't a surface.",
-      "Don't rely on the shadow alone in dark mode — a surface on the page colour looks flat however strong its shadow.",
+      "Don't add a shadow in dark mode, not even a stronger one — step the surface up a grey instead.",
       "Don't use pure black (#000000) for a dark surface, or a grey lighter than --color-surface-n3 to make something feel important."
     ]
   },
-  "contentHash": "53a2929ee9ce983881d644924f1fc20928fc3583ec489203e7ad87d37d59bc56",
-  "note": "Documents the elevation DATA (ELEVATION, including each level's dark surface step) and its theme-aware builders: renderElevLevels() (Overview Levels grid), renderElevDocToks() (Usage level-header token readouts), renderElevTokens() (Tokens five-levels table) — all three lead with the shadow in light and the surface colour in dark and re-run on theme toggle — and renderElevDark() (dark ladder + CSS variables table, each value cell drawn in its own data-theme scope). Values are read back live from the theme blocks via elevVarValue(); elevShadowParts/elevShadowText/elevSurfaceAlias/elevLv are formatting helpers. No reusable component class of its own. The elevation tokens ARE declared as CSS custom properties in both [data-brand=\"flash\"][data-theme] blocks: --elevation-default (shadow colour: black 16% light / 48% dark), --elevation-xs/-s/-m/-l/-l-up/-xl (full box-shadow; --elevation-xs is none in dark) and --elevation-surface-0/-xs/-s/-m/-l/-xl (background: --color-surface-base in light; in dark base / n1 / n1 / n2 / n3 / n3). Pair a surface's background and shadow from the same level. Adopted by .card (surface only, flat), .dpd-menu/.pop__panel/.hc__card (M), .bsh-sheet (L surface + l-up), and .tip__bubble/.cht__tip (S shadow on an inverse fill)."
+  "contentHash": "d397c7568d7117f8ad2484da84eeeb149f97823d101565c1e53ca871d0fbd185",
+  "note": "Documents the elevation DATA (ELEVATION, including each level's dark surface step) and its theme-aware builders: renderElevLevels() (Overview Levels grid), renderElevDocToks() (Usage level-header token readouts) and renderElevTokens() (Tokens five-levels table; in dark its second column is Lift, the surface contrast vs the page via elevContrast()) — all three lead with the shadow in light and the surface colour in dark and re-run on theme toggle — plus renderElevDark() (dark ladder + CSS variables table, each value cell drawn in its own data-theme scope). Values are read back live from the theme blocks via elevVarValue(); elevShadowParts/elevShadowText/elevSurfaceAlias/elevLv are formatting helpers. No reusable component class of its own. The elevation tokens are CSS custom properties in both [data-brand=\"flash\"][data-theme] blocks: --elevation-default (black 16% in light; transparent in dark), --elevation-xs/-s/-m/-l/-l-up/-xl (full box-shadow in light; ALL none in dark — dark mode has no shadows) and --elevation-surface-0/-xs/-s/-m/-l/-xl (background: --color-surface-base in light; in dark base / n1 / n1 / n2 / n3 / n3). Pair a surface's background and shadow from the same level. Adopted by .card (surface only, flat), .dpd-menu/.pop__panel/.hc__card (M), .bsh-sheet (L surface + l-up), and .tip__bubble/.cht__tip (S shadow on an inverse fill)."
 }
   </pre>
 </details>
@@ -3295,35 +3295,35 @@ body.home .main{max-width:none;margin:0;padding:0}
 
           <div class="type-sub">
             <div class="type-sub__title">Anatomy</div>
-            <div class="type-sub__desc">One shadow, four properties — only y-offset and blur ever move. x-axis and spread are always 0.</div>
+            <div class="type-sub__desc">One shadow, four properties — only y-offset and blur ever move. x-axis and spread are always 0. Shadows are light mode only, so the anatomy is always drawn in light; dark mode lifts with the surface instead.</div>
             <div class="cpg-section-block">
-              <div class="spec-hero" style="background:var(--chrome-bg);display:flex;align-items:center;justify-content:center;padding:48px 20px">
+              <div class="spec-hero" data-brand="flash" data-theme="light" style="background:var(--chrome-bg);display:flex;align-items:center;justify-content:center;padding:48px 20px">
                 <div style="width:220px;height:120px;border-radius:12px;background:var(--elevation-surface-m);border:1px solid var(--chrome-border);box-shadow:var(--elevation-m)"></div>
               </div>
               <div class="spec-parts">
                 <div class="spec-part">
-                  <div class="spec-part__stage" style="background:var(--chrome-bg);display:flex;align-items:center;justify-content:center;min-height:112px"><div style="width:44px;height:44px;border-radius:8px;background:var(--color-surface-base);border:1px solid var(--chrome-border);box-shadow:0 8px 0 0 rgba(0,0,0,0.16)"></div></div>
+                  <div class="spec-part__stage" data-brand="flash" data-theme="light" style="background:var(--chrome-bg);display:flex;align-items:center;justify-content:center;min-height:112px"><div style="width:44px;height:44px;border-radius:8px;background:var(--color-surface-base);border:1px solid var(--chrome-border);box-shadow:0 8px 0 0 rgba(0,0,0,0.16)"></div></div>
                   <div class="spec-part__body">
                     <div class="spec-part__name"><span class="spec-part__num">1</span>Y-offset</div>
                     <div class="spec-part__note">The only offset that moves — x is always 0. Shown here with blur set to 0 so the offset alone is visible.</div>
                   </div>
                 </div>
                 <div class="spec-part">
-                  <div class="spec-part__stage" style="background:var(--chrome-bg);display:flex;align-items:center;justify-content:center;min-height:112px"><div style="width:44px;height:44px;border-radius:8px;background:var(--color-surface-base);border:1px solid var(--chrome-border);box-shadow:0 0 24px 0 rgba(0,0,0,0.16)"></div></div>
+                  <div class="spec-part__stage" data-brand="flash" data-theme="light" style="background:var(--chrome-bg);display:flex;align-items:center;justify-content:center;min-height:112px"><div style="width:44px;height:44px;border-radius:8px;background:var(--color-surface-base);border:1px solid var(--chrome-border);box-shadow:0 0 24px 0 rgba(0,0,0,0.16)"></div></div>
                   <div class="spec-part__body">
                     <div class="spec-part__name"><span class="spec-part__num">2</span>Blur</div>
                     <div class="spec-part__note">Shown here with offset set to 0 so the blur alone is visible.</div>
                   </div>
                 </div>
                 <div class="spec-part">
-                  <div class="spec-part__stage" style="background:var(--chrome-bg);display:flex;align-items:center;justify-content:center;min-height:112px"><div style="width:44px;height:44px;border-radius:8px;background:var(--elevation-default)"></div></div>
+                  <div class="spec-part__stage" data-brand="flash" data-theme="light" style="background:var(--chrome-bg);display:flex;align-items:center;justify-content:center;min-height:112px"><div style="width:44px;height:44px;border-radius:8px;background:var(--elevation-default)"></div></div>
                   <div class="spec-part__body">
                     <div class="spec-part__name"><span class="spec-part__num">3</span>Colour</div>
-                    <div class="spec-part__note"><code>elevation-default</code> — #000000 at 16% in light, 48% in dark. One colour per theme, used at every level.</div>
+                    <div class="spec-part__note"><code>elevation-default</code> — #000000 at 16%, used at every level. Light mode only &mdash; dark mode has no shadow.</div>
                   </div>
                 </div>
                 <div class="spec-part">
-                  <div class="spec-part__stage" style="background:var(--chrome-bg);display:flex;align-items:center;justify-content:center;min-height:112px"><div style="width:44px;height:44px;border-radius:8px;background:var(--color-surface-base);border:1px solid var(--chrome-border);box-shadow:0 4px 24px 8px rgba(0,0,0,0.16)"></div></div>
+                  <div class="spec-part__stage" data-brand="flash" data-theme="light" style="background:var(--chrome-bg);display:flex;align-items:center;justify-content:center;min-height:112px"><div style="width:44px;height:44px;border-radius:8px;background:var(--color-surface-base);border:1px solid var(--chrome-border);box-shadow:0 4px 24px 8px rgba(0,0,0,0.16)"></div></div>
                   <div class="spec-part__body">
                     <div class="spec-part__name"><span class="spec-part__num">4</span>Spread</div>
                     <div class="spec-part__note">Always 0. Shown here at 8px to make clear why — it thickens the shadow into a hard-edged halo rather than a soft lift.</div>
@@ -3335,7 +3335,7 @@ body.home .main{max-width:none;margin:0;padding:0}
 
           <div class="type-sub">
             <div class="type-sub__title">Levels</div>
-            <div class="type-sub__desc"><span class="elev-only-light">In light, each level is a shadow &mdash; its own y-offset and blur, in black at 16%. Every level sits on the white base surface.</span><span class="elev-only-dark">In dark, each level is a surface step &mdash; the grey does the lifting, with a black 48% shadow as a secondary edge (none at XS).</span> Built at runtime from the same <code>ELEVATION</code> data as the Tokens table &mdash; switch the theme to compare.</div>
+            <div class="type-sub__desc"><span class="elev-only-light">In light, each level is a shadow &mdash; its own y-offset and blur, in black at 16%. Every level sits on the white base surface.</span><span class="elev-only-dark">In dark, each level is a surface step &mdash; the grey alone does the lifting, with no shadow.</span> Built at runtime from the same <code>ELEVATION</code> data as the Tokens table &mdash; switch the theme to compare.</div>
             <div class="cpg-section-block">
               <div id="elev-levels-grid" class="spec-grid" style="grid-template-columns:repeat(auto-fill,minmax(200px,1fr))"></div>
             </div>
@@ -3343,7 +3343,7 @@ body.home .main{max-width:none;margin:0;padding:0}
 
           <div class="type-sub">
             <div class="type-sub__title">Elevation in dark mode</div>
-            <div class="type-sub__desc">On a near-black page a shadow has almost nothing darker to fall onto, so it can&rsquo;t show depth on its own. Dark mode uses the cue we read in a dim room instead: whatever is closer to the light looks lighter. Each level steps the surface one grey lighter, using the existing surface colour tokens. There are three lifted greys for five levels, so XS and S share one, L and XL share one, and the shadow tells each pair apart.</div>
+            <div class="type-sub__desc">On a near-black page a shadow has almost nothing darker to fall onto, so dark mode drops shadows entirely. It uses the cue we read in a dim room instead: whatever is closer to the light looks lighter. Each level steps the surface one grey lighter, using the existing surface colour tokens. There are three lifted greys for five levels, so XS and S share one and L and XL share one &mdash; in practice they don&rsquo;t collide, because S is tooltips (inverse fill) and XL is toasts (their own status fill).</div>
             <div class="cpg-section-block">
               <div id="elev-dark-ladder" class="elev-ladder" data-brand="flash" data-theme="dark"></div>
             </div>
@@ -3357,7 +3357,7 @@ body.home .main{max-width:none;margin:0;padding:0}
 
           <div class="type-sub">
             <div class="type-sub__title">Which level for what</div>
-            <div class="type-sub__desc">Each level, the surfaces it&rsquo;s for, and the components that carry it today. The token readout follows the theme: <span class="elev-only-light">in light the shadow leads</span><span class="elev-only-dark">in dark the surface colour leads</span>.</div>
+            <div class="type-sub__desc">Each level, the surfaces it&rsquo;s for, and the components that carry it today. The token readout follows the theme: <span class="elev-only-light">in light the shadow leads</span><span class="elev-only-dark">in dark only the surface colour applies</span>.</div>
             <div class="cpg-section-outline">
 
               <div class="logo-var">
@@ -3380,7 +3380,7 @@ body.home .main{max-width:none;margin:0;padding:0}
                       <div class="elev-doc-use__meta">
                         <span class="elev-doc-use__sel">.card</span>
                         <span class="tag tag--sm tag--success">Matches</span>
-                        <span class="elev-doc-use__note">Surface only &mdash; cards stay flat in light, and XS has no shadow in dark.</span>
+                        <span class="elev-doc-use__note">Surface only &mdash; cards stay flat in both themes.</span>
                       </div>
                     </div>
                   </div>
@@ -3407,7 +3407,7 @@ body.home .main{max-width:none;margin:0;padding:0}
                       <div class="elev-doc-use__meta">
                         <span class="elev-doc-use__sel">.tip__bubble</span>
                         <span class="tag tag--sm tag--success">Matches</span>
-                        <span class="elev-doc-use__note">Inverse surface &mdash; takes the shadow only.</span>
+                        <span class="elev-doc-use__note">Inverse surface &mdash; takes the shadow, in light only.</span>
                       </div>
                     </div>
                     <div class="elev-doc-use__note">Chart tooltips (<code>.cht__tip</code>) carry this level the same way.</div>
@@ -3498,7 +3498,7 @@ body.home .main{max-width:none;margin:0;padding:0}
 
           <div class="type-sub">
             <div class="type-sub__title">Light and dark</div>
-            <div class="type-sub__desc">Same level, different cue. In light, the shadow lifts the surface. In dark, the surface steps one grey lighter per level and the shadow only darkens its edge. Both screens below are the same markup &mdash; only the theme changes.</div>
+            <div class="type-sub__desc">Same level, different cue. In light, the shadow lifts the surface. In dark there are no shadows: the surface steps one grey lighter per level. Both screens below are the same markup &mdash; only the theme changes.</div>
             <div class="cpg-section-outline">
               <div class="spec-insitu-grid spec-insitu-grid--2">
                 <div class="spec-mock" data-brand="flash" data-theme="light">
@@ -3519,16 +3519,16 @@ body.home .main{max-width:none;margin:0;padding:0}
                       <div class="elev-scene__sheet"><div class="elev-scene__handle"></div><div class="elev-scene__title">Sheet</div></div>
                     </div>
                   </div>
-                  <div class="spec-mock__cap"><b>Dark</b>Card on <code>n1</code>, menu on <code>n2</code>, sheet on <code>n3</code> &mdash; each lighter than what it floats over. Shadows at 48%; the card has none.</div>
+                  <div class="spec-mock__cap"><b>Dark</b>Card on <code>n1</code>, menu on <code>n2</code>, sheet on <code>n3</code> &mdash; each lighter than what it floats over. No shadows &mdash; the grey steps alone carry the depth.</div>
                 </div>
               </div>
-              <div class="logo-note">A component keeps the same level in both themes. Give it its level&rsquo;s surface variable and its level&rsquo;s shadow variable together, and the theme decides which one does the work.</div>
+              <div class="logo-note">A component keeps the same level in both themes. Give it its level&rsquo;s surface variable and its level&rsquo;s shadow variable together: in light the shadow does the work, in dark the surface does and the shadow variable resolves to none.</div>
             </div>
           </div>
 
           <div class="type-sub">
             <div class="type-sub__title">Applying it</div>
-            <div class="type-sub__desc">Two variables per surface: its level&rsquo;s background and its level&rsquo;s shadow. Both switch with the theme, so a component needs no dark-mode override of its own.</div>
+            <div class="type-sub__desc">Two variables per surface: its level&rsquo;s background and its level&rsquo;s shadow. Both switch with the theme &mdash; in dark the shadow variable resolves to <code>none</code> &mdash; so a component needs no dark-mode override of its own.</div>
             <div class="cpg-section-outline">
               <div class="code-panel code-panel--bare open">
                 <div class="code-panel__head">
@@ -3552,12 +3552,12 @@ body.home .main{max-width:none;margin:0;padding:0}
 <span class="code-cls">.menu__item:hover</span> { <span class="code-attr">background</span>: <span class="code-val">var(--chrome-hover)</span>; }</div></div>
               </div>
               <div class="dd-table-wrap" style="margin-top:16px"><table class="dd-table"><thead><tr><th>Surface</th><th>Background</th><th>Shadow</th><th>Why</th></tr></thead><tbody>
-                <tr><td class="dd-table__name">Card, tile</td><td><code>--elevation-surface-xs</code></td><td><code>--elevation-xs</code></td><td>In dark the grey step alone lifts it &mdash; XS has no dark shadow.</td></tr>
+                <tr><td class="dd-table__name">Card, tile</td><td><code>--elevation-surface-xs</code></td><td><code>--elevation-xs</code></td><td>Stays flat in both themes; in dark the grey step alone lifts it.</td></tr>
                 <tr><td class="dd-table__name">Menu, popover, dialog</td><td><code>--elevation-surface-m</code></td><td><code>--elevation-m</code></td><td>Sits one step above any card it opens from.</td></tr>
                 <tr><td class="dd-table__name">Drawer, side panel</td><td><code>--elevation-surface-l</code></td><td><code>--elevation-l</code></td><td>Above most content on screen.</td></tr>
-                <tr><td class="dd-table__name">Bottom sheet</td><td><code>--elevation-surface-l</code></td><td><code>--elevation-l-up</code></td><td>Rises from the bottom, so its shadow falls upward.</td></tr>
+                <tr><td class="dd-table__name">Bottom sheet</td><td><code>--elevation-surface-l</code></td><td><code>--elevation-l-up</code></td><td>Rises from the bottom, so in light its shadow falls upward.</td></tr>
                 <tr><td class="dd-table__name">Surface opened from a lifted surface</td><td>At least one level above its parent</td><td>Same level as its background</td><td>A child on the same grey as its parent reads as part of it.</td></tr>
-                <tr><td class="dd-table__name">Tooltip, chart tooltip</td><td>Keep <code>--color-surface-inverse</code></td><td><code>--elevation-s</code></td><td>The inverse fill already contrasts in both themes.</td></tr>
+                <tr><td class="dd-table__name">Tooltip, chart tooltip</td><td>Keep <code>--color-surface-inverse</code></td><td><code>--elevation-s</code></td><td>The inverse fill already contrasts in both themes; the shadow shows in light only.</td></tr>
                 <tr><td class="dd-table__name">Toast, status-filled surface</td><td>Keep its own fill</td><td>None</td><td>Toasts ship flat; the fill separates them.</td></tr>
                 <tr><td class="dd-table__name">Hover or pressed on a lifted surface</td><td>Same level + <code>--chrome-hover</code></td><td>Unchanged</td><td>A hover is a state, not a new layer.</td></tr>
               </tbody></table></div>
@@ -3622,7 +3622,7 @@ body.home .main{max-width:none;margin:0;padding:0}
                       <div class="elev-scene__sheet"><div class="elev-scene__handle"></div><div class="elev-scene__title">Sheet</div></div>
                     </div></div>
                   </div>
-                  <div class="spec-mock__cap"><b class="logo-dont__tag">&#10007; Don't: rely on the shadow alone in dark</b>Card, menu and sheet all on the page colour with light-mode shadows. However strong the shadow, they read as flat.</div>
+                  <div class="spec-mock__cap"><b class="logo-dont__tag">&#10007; Don't: lift with a shadow in dark</b>Card, menu and sheet on the page colour with light-mode shadows. A shadow has nothing darker to fall onto, so they read as flat &mdash; step the surface instead.</div>
                 </div>
                 <div class="spec-mock">
                   <div class="spec-mock__stage logo-dont" style="background:var(--color-crit-l);align-items:stretch;justify-content:center">
@@ -3648,7 +3648,7 @@ body.home .main{max-width:none;margin:0;padding:0}
                   <li>Pick the level from what the surface actually is — a card is XS, a menu is M — not from how important it feels.</li>
                   <li>Let a component keep one level everywhere it appears, in both light and dark.</li>
                   <li>Pair a surface&rsquo;s background and shadow from the same level &mdash; <code>--elevation-surface-m</code> with <code>--elevation-m</code>.</li>
-                  <li>In dark, let the lighter surface carry the depth and treat the shadow as a secondary edge.</li>
+                  <li>In dark, let the lighter surface carry all of the depth &mdash; the shadow variables resolve to <code>none</code>.</li>
                   <li>Use z-index to control stacking order; use elevation only to communicate depth visually.</li>
                   <li>Reserve XL for the single highest-priority layer on screen at once.</li>
                 </ul>
@@ -3658,9 +3658,9 @@ body.home .main{max-width:none;margin:0;padding:0}
                 <ul class="sel-usage__list">
                   <li>Don't invent a shadow value outside the five documented levels.</li>
                   <li>Don't stack multiple shadows on one surface.</li>
-                  <li>Don't tint <code>elevation-default</code> — it is always black: 16% in light, 48% in dark.</li>
+                  <li>Don't tint <code>elevation-default</code> — it is always black at 16%, and only used in light mode.</li>
                   <li>Don't apply a shadow to text, an icon, or anything that isn't a surface.</li>
-                  <li>Don't rely on the shadow alone in dark mode — a surface on the page colour looks flat however strong its shadow.</li>
+                  <li>Don't add a shadow in dark mode, not even a stronger one — step the surface up a grey instead.</li>
                   <li>Don't use pure black (#000000) for a dark surface, or a grey lighter than <code>--color-surface-n3</code> to make something feel important.</li>
                 </ul>
               </div>
@@ -3674,7 +3674,7 @@ body.home .main{max-width:none;margin:0;padding:0}
         <div class="type-sub spec-panel spec-stack">
           <div class="type-sub">
             <div class="type-sub__title">The five levels</div>
-            <div class="type-sub__desc"><span class="elev-only-light">Light: each level is its shadow, on the white base surface. Click a row to copy its shadow variable.</span><span class="elev-only-dark">Dark: each level is its surface colour, with a black 48% shadow as a secondary edge. Click a row to copy its surface variable.</span></div>
+            <div class="type-sub__desc"><span class="elev-only-light">Light: each level is its shadow, on the white base surface. Click a row to copy its shadow variable.</span><span class="elev-only-dark">Dark: each level is its surface colour alone &mdash; no shadow. Lift is the contrast of the surface against the page. Click a row to copy its surface variable.</span></div>
             <div id="sp-elev" class="type-sub"></div>
             <div class="logo-note">Declared as CSS custom properties in both theme blocks. Click a row to copy its <code>var()</code>.</div>
           </div>
@@ -3685,7 +3685,7 @@ body.home .main{max-width:none;margin:0;padding:0}
           </div>
           <div class="type-sub">
             <div class="type-sub__title">Where it's used</div>
-            <div class="type-sub__desc">Documented level against what each component actually carries on <code>main</code>. Every floating surface now takes its background and shadow from the elevation variables; the remaining drift is state shadows and non-surface controls.</div>
+            <div class="type-sub__desc">Documented level against what each component actually carries on <code>main</code>. Every floating surface now takes its background and shadow from the elevation variables, so in dark none of them carries a shadow; the remaining drift is state shadows and non-surface controls.</div>
             <div class="dd-table-wrap"><table class="dd-table"><thead><tr><th>Component</th><th>Selector</th><th>Level</th><th>Background</th><th>Shadow</th><th>Status</th></tr></thead><tbody>
               <tr><td class="dd-table__name">Card (resting)</td><td><code>.card</code></td><td>elevation-xs</td><td><code onclick="copy('var(--elevation-surface-xs)','Value')">var(--elevation-surface-xs)</code></td><td>none (flat)</td><td>Matches</td></tr>
               <tr><td class="dd-table__name">Card, hover</td><td><code>.card--interactive:hover</code></td><td>&mdash;</td><td>inherits</td><td><code onclick="copy('0 8px 24px 0 rgba(0,0,0,0.10)','Value')">0 8px 24px 0 rgba(0,0,0,0.10)</code></td><td>Drift</td></tr>
@@ -10915,8 +10915,8 @@ function renderElevTokens(){
       </div>
       <div class="elev-colour">
         <div class="elev-col-info">
-          <div class="elev-col-val">${sh ? `y ${sh.y} &middot; blur ${sh.blur} &middot; ${sh.pct}%` : 'none'}</div>
-          <div class="elev-col-token">--${e.token}</div>
+          <div class="elev-col-val">${elevContrast(hex, elevVarValue('dark','--color-surface-base')).toFixed(2)}:1</div>
+          <div class="elev-col-token">vs page &middot; no shadow</div>
         </div>
       </div>`;
     } else {
@@ -10954,7 +10954,7 @@ function renderElevTokens(){
         <div class="elev-head-cell"></div>
         <div class="elev-head-cell">Level</div>
         <div class="elev-head-cell">${dark ? 'Surface' : 'Effects'}</div>
-        <div class="elev-head-cell">${dark ? 'Shadow' : 'Colour'}</div>
+        <div class="elev-head-cell">${dark ? 'Lift' : 'Colour'}</div>
         <div class="elev-head-cell">Usage</div>
       </div>
       ${elevRows}
@@ -10974,7 +10974,7 @@ function renderElevLevels(){
     const alias = elevSurfaceAlias(theme, lv);
     // Lead with what carries the depth in this theme: the shadow in light, the surface in dark
     const desc = theme==='dark'
-      ? `<code>--elevation-surface-${lv}</code><br>--color-surface-${alias} &middot; ${elevVarValue('dark','--color-surface-'+alias)}<br>shadow ${elevShadowText('dark','--'+e.token)}<br>${e.eg}`
+      ? `<code>--elevation-surface-${lv}</code><br>--color-surface-${alias} &middot; ${elevVarValue('dark','--color-surface-'+alias)}<br>no shadow<br>${e.eg}`
       : `<code>--${e.token}</code><br>${elevShadowText('light','--'+e.token)}<br>${e.eg}`;
     return `<div class="spec-cell">
       <div class="spec-cell__stage" style="background:var(--elevation-surface-0);display:flex;align-items:center;justify-content:center;min-height:110px"><div style="width:70px;height:70px;border-radius:10px;background:var(--elevation-surface-${lv});border:1px solid var(--chrome-border);box-shadow:var(--${e.token})"></div></div>
@@ -11003,7 +11003,7 @@ function elevVarValue(theme, name){
 
 function elevLv(e){ return e.token.replace('elevation-',''); }
 
-// '0 4px 24px 0 rgba(0,0,0,0.48)' -> {y:4, blur:24, pct:48}; 'none' -> null
+// '0 4px 24px 0 rgba(0,0,0,0.16)' -> {y:4, blur:24, pct:16}; 'none' -> null
 function elevShadowParts(v){
   const m = /^0(?:px)? (-?\d+)(?:px)? (\d+)(?:px)? 0(?:px)? rgba\(0,\s*0,\s*0,\s*([\d.]+)\)$/.exec((v||'').trim());
   return m ? {y:+m[1], blur:+m[2], pct:Math.round(parseFloat(m[3])*100)} : null;
@@ -11011,6 +11011,12 @@ function elevShadowParts(v){
 function elevShadowText(theme, name){
   const p = elevShadowParts(elevVarValue(theme, name));
   return p ? `y ${p.y} &middot; blur ${p.blur} &middot; ${p.pct}%` : 'none';
+}
+// WCAG contrast ratio between two #rrggbb colours — how far a dark surface steps off the page
+function elevContrast(a, b){
+  const lum = h => { const c = [1,3,5].map(i => parseInt(h.slice(i,i+2),16)/255).map(x => x<=0.03928 ? x/12.92 : Math.pow((x+0.055)/1.055,2.4)); return 0.2126*c[0]+0.7152*c[1]+0.0722*c[2]; };
+  const la = lum(a), lb = lum(b);
+  return (Math.max(la,lb)+0.05)/(Math.min(la,lb)+0.05);
 }
 // The --color-surface-* step a level's surface resolves to in a theme
 function elevSurfaceAlias(theme, lv){
@@ -11027,7 +11033,7 @@ function renderElevDocToks(){
     const alias = elevSurfaceAlias(theme, lv);
     const hex = elevVarValue(theme, '--color-surface-'+alias);
     const surface = `<div class="elev-tok-line"><span class="elev-tok-line__k">Surface</span><span class="elev-tok-sw" style="background:${hex}"></span><span class="elev-doc-tok" onclick="copy('var(--elevation-surface-${lv})','CSS variable')">--elevation-surface-${lv}</span><span class="elev-tok-line__v">&rarr; --color-surface-${alias} &middot; ${hex}</span></div>`;
-    const shadow = `<div class="elev-tok-line"><span class="elev-tok-line__k">Shadow</span><span class="elev-doc-tok" onclick="copy('var(--elevation-${lv})','CSS variable')">--elevation-${lv}</span><span class="elev-tok-line__v">${elevShadowText(theme,'--elevation-'+lv)}</span></div>`;
+    const shadow = `<div class="elev-tok-line"><span class="elev-tok-line__k">Shadow</span><span class="elev-doc-tok" onclick="copy('var(--elevation-${lv})','CSS variable')">--elevation-${lv}</span><span class="elev-tok-line__v">${theme==='dark' ? 'none &middot; shadows are light mode only' : elevShadowText(theme,'--elevation-'+lv)}</span></div>`;
     el.innerHTML = theme==='dark' ? surface + shadow : shadow + surface;
   });
 }
@@ -11059,7 +11065,7 @@ function renderElevDark(){
       if(e.token==='elevation-l') shadowRows.push({name:'--elevation-l-up', role:'Bottom sheets (casts upward)', kind:'shadow', lv:'l'});
     });
     const groups = [
-      {title:'Shadow colour', note:'one per theme', rows:[{name:'--elevation-default', role:'Every shadow', kind:'colour', lv:'0'}]},
+      {title:'Shadow colour', note:'light mode only', rows:[{name:'--elevation-default', role:'Every shadow', kind:'colour', lv:'0'}]},
       {title:'Shadows', note:'box-shadow', rows:shadowRows},
       {title:'Surfaces', note:'background', rows:[{name:'--elevation-surface-0', role:'Page', kind:'surface', lv:'0'}]
         .concat(ELEVATION.map(e => ({name:'--elevation-surface-'+elevLv(e), role:e.eg, kind:'surface', lv:elevLv(e)})))},
@@ -11069,14 +11075,15 @@ function renderElevDark(){
       const raw = elevVarValue(theme, r.name);
       let tile, main, sub;
       if(r.kind==='colour'){
-        const pct = Math.round(parseFloat((/,\s*([\d.]+)\)/.exec(raw)||[0,0])[1])*100);
+        const a = /,\s*([\d.]+)\)/.exec(raw);
         tile = `<span class="elev-vt__tile" style="background:var(${r.name})"></span>`;
-        main = `black ${pct}%`; sub = raw;
+        main = a && parseFloat(a[1]) > 0 ? `black ${Math.round(parseFloat(a[1])*100)}%` : `<span class="elev-vt__none">none</span>`;
+        sub = a && parseFloat(a[1]) > 0 ? raw : 'no shadows in dark';
       } else if(r.kind==='shadow'){
         const p = elevShadowParts(raw);
         tile = `<span class="elev-vt__tile" style="background:var(--elevation-surface-${r.lv});box-shadow:var(${r.name})"></span>`;
         main = p ? `y ${p.y} &middot; blur ${p.blur}` : `<span class="elev-vt__none">none</span>`;
-        sub = p ? `black ${p.pct}%` : 'surface step only';
+        sub = p ? `black ${p.pct}%` : (theme==='dark' ? 'no shadows in dark' : 'flat');
       } else {
         tile = `<span class="elev-vt__tile" style="background:var(${r.name});border:1px solid var(--chrome-border)"></span>`;
         main = raw; sub = `--color-surface-${elevSurfaceAlias(theme, r.lv)}`;
@@ -21816,12 +21823,17 @@ function cbrTabSwitch(tab){
 /* ============================================================
    CHANGELOG
 ============================================================ */
-const SYSTEM_VERSION = '1.98.1';
+const SYSTEM_VERSION = '1.99.0';
 
 const CHANGELOG = {
   system: {
     version: SYSTEM_VERSION,
     entries: [
+      {version:'1.99.0', date:'2026-10-08', author:'Mo', title:'Dark mode drops elevation shadows entirely', changes:[
+        ['changed','In the [data-theme="dark"] block every elevation shadow variable (--elevation-xs/-s/-m/-l/-l-up/-xl) now resolves to none and --elevation-default to transparent, replacing the black 48% shadows. Dark-mode depth comes only from the surface steps (n1 / n2 / n3). Light mode is unchanged'],
+        ['changed','Every component on the variables loses its shadow in dark with no code change of its own: .tip__bubble, .cht__tip, .dpd-menu, .pop__panel, .hc__card and .bsh-sheet. The Hover Cards Tokens table Shadow row now reads "black 16% in light, none in dark"'],
+        ['changed','Elevation page rewritten to match — see the Elevation changelog'],
+      ]},
       {version:'1.98.1', date:'2026-10-08', author:'Mo', title:'Bottom Sheets: phone bezel no longer white in dark, scrim blur clipped to the rounded screen', changes:[
         ['fixed','Bottom sheet phone frames (.bsh-phone and the In-context mock frames): the 6–7px bezel used var(--chrome-txt), which turns pure white in dark mode. It is now var(--prim-black) in both themes, with a 1px var(--chrome-border) ring so the outline still reads on a dark page'],
         ['fixed','.bsh-phone__overlay (the blurred scrim behind an open sheet) was a square layer inside the rounded screen, so its backdrop blur ignored the rounded corners and smeared the bezel into the screen edge. It now takes the screen\'s inner radius, and the frame isolates it'],
@@ -24021,7 +24033,16 @@ const CHANGELOG = {
         ['added','8px base scale, spacing tokens, radius tokens, 4-breakpoint grid'],
       ]},
     ]},
-    {secId:'s-elev', name:'Elevation', version:'1.3.0', entries:[
+    {secId:'s-elev', name:'Elevation', version:'1.4.0', entries:[
+      {version:'1.4.0', date:'2026-10-08', author:'Mo', title:'No shadows in dark mode — surface steps only', changes:[
+        ['changed','Dark mode has no shadows: --elevation-xs through --elevation-xl and --elevation-l-up resolve to none in dark, and --elevation-default to transparent (was black 48%, with none only at XS)'],
+        ['changed','Hero, Anatomy, Levels, Elevation in dark mode, Light and dark, Applying it, Common mistakes and Do\'s and don\'ts copy rewritten: no more "secondary edge" or 48% wording. Dark mode is described as surface steps only; elevation-default as black 16%, light mode only'],
+        ['changed','Anatomy: the hero and the four property stages now render in a light data-theme scope in both themes, since the shadow they explain only exists in light'],
+        ['changed','Elevation in dark mode: XS/S and L/XL sharing a grey is now explained by the components at those levels (S is inverse tooltips, XL is toasts with their own fill), not by the shadow telling them apart'],
+        ['changed','Tokens, The five levels: in dark the Shadow column is replaced by Lift, the surface\'s contrast ratio against the page (e.g. 1.23:1 for n1), computed live by the new elevContrast()'],
+        ['changed','Levels grid, Which-level headers and the CSS variables table show "no shadow" / "none · shadows are light mode only" / "no shadows in dark" for every dark shadow value; the Shadow colour group is labelled "light mode only"'],
+        ['changed','Common mistakes: "Don\'t rely on the shadow alone in dark" becomes "Don\'t lift with a shadow in dark"; Do\'s and don\'ts: "Don\'t add a shadow in dark mode, not even a stronger one — step the surface up a grey instead"'],
+      ]},
       {version:'1.3.0', date:'2026-10-08', author:'Mo', title:'Components migrated to the elevation variables; Levels, Which-level and Tokens readouts follow the theme; CSS variables table redesigned', changes:[
         ['changed','Overview, Levels: each cell now leads with what carries the depth in the current theme — in light the shadow variable and its y/blur/16%, in dark --elevation-surface-* with its --color-surface-* step and hex, then the 48% shadow (none at XS). The section description swaps with the theme too, via new .elev-only-light / .elev-only-dark spans'],
         ['changed','Usage, Which level for what: each level header now shows both its Surface and Shadow tokens with a colour swatch and resolved value, rendered by the new renderElevDocToks(); the shadow line leads in light, the surface line leads in dark. The separate "Dark surface" rows added in 1.2.0 are removed as redundant'],
@@ -29310,7 +29331,7 @@ ${s.desc==='on' ? `        <span class="code-attr">Description</span>=<span clas
            ['Corner radius','12px','&mdash;'],
            ['Border','1px solid','<code>chrome-border</code>'],
            ['Surface','Elevation M surface &mdash; white in light, n2 in dark','<code>elevation-surface-m</code>'],
-           ['Shadow','Elevation M &mdash; 0 4px 24px, black 16% light / 48% dark','<code>elevation-m</code>'],
+           ['Shadow','Elevation M &mdash; 0 4px 24px, black 16% in light, none in dark','<code>elevation-m</code>'],
            ['Trigger','600 weight, underlined','<code>color-link</code>'],
            ['Name','14px / 800','<code>chrome-txt</code>'],
            ['Handle','12px','<code>chrome-muted</code>'],
